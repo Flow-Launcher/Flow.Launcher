@@ -13,29 +13,23 @@ namespace Flow.Launcher.Plugin.Calculator
 {
     public class Main : IPlugin, IPluginI18n, ISettingProvider
     {
-        private static readonly Regex RegValidExpressChar = MainRegexHelper.GetRegValidExpressChar();
-        private static readonly Regex RegBrackets = MainRegexHelper.GetRegBrackets();
         private static readonly Regex ThousandGroupRegex = MainRegexHelper.GetThousandGroupRegex();
         private static readonly Regex NumberRegex = MainRegexHelper.GetNumberRegex();
+        private static readonly Regex PowRegex = MainRegexHelper.GetPowRegex();
+        private static readonly Regex LogRegex = MainRegexHelper.GetLogRegex();
+        private static readonly Regex LnRegex = MainRegexHelper.GetLnRegex();
+        private static readonly Regex FunctionRegex = MainRegexHelper.GetFunctionRegex();
 
         private static Engine MagesEngine;
         private const string Comma = ",";
         private const string Dot = ".";
+        private const string IcoPath = "Images/calculator.png";
+        private static readonly List<Result> EmptyResults = [];
 
         internal static PluginInitContext Context { get; set; } = null!;
 
         private Settings _settings;
         private SettingsViewModel _viewModel;
-
-        /// <summary>
-        /// Holds the formatting information for a single query.
-        /// This is used to ensure thread safety by keeping query state local.
-        /// </summary>
-        private class ParsingContext
-        {
-            public string InputDecimalSeparator { get; set; }
-            public bool InputUsesGroupSeparators { get; set; }
-        }
 
         public void Init(PluginInitContext context)
         {
@@ -54,38 +48,98 @@ namespace Flow.Launcher.Plugin.Calculator
 
         public List<Result> Query(Query query)
         {
-            if (!CanCalculate(query))
+            if (string.IsNullOrWhiteSpace(query.Search))
             {
-                return new List<Result>();
+                return EmptyResults;
             }
-
-            var context = new ParsingContext();
 
             try
             {
-                var expression = NumberRegex.Replace(query.Search, m => NormalizeNumber(m.Value, context));
+                var search = query.Search;
+                bool isFunctionPresent = FunctionRegex.IsMatch(search);
+                
+                // Mages is case sensitive, so we need to convert all function names to lower case.
+                search = FunctionRegex.Replace(search, m => m.Value.ToLowerInvariant());
+                
+                var decimalSep = GetDecimalSeparator();
+                var groupSep = GetGroupSeparator(decimalSep);
+                var expression = NumberRegex.Replace(search, m => NormalizeNumber(m.Value, isFunctionPresent, decimalSep, groupSep));
+
+                // WORKAROUND START: The 'pow' function in Mages v3.0.0 is broken.
+                // https://github.com/FlorianRappl/Mages/issues/132
+                // We bypass it by rewriting any pow(x,y) expression to the equivalent (x^y) expression
+                // before the engine sees it. This loop handles nested calls.
+                {
+                    string previous;
+                    do
+                    {
+                        previous = expression;
+                        expression = PowRegex.Replace(previous, PowMatchEvaluator);
+                    } while (previous != expression);
+                }
+                // WORKAROUND END
+
+                // WORKAROUND START: The 'log' & 'ln' function in Mages v3.0.0 are broken.
+                // https://github.com/FlorianRappl/Mages/issues/137
+                // We bypass it by rewriting any log & ln expression to the equivalent (log10 & log) expression
+                // before the engine sees it. This loop handles nested calls.
+                {
+                    string previous;
+                    do
+                    {
+                        previous = expression;
+                        expression = LogRegex.Replace(previous, LogMatchEvaluator);
+                    } while (previous != expression);
+                }
+                {
+                    string previous;
+                    do
+                    {
+                        previous = expression;
+                        expression = LnRegex.Replace(previous, LnMatchEvaluator);
+                    } while (previous != expression);
+                }
+                // WORKAROUND END
 
                 var result = MagesEngine.Interpret(expression);
 
-                if (result?.ToString() == "NaN")
+                if (result == null || string.IsNullOrEmpty(result.ToString()))
+                {
+                    if (!_settings.ShowErrorMessage) return EmptyResults;
+                    return
+                    [
+                        new Result
+                        {
+                            Title = Localize.flowlauncher_plugin_calculator_expression_not_complete(),
+                            IcoPath = IcoPath
+                        }
+                    ];
+                }
+
+                if (result.ToString() == "NaN")
+                {
                     result = Localize.flowlauncher_plugin_calculator_not_a_number();
+                }
 
                 if (result is Function)
+                {
                     result = Localize.flowlauncher_plugin_calculator_expression_not_complete();
+                }
 
-                if (!string.IsNullOrEmpty(result?.ToString()))
+                if (!string.IsNullOrEmpty(result.ToString()))
                 {
                     decimal roundedResult = Math.Round(Convert.ToDecimal(result), _settings.MaxDecimalPlaces, MidpointRounding.AwayFromZero);
-                    string newResult = FormatResult(roundedResult, context);
+                    string newResult = FormatResult(roundedResult);
 
-                    return new List<Result>
-                    {
+                    return
+                    [
                         new Result
                         {
                             Title = newResult,
-                            IcoPath = "Images/calculator.png",
+                            IcoPath = IcoPath,
                             Score = 300,
-                            SubTitle = Localize.flowlauncher_plugin_calculator_copy_number_to_clipboard(),
+                            // Check context nullability for unit testing
+                            SubTitle = Context == null ? string.Empty : Localize.flowlauncher_plugin_calculator_copy_number_to_clipboard(),
                             CopyText = newResult,
                             Action = c =>
                             {
@@ -101,118 +155,206 @@ namespace Flow.Launcher.Plugin.Calculator
                                 }
                             }
                         }
-                    };
+                    ];
                 }
             }
             catch (Exception)
             {
-                // ignored
+                // Mages engine can throw various exceptions, for simplicity we catch them all and show a generic message.
+                if (!_settings.ShowErrorMessage) return EmptyResults;
+                return
+                [
+                    new Result
+                    {
+                        Title = Localize.flowlauncher_plugin_calculator_expression_not_complete(),
+                        IcoPath = IcoPath
+                    }
+                ];
             }
 
-            return new List<Result>();
+            return EmptyResults;
         }
 
-        /// <summary>
-        /// Parses a string representation of a number, detecting its format. It uses structural analysis
-        /// and falls back to system culture for truly ambiguous cases (e.g., "1,234").
-        /// It populates the provided ParsingContext with the detected format for later use.
-        /// </summary>
-        /// <returns>A normalized number string with '.' as the decimal separator for the Mages engine.</returns>
-        private string NormalizeNumber(string numberStr, ParsingContext context)
+        private static string PowMatchEvaluator(Match m)
         {
-            var systemGroupSep = CultureInfo.CurrentCulture.NumberFormat.NumberGroupSeparator;
-            int dotCount = numberStr.Count(f => f == '.');
-            int commaCount = numberStr.Count(f => f == ',');
+            // m.Groups[1].Value will be `(...)` with parens
+            var contentWithParen = m.Groups[1].Value;
+            // remove outer parens. `(min(2,3), 4)` becomes `min(2,3), 4`
+            var argsContent = contentWithParen[1..^1];
 
-            // Case 1: Unambiguous mixed separators (e.g., "1.234,56")
-            if (dotCount > 0 && commaCount > 0)
+            var bracketCount = 0;
+            var splitIndex = -1;
+
+            // Find the top-level comma that separates the two arguments of pow.
+            for (var i = 0; i < argsContent.Length; i++)
             {
-                context.InputUsesGroupSeparators = true;
-                if (numberStr.LastIndexOf('.') > numberStr.LastIndexOf(','))
+                switch (argsContent[i])
                 {
-                    context.InputDecimalSeparator = Dot;
-                    return numberStr.Replace(Comma, string.Empty);
+                    case '(':
+                    case '[':
+                        bracketCount++;
+                        break;
+                    case ')':
+                    case ']':
+                        bracketCount--;
+                        break;
+                    case ',' when bracketCount == 0:
+                        splitIndex = i;
+                        break;
+                }
+
+                if (splitIndex != -1)
+                    break;
+            }
+
+            if (splitIndex == -1)
+            {
+                // This indicates malformed arguments for pow, e.g., pow(5) or pow().
+                // Return original string to let Mages handle the error.
+                return m.Value;
+            }
+
+            var arg1 = argsContent[..splitIndex].Trim();
+            var arg2 = argsContent[(splitIndex + 1)..].Trim();
+
+            // Check for empty arguments which can happen with stray commas, e.g., pow(,5)
+            if (string.IsNullOrEmpty(arg1) || string.IsNullOrEmpty(arg2))
+            {
+                return m.Value;
+            }
+
+            return $"({arg1}^{arg2})";
+        }
+
+        private static string LogMatchEvaluator(Match m)
+        {
+            // m.Groups[1].Value will be `(...)` with parens
+            var contentWithParen = m.Groups[1].Value;
+            var argsContent = contentWithParen[1..^1];
+
+            // log is unary — if malformed, return original to let Mages handle it
+            var arg = argsContent.Trim();
+            if (string.IsNullOrEmpty(arg)) return m.Value;
+
+            // log(x) -> log10(x)   (natural log)
+            return $"(log10({arg}))";
+        }
+
+        private static string LnMatchEvaluator(Match m)
+        {
+            // m.Groups[1].Value will be `(...)` with parens
+            var contentWithParen = m.Groups[1].Value;
+            var argsContent = contentWithParen[1..^1];
+
+            // ln is unary — if malformed, return original to let Mages handle it
+            var arg = argsContent.Trim();
+            if (string.IsNullOrEmpty(arg)) return m.Value;
+
+            // ln(x) -> log(x)   (natural log)
+            return $"(log({arg}))";
+        }
+        private static string NormalizeNumber(string numberStr, bool isFunctionPresent, string decimalSep, string groupSep)
+        {
+            if (isFunctionPresent)
+            {
+                // STRICT MODE: When functions are present, ',' is ALWAYS an argument separator.
+                if (numberStr.Contains(','))
+                {
+                    return numberStr;
+                }
+
+                string processedStr = numberStr;
+
+                // Handle group separator, with special care for ambiguous dot.
+                if (!string.IsNullOrEmpty(groupSep))
+                {
+                    if (groupSep == ".")
+                    {
+                        var parts = processedStr.Split('.');
+                        if (parts.Length > 1)
+                        {
+                            var culture = CultureInfo.CurrentCulture;
+                            if (IsValidGrouping(parts, culture.NumberFormat.NumberGroupSizes))
+                            {
+                                processedStr = processedStr.Replace(groupSep, "");
+                            }
+                            // If not grouped, it's likely a decimal number, so we don't strip dots.
+                        }
+                    }
+                    else
+                    {
+                        processedStr = processedStr.Replace(groupSep, "");
+                    }
+                }
+
+                // Handle decimal separator.
+                if (decimalSep != ".")
+                {
+                    processedStr = processedStr.Replace(decimalSep, ".");
+                }
+                
+                return processedStr;
+            }
+            else
+            {
+                // LENIENT MODE: No functions are present, so we can be flexible.
+                string processedStr = numberStr;
+                if (!string.IsNullOrEmpty(groupSep))
+                {
+                    processedStr = processedStr.Replace(groupSep, "");
+                }
+                if (decimalSep != ".")
+                {
+                    processedStr = processedStr.Replace(decimalSep, ".");
+                }
+                return processedStr;
+            }
+        }
+        
+        private static bool IsValidGrouping(string[] parts, int[] groupSizes)
+        {
+            if (parts.Length <= 1) return true;
+
+            if (groupSizes is null || groupSizes.Length == 0 || groupSizes[0] == 0)
+                return false; // has groups, but culture defines none.
+
+            var firstPart = parts[0];
+            if (firstPart.StartsWith('-')) firstPart = firstPart[1..];
+            if (firstPart.Length == 0) return false; // e.g. ",123"
+
+            if (firstPart.Length > groupSizes[0]) return false;
+
+            var lastGroupSize = groupSizes.Last();
+            var canRepeatLastGroup = lastGroupSize != 0;
+            
+            int groupIndex = 0;
+            for (int i = parts.Length - 1; i > 0; i--)
+            {
+                int expectedSize;
+                if (groupIndex < groupSizes.Length)
+                {
+                    expectedSize = groupSizes[groupIndex];
+                }
+                else if(canRepeatLastGroup)
+                {
+                    expectedSize = lastGroupSize;
                 }
                 else
                 {
-                    context.InputDecimalSeparator = Comma;
-                    return numberStr.Replace(Dot, string.Empty).Replace(Comma, Dot);
+                    return false;
                 }
+
+                if (parts[i].Length != expectedSize) return false;
+                
+                groupIndex++;
             }
 
-            // Case 2: Only dots
-            if (dotCount > 0)
-            {
-                if (dotCount > 1)
-                {
-                    context.InputUsesGroupSeparators = true;
-                    return numberStr.Replace(Dot, string.Empty);
-                }
-                // A number is ambiguous if it has a single Dot in the thousands position,
-                // and does not start with a "0." or "."
-                bool isAmbiguous = numberStr.Length - numberStr.LastIndexOf('.') == 4
-                                   && !numberStr.StartsWith("0.")
-                                   && !numberStr.StartsWith(".");
-                if (isAmbiguous)
-                {
-                    if (systemGroupSep == Dot)
-                    {
-                        context.InputUsesGroupSeparators = true;
-                        return numberStr.Replace(Dot, string.Empty);
-                    }
-                    else
-                    {
-                        context.InputDecimalSeparator = Dot;
-                        return numberStr;
-                    }
-                }
-                else // Unambiguous decimal (e.g., "12.34" or "0.123" or ".123")
-                {
-                    context.InputDecimalSeparator = Dot;
-                    return numberStr;
-                }
-            }
-
-            // Case 3: Only commas
-            if (commaCount > 0)
-            {
-                if (commaCount > 1)
-                {
-                    context.InputUsesGroupSeparators = true;
-                    return numberStr.Replace(Comma, string.Empty);
-                }
-                // A number is ambiguous if it has a single Comma in the thousands position,
-                // and does not start with a "0," or ","
-                bool isAmbiguous = numberStr.Length - numberStr.LastIndexOf(',') == 4
-                                   && !numberStr.StartsWith("0,")
-                                   && !numberStr.StartsWith(",");
-                if (isAmbiguous)
-                {
-                    if (systemGroupSep == Comma)
-                    {
-                        context.InputUsesGroupSeparators = true;
-                        return numberStr.Replace(Comma, string.Empty);
-                    }
-                    else
-                    {
-                        context.InputDecimalSeparator = Comma;
-                        return numberStr.Replace(Comma, Dot);
-                    }
-                }
-                else // Unambiguous decimal (e.g., "12,34" or "0,123" or ",123")
-                {
-                    context.InputDecimalSeparator = Comma;
-                    return numberStr.Replace(Comma, Dot);
-                }
-            }
-
-            // Case 4: No separators
-            return numberStr;
+            return true;
         }
 
-        private string FormatResult(decimal roundedResult, ParsingContext context)
+        private string FormatResult(decimal roundedResult)
         {
-            string decimalSeparator = context.InputDecimalSeparator ?? GetDecimalSeparator();
+            string decimalSeparator = GetDecimalSeparator();
             string groupSeparator = GetGroupSeparator(decimalSeparator);
 
             string resultStr = roundedResult.ToString(CultureInfo.InvariantCulture);
@@ -221,7 +363,7 @@ namespace Flow.Launcher.Plugin.Calculator
             string integerPart = parts[0];
             string fractionalPart = parts.Length > 1 ? parts[1] : string.Empty;
 
-            if (context.InputUsesGroupSeparators && integerPart.Length > 3)
+            if (integerPart.Length > 3)
             {
                 integerPart = ThousandGroupRegex.Replace(integerPart, groupSeparator);
             }
@@ -236,29 +378,23 @@ namespace Flow.Launcher.Plugin.Calculator
 
         private string GetGroupSeparator(string decimalSeparator)
         {
-            // This logic is now independent of the system's group separator
-            // to ensure consistent output for unit testing.
-            return decimalSeparator == Dot ? Comma : Dot;
-        }
+            var culture = CultureInfo.CurrentCulture;
+            var systemGroupSeparator = culture.NumberFormat.NumberGroupSeparator;
 
-        private bool CanCalculate(Query query)
-        {
-            if (query.Search.Length < 2)
+            if (_settings.DecimalSeparator == DecimalSeparator.UseSystemLocale)
             {
-                return false;
+                return systemGroupSeparator;
             }
 
-            if (!RegValidExpressChar.IsMatch(query.Search))
+            // When a custom decimal separator is used,
+            // use the system's group separator unless it conflicts with the custom decimal separator.
+            if (decimalSeparator == systemGroupSeparator)
             {
-                return false;
+                // Conflict: use the opposite of the decimal separator as a fallback.
+                return decimalSeparator == Dot ? Comma : Dot;
             }
 
-            if (!IsBracketComplete(query.Search))
-            {
-                return false;
-            }
-
-            return true;
+            return systemGroupSeparator;
         }
 
         private string GetDecimalSeparator()
@@ -271,25 +407,6 @@ namespace Flow.Launcher.Plugin.Calculator
                 DecimalSeparator.Comma => Comma,
                 _ => systemDecimalSeparator,
             };
-        }
-
-        private static bool IsBracketComplete(string query)
-        {
-            var matchs = RegBrackets.Matches(query);
-            var leftBracketCount = 0;
-            foreach (Match match in matchs)
-            {
-                if (match.Value == "(" || match.Value == "[")
-                {
-                    leftBracketCount++;
-                }
-                else
-                {
-                    leftBracketCount--;
-                }
-            }
-
-            return leftBracketCount == 0;
         }
 
         public string GetTranslatedPluginTitle()

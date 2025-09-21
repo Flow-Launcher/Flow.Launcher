@@ -4,15 +4,15 @@
     "net9.0-windows7.0": {
       "Fody": {
         "type": "Direct",
-        "requested": "[6.9.2, )",
-        "resolved": "6.9.2",
-        "contentHash": "YBHobPGogb0vYhGYIxn/ndWqTjNWZveDi5jdjrcshL2vjwU3gQGyDeI7vGgye+2rAM5fGRvlLgNWLW3DpviS/w=="
+        "requested": "[6.9.3, )",
+        "resolved": "6.9.3",
+        "contentHash": "1CUGgFdyECDKgi5HaUBhdv6k+VG9Iy4OCforGfHyar3xQXAJypZkzymgKtWj/4SPd6nSG0Qi7NH71qHrDSZLaA=="
       },
       "JetBrains.Annotations": {
         "type": "Direct",
-        "requested": "[2024.3.0, )",
-        "resolved": "2024.3.0",
-        "contentHash": "ox5pkeLQXjvJdyAB4b2sBYAlqZGLh3PjSnP1bQNVx72ONuTJ9+34/+Rq91Fc0dG29XG9RgZur9+NcP4riihTug=="
+        "requested": "[2025.2.2, )",
+        "resolved": "2025.2.2",
+        "contentHash": "0X56ZRizuHdrnPpgXjWV7f2tQO1FlQg5O1967OGKnI/4ZRNOK642J8L7brM1nYvrxTTU5TP1yRyXLRLaXLPQ8A=="
       },
       "Microsoft.SourceLink.GitHub": {
         "type": "Direct",
@@ -26,9 +26,9 @@
       },
       "Microsoft.Windows.CsWin32": {
         "type": "Direct",
-        "requested": "[0.3.183, )",
-        "resolved": "0.3.183",
-        "contentHash": "Ze3aE2y7xgzKxEWtNb4SH0CExXpCHr3sbmwnvMiWMzJhWDX/G4Rs5wgg2UNs3VN+qVHh/DkDWLCPaVQv/b//Nw==",
+        "requested": "[0.3.205, )",
+        "resolved": "0.3.205",
+        "contentHash": "U5wGAnyKd7/I2YMd43nogm81VMtjiKzZ9dsLMVI4eAB7jtv5IEj0gprj0q/F3iRmAIaGv5omOf8iSYx2+nE6BQ==",
         "dependencies": {
           "Microsoft.Windows.SDK.Win32Docs": "0.1.42-alpha",
           "Microsoft.Windows.SDK.Win32Metadata": "61.0.15-preview",

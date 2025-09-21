@@ -34,6 +34,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <NoWarn>$(NoWarn);FLSG0007</NoWarn>
   </PropertyGroup>
 
   <Target Name="RemoveUnnecessaryRuntimesAfterBuild" AfterTargets="Build">
@@ -103,9 +104,9 @@
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-    <PackageReference Include="Flow.Launcher.Localization" Version="0.0.4" />
-    <PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.8" />
-    <PackageReference Include="Svg.Skia" Version="3.0.4" />
+    <PackageReference Include="Flow.Launcher.Localization" Version="0.0.6" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.9" />
+    <PackageReference Include="Svg.Skia" Version="3.0.6" />
     <PackageReference Include="SkiaSharp" Version="3.119.0" />
   </ItemGroup>
 

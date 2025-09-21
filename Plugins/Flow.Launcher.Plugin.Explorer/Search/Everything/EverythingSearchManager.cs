@@ -27,8 +27,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 if (!await EverythingApi.IsEverythingRunningAsync(token))
                     throw new EngineNotAvailableException(
                         Enum.GetName(Settings.IndexSearchEngineOption.Everything)!,
-                        Main.Context.API.GetTranslation("flowlauncher_plugin_everything_click_to_launch_or_install"),
-                        Main.Context.API.GetTranslation("flowlauncher_plugin_everything_is_not_running"),
+                        Localize.flowlauncher_plugin_everything_click_to_launch_or_install(),
+                        Localize.flowlauncher_plugin_everything_is_not_running(),
                         Constants.EverythingErrorImagePath,
                         ClickToInstallEverythingAsync);
             }
@@ -38,7 +38,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                     Enum.GetName(Settings.IndexSearchEngineOption.Everything)!,
                     "Please check whether your system is x86 or x64",
                     Constants.GeneralSearchErrorImagePath,
-                    Main.Context.API.GetTranslation("flowlauncher_plugin_everything_sdk_issue"));
+                    Localize.flowlauncher_plugin_everything_sdk_issue());
             }
         }
 
@@ -50,7 +50,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
                 if (installedPath == null)
                 {
-                    Main.Context.API.ShowMsgError(Main.Context.API.GetTranslation("flowlauncher_plugin_everything_not_found"));
+                    Main.Context.API.ShowMsgError(Localize.flowlauncher_plugin_everything_not_found());
                     Main.Context.API.LogError(ClassName, "Unable to find Everything.exe");
 
                     return false;
@@ -65,7 +65,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             // Just let the user know that Everything is not installed properly and ask them to install it manually
             catch (Exception e)
             {
-                Main.Context.API.ShowMsgError(Main.Context.API.GetTranslation("flowlauncher_plugin_everything_install_issue"));
+                Main.Context.API.ShowMsgError(Localize.flowlauncher_plugin_everything_install_issue());
                 Main.Context.API.LogException(ClassName, "Failed to install Everything", e);
 
                 return false;
@@ -97,8 +97,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             if (!Settings.EnableEverythingContentSearch)
             {
                 throw new EngineNotAvailableException(Enum.GetName(Settings.IndexSearchEngineOption.Everything)!,
-                    Main.Context.API.GetTranslation("flowlauncher_plugin_everything_enable_content_search"),
-                    Main.Context.API.GetTranslation("flowlauncher_plugin_everything_enable_content_search_tips"),
+                    Localize.flowlauncher_plugin_everything_enable_content_search(),
+                    Localize.flowlauncher_plugin_everything_enable_content_search_tips(),
                     Constants.EverythingErrorImagePath,
                     _ =>
                     {
