@@ -1,8 +1,8 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <system:String x:Key="flowlauncher_plugin_calculator_plugin_name">Калькулятор</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_plugin_description">Виконуйте математичні обчислення (включаючи шістнадцяткові значення). Використовуйте «,» або «.» як роздільник тисяч або десяткових знаків.</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_plugin_description">Виконуйте математичні розрахунки, включаючи шістнадцяткові значення та розширені функції, такі як «min(1,2,3)», «sqrt(123)» та «cos(123)».</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_not_a_number">Не є числом (NaN)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_expression_not_complete">Вираз неправильний або неповний (Ви забули якісь дужки?)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_copy_number_to_clipboard">Скопіюйте це число в буфер обміну</system:String>
@@ -13,4 +13,5 @@
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_dot">Крапка (.)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_max_decimal_places">Макс. кількість знаків після коми</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_failed_to_copy">Копіювання не вдалося, спробуйте пізніше</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_show_error_message">Показувати повідомлення про помилку, якщо обчислення не вдалося</system:String>
 </ResourceDictionary>

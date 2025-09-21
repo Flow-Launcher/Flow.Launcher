@@ -24,8 +24,8 @@
     <system:String x:Key="userDataDuplicated">Flow Launcher ha detectado que los datos de usario existen tanto en {0} como en {1}. {2}{2}Por favor, elimine {1} para continuar. No se han producido cambios.</system:String>
 
     <!--  Plugin Loader  -->
-    <system:String x:Key="pluginHasErrored">El siguiente complemento ha sufrido un error y no puede cargarse:</system:String>
-    <system:String x:Key="pluginsHaveErrored">Los siguientes complementos han sufrido un error y no pueden cargarse:</system:String>
+    <system:String x:Key="pluginHasErrored">El siguiente complemento ha sufrido un fallo y no se puede cargar:</system:String>
+    <system:String x:Key="pluginsHaveErrored">Los siguientes complementos han sufrido un fallo y no se pueden cargar:</system:String>
     <system:String x:Key="referToLogs">Por favor, consulte los registros para más información</system:String>
 
     <!--  Http  -->
@@ -224,6 +224,7 @@
     <system:String x:Key="failedToUninstallPluginTitle">Fallo al desinstalar {0}</system:String>
     <system:String x:Key="fileNotFoundMessage">No se puede encontrar plugin.json en el archivo zip extraído, o esta ruta {0} no existe</system:String>
     <system:String x:Key="pluginExistAlreadyMessage">Ya existe un complemento con el mismo ID y versión, o la versión es superior a la de este complemento descargado</system:String>
+    <system:String x:Key="errorCreatingSettingPanel">Error creating setting panel for plugin {0}:{1}{2}</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Tienda complementos</system:String>
@@ -332,7 +333,7 @@
     <system:String x:Key="PlaceholderTextTip">Cambia el texto del marcador de posición. La entrada vacía utilizará: {0}</system:String>
     <system:String x:Key="KeepMaxResults">Tamaño fijo de la ventana</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">El tamaño de la ventana no se puede ajustar mediante arrastre.</system:String>
-    <system:String x:Key="MaxShowResultsCannotWorkWithAlwaysPreview">Since Always Preview is on, maximum results shown may not take effect because preview panel requires a certain minimum height</system:String>
+    <system:String x:Key="MaxShowResultsCannotWorkWithAlwaysPreview">Dado que la vista previa está siempre activada, es posible que no se muestren los resultados máximos, ya que el panel de vista previa requiere una altura mínima determinada</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Atajo de teclado</system:String>
@@ -395,7 +396,7 @@
     <system:String x:Key="showBadges">Mostrar distintivos en resultados</system:String>
     <system:String x:Key="showBadgesToolTip">Para los complementos compatibles, se muestran distintivos que ayudan a distinguirlos más fácilmente.</system:String>
     <system:String x:Key="showBadgesGlobalOnly">Mostrar distintivos en resultados solo para consulta global</system:String>
-    <system:String x:Key="showBadgesGlobalOnlyToolTip">Mostrar distintivos solo para los resultados de consultas globales</system:String>
+    <system:String x:Key="showBadgesGlobalOnlyToolTip">Muestra distintivos solo para los resultados de consultas globales</system:String>
     <system:String x:Key="dialogJumpHotkey">Salto de diálogo</system:String>
     <system:String x:Key="dialogJumpHotkeyToolTip">Introducir atajo de teclado para acceder rápidamente a la ventana de diálogo Abrir/Guardar como en la ruta del administrador de archivos actual.</system:String>
     <system:String x:Key="dialogJump">Salto de diálogo</system:String>
@@ -467,8 +468,10 @@
     <system:String x:Key="userdatapathButton">Abrir carpeta</system:String>
     <system:String x:Key="advanced">Avanzado</system:String>
     <system:String x:Key="logLevel">Nivel de registro</system:String>
-    <system:String x:Key="LogLevelDEBUG">Depuración</system:String>
+    <system:String x:Key="LogLevelNONE">Silencioso</system:String>
+    <system:String x:Key="LogLevelERROR">Error</system:String>
     <system:String x:Key="LogLevelINFO">Información</system:String>
+    <system:String x:Key="LogLevelDEBUG">Depuración</system:String>
     <system:String x:Key="settingWindowFontTitle">Configuración de fuente de la ventana</system:String>
 
     <!--  Release Notes Window  -->
@@ -490,6 +493,7 @@
     <system:String x:Key="fileManager_file_arg">Argumentos del archivo</system:String>
     <system:String x:Key="fileManagerPathNotFound">El administrador de archivos '{0}' no pudo ser localizado en '{1}'. ¿Desea continuar?</system:String>
     <system:String x:Key="fileManagerPathError">Error de ruta del administrador de archivos</system:String>
+    <system:String x:Key="fileManagerExplorer">File Explorer</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">Navegador web predeterminado</system:String>
@@ -500,6 +504,8 @@
     <system:String x:Key="defaultBrowser_newWindow">Nueva ventana</system:String>
     <system:String x:Key="defaultBrowser_newTab">Nueva pestaña</system:String>
     <system:String x:Key="defaultBrowser_parameter">Modo privado</system:String>
+    <system:String x:Key="defaultBrowser_default">Default</system:String>
+    <system:String x:Key="defaultBrowser_new_profile">New Profile</system:String>
 
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">Cambiar la prioridad</system:String>
