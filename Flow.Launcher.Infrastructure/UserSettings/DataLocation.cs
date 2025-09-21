@@ -21,7 +21,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         public static bool PortableDataLocationInUse()
         {
-            if (Directory.Exists(PortableDataPath) && !File.Exists(DeletionIndicatorFile))
+            if (Directory.Exists(PortableDataPath) &&
+                !File.Exists(Path.Combine(PortableDataPath, DeletionIndicatorFile))
                 return true;
 
             return false;
