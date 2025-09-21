@@ -183,6 +183,8 @@ namespace Flow.Launcher
                 // So set to OnExplicitShutdown to prevent the application from shutting down before main window is created
                 Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
 
+                Log.SetLogLevel(_settings.LogLevel);
+
                 // Update dynamic resources base on settings
                 Current.Resources["SettingWindowFont"] = new FontFamily(_settings.SettingWindowFont);
                 Current.Resources["ContentControlThemeFontFamily"] = new FontFamily(_settings.SettingWindowFont);
@@ -195,11 +197,7 @@ namespace Flow.Launcher
                 // Initialize language before portable clean up since it needs translations
                 await _internationalization.InitializeLanguageAsync();
 
-                // Clean up after portability updates
                 Ioc.Default.GetRequiredService<Portable>().PreStartCleanUpAfterPortabilityUpdate();
-
-                // Initialize logger after data path initialization during portable clean up to ensure correct log directory path is used
-                Log.SetLogLevel(_settings.LogLevel);
 
                 API.LogInfo(ClassName, "Begin Flow Launcher startup ----------------------------------------------------");
                 API.LogInfo(ClassName, $"Runtime info:{ErrorReporting.RuntimeInfo()}");
