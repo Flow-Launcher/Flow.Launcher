@@ -21,9 +21,9 @@ public static class EverythingDownloadHelper
         if (string.IsNullOrEmpty(installedLocation))
         {
             if (api.ShowMsgBox(
-                        string.Format(api.GetTranslation("flowlauncher_plugin_everything_installing_select"), Environment.NewLine),
-                        api.GetTranslation("flowlauncher_plugin_everything_installing_title"),
-                        MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                Localize.flowlauncher_plugin_everything_installing_select(Environment.NewLine),
+                Localize.flowlauncher_plugin_everything_installing_title(),
+                MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 var dlg = new System.Windows.Forms.OpenFileDialog
                 {
@@ -41,13 +41,13 @@ public static class EverythingDownloadHelper
             return installedLocation;
         }
 
-        api.ShowMsg(api.GetTranslation("flowlauncher_plugin_everything_installing_title"),
-            api.GetTranslation("flowlauncher_plugin_everything_installing_subtitle"), "", useMainWindowAsOwner: false);
+        api.ShowMsg(Localize.flowlauncher_plugin_everything_installing_title(),
+            Localize.flowlauncher_plugin_everything_installing_subtitle(), "", useMainWindowAsOwner: false);
 
         await DroplexPackage.Drop(App.Everything1_4_1_1009).ConfigureAwait(false);
 
-        api.ShowMsg(api.GetTranslation("flowlauncher_plugin_everything_installing_title"),
-            api.GetTranslation("flowlauncher_plugin_everything_installationsuccess_subtitle"), "", useMainWindowAsOwner: false);
+        api.ShowMsg(Localize.flowlauncher_plugin_everything_installing_title(),
+            Localize.flowlauncher_plugin_everything_installationsuccess_subtitle(), "", useMainWindowAsOwner: false);
 
         installedLocation = "C:\\Program Files\\Everything\\Everything.exe";
 
@@ -83,6 +83,5 @@ public static class EverythingDownloadHelper
 
         var scoopInstalledPath = Environment.ExpandEnvironmentVariables(@"%userprofile%\scoop\apps\everything\current\Everything.exe");
         return File.Exists(scoopInstalledPath) ? scoopInstalledPath : string.Empty;
-
     }
 }
