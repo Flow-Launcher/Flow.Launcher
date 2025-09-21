@@ -55,13 +55,20 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             if (sender is not TextBox textBox) return;
             if (_info is DirectoryInfo)
             {
-                await Application.Current.Dispatcher.InvokeAsync(textBox.SelectAll, DispatcherPriority.Background);
+                await textBox.Dispatcher.InvokeAsync(textBox.SelectAll, DispatcherPriority.Background);
+                return;
             }
             // select everything but the extension
-            else if (_info is FileInfo info)
+            if (_info is FileInfo info)
             {
                 string properName = Path.GetFileNameWithoutExtension(info.Name);
-                Application.Current.Dispatcher.Invoke(textBox.Select, DispatcherPriority.Background, textBox.Text.IndexOf(properName), properName.Length);
+                int start = textBox.Text.LastIndexOf(properName, StringComparison.OrdinalIgnoreCase);
+                if (start < 0)
+                {
+                    await textBox.Dispatcher.InvokeAsync(textBox.SelectAll, DispatcherPriority.Background);
+                    return;
+                }
+                await textBox.Dispatcher.InvokeAsync(() => textBox.Select(start, properName.Length), DispatcherPriority.Background);
             }
         }
 
