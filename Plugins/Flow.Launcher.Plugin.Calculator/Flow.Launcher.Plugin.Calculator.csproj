@@ -33,6 +33,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <NoWarn>$(NoWarn);FLSG0007</NoWarn>
   </PropertyGroup>
   
   <ItemGroup>
@@ -62,7 +63,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Flow.Launcher.Localization" Version="0.0.4" />
+    <PackageReference Include="Flow.Launcher.Localization" Version="0.0.6" />
     <PackageReference Include="Mages" Version="3.0.0" />
   </ItemGroup>
   

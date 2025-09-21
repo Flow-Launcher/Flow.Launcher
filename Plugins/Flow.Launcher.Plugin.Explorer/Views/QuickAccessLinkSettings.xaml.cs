@@ -97,7 +97,7 @@ public partial class QuickAccessLinkSettings
         // Validate the input before proceeding
         if (string.IsNullOrEmpty(SelectedName) || string.IsNullOrEmpty(SelectedPath))
         {
-            var warning = Main.Context.API.GetTranslation("plugin_explorer_quick_access_link_no_folder_selected");
+            var warning = Localize.plugin_explorer_quick_access_link_no_folder_selected();
             Main.Context.API.ShowMsgBox(warning);
             return;
         }
@@ -107,7 +107,7 @@ public partial class QuickAccessLinkSettings
                 x.Path.Equals(SelectedPath, StringComparison.OrdinalIgnoreCase) &&
                 x.Name.Equals(SelectedName, StringComparison.OrdinalIgnoreCase)))
         {
-            var warning = Main.Context.API.GetTranslation("plugin_explorer_quick_access_link_path_already_exists");
+            var warning = Localize.plugin_explorer_quick_access_link_path_already_exists();
             Main.Context.API.ShowMsgBox(warning);
             return;
         }

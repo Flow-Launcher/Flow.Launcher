@@ -161,8 +161,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             {
                 new()
                 {
-                    Title = Context.API.GetTranslation("flowlauncher_plugin_everything_enable_content_search"),
-                    SubTitle = Context.API.GetTranslation("flowlauncher_plugin_everything_enable_content_search_tips"),
+                    Title = Localize.flowlauncher_plugin_everything_enable_content_search(),
+                    SubTitle = Localize.flowlauncher_plugin_everything_enable_content_search_tips(),
                     IcoPath = "Images/index_error.png",
                     Action = c =>
                     {
