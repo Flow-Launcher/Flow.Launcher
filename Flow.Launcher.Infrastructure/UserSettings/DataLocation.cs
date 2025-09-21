@@ -26,8 +26,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             return false;
         }
 
-        public static readonly string VersionLogDirectory = Path.Combine(LogDirectory, Constant.Version);
-        public static readonly string LogDirectory = Path.Combine(DataDirectory(), Constant.Logs);
+        public static string VersionLogDirectory => Path.Combine(LogDirectory, Constant.Version);
+        public static string LogDirectory => Path.Combine(DataDirectory(), Constant.Logs);
 
         public static readonly string CacheDirectory = Path.Combine(DataDirectory(), Constant.Cache);
         public static readonly string SettingsDirectory = Path.Combine(DataDirectory(), Constant.Settings);
