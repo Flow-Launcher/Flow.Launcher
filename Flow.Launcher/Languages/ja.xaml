@@ -224,7 +224,7 @@
     <system:String x:Key="failedToUninstallPluginTitle">{0} のアンインストールに失敗</system:String>
     <system:String x:Key="fileNotFoundMessage">展開されたzipファイルからplugin.jsonが見つからないか、このパス {0} が存在しません</system:String>
     <system:String x:Key="pluginExistAlreadyMessage">同じIDとバージョンのプラグインがすでに存在するか、またはこのダウンロードしたプラグインよりもバージョンが大きいです</system:String>
-    <system:String x:Key="errorCreatingSettingPanel">Error creating setting panel for plugin {0}:{1}{2}</system:String>
+    <system:String x:Key="errorCreatingSettingPanel">プラグイン {0}の設定パネル作成中にエラーが発生しました:{1}{2}</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">プラグインストア</system:String>
@@ -468,7 +468,7 @@
     <system:String x:Key="userdatapathButton">フォルダーを開く</system:String>
     <system:String x:Key="advanced">上級者向け機能</system:String>
     <system:String x:Key="logLevel">ログレベル</system:String>
-    <system:String x:Key="LogLevelNONE">Silent</system:String>
+    <system:String x:Key="LogLevelNONE">サイレント</system:String>
     <system:String x:Key="LogLevelERROR">エラー</system:String>
     <system:String x:Key="LogLevelINFO">情報</system:String>
     <system:String x:Key="LogLevelDEBUG">デバッグ</system:String>
@@ -493,7 +493,7 @@
     <system:String x:Key="fileManager_file_arg">ファイル用の引数</system:String>
     <system:String x:Key="fileManagerPathNotFound">ファイルマネージャー '{0}' は、'{1}' に見つかりませんでした。続行しますか？</system:String>
     <system:String x:Key="fileManagerPathError">ファイルマネージャのパスエラー</system:String>
-    <system:String x:Key="fileManagerExplorer">File Explorer</system:String>
+    <system:String x:Key="fileManagerExplorer">ファイルエクスプローラー</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">デフォルトのウェブブラウザー</system:String>
@@ -504,8 +504,8 @@
     <system:String x:Key="defaultBrowser_newWindow">新しいウィンドウ</system:String>
     <system:String x:Key="defaultBrowser_newTab">新しいタブ</system:String>
     <system:String x:Key="defaultBrowser_parameter">プライベートモード</system:String>
-    <system:String x:Key="defaultBrowser_default">Default</system:String>
-    <system:String x:Key="defaultBrowser_new_profile">New Profile</system:String>
+    <system:String x:Key="defaultBrowser_default">デフォルト</system:String>
+    <system:String x:Key="defaultBrowser_new_profile">新しいプロファイル</system:String>
 
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">優先度の変更</system:String>
