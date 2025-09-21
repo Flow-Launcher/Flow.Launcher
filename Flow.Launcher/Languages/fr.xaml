@@ -224,6 +224,7 @@
     <system:String x:Key="failedToUninstallPluginTitle">Échec de la désinstallation de {0}</system:String>
     <system:String x:Key="fileNotFoundMessage">Impossible de trouver le fichier plugin.json dans le fichier zip extrait, ou ce chemin {0} n'existe pas</system:String>
     <system:String x:Key="pluginExistAlreadyMessage">Un plugin avec le même ID et la même version existe déjà, ou la version est supérieure à ce plugin téléchargé</system:String>
+    <system:String x:Key="errorCreatingSettingPanel">Erreur lors de la création du panneau de configuration pour le plugin {0}:{1}{2}</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Magasin des Plugins</system:String>
@@ -466,8 +467,10 @@
     <system:String x:Key="userdatapathButton">Ouvrir le dossier</system:String>
     <system:String x:Key="advanced">Avancé</system:String>
     <system:String x:Key="logLevel">Niveau de journalisation</system:String>
-    <system:String x:Key="LogLevelDEBUG">Débogage</system:String>
+    <system:String x:Key="LogLevelNONE">Silencieux</system:String>
+    <system:String x:Key="LogLevelERROR">Erreur</system:String>
     <system:String x:Key="LogLevelINFO">Info</system:String>
+    <system:String x:Key="LogLevelDEBUG">Débogage</system:String>
     <system:String x:Key="settingWindowFontTitle">Réglage de la police de la fenêtre</system:String>
 
     <!--  Release Notes Window  -->
@@ -489,6 +492,7 @@
     <system:String x:Key="fileManager_file_arg">Arguments pour le fichier</system:String>
     <system:String x:Key="fileManagerPathNotFound">Le gestionnaire de fichiers '{0}' n'a pas pu être situé à '{1}'. Souhaitez-vous continuer ?</system:String>
     <system:String x:Key="fileManagerPathError">Erreur de chemin du gestionnaire de fichiers</system:String>
+    <system:String x:Key="fileManagerExplorer">Explorateur de fichiers</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">Navigateur web par défaut</system:String>
@@ -499,6 +503,8 @@
     <system:String x:Key="defaultBrowser_newWindow">Nouvelle fenêtre</system:String>
     <system:String x:Key="defaultBrowser_newTab">Nouvel onglet</system:String>
     <system:String x:Key="defaultBrowser_parameter">Mode privé</system:String>
+    <system:String x:Key="defaultBrowser_default">Par défaut</system:String>
+    <system:String x:Key="defaultBrowser_new_profile">Nouveau profil</system:String>
 
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">Changer la priorité</system:String>

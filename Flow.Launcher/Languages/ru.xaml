@@ -167,7 +167,7 @@
     <system:String x:Key="KoreanImeRegistryTooltip">You can change the Previous Korean IME settings directly from here</system:String>
     <system:String x:Key="KoreanImeSettingChangeFailTitle">Failed to change Korean IME setting</system:String>
     <system:String x:Key="KoreanImeSettingChangeFailSubTitle">Please check your system registry access or contact support.</system:String>
-    <system:String x:Key="homePage">Home Page</system:String>
+    <system:String x:Key="homePage">Главная страница</system:String>
     <system:String x:Key="homePageToolTip">Show home page results when query text is empty.</system:String>
     <system:String x:Key="historyResultsForHomePage">Show History Results in Home Page</system:String>
     <system:String x:Key="historyResultsCountForHomePage">Maximum History Results Shown in Home Page</system:String>
@@ -199,10 +199,10 @@
     <system:String x:Key="pluginSearchDelayTime">Plugin search delay time</system:String>
     <system:String x:Key="pluginSearchDelayTimeTooltip">Change Plugin Search Delay Time</system:String>
     <system:String x:Key="FilterComboboxLabel">Advanced Settings:</system:String>
-    <system:String x:Key="DisplayModeOnOff">Enabled</system:String>
+    <system:String x:Key="DisplayModeOnOff">Включено</system:String>
     <system:String x:Key="DisplayModePriority">Приоритет</system:String>
     <system:String x:Key="DisplayModeSearchDelay">Search Delay</system:String>
-    <system:String x:Key="DisplayModeHomeOnOff">Home Page</system:String>
+    <system:String x:Key="DisplayModeHomeOnOff">Главная страница</system:String>
     <system:String x:Key="currentPriority">Текущий приоритет</system:String>
     <system:String x:Key="newPriority">Новый приоритет</system:String>
     <system:String x:Key="priority">Приоритет</system:String>
@@ -224,6 +224,7 @@
     <system:String x:Key="failedToUninstallPluginTitle">Fail to uninstall {0}</system:String>
     <system:String x:Key="fileNotFoundMessage">Unable to find plugin.json from the extracted zip file, or this path {0} does not exist</system:String>
     <system:String x:Key="pluginExistAlreadyMessage">A plugin with the same ID and version already exists, or the version is greater than this downloaded plugin</system:String>
+    <system:String x:Key="errorCreatingSettingPanel">Error creating setting panel for plugin {0}:{1}{2}</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Магазин плагинов</system:String>
@@ -467,8 +468,10 @@
     <system:String x:Key="userdatapathButton">Open Folder</system:String>
     <system:String x:Key="advanced">Advanced</system:String>
     <system:String x:Key="logLevel">Log Level</system:String>
-    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
+    <system:String x:Key="LogLevelNONE">Silent</system:String>
+    <system:String x:Key="LogLevelERROR">Ошибка</system:String>
     <system:String x:Key="LogLevelINFO">Info</system:String>
+    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
     <system:String x:Key="settingWindowFontTitle">Setting Window Font</system:String>
 
     <!--  Release Notes Window  -->
@@ -490,6 +493,7 @@
     <system:String x:Key="fileManager_file_arg">Аргумент для файла</system:String>
     <system:String x:Key="fileManagerPathNotFound">The file manager '{0}' could not be located at '{1}'. Would you like to continue?</system:String>
     <system:String x:Key="fileManagerPathError">File Manager Path Error</system:String>
+    <system:String x:Key="fileManagerExplorer">File Explorer</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">Браузер по умолчанию</system:String>
@@ -500,6 +504,8 @@
     <system:String x:Key="defaultBrowser_newWindow">Новое окно</system:String>
     <system:String x:Key="defaultBrowser_newTab">Новая вкладка</system:String>
     <system:String x:Key="defaultBrowser_parameter">Приватный режим</system:String>
+    <system:String x:Key="defaultBrowser_default">Default</system:String>
+    <system:String x:Key="defaultBrowser_new_profile">New Profile</system:String>
 
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">Изменить приоритет</system:String>
@@ -525,7 +531,7 @@
     <system:String x:Key="searchDelayTimeTips">Input the search delay time in ms you like to use for the plugin. Input empty if you don't want to specify any, and the plugin will use default search delay time.</system:String>
 
     <!--  Search Delay Settings Dialog  -->
-    <system:String x:Key="homeTitle">Home Page</system:String>
+    <system:String x:Key="homeTitle">Главная страница</system:String>
     <system:String x:Key="homeTips">Enable the plugin home page state if you like to show the plugin results when query is empty.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
