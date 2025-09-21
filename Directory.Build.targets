@@ -5,10 +5,10 @@
 			Condition="'$(OutputType)' == 'Library' and '$(CopyLocalLockFileAssemblies)' == 'true' and $(AssemblyName.EndsWith('Tests')) == 'false' ">
 	  <ItemGroup>
 		<ProjectReferenceWithConfiguration Update="@(ProjectReferenceWithConfiguration)" >
-		  <Private>false</Private>
+		  <Private>true</Private>
 		</ProjectReferenceWithConfiguration>
 		<ProjectReference Update="@(ProjectReference)" >
-		  <Private>false</Private>
+		  <Private>true</Private>
 		</ProjectReference>
 	  </ItemGroup>
 	</Target>
