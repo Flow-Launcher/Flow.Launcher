@@ -69,11 +69,11 @@
     <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword_tip">Enter a keyword to search for command: {0}. This keyword is used to match your query.</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_command_keyword">Command Keyword</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_reset">Reset</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_confirm">Confirm</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_confirm">Подтвердить</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_cancel">Отменить</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_input_command_keyword">Please enter a non-empty command keyword</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_sys_plugin_name">System Commands</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_plugin_name">Системные команды</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_plugin_description">Provides System related commands. e.g. shutdown, lock, settings etc.</system:String>
 
 </ResourceDictionary>

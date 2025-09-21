@@ -223,6 +223,7 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="failedToUninstallPluginTitle">Fail to uninstall {0}</system:String>
     <system:String x:Key="fileNotFoundMessage">Unable to find plugin.json from the extracted zip file, or this path {0} does not exist</system:String>
     <system:String x:Key="pluginExistAlreadyMessage">A plugin with the same ID and version already exists, or the version is greater than this downloaded plugin</system:String>
+    <system:String x:Key="errorCreatingSettingPanel">Error creating setting panel for plugin {0}:{1}{2}</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Sklep z wtyczkami</system:String>
@@ -466,8 +467,10 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="userdatapathButton">Otwórz folder</system:String>
     <system:String x:Key="advanced">Zaawansowane</system:String>
     <system:String x:Key="logLevel">Poziom logowania</system:String>
-    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
+    <system:String x:Key="LogLevelNONE">Silent</system:String>
+    <system:String x:Key="LogLevelERROR">Błąd</system:String>
     <system:String x:Key="LogLevelINFO">Info</system:String>
+    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
     <system:String x:Key="settingWindowFontTitle">Ustawienia czcionki okna</system:String>
 
     <!--  Release Notes Window  -->
@@ -489,6 +492,7 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="fileManager_file_arg">Arg dla pliku</system:String>
     <system:String x:Key="fileManagerPathNotFound">Menedżer plików „{0}” nie został znaleziony w lokalizacji „{1}”. Czy chcesz kontynuować?</system:String>
     <system:String x:Key="fileManagerPathError">Błąd ścieżki do menedżera plików</system:String>
+    <system:String x:Key="fileManagerExplorer">File Explorer</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">Domyślna przeglądarka</system:String>
@@ -499,6 +503,8 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="defaultBrowser_newWindow">Nowe okno</system:String>
     <system:String x:Key="defaultBrowser_newTab">Nowa zakładka</system:String>
     <system:String x:Key="defaultBrowser_parameter">Tryb prywatny</system:String>
+    <system:String x:Key="defaultBrowser_default">Default</system:String>
+    <system:String x:Key="defaultBrowser_new_profile">New Profile</system:String>
 
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">Zmień priorytet</system:String>

@@ -25,7 +25,7 @@ public partial class PreviewPanel : UserControl
     public string FileName { get; }
 
     [ObservableProperty]
-    private string _fileSize = Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+    private string _fileSize = Localize.plugin_explorer_plugin_tooltip_more_info_unknown();
     
     [ObservableProperty]
     private string _createdAt = "";
@@ -111,17 +111,17 @@ public partial class PreviewPanel : UserControl
         catch (FileNotFoundException)
         {
             Main.Context.API.LogError(ClassName, $"File not found: {filePath}");
-            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+            return Localize.plugin_explorer_plugin_tooltip_more_info_unknown();
         }
         catch (UnauthorizedAccessException)
         {
             Main.Context.API.LogError(ClassName, $"Access denied to file: {filePath}");
-            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+            return Localize.plugin_explorer_plugin_tooltip_more_info_unknown();
         }
         catch (Exception e)
         {
             Main.Context.API.LogException(ClassName, $"Failed to get file size for {filePath}", e);
-            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+            return Localize.plugin_explorer_plugin_tooltip_more_info_unknown();
         }
     }
 
@@ -142,17 +142,17 @@ public partial class PreviewPanel : UserControl
         catch (FileNotFoundException)
         {
             Main.Context.API.LogError(ClassName, $"File not found: {filePath}");
-            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+            return Localize.plugin_explorer_plugin_tooltip_more_info_unknown();
         }
         catch (UnauthorizedAccessException)
         {
             Main.Context.API.LogError(ClassName, $"Access denied to file: {filePath}");
-            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+            return Localize.plugin_explorer_plugin_tooltip_more_info_unknown();
         }
         catch (Exception e)
         {
             Main.Context.API.LogException(ClassName, $"Failed to get file created date for {filePath}", e);
-            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+            return Localize.plugin_explorer_plugin_tooltip_more_info_unknown();
         }
     }
 
@@ -173,17 +173,17 @@ public partial class PreviewPanel : UserControl
         catch (FileNotFoundException)
         {
             Main.Context.API.LogError(ClassName, $"File not found: {filePath}");
-            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+            return Localize.plugin_explorer_plugin_tooltip_more_info_unknown();
         }
         catch (UnauthorizedAccessException)
         {
             Main.Context.API.LogError(ClassName, $"Access denied to file: {filePath}");
-            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+            return Localize.plugin_explorer_plugin_tooltip_more_info_unknown();
         }
         catch (Exception e)
         {
             Main.Context.API.LogException(ClassName, $"Failed to get file modified date for {filePath}", e);
-            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+            return Localize.plugin_explorer_plugin_tooltip_more_info_unknown();
         }
     }
 
@@ -205,17 +205,17 @@ public partial class PreviewPanel : UserControl
         catch (FileNotFoundException)
         {
             Main.Context.API.LogError(ClassName, $"Folder not found: {folderPath}");
-            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+            return Localize.plugin_explorer_plugin_tooltip_more_info_unknown();
         }
         catch (UnauthorizedAccessException)
         {
             Main.Context.API.LogError(ClassName, $"Access denied to folder: {folderPath}");
-            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+            return Localize.plugin_explorer_plugin_tooltip_more_info_unknown();
         }
         catch (OperationCanceledException)
         {
             Main.Context.API.LogError(ClassName, $"Operation timed out while calculating folder size for {folderPath}");
-            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+            return Localize.plugin_explorer_plugin_tooltip_more_info_unknown();
         }
         // For parallel operations, AggregateException may be thrown if any of the tasks fail
         catch (AggregateException ae)
@@ -224,22 +224,22 @@ public partial class PreviewPanel : UserControl
             {
                 case FileNotFoundException:
                     Main.Context.API.LogError(ClassName, $"Folder not found: {folderPath}");
-                    return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+                    return Localize.plugin_explorer_plugin_tooltip_more_info_unknown();
                 case UnauthorizedAccessException:
                     Main.Context.API.LogError(ClassName, $"Access denied to folder: {folderPath}");
-                    return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+                    return Localize.plugin_explorer_plugin_tooltip_more_info_unknown();
                 case OperationCanceledException:
                     Main.Context.API.LogError(ClassName, $"Operation timed out while calculating folder size for {folderPath}");
-                    return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+                    return Localize.plugin_explorer_plugin_tooltip_more_info_unknown();
                 default:
                     Main.Context.API.LogException(ClassName, $"Failed to get folder size for {folderPath}", ae);
-                    return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+                    return Localize.plugin_explorer_plugin_tooltip_more_info_unknown();
             }
         }
         catch (Exception e)
         {
             Main.Context.API.LogException(ClassName, $"Failed to get folder size for {folderPath}", e);
-            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+            return Localize.plugin_explorer_plugin_tooltip_more_info_unknown();
         }
     }
 
@@ -260,17 +260,17 @@ public partial class PreviewPanel : UserControl
         catch (FileNotFoundException)
         {
             Main.Context.API.LogError(ClassName, $"Folder not found: {folderPath}");
-            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+            return Localize.plugin_explorer_plugin_tooltip_more_info_unknown();
         }
         catch (UnauthorizedAccessException)
         {
             Main.Context.API.LogError(ClassName, $"Access denied to folder: {folderPath}");
-            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+            return Localize.plugin_explorer_plugin_tooltip_more_info_unknown();
         }
         catch (Exception e)
         {
             Main.Context.API.LogException(ClassName, $"Failed to get folder created date for {folderPath}", e);
-            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+            return Localize.plugin_explorer_plugin_tooltip_more_info_unknown();
         }
     }
 
@@ -291,17 +291,17 @@ public partial class PreviewPanel : UserControl
         catch (FileNotFoundException)
         {
             Main.Context.API.LogError(ClassName, $"Folder not found: {folderPath}");
-            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+            return Localize.plugin_explorer_plugin_tooltip_more_info_unknown();
         }
         catch (UnauthorizedAccessException)
         {
             Main.Context.API.LogError(ClassName, $"Access denied to folder: {folderPath}");
-            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+            return Localize.plugin_explorer_plugin_tooltip_more_info_unknown();
         }
         catch (Exception e)
         {
             Main.Context.API.LogException(ClassName, $"Failed to get folder modified date for {folderPath}", e);
-            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+            return Localize.plugin_explorer_plugin_tooltip_more_info_unknown();
         }
     }
 
@@ -311,21 +311,20 @@ public partial class PreviewPanel : UserControl
         var difference = now - fileDateTime;
 
         if (difference.TotalDays < 1)
-            return Main.Context.API.GetTranslation("Today");
+            return Localize.Today();
         if (difference.TotalDays < 30)
-            return string.Format(Main.Context.API.GetTranslation("DaysAgo"), (int)difference.TotalDays);
+            return Localize.DaysAgo((int)difference.TotalDays);
 
         var monthsDiff = (now.Year - fileDateTime.Year) * 12 + now.Month - fileDateTime.Month;
         if (monthsDiff == 1)
-            return Main.Context.API.GetTranslation("OneMonthAgo");
+            return Localize.OneMonthAgo();
         if (monthsDiff < 12)
-            return string.Format(Main.Context.API.GetTranslation("MonthsAgo"), monthsDiff);
+            return Localize.MonthsAgo(monthsDiff);
 
         var yearsDiff = now.Year - fileDateTime.Year;
         if (now.Month < fileDateTime.Month || (now.Month == fileDateTime.Month && now.Day < fileDateTime.Day))
             yearsDiff--; 
 
-        return yearsDiff == 1 ? Main.Context.API.GetTranslation("OneYearAgo") :
-            string.Format(Main.Context.API.GetTranslation("YearsAgo"), yearsDiff);
+        return yearsDiff == 1 ? Localize.OneYearAgo(): Localize.YearsAgo(yearsDiff);
     }
 }

@@ -90,12 +90,12 @@ namespace Flow.Launcher.Plugin.Explorer
 
         public string GetTranslatedPluginTitle()
         {
-            return Context.API.GetTranslation("plugin_explorer_plugin_name");
+            return Localize.plugin_explorer_plugin_name();
         }
 
         public string GetTranslatedPluginDescription()
         {
-            return Context.API.GetTranslation("plugin_explorer_plugin_description");
+            return Localize.plugin_explorer_plugin_description();
         }
 
         public void OnCultureInfoChanged(CultureInfo newCulture)
