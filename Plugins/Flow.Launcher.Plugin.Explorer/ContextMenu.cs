@@ -181,21 +181,21 @@ namespace Flow.Launcher.Plugin.Explorer
                 });
                 contextMenus.Add(new Result
                 {
-                    Title = Context.API.GetTranslation("plugin_explorer_rename_a_file"),
-                    SubTitle = Context.API.GetTranslation("plugin_explorer_rename_subtitle"),
+                    Title = Localize.plugin_explorer_rename_a_file(),
+                    SubTitle = Localize.plugin_explorer_rename_subtitle(),
                     Action = _ =>
                     {
                         RenameFile window;
                         switch (record.Type)
                         {
                             case ResultType.Folder:
-                                window = new RenameFile(Context.API, new DirectoryInfo(record.FullPath));
+                                window = new RenameFile(new DirectoryInfo(record.FullPath));
                                 break;
                             case ResultType.File:
-                                window = new RenameFile(Context.API, new FileInfo(record.FullPath));
+                                window = new RenameFile(new FileInfo(record.FullPath));
                                 break;
                             default:
-                                Context.API.ShowMsgError(Context.API.GetTranslation("plugin_explorer_cannot_rename"));
+                                Context.API.ShowMsgError(Localize.plugin_explorer_cannot_rename());
                                 return false;
                         }
                         window.ShowDialog();

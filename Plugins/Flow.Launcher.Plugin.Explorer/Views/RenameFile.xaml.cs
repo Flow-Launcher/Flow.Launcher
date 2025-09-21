@@ -23,14 +23,12 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
         private string _newFileName;
 
-        private readonly IPublicAPI _api;
         private readonly string _oldFilePath;
 
         private readonly FileSystemInfo _info;
 
-        public RenameFile(IPublicAPI api, FileSystemInfo info)
+        public RenameFile(FileSystemInfo info)
         {
-            _api = api;
             _info = info;
             _oldFilePath = _info.FullName;
             NewFileName = _info.Name;
@@ -70,7 +68,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
         private void OnDoneButtonClick(object sender, RoutedEventArgs e)
         {
-            RenameThing.Rename(NewFileName, _info, _api);
+            RenameThing.Rename(NewFileName, _info);
             Close();
         }
 

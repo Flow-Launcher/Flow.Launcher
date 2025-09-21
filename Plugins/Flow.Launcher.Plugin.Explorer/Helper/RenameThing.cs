@@ -59,12 +59,12 @@ public static class RenameThing
     /// <param name="NewFileName">The requested new name</param>
     /// <param name="oldInfo"> The <see cref="FileInfo"/> or <see cref="DirectoryInfo"/> representing the old file</param>
     /// <param name="api">An instance of <see cref="IPublicAPI"/>so this can create msgboxes</param>
-    public static void Rename(string NewFileName, FileSystemInfo oldInfo, IPublicAPI api)
+    public static void Rename(string NewFileName, FileSystemInfo oldInfo)
     {
         // if it's just whitespace and nothing else
-        if (NewFileName.Trim() == "" || NewFileName == "")
+        if (string.IsNullOrEmpty(NewFileName.Trim()) || string.IsNullOrEmpty(NewFileName))
         {
-            api.ShowMsgError(string.Format(api.GetTranslation("plugin_explorer_field_may_not_be_empty"), "New file name"));
+            Main.Context.API.ShowMsgError(Localize.plugin_explorer_field_may_not_be_empty());
             return;
         }
 
@@ -77,33 +77,34 @@ public static class RenameThing
             switch (exception)
             {
                 case FileNotFoundException:
-                    api.ShowMsgError(string.Format(api.GetTranslation("plugin_explorer_item_not_found"), oldInfo.FullName));
+                    Main.Context.API.ShowMsgError(Localize.plugin_explorer_item_not_found(oldInfo.FullName));
                     return;
                 case NotANewNameException:
-                    api.ShowMsgError(string.Format(api.GetTranslation("plugin_explorer_not_a_new_name"), NewFileName));
+                    Main.Context.API.ShowMsgError(Localize.plugin_explorer_not_a_new_name(NewFileName));
                     return;
                 case InvalidNameException:
-                    api.ShowMsgError(string.Format(api.GetTranslation("plugin_explorer_invalid_name"), NewFileName));
+                    Main.Context.API.ShowMsgError(Localize.plugin_explorer_invalid_name(NewFileName));
                     return;
                 case ElementAlreadyExistsException:
-                    api.ShowMsgError(string.Format(api.GetTranslation("plugin_explorer_element_already_exists"), NewFileName));
+                    Main.Context.API.ShowMsgError(Localize.plugin_explorer_element_already_exists(NewFileName));
                     return;
                 default:
                     string msg = exception.Message;
                     if (!string.IsNullOrEmpty(msg))
                     {
-                        api.ShowMsgError(string.Format(api.GetTranslation("plugin_explorer_exception"), exception.Message));
+                        Main.Context.API.ShowMsgError(Localize.plugin_explorer_exception(exception.Message));
                         return;
                     }
                     else
                     {
-                        api.ShowMsgError(api.GetTranslation("plugin_explorer_no_reason_given_exception"));
+                        Main.Context.API.ShowMsgError(Localize.plugin_explorer_no_reason_given_exception());
                     }
                         
                     return;
             }
         }
-        api.ShowMsg(string.Format(api.GetTranslation("plugin_explorer_successful_rename"), NewFileName));
+
+        Main.Context.API.ShowMsg(Localize.plugin_explorer_successful_rename(NewFileName));
     }
 }
 

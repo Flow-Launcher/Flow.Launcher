@@ -139,8 +139,8 @@ namespace Flow.Launcher.Plugin.Explorer
                 new SearchWindowPluginHotkey()
                 {
                     Id = 0,
-                    Name = Context.API.GetTranslation("plugin_explorer_opencontainingfolder"),
-                    Description = Context.API.GetTranslation("plugin_explorer_opencontainingfolder_subtitle"),
+                    Name = Localize.plugin_explorer_opencontainingfolder(),
+                    Description = Localize.plugin_explorer_opencontainingfolder_subtitle(),
                     Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\ue838"),
                     DefaultHotkey = "Ctrl+Enter",
                     Editable = false,
@@ -163,7 +163,7 @@ namespace Flow.Launcher.Plugin.Explorer
                                 {
                                     var message = $"Fail to open file at {record.FullPath}";
                                     Context.API.LogException(ClassName, message, e);
-                                    Context.API.ShowMsgBox(e.Message, Context.API.GetTranslation("plugin_explorer_opendir_error"));
+                                    Context.API.ShowMsgBox(e.Message, Localize.plugin_explorer_opendir_error());
                                     return false;
                                 }
 
@@ -177,7 +177,7 @@ namespace Flow.Launcher.Plugin.Explorer
                 new SearchWindowPluginHotkey()
                 {
                     Id = 1,
-                    Name = Context.API.GetTranslation("plugin_explorer_show_contextmenu_title"),
+                    Name = Localize.plugin_explorer_show_contextmenu_title(),
                     Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\ue700"),
                     DefaultHotkey = "Alt+Enter",
                     Editable = false,
@@ -203,7 +203,7 @@ namespace Flow.Launcher.Plugin.Explorer
                 new SearchWindowPluginHotkey()
                 {
                     Id = 2,
-                    Name = Context.API.GetTranslation("plugin_explorer_run_as_administrator"),
+                    Name = Localize.plugin_explorer_run_as_administrator(),
                     Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE7EF"),
                     DefaultHotkey = "Ctrl+Shift+Enter",
                     Editable = false,
@@ -228,7 +228,7 @@ namespace Flow.Launcher.Plugin.Explorer
                                 {
                                     var message = $"Fail to open file at {record.FullPath}";
                                     Context.API.LogException(ClassName, message, ex);
-                                    Context.API.ShowMsgBox(ex.Message, Context.API.GetTranslation("plugin_explorer_opendir_error"));
+                                    Context.API.ShowMsgBox(ex.Message, Localize.plugin_explorer_opendir_error());
                                     return false;
                                 }
                             }
@@ -241,8 +241,8 @@ namespace Flow.Launcher.Plugin.Explorer
                 new SearchWindowPluginHotkey()
                 {
                     Id = 3,
-                    Name = Context.API.GetTranslation("plugin_explorer_rename_a_file"),
-                    Description = Context.API.GetTranslation("plugin_explorer_rename_subtitle"),
+                    Name = Localize.plugin_explorer_rename_a_file(),
+                    Description = Localize.plugin_explorer_rename_subtitle(),
                     Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\ue8ac"),
                     DefaultHotkey = "F2",
                     Editable = true,
@@ -255,13 +255,13 @@ namespace Flow.Launcher.Plugin.Explorer
                             switch (record.Type)
                             {
                                 case ResultType.Folder:
-                                    window = new RenameFile(Context.API, new DirectoryInfo(record.FullPath));
+                                    window = new RenameFile(new DirectoryInfo(record.FullPath));
                                     break;
                                 case ResultType.File:
-                                    window = new RenameFile(Context.API, new FileInfo(record.FullPath));
+                                    window = new RenameFile(new FileInfo(record.FullPath));
                                     break;
                                 default:
-                                    Context.API.ShowMsgError(Context.API.GetTranslation("plugin_explorer_cannot_rename"));
+                                    Context.API.ShowMsgError(Localize.plugin_explorer_cannot_rename());
                                     return false;
                             }
                             window.ShowDialog();
