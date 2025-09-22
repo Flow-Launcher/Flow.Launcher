@@ -597,6 +597,7 @@
     <system:String x:Key="errorTitle">Помилка</system:String>
     <system:String x:Key="folderOpenError">Під час відкриття теки сталася помилка. {0}</system:String>
     <system:String x:Key="browserOpenError">Під час відкриття URL-адреси в браузері сталася помилка. Перевірте налаштування типового веббраузера у розділі «Загальні» вікна налаштувань.</system:String>
+    <system:String x:Key="fileNotFoundError">File or directory not found: {0}</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Будь ласка, зачекайте...</system:String>
