@@ -597,6 +597,7 @@ Si añade un prefijo &quot;@&quot; al introducir un acceso directo, éste coinci
     <system:String x:Key="errorTitle">Error</system:String>
     <system:String x:Key="folderOpenError">Se ha producido un error al abrir la carpeta. {0}</system:String>
     <system:String x:Key="browserOpenError">Se ha producido un error al abrir la URL en el navegador. Por favor, compruebe la configuración de su navegador web predeterminado en la sección General de la ventana de configuración</system:String>
+    <system:String x:Key="fileNotFoundError">File or directory not found: {0}</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Por favor espere...</system:String>
