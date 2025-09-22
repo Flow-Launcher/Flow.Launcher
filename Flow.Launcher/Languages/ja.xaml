@@ -597,6 +597,7 @@
     <system:String x:Key="errorTitle">エラー</system:String>
     <system:String x:Key="folderOpenError">フォルダを開く際にエラーが発生しました。 {0}</system:String>
     <system:String x:Key="browserOpenError">ブラウザでURLを開く際にエラーが発生しました。設定ウィンドウの一般セクションでデフォルトのウェブブラウザ設定を確認してください</system:String>
+    <system:String x:Key="fileNotFoundError">File or directory not found: {0}</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">しばらくお待ちください…</system:String>
