@@ -13,6 +13,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace Flow.Launcher.Plugin.BrowserBookmarks.Services;
 
@@ -34,16 +35,19 @@ public partial class FaviconService : IDisposable
     private static partial Regex HrefAttributeRegex();
     [GeneratedRegex("sizes\\s*=\\s*(?:['\"](?<v>[^'\"]*)['\"]|(?<v>[^>\\s]+))", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-US")]
     private static partial Regex SizesAttributeRegex();
+    [GeneratedRegex("<base[^>]+href\\s*=\\s*(?:['\"](?<v>[^'\"]*)['\"]|(?<v>[^>\\s]+))", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-US")]
+    private static partial Regex BaseHrefRegex();
 
     private record struct FaviconCandidate(string Url, int Score);
 
-    public FaviconService(PluginInitContext context, Settings settings, string tempPath)
+public FaviconService(PluginInitContext context, Settings settings, string tempPath)
     {
-        _context = context; _settings = settings;
+        _context = context;
+        _settings = settings;
 
         _faviconCacheDir = Path.Combine(context.CurrentPluginMetadata.PluginCacheDirectoryPath, "FaviconCache");
         Directory.CreateDirectory(_faviconCacheDir);
-
+        
         _localExtractor = new LocalFaviconExtractor(context, tempPath);
 
         var handler = new HttpClientHandler { AllowAutoRedirect = true };
@@ -52,7 +56,7 @@ public partial class FaviconService : IDisposable
         _httpClient.DefaultRequestHeaders.Accept.ParseAdd("text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8");
         _httpClient.Timeout = TimeSpan.FromSeconds(5);
     }
-
+    
     public async Task ProcessBookmarkFavicons(IReadOnlyList<Bookmark> bookmarks, CancellationToken cancellationToken)
     {
         if (!_settings.EnableFavicons) return;
@@ -72,7 +76,7 @@ public partial class FaviconService : IDisposable
             var localData = await _localExtractor.GetFaviconDataAsync(bookmark, token);
             if (localData != null)
             {
-                var pngData = await ToPng(new MemoryStream(localData), token);
+                var (pngData, _) = await ToPng(new MemoryStream(localData), token);
                 if (pngData != null)
                 {
                     await File.WriteAllBytesAsync(cachePath, pngData, token);
@@ -80,7 +84,7 @@ public partial class FaviconService : IDisposable
                     return;
                 }
             }
-
+            
             // 2. Fallback to web if enabled
             if (_settings.FetchMissingFavicons && Uri.TryCreate(bookmark.Url, UriKind.Absolute, out var uri))
             {
@@ -118,146 +122,227 @@ public partial class FaviconService : IDisposable
     {
         var urlString = url.GetLeftPart(UriPartial.Authority);
         var cachePath = GetCachePath(urlString, _faviconCacheDir);
+        if (File.Exists(cachePath)) return cachePath;
+
+        using var overallCts = CancellationTokenSource.CreateLinkedTokenSource(token);
+        overallCts.CancelAfter(TimeSpan.FromSeconds(10));
+        var linkedToken = overallCts.Token;
+
+        (string? TempPath, int Size) icoResult = (null, -1);
+        (string? TempPath, int Size) htmlResult = (null, -1);
 
         try
         {
-            if (File.Exists(cachePath)) return cachePath;
+            var icoTask = FetchAndProcessUrlAsync(new Uri(url, "/favicon.ico"), linkedToken);
+            var htmlTask = FetchAndProcessHtmlAsync(url, linkedToken);
 
-            using var overallCts = CancellationTokenSource.CreateLinkedTokenSource(token);
-            overallCts.CancelAfter(TimeSpan.FromSeconds(10));
+            await Task.WhenAll(icoTask, htmlTask);
 
-            if (await FetchAndProcessFavicon(new Uri(url, "/favicon.ico"), cachePath, overallCts.Token))
-                return cachePath;
+            icoResult = icoTask.Result;
+            htmlResult = htmlTask.Result;
 
-            var candidates = await GetFaviconCandidatesFromHtml(url, overallCts.Token);
-            foreach (var candidate in candidates.OrderByDescending(c => c.Score).Select(c => c.Url).Distinct())
+            string? winnerPath = null;
+            if (htmlResult.Size >= 32)
+                winnerPath = htmlResult.TempPath;
+            else if (icoResult.Size >= 32)
+                winnerPath = icoResult.TempPath;
+            else if (htmlResult.Size > icoResult.Size)
+                winnerPath = htmlResult.TempPath;
+            else if (icoResult.Size >= 0)
+                winnerPath = icoResult.TempPath;
+            else if (htmlResult.Size >= 0)
+                winnerPath = htmlResult.TempPath;
+
+            if (winnerPath != null)
             {
-                if (Uri.TryCreate(candidate, UriKind.Absolute, out var candidateUri) &&
-                    await FetchAndProcessFavicon(candidateUri, cachePath, overallCts.Token))
-                    return cachePath;
+                File.Move(winnerPath, cachePath, true);
+                _context.API.LogDebug(nameof(FaviconService), $"Favicon for {urlString} cached successfully.");
+                return cachePath;
             }
+            
+            _context.API.LogDebug(nameof(FaviconService), $"No suitable favicon found for {urlString} after all tasks.");
         }
-        catch (OperationCanceledException) { /* Swallow */ }
+        catch (OperationCanceledException) { /* Swallow cancellation */ }
         catch (Exception ex)
         {
-            _context.API.LogException(nameof(FaviconService), $"Error fetching favicon for {urlString}", ex);
+            _context.API.LogException(nameof(FaviconService), $"Error in favicon fetch for {urlString}", ex);
         }
         finally
         {
+            if (icoResult.TempPath != null && File.Exists(icoResult.TempPath)) File.Delete(icoResult.TempPath);
+            if (htmlResult.TempPath != null && File.Exists(htmlResult.TempPath)) File.Delete(htmlResult.TempPath);
             _ongoingFetches.TryRemove(urlString, out _);
         }
 
         return null;
     }
-
-    private async Task<IEnumerable<FaviconCandidate>> GetFaviconCandidatesFromHtml(Uri pageUri, CancellationToken token)
+    
+    private async Task<(string? TempPath, int Size)> FetchAndProcessHtmlAsync(Uri pageUri, CancellationToken token)
     {
-        var candidates = new List<FaviconCandidate>();
+        var bestCandidate = await GetBestCandidateFromHtmlAsync(pageUri, token);
+        if (bestCandidate != null && Uri.TryCreate(bestCandidate.Value.Url, UriKind.Absolute, out var candidateUri))
+        {
+            return await FetchAndProcessUrlAsync(candidateUri, token);
+        }
+        return (null, -1);
+    }
+
+    private async Task<(string? TempPath, int Size)> FetchAndProcessUrlAsync(Uri faviconUri, CancellationToken token)
+    {
+        var tempPath = Path.GetTempFileName();
+        try
+        {
+            _context.API.LogDebug(nameof(FaviconService), $"Attempting to fetch favicon: {faviconUri}");
+            using var request = new HttpRequestMessage(HttpMethod.Get, faviconUri);
+            var response = await _httpClient.SendAsync(request, HttpCompletionOption.ResponseContentRead, token);
+            
+            if (!response.IsSuccessStatusCode)
+            {
+                _context.API.LogDebug(nameof(FaviconService), $"Fetch failed for {faviconUri} with status code {response.StatusCode}");
+                File.Delete(tempPath);
+                return (null, -1);
+            }
+
+            await using var contentStream = await response.Content.ReadAsStreamAsync(token);
+            var (pngData, size) = await ToPng(contentStream, token);
+            
+            if (pngData is { Length: > 0 })
+            {
+                await File.WriteAllBytesAsync(tempPath, pngData, token);
+                _context.API.LogDebug(nameof(FaviconService), $"Successfully processed favicon for {faviconUri} with original size {size}x{size}");
+                return (tempPath, size);
+            }
+            
+            _context.API.LogDebug(nameof(FaviconService), $"Failed to process or invalid image for {faviconUri}.");
+        }
+        catch (OperationCanceledException) { _context.API.LogDebug(nameof(FaviconService), $"Favicon fetch cancelled for {faviconUri}."); }
+        catch (Exception ex) when (ex is HttpRequestException or NotSupportedException)
+        {
+             _context.API.LogDebug(nameof(FaviconService), $"Favicon fetch/process failed for {faviconUri}: {ex.Message}");
+        }
+        
+        File.Delete(tempPath);
+        return (null, -1);
+    }
+    
+    private async Task<FaviconCandidate?> GetBestCandidateFromHtmlAsync(Uri pageUri, CancellationToken token)
+    {
         try
         {
             var response = await _httpClient.GetAsync(pageUri, HttpCompletionOption.ResponseHeadersRead, token);
-            if (!response.IsSuccessStatusCode) return candidates;
+            if (!response.IsSuccessStatusCode) return null;
 
             var baseUri = response.RequestMessage?.RequestUri ?? pageUri;
 
             await using var stream = await response.Content.ReadAsStreamAsync(token);
             using var reader = new StreamReader(stream, Encoding.UTF8, true);
+            
+            var contentBuilder = new StringBuilder();
+            var buffer = new char[4096];
+            int charsRead;
+            var totalCharsRead = 0;
+            const int maxCharsToRead = 500 * 1024;
 
-            var buffer = new char[20 * 1024];
-            var charsRead = await reader.ReadAsync(buffer, 0, buffer.Length);
-            var content = new string(buffer, 0, charsRead);
-
-            var headEndIndex = content.IndexOf("</head>", StringComparison.OrdinalIgnoreCase);
-            if (headEndIndex != -1) content = content[..headEndIndex];
-
-            foreach (Match linkMatch in LinkTagRegex().Matches(content))
+            while (!token.IsCancellationRequested && (charsRead = await reader.ReadAsync(buffer, 0, buffer.Length)) > 0 && totalCharsRead < maxCharsToRead)
             {
-                var linkTag = linkMatch.Value;
-                var relMatch = RelAttributeRegex().Match(linkTag);
-                if (!relMatch.Success || !relMatch.Groups["v"].Value.Contains("icon", StringComparison.OrdinalIgnoreCase)) continue;
+                contentBuilder.Append(buffer, 0, charsRead);
+                totalCharsRead += charsRead;
 
-                var hrefMatch = HrefAttributeRegex().Match(linkTag);
-                if (!hrefMatch.Success) continue;
-
-                var href = hrefMatch.Groups["v"].Value;
-                if (string.IsNullOrWhiteSpace(href)) continue;
-
-                if (!Uri.TryCreate(baseUri, href, out var fullUrl)) continue;
-
-                candidates.Add(new FaviconCandidate(fullUrl.ToString(), CalculateFaviconScore(linkTag, fullUrl.ToString())));
+                if (contentBuilder.ToString().Contains("</head>", StringComparison.OrdinalIgnoreCase))
+                {
+                    break;
+                }
             }
+
+            return ParseLinkTags(contentBuilder.ToString(), baseUri)
+                     .OrderByDescending(c => c.Score)
+                     .FirstOrDefault();
         }
+        catch (OperationCanceledException) { return null; }
         catch (Exception ex) when (ex is HttpRequestException or TaskCanceledException)
         {
             _context.API.LogDebug(nameof(FaviconService), $"Failed to fetch or parse HTML head for {pageUri}: {ex.Message}");
         }
+        return null;
+    }
+    
+    private static List<FaviconCandidate> ParseLinkTags(string htmlContent, Uri originalBaseUri)
+    {
+        var candidates = new List<FaviconCandidate>();
+        var effectiveBaseUri = originalBaseUri;
+
+        var baseMatch = BaseHrefRegex().Match(htmlContent);
+        if (baseMatch.Success)
+        {
+            var baseHref = baseMatch.Groups["v"].Value;
+            if (Uri.TryCreate(originalBaseUri, baseHref, out var newBaseUri))
+            {
+                effectiveBaseUri = newBaseUri;
+            }
+        }
+        
+        foreach (Match linkMatch in LinkTagRegex().Matches(htmlContent))
+        {
+            var linkTag = linkMatch.Value;
+            var relMatch = RelAttributeRegex().Match(linkTag);
+            if (!relMatch.Success || !relMatch.Groups["v"].Value.Contains("icon", StringComparison.OrdinalIgnoreCase)) continue;
+
+            var hrefMatch = HrefAttributeRegex().Match(linkTag);
+            if (!hrefMatch.Success) continue;
+
+            var href = hrefMatch.Groups["v"].Value;
+            if (string.IsNullOrWhiteSpace(href)) continue;
+
+            if (href.StartsWith("//"))
+            {
+                href = effectiveBaseUri.Scheme + ":" + href;
+            }
+
+            if (!Uri.TryCreate(effectiveBaseUri, href, out var fullUrl)) continue;
+
+            candidates.Add(new FaviconCandidate(fullUrl.ToString(), CalculateFaviconScore(linkTag, fullUrl.ToString())));
+        }
+
         return candidates;
     }
-
+    
     private static int CalculateFaviconScore(string linkTag, string fullUrl)
     {
-        var score = 0;
         var extension = Path.GetExtension(fullUrl).ToUpperInvariant();
+        if (extension == ".SVG") return 10000;
 
-        if (extension == ".SVG") score = 10000;
-        else if (extension == ".ICO") score = 5000;
-        else
+        var sizesMatch = SizesAttributeRegex().Match(linkTag);
+        if (sizesMatch.Success)
         {
-            var sizesMatch = SizesAttributeRegex().Match(linkTag);
-            if (sizesMatch.Success)
+            var sizesValue = sizesMatch.Groups["v"].Value.ToUpperInvariant();
+            if (sizesValue == "ANY") return 1000;
+            
+            var firstSizePart = sizesValue.Split(' ')[0];
+            if (int.TryParse(firstSizePart.Split('X')[0], out var size))
             {
-                var sizesValue = sizesMatch.Groups["v"].Value.ToUpperInvariant();
-                if (sizesValue == "ANY") score = 100;
-                else
-                {
-                    var firstSizePart = sizesValue.Split(' ')[0];
-                    if (int.TryParse(firstSizePart.Split('X')[0], out var size)) score = size >= 32 ? 1000 - Math.Abs(size - 32) : size;
-                }
-            }
-            else score = 32;
-        }
-        return score;
-    }
-
-    private async Task<bool> FetchAndProcessFavicon(Uri faviconUri, string cachePath, CancellationToken token)
-    {
-        try
-        {
-            _context.API.LogDebug(nameof(FaviconService), $"Attempting to fetch favicon: {faviconUri}"); using var request = new HttpRequestMessage(HttpMethod.Get, faviconUri); var response = await _httpClient.SendAsync(request, HttpCompletionOption.ResponseContentRead, token); if (!response.IsSuccessStatusCode) return false;
-
-            await using var contentStream = await response.Content.ReadAsStreamAsync(token);
-            var data = await ToPng(contentStream, token);
-
-            if (data is { Length: > 0 })
-            {
-                await File.WriteAllBytesAsync(cachePath, data, token);
-                return true;
+                return size;
             }
         }
-        catch (Exception ex) when (ex is HttpRequestException or TaskCanceledException or NotSupportedException)
-        {
-            _context.API.LogDebug(nameof(FaviconService), $"Favicon fetch/process failed for {faviconUri}: {ex.Message}");
-        }
-        return false;
+        
+        if (extension == ".ICO") return 32; // Default score for .ico is 32 as it's likely to contain that size
+
+        return 16; // Default score for other bitmaps
     }
 
-private async Task<byte[]?> ToPng(Stream stream, CancellationToken token)
+private async Task<(byte[]? PngData, int Size)> ToPng(Stream stream, CancellationToken token)
     {
         token.ThrowIfCancellationRequested();
 
         await using var ms = new MemoryStream();
         await stream.CopyToAsync(ms, token);
 
-        // Reset stream for each decoding attempt
         ms.Position = 0;
 
-        // Attempt 1: Decode as SVG using SkiaSharp
         try
         {
             using var svg = new SKSvg();
             if (svg.Load(ms) is not null && svg.Picture is not null)
             {
-                _context.API.LogDebug(nameof(FaviconService), $"Decoded as SVG. Original size: {svg.Picture.CullRect.Width}x{svg.Picture.CullRect.Height}. Resizing to 32x32.");
                 using var bitmap = new SKBitmap(32, 32);
                 using var canvas = new SKCanvas(bitmap);
                 canvas.Clear(SKColors.Transparent);
@@ -266,39 +351,36 @@ private async Task<byte[]?> ToPng(Stream stream, CancellationToken token)
 
                 using var image = SKImage.FromBitmap(bitmap);
                 using var data = image.Encode(SKEncodedImageFormat.Png, 80);
-                return data.ToArray();
+                return (data.ToArray(), 32);
             }
         }
         catch { /* Not an SVG */ }
 
-        // Attempt 2: Decode as ICO using WPF's IconBitmapDecoder
         ms.Position = 0;
         try
         {
-            var decoder = new System.Windows.Media.Imaging.IconBitmapDecoder(ms, System.Windows.Media.Imaging.BitmapCreateOptions.PreservePixelFormat, System.Windows.Media.Imaging.BitmapCacheOption.OnLoad);
+            var decoder = new IconBitmapDecoder(ms, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.OnLoad);
             if (decoder.Frames.Any())
             {
                 var largestFrame = decoder.Frames.OrderByDescending(f => f.Width * f.Height).First();
                 
-                // We must re-encode the selected frame as a standard bitmap (PNG) before passing it back to SkiaSharp for resizing.
                 await using var pngStream = new MemoryStream();
-                var encoder = new System.Windows.Media.Imaging.PngBitmapEncoder();
-                encoder.Frames.Add(System.Windows.Media.Imaging.BitmapFrame.Create(largestFrame));
+                var encoder = new PngBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(largestFrame));
                 encoder.Save(pngStream);
                 
-                // Now, decode and resize the PNG stream with SkiaSharp for consistency.
                 pngStream.Position = 0;
                 using var original = SKBitmap.Decode(pngStream);
                 if (original != null)
                 {
-                    _context.API.LogDebug(nameof(FaviconService), $"Decoded from ICO. Selected frame size: {original.Width}x{original.Height}. Resizing to 32x32.");
+                    var originalWidth = original.Width;
                     var info = new SKImageInfo(32, 32, original.ColorType, original.AlphaType);
                     using var resized = original.Resize(info, new SKSamplingOptions(SKCubicResampler.Mitchell));
                     if (resized != null)
                     {
                         using var image = SKImage.FromBitmap(resized);
                         using var data = image.Encode(SKEncodedImageFormat.Png, 80);
-                        return data.ToArray();
+                        return (data.ToArray(), originalWidth);
                     }
                 }
             }
@@ -308,38 +390,35 @@ private async Task<byte[]?> ToPng(Stream stream, CancellationToken token)
             _context.API.LogDebug(nameof(FaviconService), $"Could not decode stream as ICO: {ex.Message}");
         }
 
-        // Attempt 3: Fallback to standard bitmap (PNG, JPG, etc.) using SkiaSharp
         ms.Position = 0;
         try
         {
             using var original = SKBitmap.Decode(ms);
             if (original != null)
             {
-                _context.API.LogDebug(nameof(FaviconService), $"Decoded as standard bitmap. Original size: {original.Width}x{original.Height}. Resizing to 32x32.");
+                var originalWidth = original.Width;
                 var info = new SKImageInfo(32, 32, original.ColorType, original.AlphaType);
                 using var resized = original.Resize(info, new SKSamplingOptions(SKCubicResampler.Mitchell));
                 if (resized != null)
                 {
                     using var image = SKImage.FromBitmap(resized);
                     using var data = image.Encode(SKEncodedImageFormat.Png, 80);
-                    return data.ToArray();
+                    return (data.ToArray(), originalWidth);
                 }
             }
         }
         catch (Exception ex)
         {
             _context.API.LogException(nameof(FaviconService), "Failed to decode or convert bitmap", ex);
-            return null;
+            return (null, 0);
         }
 
-        return null;
+        return (null, 0);
     }
-    
 
     public void Dispose()
     {
         _httpClient.Dispose();
         GC.SuppressFinalize(this);
     }
-
 }
