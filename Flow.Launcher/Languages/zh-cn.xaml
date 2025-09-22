@@ -597,6 +597,7 @@
     <system:String x:Key="errorTitle">错误</system:String>
     <system:String x:Key="folderOpenError">打开文件夹时发生错误。{0}</system:String>
     <system:String x:Key="browserOpenError">打开浏览器中的 URL 时发生错误。请在设置窗口的常规部分检查您的默认网页浏览器配置</system:String>
+    <system:String x:Key="fileNotFoundError">File or directory not found: {0}</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">请稍等...</system:String>
