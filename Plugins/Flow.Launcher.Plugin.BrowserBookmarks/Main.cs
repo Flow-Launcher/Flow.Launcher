@@ -28,6 +28,7 @@ public class Main : ISettingProvider, IPlugin, IAsyncReloadable, IPluginI18n, IC
     private List<Bookmark> _bookmarks = new();
     private readonly CancellationTokenSource _cancellationTokenSource = new();
     private PeriodicTimer? _firefoxBookmarkTimer;
+    private static readonly TimeSpan FirefoxPollingInterval = TimeSpan.FromHours(3);
 
     public void Init(PluginInitContext context)
     {
@@ -146,7 +147,7 @@ public class Main : ISettingProvider, IPlugin, IAsyncReloadable, IPluginI18n, IC
         if (!_settings.LoadFirefoxBookmark && !_settings.CustomBrowsers.Any(x => x.BrowserType == BrowserType.Firefox))
             return;
 
-        _firefoxBookmarkTimer = new PeriodicTimer(TimeSpan.FromHours(3));
+        _firefoxBookmarkTimer = new PeriodicTimer(FirefoxPollingInterval);
 
         _ = Task.Run(async () =>
         {
