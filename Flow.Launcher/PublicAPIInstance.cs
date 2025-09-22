@@ -412,6 +412,14 @@ namespace Flow.Launcher
 
         private void OpenUri(Uri uri, bool? inPrivate = null, bool forceBrowser = false)
         {
+            if (uri.IsFile)
+            {
+                if (!File.Exists(uri.LocalPath) && !Directory.Exists(uri.LocalPath))
+                {
+                    ShowMsgError(GetTranslation("errorTitle"), $"File or directory not found: {uri.LocalPath}");
+                    return;
+                }
+            }
             if (forceBrowser || uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps)
             {
                 var browserInfo = _settings.CustomBrowser;
@@ -441,13 +449,19 @@ namespace Flow.Launcher
             }
             else
             {
-                Process.Start(new ProcessStartInfo()
+                try
                 {
-                    FileName = uri.AbsoluteUri,
-                    UseShellExecute = true
-                })?.Dispose();
-
-                return;
+                    Process.Start(new ProcessStartInfo()
+                    {
+                        FileName = uri.AbsoluteUri,
+                        UseShellExecute = true
+                    })?.Dispose();
+                }
+                catch (Exception e)
+                {
+                    LogException(ClassName, $"Failed to open: {uri.AbsoluteUri}", e);
+                    ShowMsgError(GetTranslation("errorTitle"), e.Message);
+                }
             }
         }
 
