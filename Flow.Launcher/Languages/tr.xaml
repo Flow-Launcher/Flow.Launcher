@@ -595,7 +595,7 @@
     <system:String x:Key="errorTitle">Hata</system:String>
     <system:String x:Key="folderOpenError">Klasör açılırken bir hata oluştu. {0}</system:String>
     <system:String x:Key="browserOpenError">URL tarayıcıda açılırken bir hata oluştu. Lütfen ayarlar penceresindeki Genel bölümden Varsayılan Web Tarayıcısı ayarını kontrol edin</system:String>
-    <system:String x:Key="fileNotFoundError">File or directory not found: {0}</system:String>
+    <system:String x:Key="fileNotFoundError">Dosya veya dizin bulunamadı: {0}</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Lütfen bekleyin...</system:String>
