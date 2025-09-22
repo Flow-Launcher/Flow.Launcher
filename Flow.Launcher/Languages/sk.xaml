@@ -598,7 +598,7 @@ Ak pri zadávaní skratky pred ňu pridáte &quot;@&quot;, bude sa zhodovať s �
     <system:String x:Key="errorTitle">Chyba</system:String>
     <system:String x:Key="folderOpenError">Počas otvárania priečinka sa vyskytla chyba. {0}</system:String>
     <system:String x:Key="browserOpenError">Pri otváraní adresy URL v prehliadači došlo k chybe. Skontrolujte konfiguráciu predvoleného webového prehliadača v nastaveniach Všeobecné</system:String>
-    <system:String x:Key="fileNotFoundError">File or directory not found: {0}</system:String>
+    <system:String x:Key="fileNotFoundError">Súbor alebo priečinok sa nenašiel: {0}</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Čakajte, prosím...</system:String>
