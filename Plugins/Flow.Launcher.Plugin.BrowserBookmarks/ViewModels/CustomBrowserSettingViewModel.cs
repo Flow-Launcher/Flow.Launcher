@@ -2,8 +2,12 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Plugin.BrowserBookmarks.Models;
+using Flow.Launcher.Plugin.BrowserBookmarks.Services;
 using System;
+using System.ComponentModel;
+using System.IO;
 using System.Windows.Forms;
+using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher.Plugin.BrowserBookmarks.ViewModels;
 
@@ -15,6 +19,27 @@ public partial class CustomBrowserSettingViewModel : ObservableObject
     [ObservableProperty]
     private CustomBrowser _editableBrowser;
 
+    public string DetectedEngineText
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(EditableBrowser.DataDirectoryPath))
+            {
+                return Localize.flowlauncher_plugin_browserbookmark_engine_detection_select_directory();
+            }
+
+            return EditableBrowser.BrowserType switch
+            {
+                BrowserType.Unknown => Localize.flowlauncher_plugin_browserbookmark_engine_detection_invalid(),
+                BrowserType.Chromium => Localize.flowlauncher_plugin_browserbookmark_engine_detection_chromium(),
+                BrowserType.Firefox => Localize.flowlauncher_plugin_browserbookmark_engine_detection_firefox(),
+                _ => string.Empty
+            };
+        }
+    }
+
+    public bool IsValidPath => EditableBrowser.BrowserType != BrowserType.Unknown;
+
     public CustomBrowserSettingViewModel(CustomBrowser browser, Action<bool> closeAction)
     {
         _originalBrowser = browser;
@@ -22,12 +47,29 @@ public partial class CustomBrowserSettingViewModel : ObservableObject
         EditableBrowser = new CustomBrowser
         {
             Name = browser.Name,
-            DataDirectoryPath = browser.DataDirectoryPath,
-            BrowserType = browser.BrowserType
+            DataDirectoryPath = browser.DataDirectoryPath
         };
+        EditableBrowser.PropertyChanged += EditableBrowser_PropertyChanged;
+        DetectEngineType();
     }
 
-    [RelayCommand]
+    private void EditableBrowser_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(CustomBrowser.DataDirectoryPath))
+        {
+            DetectEngineType();
+        }
+    }
+
+    private void DetectEngineType()
+    {
+        EditableBrowser.BrowserType = BrowserDetector.DetectBrowserType(EditableBrowser.DataDirectoryPath);
+        OnPropertyChanged(nameof(DetectedEngineText));
+        OnPropertyChanged(nameof(IsValidPath));
+        SaveCommand.NotifyCanExecuteChanged();
+    }
+
+    [RelayCommand(CanExecute = nameof(IsValidPath))]
     private void Save()
     {
         _originalBrowser.Name = EditableBrowser.Name;
@@ -46,6 +88,11 @@ public partial class CustomBrowserSettingViewModel : ObservableObject
     private void BrowseDataDirectory()
     {
         var dialog = new FolderBrowserDialog();
+        if (!string.IsNullOrEmpty(EditableBrowser.DataDirectoryPath) && Directory.Exists(EditableBrowser.DataDirectoryPath))
+        {
+            dialog.SelectedPath = EditableBrowser.DataDirectoryPath;
+        }
+
         if (dialog.ShowDialog() == DialogResult.OK)
         {
             EditableBrowser.DataDirectoryPath = dialog.SelectedPath;

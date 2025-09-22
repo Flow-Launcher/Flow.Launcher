@@ -78,10 +78,10 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <StackPanel
                             Grid.Row="0"
@@ -134,29 +134,9 @@
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             FontSize="14"
-                            Text="{DynamicResource flowlauncher_plugin_browserbookmark_browserEngine}" />
-                        <ComboBox
-                            Grid.Row="2"
-                            Grid.Column="1"
-                            Width="120"
-                            Height="34"
-                            Margin="5 10 10 0"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            DisplayMemberPath="Display"
-                            ItemsSource="{Binding EditableBrowser.AllBrowserTypes}"
-                            SelectedValue="{Binding EditableBrowser.BrowserType}"
-                            SelectedValuePath="Value" />
-                        <TextBlock
-                            Grid.Row="3"
-                            Grid.Column="0"
-                            Margin="5 10 20 0"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            FontSize="14"
                             Text="{DynamicResource flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory}" />
                         <DockPanel
-                            Grid.Row="3"
+                            Grid.Row="2"
                             Grid.Column="1"
                             LastChildFill="True">
                             <Button
@@ -175,6 +155,15 @@
                                 VerticalAlignment="Center"
                                 Text="{Binding EditableBrowser.DataDirectoryPath}" />
                         </DockPanel>
+                        <TextBlock
+                            Grid.Row="3"
+                            Grid.Column="1"
+                            Margin="5 5 0 0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            FontSize="12"
+                            FontStyle="Italic"
+                            Text="{Binding DetectedEngineText}" />
                     </Grid>
                 </StackPanel>
             </StackPanel>

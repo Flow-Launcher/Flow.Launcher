@@ -8,7 +8,7 @@ public class CustomBrowser : BaseModel
 {
     private string _name;
     private string _dataDirectoryPath;
-    private BrowserType _browserType = BrowserType.Chromium;
+    private BrowserType _browserType = BrowserType.Unknown;
 
     public string Name
     {
@@ -36,13 +36,6 @@ public class CustomBrowser : BaseModel
         }
     }
 
-    // WORKAROUND: Manually create the list for the ComboBox to resolve the CS0246 source generator error.
-    // This provides the necessary data structure without relying on the auto-generated 'BrowserTypeLocalized' type.
-    public List<BrowserTypeDisplay> AllBrowserTypes { get; } =
-        System.Enum.GetValues<BrowserType>()
-              .Select(e => new BrowserTypeDisplay(e.ToString(), e))
-              .ToList();
-
     public BrowserType BrowserType
     {
         get => _browserType;
@@ -63,6 +56,9 @@ public record BrowserTypeDisplay(string Display, BrowserType Value);
 [EnumLocalize]
 public enum BrowserType
 {
+    [EnumLocalizeValue("Unknown")]
+    Unknown,
+
     [EnumLocalizeValue("Chromium")]
     Chromium,
 

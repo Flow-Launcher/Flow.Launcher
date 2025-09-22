@@ -12,6 +12,7 @@ using Flow.Launcher.Plugin.SharedCommands;
 using System.Collections.Specialized;
 using Flow.Launcher.Plugin.SharedModels;
 using System.IO;
+using System.Collections.Concurrent;
 
 namespace Flow.Launcher.Plugin.BrowserBookmarks;
 
@@ -26,8 +27,9 @@ public class Main : ISettingProvider, IPlugin, IAsyncReloadable, IPluginI18n, IC
 
     private List<Bookmark> _bookmarks = new();
     private readonly CancellationTokenSource _cancellationTokenSource = new();
+    private PeriodicTimer? _firefoxBookmarkTimer;
 
-public void Init(PluginInitContext context)
+    public void Init(PluginInitContext context)
     {
         Context = context;
         _settings = context.API.LoadSettingJsonStorage<Settings>();
@@ -43,6 +45,7 @@ public void Init(PluginInitContext context)
 
         // Fire and forget the initial load to make Flow's UI responsive immediately.
         _ = ReloadDataAsync();
+        StartFirefoxBookmarkTimer();
     }
 
     private string SetupTempDirectory()
@@ -63,7 +66,7 @@ public void Init(PluginInitContext context)
         return tempPath;
     }
 
-public List<Result> Query(Query query)
+    public List<Result> Query(Query query)
     {
         var search = query.Search.Trim();
         var bookmarks = _bookmarks; // use a local copy
@@ -118,11 +121,16 @@ public List<Result> Query(Query query)
     
     private void OnSettingsPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
+        if (e.PropertyName is nameof(Settings.LoadFirefoxBookmark))
+        {
+            StartFirefoxBookmarkTimer();
+        }
         _ = ReloadDataAsync();
     }
 
     private void OnCustomBrowsersChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
+        StartFirefoxBookmarkTimer();
         _ = ReloadDataAsync();
     }
     
@@ -130,7 +138,75 @@ public List<Result> Query(Query query)
     {
         _ = ReloadDataAsync();
     }
-    
+
+    private void StartFirefoxBookmarkTimer()
+    {
+        _firefoxBookmarkTimer?.Dispose();
+
+        if (!_settings.LoadFirefoxBookmark && !_settings.CustomBrowsers.Any(x => x.BrowserType == BrowserType.Firefox))
+            return;
+
+        _firefoxBookmarkTimer = new PeriodicTimer(TimeSpan.FromHours(3));
+
+        _ = Task.Run(async () =>
+        {
+            while (await _firefoxBookmarkTimer.WaitForNextTickAsync(_cancellationTokenSource.Token))
+            {
+                await ReloadFirefoxBookmarksAsync();
+            }
+        }, _cancellationTokenSource.Token);
+    }
+
+    private async Task ReloadFirefoxBookmarksAsync()
+    {
+        Context.API.LogInfo(nameof(Main), "Starting periodic reload of Firefox bookmarks.");
+
+        var firefoxLoaders = _bookmarkLoader.GetFirefoxBookmarkLoaders().ToList();
+        if (!firefoxLoaders.Any())
+        {
+            Context.API.LogInfo(nameof(Main), "No Firefox bookmark loaders enabled, skipping reload.");
+            return;
+        }
+
+        var firefoxBookmarks = new ConcurrentBag<Bookmark>();
+        var tasks = firefoxLoaders.Select(async loader =>
+        {
+            try
+            {
+                await foreach (var bookmark in loader.GetBookmarksAsync(_cancellationTokenSource.Token))
+                {
+                    firefoxBookmarks.Add(bookmark);
+                }
+            }
+            catch (OperationCanceledException) { } // Task was cancelled, swallow exception
+            catch (Exception e)
+            {
+                Context.API.LogException(nameof(Main), $"Failed to load bookmarks from {loader.Name}.", e);
+            }
+        });
+
+        await Task.WhenAll(tasks);
+        
+        if (firefoxBookmarks.IsEmpty)
+        {
+            Context.API.LogInfo(nameof(Main), "No Firefox bookmarks found during periodic reload.");
+            return;
+        }
+
+        var currentBookmarks = Volatile.Read(ref _bookmarks);
+        
+        var firefoxLoaderNames = firefoxLoaders.Select(l => l.Name).ToHashSet();
+        var otherBookmarks = currentBookmarks.Where(b => !firefoxLoaderNames.Any(name => b.Source.StartsWith(name, StringComparison.OrdinalIgnoreCase)));
+
+        var newBookmarkList = otherBookmarks.Concat(firefoxBookmarks).Distinct().ToList();
+
+        Volatile.Write(ref _bookmarks, newBookmarkList);
+        
+        Context.API.LogInfo(nameof(Main), $"Periodic reload complete. Loaded {firefoxBookmarks.Count} Firefox bookmarks.");
+        
+        _ = _faviconService.ProcessBookmarkFavicons(firefoxBookmarks.ToList(), _cancellationTokenSource.Token);
+    }
+
     public Control CreateSettingPanel()
     {
         return new Views.SettingsControl(_settings);
@@ -181,6 +257,7 @@ public List<Result> Query(Query query)
     {
         _settings.PropertyChanged -= OnSettingsPropertyChanged;
         _settings.CustomBrowsers.CollectionChanged -= OnCustomBrowsersChanged;
+        _firefoxBookmarkTimer?.Dispose();
         _cancellationTokenSource.Cancel();
         _cancellationTokenSource.Dispose();
         _faviconService.Dispose();

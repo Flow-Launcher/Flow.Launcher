@@ -56,30 +56,48 @@ public class BookmarkLoaderService
         return bookmarks.Distinct().ToList();
     }
 
-    private IEnumerable<IBookmarkLoader> GetBookmarkLoaders()
+    public IEnumerable<IBookmarkLoader> GetBookmarkLoaders()
+    {
+        return GetChromiumBookmarkLoaders().Concat(GetFirefoxBookmarkLoaders());
+    }
+
+    public IEnumerable<IBookmarkLoader> GetChromiumBookmarkLoaders()
     {
         var logAction = (string tag, string msg, Exception? ex) => _context.API.LogException(tag, msg, ex);
 
         if (_settings.LoadChromeBookmark)
         {
             var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Google\Chrome\User Data");
-            if(Directory.Exists(path))
+            if (Directory.Exists(path))
                 yield return new ChromiumBookmarkLoader("Google Chrome", path, logAction, DiscoveredBookmarkFiles);
         }
 
         if (_settings.LoadEdgeBookmark)
         {
             var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Microsoft\Edge\User Data");
-            if(Directory.Exists(path))
+            if (Directory.Exists(path))
                 yield return new ChromiumBookmarkLoader("Microsoft Edge", path, logAction, DiscoveredBookmarkFiles);
         }
 
         if (_settings.LoadChromiumBookmark)
         {
             var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Chromium\User Data");
-            if(Directory.Exists(path))
+            if (Directory.Exists(path))
                 yield return new ChromiumBookmarkLoader("Chromium", path, logAction, DiscoveredBookmarkFiles);
         }
+
+        foreach (var browser in _settings.CustomBrowsers.Where(b => b.BrowserType == BrowserType.Chromium))
+        {
+            if (string.IsNullOrEmpty(browser.Name) || string.IsNullOrEmpty(browser.DataDirectoryPath) || !Directory.Exists(browser.DataDirectoryPath))
+                continue;
+
+            yield return new ChromiumBookmarkLoader(browser.Name, browser.DataDirectoryPath, logAction, DiscoveredBookmarkFiles);
+        }
+    }
+
+    public IEnumerable<IBookmarkLoader> GetFirefoxBookmarkLoaders()
+    {
+        var logAction = (string tag, string msg, Exception? ex) => _context.API.LogException(tag, msg, ex);
 
         if (_settings.LoadFirefoxBookmark)
         {
@@ -96,7 +114,7 @@ public class BookmarkLoaderService
             {
                 yield return new FirefoxBookmarkLoader("Firefox", placesPath, _tempPath, logAction);
             }
-            
+
             string? msixPlacesPath = null;
             try
             {
@@ -112,18 +130,12 @@ public class BookmarkLoaderService
             }
         }
 
-        foreach (var browser in _settings.CustomBrowsers)
+        foreach (var browser in _settings.CustomBrowsers.Where(b => b.BrowserType == BrowserType.Firefox))
         {
             if (string.IsNullOrEmpty(browser.Name) || string.IsNullOrEmpty(browser.DataDirectoryPath) || !Directory.Exists(browser.DataDirectoryPath))
                 continue;
 
-            IBookmarkLoader loader = browser.BrowserType switch
-            {
-                BrowserType.Chromium => new ChromiumBookmarkLoader(browser.Name, browser.DataDirectoryPath, logAction, DiscoveredBookmarkFiles),
-                BrowserType.Firefox => CreateCustomFirefoxLoader(browser.Name, browser.DataDirectoryPath),
-                _ => new ChromiumBookmarkLoader(browser.Name, browser.DataDirectoryPath, logAction, DiscoveredBookmarkFiles)
-            };
-            yield return loader;
+            yield return CreateCustomFirefoxLoader(browser.Name, browser.DataDirectoryPath);
         }
     }
 

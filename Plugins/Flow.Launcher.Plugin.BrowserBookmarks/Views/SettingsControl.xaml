@@ -64,8 +64,6 @@
                         <GridViewColumn
                             DisplayMemberBinding="{Binding DataDirectoryPath, Mode=OneWay}"
                             Header="{DynamicResource flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory}" />
-                        <GridViewColumn DisplayMemberBinding="{Binding BrowserType, Mode=OneWay}"
-                            Header="{DynamicResource flowlauncher_plugin_browserbookmark_browserEngine}" />
                     </GridView>
                 </ListView.View>
             </ListView>
@@ -113,7 +111,7 @@
                 Margin="{StaticResource SettingPanelItemTopBottomMargin}"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
-                Content="{DynamicResource flowlauncher_plugin_browserbookmark_fetch_favicons}"
+                Content="{DynamicResource flowlauncher_plugin_browserbookmark_fetch_missing_favicons}"
                 IsChecked="{Binding Settings.FetchMissingFavicons}"
                 IsEnabled="{Binding Settings.EnableFavicons}" />
         </StackPanel>
