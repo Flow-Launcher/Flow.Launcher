@@ -596,6 +596,7 @@
     <system:String x:Key="errorTitle">שגיאה</system:String>
     <system:String x:Key="folderOpenError">אירעה שגיאה בעת פתיחת התיקייה. {0}</system:String>
     <system:String x:Key="browserOpenError">אירעה שגיאה בעת פתיחת כתובת ה-URL בדפדפן. אנא בדוק את תצורת דפדפן האינטרנט המוגדר כברירת מחדל שלך במקטע הכללי של חלון ההגדרות</system:String>
+    <system:String x:Key="fileNotFoundError">File or directory not found: {0}</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">אנא המתן...</system:String>
