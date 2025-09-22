@@ -597,6 +597,7 @@ Pokud před zkratku při zadávání přidáte znak &quot;@&quot;, bude odpovíd
     <system:String x:Key="errorTitle">Chyba</system:String>
     <system:String x:Key="folderOpenError">An error occurred while opening the folder. {0}</system:String>
     <system:String x:Key="browserOpenError">An error occurred while opening the URL in the browser. Please check your Default Web Browser configuration in the General section of the settings window</system:String>
+    <system:String x:Key="fileNotFoundError">File or directory not found: {0}</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Počkejte prosím...</system:String>
