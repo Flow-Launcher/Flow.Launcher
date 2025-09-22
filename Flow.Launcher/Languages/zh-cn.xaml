@@ -224,7 +224,7 @@
     <system:String x:Key="failedToUninstallPluginTitle">卸载 {0} 失败</system:String>
     <system:String x:Key="fileNotFoundMessage">无法从提取的zip文件中找到plugin.json，或者此路径 {0} 不存在</system:String>
     <system:String x:Key="pluginExistAlreadyMessage">已存在相同ID和版本的插件，或者存在版本大于此下载的插件</system:String>
-    <system:String x:Key="errorCreatingSettingPanel">Error creating setting panel for plugin {0}:{1}{2}</system:String>
+    <system:String x:Key="errorCreatingSettingPanel">为插件 {0} 创建设置面板时出错：{1}{2}</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">插件商店</system:String>
