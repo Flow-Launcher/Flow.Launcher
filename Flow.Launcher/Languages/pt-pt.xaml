@@ -595,7 +595,7 @@ Se adicionar o prefixo '@' durante a introdução do atalho, será utilizada qua
     <system:String x:Key="errorTitle">Erro</system:String>
     <system:String x:Key="folderOpenError">Ocorreu um erro ao abrir a pasta: {0}</system:String>
     <system:String x:Key="browserOpenError">Ocorreu um erro ao abrir o URL no navegador. Verifique a configuração Navegador web padrão na secção Geral das definições.</system:String>
-    <system:String x:Key="fileNotFoundError">File or directory not found: {0}</system:String>
+    <system:String x:Key="fileNotFoundError">Ficheiro ou diretório não encontrado: {0}</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Por favor aguarde...</system:String>
