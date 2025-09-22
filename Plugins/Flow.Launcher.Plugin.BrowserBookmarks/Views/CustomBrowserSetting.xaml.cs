@@ -1,6 +1,6 @@
 using Flow.Launcher.Plugin.BrowserBookmarks.Models;
+using Flow.Launcher.Plugin.BrowserBookmarks.ViewModels;
 using System.Windows;
-using System.Windows.Forms;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 
 namespace Flow.Launcher.Plugin.BrowserBookmarks.Views;
@@ -10,55 +10,28 @@ namespace Flow.Launcher.Plugin.BrowserBookmarks.Views;
 /// </summary>
 public partial class CustomBrowserSetting : Window
 {
-    private readonly CustomBrowser _currentCustomBrowser;
-    
+    private readonly CustomBrowserSettingViewModel _viewModel;
+
     public CustomBrowserSetting(CustomBrowser browser)
     {
         InitializeComponent();
-        _currentCustomBrowser = browser;
-        DataContext = new CustomBrowser
+        _viewModel = new CustomBrowserSettingViewModel(browser, result =>
         {
-            Name = browser.Name,
-            DataDirectoryPath = browser.DataDirectoryPath,
-            BrowserType = browser.BrowserType,
-        };
+            DialogResult = result;
+            Close();
+        });
+        DataContext = _viewModel;
     }
-
-    private void ConfirmEditCustomBrowser(object sender, RoutedEventArgs e)
-    {
-        var editBrowser = (CustomBrowser)DataContext;
-        _currentCustomBrowser.Name = editBrowser.Name;
-        _currentCustomBrowser.DataDirectoryPath = editBrowser.DataDirectoryPath;
-        _currentCustomBrowser.BrowserType = editBrowser.BrowserType;
-        DialogResult = true;
-        Close();
-    }
-
-    private void CancelEditCustomBrowser(object sender, RoutedEventArgs e)
-    {
-        DialogResult = false;
-        Close();
-    }
-
+    
     private void WindowKeyDown(object sender, KeyEventArgs e)
     {
         if (e.Key == System.Windows.Input.Key.Enter)
         {
-            ConfirmEditCustomBrowser(sender, e);
+            _viewModel.SaveCommand.Execute(null);
         }
         else if (e.Key == System.Windows.Input.Key.Escape)
         {
-            CancelEditCustomBrowser(sender, e);
-        }
-    }
-
-    private void OnSelectPathClick(object sender, RoutedEventArgs e)
-    {
-        var dialog = new FolderBrowserDialog();
-        if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-        {
-            var editBrowser = (CustomBrowser)DataContext;
-            editBrowser.DataDirectoryPath = dialog.SelectedPath;
+            _viewModel.CancelCommand.Execute(null);
         }
     }
 }

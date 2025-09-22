@@ -39,8 +39,9 @@ public partial class FaviconService : IDisposable
     private static partial Regex BaseHrefRegex();
 
     private record struct FaviconCandidate(string Url, int Score);
+    private record struct FetchResult(string? TempPath, int Size);
 
-public FaviconService(PluginInitContext context, Settings settings, string tempPath)
+    public FaviconService(PluginInitContext context, Settings settings, string tempPath)
     {
         _context = context;
         _settings = settings;
@@ -127,9 +128,9 @@ public FaviconService(PluginInitContext context, Settings settings, string tempP
         using var overallCts = CancellationTokenSource.CreateLinkedTokenSource(token);
         overallCts.CancelAfter(TimeSpan.FromSeconds(10));
         var linkedToken = overallCts.Token;
-
-        (string? TempPath, int Size) icoResult = (null, -1);
-        (string? TempPath, int Size) htmlResult = (null, -1);
+        
+        FetchResult icoResult = default;
+        FetchResult htmlResult = default;
 
         try
         {
@@ -141,21 +142,11 @@ public FaviconService(PluginInitContext context, Settings settings, string tempP
             icoResult = icoTask.Result;
             htmlResult = htmlTask.Result;
 
-            string? winnerPath = null;
-            if (htmlResult.Size >= 32)
-                winnerPath = htmlResult.TempPath;
-            else if (icoResult.Size >= 32)
-                winnerPath = icoResult.TempPath;
-            else if (htmlResult.Size > icoResult.Size)
-                winnerPath = htmlResult.TempPath;
-            else if (icoResult.Size >= 0)
-                winnerPath = icoResult.TempPath;
-            else if (htmlResult.Size >= 0)
-                winnerPath = htmlResult.TempPath;
+            var bestResult = SelectBestFavicon(icoResult, htmlResult);
 
-            if (winnerPath != null)
+            if (bestResult.TempPath != null)
             {
-                File.Move(winnerPath, cachePath, true);
+                File.Move(bestResult.TempPath, cachePath, true);
                 _context.API.LogDebug(nameof(FaviconService), $"Favicon for {urlString} cached successfully.");
                 return cachePath;
             }
@@ -176,18 +167,29 @@ public FaviconService(PluginInitContext context, Settings settings, string tempP
 
         return null;
     }
+
+    private FetchResult SelectBestFavicon(FetchResult icoResult, FetchResult htmlResult)
+    {
+        if (htmlResult.Size >= 32) return htmlResult;
+        if (icoResult.Size >= 32) return icoResult;
+        if (htmlResult.Size > icoResult.Size) return htmlResult;
+        // If sizes are equal, prefer ico as it's the standard. If htmlResult was better, it would likely have a larger size.
+        if (icoResult.Size >= 0) return icoResult; 
+        if (htmlResult.Size >= 0) return htmlResult;
+        return default;
+    }
     
-    private async Task<(string? TempPath, int Size)> FetchAndProcessHtmlAsync(Uri pageUri, CancellationToken token)
+    private async Task<FetchResult> FetchAndProcessHtmlAsync(Uri pageUri, CancellationToken token)
     {
         var bestCandidate = await GetBestCandidateFromHtmlAsync(pageUri, token);
         if (bestCandidate != null && Uri.TryCreate(bestCandidate.Value.Url, UriKind.Absolute, out var candidateUri))
         {
             return await FetchAndProcessUrlAsync(candidateUri, token);
         }
-        return (null, -1);
+        return default;
     }
 
-    private async Task<(string? TempPath, int Size)> FetchAndProcessUrlAsync(Uri faviconUri, CancellationToken token)
+    private async Task<FetchResult> FetchAndProcessUrlAsync(Uri faviconUri, CancellationToken token)
     {
         var tempPath = Path.GetTempFileName();
         try
@@ -200,7 +202,7 @@ public FaviconService(PluginInitContext context, Settings settings, string tempP
             {
                 _context.API.LogDebug(nameof(FaviconService), $"Fetch failed for {faviconUri} with status code {response.StatusCode}");
                 File.Delete(tempPath);
-                return (null, -1);
+                return default;
             }
 
             await using var contentStream = await response.Content.ReadAsStreamAsync(token);
@@ -210,7 +212,7 @@ public FaviconService(PluginInitContext context, Settings settings, string tempP
             {
                 await File.WriteAllBytesAsync(tempPath, pngData, token);
                 _context.API.LogDebug(nameof(FaviconService), $"Successfully processed favicon for {faviconUri} with original size {size}x{size}");
-                return (tempPath, size);
+                return new FetchResult(tempPath, size);
             }
             
             _context.API.LogDebug(nameof(FaviconService), $"Failed to process or invalid image for {faviconUri}.");
@@ -222,7 +224,7 @@ public FaviconService(PluginInitContext context, Settings settings, string tempP
         }
         
         File.Delete(tempPath);
-        return (null, -1);
+        return default;
     }
     
     private async Task<FaviconCandidate?> GetBestCandidateFromHtmlAsync(Uri pageUri, CancellationToken token)

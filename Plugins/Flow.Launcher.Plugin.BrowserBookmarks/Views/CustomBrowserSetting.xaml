@@ -5,8 +5,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Flow.Launcher.Plugin.BrowserBookmarks.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:Flow.Launcher.Plugin.BrowserBookmarks.ViewModels"
     Title="{DynamicResource flowlauncher_plugin_browserbookmark_bookmarkDataSetting}"
     Width="550"
+    d:DataContext="{d:DesignInstance viewModels:CustomBrowserSettingViewModel}"
     Background="{DynamicResource PopuBGColor}"
     Foreground="{DynamicResource PopupTextColor}"
     KeyDown="WindowKeyDown"
@@ -18,9 +20,6 @@
         <WindowChrome CaptionHeight="32"
             ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
     </WindowChrome.WindowChrome>
-    <Window.DataContext>
-        <local:CustomBrowser />
-    </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -39,7 +38,7 @@
                     </Grid.ColumnDefinitions>
                     <Button
                         Grid.Column="4"
-                        Click="CancelEditCustomBrowser"
+                        Command="{Binding CancelCommand}"
                         Style="{StaticResource TitleBarCloseButtonStyle}">
                         <Path
                             Width="46"
@@ -127,7 +126,7 @@
                             Margin="5 0 10 0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
-                            Text="{Binding Name}" />
+                            Text="{Binding EditableBrowser.Name}" />
                         <TextBlock
                             Grid.Row="2"
                             Grid.Column="0"
@@ -145,8 +144,8 @@
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             DisplayMemberPath="Display"
-                            ItemsSource="{Binding AllBrowserTypes}"
-                            SelectedValue="{Binding BrowserType}"
+                            ItemsSource="{Binding EditableBrowser.AllBrowserTypes}"
+                            SelectedValue="{Binding EditableBrowser.BrowserType}"
                             SelectedValuePath="Value" />
                         <TextBlock
                             Grid.Row="3"
@@ -165,7 +164,7 @@
                                 MinWidth="100"
                                 Margin="5 10 0 0"
                                 VerticalContentAlignment="Stretch"
-                                Click="OnSelectPathClick"
+                                Command="{Binding BrowseDataDirectoryCommand}"
                                 Content="{DynamicResource flowlauncher_plugin_browserbookmark_browseBrowserBookmark}"
                                 DockPanel.Dock="Right" />
                             <TextBox
@@ -174,7 +173,7 @@
                                 Margin="5 10 0 0"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Center"
-                                Text="{Binding DataDirectoryPath}" />
+                                Text="{Binding EditableBrowser.DataDirectoryPath}" />
                         </DockPanel>
                     </Grid>
                 </StackPanel>
@@ -190,13 +189,13 @@
                     x:Name="btnCancel"
                     MinWidth="145"
                     Margin="0 0 5 0"
-                    Click="CancelEditCustomBrowser"
+                    Command="{Binding CancelCommand}"
                     Content="{DynamicResource cancel}" />
                 <Button
                     Name="btnConfirm"
                     MinWidth="145"
                     Margin="5 0 0 0"
-                    Click="ConfirmEditCustomBrowser"
+                    Command="{Binding SaveCommand}"
                     Style="{StaticResource AccentButtonStyle}">
                     <TextBlock x:Name="lblAdd" Text="{DynamicResource done}" />
                 </Button>
