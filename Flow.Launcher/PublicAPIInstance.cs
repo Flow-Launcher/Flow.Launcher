@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -412,14 +412,12 @@ namespace Flow.Launcher
 
         private void OpenUri(Uri uri, bool? inPrivate = null, bool forceBrowser = false)
         {
-            if (uri.IsFile)
+            if (uri.IsFile && !File.Exists(uri.LocalPath) && !Directory.Exists(uri.LocalPath))
             {
-                if (!File.Exists(uri.LocalPath) && !Directory.Exists(uri.LocalPath))
-                {
-                    ShowMsgError(GetTranslation("errorTitle"), $"File or directory not found: {uri.LocalPath}");
-                    return;
-                }
+                ShowMsgError(GetTranslation("errorTitle"), string.Format(GetTranslation("fileNotFoundError"), uri.LocalPath));
+                return;
             }
+
             if (forceBrowser || uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps)
             {
                 var browserInfo = _settings.CustomBrowser;
