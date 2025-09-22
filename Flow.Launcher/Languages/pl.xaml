@@ -596,6 +596,7 @@ Jeśli dodasz prefiks '@' podczas wprowadzania skrótu, będzie on pasował do d
     <system:String x:Key="errorTitle">Błąd</system:String>
     <system:String x:Key="folderOpenError">Wystąpił błąd podczas otwierania folderu. {0}</system:String>
     <system:String x:Key="browserOpenError">Wystąpił błąd podczas otwierania adresu URL w przeglądarce. Sprawdź konfigurację domyślnej przeglądarki internetowej w sekcji Ogólne okna ustawień</system:String>
+    <system:String x:Key="fileNotFoundError">File or directory not found: {0}</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Proszę czekać...</system:String>
