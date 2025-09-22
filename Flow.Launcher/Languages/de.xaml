@@ -597,6 +597,7 @@ Wenn Sie bei der Eingabe eines Shortcuts ein '@'-Präfix hinzufügen, stimmt die
     <system:String x:Key="errorTitle">Fehler</system:String>
     <system:String x:Key="folderOpenError">Beim Öffnen des Ordners ist ein Fehler aufgetreten. {0}</system:String>
     <system:String x:Key="browserOpenError">Beim Öffnen der URL im Browser ist ein Fehler aufgetreten. Bitte überprüfen Sie die Konfiguration Ihres Default-Webbrowsers im Abschnitt „Allgemein“ des Einstellungsfensters</system:String>
+    <system:String x:Key="fileNotFoundError">File or directory not found: {0}</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Bitte warten Sie ...</system:String>
