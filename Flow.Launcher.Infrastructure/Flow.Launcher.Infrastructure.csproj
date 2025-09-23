@@ -34,6 +34,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <NoWarn>$(NoWarn);FLSG0007</NoWarn>
   </PropertyGroup>
   
   <ItemGroup>
@@ -56,6 +57,7 @@
     <PackageReference Include="Ben.Demystifier" Version="0.4.1" />
     <PackageReference Include="BitFaster.Caching" Version="2.5.4" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="Flow.Launcher.Localization" Version="0.0.6" />
     <PackageReference Include="Fody" Version="6.9.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -78,6 +80,17 @@
     <!-- PlatformNotSupportedException: SystemEvents is not supported on this platform. -->
     <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
     <PackageReference Include="ToolGood.Words.Pinyin" Version="3.1.0.3" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <FLLUseDependencyInjection>true</FLLUseDependencyInjection>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Remove="Languages\en.xaml" />
+    <AdditionalFiles Include="..\Flow.Launcher\Languages\en.xaml">
+      <Link>Languages\en.xaml</Link>
+    </AdditionalFiles>
   </ItemGroup>
 
 </Project>

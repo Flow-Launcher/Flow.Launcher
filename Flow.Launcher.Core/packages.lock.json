@@ -11,6 +11,12 @@
           "YamlDotNet": "9.1.0"
         }
       },
+      "Flow.Launcher.Localization": {
+        "type": "Direct",
+        "requested": "[0.0.6, )",
+        "resolved": "0.0.6",
+        "contentHash": "Wwh5lrnmAf66go456h9sSrkdIW3G/IaKPE3+qWZLRAQ86kIe1JovHRj+ljHZXnFOWu1cbFmHg3l1RuqzPLAHow=="
+      },
       "FSharp.Core": {
         "type": "Direct",
         "requested": "[9.0.303, )",
@@ -254,6 +260,7 @@
           "Ben.Demystifier": "[0.4.1, )",
           "BitFaster.Caching": "[2.5.4, )",
           "CommunityToolkit.Mvvm": "[8.4.0, )",
+          "Flow.Launcher.Localization": "[0.0.6, )",
           "Flow.Launcher.Plugin": "[5.0.0, )",
           "InputSimulator": "[1.0.4, )",
           "MemoryPack": "[1.21.4, )",

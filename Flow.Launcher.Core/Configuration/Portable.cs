@@ -45,7 +45,7 @@ namespace Flow.Launcher.Core.Configuration
 #endif
                 IndicateDeletion(DataLocation.PortableDataPath);
 
-                API.ShowMsgBox(API.GetTranslation("restartToDisablePortableMode"));
+                API.ShowMsgBox(Localize.restartToDisablePortableMode());
 
                 UpdateManager.RestartApp(Constant.ApplicationFileName);
             }
@@ -68,7 +68,7 @@ namespace Flow.Launcher.Core.Configuration
 #endif
                 IndicateDeletion(DataLocation.RoamingDataPath);
 
-                API.ShowMsgBox(API.GetTranslation("restartToEnablePortableMode"));
+                API.ShowMsgBox(Localize.restartToEnablePortableMode());
 
                 UpdateManager.RestartApp(Constant.ApplicationFileName);
             }
@@ -152,7 +152,7 @@ namespace Flow.Launcher.Core.Configuration
             {
                 FilesFolders.RemoveFolderIfExists(roamingDataDir, (s) => API.ShowMsgBox(s));
 
-                if (API.ShowMsgBox(API.GetTranslation("moveToDifferentLocation"), 
+                if (API.ShowMsgBox(Localize.moveToDifferentLocation(), 
                     string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     FilesFolders.OpenPath(Constant.RootDirectory, (s) => API.ShowMsgBox(s));
@@ -166,7 +166,7 @@ namespace Flow.Launcher.Core.Configuration
             {
                 FilesFolders.RemoveFolderIfExists(portableDataDir, (s) => API.ShowMsgBox(s));
 
-                API.ShowMsgBox(API.GetTranslation("shortcutsUninstallerCreated"));
+                API.ShowMsgBox(Localize.shortcutsUninstallerCreated());
             }
         }
 
@@ -177,8 +177,7 @@ namespace Flow.Launcher.Core.Configuration
 
             if (roamingLocationExists && portableLocationExists)
             {
-                API.ShowMsgBox(string.Format(API.GetTranslation("userDataDuplicated"), 
-                    DataLocation.PortableDataPath, DataLocation.RoamingDataPath, Environment.NewLine));
+                API.ShowMsgBox(Localize.userDataDuplicated(DataLocation.PortableDataPath, DataLocation.RoamingDataPath, Environment.NewLine));
 
                 return false;
             }

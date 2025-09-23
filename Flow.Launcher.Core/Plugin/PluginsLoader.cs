@@ -121,12 +121,12 @@ namespace Flow.Launcher.Core.Plugin
                 var errorPluginString = string.Join(Environment.NewLine, erroredPlugins);
 
                 var errorMessage = erroredPlugins.Count > 1 ?
-                    API.GetTranslation("pluginsHaveErrored") :
-                    API.GetTranslation("pluginHasErrored");
+                    Localize.pluginsHaveErrored():
+                    Localize.pluginHasErrored();
 
                 API.ShowMsgError($"{errorMessage}{Environment.NewLine}{Environment.NewLine}" +
                     $"{errorPluginString}{Environment.NewLine}{Environment.NewLine}" +
-                    API.GetTranslation("referToLogs"));
+                    Localize.referToLogs());
             }
 
             return plugins;

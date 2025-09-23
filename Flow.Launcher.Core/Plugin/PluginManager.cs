@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
@@ -295,15 +295,12 @@ namespace Flow.Launcher.Core.Plugin
                 }
             }
 
-            if (failedPlugins.Any())
+            if (!failedPlugins.IsEmpty)
             {
                 var failed = string.Join(",", failedPlugins.Select(x => x.Metadata.Name));
                 API.ShowMsg(
-                    API.GetTranslation("failedToInitializePluginsTitle"),
-                    string.Format(
-                        API.GetTranslation("failedToInitializePluginsMessage"),
-                        failed
-                    ),
+                    Localize.failedToInitializePluginsTitle(),
+                    Localize.failedToInitializePluginsMessage(failed),
                     "",
                     false
                 );
@@ -636,8 +633,8 @@ namespace Flow.Launcher.Core.Plugin
         {
             if (PluginModified(existingVersion.ID))
             {
-                API.ShowMsgError(string.Format(API.GetTranslation("pluginModifiedAlreadyTitle"), existingVersion.Name),
-                    API.GetTranslation("pluginModifiedAlreadyMessage"));
+                API.ShowMsgError(Localize.pluginModifiedAlreadyTitle(existingVersion.Name),
+                    Localize.pluginModifiedAlreadyMessage());
                 return false;
             }
 
@@ -669,8 +666,8 @@ namespace Flow.Launcher.Core.Plugin
         {
             if (checkModified && PluginModified(plugin.ID))
             {
-                API.ShowMsgError(string.Format(API.GetTranslation("pluginModifiedAlreadyTitle"), plugin.Name),
-                    API.GetTranslation("pluginModifiedAlreadyMessage"));
+                API.ShowMsgError(Localize.pluginModifiedAlreadyTitle(plugin.Name),
+                    Localize.pluginModifiedAlreadyMessage());
                 return false;
             }
 
@@ -689,15 +686,15 @@ namespace Flow.Launcher.Core.Plugin
 
             if (string.IsNullOrEmpty(metadataJsonFilePath) || string.IsNullOrEmpty(pluginFolderPath))
             {
-                API.ShowMsgError(string.Format(API.GetTranslation("failedToInstallPluginTitle"), plugin.Name),
-                    string.Format(API.GetTranslation("fileNotFoundMessage"), pluginFolderPath));
+                API.ShowMsgError(Localize.failedToInstallPluginTitle(plugin.Name),
+                    Localize.fileNotFoundMessage(pluginFolderPath));
                 return false;
             }
 
             if (SameOrLesserPluginVersionExists(metadataJsonFilePath))
             {
-                API.ShowMsgError(string.Format(API.GetTranslation("failedToInstallPluginTitle"), plugin.Name),
-                    API.GetTranslation("pluginExistAlreadyMessage"));
+                API.ShowMsgError(Localize.failedToInstallPluginTitle(plugin.Name),
+                    Localize.pluginExistAlreadyMessage());
                 return false;
             }
 
@@ -750,8 +747,8 @@ namespace Flow.Launcher.Core.Plugin
         {
             if (checkModified && PluginModified(plugin.ID))
             {
-                API.ShowMsgError(string.Format(API.GetTranslation("pluginModifiedAlreadyTitle"), plugin.Name),
-                    API.GetTranslation("pluginModifiedAlreadyMessage"));
+                API.ShowMsgError(Localize.pluginModifiedAlreadyTitle(plugin.Name),
+                    Localize.pluginModifiedAlreadyMessage());
                 return false;
             }
 
@@ -785,8 +782,8 @@ namespace Flow.Launcher.Core.Plugin
                 catch (Exception e)
                 {
                     API.LogException(ClassName, $"Failed to delete plugin settings folder for {plugin.Name}", e);
-                    API.ShowMsgError(API.GetTranslation("failedToRemovePluginSettingsTitle"),
-                        string.Format(API.GetTranslation("failedToRemovePluginSettingsMessage"), plugin.Name));
+                    API.ShowMsgError(Localize.failedToRemovePluginSettingsTitle(),
+                        Localize.failedToRemovePluginSettingsMessage(plugin.Name));
                 }
             }
 
@@ -801,8 +798,8 @@ namespace Flow.Launcher.Core.Plugin
                 catch (Exception e)
                 {
                     API.LogException(ClassName, $"Failed to delete plugin cache folder for {plugin.Name}", e);
-                    API.ShowMsgError(API.GetTranslation("failedToRemovePluginCacheTitle"),
-                        string.Format(API.GetTranslation("failedToRemovePluginCacheMessage"), plugin.Name));
+                    API.ShowMsgError(Localize.failedToRemovePluginCacheTitle(),
+                        Localize.failedToRemovePluginCacheMessage(plugin.Name));
                 }
                 Settings.RemovePluginSettings(plugin.ID);
                 AllPlugins.RemoveAll(p => p.Metadata.ID == plugin.ID);

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
@@ -35,16 +35,14 @@ public static class PluginInstaller
     {
         if (API.PluginModified(newPlugin.ID))
         {
-            API.ShowMsgError(string.Format(API.GetTranslation("pluginModifiedAlreadyTitle"), newPlugin.Name),
-                    API.GetTranslation("pluginModifiedAlreadyMessage"));
+            API.ShowMsgError(Localize.pluginModifiedAlreadyTitle(newPlugin.Name),
+                Localize.pluginModifiedAlreadyMessage());
             return;
         }
 
         if (API.ShowMsgBox(
-            string.Format(
-                API.GetTranslation("InstallPromptSubtitle"),
-                newPlugin.Name, newPlugin.Author, Environment.NewLine),
-            API.GetTranslation("InstallPromptTitle"),
+            Localize.InstallPromptSubtitle(newPlugin.Name, newPlugin.Author, Environment.NewLine),
+            Localize.InstallPromptTitle(),
             button: MessageBoxButton.YesNo) != MessageBoxResult.Yes) return;
 
         try
@@ -61,7 +59,7 @@ public static class PluginInstaller
             if (!newPlugin.IsFromLocalInstallPath)
             {
                 await DownloadFileAsync(
-                    $"{API.GetTranslation("DownloadingPlugin")} {newPlugin.Name}",
+                    $"{Localize.DownloadingPlugin()} {newPlugin.Name}",
                     newPlugin.UrlDownload, filePath, cts);
             }
             else
@@ -93,7 +91,7 @@ public static class PluginInstaller
         catch (Exception e)
         {
             API.LogException(ClassName, "Failed to install plugin", e);
-            API.ShowMsgError(API.GetTranslation("ErrorInstallingPlugin"));
+            API.ShowMsgError(Localize.ErrorInstallingPlugin());
             return; // do not restart on failure
         }
 
@@ -104,11 +102,8 @@ public static class PluginInstaller
         else
         {
             API.ShowMsg(
-                API.GetTranslation("installbtn"),
-                string.Format(
-                    API.GetTranslation(
-                        "InstallSuccessNoRestart"),
-                    newPlugin.Name));
+                Localize.installbtn(),
+                Localize.InstallSuccessNoRestart(newPlugin.Name));
         }
     }
 
@@ -134,23 +129,22 @@ public static class PluginInstaller
         catch (Exception e)
         {
             API.LogException(ClassName, "Failed to validate zip file", e);
-            API.ShowMsgError(API.GetTranslation("ZipFileNotHavePluginJson"));
+            API.ShowMsgError(Localize.ZipFileNotHavePluginJson());
             return;
         }
 
         if (API.PluginModified(plugin.ID))
         {
-            API.ShowMsgError(string.Format(API.GetTranslation("pluginModifiedAlreadyTitle"), plugin.Name),
-                    API.GetTranslation("pluginModifiedAlreadyMessage"));
+            API.ShowMsgError(Localize.pluginModifiedAlreadyTitle(plugin.Name),
+                Localize.pluginModifiedAlreadyMessage());
             return;
         }
 
         if (Settings.ShowUnknownSourceWarning)
         {
             if (!InstallSourceKnown(plugin.Website)
-                && API.ShowMsgBox(string.Format(
-                    API.GetTranslation("InstallFromUnknownSourceSubtitle"), Environment.NewLine),
-                    API.GetTranslation("InstallFromUnknownSourceTitle"),
+                && API.ShowMsgBox(Localize.InstallFromUnknownSourceSubtitle(Environment.NewLine),
+                    Localize.InstallFromUnknownSourceTitle(),
                     MessageBoxButton.YesNo) == MessageBoxResult.No)
                 return;
         }
@@ -167,21 +161,19 @@ public static class PluginInstaller
     {
         if (API.PluginModified(oldPlugin.ID))
         {
-            API.ShowMsgError(string.Format(API.GetTranslation("pluginModifiedAlreadyTitle"), oldPlugin.Name),
-                    API.GetTranslation("pluginModifiedAlreadyMessage"));
+            API.ShowMsgError(Localize.pluginModifiedAlreadyTitle(oldPlugin.Name),
+                Localize.pluginModifiedAlreadyMessage());
             return;
         }
 
         if (API.ShowMsgBox(
-            string.Format(
-                API.GetTranslation("UninstallPromptSubtitle"),
-                oldPlugin.Name, oldPlugin.Author, Environment.NewLine),
-            API.GetTranslation("UninstallPromptTitle"),
+            Localize.UninstallPromptSubtitle(oldPlugin.Name, oldPlugin.Author, Environment.NewLine),
+            Localize.UninstallPromptTitle(),
             button: MessageBoxButton.YesNo) != MessageBoxResult.Yes) return;
 
         var removePluginSettings = API.ShowMsgBox(
-            API.GetTranslation("KeepPluginSettingsSubtitle"),
-            API.GetTranslation("KeepPluginSettingsTitle"),
+            Localize.KeepPluginSettingsSubtitle(),
+            Localize.KeepPluginSettingsTitle(),
             button: MessageBoxButton.YesNo) == MessageBoxResult.No;
 
         try
@@ -194,7 +186,7 @@ public static class PluginInstaller
         catch (Exception e)
         {
             API.LogException(ClassName, "Failed to uninstall plugin", e);
-            API.ShowMsgError(API.GetTranslation("ErrorUninstallingPlugin"));
+            API.ShowMsgError(Localize.ErrorUninstallingPlugin());
             return; // don not restart on failure
         }
 
@@ -205,11 +197,8 @@ public static class PluginInstaller
         else
         {
             API.ShowMsg(
-                API.GetTranslation("uninstallbtn"),
-                string.Format(
-                    API.GetTranslation(
-                        "UninstallSuccessNoRestart"),
-                    oldPlugin.Name));
+                Localize.uninstallbtn(),
+                Localize.UninstallSuccessNoRestart(oldPlugin.Name));
         }
     }
 
@@ -222,10 +211,8 @@ public static class PluginInstaller
     public static async Task UpdatePluginAndCheckRestartAsync(UserPlugin newPlugin, PluginMetadata oldPlugin)
     {
         if (API.ShowMsgBox(
-            string.Format(
-                API.GetTranslation("UpdatePromptSubtitle"),
-                oldPlugin.Name, oldPlugin.Author, Environment.NewLine),
-            API.GetTranslation("UpdatePromptTitle"),
+            Localize.UpdatePromptSubtitle(oldPlugin.Name, oldPlugin.Author, Environment.NewLine),
+            Localize.UpdatePromptTitle(),
             button: MessageBoxButton.YesNo) != MessageBoxResult.Yes) return;
 
         try
@@ -237,7 +224,7 @@ public static class PluginInstaller
             if (!newPlugin.IsFromLocalInstallPath)
             {
                 await DownloadFileAsync(
-                    $"{API.GetTranslation("DownloadingPlugin")} {newPlugin.Name}",
+                    $"{Localize.DownloadingPlugin()} {newPlugin.Name}",
                     newPlugin.UrlDownload, filePath, cts);
             }
             else
@@ -259,7 +246,7 @@ public static class PluginInstaller
         catch (Exception e)
         {
             API.LogException(ClassName, "Failed to update plugin", e);
-            API.ShowMsgError(API.GetTranslation("ErrorUpdatingPlugin"));
+            API.ShowMsgError(Localize.ErrorUpdatingPlugin());
             return; // do not restart on failure
         }
 
@@ -270,11 +257,8 @@ public static class PluginInstaller
         else
         {
             API.ShowMsg(
-                API.GetTranslation("updatebtn"),
-                string.Format(
-                    API.GetTranslation(
-                        "UpdateSuccessNoRestart"),
-                    newPlugin.Name));
+                Localize.updatebtn(),
+                Localize.UpdateSuccessNoRestart(newPlugin.Name));
         }
     }
 
@@ -314,11 +298,11 @@ public static class PluginInstaller
                 }).ToList();
 
         // No updates
-        if (!resultsForUpdate.Any())
+        if (resultsForUpdate.Count == 0)
         {
             if (!silentUpdate)
             {
-                API.ShowMsg(API.GetTranslation("updateNoResultTitle"), API.GetTranslation("updateNoResultSubtitle"));
+                API.ShowMsg(Localize.updateNoResultTitle(), Localize.updateNoResultSubtitle());
             }
             return;
         }
@@ -331,8 +315,8 @@ public static class PluginInstaller
 
         // Show message box with button to update all plugins
         API.ShowMsgWithButton(
-            API.GetTranslation("updateAllPluginsTitle"),
-            API.GetTranslation("updateAllPluginsButtonContent"),
+            Localize.updateAllPluginsTitle(),
+            Localize.updateAllPluginsButtonContent(),
             () =>
             {
                 updateAllPlugins(resultsForUpdate);
@@ -357,7 +341,7 @@ public static class PluginInstaller
                 using var cts = new CancellationTokenSource();
 
                 await DownloadFileAsync(
-                    $"{API.GetTranslation("DownloadingPlugin")} {plugin.PluginNewUserPlugin.Name}",
+                    $"{Localize.DownloadingPlugin()} {plugin.PluginNewUserPlugin.Name}",
                     plugin.PluginNewUserPlugin.UrlDownload, downloadToFilePath, cts);
 
                 // check if user cancelled download before installing plugin
@@ -376,7 +360,7 @@ public static class PluginInstaller
             catch (Exception e)
             {
                 API.LogException(ClassName, "Failed to update plugin", e);
-                API.ShowMsgError(API.GetTranslation("ErrorUpdatingPlugin"));
+                API.ShowMsgError(Localize.ErrorUpdatingPlugin());
             }
         }));
 
@@ -389,8 +373,8 @@ public static class PluginInstaller
         else
         {
             API.ShowMsg(
-                API.GetTranslation("updatebtn"),
-                API.GetTranslation("PluginsUpdateSuccessNoRestart"));
+                Localize.updatebtn(),
+                Localize.PluginsUpdateSuccessNoRestart());
         }
     }
 

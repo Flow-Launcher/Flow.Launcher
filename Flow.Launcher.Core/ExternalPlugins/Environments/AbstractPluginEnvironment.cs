@@ -58,15 +58,10 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
                 return SetPathForPluginPairs(PluginsSettingsFilePath, Language);
             }
 
-            var noRuntimeMessage = string.Format(
-                API.GetTranslation("runtimePluginInstalledChooseRuntimePrompt"),
-                Language,
-                EnvName,
-                Environment.NewLine
-            );
+            var noRuntimeMessage = Localize.runtimePluginInstalledChooseRuntimePrompt(Language, EnvName, Environment.NewLine);
             if (API.ShowMsgBox(noRuntimeMessage, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.No)
             {
-                var msg = string.Format(API.GetTranslation("runtimePluginChooseRuntimeExecutable"), EnvName);
+                var msg = Localize.runtimePluginChooseRuntimeExecutable(EnvName);
 
                 var selectedFile = GetFileFromDialog(msg, FileDialogFilter);
 
@@ -77,12 +72,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
                 // Nothing selected because user pressed cancel from the file dialog window
                 else
                 {
-                    var forceDownloadMessage = string.Format(
-                        API.GetTranslation("runtimeExecutableInvalidChooseDownload"),
-                        Language,
-                        EnvName,
-                        Environment.NewLine
-                    );
+                    var forceDownloadMessage = Localize.runtimeExecutableInvalidChooseDownload(Language, EnvName, Environment.NewLine);
 
                     // Let users select valid path or choose to download
                     while (string.IsNullOrEmpty(selectedFile))
@@ -120,7 +110,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
             }
             else
             {
-                API.ShowMsgBox(string.Format(API.GetTranslation("runtimePluginUnableToSetExecutablePath"), Language));
+                API.ShowMsgBox(Localize.runtimePluginUnableToSetExecutablePath(Language));
                 API.LogError(ClassName,
                     $"Not able to successfully set {EnvName} path, setting's plugin executable path variable is still an empty string.",
                     $"{Language}Environment");
