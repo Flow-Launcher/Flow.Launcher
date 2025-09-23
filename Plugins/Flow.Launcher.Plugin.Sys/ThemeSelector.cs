@@ -43,17 +43,28 @@ public static class ThemeSelector
             score = 1000;
         }
 
-        string description = string.Empty;
-        if (theme.IsDark == true)
+        string description;
+        if (theme.IsDark == true && theme.HasBlur == true)
         {
-            description += Main.Context.API.GetTranslation("TypeIsDarkToolTip");
+            if (theme.HasBlur == true)
+            {
+                description = Localize.flowlauncher_plugin_sys_type_isdark_hasblur();
+            }
+            else
+            {
+                description = Localize.flowlauncher_plugin_sys_type_isdark();
+            }
         }
-
-        if (theme.HasBlur == true)
+        else
         {
-            if (!string.IsNullOrEmpty(description))
-                description += " ";
-            description += Main.Context.API.GetTranslation("TypeHasBlurToolTip");
+            if (theme.HasBlur == true)
+            {
+                description = Localize.flowlauncher_plugin_sys_type_hasblur();
+            }
+            else
+            {
+                description = string.Empty;
+            }
         }
 
         return new Result

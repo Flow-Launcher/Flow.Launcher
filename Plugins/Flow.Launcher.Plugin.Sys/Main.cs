@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Windows;
 using Windows.Win32;
 using Windows.Win32.Foundation;
@@ -206,8 +207,8 @@ public class Main : IPlugin, ISettingProvider, IPluginI18n
                 Action = c =>
                 {
                     var result = Context.API.ShowMsgBox(
-                        Context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_shutdown_computer"),
-                        Context.API.GetTranslation("flowlauncher_plugin_sys_shutdown_computer"),
+                        Localize.flowlauncher_plugin_sys_dlgtext_shutdown_computer(),
+                        Localize.flowlauncher_plugin_sys_shutdown_computer(),
                         MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
                     if (result == MessageBoxResult.Yes)
@@ -227,8 +228,8 @@ public class Main : IPlugin, ISettingProvider, IPluginI18n
                 Action = c =>
                 {
                     var result = Context.API.ShowMsgBox(
-                        Context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_restart_computer"),
-                        Context.API.GetTranslation("flowlauncher_plugin_sys_restart_computer"),
+                        Localize.flowlauncher_plugin_sys_dlgtext_restart_computer(),
+                        Localize.flowlauncher_plugin_sys_restart_computer(),
                         MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
                     if (result == MessageBoxResult.Yes)
@@ -248,8 +249,8 @@ public class Main : IPlugin, ISettingProvider, IPluginI18n
                 Action = c =>
                 {
                     var result = Context.API.ShowMsgBox(
-                        Context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_restart_computer_advanced"),
-                        Context.API.GetTranslation("flowlauncher_plugin_sys_restart_computer"),
+                        Localize.flowlauncher_plugin_sys_dlgtext_restart_computer_advanced(),
+                        Localize.flowlauncher_plugin_sys_restart_computer(),
                         MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
                     if (result == MessageBoxResult.Yes)
@@ -269,8 +270,8 @@ public class Main : IPlugin, ISettingProvider, IPluginI18n
                 Action = c =>
                 {
                     var result = Context.API.ShowMsgBox(
-                        Context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_logoff_computer"),
-                        Context.API.GetTranslation("flowlauncher_plugin_sys_log_off"),
+                        Localize.flowlauncher_plugin_sys_dlgtext_logoff_computer(),
+                        Localize.flowlauncher_plugin_sys_log_off(),
                         MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
                     if (result == MessageBoxResult.Yes)
@@ -337,8 +338,8 @@ public class Main : IPlugin, ISettingProvider, IPluginI18n
                     if (result != HRESULT.S_OK && result != HRESULT.E_UNEXPECTED)
                     {
                         Context.API.ShowMsgBox(
-                            string.Format(Context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_empty_recycle_bin_failed"), Environment.NewLine),
-                            Context.API.GetTranslation("flowlauncher_plugin_sys_dlgtitle_error"),
+                            Localize.flowlauncher_plugin_sys_dlgtext_empty_recycle_bin_failed(Environment.NewLine),
+                            Localize.flowlauncher_plugin_sys_dlgtitle_error(),
                             MessageBoxButton.OK, MessageBoxImage.Error);
                     }
 
@@ -377,8 +378,8 @@ public class Main : IPlugin, ISettingProvider, IPluginI18n
                 Action = c =>
                 {
                     Context.API.SaveAppAllSettings();
-                    Context.API.ShowMsg(Context.API.GetTranslation("flowlauncher_plugin_sys_dlgtitle_success"),
-                        Context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_all_settings_saved"));
+                    Context.API.ShowMsg(Localize.flowlauncher_plugin_sys_dlgtitle_success(),
+                        Localize.flowlauncher_plugin_sys_dlgtext_all_settings_saved());
                     return true;
                 }
             },
@@ -418,10 +419,9 @@ public class Main : IPlugin, ISettingProvider, IPluginI18n
 
                     _ = Context.API.ReloadAllPluginData().ContinueWith(_ =>
                         Context.API.ShowMsg(
-                            Context.API.GetTranslation("flowlauncher_plugin_sys_dlgtitle_success"),
-                            Context.API.GetTranslation(
-                                "flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded")),
-                        System.Threading.Tasks.TaskScheduler.Current);
+                            Localize.flowlauncher_plugin_sys_dlgtitle_success(),
+                            Localize.flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded()),
+                        TaskScheduler.Current);
 
                     return true;
                 }
@@ -514,12 +514,12 @@ public class Main : IPlugin, ISettingProvider, IPluginI18n
 
     public string GetTranslatedPluginTitle()
     {
-        return Context.API.GetTranslation("flowlauncher_plugin_sys_plugin_name");
+        return Localize.flowlauncher_plugin_sys_plugin_name();
     }
 
     public string GetTranslatedPluginDescription()
     {
-        return Context.API.GetTranslation("flowlauncher_plugin_sys_plugin_description");
+        return Localize.flowlauncher_plugin_sys_plugin_description();
     }
 
     public void OnCultureInfoChanged(CultureInfo _)

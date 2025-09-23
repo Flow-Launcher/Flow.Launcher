@@ -11,7 +11,7 @@ public partial class CommandKeywordSettingWindow
         _oldSearchSource = old;
         InitializeComponent();
         CommandKeyword.Text = old.Keyword;
-        CommandKeywordTips.Text = string.Format(Main.Context.API.GetTranslation("flowlauncher_plugin_sys_custom_command_keyword_tip"), old.Name);
+        CommandKeywordTips.Text = Localize.flowlauncher_plugin_sys_custom_command_keyword_tip(old.Name);
     }
 
     private void OnCancelButtonClick(object sender, RoutedEventArgs e)
@@ -24,7 +24,7 @@ public partial class CommandKeywordSettingWindow
         var keyword = CommandKeyword.Text;
         if (string.IsNullOrEmpty(keyword))
         {
-            var warning = Main.Context.API.GetTranslation("flowlauncher_plugin_sys_input_command_keyword");
+            var warning = Localize.flowlauncher_plugin_sys_input_command_keyword();
             Main.Context.API.ShowMsgBox(warning);
         }
         else
