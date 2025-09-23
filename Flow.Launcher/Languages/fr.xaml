@@ -596,7 +596,7 @@ Si vous ajoutez un préfixe &quot;@&quot; lors de la saisie d'un raccourci, celu
     <system:String x:Key="errorTitle">Erreur</system:String>
     <system:String x:Key="folderOpenError">Une erreur s'est produite lors de l'ouverture du dossier. {0}</system:String>
     <system:String x:Key="browserOpenError">Une erreur s'est produite lors de l'ouverture de l'URL dans le navigateur. Veuillez vérifier la configuration de votre navigateur Web par défaut dans la section &quot;Général&quot; de la fenêtre des paramètres</system:String>
-    <system:String x:Key="fileNotFoundError">File or directory not found: {0}</system:String>
+    <system:String x:Key="fileNotFoundError">Fichier ou répertoire introuvable : {0}</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Veuillez patienter...</system:String>
