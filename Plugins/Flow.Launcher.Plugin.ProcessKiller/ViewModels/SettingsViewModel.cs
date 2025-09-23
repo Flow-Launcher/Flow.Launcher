@@ -1,6 +1,7 @@
-﻿namespace Flow.Launcher.Plugin.ProcessKiller.ViewModels;
-
-public class SettingsViewModel(Settings settings)
+﻿namespace Flow.Launcher.Plugin.ProcessKiller.ViewModels
 {
-    public Settings Settings { get; set; } = settings;
+    public class SettingsViewModel(Settings settings)
+    {
+        public Settings Settings { get; set; } = settings;
+    }
 }
