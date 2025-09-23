@@ -1,44 +1,43 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Flow.Launcher.Plugin.Sys
+namespace Flow.Launcher.Plugin.Sys;
+
+public class Command : BaseModel
 {
-    public class Command : BaseModel
+    public string Key { get; set; }
+
+    private string name;
+    [JsonIgnore]
+    public string Name
     {
-        public string Key { get; set; }
-
-        private string name;
-        [JsonIgnore]
-        public string Name
+        get => name;
+        set
         {
-            get => name;
-            set
-            {
-                name = value;
-                OnPropertyChanged();
-            }
+            name = value;
+            OnPropertyChanged();
         }
+    }
 
-        private string description;
-        [JsonIgnore]
-        public string Description
+    private string description;
+    [JsonIgnore]
+    public string Description
+    {
+        get => description;
+        set
         {
-            get => description;
-            set
-            {
-                description = value;
-                OnPropertyChanged();
-            }
+            description = value;
+            OnPropertyChanged();
         }
+    }
 
-        private string keyword;
-        public string Keyword
+    private string keyword;
+    public string Keyword
+    {
+        get => keyword;
+        set
         {
-            get => keyword;
-            set
-            {
-                keyword = value;
-                OnPropertyChanged();
-            }
+            keyword = value;
+            OnPropertyChanged();
         }
     }
 }
