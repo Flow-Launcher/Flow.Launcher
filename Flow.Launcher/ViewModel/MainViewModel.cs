@@ -283,7 +283,7 @@ namespace Flow.Launcher.ViewModel
                 var plugin = (IResultUpdated)pair.Plugin;
                 plugin.ResultsUpdated += (s, e) =>
                 {
-                    if (_updateQuery == null || e.Query.RawQuery != _updateQuery.RawQuery || e.Token.IsCancellationRequested)
+                    if (_updateQuery == null || e.Query.Input != _updateQuery.Input || e.Token.IsCancellationRequested)
                     {
                         return;
                     }
@@ -311,10 +311,7 @@ namespace Flow.Launcher.ViewModel
 
                     PluginManager.UpdatePluginMetadata(resultsCopy, pair.Metadata, e.Query);
 
-                    if (_updateQuery == null || e.Query.RawQuery != _updateQuery.RawQuery || token.IsCancellationRequested)
-                    {
-                        return;
-                    }
+                    if (token.IsCancellationRequested) return;
 
                     App.API.LogDebug(ClassName, $"Update results for plugin <{pair.Metadata.Name}>");
 
@@ -1436,7 +1433,7 @@ namespace Flow.Launcher.ViewModel
                 _ = Task.Delay(200, currentCancellationToken).ContinueWith(_ =>
                 {
                     // start the progress bar if query takes more than 200 ms and this is the current running query and it didn't finish yet
-                    if (_progressQuery != null && _progressQuery == query)
+                    if (_progressQuery != null && _progressQuery.Input == query.Input)
                     {
                         ProgressBarVisibility = Visibility.Visible;
                     }
