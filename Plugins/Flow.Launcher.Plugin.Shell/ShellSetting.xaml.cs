@@ -30,7 +30,7 @@ public partial class CMDSetting : UserControl
 
         ShowOnlyMostUsedCMDs.IsChecked = _settings.ShowOnlyMostUsedCMDs;
 
-        if ((bool)!ShowOnlyMostUsedCMDs.IsChecked)
+        if (ShowOnlyMostUsedCMDs.IsChecked != true)
             ShowOnlyMostUsedCMDsNumber.IsEnabled = false;
 
         ShowOnlyMostUsedCMDsNumber.ItemsSource = new List<int>() { 5, 10, 20 };
