@@ -72,8 +72,8 @@ public class Main : IPlugin, IPluginI18n, IContextMenu, ISettingProvider
     private List<Result> CreateResultsFromQuery(Query query)
     {
         // Get all non-system processes
-        var allPocessList = processHelper.GetMatchingProcesses();
-        if (allPocessList.Count == 0)
+        var allProcessList = processHelper.GetMatchingProcesses();
+        if (allProcessList.Count == 0)
         {
             return null;
         }
@@ -87,7 +87,7 @@ public class Main : IPlugin, IPluginI18n, IContextMenu, ISettingProvider
             [];
         if (string.IsNullOrWhiteSpace(searchTerm))
         {
-            foreach (var p in allPocessList)
+            foreach (var p in allProcessList)
             {
                 var progressNameIdTitle = ProcessHelper.GetProcessNameIdTitle(p);
 
@@ -115,7 +115,7 @@ public class Main : IPlugin, IPluginI18n, IContextMenu, ISettingProvider
         }
         else
         {
-            foreach (var p in allPocessList)
+            foreach (var p in allProcessList)
             {
                 var progressNameIdTitle = ProcessHelper.GetProcessNameIdTitle(p);
 
