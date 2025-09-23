@@ -439,41 +439,41 @@ namespace Flow.Launcher.Plugin.Shell
         public List<Result> LoadContextMenus(Result selectedResult)
         {
             var results = new List<Result>
-        {
-            new()
             {
-                Title = Localize.flowlauncher_plugin_cmd_run_as_different_user(),
-                Action = c =>
+                new()
                 {
-                    Execute(ShellCommand.RunAsDifferentUser, PrepareProcessStartInfo(selectedResult.Title));
-                    return true;
+                    Title = Localize.flowlauncher_plugin_cmd_run_as_different_user(),
+                    Action = c =>
+                    {
+                        Execute(ShellCommand.RunAsDifferentUser, PrepareProcessStartInfo(selectedResult.Title));
+                        return true;
+                    },
+                    IcoPath = "Images/user.png",
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xe7ee")
                 },
-                IcoPath = "Images/user.png",
-                Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xe7ee")
-            },
-            new()
-            {
-                Title = Localize.flowlauncher_plugin_cmd_run_as_administrator(),
-                Action = c =>
+                new()
                 {
-                    Execute(Process.Start, PrepareProcessStartInfo(selectedResult.Title, true));
-                    return true;
+                    Title = Localize.flowlauncher_plugin_cmd_run_as_administrator(),
+                    Action = c =>
+                    {
+                        Execute(Process.Start, PrepareProcessStartInfo(selectedResult.Title, true));
+                        return true;
+                    },
+                    IcoPath = "Images/admin.png",
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xe7ef")
                 },
-                IcoPath = "Images/admin.png",
-                Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xe7ef")
-            },
-            new()
-            {
-                Title = Localize.flowlauncher_plugin_cmd_copy(),
-                Action = c =>
+                new()
                 {
-                    Context.API.CopyToClipboard(selectedResult.Title);
-                    return true;
-                },
-                IcoPath = "Images/copy.png",
-                Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xe8c8")
-            }
-        };
+                    Title = Localize.flowlauncher_plugin_cmd_copy(),
+                    Action = c =>
+                    {
+                        Context.API.CopyToClipboard(selectedResult.Title);
+                        return true;
+                    },
+                    IcoPath = "Images/copy.png",
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xe8c8")
+                }
+            };
 
             return results;
         }
@@ -483,5 +483,4 @@ namespace Flow.Launcher.Plugin.Shell
             Context.API.RemoveGlobalKeyboardCallback(API_GlobalKeyboardEvent);
         }
     }
-
 }

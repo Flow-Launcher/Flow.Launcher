@@ -19,19 +19,19 @@ namespace Flow.Launcher.Plugin.ProcessKiller
         private readonly HashSet<string> _systemProcessList =
         [
             "conhost",
-        "svchost",
-        "idle",
-        "system",
-        "rundll32",
-        "csrss",
-        "lsass",
-        "lsm",
-        "smss",
-        "wininit",
-        "winlogon",
-        "services",
-        "spoolsv",
-        "explorer"
+            "svchost",
+            "idle",
+            "system",
+            "rundll32",
+            "csrss",
+            "lsass",
+            "lsm",
+            "smss",
+            "wininit",
+            "winlogon",
+            "services",
+            "spoolsv",
+            "explorer"
         ];
 
         private const string FlowLauncherProcessName = "Flow.Launcher";
