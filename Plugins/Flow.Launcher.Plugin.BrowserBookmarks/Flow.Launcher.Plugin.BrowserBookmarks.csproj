@@ -47,7 +47,7 @@
                             $(OutputPath)runtimes\linux-musl-arm64;
                             $(OutputPath)runtimes\linux-musl-x64;
                             $(OutputPath)runtimes\linux-musl-s390x;
-                            $(OutputPath)runtimes\linux-ppc6le;
+                            $(OutputPath)runtimes\linux-ppc64le;
                             $(OutputPath)runtimes\linux-s390x;
                             $(OutputPath)runtimes\linux-x64;
                             $(OutputPath)runtimes\linux-x86;
