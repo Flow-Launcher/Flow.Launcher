@@ -200,313 +200,313 @@ namespace Flow.Launcher.Plugin.Sys
             results.AddRange(
             [
                 new Result
-            {
-                Title = "Shutdown",
-                Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe7e8"),
-                IcoPath = "Images\\shutdown.png",
-                Action = c =>
                 {
-                    var result = Context.API.ShowMsgBox(
-                        Localize.flowlauncher_plugin_sys_dlgtext_shutdown_computer(),
-                        Localize.flowlauncher_plugin_sys_shutdown_computer(),
-                        MessageBoxButton.YesNo, MessageBoxImage.Warning);
-
-                    if (result == MessageBoxResult.Yes)
-                        if (EnableShutdownPrivilege())
-                            PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_SHUTDOWN | EXIT_WINDOWS_FLAGS.EWX_POWEROFF, REASON);
-                        else
-                            Process.Start("shutdown", "/s /t 0");
-
-                    return true;
-                }
-            },
-            new Result
-            {
-                Title = "Restart",
-                Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe777"),
-                IcoPath = "Images\\restart.png",
-                Action = c =>
-                {
-                    var result = Context.API.ShowMsgBox(
-                        Localize.flowlauncher_plugin_sys_dlgtext_restart_computer(),
-                        Localize.flowlauncher_plugin_sys_restart_computer(),
-                        MessageBoxButton.YesNo, MessageBoxImage.Warning);
-
-                    if (result == MessageBoxResult.Yes)
-                        if (EnableShutdownPrivilege())
-                            PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_REBOOT, REASON);
-                        else
-                            Process.Start("shutdown", "/r /t 0");
-
-                    return true;
-                }
-            },
-            new Result
-            {
-                Title = "Restart With Advanced Boot Options",
-                Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xecc5"),
-                IcoPath = "Images\\restart_advanced.png",
-                Action = c =>
-                {
-                    var result = Context.API.ShowMsgBox(
-                        Localize.flowlauncher_plugin_sys_dlgtext_restart_computer_advanced(),
-                        Localize.flowlauncher_plugin_sys_restart_computer(),
-                        MessageBoxButton.YesNo, MessageBoxImage.Warning);
-
-                    if (result == MessageBoxResult.Yes)
-                        if (EnableShutdownPrivilege())
-                            PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_REBOOT | EXIT_WINDOWS_FLAGS.EWX_BOOTOPTIONS, REASON);
-                        else
-                            Process.Start("shutdown", "/r /o /t 0");
-
-                    return true;
-                }
-            },
-            new Result
-            {
-                Title = "Log Off/Sign Out",
-                Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe77b"),
-                IcoPath = "Images\\logoff.png",
-                Action = c =>
-                {
-                    var result = Context.API.ShowMsgBox(
-                        Localize.flowlauncher_plugin_sys_dlgtext_logoff_computer(),
-                        Localize.flowlauncher_plugin_sys_log_off(),
-                        MessageBoxButton.YesNo, MessageBoxImage.Warning);
-
-                    if (result == MessageBoxResult.Yes)
-                        PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_LOGOFF, REASON);
-
-                    return true;
-                }
-            },
-            new Result
-            {
-                Title = "Lock",
-                Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe72e"),
-                IcoPath = "Images\\lock.png",
-                Action = c =>
-                {
-                    PInvoke.LockWorkStation();
-                    return true;
-                }
-            },
-            new Result
-            {
-                Title = "Sleep",
-                Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xec46"),
-                IcoPath = "Images\\sleep.png",
-                Action = c =>
-                {
-                    PInvoke.SetSuspendState(false, false, false);
-                    return true;
-                }
-            },
-            new Result
-            {
-                Title = "Hibernate",
-                Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe8be"),
-                IcoPath = "Images\\hibernate.png",
-                Action= c =>
-                {
-                    PInvoke.SetSuspendState(true, false, false);
-                    return true;
-                }
-            },
-             new Result
-            {
-                Title = "Index Option",
-                IcoPath = "Images\\indexoption.png",
-                Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe773"),
-                Action = c =>
-                {
-                    Process.Start("control.exe", "srchadmin.dll");
-                    return true;
-                }
-            },
-            new Result
-            {
-                Title = "Empty Recycle Bin",
-                IcoPath = "Images\\recyclebin.png",
-                Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xea99"),
-                Action = c =>
-                {
-                    // http://www.pinvoke.net/default.aspx/shell32/SHEmptyRecycleBin.html
-                    // FYI, couldn't find documentation for this but if the recycle bin is already empty, it will return -2147418113 (0x8000FFFF (E_UNEXPECTED))
-                    // 0 for nothing
-                    var result = PInvoke.SHEmptyRecycleBin(new(), string.Empty, 0);
-                    if (result != HRESULT.S_OK && result != HRESULT.E_UNEXPECTED)
+                    Title = "Shutdown",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe7e8"),
+                    IcoPath = "Images\\shutdown.png",
+                    Action = c =>
                     {
-                        Context.API.ShowMsgBox(
-                            Localize.flowlauncher_plugin_sys_dlgtext_empty_recycle_bin_failed(Environment.NewLine),
-                            Localize.flowlauncher_plugin_sys_dlgtitle_error(),
-                            MessageBoxButton.OK, MessageBoxImage.Error);
+                        var result = Context.API.ShowMsgBox(
+                            Localize.flowlauncher_plugin_sys_dlgtext_shutdown_computer(),
+                            Localize.flowlauncher_plugin_sys_shutdown_computer(),
+                            MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+                        if (result == MessageBoxResult.Yes)
+                            if (EnableShutdownPrivilege())
+                                PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_SHUTDOWN | EXIT_WINDOWS_FLAGS.EWX_POWEROFF, REASON);
+                            else
+                                Process.Start("shutdown", "/s /t 0");
+
+                        return true;
                     }
-
-                    return true;
-                }
-            },
-            new Result
-            {
-                Title = "Open Recycle Bin",
-                IcoPath = "Images\\openrecyclebin.png",
-                Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe74d"),
-                CopyText = recycleBinFolder,
-                Action = c =>
+                },
+                new Result
                 {
-                    Process.Start("explorer", recycleBinFolder);
-                    return true;
-                }
-            },
-            new Result
-            {
-                Title = "Exit",
-                IcoPath = "Images\\app.png",
-                Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe89f"),
-                Action = c =>
-                {
-                    Context.API.HideMainWindow();
-                    Application.Current.MainWindow.Close();
-                    return true;
-                }
-            },
-            new Result
-            {
-                Title = "Save Settings",
-                Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xea35"),
-                IcoPath = "Images\\app.png",
-                Action = c =>
-                {
-                    Context.API.SaveAppAllSettings();
-                    Context.API.ShowMsg(Localize.flowlauncher_plugin_sys_dlgtitle_success(),
-                        Localize.flowlauncher_plugin_sys_dlgtext_all_settings_saved());
-                    return true;
-                }
-            },
-            new Result
-            {
-                Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe72c"),
-                Title = "Restart Flow Launcher",
-                IcoPath = "Images\\app.png",
-                Action = c =>
-                {
-                    Context.API.RestartApp();
-                    return false;
-                }
-            },
-            new Result
-            {
-                Title = "Settings",
-                Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xf210"),
-                IcoPath = "Images\\app.png",
-                Action = c =>
-                {
-                    // Hide the window first then open setting dialog because main window can be topmost window which will still display on top of the setting dialog for a while
-                    Context.API.HideMainWindow();
-                    Context.API.OpenSettingDialog();
-                    return true;
-                }
-            },
-            new Result
-            {
-                Title = "Reload Plugin Data",
-                IcoPath = "Images\\app.png",
-                Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe72c"),
-                Action = c =>
-                {
-                    // Hide the window first then show msg after done because sometimes the reload could take a while, so not to make user think it's frozen. 
-                    Context.API.HideMainWindow();
-
-                    _ = Context.API.ReloadAllPluginData().ContinueWith(_ =>
-                        Context.API.ShowMsg(
-                            Localize.flowlauncher_plugin_sys_dlgtitle_success(),
-                            Localize.flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded()),
-                        TaskScheduler.Current);
-
-                    return true;
-                }
-            },
-            new Result
-            {
-                Title = "Check For Update",
-                Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xede4"),
-                IcoPath = "Images\\checkupdate.png",
-                Action = c =>
-                {
-                    Context.API.HideMainWindow();
-                    Context.API.CheckForNewUpdate();
-                    return true;
-                }
-            },
-            new Result
-            {
-                Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xf12b"),
-                Title = "Open Log Location",
-                IcoPath = "Images\\app.png",
-                CopyText = Context.API.GetLogDirectory(),
-                AutoCompleteText = Context.API.GetLogDirectory(),
-                Action = c =>
-                {
-                    Context.API.OpenDirectory(Context.API.GetLogDirectory());
-                    return true;
-                }
-            },
-            new Result
-            {
-                Title = "Flow Launcher Tips",
-                Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe897"),
-                IcoPath = "Images\\app.png",
-                CopyText = Documentation,
-                AutoCompleteText = Documentation,
-                Action = c =>
-                {
-                    Context.API.OpenUrl(Documentation);
-                    return true;
-                }
-            },
-            new Result
-            {
-                Title = "Flow Launcher UserData Folder",
-                Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xf12b"),
-                IcoPath = "Images\\app.png",
-                CopyText = Context.API.GetDataDirectory(),
-                AutoCompleteText = Context.API.GetDataDirectory(),
-                Action = c =>
-                {
-                    Context.API.OpenDirectory(Context.API.GetDataDirectory());
-                    return true;
-                }
-            },
-            new Result
-            {
-                Title = "Toggle Game Mode",
-                IcoPath = "Images\\app.png",
-                Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\ue7fc"),
-                Action = c =>
-                {
-                    Context.API.ToggleGameMode();
-                    return true;
-                }
-            },
-            new Result
-            {
-                Title = "Set Flow Launcher Theme",
-                IcoPath = "Images\\app.png",
-                Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\ue790"),
-                Action = c =>
-                {
-                    if (string.IsNullOrEmpty(query.ActionKeyword))
+                    Title = "Restart",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe777"),
+                    IcoPath = "Images\\restart.png",
+                    Action = c =>
                     {
-                        Context.API.ChangeQuery($"{ThemeSelector.Keyword}{Plugin.Query.ActionKeywordSeparator}");
-                    }
-                    else
-                    {
-                        Context.API.ChangeQuery($"{query.ActionKeyword}{Plugin.Query.ActionKeywordSeparator}{ThemeSelector.Keyword}{Plugin.Query.ActionKeywordSeparator}");
+                        var result = Context.API.ShowMsgBox(
+                            Localize.flowlauncher_plugin_sys_dlgtext_restart_computer(),
+                            Localize.flowlauncher_plugin_sys_restart_computer(),
+                            MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
+                        if (result == MessageBoxResult.Yes)
+                            if (EnableShutdownPrivilege())
+                                PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_REBOOT, REASON);
+                            else
+                                Process.Start("shutdown", "/r /t 0");
+
+                        return true;
                     }
-                    return false;
+                },
+                new Result
+                {
+                    Title = "Restart With Advanced Boot Options",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xecc5"),
+                    IcoPath = "Images\\restart_advanced.png",
+                    Action = c =>
+                    {
+                        var result = Context.API.ShowMsgBox(
+                            Localize.flowlauncher_plugin_sys_dlgtext_restart_computer_advanced(),
+                            Localize.flowlauncher_plugin_sys_restart_computer(),
+                            MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+                        if (result == MessageBoxResult.Yes)
+                            if (EnableShutdownPrivilege())
+                                PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_REBOOT | EXIT_WINDOWS_FLAGS.EWX_BOOTOPTIONS, REASON);
+                            else
+                                Process.Start("shutdown", "/r /o /t 0");
+
+                        return true;
+                    }
+                },
+                new Result
+                {
+                    Title = "Log Off/Sign Out",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe77b"),
+                    IcoPath = "Images\\logoff.png",
+                    Action = c =>
+                    {
+                        var result = Context.API.ShowMsgBox(
+                            Localize.flowlauncher_plugin_sys_dlgtext_logoff_computer(),
+                            Localize.flowlauncher_plugin_sys_log_off(),
+                            MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+                        if (result == MessageBoxResult.Yes)
+                            PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_LOGOFF, REASON);
+
+                        return true;
+                    }
+                },
+                new Result
+                {
+                    Title = "Lock",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe72e"),
+                    IcoPath = "Images\\lock.png",
+                    Action = c =>
+                    {
+                        PInvoke.LockWorkStation();
+                        return true;
+                    }
+                },
+                new Result
+                {
+                    Title = "Sleep",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xec46"),
+                    IcoPath = "Images\\sleep.png",
+                    Action = c =>
+                    {
+                        PInvoke.SetSuspendState(false, false, false);
+                        return true;
+                    }
+                },
+                new Result
+                {
+                    Title = "Hibernate",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe8be"),
+                    IcoPath = "Images\\hibernate.png",
+                    Action= c =>
+                    {
+                        PInvoke.SetSuspendState(true, false, false);
+                        return true;
+                    }
+                },
+                 new Result
+                {
+                    Title = "Index Option",
+                    IcoPath = "Images\\indexoption.png",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe773"),
+                    Action = c =>
+                    {
+                        Process.Start("control.exe", "srchadmin.dll");
+                        return true;
+                    }
+                },
+                new Result
+                {
+                    Title = "Empty Recycle Bin",
+                    IcoPath = "Images\\recyclebin.png",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xea99"),
+                    Action = c =>
+                    {
+                        // http://www.pinvoke.net/default.aspx/shell32/SHEmptyRecycleBin.html
+                        // FYI, couldn't find documentation for this but if the recycle bin is already empty, it will return -2147418113 (0x8000FFFF (E_UNEXPECTED))
+                        // 0 for nothing
+                        var result = PInvoke.SHEmptyRecycleBin(new(), string.Empty, 0);
+                        if (result != HRESULT.S_OK && result != HRESULT.E_UNEXPECTED)
+                        {
+                            Context.API.ShowMsgBox(
+                                Localize.flowlauncher_plugin_sys_dlgtext_empty_recycle_bin_failed(Environment.NewLine),
+                                Localize.flowlauncher_plugin_sys_dlgtitle_error(),
+                                MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+
+                        return true;
+                    }
+                },
+                new Result
+                {
+                    Title = "Open Recycle Bin",
+                    IcoPath = "Images\\openrecyclebin.png",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe74d"),
+                    CopyText = recycleBinFolder,
+                    Action = c =>
+                    {
+                        Process.Start("explorer", recycleBinFolder);
+                        return true;
+                    }
+                },
+                new Result
+                {
+                    Title = "Exit",
+                    IcoPath = "Images\\app.png",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe89f"),
+                    Action = c =>
+                    {
+                        Context.API.HideMainWindow();
+                        Application.Current.MainWindow.Close();
+                        return true;
+                    }
+                },
+                new Result
+                {
+                    Title = "Save Settings",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xea35"),
+                    IcoPath = "Images\\app.png",
+                    Action = c =>
+                    {
+                        Context.API.SaveAppAllSettings();
+                        Context.API.ShowMsg(Localize.flowlauncher_plugin_sys_dlgtitle_success(),
+                            Localize.flowlauncher_plugin_sys_dlgtext_all_settings_saved());
+                        return true;
+                    }
+                },
+                new Result
+                {
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe72c"),
+                    Title = "Restart Flow Launcher",
+                    IcoPath = "Images\\app.png",
+                    Action = c =>
+                    {
+                        Context.API.RestartApp();
+                        return false;
+                    }
+                },
+                new Result
+                {
+                    Title = "Settings",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xf210"),
+                    IcoPath = "Images\\app.png",
+                    Action = c =>
+                    {
+                        // Hide the window first then open setting dialog because main window can be topmost window which will still display on top of the setting dialog for a while
+                        Context.API.HideMainWindow();
+                        Context.API.OpenSettingDialog();
+                        return true;
+                    }
+                },
+                new Result
+                {
+                    Title = "Reload Plugin Data",
+                    IcoPath = "Images\\app.png",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe72c"),
+                    Action = c =>
+                    {
+                        // Hide the window first then show msg after done because sometimes the reload could take a while, so not to make user think it's frozen. 
+                        Context.API.HideMainWindow();
+
+                        _ = Context.API.ReloadAllPluginData().ContinueWith(_ =>
+                            Context.API.ShowMsg(
+                                Localize.flowlauncher_plugin_sys_dlgtitle_success(),
+                                Localize.flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded()),
+                            TaskScheduler.Current);
+
+                        return true;
+                    }
+                },
+                new Result
+                {
+                    Title = "Check For Update",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xede4"),
+                    IcoPath = "Images\\checkupdate.png",
+                    Action = c =>
+                    {
+                        Context.API.HideMainWindow();
+                        Context.API.CheckForNewUpdate();
+                        return true;
+                    }
+                },
+                new Result
+                {
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xf12b"),
+                    Title = "Open Log Location",
+                    IcoPath = "Images\\app.png",
+                    CopyText = Context.API.GetLogDirectory(),
+                    AutoCompleteText = Context.API.GetLogDirectory(),
+                    Action = c =>
+                    {
+                        Context.API.OpenDirectory(Context.API.GetLogDirectory());
+                        return true;
+                    }
+                },
+                new Result
+                {
+                    Title = "Flow Launcher Tips",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe897"),
+                    IcoPath = "Images\\app.png",
+                    CopyText = Documentation,
+                    AutoCompleteText = Documentation,
+                    Action = c =>
+                    {
+                        Context.API.OpenUrl(Documentation);
+                        return true;
+                    }
+                },
+                new Result
+                {
+                    Title = "Flow Launcher UserData Folder",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xf12b"),
+                    IcoPath = "Images\\app.png",
+                    CopyText = Context.API.GetDataDirectory(),
+                    AutoCompleteText = Context.API.GetDataDirectory(),
+                    Action = c =>
+                    {
+                        Context.API.OpenDirectory(Context.API.GetDataDirectory());
+                        return true;
+                    }
+                },
+                new Result
+                {
+                    Title = "Toggle Game Mode",
+                    IcoPath = "Images\\app.png",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\ue7fc"),
+                    Action = c =>
+                    {
+                        Context.API.ToggleGameMode();
+                        return true;
+                    }
+                },
+                new Result
+                {
+                    Title = "Set Flow Launcher Theme",
+                    IcoPath = "Images\\app.png",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\ue790"),
+                    Action = c =>
+                    {
+                        if (string.IsNullOrEmpty(query.ActionKeyword))
+                        {
+                            Context.API.ChangeQuery($"{ThemeSelector.Keyword}{Plugin.Query.ActionKeywordSeparator}");
+                        }
+                        else
+                        {
+                            Context.API.ChangeQuery($"{query.ActionKeyword}{Plugin.Query.ActionKeywordSeparator}{ThemeSelector.Keyword}{Plugin.Query.ActionKeywordSeparator}");
+
+                        }
+                        return false;
+                    }
                 }
-            }
             ]);
 
             return results;
