@@ -17,7 +17,7 @@ public class Main : IPlugin, ISettingProvider, IPluginI18n, IContextMenu, IDispo
 {
     private static readonly string ClassName = nameof(Main);
 
-    internal PluginInitContext Context { get; private set; }
+    internal static PluginInitContext Context { get; private set; }
 
     private const string Image = "Images/shell.png";
     private bool _winRStroked;
@@ -103,14 +103,14 @@ public class Main : IPlugin, ISettingProvider, IPluginI18n, IContextMenu, IDispo
             {
                 if (m.Key == cmd)
                 {
-                    result.SubTitle = string.Format(Context.API.GetTranslation("flowlauncher_plugin_cmd_cmd_has_been_executed_times"), m.Value);
+                    result.SubTitle = Localize.flowlauncher_plugin_cmd_cmd_has_been_executed_times(m.Value);
                     return null;
                 }
 
                 var ret = new Result
                 {
                     Title = m.Key,
-                    SubTitle = string.Format(Context.API.GetTranslation("flowlauncher_plugin_cmd_cmd_has_been_executed_times"), m.Value),
+                    SubTitle = Localize.flowlauncher_plugin_cmd_cmd_has_been_executed_times(m.Value),
                     IcoPath = Image,
                     Action = c =>
                     {
@@ -140,7 +140,7 @@ public class Main : IPlugin, ISettingProvider, IPluginI18n, IContextMenu, IDispo
         {
             Title = cmd,
             Score = 5000,
-            SubTitle = Context.API.GetTranslation("flowlauncher_plugin_cmd_execute_through_shell"),
+            SubTitle = Localize.flowlauncher_plugin_cmd_execute_through_shell(),
             IcoPath = Image,
             Action = c =>
             {
@@ -165,7 +165,7 @@ public class Main : IPlugin, ISettingProvider, IPluginI18n, IContextMenu, IDispo
             .Select(m => new Result
             {
                 Title = m.Key,
-                SubTitle = string.Format(Context.API.GetTranslation("flowlauncher_plugin_cmd_cmd_has_been_executed_times"), m.Value),
+                SubTitle = Localize.flowlauncher_plugin_cmd_cmd_has_been_executed_times(m.Value),
                 IcoPath = Image,
                 Action = c =>
                 {
@@ -199,7 +199,7 @@ public class Main : IPlugin, ISettingProvider, IPluginI18n, IContextMenu, IDispo
             Verb = runAsAdministratorArg,
             WorkingDirectory = workingDirectory,
         };
-        var notifyStr = Context.API.GetTranslation("flowlauncher_plugin_cmd_press_any_key_to_close");
+        var notifyStr = Localize.flowlauncher_plugin_cmd_press_any_key_to_close();
         var addedCharacter = _settings.UseWindowsTerminal ? "\\" : "";
         switch (_settings.Shell)
         {
@@ -336,12 +336,12 @@ public class Main : IPlugin, ISettingProvider, IPluginI18n, IContextMenu, IDispo
         catch (FileNotFoundException e)
         {
             Context.API.ShowMsgError(GetTranslatedPluginTitle(),
-                string.Format(Context.API.GetTranslation("flowlauncher_plugin_cmd_command_not_found"), e.Message));
+                Localize.flowlauncher_plugin_cmd_command_not_found(e.Message));
         }
         catch (Win32Exception e)
         {
             Context.API.ShowMsgError(GetTranslatedPluginTitle(),
-                string.Format(Context.API.GetTranslation("flowlauncher_plugin_cmd_error_running_command"), e.Message));
+                Localize.flowlauncher_plugin_cmd_error_running_command(e.Message));
         }
         catch (Exception e)
         {
@@ -405,7 +405,7 @@ public class Main : IPlugin, ISettingProvider, IPluginI18n, IContextMenu, IDispo
         return true;
     }
 
-    private void OnWinRPressed()
+    private static void OnWinRPressed()
     {
         Context.API.ShowMainWindow();
         // show the main window and set focus to the query box
@@ -428,12 +428,12 @@ public class Main : IPlugin, ISettingProvider, IPluginI18n, IContextMenu, IDispo
 
     public string GetTranslatedPluginTitle()
     {
-        return Context.API.GetTranslation("flowlauncher_plugin_cmd_plugin_name");
+        return Localize.flowlauncher_plugin_cmd_plugin_name();
     }
 
     public string GetTranslatedPluginDescription()
     {
-        return Context.API.GetTranslation("flowlauncher_plugin_cmd_plugin_description");
+        return Localize.flowlauncher_plugin_cmd_plugin_description();
     }
 
     public List<Result> LoadContextMenus(Result selectedResult)
@@ -442,7 +442,7 @@ public class Main : IPlugin, ISettingProvider, IPluginI18n, IContextMenu, IDispo
         {
             new()
             {
-                Title = Context.API.GetTranslation("flowlauncher_plugin_cmd_run_as_different_user"),
+                Title = Localize.flowlauncher_plugin_cmd_run_as_different_user(),
                 Action = c =>
                 {
                     Execute(ShellCommand.RunAsDifferentUser, PrepareProcessStartInfo(selectedResult.Title));
@@ -453,7 +453,7 @@ public class Main : IPlugin, ISettingProvider, IPluginI18n, IContextMenu, IDispo
             },
             new()
             {
-                Title = Context.API.GetTranslation("flowlauncher_plugin_cmd_run_as_administrator"),
+                Title = Localize.flowlauncher_plugin_cmd_run_as_administrator(),
                 Action = c =>
                 {
                     Execute(Process.Start, PrepareProcessStartInfo(selectedResult.Title, true));
@@ -464,7 +464,7 @@ public class Main : IPlugin, ISettingProvider, IPluginI18n, IContextMenu, IDispo
             },
             new()
             {
-                Title = Context.API.GetTranslation("flowlauncher_plugin_cmd_copy"),
+                Title = Localize.flowlauncher_plugin_cmd_copy(),
                 Action = c =>
                 {
                     Context.API.CopyToClipboard(selectedResult.Title);
