@@ -7,7 +7,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
     {
         public string Name { get; set; }
         [JsonIgnore]
-        public string DisplayName => Name == "Default" ? Localize.defaultBrowser_default(): Name;
+        public string DisplayName => Name == "Default" ? Localize.defaultBrowser_default() : Name;
         public string Path { get; set; }
         public string PrivateArg { get; set; }
         public bool EnablePrivate { get; set; }

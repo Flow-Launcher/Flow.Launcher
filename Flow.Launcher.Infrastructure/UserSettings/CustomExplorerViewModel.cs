@@ -7,7 +7,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
     {
         public string Name { get; set; }
         [JsonIgnore]
-        public string DisplayName => Name == "Explorer" ? Localize.fileManagerExplorer(): Name;
+        public string DisplayName => Name == "Explorer" ? Localize.fileManagerExplorer() : Name;
         public string Path { get; set; }
         public string FileArgument { get; set; } = "\"%d\"";
         public string DirectoryArgument { get; set; } = "\"%d\"";

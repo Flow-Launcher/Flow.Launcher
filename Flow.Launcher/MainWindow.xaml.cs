@@ -753,7 +753,7 @@ namespace Flow.Launcher
         private void UpdateNotifyIconText()
         {
             var menu = _contextMenu;
-            ((MenuItem)menu.Items[0]).Header = Localize.iconTrayOpen()+
+            ((MenuItem)menu.Items[0]).Header = Localize.iconTrayOpen() +
                                                " (" + _settings.Hotkey + ")";
             ((MenuItem)menu.Items[1]).Header = Localize.GameMode();
             ((MenuItem)menu.Items[2]).Header = Localize.PositionReset();
@@ -768,7 +768,7 @@ namespace Flow.Launcher
             var openIcon = new FontIcon { Glyph = "\ue71e" };
             var open = new MenuItem
             {
-                Header = Localize.iconTrayOpen()+ " (" + _settings.Hotkey + ")",
+                Header = Localize.iconTrayOpen() + " (" + _settings.Hotkey + ")",
                 Icon = openIcon
             };
             var gamemodeIcon = new FontIcon { Glyph = "\ue7fc" };

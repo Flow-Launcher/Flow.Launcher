@@ -164,11 +164,11 @@ namespace Flow.Launcher.ViewModel
             Visibility.Collapsed : Visibility.Visible;
         public string InitializeTime => PluginPair.Metadata.InitTime + "ms";
         public string QueryTime => PluginPair.Metadata.AvgQueryTime + "ms";
-        public string Version => Localize.plugin_query_version()+ " " + PluginPair.Metadata.Version;
+        public string Version => Localize.plugin_query_version() + " " + PluginPair.Metadata.Version;
         public string InitAndQueryTime =>
-            Localize.plugin_init_time()+ " " +
+            Localize.plugin_init_time() + " " +
             PluginPair.Metadata.InitTime + "ms, " +
-            Localize.plugin_query_time()+ " " +
+            Localize.plugin_query_time() + " " +
             PluginPair.Metadata.AvgQueryTime + "ms";
         public string ActionKeywordsText => string.Join(Query.ActionKeywordSeparator, PluginPair.Metadata.ActionKeywords);
         public string SearchDelayTimeText => PluginPair.Metadata.SearchDelayTime == null ?
