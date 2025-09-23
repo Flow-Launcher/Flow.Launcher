@@ -41,7 +41,7 @@ namespace Flow.Launcher
 
             if (string.IsNullOrEmpty(Hotkey) && string.IsNullOrEmpty(ActionKeyword))
             {
-                App.API.ShowMsgBox(App.API.GetTranslation("emptyPluginHotkey"));
+                App.API.ShowMsgBox(Localize.emptyPluginHotkey());
                 return;
             }
 

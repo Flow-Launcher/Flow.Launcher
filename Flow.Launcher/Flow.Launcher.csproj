@@ -37,6 +37,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <NoWarn>$(NoWarn);FLSG0007</NoWarn>
   </PropertyGroup>
 
   <Target Name="RemoveUnnecessaryRuntimesAfterBuild" AfterTargets="Build">
@@ -132,6 +133,7 @@
   <ItemGroup>
     <PackageReference Include="ChefKeys" Version="0.1.2" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="Flow.Launcher.Localization" Version="0.0.6" />
     <PackageReference Include="Fody" Version="6.9.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -160,6 +162,10 @@
     <ProjectReference Include="..\Flow.Launcher.Infrastructure\Flow.Launcher.Infrastructure.csproj" />
     <ProjectReference Include="..\Flow.Launcher.Plugin\Flow.Launcher.Plugin.csproj" />
   </ItemGroup>
+
+  <PropertyGroup>
+    <FLLUseDependencyInjection>true</FLLUseDependencyInjection>
+  </PropertyGroup>
 
   <ItemGroup>
     <Content Include="Resources\open.wav">

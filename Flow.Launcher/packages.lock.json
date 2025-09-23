@@ -14,6 +14,12 @@
         "resolved": "8.4.0",
         "contentHash": "tqVU8yc/ADO9oiTRyTnwhFN68hCwvkliMierptWOudIAvWY1mWCh5VFh+guwHJmpMwfg0J0rY+yyd5Oy7ty9Uw=="
       },
+      "Flow.Launcher.Localization": {
+        "type": "Direct",
+        "requested": "[0.0.6, )",
+        "resolved": "0.0.6",
+        "contentHash": "Wwh5lrnmAf66go456h9sSrkdIW3G/IaKPE3+qWZLRAQ86kIe1JovHRj+ljHZXnFOWu1cbFmHg3l1RuqzPLAHow=="
+      },
       "Fody": {
         "type": "Direct",
         "requested": "[6.9.3, )",

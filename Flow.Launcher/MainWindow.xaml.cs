@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Media;
@@ -145,8 +145,8 @@ namespace Flow.Launcher
                 _settings.ReleaseNotesVersion = Constant.Version;
                 // Show release note popup with button
                 App.API.ShowMsgWithButton(
-                    string.Format(App.API.GetTranslation("appUpdateTitle"), Constant.Version),
-                    App.API.GetTranslation("appUpdateButtonContent"),
+                    Localize.appUpdateTitle(Constant.Version),
+                    Localize.appUpdateButtonContent(),
                     () =>
                     {
                         Application.Current.Dispatcher.Invoke(() =>
@@ -753,12 +753,12 @@ namespace Flow.Launcher
         private void UpdateNotifyIconText()
         {
             var menu = _contextMenu;
-            ((MenuItem)menu.Items[0]).Header = App.API.GetTranslation("iconTrayOpen") +
+            ((MenuItem)menu.Items[0]).Header = Localize.iconTrayOpen()+
                                                " (" + _settings.Hotkey + ")";
-            ((MenuItem)menu.Items[1]).Header = App.API.GetTranslation("GameMode");
-            ((MenuItem)menu.Items[2]).Header = App.API.GetTranslation("PositionReset");
-            ((MenuItem)menu.Items[3]).Header = App.API.GetTranslation("iconTraySettings");
-            ((MenuItem)menu.Items[4]).Header = App.API.GetTranslation("iconTrayExit");
+            ((MenuItem)menu.Items[1]).Header = Localize.GameMode();
+            ((MenuItem)menu.Items[2]).Header = Localize.PositionReset();
+            ((MenuItem)menu.Items[3]).Header = Localize.iconTraySettings();
+            ((MenuItem)menu.Items[4]).Header = Localize.iconTrayExit();
         }
 
         private void InitializeContextMenu()
@@ -768,31 +768,31 @@ namespace Flow.Launcher
             var openIcon = new FontIcon { Glyph = "\ue71e" };
             var open = new MenuItem
             {
-                Header = App.API.GetTranslation("iconTrayOpen") + " (" + _settings.Hotkey + ")",
+                Header = Localize.iconTrayOpen()+ " (" + _settings.Hotkey + ")",
                 Icon = openIcon
             };
             var gamemodeIcon = new FontIcon { Glyph = "\ue7fc" };
             var gamemode = new MenuItem
             {
-                Header = App.API.GetTranslation("GameMode"),
+                Header = Localize.GameMode(),
                 Icon = gamemodeIcon
             };
             var positionresetIcon = new FontIcon { Glyph = "\ue73f" };
             var positionreset = new MenuItem
             {
-                Header = App.API.GetTranslation("PositionReset"),
+                Header = Localize.PositionReset(),
                 Icon = positionresetIcon
             };
             var settingsIcon = new FontIcon { Glyph = "\ue713" };
             var settings = new MenuItem
             {
-                Header = App.API.GetTranslation("iconTraySettings"),
+                Header = Localize.iconTraySettings(),
                 Icon = settingsIcon
             };
             var exitIcon = new FontIcon { Glyph = "\ue7e8" };
             var exit = new MenuItem
             {
-                Header = App.API.GetTranslation("iconTrayExit"),
+                Header = Localize.iconTrayExit(),
                 Icon = exitIcon
             };
 
@@ -802,8 +802,8 @@ namespace Flow.Launcher
             settings.Click += (o, e) => App.API.OpenSettingDialog();
             exit.Click += (o, e) => Close();
 
-            gamemode.ToolTip = App.API.GetTranslation("GameModeToolTip");
-            positionreset.ToolTip = App.API.GetTranslation("PositionResetToolTip");
+            gamemode.ToolTip = Localize.GameModeToolTip();
+            positionreset.ToolTip = Localize.PositionResetToolTip();
 
             _contextMenu.Items.Add(open);
             _contextMenu.Items.Add(gamemode);

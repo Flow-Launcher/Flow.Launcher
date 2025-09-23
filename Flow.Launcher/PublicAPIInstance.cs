@@ -184,14 +184,14 @@ namespace Flow.Launcher
                     if (showDefaultNotification)
                     {
                         ShowMsg(
-                            $"{GetTranslation("copy")} {(isFile ? GetTranslation("fileTitle") : GetTranslation("folderTitle"))}",
-                            GetTranslation("completedSuccessfully"));
+                            $"{Localize.copy()} {(isFile ? Localize.fileTitle(): Localize.folderTitle())}",
+                            Localize.completedSuccessfully());
                     }
                 }
                 else
                 {
                     LogException(nameof(PublicAPIInstance), "Failed to copy file/folder to clipboard", exception);
-                    ShowMsgError(GetTranslation("failedToCopy"));
+                    ShowMsgError(Localize.failedToCopy());
                 }
             }
             else
@@ -209,14 +209,14 @@ namespace Flow.Launcher
                     if (showDefaultNotification)
                     {
                         ShowMsg(
-                            $"{GetTranslation("copy")} {GetTranslation("textTitle")}",
-                            GetTranslation("completedSuccessfully"));
+                            $"{Localize.copy()} {Localize.textTitle()}",
+                            Localize.completedSuccessfully());
                     }
                 }
                 else
                 {
                     LogException(nameof(PublicAPIInstance), "Failed to copy text to clipboard", exception);
-                    ShowMsgError(GetTranslation("failedToCopy"));
+                    ShowMsgError(Localize.failedToCopy());
                 }
             }
         }
@@ -393,18 +393,18 @@ namespace Flow.Launcher
             }
             catch (Win32Exception ex) when (ex.NativeErrorCode == 2)
             {
-                LogError(ClassName, "File Manager not found");
+                LogException(ClassName, "File Manager not found", ex);
                 ShowMsgError(
-                    GetTranslation("fileManagerNotFoundTitle"),
-                    string.Format(GetTranslation("fileManagerNotFound"), ex.Message)
+                    Localize.fileManagerNotFoundTitle(),
+                    Localize.fileManagerNotFound()
                 );
             }
             catch (Exception ex)
             {
                 LogException(ClassName, "Failed to open folder", ex);
                 ShowMsgError(
-                    GetTranslation("errorTitle"),
-                    string.Format(GetTranslation("folderOpenError"), ex.Message)
+                    Localize.errorTitle(),
+                    Localize.folderOpenError()
                 );
             }
         }
@@ -413,7 +413,7 @@ namespace Flow.Launcher
         {
             if (uri.IsFile && !FilesFolders.FileOrLocationExists(uri.LocalPath))
             {
-                ShowMsgError(GetTranslation("errorTitle"), string.Format(GetTranslation("fileNotFoundError"), uri.LocalPath));
+                ShowMsgError(Localize.errorTitle(), Localize.fileNotFoundError(uri.LocalPath));
                 return;
             }
 
@@ -439,8 +439,8 @@ namespace Flow.Launcher
                     var tabOrWindow = browserInfo.OpenInTab ? "tab" : "window";
                     LogException(ClassName, $"Failed to open URL in browser {tabOrWindow}: {path}, {inPrivate ?? browserInfo.EnablePrivate}, {browserInfo.PrivateArg}", e);
                     ShowMsgError(
-                        GetTranslation("errorTitle"),
-                        GetTranslation("browserOpenError")
+                        Localize.errorTitle(),
+                        Localize.browserOpenError()
                     );
                 }
             }
@@ -457,7 +457,7 @@ namespace Flow.Launcher
                 catch (Exception e)
                 {
                     LogException(ClassName, $"Failed to open: {uri.AbsoluteUri}", e);
-                    ShowMsgError(GetTranslation("errorTitle"), e.Message);
+                    ShowMsgError(Localize.errorTitle(), e.Message);
                 }
             }
         }
