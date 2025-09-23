@@ -141,15 +141,7 @@ namespace Flow.Launcher.Infrastructure.Image
             }
             catch
             {
-                try
-                {
-                    hBitmap = GetHBitmap(Path.GetFullPath(fileName), width, height, options);
-                }
-                catch (System.Exception ex)
-                {
-                    // Handle other exceptions
-                    throw new InvalidOperationException("Failed to get thumbnail", ex);
-                }
+                hBitmap = GetHBitmap(Path.GetFullPath(fileName), width, height, options);
             }
 
             return hBitmap;
