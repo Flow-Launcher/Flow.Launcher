@@ -135,7 +135,7 @@ namespace Flow.Launcher.Infrastructure.Image
                 var iconPath = urlSection?["IconFile"];
                 if (string.IsNullOrEmpty(iconPath))
                 {
-                    throw new FileNotFoundException();
+                    throw new FileNotFoundException("Icon file not specified in Internet shortcut (.url) file.");
                 }
                 hBitmap = GetHBitmap(Path.GetFullPath(iconPath), width, height, options);
             }
