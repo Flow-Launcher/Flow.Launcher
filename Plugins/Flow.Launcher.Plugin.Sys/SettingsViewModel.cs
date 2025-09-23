@@ -1,6 +1,7 @@
-﻿namespace Flow.Launcher.Plugin.Sys;
-
-public class SettingsViewModel(Settings settings)
+﻿namespace Flow.Launcher.Plugin.Sys
 {
-    public Settings Settings { get; } = settings;
+    public class SettingsViewModel(Settings settings)
+    {
+        public Settings Settings { get; } = settings;
+    }
 }

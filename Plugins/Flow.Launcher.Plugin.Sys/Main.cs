@@ -13,13 +13,13 @@ using Windows.Win32.System.Shutdown;
 using Application = System.Windows.Application;
 using Control = System.Windows.Controls.Control;
 
-namespace Flow.Launcher.Plugin.Sys;
-
-public class Main : IPlugin, ISettingProvider, IPluginI18n
+namespace Flow.Launcher.Plugin.Sys
 {
-    private static readonly string ClassName = nameof(Main);
+    public class Main : IPlugin, ISettingProvider, IPluginI18n
+    {
+        private static readonly string ClassName = nameof(Main);
 
-    private readonly Dictionary<string, string> KeywordTitleMappings = new()
+        private readonly Dictionary<string, string> KeywordTitleMappings = new()
     {
         {"Shutdown", "flowlauncher_plugin_sys_shutdown_computer_cmd"},
         {"Restart", "flowlauncher_plugin_sys_restart_computer_cmd"},
@@ -43,163 +43,163 @@ public class Main : IPlugin, ISettingProvider, IPluginI18n
         {"Toggle Game Mode", "flowlauncher_plugin_sys_toggle_game_mode_cmd"},
         {"Set Flow Launcher Theme", "flowlauncher_plugin_sys_theme_selector_cmd"}
     };
-    private readonly Dictionary<string, string> KeywordDescriptionMappings = [];
+        private readonly Dictionary<string, string> KeywordDescriptionMappings = [];
 
-    // SHTDN_REASON_MAJOR_OTHER indicates a generic shutdown reason that isn't categorized under hardware failure,
-    // software updates, or other predefined reasons.
-    // SHTDN_REASON_FLAG_PLANNED marks the shutdown as planned rather than an unexpected shutdown or failure
-    private const SHUTDOWN_REASON REASON = SHUTDOWN_REASON.SHTDN_REASON_MAJOR_OTHER |
-        SHUTDOWN_REASON.SHTDN_REASON_FLAG_PLANNED;
+        // SHTDN_REASON_MAJOR_OTHER indicates a generic shutdown reason that isn't categorized under hardware failure,
+        // software updates, or other predefined reasons.
+        // SHTDN_REASON_FLAG_PLANNED marks the shutdown as planned rather than an unexpected shutdown or failure
+        private const SHUTDOWN_REASON REASON = SHUTDOWN_REASON.SHTDN_REASON_MAJOR_OTHER |
+            SHUTDOWN_REASON.SHTDN_REASON_FLAG_PLANNED;
 
-    private const string Documentation = "https://flowlauncher.com/docs/#/usage-tips";
+        private const string Documentation = "https://flowlauncher.com/docs/#/usage-tips";
 
-    internal static PluginInitContext Context { get; private set; }
-    private Settings _settings;
-    private SettingsViewModel _viewModel;
+        internal static PluginInitContext Context { get; private set; }
+        private Settings _settings;
+        private SettingsViewModel _viewModel;
 
-    public Control CreateSettingPanel()
-    {
-        UpdateLocalizedNameDescription(false);
-        return new SysSettings(_viewModel);
-    }
-
-    public List<Result> Query(Query query)
-    {
-        if (query.Search.StartsWith(ThemeSelector.Keyword))
+        public Control CreateSettingPanel()
         {
-            return ThemeSelector.Query(query);
+            UpdateLocalizedNameDescription(false);
+            return new SysSettings(_viewModel);
         }
 
-        var commands = Commands(query);
-        var results = new List<Result>();
-        var isEmptyQuery = string.IsNullOrWhiteSpace(query.Search);
-        foreach (var c in commands)
+        public List<Result> Query(Query query)
         {
-            var command = _settings.Commands.First(x => x.Key == c.Title);
-            c.Title = command.Name;
-            c.SubTitle = command.Description;
-            if (isEmptyQuery)
+            if (query.Search.StartsWith(ThemeSelector.Keyword))
             {
-                results.Add(c);
-                continue;
+                return ThemeSelector.Query(query);
             }
 
-            // Match from localized title & localized subtitle & keyword
-            var titleMatch = Context.API.FuzzySearch(query.Search, c.Title);
-            var subTitleMatch = Context.API.FuzzySearch(query.Search, c.SubTitle);
-            var keywordMatch = Context.API.FuzzySearch(query.Search, command.Keyword);
-
-            // Get the largest score from them
-            var score = Math.Max(titleMatch.Score, subTitleMatch.Score);
-            var finalScore = Math.Max(score, keywordMatch.Score);
-            if (finalScore > 0)
+            var commands = Commands(query);
+            var results = new List<Result>();
+            var isEmptyQuery = string.IsNullOrWhiteSpace(query.Search);
+            foreach (var c in commands)
             {
-                c.Score = finalScore;
-
-                // If title match has the highest score, highlight title
-                if (finalScore == titleMatch.Score)
+                var command = _settings.Commands.First(x => x.Key == c.Title);
+                c.Title = command.Name;
+                c.SubTitle = command.Description;
+                if (isEmptyQuery)
                 {
-                    c.TitleHighlightData = titleMatch.MatchData;
+                    results.Add(c);
+                    continue;
                 }
 
-                results.Add(c);
+                // Match from localized title & localized subtitle & keyword
+                var titleMatch = Context.API.FuzzySearch(query.Search, c.Title);
+                var subTitleMatch = Context.API.FuzzySearch(query.Search, c.SubTitle);
+                var keywordMatch = Context.API.FuzzySearch(query.Search, command.Keyword);
+
+                // Get the largest score from them
+                var score = Math.Max(titleMatch.Score, subTitleMatch.Score);
+                var finalScore = Math.Max(score, keywordMatch.Score);
+                if (finalScore > 0)
+                {
+                    c.Score = finalScore;
+
+                    // If title match has the highest score, highlight title
+                    if (finalScore == titleMatch.Score)
+                    {
+                        c.TitleHighlightData = titleMatch.MatchData;
+                    }
+
+                    results.Add(c);
+                }
             }
+
+            return results;
         }
 
-        return results;
-    }
-
-    private string GetTitle(string key)
-    {
-        if (!KeywordTitleMappings.TryGetValue(key, out var translationKey))
+        private string GetTitle(string key)
         {
-            Context.API.LogError(ClassName, $"Title not found for: {key}");
-            return "Title Not Found";
-        }
-
-        return Context.API.GetTranslation(translationKey);
-    }
-
-    private string GetDescription(string key)
-    {
-        if (!KeywordDescriptionMappings.TryGetValue(key, out var translationKey))
-        {
-            Context.API.LogError(ClassName, $"Description not found for: {key}");
-            return "Description Not Found";
-        }
-
-        return Context.API.GetTranslation(translationKey);
-    }
-
-    public void Init(PluginInitContext context)
-    {
-        Context = context;
-        _settings = context.API.LoadSettingJsonStorage<Settings>();
-        _viewModel = new SettingsViewModel(_settings);
-        foreach (string key in KeywordTitleMappings.Keys)
-        {
-            // Remove _cmd in the last of the strings
-            KeywordDescriptionMappings[key] = KeywordTitleMappings[key][..^4];
-        }
-    }
-
-    private void UpdateLocalizedNameDescription(bool force)
-    {
-        if (string.IsNullOrEmpty(_settings.Commands[0].Name) || force)
-        {
-            foreach (var c in _settings.Commands)
+            if (!KeywordTitleMappings.TryGetValue(key, out var translationKey))
             {
-                c.Name = GetTitle(c.Key);
-                c.Description = GetDescription(c.Key);
+                Context.API.LogError(ClassName, $"Title not found for: {key}");
+                return "Title Not Found";
+            }
+
+            return Context.API.GetTranslation(translationKey);
+        }
+
+        private string GetDescription(string key)
+        {
+            if (!KeywordDescriptionMappings.TryGetValue(key, out var translationKey))
+            {
+                Context.API.LogError(ClassName, $"Description not found for: {key}");
+                return "Description Not Found";
+            }
+
+            return Context.API.GetTranslation(translationKey);
+        }
+
+        public void Init(PluginInitContext context)
+        {
+            Context = context;
+            _settings = context.API.LoadSettingJsonStorage<Settings>();
+            _viewModel = new SettingsViewModel(_settings);
+            foreach (string key in KeywordTitleMappings.Keys)
+            {
+                // Remove _cmd in the last of the strings
+                KeywordDescriptionMappings[key] = KeywordTitleMappings[key][..^4];
             }
         }
-    }
 
-    private static unsafe bool EnableShutdownPrivilege()
-    {
-        try
+        private void UpdateLocalizedNameDescription(bool force)
         {
-            if (!PInvoke.OpenProcessToken(Process.GetCurrentProcess().SafeHandle, TOKEN_ACCESS_MASK.TOKEN_ADJUST_PRIVILEGES | TOKEN_ACCESS_MASK.TOKEN_QUERY, out var tokenHandle))
+            if (string.IsNullOrEmpty(_settings.Commands[0].Name) || force)
+            {
+                foreach (var c in _settings.Commands)
+                {
+                    c.Name = GetTitle(c.Key);
+                    c.Description = GetDescription(c.Key);
+                }
+            }
+        }
+
+        private static unsafe bool EnableShutdownPrivilege()
+        {
+            try
+            {
+                if (!PInvoke.OpenProcessToken(Process.GetCurrentProcess().SafeHandle, TOKEN_ACCESS_MASK.TOKEN_ADJUST_PRIVILEGES | TOKEN_ACCESS_MASK.TOKEN_QUERY, out var tokenHandle))
+                {
+                    return false;
+                }
+
+                if (!PInvoke.LookupPrivilegeValue(null, PInvoke.SE_SHUTDOWN_NAME, out var luid))
+                {
+                    return false;
+                }
+
+                var privileges = new TOKEN_PRIVILEGES
+                {
+                    PrivilegeCount = 1,
+                    Privileges = new() { e0 = new LUID_AND_ATTRIBUTES { Luid = luid, Attributes = TOKEN_PRIVILEGES_ATTRIBUTES.SE_PRIVILEGE_ENABLED } }
+                };
+
+                if (!PInvoke.AdjustTokenPrivileges(tokenHandle, false, &privileges, 0, null, null))
+                {
+                    return false;
+                }
+
+                if (Marshal.GetLastWin32Error() != (int)WIN32_ERROR.NO_ERROR)
+                {
+                    return false;
+                }
+
+                return true;
+            }
+            catch (Exception)
             {
                 return false;
             }
-
-            if (!PInvoke.LookupPrivilegeValue(null, PInvoke.SE_SHUTDOWN_NAME, out var luid))
-            {
-                return false;
-            }
-
-            var privileges = new TOKEN_PRIVILEGES
-            {
-                PrivilegeCount = 1,
-                Privileges = new() { e0 = new LUID_AND_ATTRIBUTES { Luid = luid, Attributes = TOKEN_PRIVILEGES_ATTRIBUTES.SE_PRIVILEGE_ENABLED } }
-            };
-
-            if (!PInvoke.AdjustTokenPrivileges(tokenHandle, false, &privileges, 0, null, null))
-            {
-                return false;
-            }
-
-            if (Marshal.GetLastWin32Error() != (int)WIN32_ERROR.NO_ERROR)
-            {
-                return false;
-            }
-
-            return true;
         }
-        catch (Exception)
+
+        private static List<Result> Commands(Query query)
         {
-            return false;
-        }
-    }
-
-    private static List<Result> Commands(Query query)
-    {
-        var results = new List<Result>();
-        var recycleBinFolder = "shell:RecycleBinFolder";
-        results.AddRange(
-        [
-            new Result
+            var results = new List<Result>();
+            var recycleBinFolder = "shell:RecycleBinFolder";
+            results.AddRange(
+            [
+                new Result
             {
                 Title = "Shutdown",
                 Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe7e8"),
@@ -507,23 +507,24 @@ public class Main : IPlugin, ISettingProvider, IPluginI18n
                     return false;
                 }
             }
-        ]);
+            ]);
 
-        return results;
-    }
+            return results;
+        }
 
-    public string GetTranslatedPluginTitle()
-    {
-        return Localize.flowlauncher_plugin_sys_plugin_name();
-    }
+        public string GetTranslatedPluginTitle()
+        {
+            return Localize.flowlauncher_plugin_sys_plugin_name();
+        }
 
-    public string GetTranslatedPluginDescription()
-    {
-        return Localize.flowlauncher_plugin_sys_plugin_description();
-    }
+        public string GetTranslatedPluginDescription()
+        {
+            return Localize.flowlauncher_plugin_sys_plugin_description();
+        }
 
-    public void OnCultureInfoChanged(CultureInfo _)
-    {
-        UpdateLocalizedNameDescription(true);
+        public void OnCultureInfoChanged(CultureInfo _)
+        {
+            UpdateLocalizedNameDescription(true);
+        }
     }
 }

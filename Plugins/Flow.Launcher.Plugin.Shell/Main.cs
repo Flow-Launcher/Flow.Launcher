@@ -11,66 +11,106 @@ using WindowsInput.Native;
 using Control = System.Windows.Controls.Control;
 using Keys = System.Windows.Forms.Keys;
 
-namespace Flow.Launcher.Plugin.Shell;
-
-public class Main : IPlugin, ISettingProvider, IPluginI18n, IContextMenu, IDisposable
+namespace Flow.Launcher.Plugin.Shell
 {
-    private static readonly string ClassName = nameof(Main);
-
-    internal static PluginInitContext Context { get; private set; }
-
-    private const string Image = "Images/shell.png";
-    private bool _winRStroked;
-    private readonly KeyboardSimulator _keyboardSimulator = new(new InputSimulator());
-
-    private Settings _settings;
-
-    public List<Result> Query(Query query)
+    public class Main : IPlugin, ISettingProvider, IPluginI18n, IContextMenu, IDisposable
     {
-        List<Result> results = [];
-        string cmd = query.Search;
-        if (string.IsNullOrEmpty(cmd))
-        {
-            return ResultsFromHistory();
-        }
-        else
-        {
-            var queryCmd = GetCurrentCmd(cmd);
-            results.Add(queryCmd);
-            var history = GetHistoryCmds(cmd, queryCmd);
-            results.AddRange(history);
+        private static readonly string ClassName = nameof(Main);
 
-            try
+        internal static PluginInitContext Context { get; private set; }
+
+        private const string Image = "Images/shell.png";
+        private bool _winRStroked;
+        private readonly KeyboardSimulator _keyboardSimulator = new(new InputSimulator());
+
+        private Settings _settings;
+
+        public List<Result> Query(Query query)
+        {
+            List<Result> results = [];
+            string cmd = query.Search;
+            if (string.IsNullOrEmpty(cmd))
             {
-                string basedir = null;
-                string dir = null;
-                string excmd = Environment.ExpandEnvironmentVariables(cmd);
-                if (Directory.Exists(excmd) && (cmd.EndsWith('/') || cmd.EndsWith('\\')))
-                {
-                    basedir = excmd;
-                    dir = cmd;
-                }
-                else if (Directory.Exists(Path.GetDirectoryName(excmd) ?? string.Empty))
-                {
-                    basedir = Path.GetDirectoryName(excmd);
-                    var dirName = Path.GetDirectoryName(cmd);
-                    dir = (dirName.EndsWith('/') || dirName.EndsWith('\\')) ? dirName : cmd[..(dirName.Length + 1)];
-                }
+                return ResultsFromHistory();
+            }
+            else
+            {
+                var queryCmd = GetCurrentCmd(cmd);
+                results.Add(queryCmd);
+                var history = GetHistoryCmds(cmd, queryCmd);
+                results.AddRange(history);
 
-                if (basedir != null)
+                try
                 {
-                    var autocomplete =
-                        Directory.GetFileSystemEntries(basedir)
-                            .Select(o => dir + Path.GetFileName(o))
-                            .Where(o => o.StartsWith(cmd, StringComparison.OrdinalIgnoreCase) &&
-                                        !results.Any(p => o.Equals(p.Title, StringComparison.OrdinalIgnoreCase)) &&
-                                        !results.Any(p => o.Equals(p.Title, StringComparison.OrdinalIgnoreCase))).ToList();
-
-                    autocomplete.Sort();
-
-                    results.AddRange(autocomplete.ConvertAll(m => new Result
+                    string basedir = null;
+                    string dir = null;
+                    string excmd = Environment.ExpandEnvironmentVariables(cmd);
+                    if (Directory.Exists(excmd) && (cmd.EndsWith('/') || cmd.EndsWith('\\')))
                     {
-                        Title = m,
+                        basedir = excmd;
+                        dir = cmd;
+                    }
+                    else if (Directory.Exists(Path.GetDirectoryName(excmd) ?? string.Empty))
+                    {
+                        basedir = Path.GetDirectoryName(excmd);
+                        var dirName = Path.GetDirectoryName(cmd);
+                        dir = (dirName.EndsWith('/') || dirName.EndsWith('\\')) ? dirName : cmd[..(dirName.Length + 1)];
+                    }
+
+                    if (basedir != null)
+                    {
+                        var autocomplete =
+                            Directory.GetFileSystemEntries(basedir)
+                                .Select(o => dir + Path.GetFileName(o))
+                                .Where(o => o.StartsWith(cmd, StringComparison.OrdinalIgnoreCase) &&
+                                            !results.Any(p => o.Equals(p.Title, StringComparison.OrdinalIgnoreCase)) &&
+                                            !results.Any(p => o.Equals(p.Title, StringComparison.OrdinalIgnoreCase))).ToList();
+
+                        autocomplete.Sort();
+
+                        results.AddRange(autocomplete.ConvertAll(m => new Result
+                        {
+                            Title = m,
+                            IcoPath = Image,
+                            Action = c =>
+                            {
+                                var runAsAdministrator =
+                                    c.SpecialKeyState.CtrlPressed &&
+                                    c.SpecialKeyState.ShiftPressed &&
+                                    !c.SpecialKeyState.AltPressed &&
+                                    !c.SpecialKeyState.WinPressed;
+
+                                Execute(Process.Start, PrepareProcessStartInfo(m, runAsAdministrator));
+                                return true;
+                            },
+                            CopyText = m
+                        }));
+                    }
+                }
+                catch (Exception e)
+                {
+                    Context.API.LogException(ClassName, $"Exception when query for <{query}>", e);
+                }
+                return results;
+            }
+        }
+
+        private List<Result> GetHistoryCmds(string cmd, Result result)
+        {
+            IEnumerable<Result> history = _settings.CommandHistory.Where(o => o.Key.Contains(cmd))
+                .OrderByDescending(o => o.Value)
+                .Select(m =>
+                {
+                    if (m.Key == cmd)
+                    {
+                        result.SubTitle = Localize.flowlauncher_plugin_cmd_cmd_has_been_executed_times(m.Value);
+                        return null;
+                    }
+
+                    var ret = new Result
+                    {
+                        Title = m.Key,
+                        SubTitle = Localize.flowlauncher_plugin_cmd_cmd_has_been_executed_times(m.Value),
                         IcoPath = Image,
                         Action = c =>
                         {
@@ -80,34 +120,49 @@ public class Main : IPlugin, ISettingProvider, IPluginI18n, IContextMenu, IDispo
                                 !c.SpecialKeyState.AltPressed &&
                                 !c.SpecialKeyState.WinPressed;
 
-                            Execute(Process.Start, PrepareProcessStartInfo(m, runAsAdministrator));
+                            Execute(Process.Start, PrepareProcessStartInfo(m.Key, runAsAdministrator));
                             return true;
                         },
-                        CopyText = m
-                    }));
-                }
-            }
-            catch (Exception e)
-            {
-                Context.API.LogException(ClassName, $"Exception when query for <{query}>", e);
-            }
-            return results;
+                        CopyText = m.Key
+                    };
+                    return ret;
+                }).Where(o => o != null);
+
+            if (_settings.ShowOnlyMostUsedCMDs)
+                return [.. history.Take(_settings.ShowOnlyMostUsedCMDsNumber)];
+
+            return [.. history];
         }
-    }
 
-    private List<Result> GetHistoryCmds(string cmd, Result result)
-    {
-        IEnumerable<Result> history = _settings.CommandHistory.Where(o => o.Key.Contains(cmd))
-            .OrderByDescending(o => o.Value)
-            .Select(m =>
+        private Result GetCurrentCmd(string cmd)
+        {
+            Result result = new Result
             {
-                if (m.Key == cmd)
+                Title = cmd,
+                Score = 5000,
+                SubTitle = Localize.flowlauncher_plugin_cmd_execute_through_shell(),
+                IcoPath = Image,
+                Action = c =>
                 {
-                    result.SubTitle = Localize.flowlauncher_plugin_cmd_cmd_has_been_executed_times(m.Value);
-                    return null;
-                }
+                    var runAsAdministrator =
+                        c.SpecialKeyState.CtrlPressed &&
+                        c.SpecialKeyState.ShiftPressed &&
+                        !c.SpecialKeyState.AltPressed &&
+                        !c.SpecialKeyState.WinPressed;
 
-                var ret = new Result
+                    Execute(Process.Start, PrepareProcessStartInfo(cmd, runAsAdministrator));
+                    return true;
+                },
+                CopyText = cmd
+            };
+
+            return result;
+        }
+
+        private List<Result> ResultsFromHistory()
+        {
+            IEnumerable<Result> history = _settings.CommandHistory.OrderByDescending(o => o.Value)
+                .Select(m => new Result
                 {
                     Title = m.Key,
                     SubTitle = Localize.flowlauncher_plugin_cmd_cmd_has_been_executed_times(m.Value),
@@ -124,321 +179,266 @@ public class Main : IPlugin, ISettingProvider, IPluginI18n, IContextMenu, IDispo
                         return true;
                     },
                     CopyText = m.Key
-                };
-                return ret;
-            }).Where(o => o != null);
+                });
 
-        if (_settings.ShowOnlyMostUsedCMDs)
-            return [.. history.Take(_settings.ShowOnlyMostUsedCMDsNumber)];
+            if (_settings.ShowOnlyMostUsedCMDs)
+                return [.. history.Take(_settings.ShowOnlyMostUsedCMDsNumber)];
 
-        return [.. history];
-    }
+            return [.. history];
+        }
 
-    private Result GetCurrentCmd(string cmd)
-    {
-        Result result = new Result
+        private ProcessStartInfo PrepareProcessStartInfo(string command, bool runAsAdministrator = false)
         {
-            Title = cmd,
-            Score = 5000,
-            SubTitle = Localize.flowlauncher_plugin_cmd_execute_through_shell(),
-            IcoPath = Image,
-            Action = c =>
+            command = command.Trim();
+            command = Environment.ExpandEnvironmentVariables(command);
+            var workingDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+            var runAsAdministratorArg = !runAsAdministrator && !_settings.RunAsAdministrator ? "" : "runas";
+
+            var info = new ProcessStartInfo()
             {
-                var runAsAdministrator =
-                    c.SpecialKeyState.CtrlPressed &&
-                    c.SpecialKeyState.ShiftPressed &&
-                    !c.SpecialKeyState.AltPressed &&
-                    !c.SpecialKeyState.WinPressed;
-
-                Execute(Process.Start, PrepareProcessStartInfo(cmd, runAsAdministrator));
-                return true;
-            },
-            CopyText = cmd
-        };
-
-        return result;
-    }
-
-    private List<Result> ResultsFromHistory()
-    {
-        IEnumerable<Result> history = _settings.CommandHistory.OrderByDescending(o => o.Value)
-            .Select(m => new Result
+                Verb = runAsAdministratorArg,
+                WorkingDirectory = workingDirectory,
+            };
+            var notifyStr = Localize.flowlauncher_plugin_cmd_press_any_key_to_close();
+            var addedCharacter = _settings.UseWindowsTerminal ? "\\" : "";
+            switch (_settings.Shell)
             {
-                Title = m.Key,
-                SubTitle = Localize.flowlauncher_plugin_cmd_cmd_has_been_executed_times(m.Value),
-                IcoPath = Image,
-                Action = c =>
-                {
-                    var runAsAdministrator =
-                        c.SpecialKeyState.CtrlPressed &&
-                        c.SpecialKeyState.ShiftPressed &&
-                        !c.SpecialKeyState.AltPressed &&
-                        !c.SpecialKeyState.WinPressed;
+                case Shell.Cmd:
+                    {
+                        if (_settings.UseWindowsTerminal)
+                        {
+                            info.FileName = "wt.exe";
+                            info.ArgumentList.Add("cmd");
+                        }
+                        else
+                        {
+                            info.FileName = "cmd.exe";
+                        }
+                        if (_settings.LeaveShellOpen)
+                        {
+                            info.ArgumentList.Add("/k");
+                        }
+                        else
+                        {
+                            info.ArgumentList.Add("/c");
+                        }
+                        info.ArgumentList.Add(
+                            $"{command}" +
+                            $"{(_settings.CloseShellAfterPress ?
+                                $" && echo {notifyStr} && pause > nul /c" :
+                                "")}");
+                        break;
+                    }
 
-                    Execute(Process.Start, PrepareProcessStartInfo(m.Key, runAsAdministrator));
-                    return true;
-                },
-                CopyText = m.Key
-            });
+                case Shell.Powershell:
+                    {
+                        // Using just a ; doesn't work with wt, as it's used to create a new tab for the terminal window
+                        // \\ must be escaped for it to work properly, or breaking it into multiple arguments
+                        if (_settings.UseWindowsTerminal)
+                        {
+                            info.FileName = "wt.exe";
+                            info.ArgumentList.Add("powershell");
+                        }
+                        else
+                        {
+                            info.FileName = "powershell.exe";
+                        }
+                        if (_settings.LeaveShellOpen)
+                        {
+                            info.ArgumentList.Add("-NoExit");
+                            info.ArgumentList.Add(command);
+                        }
+                        else
+                        {
+                            info.ArgumentList.Add("-Command");
+                            info.ArgumentList.Add(
+                                $"{command}{addedCharacter};" +
+                                $"{(_settings.CloseShellAfterPress ?
+                                    $" Write-Host '{notifyStr}'{addedCharacter}; [System.Console]::ReadKey(){addedCharacter}; exit" :
+                                    "")}");
+                        }
+                        break;
+                    }
 
-        if (_settings.ShowOnlyMostUsedCMDs)
-            return [.. history.Take(_settings.ShowOnlyMostUsedCMDsNumber)];
-
-        return [.. history];
-    }
-
-    private ProcessStartInfo PrepareProcessStartInfo(string command, bool runAsAdministrator = false)
-    {
-        command = command.Trim();
-        command = Environment.ExpandEnvironmentVariables(command);
-        var workingDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-        var runAsAdministratorArg = !runAsAdministrator && !_settings.RunAsAdministrator ? "" : "runas";
-
-        var info = new ProcessStartInfo()
-        {
-            Verb = runAsAdministratorArg,
-            WorkingDirectory = workingDirectory,
-        };
-        var notifyStr = Localize.flowlauncher_plugin_cmd_press_any_key_to_close();
-        var addedCharacter = _settings.UseWindowsTerminal ? "\\" : "";
-        switch (_settings.Shell)
-        {
-            case Shell.Cmd:
-                {
-                    if (_settings.UseWindowsTerminal)
+                case Shell.Pwsh:
                     {
-                        info.FileName = "wt.exe";
-                        info.ArgumentList.Add("cmd");
-                    }
-                    else
-                    {
-                        info.FileName = "cmd.exe";
-                    }
-                    if (_settings.LeaveShellOpen)
-                    {
-                        info.ArgumentList.Add("/k");
-                    }
-                    else
-                    {
-                        info.ArgumentList.Add("/c");
-                    }
-                    info.ArgumentList.Add(
-                        $"{command}" +
-                        $"{(_settings.CloseShellAfterPress ?
-                            $" && echo {notifyStr} && pause > nul /c" :
-                            "")}");
-                    break;
-                }
-
-            case Shell.Powershell:
-                {
-                    // Using just a ; doesn't work with wt, as it's used to create a new tab for the terminal window
-                    // \\ must be escaped for it to work properly, or breaking it into multiple arguments
-                    if (_settings.UseWindowsTerminal)
-                    {
-                        info.FileName = "wt.exe";
-                        info.ArgumentList.Add("powershell");
-                    }
-                    else
-                    {
-                        info.FileName = "powershell.exe";
-                    }
-                    if (_settings.LeaveShellOpen)
-                    {
-                        info.ArgumentList.Add("-NoExit");
-                        info.ArgumentList.Add(command);
-                    }
-                    else
-                    {
+                        // Using just a ; doesn't work with wt, as it's used to create a new tab for the terminal window
+                        // \\ must be escaped for it to work properly, or breaking it into multiple arguments
+                        if (_settings.UseWindowsTerminal)
+                        {
+                            info.FileName = "wt.exe";
+                            info.ArgumentList.Add("pwsh");
+                        }
+                        else
+                        {
+                            info.FileName = "pwsh.exe";
+                        }
+                        if (_settings.LeaveShellOpen)
+                        {
+                            info.ArgumentList.Add("-NoExit");
+                        }
                         info.ArgumentList.Add("-Command");
                         info.ArgumentList.Add(
                             $"{command}{addedCharacter};" +
                             $"{(_settings.CloseShellAfterPress ?
                                 $" Write-Host '{notifyStr}'{addedCharacter}; [System.Console]::ReadKey(){addedCharacter}; exit" :
                                 "")}");
+                        break;
                     }
-                    break;
-                }
 
-            case Shell.Pwsh:
-                {
-                    // Using just a ; doesn't work with wt, as it's used to create a new tab for the terminal window
-                    // \\ must be escaped for it to work properly, or breaking it into multiple arguments
-                    if (_settings.UseWindowsTerminal)
+                case Shell.RunCommand:
                     {
-                        info.FileName = "wt.exe";
-                        info.ArgumentList.Add("pwsh");
-                    }
-                    else
-                    {
-                        info.FileName = "pwsh.exe";
-                    }
-                    if (_settings.LeaveShellOpen)
-                    {
-                        info.ArgumentList.Add("-NoExit");
-                    }
-                    info.ArgumentList.Add("-Command");
-                    info.ArgumentList.Add(
-                        $"{command}{addedCharacter};" +
-                        $"{(_settings.CloseShellAfterPress ?
-                            $" Write-Host '{notifyStr}'{addedCharacter}; [System.Console]::ReadKey(){addedCharacter}; exit" :
-                            "")}");
-                    break;
-                }
-
-            case Shell.RunCommand:
-                {
-                    var parts = command.Split(
-                    [
-                        ' '
-                    ], 2);
-                    if (parts.Length == 2)
-                    {
-                        var filename = parts[0];
-                        if (ExistInPath(filename))
+                        var parts = command.Split(
+                        [
+                            ' '
+                        ], 2);
+                        if (parts.Length == 2)
                         {
-                            var arguments = parts[1];
-                            info.FileName = filename;
-                            info.ArgumentList.Add(arguments);
+                            var filename = parts[0];
+                            if (ExistInPath(filename))
+                            {
+                                var arguments = parts[1];
+                                info.FileName = filename;
+                                info.ArgumentList.Add(arguments);
+                            }
+                            else
+                            {
+                                info.FileName = command;
+                            }
                         }
                         else
                         {
                             info.FileName = command;
                         }
+
+                        info.UseShellExecute = true;
+
+                        break;
                     }
-                    else
-                    {
-                        info.FileName = command;
-                    }
 
-                    info.UseShellExecute = true;
+                default:
+                    throw new NotImplementedException();
+            }
 
-                    break;
-                }
+            info.UseShellExecute = true;
 
-            default:
-                throw new NotImplementedException();
+            _settings.AddCmdHistory(command);
+
+            return info;
         }
 
-        info.UseShellExecute = true;
-
-        _settings.AddCmdHistory(command);
-
-        return info;
-    }
-
-    private void Execute(Func<ProcessStartInfo, Process> startProcess, ProcessStartInfo info)
-    {
-        try
+        private void Execute(Func<ProcessStartInfo, Process> startProcess, ProcessStartInfo info)
         {
-            ShellCommand.Execute(startProcess, info);
-        }
-        catch (FileNotFoundException e)
-        {
-            Context.API.ShowMsgError(GetTranslatedPluginTitle(),
-                Localize.flowlauncher_plugin_cmd_command_not_found(e.Message));
-        }
-        catch (Win32Exception e)
-        {
-            Context.API.ShowMsgError(GetTranslatedPluginTitle(),
-                Localize.flowlauncher_plugin_cmd_error_running_command(e.Message));
-        }
-        catch (Exception e)
-        {
-            Context.API.LogException(ClassName, $"Error executing command: {info.FileName} {string.Join(" ", info.ArgumentList)}", e);
-        }
-    }
-
-    private static bool ExistInPath(string filename)
-    {
-        if (File.Exists(filename))
-        {
-            return true;
-        }
-        else
-        {
-            var values = Environment.GetEnvironmentVariable("PATH");
-            if (values != null)
+            try
             {
-                foreach (var path in values.Split(';'))
-                {
-                    var path1 = Path.Combine(path, filename);
-                    var path2 = Path.Combine(path, filename + ".exe");
-                    if (File.Exists(path1) || File.Exists(path2))
-                    {
-                        return true;
-                    }
-                }
-                return false;
+                ShellCommand.Execute(startProcess, info);
+            }
+            catch (FileNotFoundException e)
+            {
+                Context.API.ShowMsgError(GetTranslatedPluginTitle(),
+                    Localize.flowlauncher_plugin_cmd_command_not_found(e.Message));
+            }
+            catch (Win32Exception e)
+            {
+                Context.API.ShowMsgError(GetTranslatedPluginTitle(),
+                    Localize.flowlauncher_plugin_cmd_error_running_command(e.Message));
+            }
+            catch (Exception e)
+            {
+                Context.API.LogException(ClassName, $"Error executing command: {info.FileName} {string.Join(" ", info.ArgumentList)}", e);
+            }
+        }
+
+        private static bool ExistInPath(string filename)
+        {
+            if (File.Exists(filename))
+            {
+                return true;
             }
             else
             {
-                return false;
+                var values = Environment.GetEnvironmentVariable("PATH");
+                if (values != null)
+                {
+                    foreach (var path in values.Split(';'))
+                    {
+                        var path1 = Path.Combine(path, filename);
+                        var path2 = Path.Combine(path, filename + ".exe");
+                        if (File.Exists(path1) || File.Exists(path2))
+                        {
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
-    }
 
-    public void Init(PluginInitContext context)
-    {
-        Context = context;
-        _settings = context.API.LoadSettingJsonStorage<Settings>();
-        context.API.RegisterGlobalKeyboardCallback(API_GlobalKeyboardEvent);
-    }
-
-    bool API_GlobalKeyboardEvent(int keyevent, int vkcode, SpecialKeyState state)
-    {
-        if (!Context.CurrentPluginMetadata.Disabled && _settings.ReplaceWinR)
+        public void Init(PluginInitContext context)
         {
-            if (keyevent == (int)KeyEvent.WM_KEYDOWN && vkcode == (int)Keys.R && state.WinPressed)
-            {
-                _winRStroked = true;
-                OnWinRPressed();
-                return false;
-            }
-            if (keyevent == (int)KeyEvent.WM_KEYUP && _winRStroked && vkcode == (int)Keys.LWin)
-            {
-                _winRStroked = false;
-                _keyboardSimulator.ModifiedKeyStroke(VirtualKeyCode.LWIN, VirtualKeyCode.CONTROL);
-                return false;
-            }
+            Context = context;
+            _settings = context.API.LoadSettingJsonStorage<Settings>();
+            context.API.RegisterGlobalKeyboardCallback(API_GlobalKeyboardEvent);
         }
-        return true;
-    }
 
-    private static void OnWinRPressed()
-    {
-        Context.API.ShowMainWindow();
-        // show the main window and set focus to the query box
-        _ = Task.Run(async () =>
+        bool API_GlobalKeyboardEvent(int keyevent, int vkcode, SpecialKeyState state)
         {
-            Context.API.ChangeQuery($"{Context.CurrentPluginMetadata.ActionKeywords[0]}{Plugin.Query.TermSeparator}");
+            if (!Context.CurrentPluginMetadata.Disabled && _settings.ReplaceWinR)
+            {
+                if (keyevent == (int)KeyEvent.WM_KEYDOWN && vkcode == (int)Keys.R && state.WinPressed)
+                {
+                    _winRStroked = true;
+                    OnWinRPressed();
+                    return false;
+                }
+                if (keyevent == (int)KeyEvent.WM_KEYUP && _winRStroked && vkcode == (int)Keys.LWin)
+                {
+                    _winRStroked = false;
+                    _keyboardSimulator.ModifiedKeyStroke(VirtualKeyCode.LWIN, VirtualKeyCode.CONTROL);
+                    return false;
+                }
+            }
+            return true;
+        }
 
-            // Win+R is a system-reserved shortcut, and though the plugin intercepts the keyboard event and
-            // shows the main window, Windows continues to process the Win key and briefly reclaims focus.
-            // So we need to wait until the keyboard event processing is completed and then set focus
-            await Task.Delay(50);
-            Context.API.FocusQueryTextBox();
-        });
-    }
+        private static void OnWinRPressed()
+        {
+            Context.API.ShowMainWindow();
+            // show the main window and set focus to the query box
+            _ = Task.Run(async () =>
+            {
+                Context.API.ChangeQuery($"{Context.CurrentPluginMetadata.ActionKeywords[0]}{Plugin.Query.TermSeparator}");
 
-    public Control CreateSettingPanel()
-    {
-        return new CMDSetting(_settings);
-    }
+                // Win+R is a system-reserved shortcut, and though the plugin intercepts the keyboard event and
+                // shows the main window, Windows continues to process the Win key and briefly reclaims focus.
+                // So we need to wait until the keyboard event processing is completed and then set focus
+                await Task.Delay(50);
+                Context.API.FocusQueryTextBox();
+            });
+        }
 
-    public string GetTranslatedPluginTitle()
-    {
-        return Localize.flowlauncher_plugin_cmd_plugin_name();
-    }
+        public Control CreateSettingPanel()
+        {
+            return new CMDSetting(_settings);
+        }
 
-    public string GetTranslatedPluginDescription()
-    {
-        return Localize.flowlauncher_plugin_cmd_plugin_description();
-    }
+        public string GetTranslatedPluginTitle()
+        {
+            return Localize.flowlauncher_plugin_cmd_plugin_name();
+        }
 
-    public List<Result> LoadContextMenus(Result selectedResult)
-    {
-        var results = new List<Result>
+        public string GetTranslatedPluginDescription()
+        {
+            return Localize.flowlauncher_plugin_cmd_plugin_description();
+        }
+
+        public List<Result> LoadContextMenus(Result selectedResult)
+        {
+            var results = new List<Result>
         {
             new()
             {
@@ -475,11 +475,13 @@ public class Main : IPlugin, ISettingProvider, IPluginI18n, IContextMenu, IDispo
             }
         };
 
-        return results;
+            return results;
+        }
+
+        public void Dispose()
+        {
+            Context.API.RemoveGlobalKeyboardCallback(API_GlobalKeyboardEvent);
+        }
     }
 
-    public void Dispose()
-    {
-        Context.API.RemoveGlobalKeyboardCallback(API_GlobalKeyboardEvent);
-    }
 }
