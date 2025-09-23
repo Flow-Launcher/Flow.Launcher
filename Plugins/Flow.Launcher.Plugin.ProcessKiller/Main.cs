@@ -11,7 +11,7 @@ public class Main : IPlugin, IPluginI18n, IContextMenu, ISettingProvider
 {
     internal static PluginInitContext Context { get; private set; }
 
-    internal static Settings Settings { get; private set; }
+    private Settings _settings;
 
     private readonly ProcessHelper processHelper = new();
 
@@ -20,8 +20,8 @@ public class Main : IPlugin, IPluginI18n, IContextMenu, ISettingProvider
     public void Init(PluginInitContext context)
     {
         Context = context;
-        Settings = context.API.LoadSettingJsonStorage<Settings>();
-        _viewModel = new SettingsViewModel(Settings);
+        _settings = context.API.LoadSettingJsonStorage<Settings>();
+        _viewModel = new SettingsViewModel(_settings);
     }
 
     public List<Result> Query(Query query)
@@ -31,12 +31,12 @@ public class Main : IPlugin, IPluginI18n, IContextMenu, ISettingProvider
 
     public string GetTranslatedPluginTitle()
     {
-        return Context.API.GetTranslation("flowlauncher_plugin_processkiller_plugin_name");
+        return Localize.flowlauncher_plugin_processkiller_plugin_name();
     }
 
     public string GetTranslatedPluginDescription()
     {
-        return Context.API.GetTranslation("flowlauncher_plugin_processkiller_plugin_description");
+        return Localize.flowlauncher_plugin_processkiller_plugin_description();
     }
 
     public List<Result> LoadContextMenus(Result result)
@@ -51,7 +51,7 @@ public class Main : IPlugin, IPluginI18n, IContextMenu, ISettingProvider
         {
             menuOptions.Add(new Result
             {
-                Title = Context.API.GetTranslation("flowlauncher_plugin_processkiller_kill_instances"),
+                Title = Localize.flowlauncher_plugin_processkiller_kill_instances(),
                 SubTitle = processPath,
                 Action = _ =>
                 {
@@ -73,7 +73,7 @@ public class Main : IPlugin, IPluginI18n, IContextMenu, ISettingProvider
     {
         // Get all non-system processes
         var allPocessList = processHelper.GetMatchingProcesses();
-        if (!allPocessList.Any())
+        if (allPocessList.Count == 0)
         {
             return null;
         }
@@ -82,9 +82,9 @@ public class Main : IPlugin, IPluginI18n, IContextMenu, ISettingProvider
         var searchTerm = query.Search;
         var processlist = new List<ProcessResult>();
         var processWindowTitle =
-            Settings.ShowWindowTitle || Settings.PutVisibleWindowProcessesTop ?
+            _settings.ShowWindowTitle || _settings.PutVisibleWindowProcessesTop ?
             ProcessHelper.GetProcessesWithNonEmptyWindowTitle() :
-            new Dictionary<int, string>();
+            [];
         if (string.IsNullOrWhiteSpace(searchTerm))
         {
             foreach (var p in allPocessList)
@@ -97,8 +97,8 @@ public class Main : IPlugin, IPluginI18n, IContextMenu, ISettingProvider
                     // Use window title for those processes if enabled
                     processlist.Add(new ProcessResult(
                         p,
-                        Settings.PutVisibleWindowProcessesTop ? 200 : 0,
-                        Settings.ShowWindowTitle ? windowTitle : progressNameIdTitle,
+                        _settings.PutVisibleWindowProcessesTop ? 200 : 0,
+                        _settings.ShowWindowTitle ? windowTitle : progressNameIdTitle,
                         null,
                         progressNameIdTitle));
                 }
@@ -129,14 +129,14 @@ public class Main : IPlugin, IPluginI18n, IContextMenu, ISettingProvider
                     {
                         // Add score to prioritize processes with visible windows
                         // Use window title for those processes
-                        if (Settings.PutVisibleWindowProcessesTop)
+                        if (_settings.PutVisibleWindowProcessesTop)
                         {
                             score += 200;
                         }
                         processlist.Add(new ProcessResult(
                             p,
                             score,
-                            Settings.ShowWindowTitle ? windowTitle : progressNameIdTitle,
+                            _settings.ShowWindowTitle ? windowTitle : progressNameIdTitle,
                             score == windowTitleMatch.Score ? windowTitleMatch : null,
                             progressNameIdTitle));
                     }
@@ -194,8 +194,8 @@ public class Main : IPlugin, IPluginI18n, IContextMenu, ISettingProvider
             sortedResults.Insert(1, new Result()
             {
                 IcoPath = firstResult?.IcoPath,
-                Title = string.Format(Context.API.GetTranslation("flowlauncher_plugin_processkiller_kill_all"), firstResult?.ContextData),
-                SubTitle = string.Format(Context.API.GetTranslation("flowlauncher_plugin_processkiller_kill_all_count"), processlist.Count),
+                Title = Localize.flowlauncher_plugin_processkiller_kill_all(firstResult?.ContextData),
+                SubTitle = Localize.flowlauncher_plugin_processkiller_kill_all_count(processlist.Count),
                 Score = 200,
                 Action = (c) =>
                 {

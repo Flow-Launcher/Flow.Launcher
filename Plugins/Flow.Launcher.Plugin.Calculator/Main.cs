@@ -26,7 +26,7 @@ public class Main : IPlugin, IPluginI18n, ISettingProvider
     private const string IcoPath = "Images/calculator.png";
     private static readonly List<Result> EmptyResults = [];
 
-    internal static PluginInitContext Context { get; set; } = null!;
+    internal static PluginInitContext Context { get; private set; } = null!;
 
     private Settings _settings;
     private SettingsViewModel _viewModel;
