@@ -42,8 +42,8 @@ namespace Flow.Launcher.Infrastructure.Image
         {
             HBITMAP hBitmap;
 
-            var extension = Path.GetExtension(fileName)?.ToLowerInvariant();
-            if (extension is UrlExtension)
+            var extension = Path.GetExtension(fileName);
+            if (string.Equals(extension, UrlExtension, StringComparison.OrdinalIgnoreCase))
             {
                 hBitmap = GetHBitmapForUrlFile(fileName, width, height, options);
             }
