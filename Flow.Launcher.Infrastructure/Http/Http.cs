@@ -4,10 +4,8 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
-using Flow.Launcher.Plugin;
 using JetBrains.Annotations;
 
 namespace Flow.Launcher.Infrastructure.Http
@@ -19,10 +17,6 @@ namespace Flow.Launcher.Infrastructure.Http
         private const string UserAgent = @"Mozilla/5.0 (Trident/7.0; rv:11.0) like Gecko";
 
         private static readonly HttpClient client = new();
-
-        // We should not initialize API in static constructor because it will create another API instance
-        private static IPublicAPI api = null;
-        private static IPublicAPI API => api ??= Ioc.Default.GetRequiredService<IPublicAPI>();
 
         static Http()
         {
@@ -82,7 +76,7 @@ namespace Flow.Launcher.Infrastructure.Http
             }
             catch (UriFormatException e)
             {
-                API.ShowMsgError(Localize.pleaseTryAgain(), Localize.parseProxyFailed());
+                PublicApi.Instance.ShowMsgError(Localize.pleaseTryAgain(), Localize.parseProxyFailed());
                 Log.Exception(ClassName, "Unable to parse Uri", e);
             }
         }

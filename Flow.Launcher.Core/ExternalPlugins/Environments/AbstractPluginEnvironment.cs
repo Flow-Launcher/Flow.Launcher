@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
-using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
@@ -14,8 +13,6 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
     public abstract class AbstractPluginEnvironment
     {
         private static readonly string ClassName = nameof(AbstractPluginEnvironment);
-
-        protected readonly IPublicAPI API = Ioc.Default.GetRequiredService<IPublicAPI>();
 
         internal abstract string Language { get; }
 
@@ -59,7 +56,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
             }
 
             var noRuntimeMessage = Localize.runtimePluginInstalledChooseRuntimePrompt(Language, EnvName, Environment.NewLine);
-            if (API.ShowMsgBox(noRuntimeMessage, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.No)
+            if (PublicApi.Instance.ShowMsgBox(noRuntimeMessage, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.No)
             {
                 var msg = Localize.runtimePluginChooseRuntimeExecutable(EnvName);
 
@@ -77,7 +74,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
                     // Let users select valid path or choose to download
                     while (string.IsNullOrEmpty(selectedFile))
                     {
-                        if (API.ShowMsgBox(forceDownloadMessage, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                        if (PublicApi.Instance.ShowMsgBox(forceDownloadMessage, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                         {
                             // Continue select file
                             selectedFile = GetFileFromDialog(msg, FileDialogFilter);
@@ -110,8 +107,8 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
             }
             else
             {
-                API.ShowMsgBox(Localize.runtimePluginUnableToSetExecutablePath(Language));
-                API.LogError(ClassName,
+                PublicApi.Instance.ShowMsgBox(Localize.runtimePluginUnableToSetExecutablePath(Language));
+                PublicApi.Instance.LogError(ClassName,
                     $"Not able to successfully set {EnvName} path, setting's plugin executable path variable is still an empty string.",
                     $"{Language}Environment");
 
@@ -125,7 +122,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
         {
             if (expectedPath == currentPath) return;
 
-            FilesFolders.RemoveFolderIfExists(installedDirPath, (s) => API.ShowMsgBox(s));
+            FilesFolders.RemoveFolderIfExists(installedDirPath, (s) => PublicApi.Instance.ShowMsgBox(s));
 
             InstallEnvironment();
         }

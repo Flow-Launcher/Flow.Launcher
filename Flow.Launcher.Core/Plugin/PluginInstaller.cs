@@ -22,10 +22,6 @@ public static class PluginInstaller
 
     private static readonly Settings Settings = Ioc.Default.GetRequiredService<Settings>();
 
-    // We should not initialize API in static constructor because it will create another API instance
-    private static IPublicAPI api = null;
-    private static IPublicAPI API => api ??= Ioc.Default.GetRequiredService<IPublicAPI>();
-
     /// <summary>
     /// Installs a plugin and restarts the application if required by settings. Prompts user for confirmation and handles download if needed.
     /// </summary>
@@ -33,14 +29,14 @@ public static class PluginInstaller
     /// <returns>A Task representing the asynchronous install operation.</returns>
     public static async Task InstallPluginAndCheckRestartAsync(UserPlugin newPlugin)
     {
-        if (API.PluginModified(newPlugin.ID))
+        if (PublicApi.Instance.PluginModified(newPlugin.ID))
         {
-            API.ShowMsgError(Localize.pluginModifiedAlreadyTitle(newPlugin.Name),
+            PublicApi.Instance.ShowMsgError(Localize.pluginModifiedAlreadyTitle(newPlugin.Name),
                 Localize.pluginModifiedAlreadyMessage());
             return;
         }
 
-        if (API.ShowMsgBox(
+        if (PublicApi.Instance.ShowMsgBox(
             Localize.InstallPromptSubtitle(newPlugin.Name, newPlugin.Author, Environment.NewLine),
             Localize.InstallPromptTitle(),
             button: MessageBoxButton.YesNo) != MessageBoxResult.Yes) return;
@@ -78,7 +74,7 @@ public static class PluginInstaller
                 throw new FileNotFoundException($"Plugin {newPlugin.ID} zip file not found at {filePath}", filePath);
             }
 
-            if (!API.InstallPlugin(newPlugin, filePath))
+            if (!PublicApi.Instance.InstallPlugin(newPlugin, filePath))
             {
                 return;
             }
@@ -90,18 +86,18 @@ public static class PluginInstaller
         }
         catch (Exception e)
         {
-            API.LogException(ClassName, "Failed to install plugin", e);
-            API.ShowMsgError(Localize.ErrorInstallingPlugin());
+            PublicApi.Instance.LogException(ClassName, "Failed to install plugin", e);
+            PublicApi.Instance.ShowMsgError(Localize.ErrorInstallingPlugin());
             return; // do not restart on failure
         }
 
         if (Settings.AutoRestartAfterChanging)
         {
-            API.RestartApp();
+            PublicApi.Instance.RestartApp();
         }
         else
         {
-            API.ShowMsg(
+            PublicApi.Instance.ShowMsg(
                 Localize.installbtn(),
                 Localize.InstallSuccessNoRestart(newPlugin.Name));
         }
@@ -128,14 +124,14 @@ public static class PluginInstaller
         }
         catch (Exception e)
         {
-            API.LogException(ClassName, "Failed to validate zip file", e);
-            API.ShowMsgError(Localize.ZipFileNotHavePluginJson());
+            PublicApi.Instance.LogException(ClassName, "Failed to validate zip file", e);
+            PublicApi.Instance.ShowMsgError(Localize.ZipFileNotHavePluginJson());
             return;
         }
 
-        if (API.PluginModified(plugin.ID))
+        if (PublicApi.Instance.PluginModified(plugin.ID))
         {
-            API.ShowMsgError(Localize.pluginModifiedAlreadyTitle(plugin.Name),
+            PublicApi.Instance.ShowMsgError(Localize.pluginModifiedAlreadyTitle(plugin.Name),
                 Localize.pluginModifiedAlreadyMessage());
             return;
         }
@@ -143,7 +139,7 @@ public static class PluginInstaller
         if (Settings.ShowUnknownSourceWarning)
         {
             if (!InstallSourceKnown(plugin.Website)
-                && API.ShowMsgBox(Localize.InstallFromUnknownSourceSubtitle(Environment.NewLine),
+                && PublicApi.Instance.ShowMsgBox(Localize.InstallFromUnknownSourceSubtitle(Environment.NewLine),
                     Localize.InstallFromUnknownSourceTitle(),
                     MessageBoxButton.YesNo) == MessageBoxResult.No)
                 return;
@@ -159,44 +155,44 @@ public static class PluginInstaller
     /// <returns>A Task representing the asynchronous uninstall operation.</returns>
     public static async Task UninstallPluginAndCheckRestartAsync(PluginMetadata oldPlugin)
     {
-        if (API.PluginModified(oldPlugin.ID))
+        if (PublicApi.Instance.PluginModified(oldPlugin.ID))
         {
-            API.ShowMsgError(Localize.pluginModifiedAlreadyTitle(oldPlugin.Name),
+            PublicApi.Instance.ShowMsgError(Localize.pluginModifiedAlreadyTitle(oldPlugin.Name),
                 Localize.pluginModifiedAlreadyMessage());
             return;
         }
 
-        if (API.ShowMsgBox(
+        if (PublicApi.Instance.ShowMsgBox(
             Localize.UninstallPromptSubtitle(oldPlugin.Name, oldPlugin.Author, Environment.NewLine),
             Localize.UninstallPromptTitle(),
             button: MessageBoxButton.YesNo) != MessageBoxResult.Yes) return;
 
-        var removePluginSettings = API.ShowMsgBox(
+        var removePluginSettings = PublicApi.Instance.ShowMsgBox(
             Localize.KeepPluginSettingsSubtitle(),
             Localize.KeepPluginSettingsTitle(),
             button: MessageBoxButton.YesNo) == MessageBoxResult.No;
 
         try
         {
-            if (!await API.UninstallPluginAsync(oldPlugin, removePluginSettings))
+            if (!await PublicApi.Instance.UninstallPluginAsync(oldPlugin, removePluginSettings))
             {
                 return;
             }
         }
         catch (Exception e)
         {
-            API.LogException(ClassName, "Failed to uninstall plugin", e);
-            API.ShowMsgError(Localize.ErrorUninstallingPlugin());
+            PublicApi.Instance.LogException(ClassName, "Failed to uninstall plugin", e);
+            PublicApi.Instance.ShowMsgError(Localize.ErrorUninstallingPlugin());
             return; // don not restart on failure
         }
 
         if (Settings.AutoRestartAfterChanging)
         {
-            API.RestartApp();
+            PublicApi.Instance.RestartApp();
         }
         else
         {
-            API.ShowMsg(
+            PublicApi.Instance.ShowMsg(
                 Localize.uninstallbtn(),
                 Localize.UninstallSuccessNoRestart(oldPlugin.Name));
         }
@@ -210,7 +206,7 @@ public static class PluginInstaller
     /// <returns>A Task representing the asynchronous update operation.</returns>
     public static async Task UpdatePluginAndCheckRestartAsync(UserPlugin newPlugin, PluginMetadata oldPlugin)
     {
-        if (API.ShowMsgBox(
+        if (PublicApi.Instance.ShowMsgBox(
             Localize.UpdatePromptSubtitle(oldPlugin.Name, oldPlugin.Author, Environment.NewLine),
             Localize.UpdatePromptTitle(),
             button: MessageBoxButton.YesNo) != MessageBoxResult.Yes) return;
@@ -238,25 +234,25 @@ public static class PluginInstaller
                 return;
             }
 
-            if (!await API.UpdatePluginAsync(oldPlugin, newPlugin, filePath))
+            if (!await PublicApi.Instance.UpdatePluginAsync(oldPlugin, newPlugin, filePath))
             {
                 return;
             }
         }
         catch (Exception e)
         {
-            API.LogException(ClassName, "Failed to update plugin", e);
-            API.ShowMsgError(Localize.ErrorUpdatingPlugin());
+            PublicApi.Instance.LogException(ClassName, "Failed to update plugin", e);
+            PublicApi.Instance.ShowMsgError(Localize.ErrorUpdatingPlugin());
             return; // do not restart on failure
         }
 
         if (Settings.AutoRestartAfterChanging)
         {
-            API.RestartApp();
+            PublicApi.Instance.RestartApp();
         }
         else
         {
-            API.ShowMsg(
+            PublicApi.Instance.ShowMsg(
                 Localize.updatebtn(),
                 Localize.UpdateSuccessNoRestart(newPlugin.Name));
         }
@@ -273,17 +269,17 @@ public static class PluginInstaller
     public static async Task CheckForPluginUpdatesAsync(Action<List<PluginUpdateInfo>> updateAllPlugins, bool silentUpdate = true, bool usePrimaryUrlOnly = false, CancellationToken token = default)
     {
         // Update the plugin manifest
-        await API.UpdatePluginManifestAsync(usePrimaryUrlOnly, token);
+        await PublicApi.Instance.UpdatePluginManifestAsync(usePrimaryUrlOnly, token);
 
         // Get all plugins that can be updated
         var resultsForUpdate = (
-            from existingPlugin in API.GetAllPlugins()
-            join pluginUpdateSource in API.GetPluginManifest()
+            from existingPlugin in PublicApi.Instance.GetAllPlugins()
+            join pluginUpdateSource in PublicApi.Instance.GetPluginManifest()
                 on existingPlugin.Metadata.ID equals pluginUpdateSource.ID
             where string.Compare(existingPlugin.Metadata.Version, pluginUpdateSource.Version,
                       StringComparison.InvariantCulture) <
                   0 // if current version precedes version of the plugin from update source (e.g. PluginsManifest)
-                  && !API.PluginModified(existingPlugin.Metadata.ID)
+                  && !PublicApi.Instance.PluginModified(existingPlugin.Metadata.ID)
             select
                 new PluginUpdateInfo()
                 {
@@ -302,19 +298,19 @@ public static class PluginInstaller
         {
             if (!silentUpdate)
             {
-                API.ShowMsg(Localize.updateNoResultTitle(), Localize.updateNoResultSubtitle());
+                PublicApi.Instance.ShowMsg(Localize.updateNoResultTitle(), Localize.updateNoResultSubtitle());
             }
             return;
         }
 
         // If all plugins are modified, just return
-        if (resultsForUpdate.All(x => API.PluginModified(x.ID)))
+        if (resultsForUpdate.All(x => PublicApi.Instance.PluginModified(x.ID)))
         {
             return;
         }
 
         // Show message box with button to update all plugins
-        API.ShowMsgWithButton(
+        PublicApi.Instance.ShowMsgWithButton(
             Localize.updateAllPluginsTitle(),
             Localize.updateAllPluginsButtonContent(),
             () =>
@@ -350,7 +346,7 @@ public static class PluginInstaller
                     return;
                 }
 
-                if (!await API.UpdatePluginAsync(plugin.PluginExistingMetadata, plugin.PluginNewUserPlugin, downloadToFilePath))
+                if (!await PublicApi.Instance.UpdatePluginAsync(plugin.PluginExistingMetadata, plugin.PluginNewUserPlugin, downloadToFilePath))
                 {
                     return;
                 }
@@ -359,8 +355,8 @@ public static class PluginInstaller
             }
             catch (Exception e)
             {
-                API.LogException(ClassName, "Failed to update plugin", e);
-                API.ShowMsgError(Localize.ErrorUpdatingPlugin());
+                PublicApi.Instance.LogException(ClassName, "Failed to update plugin", e);
+                PublicApi.Instance.ShowMsgError(Localize.ErrorUpdatingPlugin());
             }
         }));
 
@@ -368,11 +364,11 @@ public static class PluginInstaller
 
         if (restart)
         {
-            API.RestartApp();
+            PublicApi.Instance.RestartApp();
         }
         else
         {
-            API.ShowMsg(
+            PublicApi.Instance.ShowMsg(
                 Localize.updatebtn(),
                 Localize.PluginsUpdateSuccessNoRestart());
         }
@@ -396,7 +392,7 @@ public static class PluginInstaller
         if (showProgress)
         {
             var exceptionHappened = false;
-            await API.ShowProgressBoxAsync(progressBoxTitle,
+            await PublicApi.Instance.ShowProgressBoxAsync(progressBoxTitle,
                 async (reportProgress) =>
                 {
                     if (reportProgress == null)
@@ -408,18 +404,18 @@ public static class PluginInstaller
                     }
                     else
                     {
-                        await API.HttpDownloadAsync(downloadUrl, filePath, reportProgress, cts.Token).ConfigureAwait(false);
+                        await PublicApi.Instance.HttpDownloadAsync(downloadUrl, filePath, reportProgress, cts.Token).ConfigureAwait(false);
                     }
                 }, cts.Cancel);
 
             // if exception happened while downloading and user does not cancel downloading,
             // we need to redownload the plugin
             if (exceptionHappened && (!cts.IsCancellationRequested))
-                await API.HttpDownloadAsync(downloadUrl, filePath, token: cts.Token).ConfigureAwait(false);
+                await PublicApi.Instance.HttpDownloadAsync(downloadUrl, filePath, token: cts.Token).ConfigureAwait(false);
         }
         else
         {
-            await API.HttpDownloadAsync(downloadUrl, filePath, token: cts.Token).ConfigureAwait(false);
+            await PublicApi.Instance.HttpDownloadAsync(downloadUrl, filePath, token: cts.Token).ConfigureAwait(false);
         }
     }
 
@@ -446,7 +442,7 @@ public static class PluginInstaller
         if (!Uri.TryCreate(url, UriKind.Absolute, out var uri) || uri.Host != acceptedHost)
             return false;
 
-        return API.GetAllPlugins().Any(x =>
+        return PublicApi.Instance.GetAllPlugins().Any(x =>
             !string.IsNullOrEmpty(x.Metadata.Website) &&
             x.Metadata.Website.StartsWith(constructedUrlPart)
         );
