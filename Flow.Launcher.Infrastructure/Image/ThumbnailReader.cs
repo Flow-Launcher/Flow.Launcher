@@ -1,13 +1,14 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
+using IniParser;
 using Windows.Win32;
 using Windows.Win32.Foundation;
-using Windows.Win32.UI.Shell;
 using Windows.Win32.Graphics.Gdi;
+using Windows.Win32.UI.Shell;
 
 namespace Flow.Launcher.Infrastructure.Image
 {
@@ -35,9 +36,21 @@ namespace Flow.Launcher.Infrastructure.Image
 
         private static readonly HRESULT S_PATHNOTFOUND = (HRESULT)0x8004B205;
 
+        private const string UrlExtension = ".url";
+
         public static BitmapSource GetThumbnail(string fileName, int width, int height, ThumbnailOptions options)
         {
-            HBITMAP hBitmap = GetHBitmap(Path.GetFullPath(fileName), width, height, options);
+            HBITMAP hBitmap;
+
+            var extension = Path.GetExtension(fileName)?.ToLowerInvariant();
+            if (extension is UrlExtension)
+            {
+                hBitmap = GetHBitmapForUrlFile(fileName, width, height, options);
+            }
+            else
+            {
+                hBitmap = GetHBitmap(Path.GetFullPath(fileName), width, height, options);
+            }
 
             try
             {
@@ -104,6 +117,31 @@ namespace Flow.Launcher.Infrastructure.Image
                 {
                     Marshal.ReleaseComObject(nativeShellItem);
                 }
+            }
+
+            return hBitmap;
+        }
+
+        private static unsafe HBITMAP GetHBitmapForUrlFile(string fileName, int width, int height, ThumbnailOptions options)
+        {
+            HBITMAP hBitmap;
+
+            try
+            {
+                var parser = new FileIniDataParser();
+                var data = parser.ReadFile(fileName);
+                var urlSection = data["InternetShortcut"];
+
+                var iconPath = urlSection?["IconFile"];
+                if (string.IsNullOrEmpty(iconPath))
+                {
+                    throw new FileNotFoundException();
+                }
+                hBitmap = GetHBitmap(Path.GetFullPath(iconPath), width, height, options);
+            }
+            catch
+            {
+                hBitmap = GetHBitmap(Path.GetFullPath(fileName), width, height, options);
             }
 
             return hBitmap;
