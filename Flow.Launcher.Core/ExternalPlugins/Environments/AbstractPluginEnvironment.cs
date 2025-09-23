@@ -14,6 +14,8 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
     {
         private static readonly string ClassName = nameof(AbstractPluginEnvironment);
 
+        protected readonly IPublicAPI API = PublicApi.Instance;
+
         internal abstract string Language { get; }
 
         internal abstract string EnvName { get; }
@@ -56,7 +58,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
             }
 
             var noRuntimeMessage = Localize.runtimePluginInstalledChooseRuntimePrompt(Language, EnvName, Environment.NewLine);
-            if (PublicApi.Instance.ShowMsgBox(noRuntimeMessage, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.No)
+            if (API.ShowMsgBox(noRuntimeMessage, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.No)
             {
                 var msg = Localize.runtimePluginChooseRuntimeExecutable(EnvName);
 
@@ -74,7 +76,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
                     // Let users select valid path or choose to download
                     while (string.IsNullOrEmpty(selectedFile))
                     {
-                        if (PublicApi.Instance.ShowMsgBox(forceDownloadMessage, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                        if (API.ShowMsgBox(forceDownloadMessage, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                         {
                             // Continue select file
                             selectedFile = GetFileFromDialog(msg, FileDialogFilter);
@@ -107,8 +109,8 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
             }
             else
             {
-                PublicApi.Instance.ShowMsgBox(Localize.runtimePluginUnableToSetExecutablePath(Language));
-                PublicApi.Instance.LogError(ClassName,
+                API.ShowMsgBox(Localize.runtimePluginUnableToSetExecutablePath(Language));
+                API.LogError(ClassName,
                     $"Not able to successfully set {EnvName} path, setting's plugin executable path variable is still an empty string.",
                     $"{Language}Environment");
 
@@ -122,7 +124,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
         {
             if (expectedPath == currentPath) return;
 
-            FilesFolders.RemoveFolderIfExists(installedDirPath, (s) => PublicApi.Instance.ShowMsgBox(s));
+            FilesFolders.RemoveFolderIfExists(installedDirPath, (s) => API.ShowMsgBox(s));
 
             InstallEnvironment();
         }
@@ -235,7 +237,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
         private static string GetUpdatedEnvironmentPath(string filePath)
         {
             var index = filePath.IndexOf(DataLocation.PluginEnvironments);
-            
+
             // get the substring after "Environments" because we can not determine it dynamically
             var executablePathSubstring = filePath[(index + DataLocation.PluginEnvironments.Length)..];
             return $"{DataLocation.PluginEnvironmentsPath}{executablePathSubstring}";
