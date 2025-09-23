@@ -133,8 +133,9 @@ namespace Flow.Launcher.Infrastructure.Image
                 var urlSection = data["InternetShortcut"];
 
                 var iconPath = urlSection?["IconFile"];
-                if (string.IsNullOrEmpty(iconPath))
+                if (!File.Exists(iconPath))
                 {
+                    // If the IconFile is missing, throw exception to fallback to the default icon
                     throw new FileNotFoundException("Icon file not specified in Internet shortcut (.url) file.");
                 }
                 hBitmap = GetHBitmap(Path.GetFullPath(iconPath), width, height, options);
