@@ -40,9 +40,9 @@ namespace Flow.Launcher.Plugin.Calculator
             MagesEngine = new Engine(new Configuration
             {
                 Scope = new Dictionary<string, object>
-            {
-                { "e", Math.E }, // e is not contained in the default mages engine
-            }
+                {
+                    { "e", Math.E }, // e is not contained in the default mages engine
+                }
             });
         }
 
@@ -109,10 +109,10 @@ namespace Flow.Launcher.Plugin.Calculator
                     return
                     [
                         new Result
-                    {
-                        Title = Localize.flowlauncher_plugin_calculator_expression_not_complete(),
-                        IcoPath = IcoPath
-                    }
+                        {
+                            Title = Localize.flowlauncher_plugin_calculator_expression_not_complete(),
+                            IcoPath = IcoPath
+                        }
                     ];
                 }
 
@@ -134,27 +134,27 @@ namespace Flow.Launcher.Plugin.Calculator
                     return
                     [
                         new Result
-                    {
-                        Title = newResult,
-                        IcoPath = IcoPath,
-                        Score = 300,
-                        // Check context nullability for unit testing
-                        SubTitle = Context == null ? string.Empty : Localize.flowlauncher_plugin_calculator_copy_number_to_clipboard(),
-                        CopyText = newResult,
-                        Action = c =>
                         {
-                            try
+                            Title = newResult,
+                            IcoPath = IcoPath,
+                            Score = 300,
+                            // Check context nullability for unit testing
+                            SubTitle = Context == null ? string.Empty : Localize.flowlauncher_plugin_calculator_copy_number_to_clipboard(),
+                            CopyText = newResult,
+                            Action = c =>
                             {
-                                Context.API.CopyToClipboard(newResult);
-                                return true;
-                            }
-                            catch (ExternalException)
-                            {
-                                Context.API.ShowMsgBox(Localize.flowlauncher_plugin_calculator_failed_to_copy());
-                                return false;
+                                try
+                                {
+                                    Context.API.CopyToClipboard(newResult);
+                                    return true;
+                                }
+                                catch (ExternalException)
+                                {
+                                    Context.API.ShowMsgBox(Localize.flowlauncher_plugin_calculator_failed_to_copy());
+                                    return false;
+                                }
                             }
                         }
-                    }
                     ];
                 }
             }
@@ -165,10 +165,10 @@ namespace Flow.Launcher.Plugin.Calculator
                 return
                 [
                     new Result
-                {
-                    Title = Localize.flowlauncher_plugin_calculator_expression_not_complete(),
-                    IcoPath = IcoPath
-                }
+                    {
+                        Title = Localize.flowlauncher_plugin_calculator_expression_not_complete(),
+                        IcoPath = IcoPath
+                    }
                 ];
             }
 
