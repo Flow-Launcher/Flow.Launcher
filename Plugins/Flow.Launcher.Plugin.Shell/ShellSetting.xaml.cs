@@ -137,6 +137,5 @@ public partial class CMDSetting : UserControl
         {
             _settings.ShowOnlyMostUsedCMDsNumber = (int)ShowOnlyMostUsedCMDsNumber.SelectedItem;
         };
-
     }
 }
