@@ -44,7 +44,7 @@ public static class ThemeSelector
         }
 
         string description;
-        if (theme.IsDark == true && theme.HasBlur == true)
+        if (theme.IsDark == true)
         {
             if (theme.HasBlur == true)
             {
