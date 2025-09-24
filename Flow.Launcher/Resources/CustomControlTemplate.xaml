@@ -29,6 +29,7 @@
         {DynamicResource SettingWindowFont}
     </FontFamily>
 
+    <!--  Context Menu for TextBox  -->
     <ContextMenu x:Key="TextBoxContextMenu">
         <MenuItem Command="ApplicationCommands.Cut" Header="{DynamicResource cut}">
             <MenuItem.Icon>
@@ -53,6 +54,7 @@
         <MenuItem Command="ApplicationCommands.SelectAll" Header="{DynamicResource selectAll}" />
     </ContextMenu>
 
+    <!--  Content Control for foreground  -->
     <Style TargetType="{x:Type ContentControl}">
         <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
     </Style>
@@ -167,7 +169,7 @@
         </Setter>
     </Style>
 
-    <!--  Context Menu  -->
+    <!--  Custom Context Menu from UI.WPF.Modern to remove tab focus & focus visual  -->
     <Style x:Key="ContextMenuStyleBase" TargetType="ContextMenu">
         <Setter Property="Background" Value="{DynamicResource MenuFlyoutPresenterBackground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MenuFlyoutPresenterBorderBrush}" />
@@ -274,7 +276,7 @@
 
     <Style BasedOn="{StaticResource DefaultMenuItemStyle}" TargetType="MenuItem" />
 
-    <!--  List View  -->
+    <!--  List View from UI.WPF.Modern to adjust GridView item margin  -->
     <Style
         x:Key="{x:Static GridView.GridViewItemContainerStyleKey}"
         BasedOn="{StaticResource DefaultListViewItemStyle}"
