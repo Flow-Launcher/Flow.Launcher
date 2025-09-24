@@ -277,13 +277,12 @@
     <Style BasedOn="{StaticResource DefaultMenuItemStyle}" TargetType="MenuItem" />
 
     <!--  List View from UI.WPF.Modern to adjust GridView item margin  -->
-    <!--  // TODO: Only override Margin property in future: https://github.com/iNKORE-NET/UI.WPF.Modern/pull/349  -->
     <Style
         x:Key="{x:Static GridView.GridViewItemContainerStyleKey}"
         BasedOn="{StaticResource DefaultListViewItemStyle}"
         TargetType="ListViewItem">
-        <Setter Property="Margin" Value="0 2" />
         <Setter Property="Padding" Value="6 0" />
+        <Setter Property="Margin" Value="0 2" />
         <Setter Property="Background" Value="{DynamicResource GridViewItemBackground}" />
         <Setter Property="Foreground" Value="{DynamicResource GridViewItemForeground}" />
         <Setter Property="MinWidth" Value="{DynamicResource GridViewItemMinWidth}" />
@@ -291,10 +290,9 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListViewItem">
-                    <!--  Here we use 0 2 instead of 0 4 for Margin  -->
                     <Border
                         x:Name="LayoutRoot"
-                        Margin="0 2"
+                        Margin="{TemplateBinding Margin}"
                         ui:PressHelper.IsEnabled="True"
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
