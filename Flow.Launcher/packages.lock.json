@@ -207,6 +207,11 @@
         "resolved": "1.11.42",
         "contentHash": "LDc1bEfF14EY2DZzak4xvzWvbpNXK3vi1u0KQbBpLUN4+cx/VrvXhgCAMSJhSU5vz0oMfW9JZIR20vj/PkDHPA=="
       },
+      "ini-parser": {
+        "type": "Transitive",
+        "resolved": "2.5.2",
+        "contentHash": "hp3gKmC/14+6eKLgv7Jd1Z7OV86lO+tNfOXr/stQbwmRhdQuXVSvrRAuAe7G5+lwhkov0XkqZ8/bn1PYWMx6eg=="
+      },
       "iNKORE.UI.WPF": {
         "type": "Transitive",
         "resolved": "1.2.8",
@@ -871,7 +876,8 @@
           "NLog.OutputDebugString": "[6.0.4, )",
           "SharpVectors.Wpf": "[1.8.5, )",
           "System.Drawing.Common": "[7.0.0, )",
-          "ToolGood.Words.Pinyin": "[3.1.0.3, )"
+          "ToolGood.Words.Pinyin": "[3.1.0.3, )",
+          "ini-parser": "[2.5.2, )"
         }
       },
       "flow.launcher.plugin": {

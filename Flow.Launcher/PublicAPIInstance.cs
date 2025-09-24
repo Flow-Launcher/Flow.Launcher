@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -74,7 +74,6 @@ namespace Flow.Launcher
             _mainVM.ChangeQueryText(query, requery);
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
         public void RestartApp()
         {
             _mainVM.Hide();
@@ -179,7 +178,7 @@ namespace Flow.Launcher
 
                     Clipboard.SetFileDropList(paths);
                 });
-                
+
                 if (exception == null)
                 {
                     if (showDefaultNotification)
@@ -218,7 +217,7 @@ namespace Flow.Launcher
                 {
                     LogException(nameof(PublicAPIInstance), "Failed to copy text to clipboard", exception);
                     ShowMsgError(GetTranslation("failedToCopy"));
-                }  
+                }
             }
         }
 
@@ -327,7 +326,7 @@ namespace Flow.Launcher
 
             ((PluginJsonStorage<T>)_pluginJsonStorages[type]).Save();
         }
-        
+
         public void OpenDirectory(string directoryPath, string fileNameOrFilePath = null)
         {
             try
@@ -412,6 +411,12 @@ namespace Flow.Launcher
 
         private void OpenUri(Uri uri, bool? inPrivate = null, bool forceBrowser = false)
         {
+            if (uri.IsFile && !FilesFolders.FileOrLocationExists(uri.LocalPath))
+            {
+                ShowMsgError(GetTranslation("errorTitle"), string.Format(GetTranslation("fileNotFoundError"), uri.LocalPath));
+                return;
+            }
+
             if (forceBrowser || uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps)
             {
                 var browserInfo = _settings.CustomBrowser;
@@ -441,13 +446,19 @@ namespace Flow.Launcher
             }
             else
             {
-                Process.Start(new ProcessStartInfo()
+                try
                 {
-                    FileName = uri.AbsoluteUri,
-                    UseShellExecute = true
-                })?.Dispose();
-
-                return;
+                    Process.Start(new ProcessStartInfo()
+                    {
+                        FileName = uri.AbsoluteUri,
+                        UseShellExecute = true
+                    })?.Dispose();
+                }
+                catch (Exception e)
+                {
+                    LogException(ClassName, $"Failed to open: {uri.AbsoluteUri}", e);
+                    ShowMsgError(GetTranslation("errorTitle"), e.Message);
+                }
             }
         }
 
@@ -481,7 +492,7 @@ namespace Flow.Launcher
             OpenUri(appUri);
         }
 
-        public void ToggleGameMode() 
+        public void ToggleGameMode()
         {
             _mainVM.ToggleGameMode();
         }
