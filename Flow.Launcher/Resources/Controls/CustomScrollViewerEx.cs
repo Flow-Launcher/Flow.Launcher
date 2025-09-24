@@ -8,6 +8,7 @@ using System.Windows.Input;
 
 namespace Flow.Launcher.Resources.Controls
 {
+    // TODO: Use IsScrollAnimationEnabled property in future: https://github.com/iNKORE-NET/UI.WPF.Modern/pull/347
     public class CustomScrollViewerEx : ScrollViewer
     {
         private double LastVerticalLocation = 0;
