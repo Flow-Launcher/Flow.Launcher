@@ -575,6 +575,19 @@
     </Style>
 
     <!--  Custom Toggle Switch from UI.WPF.Modern for left label  -->
+    <Thickness x:Key="ToggleSwitchTopHeaderMargin">0,0,0,4</Thickness>
+    <system:Double x:Key="ToggleSwitchPreContentMargin">10</system:Double>
+    <system:Double x:Key="ToggleSwitchPostContentMargin">10</system:Double>
+
+    <system:Double x:Key="ToggleSwitchLabelGap">12</system:Double>
+    <GridLength x:Key="ToggleSwitchLabelGapGL">12</GridLength>
+
+    <system:Double x:Key="ToggleSwitchThemeMinWidth">154</system:Double>
+
+    <system:TimeSpan x:Key="RepositionDelay">0:0:0.033</system:TimeSpan>
+    <KeyTime x:Key="RepositionDuration">0:0:0.367</KeyTime>
+    <KeySpline x:Key="RepositionKeySpline">0.1,0.9 0.2,1.0</KeySpline>
+
     <Style x:Key="DefaultToggleSwitch" TargetType="ui:ToggleSwitch">
         <Setter Property="Foreground" Value="{DynamicResource ToggleSwitchContentForeground}" />
         <!--  Change HorizontalAlignment from Left to Center  -->
