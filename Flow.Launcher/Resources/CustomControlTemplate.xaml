@@ -57,12 +57,6 @@
         <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
     </Style>
 
-    <!--  Popup Color  -->
-    <Style x:Key="PageBackgroundColor" TargetType="{x:Type Window}">
-        <Setter Property="Background" Value="{DynamicResource Color05B}" />
-        <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
-    </Style>
-
     <!--  Setting Window  -->
     <Style x:Key="PageTitle" TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
