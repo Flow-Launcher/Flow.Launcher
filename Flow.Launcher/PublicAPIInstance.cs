@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -182,7 +182,7 @@ namespace Flow.Launcher
 
                     Clipboard.SetFileDropList(paths);
                 });
-                
+
                 if (exception == null)
                 {
                     if (showDefaultNotification)
@@ -221,7 +221,7 @@ namespace Flow.Launcher
                 {
                     LogException(nameof(PublicAPIInstance), "Failed to copy text to clipboard", exception);
                     ShowMsgError(GetTranslation("failedToCopy"));
-                }  
+                }
             }
         }
 
@@ -330,7 +330,7 @@ namespace Flow.Launcher
 
             ((PluginJsonStorage<T>)_pluginJsonStorages[type]).Save();
         }
-        
+
         public void OpenDirectory(string directoryPath, string fileNameOrFilePath = null)
         {
             try
@@ -415,6 +415,12 @@ namespace Flow.Launcher
 
         private void OpenUri(Uri uri, bool? inPrivate = null, bool forceBrowser = false)
         {
+            if (uri.IsFile && !FilesFolders.FileOrLocationExists(uri.LocalPath))
+            {
+                ShowMsgError(GetTranslation("errorTitle"), string.Format(GetTranslation("fileNotFoundError"), uri.LocalPath));
+                return;
+            }
+
             if (forceBrowser || uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps)
             {
                 var browserInfo = _settings.CustomBrowser;
@@ -444,7 +450,15 @@ namespace Flow.Launcher
             }
             else
             {
-                StartProcess(uri.AbsoluteUri, arguments: string.Empty, useShellExecute: true);
+                try
+                {
+                    StartProcess(uri.AbsoluteUri, arguments: string.Empty, useShellExecute: true);
+                }
+                catch (Exception e)
+                {
+                    LogException(ClassName, $"Failed to open: {uri.AbsoluteUri}", e);
+                    ShowMsgError(GetTranslation("errorTitle"), e.Message);
+                }
             }
         }
 
@@ -478,7 +492,7 @@ namespace Flow.Launcher
             OpenUri(appUri);
         }
 
-        public void ToggleGameMode() 
+        public void ToggleGameMode()
         {
             _mainVM.ToggleGameMode();
         }
