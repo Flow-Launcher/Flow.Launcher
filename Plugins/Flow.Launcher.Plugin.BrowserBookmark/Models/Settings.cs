@@ -1,18 +1,51 @@
-﻿using System.Collections.ObjectModel;
+using System.Collections.ObjectModel;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark.Models;
 
 public class Settings : BaseModel
 {
-    public bool OpenInNewBrowserWindow { get; set; } = true;
+    private bool _loadChromeBookmark = true;
+    private bool _loadFirefoxBookmark = true;
+    private bool _loadEdgeBookmark = true;
+    private bool _loadChromiumBookmark = true;
+    private bool _enableFavicons = true;
+    private bool _fetchMissingFavicons = false;
 
-    public string BrowserPath { get; set; }
+    public bool LoadChromeBookmark
+    {
+        get => _loadChromeBookmark;
+        set { _loadChromeBookmark = value; OnPropertyChanged(); }
+    }
+    
+    public bool LoadFirefoxBookmark
+    {
+        get => _loadFirefoxBookmark;
+        set { _loadFirefoxBookmark = value; OnPropertyChanged(); }
+    }
+    
+    public bool LoadEdgeBookmark
+    {
+        get => _loadEdgeBookmark;
+        set { _loadEdgeBookmark = value; OnPropertyChanged(); }
+    }
 
-    public bool EnableFavicons { get; set; } = false;
+    public bool LoadChromiumBookmark
+    {
+        get => _loadChromiumBookmark;
+        set { _loadChromiumBookmark = value; OnPropertyChanged(); }
+    }
 
-    public bool LoadChromeBookmark { get; set; } = true;
-    public bool LoadFirefoxBookmark { get; set; } = true;
-    public bool LoadEdgeBookmark { get; set; } = true;
-
-    public ObservableCollection<CustomBrowser> CustomChromiumBrowsers { get; set; } = new();
+    public bool EnableFavicons
+    {
+        get => _enableFavicons;
+        set { _enableFavicons = value; OnPropertyChanged(); }
+    }
+    
+    public bool FetchMissingFavicons
+    {
+        get => _fetchMissingFavicons;
+        set { _fetchMissingFavicons = value; OnPropertyChanged(); }
+    }
+    
+    public ObservableCollection<CustomBrowser> CustomBrowsers { get; set; } = new();
 }

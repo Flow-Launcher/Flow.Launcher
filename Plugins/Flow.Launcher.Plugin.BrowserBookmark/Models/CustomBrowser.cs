@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
 using Flow.Launcher.Localization.Attributes;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark.Models;
 
@@ -7,7 +8,7 @@ public class CustomBrowser : BaseModel
 {
     private string _name;
     private string _dataDirectoryPath;
-    private BrowserType _browserType = BrowserType.Chromium;
+    private BrowserType _browserType = BrowserType.Unknown;
 
     public string Name
     {
@@ -35,8 +36,6 @@ public class CustomBrowser : BaseModel
         }
     }
 
-    public List<BrowserTypeLocalized> AllBrowserTypes { get; } = BrowserTypeLocalized.GetValues();
-
     public BrowserType BrowserType
     {
         get => _browserType;
@@ -51,9 +50,15 @@ public class CustomBrowser : BaseModel
     }
 }
 
+// Helper record for displaying enum values in the settings ComboBox.
+public record BrowserTypeDisplay(string Display, BrowserType Value);
+
 [EnumLocalize]
 public enum BrowserType
 {
+    [EnumLocalizeValue("Unknown")]
+    Unknown,
+
     [EnumLocalizeValue("Chromium")]
     Chromium,
 

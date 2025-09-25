@@ -57,7 +57,7 @@
                             $(OutputPath)runtimes\osx-arm64;
                             $(OutputPath)runtimes\osx-x64;
                             $(OutputPath)runtimes\win-arm;
-                            $(OutputPath)runtimes\win-arm64;"/>
+                            $(OutputPath)runtimes\win-arm64;" />
   </Target>
 
   <Target Name="RemoveUnnecessaryRuntimesAfterPublish" AfterTargets="Publish">
@@ -80,13 +80,28 @@
                             $(PublishDir)runtimes\osx-arm64;
                             $(PublishDir)runtimes\osx-x64;
                             $(PublishDir)runtimes\win-arm;
-                            $(PublishDir)runtimes\win-arm64;"/>
+                            $(PublishDir)runtimes\win-arm64;" />
   </Target>
 
   <ItemGroup>
-    <None Include="plugin.json">
+    <None Update="plugin.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Languages\en.xaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\bookmark.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\copylink.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Content Include="Languages\*.xaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -94,19 +109,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Images\*.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Languages\*.xaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="Flow.Launcher.Localization" Version="0.0.6" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.9" />
-    <PackageReference Include="Svg.Skia" Version="3.0.6" />
+    <PackageReference Include="Svg.Skia" Version="3.2.1" />
     <PackageReference Include="SkiaSharp" Version="3.119.0" />
   </ItemGroup>
 

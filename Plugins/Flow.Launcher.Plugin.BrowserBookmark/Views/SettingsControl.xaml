@@ -1,4 +1,4 @@
-﻿<UserControl
+<UserControl
     x:Class="Flow.Launcher.Plugin.BrowserBookmark.Views.SettingsControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -25,15 +25,19 @@
             <CheckBox
                 Margin="{StaticResource SettingPanelItemRightMargin}"
                 Content="Chrome"
-                IsChecked="{Binding LoadChromeBookmark}" />
+                IsChecked="{Binding Settings.LoadChromeBookmark}" />
+            <CheckBox
+                Margin="{StaticResource SettingPanelItemRightMargin}"
+                Content="Chromium"
+                IsChecked="{Binding Settings.LoadChromiumBookmark}" />
             <CheckBox
                 Margin="{StaticResource SettingPanelItemRightMargin}"
                 Content="Edge"
-                IsChecked="{Binding LoadEdgeBookmark}" />
+                IsChecked="{Binding Settings.LoadEdgeBookmark}" />
             <CheckBox
                 Margin="{StaticResource SettingPanelItemRightMargin}"
                 Content="Firefox"
-                IsChecked="{Binding LoadFirefoxBookmark}" />
+                IsChecked="{Binding Settings.LoadFirefoxBookmark}" />
             <Button
                 Margin="{StaticResource SettingPanelItemRightMargin}"
                 Click="Others_Click"
@@ -49,15 +53,17 @@
                 Margin="{StaticResource SettingPanelItemTopBottomMargin}"
                 BorderBrush="DarkGray"
                 BorderThickness="1"
-                ItemsSource="{Binding Settings.CustomChromiumBrowsers}"
+                ItemsSource="{Binding Settings.CustomBrowsers}"
                 MouseDoubleClick="MouseDoubleClickOnSelectedCustomBrowser"
                 SelectedItem="{Binding SelectedCustomBrowser}"
                 Style="{StaticResource {x:Static GridView.GridViewStyleKey}}">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn DisplayMemberBinding="{Binding Name, Mode=OneWay}" Header="{DynamicResource flowlauncher_plugin_browserbookmark_browserName}" />
-                        <GridViewColumn DisplayMemberBinding="{Binding DataDirectoryPath, Mode=OneWay}" Header="{DynamicResource flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory}" />
-                        <GridViewColumn DisplayMemberBinding="{Binding BrowserType, Mode=OneWay}" Header="{DynamicResource flowlauncher_plugin_browserbookmark_browserEngine}" />
+                        <GridViewColumn DisplayMemberBinding="{Binding Name, Mode=OneWay}"
+                            Header="{DynamicResource flowlauncher_plugin_browserbookmark_browserName}" />
+                        <GridViewColumn
+                            DisplayMemberBinding="{Binding DataDirectoryPath, Mode=OneWay}"
+                            Header="{DynamicResource flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory}" />
                     </GridView>
                 </ListView.View>
             </ListView>
@@ -78,7 +84,9 @@
                         <Style BasedOn="{StaticResource DefaultButtonStyle}" TargetType="Button">
                             <Setter Property="IsEnabled" Value="true" />
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding ElementName=CustomBrowsers, Path=SelectedItems.Count}" Value="0">
+                                <DataTrigger
+                                    Binding="{Binding ElementName=CustomBrowsers, Path=SelectedItems.Count}"
+                                    Value="0">
                                     <Setter Property="IsEnabled" Value="false" />
                                 </DataTrigger>
                             </Style.Triggers>
@@ -92,12 +100,20 @@
                     Content="{DynamicResource flowlauncher_plugin_browserbookmark_removeBrowserBookmark}" />
             </StackPanel>
         </StackPanel>
-        <CheckBox
-            Grid.Row="2"
-            Margin="{StaticResource SettingPanelItemTopBottomMargin}"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center"
-            Content="{DynamicResource flowlauncher_plugin_browserbookmark_enable_favicons}"
-            IsChecked="{Binding Settings.EnableFavicons}" />
+        <StackPanel Grid.Row="2" Orientation="Vertical">
+            <CheckBox
+                Margin="{StaticResource SettingPanelItemTopBottomMargin}"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Content="{DynamicResource flowlauncher_plugin_browserbookmark_enable_favicons}"
+                IsChecked="{Binding Settings.EnableFavicons}" />
+            <CheckBox
+                Margin="{StaticResource SettingPanelItemTopBottomMargin}"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Content="{DynamicResource flowlauncher_plugin_browserbookmark_fetch_missing_favicons}"
+                IsChecked="{Binding Settings.FetchMissingFavicons}"
+                IsEnabled="{Binding Settings.EnableFavicons}" />
+        </StackPanel>
     </Grid>
 </UserControl>

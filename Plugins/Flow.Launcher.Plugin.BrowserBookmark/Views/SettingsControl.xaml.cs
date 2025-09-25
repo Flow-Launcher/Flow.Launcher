@@ -1,13 +1,12 @@
-﻿using System.Windows;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.ComponentModel;
 using Flow.Launcher.Plugin.BrowserBookmark.Models;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark.Views;
 
-[INotifyPropertyChanged]
-public partial class SettingsControl
+public partial class SettingsControl : UserControl
 {
     public Settings Settings { get; }
     public CustomBrowser SelectedCustomBrowser { get; set; }
@@ -18,59 +17,16 @@ public partial class SettingsControl
         InitializeComponent();
     }
 
-    public bool LoadChromeBookmark
-    {
-        get => Settings.LoadChromeBookmark;
-        set
-        {
-            Settings.LoadChromeBookmark = value;
-            _ = Task.Run(() => Main.ReloadAllBookmarks());
-        }
-    }
-
-    public bool LoadFirefoxBookmark
-    {
-        get => Settings.LoadFirefoxBookmark;
-        set
-        {
-            Settings.LoadFirefoxBookmark = value;
-            _ = Task.Run(() => Main.ReloadAllBookmarks());
-        }
-    }
-
-    public bool LoadEdgeBookmark
-    {
-        get => Settings.LoadEdgeBookmark;
-        set
-        {
-            Settings.LoadEdgeBookmark = value;
-            _ = Task.Run(() => Main.ReloadAllBookmarks());
-        }
-    }
-
-    public bool OpenInNewBrowserWindow
-    {
-        get => Settings.OpenInNewBrowserWindow;
-        set
-        {
-            Settings.OpenInNewBrowserWindow = value;
-            OnPropertyChanged();
-        }
-    }
+    // Note: The auto-reload logic will be handled by the Main class listening to settings changes
+    // This code-behind is now simpler.
 
     private void NewCustomBrowser(object sender, RoutedEventArgs e)
     {
         var newBrowser = new CustomBrowser();
-        var window = new CustomBrowserSettingWindow(newBrowser);
-        window.ShowDialog();
-        if (newBrowser is not
-            {
-                Name: null,
-                DataDirectoryPath: null
-            })
+        var window = new CustomBrowserSetting(newBrowser);
+        if (window.ShowDialog() == true)
         {
-            Settings.CustomChromiumBrowsers.Add(newBrowser);
-            _ = Task.Run(() => Main.ReloadAllBookmarks());
+            Settings.CustomBrowsers.Add(newBrowser);
         }
     }
 
@@ -78,8 +34,7 @@ public partial class SettingsControl
     {
         if (CustomBrowsers.SelectedItem is CustomBrowser selectedCustomBrowser)
         {
-            Settings.CustomChromiumBrowsers.Remove(selectedCustomBrowser);
-            _ = Task.Run(() => Main.ReloadAllBookmarks());
+            Settings.CustomBrowsers.Remove(selectedCustomBrowser);
         }
     }
 
@@ -107,11 +62,7 @@ public partial class SettingsControl
         if (SelectedCustomBrowser is null)
             return;
 
-        var window = new CustomBrowserSettingWindow(SelectedCustomBrowser);
-        var result = window.ShowDialog() ?? false;
-        if (result)
-        {
-            _ = Task.Run(() => Main.ReloadAllBookmarks());
-        }
+        var window = new CustomBrowserSetting(SelectedCustomBrowser);
+        window.ShowDialog();
     }
 }
