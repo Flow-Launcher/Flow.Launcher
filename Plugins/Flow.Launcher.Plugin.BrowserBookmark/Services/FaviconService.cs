@@ -26,7 +26,6 @@ public partial class FaviconService : IDisposable
     private readonly string _faviconCacheDir;
     private readonly HttpClient _httpClient;
     private readonly LocalFaviconExtractor _localExtractor;
-
     private readonly CancellationTokenSource _cts = new();
     private readonly ConcurrentDictionary<string, Task<string?>> _ongoingFetches = new(StringComparer.OrdinalIgnoreCase);
 
@@ -53,7 +52,7 @@ public partial class FaviconService : IDisposable
 
         _faviconCacheDir = Path.Combine(context.CurrentPluginMetadata.PluginCacheDirectoryPath, "FaviconCache");
         Directory.CreateDirectory(_faviconCacheDir);
-        
+
         _localExtractor = new LocalFaviconExtractor(context, tempPath);
 
         var handler = new HttpClientHandler
@@ -269,6 +268,11 @@ public partial class FaviconService : IDisposable
                 return new FetchResult(tempPath, size);
             }
         }
+        catch (HttpRequestException ex) when (ex.InnerException is System.Net.Sockets.SocketException { SocketErrorCode: System.Net.Sockets.SocketError.HostNotFound })
+        {
+            // Host not found is a common, expected error for misconfigured favicons. Don't log as a full error.
+            _context.API.LogDebug(nameof(FaviconService), $"Favicon host not found for URI: {faviconUri}");
+        }
         catch (TaskCanceledException) when (!token.IsCancellationRequested)
         {
             _context.API.LogWarn(nameof(FaviconService), $"HttpClient timed out for {faviconUri}.");
@@ -334,7 +338,7 @@ public partial class FaviconService : IDisposable
         return new List<FaviconCandidate>();
     }
 
-    private static List<FaviconCandidate> ParseLinkTags(string htmlContent, Uri originalBaseUri)
+    private List<FaviconCandidate> ParseLinkTags(string htmlContent, Uri originalBaseUri)
     {
         var candidates = new List<FaviconCandidate>();
         var effectiveBaseUri = originalBaseUri;
@@ -361,12 +365,18 @@ public partial class FaviconService : IDisposable
             var href = hrefMatch.Groups["v"].Value;
             if (string.IsNullOrWhiteSpace(href)) continue;
 
+            _context.API.LogDebug(nameof(ParseLinkTags), $"Found potential favicon link. Raw tag: '{linkTag}', Extracted href: '{href}', Base URI: '{effectiveBaseUri}'");
+
             if (href.StartsWith("//"))
             {
                 href = effectiveBaseUri.Scheme + ":" + href;
             }
 
-            if (!Uri.TryCreate(effectiveBaseUri, href, out var fullUrl)) continue;
+            if (!Uri.TryCreate(effectiveBaseUri, href, out var fullUrl))
+            {
+                _context.API.LogWarn(nameof(ParseLinkTags), $"Failed to create a valid URI from href: '{href}' and base URI: '{effectiveBaseUri}'");
+                continue;
+            }
 
             candidates.Add(new FaviconCandidate(fullUrl.ToString(), CalculateFaviconScore(linkTag, fullUrl.ToString())));
         }
@@ -405,6 +415,9 @@ public partial class FaviconService : IDisposable
         await stream.CopyToAsync(ms, token);
         ms.Position = 0;
 
+        // The returned 'Size' is the original width of the icon, used for scoring the best favicon.
+        // It does not reflect the final dimensions of the resized PNG.
+
         // 1. Try to decode as SVG.
         var (pngData, size) = TryConvertSvgToPng(ms);
         if (pngData is not null) return (pngData, size);
@@ -413,7 +426,7 @@ public partial class FaviconService : IDisposable
         // 2. Try to decode as an ICO file to correctly handle multiple frames.
         (pngData, size) = TryConvertIcoToPng(ms);
         if (pngData is not null) return (pngData, size);
-        
+
         ms.Position = 0;
         // 3. Fallback for simple bitmaps or ICOs that IconBitmapDecoder failed on.
         (pngData, size) = TryConvertBitmapToPng(ms);
@@ -477,7 +490,7 @@ public partial class FaviconService : IDisposable
 
         return (null, 0);
     }
-    
+
     private (byte[]? PngData, int Size) TryConvertBitmapToPng(Stream stream)
     {
         try
