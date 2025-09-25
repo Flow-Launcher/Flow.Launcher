@@ -405,11 +405,27 @@ public partial class FaviconService : IDisposable
         await stream.CopyToAsync(ms, token);
         ms.Position = 0;
 
-        // 1. Try to decode as SVG first, as it needs special handling.
+        // 1. Try to decode as SVG.
+        var (pngData, size) = TryConvertSvgToPng(ms);
+        if (pngData is not null) return (pngData, size);
+
+        ms.Position = 0;
+        // 2. Try to decode as an ICO file to correctly handle multiple frames.
+        (pngData, size) = TryConvertIcoToPng(ms);
+        if (pngData is not null) return (pngData, size);
+        
+        ms.Position = 0;
+        // 3. Fallback for simple bitmaps or ICOs that IconBitmapDecoder failed on.
+        (pngData, size) = TryConvertBitmapToPng(ms);
+        return (pngData, size);
+    }
+
+    private static (byte[]? PngData, int Size) TryConvertSvgToPng(Stream stream)
+    {
         try
         {
             using var svg = new SKSvg();
-            if (svg.Load(ms) is not null && svg.Picture is not null)
+            if (svg.Load(stream) is not null && svg.Picture is not null)
             {
                 using var bitmap = new SKBitmap(TargetIconSize, TargetIconSize);
                 using var canvas = new SKCanvas(bitmap);
@@ -422,18 +438,21 @@ public partial class FaviconService : IDisposable
                 return (data.ToArray(), TargetIconSize);
             }
         }
-        catch { /* Not an SVG */ }
+        catch { /* Not a valid SVG, or SkiaSharp failed. */ }
 
-        ms.Position = 0;
-        // 2. Try to decode as an ICO file to correctly handle multiple frames.
+        return (null, 0);
+    }
+
+    private static (byte[]? PngData, int Size) TryConvertIcoToPng(Stream stream)
+    {
         try
         {
-            var decoder = new IconBitmapDecoder(ms, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.OnLoad);
+            var decoder = new IconBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.OnLoad);
             if (decoder.Frames.Any())
             {
                 var largestFrame = decoder.Frames.OrderByDescending(f => f.Width * f.Height).First();
 
-                await using var pngStream = new MemoryStream();
+                using var pngStream = new MemoryStream();
                 var encoder = new PngBitmapEncoder();
                 encoder.Frames.Add(BitmapFrame.Create(largestFrame));
                 encoder.Save(pngStream);
@@ -454,17 +473,16 @@ public partial class FaviconService : IDisposable
                 }
             }
         }
-        catch
-        {
-            // This is expected for non-ICO files or complex ICOs that the decoder can't handle.
-            // We will fall back to the generic decoder.
-        }
+        catch { /* Not an ICO, or a format IconBitmapDecoder doesn't support. Fallback will try SKBitmap.Decode. */ }
 
-        ms.Position = 0;
-        // 3. Fallback for simple bitmaps or ICOs that IconBitmapDecoder failed on.
+        return (null, 0);
+    }
+    
+    private (byte[]? PngData, int Size) TryConvertBitmapToPng(Stream stream)
+    {
         try
         {
-            using var original = SKBitmap.Decode(ms);
+            using var original = SKBitmap.Decode(stream);
             if (original != null)
             {
                 var originalWidth = original.Width;
