@@ -107,14 +107,14 @@ public class Main : ISettingProvider, IPlugin, IAsyncReloadable, IPluginI18n, IC
         ContextData = bookmark.Url
     };
 
-    public async Task ReloadDataAsync()
+public async Task ReloadDataAsync()
     {
-        var bookmarks = await _bookmarkLoader.LoadBookmarksAsync(_cancellationTokenSource.Token);
+        var (bookmarks, discoveredFiles) = await _bookmarkLoader.LoadBookmarksAsync(_cancellationTokenSource.Token);
         
         // Atomically swap the list. This prevents the Query method from seeing a partially loaded list.
         Volatile.Write(ref _bookmarks, bookmarks);
 
-        _bookmarkWatcher.UpdateWatchers(_bookmarkLoader.DiscoveredBookmarkFiles);
+        _bookmarkWatcher.UpdateWatchers(discoveredFiles);
         
         // Fire and forget favicon processing to not block the UI
         _ = _faviconService.ProcessBookmarkFavicons(_bookmarks, _cancellationTokenSource.Token);
@@ -169,43 +169,51 @@ public class Main : ISettingProvider, IPlugin, IAsyncReloadable, IPluginI18n, IC
             return;
         }
 
-        var firefoxBookmarks = new ConcurrentBag<Bookmark>();
         var tasks = firefoxLoaders.Select(async loader =>
         {
+            var loadedBookmarks = new List<Bookmark>();
             try
             {
                 await foreach (var bookmark in loader.GetBookmarksAsync(_cancellationTokenSource.Token))
                 {
-                    firefoxBookmarks.Add(bookmark);
+                    loadedBookmarks.Add(bookmark);
                 }
+                return (Loader: loader, Bookmarks: loadedBookmarks, Success: true);
             }
-            catch (OperationCanceledException) { } // Task was cancelled, swallow exception
+            catch (OperationCanceledException)
+            {
+                return (Loader: loader, Bookmarks: new List<Bookmark>(), Success: false);
+            }
             catch (Exception e)
             {
                 Context.API.LogException(nameof(Main), $"Failed to load bookmarks from {loader.Name}.", e);
+                return (Loader: loader, Bookmarks: new List<Bookmark>(), Success: false);
             }
         });
 
-        await Task.WhenAll(tasks);
-        
-        if (firefoxBookmarks.IsEmpty)
+        var results = await Task.WhenAll(tasks);
+        var successfulResults = results.Where(r => r.Success).ToList();
+
+        if (!successfulResults.Any())
         {
-            Context.API.LogInfo(nameof(Main), "No Firefox bookmarks found during periodic reload.");
+            Context.API.LogInfo(nameof(Main), "No Firefox bookmarks successfully reloaded.");
             return;
         }
 
-        var currentBookmarks = Volatile.Read(ref _bookmarks);
+        var newFirefoxBookmarks = successfulResults.SelectMany(r => r.Bookmarks).ToList();
+        var successfulLoaderNames = successfulResults.Select(r => r.Loader.Name).ToHashSet();
         
-        var firefoxLoaderNames = firefoxLoaders.Select(l => l.Name).ToHashSet();
-        var otherBookmarks = currentBookmarks.Where(b => !firefoxLoaderNames.Any(name => b.Source.StartsWith(name, StringComparison.OrdinalIgnoreCase)));
+        var currentBookmarks = Volatile.Read(ref _bookmarks);
 
-        var newBookmarkList = otherBookmarks.Concat(firefoxBookmarks).Distinct().ToList();
+        var otherBookmarks = currentBookmarks.Where(b => !successfulLoaderNames.Any(name => b.Source.StartsWith(name, StringComparison.OrdinalIgnoreCase)));
+
+        var newBookmarkList = otherBookmarks.Concat(newFirefoxBookmarks).Distinct().ToList();
 
         Volatile.Write(ref _bookmarks, newBookmarkList);
         
-        Context.API.LogInfo(nameof(Main), $"Periodic reload complete. Loaded {firefoxBookmarks.Count} Firefox bookmarks.");
+        Context.API.LogInfo(nameof(Main), $"Periodic reload complete. Loaded {newFirefoxBookmarks.Count} Firefox bookmarks from {successfulLoaderNames.Count} sources.");
         
-        _ = _faviconService.ProcessBookmarkFavicons(firefoxBookmarks.ToList(), _cancellationTokenSource.Token);
+        _ = _faviconService.ProcessBookmarkFavicons(newFirefoxBookmarks, _cancellationTokenSource.Token);
     }
 
     public Control CreateSettingPanel()
