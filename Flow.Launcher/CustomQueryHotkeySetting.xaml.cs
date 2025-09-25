@@ -37,7 +37,7 @@ namespace Flow.Launcher
 
         private void btnAdd_OnClick(object sender, RoutedEventArgs e)
         {
-            Hotkey = HotkeyControl.CurrentHotkey.ToString();
+            Hotkey = HotkeyControl.CurrentHotkey.HotkeyRaw;
 
             if (string.IsNullOrEmpty(Hotkey) && string.IsNullOrEmpty(ActionKeyword))
             {

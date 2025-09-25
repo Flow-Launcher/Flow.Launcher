@@ -1,4 +1,5 @@
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -13,6 +14,8 @@ namespace Flow.Launcher
 {
     public partial class HotkeyControl
     {
+        private HotkeyControlDialog hotkeyControlDialog;
+
         public string WindowTitle {
             get { return (string)GetValue(WindowTitleProperty); }
             set { SetValue(WindowTitleProperty, value); }
@@ -60,6 +63,13 @@ namespace Flow.Launcher
             {
                 return;
             }
+
+            //hotkeyControl.SetKeysToDisplay(new HotkeyModel(hotkeyControl.Hotkey));
+            //hotkeyControl.CurrentHotkey = new HotkeyModel(hotkeyControl.Hotkey);
+
+            var hotkeyModel = new HotkeyModel(hotkeyControl.Hotkey);
+            hotkeyControl.SetKeysToDisplay(hotkeyModel);
+            hotkeyControl.CurrentHotkey = hotkeyModel;
 
             hotkeyControl.RefreshHotkeyInterface(hotkeyControl.Hotkey);
         }
@@ -215,6 +225,19 @@ namespace Flow.Launcher
             }
         }
 
+        public static readonly DependencyProperty IsWPFHotkeyControlProperty = DependencyProperty.Register(
+            nameof(IsWPFHotkeyControl),
+            typeof(bool),
+            typeof(HotkeyControl),
+            new PropertyMetadata(true)
+        );
+
+        public bool IsWPFHotkeyControl
+        {
+            get { return (bool)GetValue(IsWPFHotkeyControlProperty); }
+            set { SetValue(IsWPFHotkeyControlProperty, value); }
+        }
+
         public HotkeyControl()
         {
             InitializeComponent();
@@ -231,14 +254,17 @@ namespace Flow.Launcher
             CurrentHotkey = new HotkeyModel(hotkey);
         }
 
-        private static bool CheckHotkeyAvailability(HotkeyModel hotkey, bool validateKeyGesture) =>
-            hotkey.Validate(validateKeyGesture) && HotKeyMapper.CheckAvailability(hotkey);
+        private static bool CheckHotkeyValid(string hotkey)
+            => HotKeyMapper.CheckHotkeyValid(hotkey);
+
+        private static bool CheckWPFHotkeyAvailability(HotkeyModel hotkey, bool validateKeyGesture)
+            => hotkey.ValidateForWpf(validateKeyGesture);
 
         public string EmptyHotkey => App.API.GetTranslation("none");
 
         public ObservableCollection<string> KeysToDisplay { get; set; } = new();
 
-        public HotkeyModel CurrentHotkey { get; private set; } = new(false, false, false, false, Key.None);
+        public HotkeyModel CurrentHotkey { get; private set; } = new();
 
         public void GetNewHotkey(object sender, RoutedEventArgs e)
         {
@@ -247,24 +273,15 @@ namespace Flow.Launcher
 
         private async Task OpenHotkeyDialogAsync()
         {
-            if (!string.IsNullOrEmpty(Hotkey))
-            {
-                HotKeyMapper.RemoveHotkey(Hotkey);
-            }
-
-            var dialog = new HotkeyControlDialog(Hotkey, DefaultHotkey, WindowTitle)
-            {
-                Owner = Window.GetWindow(this)
-            };
-
-            await dialog.ShowAsync();
-            switch (dialog.ResultType)
+            hotkeyControlDialog = new HotkeyControlDialog(Hotkey, DefaultHotkey, IsWPFHotkeyControl, WindowTitle);
+            await hotkeyControlDialog.ShowAsync();
+            switch (hotkeyControlDialog.ResultType)
             {
                 case HotkeyControlDialog.EResultType.Cancel:
-                    SetHotkey(Hotkey);
+                    //SetHotkey(Hotkey);
                     return;
                 case HotkeyControlDialog.EResultType.Save:
-                    SetHotkey(dialog.ResultValue);
+                    SetHotkey(hotkeyControlDialog.ResultValue);
                     break;
                 case HotkeyControlDialog.EResultType.Delete:
                     Delete();
@@ -274,31 +291,30 @@ namespace Flow.Launcher
 
         private void SetHotkey(HotkeyModel keyModel, bool triggerValidate = true)
         {
+            if (string.IsNullOrEmpty(keyModel.HotkeyRaw))
+                return;
+
             if (triggerValidate)
             {
-                bool hotkeyAvailable;
-                // TODO: This is a temporary way to enforce changing only the open flow hotkey to Win, and will be removed by PR #3157
-                if (keyModel.ToString() == "LWin" || keyModel.ToString() == "RWin")
-                {
-                    hotkeyAvailable = true;
-                }
-                else
-                {
-                    hotkeyAvailable = CheckHotkeyAvailability(keyModel, ValidateKeyGesture);
-                }
+                var hotkeyAvailable = IsWPFHotkeyControl
+                    ? CheckWPFHotkeyAvailability(keyModel, ValidateKeyGesture) 
+                    : CheckHotkeyValid(keyModel.HotkeyRaw);
 
                 if (!hotkeyAvailable)
-                {
                     return;
-                }
 
-                Hotkey = keyModel.ToString();
+                Hotkey = keyModel.ToWPFHotkeyString();
                 SetKeysToDisplay(CurrentHotkey);
+
+                // If exists then will be unregistered, if doesn't no errors will be thrown.
+                if (IsWPFHotkeyControl)
+                    HotKeyMapper.UnregisterHotkey(keyModel.HotkeyRaw);
+                
                 ChangeHotkey?.Execute(keyModel);
             }
             else
             {
-                Hotkey = keyModel.ToString();
+                Hotkey = keyModel.ToWPFHotkeyString();
                 ChangeHotkey?.Execute(keyModel);
             }
         }
@@ -306,16 +322,16 @@ namespace Flow.Launcher
         public void Delete()
         {
             if (!string.IsNullOrEmpty(Hotkey))
-                HotKeyMapper.RemoveHotkey(Hotkey);
+                HotKeyMapper.UnregisterHotkey(Hotkey);
             Hotkey = "";
-            SetKeysToDisplay(new HotkeyModel(false, false, false, false, Key.None));
+            SetKeysToDisplay(new HotkeyModel(Hotkey));
         }
 
         private void SetKeysToDisplay(HotkeyModel? hotkey)
         {
             KeysToDisplay.Clear();
 
-            if (hotkey == null || hotkey == default(HotkeyModel))
+            if (hotkey == null || string.IsNullOrEmpty(hotkey.Value.HotkeyRaw))
             {
                 KeysToDisplay.Add(EmptyHotkey);
                 return;
@@ -329,7 +345,16 @@ namespace Flow.Launcher
 
         public void SetHotkey(string? keyStr, bool triggerValidate = true)
         {
-            SetHotkey(new HotkeyModel(keyStr), triggerValidate);
+            if (string.IsNullOrEmpty(keyStr))
+                return;
+
+            // index 0 - new hotkey to be added, index 1 - old hotkey to be removed
+            var hotkeyNewOld = keyStr.Split(":");
+            var hotkey = new HotkeyModel(hotkeyNewOld[0])
+            {
+                PreviousHotkey = hotkeyNewOld.Length == 2 ? hotkeyNewOld[1] : hotkeyNewOld[0]
+            };
+            SetHotkey(hotkey, triggerValidate);
         }
     }
 }

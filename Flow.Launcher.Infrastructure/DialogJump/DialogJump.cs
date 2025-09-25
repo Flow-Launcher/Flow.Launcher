@@ -455,7 +455,7 @@ namespace Flow.Launcher.Infrastructure.DialogJump
 
         #region Hotkey
 
-        public static void OnToggleHotkey(object sender, HotkeyEventArgs args)
+        public static void ToggleHotkey()
         {
             _ = Task.Run(async () =>
             {

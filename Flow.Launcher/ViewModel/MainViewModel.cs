@@ -2073,6 +2073,8 @@ namespace Flow.Launcher.ViewModel
             MainWindowVisibilityStatus = true;
             VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = true });
 
+            Application.Current.MainWindow.Focus(); // TEST
+
             // Switch keyboard layout
             if (StartWithEnglishMode)
             {

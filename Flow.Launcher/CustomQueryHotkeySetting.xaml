@@ -104,7 +104,8 @@
                         VerticalAlignment="Center"
                         HorizontalContentAlignment="Left"
                         DefaultHotkey=""
-                        Type="CustomQueryHotkey" />
+                        Type="CustomQueryHotkey"
+                        IsWPFHotkeyControl="False" />
                     <TextBlock
                         Grid.Row="1"
                         Grid.Column="0"

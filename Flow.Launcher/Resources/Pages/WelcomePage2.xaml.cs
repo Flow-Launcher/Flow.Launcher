@@ -30,7 +30,7 @@ namespace Flow.Launcher.Resources.Pages
         [RelayCommand]
         private static void SetTogglingHotkey(HotkeyModel hotkey)
         {
-            HotKeyMapper.SetHotkey(hotkey, HotKeyMapper.OnToggleHotkey);
+            HotKeyMapper.RegisterHotkey(hotkey.HotkeyRaw, hotkey.PreviousHotkey, HotKeyMapper.ToggleHotkey);
         }
 
         public Brush PreviewBackground

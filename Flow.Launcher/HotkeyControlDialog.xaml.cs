@@ -10,6 +10,8 @@ using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using ModernWpf.Controls;
+using ChefKeys;
+using System.Collections.Generic;
 
 namespace Flow.Launcher;
 
@@ -21,7 +23,15 @@ public partial class HotkeyControlDialog : ContentDialog
     private Action? _overwriteOtherHotkey;
     private string DefaultHotkey { get; }
     public string WindowTitle { get; }
-    public HotkeyModel CurrentHotkey { get; private set; }
+
+    public HotkeyModel CurrentHotkey;
+
+    public HotkeyModel HotkeyToUpdate;
+
+    private bool isWPFHotkeyControl = true;
+
+    private bool clearKeysOnFirstType;
+
     public ObservableCollection<string> KeysToDisplay { get; } = new();
 
     public enum EResultType
@@ -35,45 +45,56 @@ public partial class HotkeyControlDialog : ContentDialog
     public string ResultValue { get; private set; } = string.Empty;
     public static string EmptyHotkey => App.API.GetTranslation("none");
 
-    private static bool isOpenFlowHotkey;
-
-    public HotkeyControlDialog(string hotkey, string defaultHotkey, string windowTitle = "")
+    public HotkeyControlDialog(
+        string hotkey,
+        string defaultHotkey,
+        bool isWPFHotkeyControl,
+        string windowTitle = "")
     {
+        this.isWPFHotkeyControl = isWPFHotkeyControl;
+
         WindowTitle = windowTitle switch
         {
             "" or null => App.API.GetTranslation("hotkeyRegTitle"),
             _ => windowTitle
         };
         DefaultHotkey = defaultHotkey;
+
         CurrentHotkey = new HotkeyModel(hotkey);
+        // This is a requirement to be set with current hotkey for the WPF hotkey control when saving without any new changes
+        HotkeyToUpdate = new HotkeyModel(hotkey);
+
         SetKeysToDisplay(CurrentHotkey);
+        clearKeysOnFirstType = true;
 
         InitializeComponent();
 
-        // TODO: This is a temporary way to enforce changing only the open flow hotkey to Win, and will be removed by PR #3157
-        isOpenFlowHotkey = _hotkeySettings.RegisteredHotkeys
-                             .Any(x => x.DescriptionResourceKey == "flowlauncherHotkey" 
-                                    && x.Hotkey.ToString() == hotkey);
-
         ChefKeysManager.StartMenuEnableBlocking = true;
-        ChefKeysManager.Start();
     }
 
     private void Reset(object sender, RoutedEventArgs routedEventArgs)
     {
-        SetKeysToDisplay(new HotkeyModel(DefaultHotkey));
+        HotkeyToUpdate = new HotkeyModel(DefaultHotkey);
+        SetKeysToDisplay(HotkeyToUpdate);
+        clearKeysOnFirstType = true;
     }
 
     private void Delete(object sender, RoutedEventArgs routedEventArgs)
     {
+        HotkeyToUpdate.Clear();
         KeysToDisplay.Clear();
         KeysToDisplay.Add(EmptyHotkey);
+        tbMsg.Text = string.Empty;
+        SaveBtn.IsEnabled = true;
+        SaveBtn.Visibility = Visibility.Visible;
+        OverwriteBtn.IsEnabled = false;
+        OverwriteBtn.Visibility = Visibility.Collapsed;
+        Alert.Visibility = Visibility.Collapsed;
     }
 
     private void Cancel(object sender, RoutedEventArgs routedEventArgs)
     {
         ChefKeysManager.StartMenuEnableBlocking = false;
-        ChefKeysManager.Stop();
 
         ResultType = EResultType.Cancel;
         Hide();
@@ -82,7 +103,6 @@ public partial class HotkeyControlDialog : ContentDialog
     private void Save(object sender, RoutedEventArgs routedEventArgs)
     {
         ChefKeysManager.StartMenuEnableBlocking = false;
-        ChefKeysManager.Stop();
 
         if (KeysToDisplay.Count == 1 && KeysToDisplay[0] == EmptyHotkey)
         {
@@ -91,7 +111,9 @@ public partial class HotkeyControlDialog : ContentDialog
             return;
         }
         ResultType = EResultType.Save;
-        ResultValue = string.Join("+", KeysToDisplay);
+        var newHotkey = string.Join("+", KeysToDisplay);
+        var oldHotkey = !string.IsNullOrEmpty(CurrentHotkey.HotkeyRaw) ? CurrentHotkey.HotkeyRaw : newHotkey;
+        ResultValue = string.Format("{0}:{1}", newHotkey, oldHotkey);
         Hide();
     }
 
@@ -102,20 +124,30 @@ public partial class HotkeyControlDialog : ContentDialog
         //when alt is pressed, the real key should be e.SystemKey
         Key key = e.Key == Key.System ? e.SystemKey : e.Key;
 
+        if (clearKeysOnFirstType)
+        {
+            KeysToDisplay.Clear();
+            HotkeyToUpdate.Clear();
+            clearKeysOnFirstType = false;
+        }
+
         if (ChefKeysManager.StartMenuBlocked && key.ToString() == ChefKeysManager.StartMenuSimulatedKey)
             return;
 
-        SpecialKeyState specialKeyState = GlobalHotkey.CheckModifiers();
+        AddKey(key);
+        
+        SetKeysToDisplay(HotkeyToUpdate);
+    }
 
-        var hotkeyModel = new HotkeyModel(
-            specialKeyState.AltPressed,
-            specialKeyState.ShiftPressed,
-            specialKeyState.WinPressed,
-            specialKeyState.CtrlPressed,
-            key);
+    private void AddKey(Key key)
+    {
+        if (HotkeyToUpdate.GetLastKeySet() == key.ToString())
+            return;
 
-        CurrentHotkey = hotkeyModel;
-        SetKeysToDisplay(CurrentHotkey);
+        if (MaxKeysLimitReached())
+            return;
+
+        HotkeyToUpdate.AddString(key.ToString());
     }
 
     private void SetKeysToDisplay(HotkeyModel? hotkey)
@@ -123,7 +155,7 @@ public partial class HotkeyControlDialog : ContentDialog
         _overwriteOtherHotkey = null;
         KeysToDisplay.Clear();
 
-        if (hotkey == null || hotkey == default(HotkeyModel))
+        if (hotkey is null || string.IsNullOrEmpty(hotkey.Value.HotkeyRaw))
         {
             KeysToDisplay.Add(EmptyHotkey);
             return;
@@ -137,7 +169,10 @@ public partial class HotkeyControlDialog : ContentDialog
         if (tbMsg == null)
             return;
 
-        if (_hotkeySettings.RegisteredHotkeys.FirstOrDefault(v => v.Hotkey == hotkey) is { } registeredHotkeyData)
+    if (_hotkeySettings.RegisteredHotkeys
+                .FirstOrDefault(v => v.Hotkey == hotkey 
+                                || v.Hotkey.HotkeyRaw == hotkey.Value.HotkeyRaw)
+                is { } registeredHotkeyData)
         {
             var description = string.Format(
                 App.API.GetTranslation(registeredHotkeyData.DescriptionResourceKey),
@@ -156,6 +191,7 @@ public partial class HotkeyControlDialog : ContentDialog
                 OverwriteBtn.Visibility = Visibility.Visible;
                 _overwriteOtherHotkey = registeredHotkeyData.RemoveHotkey;
             }
+            
             else
             {
                 tbMsg.Text = string.Format(
@@ -173,7 +209,11 @@ public partial class HotkeyControlDialog : ContentDialog
         OverwriteBtn.IsEnabled = false;
         OverwriteBtn.Visibility = Visibility.Collapsed;
 
-        if (!CheckHotkeyAvailability(hotkey.Value, true))
+        var isHotkeyAvailable = !isWPFHotkeyControl 
+            ? CheckHotkeyAvailability(hotkey.Value.HotkeyRaw)
+            : CheckWPFHotkeyAvailability(hotkey.Value, true);
+
+        if (!isHotkeyAvailable)
         {
             tbMsg.Text = App.API.GetTranslation("hotkeyUnavailable");
             Alert.Visibility = Visibility.Visible;
@@ -188,13 +228,13 @@ public partial class HotkeyControlDialog : ContentDialog
         }
     }
 
-    private static bool CheckHotkeyAvailability(HotkeyModel hotkey, bool validateKeyGesture)
-    {
-        if (isOpenFlowHotkey && (hotkey.ToString() == "LWin" || hotkey.ToString() == "RWin"))
-            return true;
+    private static bool CheckHotkeyAvailability(string hotkey)
+        => HotKeyMapper.CanRegisterHotkey(hotkey);
 
-        return hotkey.Validate(validateKeyGesture) && HotKeyMapper.CheckAvailability(hotkey);
-    }
+    private static bool CheckWPFHotkeyAvailability(HotkeyModel hotkey, bool validateKeyGesture)
+            => hotkey.ValidateForWpf(validateKeyGesture) && HotKeyMapper.CheckHotkeyAvailability(hotkey.HotkeyRaw);
+
+    private bool MaxKeysLimitReached() => isWPFHotkeyControl ? KeysToDisplay.Count == 2 : KeysToDisplay.Count == 4;
 
     private void Overwrite(object sender, RoutedEventArgs e)
     {

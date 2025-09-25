@@ -22,63 +22,27 @@ internal static class HotKeyMapper
         _mainViewModel = Ioc.Default.GetRequiredService<MainViewModel>();
         _settings = Ioc.Default.GetService<Settings>();
 
-        SetHotkey(_settings.Hotkey, OnToggleHotkey);
+        ChefKeysManager.RegisterHotkey(_settings.Hotkey, ToggleHotkey);
         if (_settings.EnableDialogJump)
         {
-            SetHotkey(_settings.DialogJumpHotkey, DialogJump.OnToggleHotkey);
+            ChefKeysManager.RegisterHotkey(_settings.DialogJumpHotkey, DialogJump.ToggleHotkey);
         }
+        ChefKeysManager.Start();
+
         LoadCustomPluginHotkey();
     }
 
-    internal static void OnToggleHotkey(object sender, HotkeyEventArgs args)
+    internal static void ToggleHotkey()
     {
         if (!_mainViewModel.ShouldIgnoreHotkeys())
             _mainViewModel.ToggleFlowLauncher();
     }
 
-    internal static void OnToggleHotkeyWithChefKeys()
-    {
-        if (!_mainViewModel.ShouldIgnoreHotkeys())
-            _mainViewModel.ToggleFlowLauncher();
-    }
-
-    private static void SetHotkey(string hotkeyStr, EventHandler<HotkeyEventArgs> action)
-    {
-        var hotkey = new HotkeyModel(hotkeyStr);
-        SetHotkey(hotkey, action);
-    }
-
-    private static void SetWithChefKeys(string hotkeyStr)
+    internal static void RegisterHotkey(string hotkey, string previousHotkey, Action action)
     {
         try
         {
-            ChefKeysManager.RegisterHotkey(hotkeyStr, hotkeyStr, OnToggleHotkeyWithChefKeys);
-            ChefKeysManager.Start();
-        }
-        catch (Exception e)
-        {
-            App.API.LogError(ClassName,
-                string.Format("|HotkeyMapper.SetWithChefKeys|Error registering hotkey: {0} \nStackTrace:{1}",
-                              e.Message,
-                              e.StackTrace));
-            string errorMsg = string.Format(App.API.GetTranslation("registerHotkeyFailed"), hotkeyStr);
-            string errorMsgTitle = App.API.GetTranslation("MessageBoxTitle");
-            App.API.ShowMsgBox(errorMsg, errorMsgTitle);
-        }
-    }
-
-    internal static void SetHotkey(HotkeyModel hotkey, EventHandler<HotkeyEventArgs> action)
-    {
-        string hotkeyStr = hotkey.ToString();
-        try
-        {
-            if (hotkeyStr == "LWin" || hotkeyStr == "RWin")
-            {
-                SetWithChefKeys(hotkeyStr);
-                return;
-            }
-
-            HotkeyManager.Current.AddOrReplace(hotkeyStr, hotkey.CharKey, hotkey.ModifierKeys, action);
+            ChefKeysManager.RegisterHotkey(hotkey, previousHotkey, action);
         }
         catch (Exception e)
         {
@@ -86,49 +50,35 @@ internal static class HotKeyMapper
                 string.Format("|HotkeyMapper.SetHotkey|Error registering hotkey {2}: {0} \nStackTrace:{1}",
                               e.Message,
                               e.StackTrace,
-                              hotkeyStr));
-            string errorMsg = string.Format(App.API.GetTranslation("registerHotkeyFailed"), hotkeyStr);
+                              hotkey));
+            string errorMsg = string.Format(App.API.GetTranslation("registerHotkeyFailed"), hotkey);
             string errorMsgTitle = App.API.GetTranslation("MessageBoxTitle");
             App.API.ShowMsgBox(errorMsg, errorMsgTitle);
         }
     }
 
-    internal static void RemoveHotkey(string hotkeyStr)
+    internal static void UnregisterHotkey(string hotkey)
     {
         try
         {
-            if (hotkeyStr == "LWin" || hotkeyStr == "RWin")
-            {
-                RemoveWithChefKeys(hotkeyStr);
-                return;
-            }
-
-            if (!string.IsNullOrEmpty(hotkeyStr))
-                HotkeyManager.Current.Remove(hotkeyStr);
+            if (!string.IsNullOrEmpty(hotkey))
+                ChefKeysManager.UnregisterHotkey(hotkey);
         }
         catch (Exception e)
         {
             App.API.LogError(ClassName,
-                string.Format("|HotkeyMapper.RemoveHotkey|Error removing hotkey: {0} \nStackTrace:{1}",
+                string.Format("|HotkeyMapper.RemoveHotkey|Error removing hotkey {2}: {0} \nStackTrace:{1}",
                               e.Message,
-                              e.StackTrace));
-            string errorMsg = string.Format(App.API.GetTranslation("unregisterHotkeyFailed"), hotkeyStr);
+                              e.StackTrace,
+                              hotkey));
+            string errorMsg = string.Format(App.API.GetTranslation("unregisterHotkeyFailed"), hotkey);
             string errorMsgTitle = App.API.GetTranslation("MessageBoxTitle");
             App.API.ShowMsgBox(errorMsg, errorMsgTitle);
         }
     }
 
-    private static void RemoveWithChefKeys(string hotkeyStr)
-    {
-        ChefKeysManager.UnregisterHotkey(hotkeyStr);
-        ChefKeysManager.Stop();
-    }
-
     internal static void LoadCustomPluginHotkey()
     {
-        if (_settings.CustomPluginHotkeys == null)
-            return;
-
         foreach (CustomPluginHotkey hotkey in _settings.CustomPluginHotkeys)
         {
             SetCustomQueryHotkey(hotkey);
@@ -137,7 +87,7 @@ internal static class HotKeyMapper
 
     internal static void SetCustomQueryHotkey(CustomPluginHotkey hotkey)
     {
-        SetHotkey(hotkey.Hotkey, (s, e) =>
+        ChefKeysManager.RegisterHotkey(hotkey.Hotkey, () =>
         {
             if (_mainViewModel.ShouldIgnoreHotkeys())
                 return;
@@ -147,22 +97,13 @@ internal static class HotKeyMapper
         });
     }
 
-    internal static bool CheckAvailability(HotkeyModel currentHotkey)
+    internal static bool CanRegisterHotkey(string hotkey)
     {
-        try
-        {
-            HotkeyManager.Current.AddOrReplace("HotkeyAvailabilityTest", currentHotkey.CharKey, currentHotkey.ModifierKeys, (sender, e) => { });
-
-            return true;
-        }
-        catch
-        {
-        }
-        finally
-        {
-            HotkeyManager.Current.Remove("HotkeyAvailabilityTest");
-        }
-
-        return false;
+        return ChefKeysManager.CanRegisterHotkey(hotkey);
     }
+
+    internal static bool CheckHotkeyAvailability(string hotkey) => ChefKeysManager.IsAvailable(hotkey);
+    
+    internal static bool CheckHotkeyValid(string hotkey) => ChefKeysManager.IsValidHotkey(hotkey);
+
 }

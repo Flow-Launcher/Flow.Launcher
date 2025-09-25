@@ -113,10 +113,11 @@
                     <flowlauncher:HotkeyControl
                         Margin="0 8 0 0"
                         ChangeHotkey="{Binding SetTogglingHotkeyCommand}"
-                        DefaultHotkey="Alt+Space"
+                        DefaultHotkey="LeftAlt+Space"
                         Type="Hotkey"
                         ValidateKeyGesture="True"
-                        WindowTitle="{DynamicResource flowlauncherHotkey}" />
+                        WindowTitle="{DynamicResource flowlauncherHotkey}"
+                        IsWPFHotkeyControl="False" />
                 </StackPanel>
 
             </ScrollViewer>

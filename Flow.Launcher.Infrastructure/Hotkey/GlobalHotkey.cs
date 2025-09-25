@@ -37,25 +37,53 @@ namespace Flow.Launcher.Infrastructure.Hotkey
         public static SpecialKeyState CheckModifiers()
         {
             SpecialKeyState state = new SpecialKeyState();
-            if ((PInvoke.GetKeyState((int)VIRTUAL_KEY.VK_SHIFT) & 0x8000) != 0)
+            if ((PInvoke.GetKeyState((int)VIRTUAL_KEY.VK_LSHIFT) & 0x8000) != 0)
             {
                 //SHIFT is pressed
+                state.LeftShiftPressed = true;
                 state.ShiftPressed = true;
             }
-            if ((PInvoke.GetKeyState((int)VIRTUAL_KEY.VK_CONTROL) & 0x8000) != 0)
+            if ((PInvoke.GetKeyState((int)VIRTUAL_KEY.VK_RSHIFT) & 0x8000) != 0)
+            {
+                //SHIFT is pressed
+                state.RightShiftPressed = true;
+                state.ShiftPressed = true;
+            }
+            
+            if ((PInvoke.GetKeyState((int)VIRTUAL_KEY.VK_LCONTROL) & 0x8000) != 0)
             {
                 //CONTROL is pressed
+                state.LeftCtrlPressed = true;
                 state.CtrlPressed = true;
             }
-            if ((PInvoke.GetKeyState((int)VIRTUAL_KEY.VK_MENU) & 0x8000) != 0)
+            if ((PInvoke.GetKeyState((int)VIRTUAL_KEY.VK_RCONTROL) & 0x8000) != 0)
+            {
+                //CONTROL is pressed
+                state.RightCtrlPressed = true;
+                state.CtrlPressed = true;
+            }
+            if ((PInvoke.GetKeyState((int)VIRTUAL_KEY.VK_LMENU) & 0x8000) != 0)
             {
                 //ALT is pressed
+                state.LeftAltPressed = true;
                 state.AltPressed = true;
             }
-            if ((PInvoke.GetKeyState((int)VIRTUAL_KEY.VK_LWIN) & 0x8000) != 0 ||
-                (PInvoke.GetKeyState((int)VIRTUAL_KEY.VK_RWIN) & 0x8000) != 0)
+            if ((PInvoke.GetKeyState((int)VIRTUAL_KEY.VK_RMENU) & 0x8000) != 0)
+            {
+                //ALT is pressed
+                state.RightAltPressed = true;
+                state.AltPressed = true;
+            }
+            if ((PInvoke.GetKeyState((int)VIRTUAL_KEY.VK_LWIN) & 0x8000) != 0)
             {
                 //WIN is pressed
+                state.LWinPressed = true;
+                state.WinPressed = true;
+            }
+            if ((PInvoke.GetKeyState((int)VIRTUAL_KEY.VK_RWIN) & 0x8000) != 0)
+            {
+                //WIN is pressed
+                state.RWinPressed = true;
                 state.WinPressed = true;
             }
 

@@ -38,7 +38,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             _storage.Save();
         }
 
-        public string Hotkey { get; set; } = $"{KeyConstant.Alt} + {KeyConstant.Space}";
+        public string Hotkey { get; set; } = $"{KeyConstant.LeftAlt} + {KeyConstant.Space}";
 
         private string _openResultModifiers = KeyConstant.Alt;
         public string OpenResultModifiers
