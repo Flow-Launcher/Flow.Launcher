@@ -107,7 +107,7 @@
     <PackageReference Include="Flow.Launcher.Localization" Version="0.0.6" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.9" />
     <PackageReference Include="Svg.Skia" Version="3.0.6" />
-    <PackageReference Include="SkiaSharp" Version="3.119.0" />
+    <PackageReference Include="SkiaSharp" Version="3.119.1" />
   </ItemGroup>
 
 </Project>
