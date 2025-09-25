@@ -33,10 +33,7 @@ public class ChromiumBookmarkLoader : IBookmarkLoader
         if (!Directory.Exists(_browserDataPath))
             yield break;
 
-        var profileDirectories = Directory.EnumerateDirectories(_browserDataPath, "Profile *").ToList();
-        var defaultProfile = Path.Combine(_browserDataPath, "Default");
-        if(Directory.Exists(defaultProfile))
-            profileDirectories.Add(defaultProfile);
+        var profileDirectories = BrowserDetector.GetChromiumProfileDirectories(_browserDataPath);
         
         foreach (var profilePath in profileDirectories)
         {
