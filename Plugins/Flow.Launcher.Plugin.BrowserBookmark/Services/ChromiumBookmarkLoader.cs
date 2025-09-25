@@ -34,7 +34,7 @@ public class ChromiumBookmarkLoader : IBookmarkLoader
             yield break;
 
         var profileDirectories = BrowserDetector.GetChromiumProfileDirectories(_browserDataPath);
-        
+
         foreach (var profilePath in profileDirectories)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -50,13 +50,13 @@ public class ChromiumBookmarkLoader : IBookmarkLoader
             {
                 await using var stream = File.OpenRead(bookmarkPath);
                 using var jsonDocument = await JsonDocument.ParseAsync(stream, cancellationToken: cancellationToken);
-            
+
                 if (jsonDocument.RootElement.TryGetProperty("roots", out var rootElement))
                 {
                     bookmarks.AddRange(EnumerateBookmarks(rootElement, source, profilePath));
                 }
             }
-            catch(JsonException ex)
+            catch (JsonException ex)
             {
                 _logException(nameof(ChromiumBookmarkLoader), $"Failed to parse bookmarks file for {_browserName}: {bookmarkPath}", ex);
             }
@@ -89,7 +89,7 @@ public class ChromiumBookmarkLoader : IBookmarkLoader
     {
         if (!folderElement.TryGetProperty("children", out var childrenElement))
             return;
-        
+
         foreach (var subElement in childrenElement.EnumerateArray())
         {
             if (subElement.TryGetProperty("type", out var type))

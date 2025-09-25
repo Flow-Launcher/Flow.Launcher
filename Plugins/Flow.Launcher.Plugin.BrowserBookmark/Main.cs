@@ -20,7 +20,7 @@ public class Main : ISettingProvider, IPlugin, IAsyncReloadable, IPluginI18n, IC
 {
     internal static PluginInitContext Context { get; set; } = null!;
     private static Settings _settings = null!;
-    
+
     private BookmarkLoaderService _bookmarkLoader = null!;
     private FaviconService _faviconService = null!;
     private BookmarkWatcherService _bookmarkWatcher = null!;
@@ -38,7 +38,7 @@ public class Main : ISettingProvider, IPlugin, IAsyncReloadable, IPluginI18n, IC
         _settings.CustomBrowsers.CollectionChanged += OnCustomBrowsersChanged;
 
         var tempPath = SetupTempDirectory();
-        
+
         _bookmarkLoader = new BookmarkLoaderService(Context, _settings, tempPath);
         _faviconService = new FaviconService(Context, _settings, tempPath);
         _bookmarkWatcher = new BookmarkWatcherService();
@@ -78,7 +78,7 @@ public class Main : ISettingProvider, IPlugin, IAsyncReloadable, IPluginI18n, IC
                 .Select(b =>
                 {
                     var match = Context.API.FuzzySearch(search, b.Name);
-                    if(!match.IsSearchPrecisionScoreMet())
+                    if (!match.IsSearchPrecisionScoreMet())
                         match = Context.API.FuzzySearch(search, b.Url);
                     return (b, match);
                 })
@@ -90,7 +90,7 @@ public class Main : ISettingProvider, IPlugin, IAsyncReloadable, IPluginI18n, IC
 
         return bookmarks.Select(b => CreateResult(b, 0)).ToList();
     }
-    
+
     private Result CreateResult(Bookmark bookmark, int score) => new()
     {
         Title = bookmark.Name,
@@ -107,19 +107,19 @@ public class Main : ISettingProvider, IPlugin, IAsyncReloadable, IPluginI18n, IC
         ContextData = bookmark.Url
     };
 
-public async Task ReloadDataAsync()
+    public async Task ReloadDataAsync()
     {
         var (bookmarks, discoveredFiles) = await _bookmarkLoader.LoadBookmarksAsync(_cancellationTokenSource.Token);
-        
+
         // Atomically swap the list. This prevents the Query method from seeing a partially loaded list.
         Volatile.Write(ref _bookmarks, bookmarks);
 
         _bookmarkWatcher.UpdateWatchers(discoveredFiles);
-        
+
         // Fire and forget favicon processing to not block the UI
         _ = _faviconService.ProcessBookmarkFavicons(_bookmarks, _cancellationTokenSource.Token);
     }
-    
+
     private void OnSettingsPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
         if (e.PropertyName is nameof(Settings.LoadFirefoxBookmark))
@@ -134,7 +134,7 @@ public async Task ReloadDataAsync()
         StartFirefoxBookmarkTimer();
         _ = ReloadDataAsync();
     }
-    
+
     private void OnBookmarkFileChanged()
     {
         _ = ReloadDataAsync();
@@ -202,7 +202,7 @@ public async Task ReloadDataAsync()
 
         var newFirefoxBookmarks = successfulResults.SelectMany(r => r.Bookmarks).ToList();
         var successfulLoaderNames = successfulResults.Select(r => r.Loader.Name).ToHashSet();
-        
+
         var currentBookmarks = Volatile.Read(ref _bookmarks);
 
         var otherBookmarks = currentBookmarks.Where(b => !successfulLoaderNames.Any(name => b.Source.StartsWith(name, StringComparison.OrdinalIgnoreCase)));
@@ -210,9 +210,9 @@ public async Task ReloadDataAsync()
         var newBookmarkList = otherBookmarks.Concat(newFirefoxBookmarks).Distinct().ToList();
 
         Volatile.Write(ref _bookmarks, newBookmarkList);
-        
+
         Context.API.LogInfo(nameof(Main), $"Periodic reload complete. Loaded {newFirefoxBookmarks.Count} Firefox bookmarks from {successfulLoaderNames.Count} sources.");
-        
+
         _ = _faviconService.ProcessBookmarkFavicons(newFirefoxBookmarks, _cancellationTokenSource.Token);
     }
 
@@ -220,7 +220,7 @@ public async Task ReloadDataAsync()
     {
         return new Views.SettingsControl(_settings);
     }
-    
+
     public string GetTranslatedPluginTitle()
     {
         return Localize.flowlauncher_plugin_browserbookmark_plugin_name();
@@ -230,12 +230,12 @@ public async Task ReloadDataAsync()
     {
         return Localize.flowlauncher_plugin_browserbookmark_plugin_description();
     }
-    
+
     public List<Result> LoadContextMenus(Result selectedResult)
     {
         if (selectedResult.ContextData is not string url)
             return new List<Result>();
-        
+
         return new List<Result>
         {
             new()
@@ -246,11 +246,11 @@ public async Task ReloadDataAsync()
                 IcoPath = @"Images\copylink.png",
                 Action = _ =>
                 {
-                    try 
+                    try
                     {
                         Context.API.CopyToClipboard(url);
                         return true;
-                    } 
+                    }
                     catch(Exception ex)
                     {
                         Context.API.LogException(nameof(Main), "Failed to copy URL to clipboard", ex);
@@ -261,7 +261,7 @@ public async Task ReloadDataAsync()
             }
         };
     }
-    
+
     public void Dispose()
     {
         _settings.PropertyChanged -= OnSettingsPropertyChanged;
