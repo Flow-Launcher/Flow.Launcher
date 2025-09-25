@@ -399,7 +399,15 @@ public partial class FaviconService : IDisposable
                 continue;
             }
 
-            candidates.Add(new FaviconCandidate(fullUrl.ToString(), CalculateFaviconScore(linkTag, fullUrl.ToString())));
+            var score = CalculateFaviconScore(linkTag, fullUrl.ToString());
+            candidates.Add(new FaviconCandidate(fullUrl.ToString(), score));
+
+            // If we find a candidate that is likely high quality, stop parsing the rest of the HTML.
+            if (score >= TargetIconSize)
+            {
+                _context.API.LogDebug(nameof(ParseLinkTags), $"Found suitable favicon candidate (score: {score}). Halting further HTML parsing.");
+                break;
+            }
         }
 
         return candidates;
