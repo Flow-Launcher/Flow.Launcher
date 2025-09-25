@@ -16,16 +16,21 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
+
 namespace Flow.Launcher.Plugin.BrowserBookmark.Services;
 
 public partial class FaviconService : IDisposable
 {
-    private readonly PluginInitContext _context; private readonly Settings _settings; private readonly string _faviconCacheDir; private readonly HttpClient _httpClient;
+    private readonly PluginInitContext _context;
+    private readonly Settings _settings;
+    private readonly string _faviconCacheDir;
+    private readonly HttpClient _httpClient;
     private readonly LocalFaviconExtractor _localExtractor;
+
     private readonly CancellationTokenSource _cts = new();
     private readonly ConcurrentDictionary<string, Task<string?>> _ongoingFetches = new(StringComparer.OrdinalIgnoreCase);
 
-    [GeneratedRegex("<link[^>]+>", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-US")]
+    [GeneratedRegex("<link[^>]+?>", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-US")]
     private static partial Regex LinkTagRegex();
     [GeneratedRegex("rel\\s*=\\s*(?:['\"](?<v>[^'\"]*)['\"]|(?<v>[^>\\s]+))", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-US")]
     private static partial Regex RelAttributeRegex();
@@ -48,16 +53,17 @@ public partial class FaviconService : IDisposable
 
         _faviconCacheDir = Path.Combine(context.CurrentPluginMetadata.PluginCacheDirectoryPath, "FaviconCache");
         Directory.CreateDirectory(_faviconCacheDir);
-
+        
         _localExtractor = new LocalFaviconExtractor(context, tempPath);
 
         var handler = new HttpClientHandler
         {
             AllowAutoRedirect = true,
-            AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate | DecompressionMethods.Brotli
+            AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate | DecompressionMethods.Brotli,
+            ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
         };
         _httpClient = new HttpClient(handler);
-        _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36");
+        _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.6409.0 Safari/537.36");
         _httpClient.DefaultRequestHeaders.Accept.ParseAdd("text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8");
         _httpClient.Timeout = TimeSpan.FromSeconds(5);
     }
@@ -129,19 +135,16 @@ public partial class FaviconService : IDisposable
         var cachePath = GetCachePath(urlString, _faviconCacheDir);
         if (File.Exists(cachePath)) return cachePath;
 
-        using var overallCts = CancellationTokenSource.CreateLinkedTokenSource(_cts.Token);
-        overallCts.CancelAfter(TimeSpan.FromSeconds(10));
-
-        // This token is used to cancel the slower HTML fetch if the direct favicon.ico fetch is successful and high-quality.
-        using var htmlProcessingCts = CancellationTokenSource.CreateLinkedTokenSource(overallCts.Token);
+        // This token is used for graceful shutdown and to cancel the HTML task if the ico task succeeds first.
+        using var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(_cts.Token);
 
         FetchResult icoResult = default;
         FetchResult htmlResult = default;
 
         try
         {
-            var icoTask = FetchAndProcessUrlAsync(new Uri(url, "/favicon.ico"), htmlProcessingCts.Token);
-            var htmlTask = FetchAndProcessHtmlAsync(url, htmlProcessingCts.Token);
+            var icoTask = FetchAndProcessUrlAsync(new Uri(url, "/favicon.ico"), linkedCts.Token);
+            var htmlTask = FetchAndProcessHtmlAsync(url, linkedCts.Token);
 
             var tasks = new List<Task<FetchResult>> { icoTask, htmlTask };
 
@@ -152,8 +155,8 @@ public partial class FaviconService : IDisposable
 
                 if (completedTask.IsCompletedSuccessfully && completedTask.Result.Size >= TargetIconSize)
                 {
-                    // A task finished with a good icon (>=48px). We can cancel the remaining tasks.
-                    htmlProcessingCts.Cancel();
+                    // A task finished with a good icon. We can cancel the other one.
+                    linkedCts.Cancel();
                     break;
                 }
             }
@@ -172,10 +175,6 @@ public partial class FaviconService : IDisposable
             }
 
             _context.API.LogDebug(nameof(FaviconService), $"No suitable favicon found for {urlString} after all tasks.");
-        }
-        catch (OperationCanceledException) when (overallCts.IsCancellationRequested)
-        {
-            // This is the overall timeout or service disposal, swallow it.
         }
         catch (Exception ex)
         {
@@ -227,20 +226,18 @@ public partial class FaviconService : IDisposable
         var tempPath = Path.GetTempFileName();
         try
         {
-            _context.API.LogDebug(nameof(FaviconService), $"Attempting to fetch favicon: {faviconUri}");
             using var request = new HttpRequestMessage(HttpMethod.Get, faviconUri);
+
             using var response = await _httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, token);
 
             if (!response.IsSuccessStatusCode)
             {
-                _context.API.LogDebug(nameof(FaviconService), $"Fetch failed for {faviconUri} with status code {response.StatusCode}");
                 File.Delete(tempPath);
                 return default;
             }
 
             if (response.Content.Headers.ContentLength > MaxFaviconBytes)
             {
-                _context.API.LogDebug(nameof(FaviconService), $"Favicon at {faviconUri} is too large ({response.Content.Headers.ContentLength} bytes). Skipping.");
                 File.Delete(tempPath);
                 return default;
             }
@@ -257,7 +254,6 @@ public partial class FaviconService : IDisposable
                 totalBytesRead += bytesRead;
                 if (totalBytesRead > MaxFaviconBytes)
                 {
-                    _context.API.LogDebug(nameof(FaviconService), $"Favicon at {faviconUri} exceeded max size during download. Skipping.");
                     File.Delete(tempPath);
                     return default;
                 }
@@ -270,16 +266,20 @@ public partial class FaviconService : IDisposable
             if (pngData is { Length: > 0 })
             {
                 await File.WriteAllBytesAsync(tempPath, pngData, token);
-                _context.API.LogDebug(nameof(FaviconService), $"Successfully processed favicon for {faviconUri} with original size {size}x{size}");
                 return new FetchResult(tempPath, size);
             }
-
-            _context.API.LogDebug(nameof(FaviconService), $"Failed to process or invalid image for {faviconUri}.");
         }
-        catch (OperationCanceledException) { _context.API.LogDebug(nameof(FaviconService), $"Favicon fetch cancelled for {faviconUri}."); }
-        catch (Exception ex) when (ex is HttpRequestException or NotSupportedException)
+        catch (TaskCanceledException) when (!token.IsCancellationRequested)
         {
-            _context.API.LogDebug(nameof(FaviconService), $"Favicon fetch/process failed for {faviconUri}: {ex.Message}");
+            _context.API.LogWarn(nameof(FaviconService), $"HttpClient timed out for {faviconUri}.");
+        }
+        catch (OperationCanceledException)
+        {
+            // This is expected if another task cancels this one. No need to log.
+        }
+        catch (Exception ex)
+        {
+            _context.API.LogException(nameof(FaviconService), $"Favicon fetch/process failed for {faviconUri}", ex);
         }
 
         File.Delete(tempPath);
@@ -319,10 +319,17 @@ public partial class FaviconService : IDisposable
                     .OrderByDescending(c => c.Score)
                     .ToList();
         }
-        catch (OperationCanceledException) { return new List<FaviconCandidate>(); }
-        catch (Exception ex) when (ex is HttpRequestException or TaskCanceledException)
+        catch (TaskCanceledException) when (!token.IsCancellationRequested)
         {
-            _context.API.LogDebug(nameof(FaviconService), $"Failed to fetch or parse HTML head for {pageUri}: {ex.Message}");
+            _context.API.LogWarn(nameof(FaviconService), $"HttpClient timed out fetching HTML for {pageUri}.");
+        }
+        catch (OperationCanceledException)
+        {
+            // This is expected if another task cancels this one. No need to log.
+        }
+        catch (Exception ex)
+        {
+            _context.API.LogException(nameof(FaviconService), $"Failed to fetch or parse HTML head for {pageUri}", ex);
         }
         return new List<FaviconCandidate>();
     }
@@ -390,17 +397,15 @@ public partial class FaviconService : IDisposable
         return 16; // Default score for other bitmaps
     }
 
-
     private async Task<(byte[]? PngData, int Size)> ToPng(Stream stream, CancellationToken token)
     {
         token.ThrowIfCancellationRequested();
 
-
         await using var ms = new MemoryStream();
         await stream.CopyToAsync(ms, token);
-
         ms.Position = 0;
 
+        // 1. Try to decode as SVG first, as it needs special handling.
         try
         {
             using var svg = new SKSvg();
@@ -420,6 +425,7 @@ public partial class FaviconService : IDisposable
         catch { /* Not an SVG */ }
 
         ms.Position = 0;
+        // 2. Try to decode as an ICO file to correctly handle multiple frames.
         try
         {
             var decoder = new IconBitmapDecoder(ms, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.OnLoad);
@@ -448,12 +454,14 @@ public partial class FaviconService : IDisposable
                 }
             }
         }
-        catch (Exception ex)
+        catch
         {
-            _context.API.LogDebug(nameof(FaviconService), $"Could not decode stream as ICO: {ex.Message}");
+            // This is expected for non-ICO files or complex ICOs that the decoder can't handle.
+            // We will fall back to the generic decoder.
         }
 
         ms.Position = 0;
+        // 3. Fallback for simple bitmaps or ICOs that IconBitmapDecoder failed on.
         try
         {
             using var original = SKBitmap.Decode(ms);
@@ -472,8 +480,7 @@ public partial class FaviconService : IDisposable
         }
         catch (Exception ex)
         {
-            _context.API.LogException(nameof(FaviconService), "Failed to decode or convert bitmap", ex);
-            return (null, 0);
+            _context.API.LogException(nameof(FaviconService), "Failed to decode or convert bitmap with final fallback", ex);
         }
 
         return (null, 0);
