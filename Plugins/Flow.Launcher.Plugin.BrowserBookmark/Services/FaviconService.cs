@@ -28,6 +28,7 @@ public partial class FaviconService : IDisposable
     private readonly LocalFaviconExtractor _localExtractor;
     private readonly CancellationTokenSource _cts = new();
     private readonly ConcurrentDictionary<string, Task<string?>> _ongoingFetches = new(StringComparer.OrdinalIgnoreCase);
+    private readonly ConcurrentDictionary<string, DateTime> _failedFetches = new(StringComparer.OrdinalIgnoreCase);
 
     [GeneratedRegex("<link[^>]+?>", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-US")]
     private static partial Regex LinkTagRegex();
@@ -44,6 +45,7 @@ public partial class FaviconService : IDisposable
     private record struct FetchResult(string? TempPath, int Size);
     private const int MaxFaviconBytes = 250 * 1024;
     private const int TargetIconSize = 48;
+    private static readonly TimeSpan FailedFaviconCooldown = TimeSpan.FromHours(12); // How long to wait before retrying a failed favicon
 
     public FaviconService(PluginInitContext context, Settings settings, string tempPath)
     {
@@ -114,6 +116,15 @@ public partial class FaviconService : IDisposable
             return Task.FromResult<string?>(null);
         }
         var authority = url.GetLeftPart(UriPartial.Authority);
+
+        // Check if this domain recently failed to provide a favicon
+        if (_failedFetches.TryGetValue(authority, out var lastAttemptTime) &&
+            (DateTime.UtcNow - lastAttemptTime < FailedFaviconCooldown))
+        {
+            _context.API.LogDebug(nameof(FaviconService), $"Skipping favicon fetch for {authority} due to recent failure (cooldown active).");
+            return Task.FromResult<string?>(null);
+        }
+
         return _ongoingFetches.GetOrAdd(authority, key => FetchAndCacheFaviconAsync(new Uri(key)));
     }
 
@@ -139,6 +150,7 @@ public partial class FaviconService : IDisposable
 
         FetchResult icoResult = default;
         FetchResult htmlResult = default;
+        bool fetchAttempted = false;
 
         try
         {
@@ -156,6 +168,7 @@ public partial class FaviconService : IDisposable
                 {
                     // A task finished with a good icon. We can cancel the other one.
                     linkedCts.Cancel();
+                    fetchAttempted = true; // Mark as attempted, but potentially successful
                     break;
                 }
             }
@@ -170,6 +183,7 @@ public partial class FaviconService : IDisposable
             {
                 File.Move(bestResult.TempPath, cachePath, true);
                 _context.API.LogDebug(nameof(FaviconService), $"Favicon for {urlString} cached successfully.");
+                _failedFetches.TryRemove(urlString, out _); // Remove from blacklist on success
                 return cachePath;
             }
 
@@ -178,12 +192,19 @@ public partial class FaviconService : IDisposable
         catch (Exception ex)
         {
             _context.API.LogException(nameof(FaviconService), $"Error in favicon fetch for {urlString}", ex);
+            fetchAttempted = true; // Mark as attempted and failed
         }
         finally
         {
             if (icoResult.TempPath != null && File.Exists(icoResult.TempPath)) File.Delete(icoResult.TempPath);
             if (htmlResult.TempPath != null && File.Exists(htmlResult.TempPath)) File.Delete(htmlResult.TempPath);
             _ongoingFetches.TryRemove(urlString, out _);
+
+            // If fetch was attempted but no favicon found or an exception occurred, add to failed fetches
+            if (fetchAttempted && !File.Exists(cachePath))
+            {
+                _failedFetches[urlString] = DateTime.UtcNow;
+            }
         }
 
         return null;
@@ -521,6 +542,7 @@ public partial class FaviconService : IDisposable
     {
         _cts.Cancel();
         _ongoingFetches.Clear();
+        _failedFetches.Clear(); // Clear failed fetches on dispose
         _httpClient.Dispose();
         _cts.Dispose();
         GC.SuppressFinalize(this);
