@@ -1,6 +1,7 @@
 #nullable enable
 using Flow.Launcher.Plugin.BrowserBookmark.Models;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,11 +16,11 @@ public class ChromiumBookmarkLoader : IBookmarkLoader
     private readonly string _browserName;
     private readonly string _browserDataPath;
     private readonly Action<string, string, Exception?> _logException;
-    private readonly List<string> _discoveredFiles;
+    private readonly ConcurrentBag<string> _discoveredFiles;
 
     public string Name => _browserName;
 
-    public ChromiumBookmarkLoader(string browserName, string browserDataPath, Action<string, string, Exception?> logException, List<string> discoveredFiles)
+    public ChromiumBookmarkLoader(string browserName, string browserDataPath, Action<string, string, Exception?> logException, ConcurrentBag<string> discoveredFiles)
     {
         _browserName = browserName;
         _browserDataPath = browserDataPath;

@@ -15,9 +15,6 @@ public class BookmarkLoaderService
     private readonly PluginInitContext _context;
     private readonly Settings _settings;
     private readonly string _tempPath;
-    
-    // This will hold the actual paths to the bookmark files for the watcher service
-    public List<string> DiscoveredBookmarkFiles { get; } = new();
 
     public BookmarkLoaderService(PluginInitContext context, Settings settings, string tempPath)
     {
@@ -26,11 +23,11 @@ public class BookmarkLoaderService
         _tempPath = tempPath;
     }
 
-    public async Task<List<Bookmark>> LoadBookmarksAsync(CancellationToken cancellationToken)
+    public async Task<(List<Bookmark> Bookmarks, List<string> DiscoveredFiles)> LoadBookmarksAsync(CancellationToken cancellationToken)
     {
-        DiscoveredBookmarkFiles.Clear();
+        var discoveredBookmarkFiles = new ConcurrentBag<string>();
         var bookmarks = new ConcurrentBag<Bookmark>();
-        var loaders = GetBookmarkLoaders();
+        var loaders = GetBookmarkLoaders(discoveredBookmarkFiles);
 
         var tasks = loaders.Select(async loader =>
         {
@@ -53,15 +50,15 @@ public class BookmarkLoaderService
 
         await Task.WhenAll(tasks);
 
-        return bookmarks.Distinct().ToList();
+        return (bookmarks.Distinct().ToList(), discoveredBookmarkFiles.Distinct().ToList());
     }
 
-    public IEnumerable<IBookmarkLoader> GetBookmarkLoaders()
+    public IEnumerable<IBookmarkLoader> GetBookmarkLoaders(ConcurrentBag<string> discoveredBookmarkFiles)
     {
-        return GetChromiumBookmarkLoaders().Concat(GetFirefoxBookmarkLoaders());
+        return GetChromiumBookmarkLoaders(discoveredBookmarkFiles).Concat(GetFirefoxBookmarkLoaders());
     }
 
-    public IEnumerable<IBookmarkLoader> GetChromiumBookmarkLoaders()
+    public IEnumerable<IBookmarkLoader> GetChromiumBookmarkLoaders(ConcurrentBag<string> discoveredBookmarkFiles)
     {
         var logAction = (string tag, string msg, Exception? ex) => _context.API.LogException(tag, msg, ex);
         var localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
@@ -70,33 +67,33 @@ public class BookmarkLoaderService
         {
             var path = Path.Combine(localAppData, @"Google\Chrome\User Data");
             if (Directory.Exists(path))
-                yield return new ChromiumBookmarkLoader("Google Chrome", path, logAction, DiscoveredBookmarkFiles);
+                yield return new ChromiumBookmarkLoader("Google Chrome", path, logAction, discoveredBookmarkFiles);
 
             var canaryPath = Path.Combine(localAppData, @"Google\Chrome SxS\User Data");
             if (Directory.Exists(canaryPath))
-                yield return new ChromiumBookmarkLoader("Google Chrome Canary", canaryPath, logAction, DiscoveredBookmarkFiles);
+                yield return new ChromiumBookmarkLoader("Google Chrome Canary", canaryPath, logAction, discoveredBookmarkFiles);
         }
 
         if (_settings.LoadEdgeBookmark)
         {
             var path = Path.Combine(localAppData, @"Microsoft\Edge\User Data");
             if (Directory.Exists(path))
-                yield return new ChromiumBookmarkLoader("Microsoft Edge", path, logAction, DiscoveredBookmarkFiles);
+                yield return new ChromiumBookmarkLoader("Microsoft Edge", path, logAction, discoveredBookmarkFiles);
 
             var devPath = Path.Combine(localAppData, @"Microsoft\Edge Dev\User Data");
             if (Directory.Exists(devPath))
-                yield return new ChromiumBookmarkLoader("Microsoft Edge Dev", devPath, logAction, DiscoveredBookmarkFiles);
+                yield return new ChromiumBookmarkLoader("Microsoft Edge Dev", devPath, logAction, discoveredBookmarkFiles);
 
             var canaryPath = Path.Combine(localAppData, @"Microsoft\Edge SxS\User Data");
             if (Directory.Exists(canaryPath))
-                yield return new ChromiumBookmarkLoader("Microsoft Edge Canary", canaryPath, logAction, DiscoveredBookmarkFiles);
+                yield return new ChromiumBookmarkLoader("Microsoft Edge Canary", canaryPath, logAction, discoveredBookmarkFiles);
         }
 
         if (_settings.LoadChromiumBookmark)
         {
             var path = Path.Combine(localAppData, @"Chromium\User Data");
             if (Directory.Exists(path))
-                yield return new ChromiumBookmarkLoader("Chromium", path, logAction, DiscoveredBookmarkFiles);
+                yield return new ChromiumBookmarkLoader("Chromium", path, logAction, discoveredBookmarkFiles);
         }
 
         foreach (var browser in _settings.CustomBrowsers.Where(b => b.BrowserType == BrowserType.Chromium))
@@ -104,7 +101,7 @@ public class BookmarkLoaderService
             if (string.IsNullOrEmpty(browser.Name) || string.IsNullOrEmpty(browser.DataDirectoryPath) || !Directory.Exists(browser.DataDirectoryPath))
                 continue;
 
-            yield return new ChromiumBookmarkLoader(browser.Name, browser.DataDirectoryPath, logAction, DiscoveredBookmarkFiles);
+            yield return new ChromiumBookmarkLoader(browser.Name, browser.DataDirectoryPath, logAction, discoveredBookmarkFiles);
         }
     }
 
