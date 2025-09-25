@@ -75,7 +75,13 @@ public class ChromiumBookmarkLoader : IBookmarkLoader
         var bookmarks = new List<Bookmark>();
         foreach (var folder in rootElement.EnumerateObject())
         {
-            if (folder.Value.ValueKind == JsonValueKind.Object)
+            if (folder.Value.ValueKind != JsonValueKind.Object)
+                continue;
+
+            // Fix for Opera. It stores bookmarks slightly different than chrome.
+            if (folder.Name == "custom_root")
+                bookmarks.AddRange(EnumerateBookmarks(folder.Value, source, profilePath));
+            else
                 EnumerateFolderBookmark(folder.Value, bookmarks, source, profilePath);
         }
         return bookmarks;

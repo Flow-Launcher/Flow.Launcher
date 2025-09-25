@@ -1,25 +1,24 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading;
-
 namespace Flow.Launcher.Plugin.BrowserBookmark.Services;
 
 public class BookmarkWatcherService : IDisposable
 {
     private readonly List<FileSystemWatcher> _watchers = new();
     public event Action OnBookmarkFileChanged;
-    
+
     // Timer to debounce file change events
     private Timer _debounceTimer;
     private readonly object _lock = new();
+    private volatile bool _disposed;
 
     public BookmarkWatcherService()
     {
         _debounceTimer = new Timer(_ => OnBookmarkFileChanged?.Invoke(), null, Timeout.Infinite, Timeout.Infinite);
     }
-    
+
     public void UpdateWatchers(IEnumerable<string> filePaths)
     {
         // Dispose old watchers
@@ -38,7 +37,7 @@ public class BookmarkWatcherService : IDisposable
 
             if (string.IsNullOrEmpty(directory) || string.IsNullOrEmpty(fileName) || !Directory.Exists(directory))
                 continue;
-            
+
             var watcher = new FileSystemWatcher(directory)
             {
                 Filter = fileName,
@@ -69,16 +68,26 @@ public class BookmarkWatcherService : IDisposable
         // This prevents multiple reloads if a browser writes to the file several times in quick succession.
         lock (_lock)
         {
-            _debounceTimer.Change(2000, Timeout.Infinite);
+            if (_disposed) return;
+            _debounceTimer?.Change(2000, Timeout.Infinite);
         }
     }
 
     public void Dispose()
     {
-        _debounceTimer?.Dispose();
+        lock (_lock)
+        {
+            _disposed = true;
+            _debounceTimer?.Change(Timeout.Infinite, Timeout.Infinite);
+            _debounceTimer?.Dispose();
+        }
         foreach (var watcher in _watchers)
         {
             watcher.EnableRaisingEvents = false;
+            watcher.Changed -= OnFileChanged;
+            watcher.Created -= OnFileChanged;
+            watcher.Deleted -= OnFileChanged;
+            watcher.Renamed -= OnFileRenamed;
             watcher.Dispose();
         }
     }

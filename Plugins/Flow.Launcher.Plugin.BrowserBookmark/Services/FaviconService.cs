@@ -7,6 +7,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
@@ -25,7 +26,8 @@ public partial class FaviconService : IDisposable
     private readonly HttpClient _httpClient;
     private readonly LocalFaviconExtractor _localExtractor;
 
-    private readonly ConcurrentDictionary<string, Task<string?>> _ongoingFetches = new();
+    private readonly CancellationTokenSource _cts = new();
+    private readonly ConcurrentDictionary<string, Task<string?>> _ongoingFetches = new(StringComparer.OrdinalIgnoreCase);
 
     [GeneratedRegex("<link[^>]+>", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-US")]
     private static partial Regex LinkTagRegex();
@@ -40,6 +42,7 @@ public partial class FaviconService : IDisposable
 
     private record struct FaviconCandidate(string Url, int Score);
     private record struct FetchResult(string? TempPath, int Size);
+    private const int MaxFaviconBytes = 250 * 1024;
 
     public FaviconService(PluginInitContext context, Settings settings, string tempPath)
     {
@@ -51,7 +54,11 @@ public partial class FaviconService : IDisposable
         
         _localExtractor = new LocalFaviconExtractor(context, tempPath);
 
-        var handler = new HttpClientHandler { AllowAutoRedirect = true };
+        var handler = new HttpClientHandler
+        {
+            AllowAutoRedirect = true,
+            AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate | DecompressionMethods.Brotli
+        };
         _httpClient = new HttpClient(handler);
         _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36");
         _httpClient.DefaultRequestHeaders.Accept.ParseAdd("text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8");
@@ -105,7 +112,7 @@ public partial class FaviconService : IDisposable
             return Task.FromResult<string?>(null);
         }
         var authority = url.GetLeftPart(UriPartial.Authority);
-        return _ongoingFetches.GetOrAdd(authority, key => FetchAndCacheFaviconAsync(new Uri(key), token));
+        return _ongoingFetches.GetOrAdd(authority, key => FetchAndCacheFaviconAsync(new Uri(key)));
     }
 
     private static string GetCachePath(string url, string cacheDir)
@@ -119,13 +126,13 @@ public partial class FaviconService : IDisposable
         return Path.Combine(cacheDir, sb.ToString() + ".png");
     }
 
-    private async Task<string?> FetchAndCacheFaviconAsync(Uri url, CancellationToken token)
+    private async Task<string?> FetchAndCacheFaviconAsync(Uri url)
     {
         var urlString = url.GetLeftPart(UriPartial.Authority);
         var cachePath = GetCachePath(urlString, _faviconCacheDir);
         if (File.Exists(cachePath)) return cachePath;
 
-        using var overallCts = CancellationTokenSource.CreateLinkedTokenSource(token);
+        using var overallCts = CancellationTokenSource.CreateLinkedTokenSource(_cts.Token);
         overallCts.CancelAfter(TimeSpan.FromSeconds(10));
         var linkedToken = overallCts.Token;
         
@@ -196,7 +203,7 @@ public partial class FaviconService : IDisposable
         {
             _context.API.LogDebug(nameof(FaviconService), $"Attempting to fetch favicon: {faviconUri}");
             using var request = new HttpRequestMessage(HttpMethod.Get, faviconUri);
-            var response = await _httpClient.SendAsync(request, HttpCompletionOption.ResponseContentRead, token);
+            using var response = await _httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, token);
             
             if (!response.IsSuccessStatusCode)
             {
@@ -205,8 +212,34 @@ public partial class FaviconService : IDisposable
                 return default;
             }
 
+            if (response.Content.Headers.ContentLength > MaxFaviconBytes)
+            {
+                _context.API.LogDebug(nameof(FaviconService), $"Favicon at {faviconUri} is too large ({response.Content.Headers.ContentLength} bytes). Skipping.");
+                File.Delete(tempPath);
+                return default;
+            }
+
             await using var contentStream = await response.Content.ReadAsStreamAsync(token);
-            var (pngData, size) = await ToPng(contentStream, token);
+            await using var memoryStream = new MemoryStream();
+            
+            var buffer = new byte[8192];
+            int bytesRead;
+            long totalBytesRead = 0;
+
+            while ((bytesRead = await contentStream.ReadAsync(buffer, 0, buffer.Length, token)) > 0)
+            {
+                totalBytesRead += bytesRead;
+                if (totalBytesRead > MaxFaviconBytes)
+                {
+                    _context.API.LogDebug(nameof(FaviconService), $"Favicon at {faviconUri} exceeded max size during download. Skipping.");
+                    File.Delete(tempPath);
+                    return default;
+                }
+                await memoryStream.WriteAsync(buffer, 0, bytesRead, token);
+            }
+
+            memoryStream.Position = 0;
+            var (pngData, size) = await ToPng(memoryStream, token);
             
             if (pngData is { Length: > 0 })
             {
@@ -220,7 +253,7 @@ public partial class FaviconService : IDisposable
         catch (OperationCanceledException) { _context.API.LogDebug(nameof(FaviconService), $"Favicon fetch cancelled for {faviconUri}."); }
         catch (Exception ex) when (ex is HttpRequestException or NotSupportedException)
         {
-             _context.API.LogDebug(nameof(FaviconService), $"Favicon fetch/process failed for {faviconUri}: {ex.Message}");
+            _context.API.LogDebug(nameof(FaviconService), $"Favicon fetch/process failed for {faviconUri}: {ex.Message}");
         }
         
         File.Delete(tempPath);
@@ -420,7 +453,10 @@ private async Task<(byte[]? PngData, int Size)> ToPng(Stream stream, Cancellatio
 
     public void Dispose()
     {
+        _cts.Cancel();
+        _ongoingFetches.Clear();
         _httpClient.Dispose();
+        _cts.Dispose();
         GC.SuppressFinalize(this);
     }
 }

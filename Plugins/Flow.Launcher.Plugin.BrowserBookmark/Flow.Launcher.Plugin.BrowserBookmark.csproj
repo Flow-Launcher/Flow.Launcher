@@ -57,7 +57,7 @@
                             $(OutputPath)runtimes\osx-arm64;
                             $(OutputPath)runtimes\osx-x64;
                             $(OutputPath)runtimes\win-arm;
-                            $(OutputPath)runtimes\win-arm64;" />
+                            $(OutputPath)runtimes\win-arm64;"/>
   </Target>
 
   <Target Name="RemoveUnnecessaryRuntimesAfterPublish" AfterTargets="Publish">
@@ -80,7 +80,7 @@
                             $(PublishDir)runtimes\osx-arm64;
                             $(PublishDir)runtimes\osx-x64;
                             $(PublishDir)runtimes\win-arm;
-                            $(PublishDir)runtimes\win-arm64;" />
+                            $(PublishDir)runtimes\win-arm64;"/>
   </Target>
 
   <ItemGroup>
@@ -113,7 +113,7 @@
     <PackageReference Include="Flow.Launcher.Localization" Version="0.0.6" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.9" />
     <PackageReference Include="Svg.Skia" Version="3.2.1" />
-    <PackageReference Include="SkiaSharp" Version="3.119.0" />
+    <PackageReference Include="SkiaSharp" Version="3.119.1" />
   </ItemGroup>
 
 </Project>

@@ -48,27 +48,43 @@ public static class FirefoxProfileFinder
         try
         {
             var iniContent = File.ReadAllText(profileIni);
-            // Try to find the default-release profile first, which is the most common case.
-            var profileSectionMatch = Regex.Match(iniContent, @"\[Profile[^\]]+\]\s*Name=default-release[\s\S]+?Path=([^\r\n]+)[\s\S]+?Default=1", RegexOptions.IgnoreCase);
             
-            // Fallback to any default profile.
-            if (!profileSectionMatch.Success)
+            var profileSections = Regex.Matches(iniContent, @"^\[Profile[^\]]+\](?:.|\n|\r)*?(?=\r?\n\[|$)", RegexOptions.Multiline)
+                .Cast<Match>()
+                .Select(m => m.Value)
+                .ToArray();
+
+            string? targetSection = null;
+
+            // Priority 1: Find a profile named "default-release" that is also marked as default.
+            targetSection = profileSections.FirstOrDefault(s => 
+                Regex.IsMatch(s, @"\bName\s*=\s*default-release\b", RegexOptions.IgnoreCase) && 
+                Regex.IsMatch(s, @"\bDefault\s*=\s*1\b", RegexOptions.IgnoreCase));
+            
+            // Priority 2: Find any profile marked as default.
+            if (targetSection == null)
             {
-                profileSectionMatch = Regex.Match(iniContent, @"\[Profile[^\]]+\][\s\S]+?Path=([^\r\n]+)[\s\S]+?Default=1", RegexOptions.IgnoreCase);
+                targetSection = profileSections.FirstOrDefault(s => Regex.IsMatch(s, @"\bDefault\s*=\s*1\b", RegexOptions.IgnoreCase));
             }
 
-            // Fallback to the first available profile if no default is marked.
-            if (!profileSectionMatch.Success)
+            // Priority 3: Fallback to the first profile in the file.
+            if (targetSection == null)
             {
-                profileSectionMatch = Regex.Match(iniContent, @"\[Profile[^\]]+\][\s\S]+?Path=([^\r\n]+)");
+                targetSection = profileSections.FirstOrDefault();
             }
-
-            if (!profileSectionMatch.Success) 
+            
+            if (targetSection == null) 
+                return null;
+            
+            var pathMatch = Regex.Match(targetSection, @"^Path\s*=\s*(.+)", RegexOptions.Multiline | RegexOptions.IgnoreCase);
+            if (!pathMatch.Success) 
                 return null;
 
-            var path = profileSectionMatch.Groups[1].Value;
-            var isRelative = !path.Contains(':');
-
+            var path = pathMatch.Groups[1].Value.Trim();
+            
+            // IsRelative=0 means it's an absolute path. The default is relative (IsRelative=1).
+            var isRelative = !Regex.IsMatch(targetSection, @"^IsRelative\s*=\s*0", RegexOptions.Multiline | RegexOptions.IgnoreCase);
+            
             var profilePath = isRelative ? Path.Combine(profileFolderPath, path.Replace('/', Path.DirectorySeparatorChar)) : path;
             var placesDb = Path.Combine(profilePath, "places.sqlite");
 

@@ -64,24 +64,37 @@ public class BookmarkLoaderService
     public IEnumerable<IBookmarkLoader> GetChromiumBookmarkLoaders()
     {
         var logAction = (string tag, string msg, Exception? ex) => _context.API.LogException(tag, msg, ex);
+        var localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 
         if (_settings.LoadChromeBookmark)
         {
-            var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Google\Chrome\User Data");
+            var path = Path.Combine(localAppData, @"Google\Chrome\User Data");
             if (Directory.Exists(path))
                 yield return new ChromiumBookmarkLoader("Google Chrome", path, logAction, DiscoveredBookmarkFiles);
+
+            var canaryPath = Path.Combine(localAppData, @"Google\Chrome SxS\User Data");
+            if (Directory.Exists(canaryPath))
+                yield return new ChromiumBookmarkLoader("Google Chrome Canary", canaryPath, logAction, DiscoveredBookmarkFiles);
         }
 
         if (_settings.LoadEdgeBookmark)
         {
-            var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Microsoft\Edge\User Data");
+            var path = Path.Combine(localAppData, @"Microsoft\Edge\User Data");
             if (Directory.Exists(path))
                 yield return new ChromiumBookmarkLoader("Microsoft Edge", path, logAction, DiscoveredBookmarkFiles);
+
+            var devPath = Path.Combine(localAppData, @"Microsoft\Edge Dev\User Data");
+            if (Directory.Exists(devPath))
+                yield return new ChromiumBookmarkLoader("Microsoft Edge Dev", devPath, logAction, DiscoveredBookmarkFiles);
+
+            var canaryPath = Path.Combine(localAppData, @"Microsoft\Edge SxS\User Data");
+            if (Directory.Exists(canaryPath))
+                yield return new ChromiumBookmarkLoader("Microsoft Edge Canary", canaryPath, logAction, DiscoveredBookmarkFiles);
         }
 
         if (_settings.LoadChromiumBookmark)
         {
-            var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Chromium\User Data");
+            var path = Path.Combine(localAppData, @"Chromium\User Data");
             if (Directory.Exists(path))
                 yield return new ChromiumBookmarkLoader("Chromium", path, logAction, DiscoveredBookmarkFiles);
         }

@@ -50,9 +50,6 @@ public class CustomBrowser : BaseModel
     }
 }
 
-// Helper record for displaying enum values in the settings ComboBox.
-public record BrowserTypeDisplay(string Display, BrowserType Value);
-
 [EnumLocalize]
 public enum BrowserType
 {
