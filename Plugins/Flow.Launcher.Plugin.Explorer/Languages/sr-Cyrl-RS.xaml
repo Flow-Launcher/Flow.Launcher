@@ -22,6 +22,7 @@
     <system:String x:Key="plugin_explorer_directoryinfosearch_error">Error occurred during search: {0}</system:String>
     <system:String x:Key="plugin_explorer_opendir_error">Could not open folder</system:String>
     <system:String x:Key="plugin_explorer_openfile_error">Could not open file</system:String>
+    <system:String x:Key="plugin_explorer_new_action_keyword_assigned">This new action keyword is already assigned to another plugin, please choose a different one</system:String>
 
     <!--  Controls  -->
     <system:String x:Key="plugin_explorer_delete">Delete</system:String>
