@@ -4,7 +4,6 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Threading;
@@ -113,7 +112,7 @@ public class ChromiumBookmarkLoader : IBookmarkLoader
             }
             else
             {
-                _logException(nameof(ChromiumBookmarkLoader), $"type property not found for {subElement.GetString()}", null);
+                _logException(nameof(ChromiumBookmarkLoader), "type property not found in bookmark node.", null);
             }
         }
     }

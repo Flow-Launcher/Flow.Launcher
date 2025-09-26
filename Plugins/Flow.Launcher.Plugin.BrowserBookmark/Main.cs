@@ -8,11 +8,8 @@ using System.Threading.Tasks;
 using Flow.Launcher.Plugin.BrowserBookmark.Services;
 using System.ComponentModel;
 using System.Linq;
-using Flow.Launcher.Plugin.SharedCommands;
 using System.Collections.Specialized;
-using Flow.Launcher.Plugin.SharedModels;
 using System.IO;
-using System.Collections.Concurrent;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark;
 
@@ -251,7 +248,7 @@ public class Main : ISettingProvider, IPlugin, IAsyncReloadable, IPluginI18n, IC
                         Context.API.CopyToClipboard(url);
                         return true;
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         Context.API.LogException(nameof(Main), "Failed to copy URL to clipboard", ex);
                         Context.API.ShowMsgError(Localize.flowlauncher_plugin_browserbookmark_copy_failed());

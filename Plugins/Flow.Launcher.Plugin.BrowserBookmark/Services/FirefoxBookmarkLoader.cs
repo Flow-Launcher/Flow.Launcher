@@ -22,9 +22,11 @@ public class FirefoxBookmarkLoader : IBookmarkLoader
     private const string QueryAllBookmarks = """
         SELECT moz_places.url, moz_bookmarks.title
         FROM moz_places
-            INNER JOIN moz_bookmarks ON (
-                moz_bookmarks.fk NOT NULL AND moz_bookmarks.title NOT NULL AND moz_bookmarks.fk = moz_places.id
-            )
+        INNER JOIN moz_bookmarks
+            ON moz_bookmarks.fk = moz_places.id
+        WHERE moz_bookmarks.fk IS NOT NULL
+          AND moz_bookmarks.title IS NOT NULL
+          AND moz_places.url IS NOT NULL
         ORDER BY moz_places.visit_count DESC
         """;
 
@@ -69,10 +71,9 @@ public class FirefoxBookmarkLoader : IBookmarkLoader
         }
         finally
         {
-            if (tempDbPath != null && File.Exists(tempDbPath))
+            if (tempDbPath != null)
             {
-                try { File.Delete(tempDbPath); } 
-                catch(Exception e) { _logException(nameof(FirefoxBookmarkLoader), $"Failed to delete temp db file {tempDbPath}", e); }
+                CleanupTempFiles(tempDbPath);
             }
         }
 
@@ -84,9 +85,10 @@ public class FirefoxBookmarkLoader : IBookmarkLoader
 
     private async Task ReadBookmarksFromDb(string dbPath, ICollection<Bookmark> bookmarks, CancellationToken cancellationToken)
     {
-        var profilePath = Path.GetDirectoryName(dbPath) ?? string.Empty;
+        // Always use the original profile directory, even when reading from a temp DB copy  
+        var profilePath = Path.GetDirectoryName(_placesPath) ?? string.Empty;
         var connectionString = $"Data Source={dbPath};Mode=ReadOnly;Pooling=false;";
-        
+
         await using var dbConnection = new SqliteConnection(connectionString);
         await dbConnection.OpenAsync(cancellationToken);
         await using var command = new SqliteCommand(QueryAllBookmarks, dbConnection);
@@ -101,6 +103,35 @@ public class FirefoxBookmarkLoader : IBookmarkLoader
             {
                 bookmarks.Add(new Bookmark(title, url, _browserName, profilePath));
             }
+        }
+    }
+
+    private void CleanupTempFiles(string mainTempDbPath)
+    {
+        // This method ensures that the main temp file and any of its associated files
+        // (e.g., -wal, -shm) are deleted.
+        try
+        {
+            var directory = Path.GetDirectoryName(mainTempDbPath);
+            var baseName = Path.GetFileName(mainTempDbPath);
+            if (directory == null || !Directory.Exists(directory)) return;
+
+            foreach (var file in Directory.GetFiles(directory, baseName + "*"))
+            {
+                try
+                {
+                    File.Delete(file);
+                }
+                catch (Exception ex)
+                {
+                    // Log failure to delete a specific chunk, but don't stop the process
+                    _logException(nameof(FirefoxBookmarkLoader), $"Failed to delete temporary file chunk: {file}", ex);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            _logException(nameof(FirefoxBookmarkLoader), $"Failed to clean up temporary files for base: {mainTempDbPath}", ex);
         }
     }
 }

@@ -1,6 +1,4 @@
 using Flow.Launcher.Localization.Attributes;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark.Models;
 
