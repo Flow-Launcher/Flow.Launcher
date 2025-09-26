@@ -89,5 +89,18 @@ public class Settings : BaseModel
         }
     }
     
-    public ObservableCollection<CustomBrowser> CustomBrowsers { get; set; } = new();
+    private ObservableCollection<CustomBrowser> _customBrowsers = new();
+
+    public ObservableCollection<CustomBrowser> CustomBrowsers
+    {
+        get => _customBrowsers;
+        set
+        {
+            if (_customBrowsers != value)
+            {
+                _customBrowsers = value ?? new();
+                OnPropertyChanged();
+            }
+        }
+    }
 }
