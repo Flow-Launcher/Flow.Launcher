@@ -74,9 +74,11 @@ public partial class FaviconService : IDisposable
 
     private async Task SaveFailedFetchesAsync()
     {
-        await _fileLock.WaitAsync(_cts.Token);
+        var acquired = false;
         try
         {
+            await _fileLock.WaitAsync(_cts.Token);
+            acquired = true;
             var json = JsonSerializer.Serialize(_failedFetches);
             await File.WriteAllTextAsync(_failsFilePath, json, _cts.Token);
         }
@@ -87,7 +89,8 @@ public partial class FaviconService : IDisposable
         }
         finally
         {
-            _fileLock.Release();
+            if (acquired)
+                _fileLock.Release();
         }
     }
 

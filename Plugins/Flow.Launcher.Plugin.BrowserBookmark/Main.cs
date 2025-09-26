@@ -155,12 +155,18 @@ public class Main : ISettingProvider, IPlugin, IAsyncReloadable, IPluginI18n, IC
 
         _firefoxBookmarkTimer = new PeriodicTimer(FirefoxPollingInterval);
 
+        var timer = _firefoxBookmarkTimer!;
         _ = Task.Run(async () =>
         {
-            while (await _firefoxBookmarkTimer.WaitForNextTickAsync(_cancellationTokenSource.Token))
+            try
             {
-                await ReloadFirefoxBookmarksAsync();
+                while (await timer.WaitForNextTickAsync(_cancellationTokenSource.Token))
+                {
+                    await ReloadFirefoxBookmarksAsync();
+                }
             }
+            catch (OperationCanceledException) { }
+            catch (ObjectDisposedException) { }
         }, _cancellationTokenSource.Token);
     }
 
