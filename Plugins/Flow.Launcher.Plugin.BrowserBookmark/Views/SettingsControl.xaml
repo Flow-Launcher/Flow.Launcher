@@ -14,7 +14,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <StackPanel
+        <WrapPanel
             Grid.Row="0"
             Margin="{StaticResource SettingPanelItemTopBottomMargin}"
             Orientation="Horizontal">
@@ -42,7 +42,7 @@
                 Margin="{StaticResource SettingPanelItemRightMargin}"
                 Click="Others_Click"
                 Content="{DynamicResource flowlauncher_plugin_browserbookmark_others}" />
-        </StackPanel>
+        </WrapPanel>
         <StackPanel
             Name="CustomBrowsersList"
             Grid.Row="1"
@@ -59,11 +59,8 @@
                 Style="{StaticResource {x:Static GridView.GridViewStyleKey}}">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn DisplayMemberBinding="{Binding Name, Mode=OneWay}"
-                            Header="{DynamicResource flowlauncher_plugin_browserbookmark_browserName}" />
-                        <GridViewColumn
-                            DisplayMemberBinding="{Binding DataDirectoryPath, Mode=OneWay}"
-                            Header="{DynamicResource flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory}" />
+                        <GridViewColumn DisplayMemberBinding="{Binding Name, Mode=OneWay}" Header="{DynamicResource flowlauncher_plugin_browserbookmark_browserName}" />
+                        <GridViewColumn DisplayMemberBinding="{Binding DataDirectoryPath, Mode=OneWay}" Header="{DynamicResource flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory}" />
                     </GridView>
                 </ListView.View>
             </ListView>
@@ -84,9 +81,7 @@
                         <Style BasedOn="{StaticResource DefaultButtonStyle}" TargetType="Button">
                             <Setter Property="IsEnabled" Value="true" />
                             <Style.Triggers>
-                                <DataTrigger
-                                    Binding="{Binding ElementName=CustomBrowsers, Path=SelectedItems.Count}"
-                                    Value="0">
+                                <DataTrigger Binding="{Binding ElementName=CustomBrowsers, Path=SelectedItems.Count}" Value="0">
                                     <Setter Property="IsEnabled" Value="false" />
                                 </DataTrigger>
                             </Style.Triggers>
