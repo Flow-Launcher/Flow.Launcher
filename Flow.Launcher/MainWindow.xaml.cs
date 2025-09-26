@@ -991,7 +991,7 @@ namespace Flow.Launcher
         {
             var dip1 = Win32Helper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Y);
             var dip2 = Win32Helper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Height);
-            var top = (dip2.Y - QueryTextBox.ActualHeight) / 4 + dip1.Y;
+            var top = (dip2.Y - ActualHeight) / 2 + dip1.Y;
             return top;
         }
 
