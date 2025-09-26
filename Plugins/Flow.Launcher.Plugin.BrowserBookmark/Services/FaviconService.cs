@@ -83,6 +83,7 @@ public partial class FaviconService : IDisposable
             await File.WriteAllTextAsync(_failsFilePath, json, _cts.Token);
         }
         catch (OperationCanceledException) { /* Swallow if app is closing */ }
+        catch (ObjectDisposedException) { /* Swallow if disposing */ }
         catch (Exception ex)
         {
             _context.API.LogException(nameof(FaviconService), $"Failed to save failed favicons file to {_failsFilePath}", ex);
@@ -102,13 +103,20 @@ public partial class FaviconService : IDisposable
 
         await Parallel.ForEachAsync(bookmarks, options, async (bookmark, token) =>
         {
-            var cachePath = GetCachePath(bookmark.Url, _faviconCacheDir);
-            if (File.Exists(cachePath))
+            var pageCachePath = GetCachePath(bookmark.Url, _faviconCacheDir);
+            var hostCachePath = Uri.TryCreate(bookmark.Url, UriKind.Absolute, out var pageUri)
+                ? GetCachePath(pageUri.GetLeftPart(UriPartial.Authority), _faviconCacheDir)
+                : pageCachePath;
+            if (File.Exists(hostCachePath))
             {
-                bookmark.FaviconPath = cachePath;
+                bookmark.FaviconPath = hostCachePath;
                 return;
             }
-
+            if (File.Exists(pageCachePath))
+            {
+                bookmark.FaviconPath = pageCachePath;
+                return;
+            }
             // 1. Try local browser database
             var localData = await _localExtractor.GetFaviconDataAsync(bookmark, token);
             if (localData != null)
@@ -116,8 +124,16 @@ public partial class FaviconService : IDisposable
                 var (pngData, _) = await _imageConverter.ToPngAsync(new MemoryStream(localData), token);
                 if (pngData != null)
                 {
-                    await File.WriteAllBytesAsync(cachePath, pngData, token);
-                    bookmark.FaviconPath = cachePath;
+                    var path = hostCachePath;
+                    try
+                    {
+                        await File.WriteAllBytesAsync(path, pngData, token);
+                    }
+                    catch (IOException)
+                    {
+                        // Another thread may have created it concurrently.
+                    }
+                    bookmark.FaviconPath = path;
                     return;
                 }
             }
@@ -132,6 +148,7 @@ public partial class FaviconService : IDisposable
                 }
             }
         });
+
     }
 
     private async Task<string?> GetFaviconFromWebAsync(Uri url, CancellationToken token)
@@ -211,7 +228,14 @@ public partial class FaviconService : IDisposable
 
             if (bestResult.PngData != null)
             {
-                await File.WriteAllBytesAsync(cachePath, bestResult.PngData, _cts.Token);
+                try
+                {
+                    await File.WriteAllBytesAsync(cachePath, bestResult.PngData, _cts.Token);
+                }
+                catch (IOException)
+                {
+                    // Another thread may have created it concurrently.
+                }
                 _context.API.LogDebug(nameof(FaviconService), $"Favicon for {urlString} cached successfully.");
                 if (_failedFetches.TryRemove(urlString, out _))
                 {
