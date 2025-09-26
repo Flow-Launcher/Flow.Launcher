@@ -1,13 +1,12 @@
 {
-    "ID": "0ECADE17459B49F587BF81DC3A125110",
-    "ActionKeyword": "b",
-    "Name": "Browser Bookmarks",
-    "Description": "Search your browser bookmarks, optionally retrieve missing favicons from the web.",
-    "Author": "dcog989",
-    "Version": "1.0.0",
-    "Language": "csharp",
-    "Website": "https://github.com/Flow-Launcher/Flow.Launcher",
-    "ExecuteFileName": "Flow.Launcher.Plugin.BrowserBookmark.dll",
-    "IcoPath": "Images\\bookmark.png",
-    "Languages": "Languages"
+  "ID": "0ECADE17459B49F587BF81DC3A125110",
+  "ActionKeyword": "b",
+  "Name": "Browser Bookmarks",
+  "Description": "Search your browser bookmarks, optionally retrieve missing favicons from the web.",
+  "Author": "dcog989",
+  "Version": "1.0.0",
+  "Language": "csharp",
+  "Website": "https://github.com/Flow-Launcher/Flow.Launcher",
+  "ExecuteFileName": "Flow.Launcher.Plugin.BrowserBookmark.dll",
+  "IcoPath": "Images\\bookmark.png"
 }

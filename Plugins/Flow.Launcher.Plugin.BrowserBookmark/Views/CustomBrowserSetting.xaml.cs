@@ -1,13 +1,11 @@
-using Flow.Launcher.Plugin.BrowserBookmark.Models;
+﻿using Flow.Launcher.Plugin.BrowserBookmark.Models;
 using Flow.Launcher.Plugin.BrowserBookmark.ViewModels;
 using System.Windows;
+using System.Windows.Input;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark.Views;
 
-/// <summary>
-/// Interaction logic for CustomBrowserSetting.xaml
-/// </summary>
 public partial class CustomBrowserSetting : Window
 {
     private readonly CustomBrowserSettingViewModel _viewModel;
@@ -25,14 +23,14 @@ public partial class CustomBrowserSetting : Window
 
     private void WindowKeyDown(object sender, KeyEventArgs e)
     {
-        if (e.Key == System.Windows.Input.Key.Enter)
+        if (e.Key == Key.Enter)
         {
             if (_viewModel.SaveCommand.CanExecute(null))
             {
                 _viewModel.SaveCommand.Execute(null);
             }
         }
-        else if (e.Key == System.Windows.Input.Key.Escape)
+        else if (e.Key == Key.Escape)
         {
             _viewModel.CancelCommand.Execute(null);
         }
