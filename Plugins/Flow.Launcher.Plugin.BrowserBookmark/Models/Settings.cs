@@ -1,4 +1,4 @@
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark.Models;
 
@@ -14,37 +14,79 @@ public class Settings : BaseModel
     public bool LoadChromeBookmark
     {
         get => _loadChromeBookmark;
-        set { _loadChromeBookmark = value; OnPropertyChanged(); }
+        set
+        {
+            if (_loadChromeBookmark != value)
+            {
+                _loadChromeBookmark = value;
+                OnPropertyChanged();
+            }
+        }
     }
     
     public bool LoadFirefoxBookmark
     {
         get => _loadFirefoxBookmark;
-        set { _loadFirefoxBookmark = value; OnPropertyChanged(); }
+        set
+        {
+            if (_loadFirefoxBookmark != value)
+            {
+                _loadFirefoxBookmark = value;
+                OnPropertyChanged();
+            }
+        }
     }
     
     public bool LoadEdgeBookmark
     {
         get => _loadEdgeBookmark;
-        set { _loadEdgeBookmark = value; OnPropertyChanged(); }
+        set
+        {
+            if (_loadEdgeBookmark != value)
+            {
+                _loadEdgeBookmark = value;
+                OnPropertyChanged();
+            }
+        }
     }
 
     public bool LoadChromiumBookmark
     {
         get => _loadChromiumBookmark;
-        set { _loadChromiumBookmark = value; OnPropertyChanged(); }
+        set
+        {
+            if (_loadChromiumBookmark != value)
+            {
+                _loadChromiumBookmark = value;
+                OnPropertyChanged();
+            }
+        }
     }
 
     public bool EnableFavicons
     {
         get => _enableFavicons;
-        set { _enableFavicons = value; OnPropertyChanged(); }
+        set
+        {
+            if (_enableFavicons != value)
+            {
+                _enableFavicons = value;
+                OnPropertyChanged();
+            }
+        }
     }
     
     public bool FetchMissingFavicons
     {
         get => _fetchMissingFavicons;
-        set { _fetchMissingFavicons = value; OnPropertyChanged(); }
+        set
+        {
+            if (_fetchMissingFavicons != value)
+            {
+                _fetchMissingFavicons = value;
+                OnPropertyChanged();
+            }
+        }
     }
     
     public ObservableCollection<CustomBrowser> CustomBrowsers { get; set; } = new();
