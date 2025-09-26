@@ -4,7 +4,6 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Threading;
@@ -56,9 +55,21 @@ public class ChromiumBookmarkLoader : IBookmarkLoader
                     bookmarks.AddRange(EnumerateBookmarks(rootElement, source, profilePath));
                 }
             }
+            catch (IOException ex)
+            {
+                _logException(nameof(ChromiumBookmarkLoader), $"IO error reading {_browserName} bookmarks: {bookmarkPath}", ex);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                _logException(nameof(ChromiumBookmarkLoader), $"Unauthorized to read {_browserName} bookmarks: {bookmarkPath}", ex);
+            }
             catch (JsonException ex)
             {
                 _logException(nameof(ChromiumBookmarkLoader), $"Failed to parse bookmarks file for {_browserName}: {bookmarkPath}", ex);
+            }
+            catch (Exception ex)
+            {
+                _logException(nameof(ChromiumBookmarkLoader), $"Unexpected error loading {_browserName} bookmarks: {bookmarkPath}", ex);
             }
 
             foreach (var bookmark in bookmarks)
@@ -113,7 +124,7 @@ public class ChromiumBookmarkLoader : IBookmarkLoader
             }
             else
             {
-                _logException(nameof(ChromiumBookmarkLoader), $"type property not found for {subElement.GetString()}", null);
+                _logException(nameof(ChromiumBookmarkLoader), "type property not found in bookmark node.", null);
             }
         }
     }

@@ -22,8 +22,7 @@ public class FaviconWebClient : IDisposable
         var handler = new HttpClientHandler
         {
             AllowAutoRedirect = true,
-            AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate | DecompressionMethods.Brotli,
-            ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+            AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate | DecompressionMethods.Brotli
         };
         _httpClient = new HttpClient(handler);
         _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.6409.0 Safari/537.36");
@@ -47,9 +46,9 @@ public class FaviconWebClient : IDisposable
             var buffer = new char[4096];
             int charsRead;
             var totalCharsRead = 0;
-            const int maxCharsToRead = 500 * 1024;
+            const int maxHeadChars = 150 * 1024;
 
-            while (!token.IsCancellationRequested && (charsRead = await reader.ReadAsync(buffer, 0, buffer.Length)) > 0 && totalCharsRead < maxCharsToRead)
+            while (!token.IsCancellationRequested && (charsRead = await reader.ReadAsync(buffer, 0, buffer.Length)) > 0 && totalCharsRead < maxHeadChars)
             {
                 contentBuilder.Append(buffer, 0, charsRead);
                 totalCharsRead += charsRead;
@@ -82,10 +81,10 @@ public class FaviconWebClient : IDisposable
 
             if (!response.IsSuccessStatusCode)
                 return null;
-            
+
             if (response.Content.Headers.ContentLength > MaxFaviconBytes)
                 return null;
-            
+
             await using var contentStream = await response.Content.ReadAsStreamAsync(token);
             var memoryStream = new MemoryStream();
 

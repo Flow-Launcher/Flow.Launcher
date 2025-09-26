@@ -14,6 +14,8 @@ using System.Threading.Tasks;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark.Services;
 
+public readonly record struct FaviconCandidate(string Url, int Score);
+
 public partial class FaviconService : IDisposable
 {
     private readonly PluginInitContext _context;
@@ -28,8 +30,6 @@ public partial class FaviconService : IDisposable
     private ConcurrentDictionary<string, DateTime> _failedFetches = new(StringComparer.OrdinalIgnoreCase);
     private readonly string _failsFilePath;
     private readonly SemaphoreSlim _fileLock = new(1, 1);
-
-    public record struct FaviconCandidate(string Url, int Score);
     private record struct FetchResult(byte[]? PngData, int Size);
     private static readonly TimeSpan FailedFaviconCooldown = TimeSpan.FromHours(24);
 
@@ -40,7 +40,7 @@ public partial class FaviconService : IDisposable
 
         _faviconCacheDir = Path.Combine(context.CurrentPluginMetadata.PluginCacheDirectoryPath, "FaviconCache");
         Directory.CreateDirectory(_faviconCacheDir);
-        
+
         var failsDir = Path.Combine(context.CurrentPluginMetadata.PluginCacheDirectoryPath, "FaviconFails");
         Directory.CreateDirectory(failsDir);
         _failsFilePath = Path.Combine(failsDir, "FaviconFails.json");
@@ -74,20 +74,24 @@ public partial class FaviconService : IDisposable
 
     private async Task SaveFailedFetchesAsync()
     {
-        await _fileLock.WaitAsync(_cts.Token);
+        var acquired = false;
         try
         {
+            await _fileLock.WaitAsync(_cts.Token);
+            acquired = true;
             var json = JsonSerializer.Serialize(_failedFetches);
             await File.WriteAllTextAsync(_failsFilePath, json, _cts.Token);
         }
         catch (OperationCanceledException) { /* Swallow if app is closing */ }
+        catch (ObjectDisposedException) { /* Swallow if disposing */ }
         catch (Exception ex)
         {
             _context.API.LogException(nameof(FaviconService), $"Failed to save failed favicons file to {_failsFilePath}", ex);
         }
         finally
         {
-            _fileLock.Release();
+            if (acquired)
+                _fileLock.Release();
         }
     }
 
@@ -99,23 +103,49 @@ public partial class FaviconService : IDisposable
 
         await Parallel.ForEachAsync(bookmarks, options, async (bookmark, token) =>
         {
-            var cachePath = GetCachePath(bookmark.Url, _faviconCacheDir);
-            if (File.Exists(cachePath))
+            var pageCachePath = GetCachePath(bookmark.Url, _faviconCacheDir);
+            var hostCachePath = Uri.TryCreate(bookmark.Url, UriKind.Absolute, out var pageUri)
+                ? GetCachePath(pageUri.GetLeftPart(UriPartial.Authority), _faviconCacheDir)
+                : pageCachePath;
+            if (File.Exists(hostCachePath))
             {
-                bookmark.FaviconPath = cachePath;
+                bookmark.FaviconPath = hostCachePath;
                 return;
             }
-
+            if (File.Exists(pageCachePath))
+            {
+                bookmark.FaviconPath = pageCachePath;
+                return;
+            }
             // 1. Try local browser database
             var localData = await _localExtractor.GetFaviconDataAsync(bookmark, token);
             if (localData != null)
             {
-                var (pngData, _) = await _imageConverter.ToPngAsync(new MemoryStream(localData), token);
+                using var ms = new MemoryStream(localData, writable: false);
+                var (pngData, _) = await _imageConverter.ToPngAsync(ms, token);
                 if (pngData != null)
                 {
-                    await File.WriteAllBytesAsync(cachePath, pngData, token);
-                    bookmark.FaviconPath = cachePath;
-                    return;
+                    var path = hostCachePath;
+                    var tmp = path + "." + Guid.NewGuid().ToString("N") + ".tmp";
+                    try
+                    {
+                        await File.WriteAllBytesAsync(tmp, pngData, token);
+                        try { File.Move(tmp, path, overwrite: false); }
+                        catch (IOException)
+                        {
+                            // Another thread may have created it concurrently.
+                        }
+                    }
+                    finally
+                    {
+                        try { if (File.Exists(tmp)) File.Delete(tmp); } catch { /* best effort */ }
+                    }
+                    if (File.Exists(path))
+                    {
+                        bookmark.FaviconPath = path;
+                        return;
+                    }
+                    // If write failed and file still doesn't exist, fall through to web fallback.
                 }
             }
 
@@ -129,29 +159,39 @@ public partial class FaviconService : IDisposable
                 }
             }
         });
+
     }
 
-    private Task<string?> GetFaviconFromWebAsync(Uri url, CancellationToken token)
+    private async Task<string?> GetFaviconFromWebAsync(Uri url, CancellationToken token)
     {
         if (url is null || (url.Scheme != "http" && url.Scheme != "https"))
-        {
-            return Task.FromResult<string?>(null);
-        }
+            return null;
+
         var authority = url.GetLeftPart(UriPartial.Authority);
 
-        if (_failedFetches.TryGetValue(authority, out var lastAttemptTime) && 
+        if (_failedFetches.TryGetValue(authority, out var lastAttemptTime) &&
             (DateTime.UtcNow - lastAttemptTime < FailedFaviconCooldown))
         {
-            _context.API.LogDebug(nameof(FaviconService), $"Skipping favicon fetch for {authority} due to recent failure (cooldown active).");
-            return Task.FromResult<string?>(null);
+            _context.API.LogDebug(nameof(FaviconService),
+                $"Skipping favicon fetch for {authority} due to recent failure (cooldown active).");
+            return null;
         }
 
-        return _ongoingFetches.GetOrAdd(authority, key => FetchAndCacheFaviconAsync(new Uri(key)));
+        var fetchTask = _ongoingFetches.GetOrAdd(authority, key => FetchAndCacheFaviconAsync(new Uri(key)));
+        try
+        {
+            return await fetchTask.WaitAsync(token);
+        }
+        catch (OperationCanceledException)
+        {
+            // Do not cancel the shared fetch; just stop waiting for this caller.
+            return null;
+        }
     }
 
     private static string GetCachePath(string url, string cacheDir)
     {
-        var hash = SHA1.HashData(Encoding.UTF8.GetBytes(url));
+        var hash = SHA256.HashData(Encoding.UTF8.GetBytes(url));
         var sb = new StringBuilder(hash.Length * 2);
         foreach (byte b in hash)
         {
@@ -199,13 +239,24 @@ public partial class FaviconService : IDisposable
 
             if (bestResult.PngData != null)
             {
-                await File.WriteAllBytesAsync(cachePath, bestResult.PngData, _cts.Token);
-                _context.API.LogDebug(nameof(FaviconService), $"Favicon for {urlString} cached successfully.");
-                if (_failedFetches.TryRemove(urlString, out _))
+                try
                 {
-                    _ = SaveFailedFetchesAsync();
+                    await File.WriteAllBytesAsync(cachePath, bestResult.PngData, _cts.Token);
                 }
-                return cachePath;
+                catch (IOException)
+                {
+                    // Another thread may have created it concurrently.
+                }
+                if (File.Exists(cachePath))
+                {
+                    _context.API.LogDebug(nameof(FaviconService), $"Favicon for {urlString} cached successfully.");
+                    if (_failedFetches.TryRemove(urlString, out _))
+                    {
+                        _ = SaveFailedFetchesAsync();
+                    }
+                    return cachePath;
+                }
+                // Do not treat as success; let finally record failure if needed.
             }
 
             _context.API.LogDebug(nameof(FaviconService), $"No suitable favicon found for {urlString} after all tasks.");
@@ -218,7 +269,7 @@ public partial class FaviconService : IDisposable
         finally
         {
             _ongoingFetches.TryRemove(urlString, out _);
-            
+
             if (fetchAttempted && !File.Exists(cachePath))
             {
                 _failedFetches[urlString] = DateTime.UtcNow;
@@ -231,11 +282,15 @@ public partial class FaviconService : IDisposable
 
     private static FetchResult SelectBestFavicon(FetchResult icoResult, FetchResult htmlResult)
     {
-        if (htmlResult.Size >= ImageConverter.TargetIconSize) return htmlResult;
-        if (icoResult.Size >= ImageConverter.TargetIconSize) return icoResult;
-        if (htmlResult.Size > icoResult.Size) return htmlResult;
-        if (icoResult.Size >= 0) return icoResult;
-        if (htmlResult.Size >= 0) return htmlResult;
+        var htmlValid = htmlResult.PngData != null;
+        var icoValid = icoResult.PngData != null;
+
+        if (htmlValid && htmlResult.Size >= ImageConverter.TargetIconSize) return htmlResult;
+        if (icoValid && icoResult.Size >= ImageConverter.TargetIconSize) return icoResult;
+
+        if (htmlValid && icoValid) return htmlResult.Size >= icoResult.Size ? htmlResult : icoResult;
+        if (htmlValid) return htmlResult;
+        if (icoValid) return icoResult;
         return default;
     }
 
@@ -265,7 +320,7 @@ public partial class FaviconService : IDisposable
     private async Task<FetchResult> FetchFromUrlAsync(Uri faviconUri, CancellationToken token)
     {
         await using var stream = await _webClient.DownloadFaviconAsync(faviconUri, token);
-        if (stream == null) 
+        if (stream == null)
             return default;
 
         var (pngData, size) = await _imageConverter.ToPngAsync(stream, token);

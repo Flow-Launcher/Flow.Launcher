@@ -8,11 +8,8 @@ using System.Threading.Tasks;
 using Flow.Launcher.Plugin.BrowserBookmark.Services;
 using System.ComponentModel;
 using System.Linq;
-using Flow.Launcher.Plugin.SharedCommands;
 using System.Collections.Specialized;
-using Flow.Launcher.Plugin.SharedModels;
 using System.IO;
-using System.Collections.Concurrent;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark;
 
@@ -29,6 +26,7 @@ public class Main : ISettingProvider, IPlugin, IAsyncReloadable, IPluginI18n, IC
     private readonly CancellationTokenSource _cancellationTokenSource = new();
     private PeriodicTimer? _firefoxBookmarkTimer;
     private static readonly TimeSpan FirefoxPollingInterval = TimeSpan.FromHours(3);
+    private readonly SemaphoreSlim _reloadGate = new(1, 1);
 
     public void Init(PluginInitContext context)
     {
@@ -70,7 +68,7 @@ public class Main : ISettingProvider, IPlugin, IAsyncReloadable, IPluginI18n, IC
     public List<Result> Query(Query query)
     {
         var search = query.Search.Trim();
-        var bookmarks = _bookmarks; // use a local copy
+        var bookmarks = Volatile.Read(ref _bookmarks); // use a local copy with proper memory barrier
 
         if (!string.IsNullOrEmpty(search))
         {
@@ -109,15 +107,23 @@ public class Main : ISettingProvider, IPlugin, IAsyncReloadable, IPluginI18n, IC
 
     public async Task ReloadDataAsync()
     {
-        var (bookmarks, discoveredFiles) = await _bookmarkLoader.LoadBookmarksAsync(_cancellationTokenSource.Token);
+        await _reloadGate.WaitAsync(_cancellationTokenSource.Token);
+        try
+        {
+            var (bookmarks, discoveredFiles) = await _bookmarkLoader.LoadBookmarksAsync(_cancellationTokenSource.Token);
 
-        // Atomically swap the list. This prevents the Query method from seeing a partially loaded list.
-        Volatile.Write(ref _bookmarks, bookmarks);
+            // Atomically swap the list. This prevents the Query method from seeing a partially loaded list.
+            Volatile.Write(ref _bookmarks, bookmarks);
 
-        _bookmarkWatcher.UpdateWatchers(discoveredFiles);
+            _bookmarkWatcher.UpdateWatchers(discoveredFiles);
 
-        // Fire and forget favicon processing to not block the UI
-        _ = _faviconService.ProcessBookmarkFavicons(_bookmarks, _cancellationTokenSource.Token);
+            // Fire and forget favicon processing to not block the UI
+            _ = _faviconService.ProcessBookmarkFavicons(_bookmarks, _cancellationTokenSource.Token);
+        }
+        finally
+        {
+            _reloadGate.Release();
+        }
     }
 
     private void OnSettingsPropertyChanged(object? sender, PropertyChangedEventArgs e)
@@ -149,71 +155,86 @@ public class Main : ISettingProvider, IPlugin, IAsyncReloadable, IPluginI18n, IC
 
         _firefoxBookmarkTimer = new PeriodicTimer(FirefoxPollingInterval);
 
+        var timer = _firefoxBookmarkTimer!;
         _ = Task.Run(async () =>
         {
-            while (await _firefoxBookmarkTimer.WaitForNextTickAsync(_cancellationTokenSource.Token))
+            try
             {
-                await ReloadFirefoxBookmarksAsync();
+                while (await timer.WaitForNextTickAsync(_cancellationTokenSource.Token))
+                {
+                    await ReloadFirefoxBookmarksAsync();
+                }
             }
+            catch (OperationCanceledException) { }
+            catch (ObjectDisposedException) { }
         }, _cancellationTokenSource.Token);
     }
 
     private async Task ReloadFirefoxBookmarksAsync()
     {
-        Context.API.LogInfo(nameof(Main), "Starting periodic reload of Firefox bookmarks.");
-
-        var firefoxLoaders = _bookmarkLoader.GetFirefoxBookmarkLoaders().ToList();
-        if (!firefoxLoaders.Any())
+        // Share the same gate to avoid conflicting with full reloads
+        await _reloadGate.WaitAsync(_cancellationTokenSource.Token);
+        try
         {
-            Context.API.LogInfo(nameof(Main), "No Firefox bookmark loaders enabled, skipping reload.");
-            return;
-        }
+            Context.API.LogInfo(nameof(Main), "Starting periodic reload of Firefox bookmarks.");
 
-        var tasks = firefoxLoaders.Select(async loader =>
-        {
-            var loadedBookmarks = new List<Bookmark>();
-            try
+            var firefoxLoaders = _bookmarkLoader.GetFirefoxBookmarkLoaders().ToList();
+            if (!firefoxLoaders.Any())
             {
-                await foreach (var bookmark in loader.GetBookmarksAsync(_cancellationTokenSource.Token))
+                Context.API.LogInfo(nameof(Main), "No Firefox bookmark loaders enabled, skipping reload.");
+                return;
+            }
+
+            var tasks = firefoxLoaders.Select(async loader =>
+            {
+                var loadedBookmarks = new List<Bookmark>();
+                try
                 {
-                    loadedBookmarks.Add(bookmark);
+                    await foreach (var bookmark in loader.GetBookmarksAsync(_cancellationTokenSource.Token))
+                    {
+                        loadedBookmarks.Add(bookmark);
+                    }
+                    return (Loader: loader, Bookmarks: loadedBookmarks, Success: true);
                 }
-                return (Loader: loader, Bookmarks: loadedBookmarks, Success: true);
-            }
-            catch (OperationCanceledException)
-            {
-                return (Loader: loader, Bookmarks: new List<Bookmark>(), Success: false);
-            }
-            catch (Exception e)
-            {
-                Context.API.LogException(nameof(Main), $"Failed to load bookmarks from {loader.Name}.", e);
-                return (Loader: loader, Bookmarks: new List<Bookmark>(), Success: false);
-            }
-        });
+                catch (OperationCanceledException)
+                {
+                    return (Loader: loader, Bookmarks: new List<Bookmark>(), Success: false);
+                }
+                catch (Exception e)
+                {
+                    Context.API.LogException(nameof(Main), $"Failed to load bookmarks from {loader.Name}.", e);
+                    return (Loader: loader, Bookmarks: new List<Bookmark>(), Success: false);
+                }
+            });
 
-        var results = await Task.WhenAll(tasks);
-        var successfulResults = results.Where(r => r.Success).ToList();
+            var results = await Task.WhenAll(tasks);
+            var successfulResults = results.Where(r => r.Success).ToList();
 
-        if (!successfulResults.Any())
-        {
-            Context.API.LogInfo(nameof(Main), "No Firefox bookmarks successfully reloaded.");
-            return;
+            if (!successfulResults.Any())
+            {
+                Context.API.LogInfo(nameof(Main), "No Firefox bookmarks successfully reloaded.");
+                return;
+            }
+
+            var newFirefoxBookmarks = successfulResults.SelectMany(r => r.Bookmarks).ToList();
+            var successfulLoaderNames = successfulResults.Select(r => r.Loader.Name).ToHashSet();
+
+            var currentBookmarks = Volatile.Read(ref _bookmarks);
+
+            var otherBookmarks = currentBookmarks.Where(b => !successfulLoaderNames.Any(name => b.Source.StartsWith(name, StringComparison.OrdinalIgnoreCase)));
+
+            var newBookmarkList = otherBookmarks.Concat(newFirefoxBookmarks).Distinct().ToList();
+
+            Volatile.Write(ref _bookmarks, newBookmarkList);
+
+            Context.API.LogInfo(nameof(Main), $"Periodic reload complete. Loaded {newFirefoxBookmarks.Count} Firefox bookmarks from {successfulLoaderNames.Count} sources.");
+
+            _ = _faviconService.ProcessBookmarkFavicons(newFirefoxBookmarks, _cancellationTokenSource.Token);
         }
-
-        var newFirefoxBookmarks = successfulResults.SelectMany(r => r.Bookmarks).ToList();
-        var successfulLoaderNames = successfulResults.Select(r => r.Loader.Name).ToHashSet();
-
-        var currentBookmarks = Volatile.Read(ref _bookmarks);
-
-        var otherBookmarks = currentBookmarks.Where(b => !successfulLoaderNames.Any(name => b.Source.StartsWith(name, StringComparison.OrdinalIgnoreCase)));
-
-        var newBookmarkList = otherBookmarks.Concat(newFirefoxBookmarks).Distinct().ToList();
-
-        Volatile.Write(ref _bookmarks, newBookmarkList);
-
-        Context.API.LogInfo(nameof(Main), $"Periodic reload complete. Loaded {newFirefoxBookmarks.Count} Firefox bookmarks from {successfulLoaderNames.Count} sources.");
-
-        _ = _faviconService.ProcessBookmarkFavicons(newFirefoxBookmarks, _cancellationTokenSource.Token);
+        finally
+        {
+            _reloadGate.Release();
+        }
     }
 
     public Control CreateSettingPanel()
@@ -251,7 +272,7 @@ public class Main : ISettingProvider, IPlugin, IAsyncReloadable, IPluginI18n, IC
                         Context.API.CopyToClipboard(url);
                         return true;
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         Context.API.LogException(nameof(Main), "Failed to copy URL to clipboard", ex);
                         Context.API.ShowMsgError(Localize.flowlauncher_plugin_browserbookmark_copy_failed());

@@ -20,12 +20,15 @@ public partial class CustomBrowserSetting : Window
         });
         DataContext = _viewModel;
     }
-    
+
     private void WindowKeyDown(object sender, KeyEventArgs e)
     {
         if (e.Key == Key.Enter)
         {
-            _viewModel.SaveCommand.Execute(null);
+            if (_viewModel.SaveCommand.CanExecute(null))
+            {
+                _viewModel.SaveCommand.Execute(null);
+            }
         }
         else if (e.Key == Key.Escape)
         {

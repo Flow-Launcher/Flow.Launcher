@@ -22,11 +22,19 @@ public class LocalFaviconExtractor
 
     public async Task<byte[]?> GetFaviconDataAsync(Bookmark bookmark, CancellationToken token)
     {
-        return bookmark.Source switch
+        var profilePath = bookmark.ProfilePath;
+        if (!string.IsNullOrEmpty(profilePath))
         {
-            var s when s.Contains("Firefox") => await GetFirefoxFaviconAsync(bookmark, token),
-            _ => await GetChromiumFaviconAsync(bookmark, token) // Default to Chromium
-        };
+            if (File.Exists(Path.Combine(profilePath, "favicons.sqlite")))
+                return await GetFirefoxFaviconAsync(bookmark, token);
+
+            if (File.Exists(Path.Combine(profilePath, "Favicons")))
+                return await GetChromiumFaviconAsync(bookmark, token);
+        }
+
+        return bookmark.Source?.IndexOf("Firefox", StringComparison.OrdinalIgnoreCase) >= 0
+            ? await GetFirefoxFaviconAsync(bookmark, token)
+            : await GetChromiumFaviconAsync(bookmark, token);
     }
 
     private Task<byte[]?> GetChromiumFaviconAsync(Bookmark bookmark, CancellationToken token)
@@ -39,7 +47,7 @@ public class LocalFaviconExtractor
 
         return GetFaviconFromDbAsync(bookmark, "Favicons", query, null, token);
     }
-    
+
     private Task<byte[]?> GetFirefoxFaviconAsync(Bookmark bookmark, CancellationToken token)
     {
         const string query = @"
@@ -56,15 +64,21 @@ public class LocalFaviconExtractor
         Func<byte[], CancellationToken, Task<byte[]>>? postProcessor, CancellationToken token)
     {
         var dbPath = Path.Combine(bookmark.ProfilePath, dbFileName);
-        if (!File.Exists(dbPath)) 
+        if (!File.Exists(dbPath))
             return null;
 
         var tempDbPath = Path.Combine(_tempPath, $"{Path.GetFileNameWithoutExtension(dbFileName)}_{Guid.NewGuid()}{Path.GetExtension(dbFileName)}");
-        
+
         try
         {
-            File.Copy(dbPath, tempDbPath, true);
+            var walPath = dbPath + "-wal";
+            var shmPath = dbPath + "-shm";
 
+            File.Copy(dbPath, tempDbPath, true);
+            if (File.Exists(walPath))
+                File.Copy(walPath, tempDbPath + "-wal", true);
+            if (File.Exists(shmPath))
+                File.Copy(shmPath, tempDbPath + "-shm", true);
             var connectionString = $"Data Source={tempDbPath};Mode=ReadOnly;Pooling=false;";
             await using var connection = new SqliteConnection(connectionString);
             await connection.OpenAsync(token);
@@ -74,7 +88,7 @@ public class LocalFaviconExtractor
 
             if (await cmd.ExecuteScalarAsync(token) is not byte[] data || data.Length == 0)
                 return null;
-            
+
             _context.API.LogDebug(nameof(LocalFaviconExtractor), $"Extracted {data.Length} bytes for {bookmark.Url} from {dbFileName}.");
 
             return postProcessor != null ? await postProcessor(data, token) : data;
