@@ -46,9 +46,9 @@ public class FaviconWebClient : IDisposable
             var buffer = new char[4096];
             int charsRead;
             var totalCharsRead = 0;
-            const int maxCharsToRead = 500 * 1024;
+            const int maxHeadChars = 150 * 1024;
 
-            while (!token.IsCancellationRequested && (charsRead = await reader.ReadAsync(buffer, 0, buffer.Length)) > 0 && totalCharsRead < maxCharsToRead)
+            while (!token.IsCancellationRequested && (charsRead = await reader.ReadAsync(buffer, 0, buffer.Length)) > 0 && totalCharsRead < maxHeadChars)
             {
                 contentBuilder.Append(buffer, 0, charsRead);
                 totalCharsRead += charsRead;

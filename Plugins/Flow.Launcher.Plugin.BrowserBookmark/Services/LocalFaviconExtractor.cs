@@ -22,11 +22,19 @@ public class LocalFaviconExtractor
 
     public async Task<byte[]?> GetFaviconDataAsync(Bookmark bookmark, CancellationToken token)
     {
-        return bookmark.Source switch
+        var profilePath = bookmark.ProfilePath;
+        if (!string.IsNullOrEmpty(profilePath))
         {
-            var s when s.Contains("Firefox") => await GetFirefoxFaviconAsync(bookmark, token),
-            _ => await GetChromiumFaviconAsync(bookmark, token) // Default to Chromium
-        };
+            if (File.Exists(Path.Combine(profilePath, "favicons.sqlite")))
+                return await GetFirefoxFaviconAsync(bookmark, token);
+
+            if (File.Exists(Path.Combine(profilePath, "Favicons")))
+                return await GetChromiumFaviconAsync(bookmark, token);
+        }
+
+        return bookmark.Source?.IndexOf("Firefox", StringComparison.OrdinalIgnoreCase) >= 0
+            ? await GetFirefoxFaviconAsync(bookmark, token)
+            : await GetChromiumFaviconAsync(bookmark, token);
     }
 
     private Task<byte[]?> GetChromiumFaviconAsync(Bookmark bookmark, CancellationToken token)

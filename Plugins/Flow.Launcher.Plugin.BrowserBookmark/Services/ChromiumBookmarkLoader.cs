@@ -55,9 +55,21 @@ public class ChromiumBookmarkLoader : IBookmarkLoader
                     bookmarks.AddRange(EnumerateBookmarks(rootElement, source, profilePath));
                 }
             }
+            catch (IOException ex)
+            {
+                _logException(nameof(ChromiumBookmarkLoader), $"IO error reading {_browserName} bookmarks: {bookmarkPath}", ex);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                _logException(nameof(ChromiumBookmarkLoader), $"Unauthorized to read {_browserName} bookmarks: {bookmarkPath}", ex);
+            }
             catch (JsonException ex)
             {
                 _logException(nameof(ChromiumBookmarkLoader), $"Failed to parse bookmarks file for {_browserName}: {bookmarkPath}", ex);
+            }
+            catch (Exception ex)
+            {
+                _logException(nameof(ChromiumBookmarkLoader), $"Unexpected error loading {_browserName} bookmarks: {bookmarkPath}", ex);
             }
 
             foreach (var bookmark in bookmarks)

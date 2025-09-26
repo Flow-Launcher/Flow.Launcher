@@ -67,7 +67,7 @@ public class Main : ISettingProvider, IPlugin, IAsyncReloadable, IPluginI18n, IC
     public List<Result> Query(Query query)
     {
         var search = query.Search.Trim();
-        var bookmarks = _bookmarks; // use a local copy
+        var bookmarks = Volatile.Read(ref _bookmarks); // use a local copy with proper memory barrier
 
         if (!string.IsNullOrEmpty(search))
         {

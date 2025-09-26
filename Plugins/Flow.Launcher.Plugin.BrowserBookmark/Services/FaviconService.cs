@@ -240,11 +240,15 @@ public partial class FaviconService : IDisposable
 
     private static FetchResult SelectBestFavicon(FetchResult icoResult, FetchResult htmlResult)
     {
-        if (htmlResult.Size >= ImageConverter.TargetIconSize) return htmlResult;
-        if (icoResult.Size >= ImageConverter.TargetIconSize) return icoResult;
-        if (htmlResult.Size > icoResult.Size) return htmlResult;
-        if (icoResult.Size >= 0) return icoResult;
-        if (htmlResult.Size >= 0) return htmlResult;
+        var htmlValid = htmlResult.PngData != null;
+        var icoValid  = icoResult.PngData  != null;
+
+        if (htmlValid && htmlResult.Size >= ImageConverter.TargetIconSize) return htmlResult;
+        if (icoValid  && icoResult.Size  >= ImageConverter.TargetIconSize) return icoResult;
+
+        if (htmlValid && icoValid) return htmlResult.Size >= icoResult.Size ? htmlResult : icoResult;
+        if (htmlValid) return htmlResult;
+        if (icoValid)  return icoResult;
         return default;
     }
 

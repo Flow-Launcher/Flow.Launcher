@@ -57,7 +57,15 @@ public class FirefoxBookmarkLoader : IBookmarkLoader
             try
             {
                 tempDbPath = Path.Combine(_tempPath, $"ff_places_{Guid.NewGuid()}.sqlite");
+                var walPath = _placesPath + "-wal";
+                var shmPath = _placesPath + "-shm";
+
                 File.Copy(_placesPath, tempDbPath, true);
+                if (File.Exists(walPath))
+                    File.Copy(walPath, tempDbPath + "-wal", true);
+                if (File.Exists(shmPath))
+                    File.Copy(shmPath, tempDbPath + "-shm", true);
+
                 await ReadBookmarksFromDb(tempDbPath, bookmarks, cancellationToken);
             }
             catch (Exception copyEx)
