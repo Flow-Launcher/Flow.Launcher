@@ -8,6 +8,5 @@
     "Language": "csharp",
     "Website": "https://github.com/Flow-Launcher/Flow.Launcher",
     "ExecuteFileName": "Flow.Launcher.Plugin.BrowserBookmark.dll",
-    "IcoPath": "Images\\bookmark.png",
-    "Languages": "Languages"
+    "IcoPath": "Images\\bookmark.png"
 }
