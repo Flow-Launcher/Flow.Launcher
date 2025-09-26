@@ -66,6 +66,8 @@ public class FirefoxBookmarkLoader : IBookmarkLoader
                 if (File.Exists(shmPath))
                     File.Copy(shmPath, tempDbPath + "-shm", true);
 
+                // Clear any partially-read results before fallback to avoid duplicates
+                bookmarks.Clear();
                 await ReadBookmarksFromDb(tempDbPath, bookmarks, cancellationToken);
             }
             catch (Exception copyEx)

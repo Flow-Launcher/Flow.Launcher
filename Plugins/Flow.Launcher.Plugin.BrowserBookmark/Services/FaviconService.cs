@@ -14,6 +14,8 @@ using System.Threading.Tasks;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark.Services;
 
+public readonly record struct FaviconCandidate(string Url, int Score);
+
 public partial class FaviconService : IDisposable
 {
     private readonly PluginInitContext _context;
@@ -28,8 +30,6 @@ public partial class FaviconService : IDisposable
     private ConcurrentDictionary<string, DateTime> _failedFetches = new(StringComparer.OrdinalIgnoreCase);
     private readonly string _failsFilePath;
     private readonly SemaphoreSlim _fileLock = new(1, 1);
-
-    public record struct FaviconCandidate(string Url, int Score);
     private record struct FetchResult(byte[]? PngData, int Size);
     private static readonly TimeSpan FailedFaviconCooldown = TimeSpan.FromHours(24);
 
@@ -241,14 +241,14 @@ public partial class FaviconService : IDisposable
     private static FetchResult SelectBestFavicon(FetchResult icoResult, FetchResult htmlResult)
     {
         var htmlValid = htmlResult.PngData != null;
-        var icoValid  = icoResult.PngData  != null;
+        var icoValid = icoResult.PngData != null;
 
         if (htmlValid && htmlResult.Size >= ImageConverter.TargetIconSize) return htmlResult;
-        if (icoValid  && icoResult.Size  >= ImageConverter.TargetIconSize) return icoResult;
+        if (icoValid && icoResult.Size >= ImageConverter.TargetIconSize) return icoResult;
 
         if (htmlValid && icoValid) return htmlResult.Size >= icoResult.Size ? htmlResult : icoResult;
         if (htmlValid) return htmlResult;
-        if (icoValid)  return icoResult;
+        if (icoValid) return icoResult;
         return default;
     }
 
