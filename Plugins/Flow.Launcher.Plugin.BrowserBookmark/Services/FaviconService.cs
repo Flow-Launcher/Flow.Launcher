@@ -133,8 +133,12 @@ public partial class FaviconService : IDisposable
                     {
                         // Another thread may have created it concurrently.
                     }
-                    bookmark.FaviconPath = path;
-                    return;
+                    if (File.Exists(path))
+                    {
+                        bookmark.FaviconPath = path;
+                        return;
+                    }
+                    // If write failed and file still doesn't exist, fall through to web fallback.
                 }
             }
 
@@ -236,12 +240,16 @@ public partial class FaviconService : IDisposable
                 {
                     // Another thread may have created it concurrently.
                 }
-                _context.API.LogDebug(nameof(FaviconService), $"Favicon for {urlString} cached successfully.");
-                if (_failedFetches.TryRemove(urlString, out _))
+                if (File.Exists(cachePath))
                 {
-                    _ = SaveFailedFetchesAsync();
+                    _context.API.LogDebug(nameof(FaviconService), $"Favicon for {urlString} cached successfully.");
+                    if (_failedFetches.TryRemove(urlString, out _))
+                    {
+                        _ = SaveFailedFetchesAsync();
+                    }
+                    return cachePath;
                 }
-                return cachePath;
+                // Do not treat as success; let finally record failure if needed.
             }
 
             _context.API.LogDebug(nameof(FaviconService), $"No suitable favicon found for {urlString} after all tasks.");
