@@ -121,17 +121,24 @@ public partial class FaviconService : IDisposable
             var localData = await _localExtractor.GetFaviconDataAsync(bookmark, token);
             if (localData != null)
             {
-                var (pngData, _) = await _imageConverter.ToPngAsync(new MemoryStream(localData), token);
+                using var ms = new MemoryStream(localData, writable: false);
+                var (pngData, _) = await _imageConverter.ToPngAsync(ms, token);
                 if (pngData != null)
                 {
                     var path = hostCachePath;
+                    var tmp = path + "." + Guid.NewGuid().ToString("N") + ".tmp";
                     try
                     {
-                        await File.WriteAllBytesAsync(path, pngData, token);
+                        await File.WriteAllBytesAsync(tmp, pngData, token);
+                        try { File.Move(tmp, path, overwrite: false); }
+                        catch (IOException)
+                        {
+                            // Another thread may have created it concurrently.
+                        }
                     }
-                    catch (IOException)
+                    finally
                     {
-                        // Another thread may have created it concurrently.
+                        try { if (File.Exists(tmp)) File.Delete(tmp); } catch { /* best effort */ }
                     }
                     if (File.Exists(path))
                     {
