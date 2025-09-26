@@ -6,7 +6,6 @@ using Flow.Launcher.Plugin.BrowserBookmark.Services;
 using System;
 using System.ComponentModel;
 using System.IO;
-using Microsoft.Win32;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark.ViewModels;
 
@@ -86,22 +85,20 @@ public partial class CustomBrowserSettingViewModel : ObservableObject
     [RelayCommand]
     private void BrowseDataDirectory()
     {
-        var dialog = new OpenFileDialog
+        var dialog = new System.Windows.Forms.FolderBrowserDialog
         {
-            ValidateNames = false,
-            CheckFileExists = false,
-            CheckPathExists = true,
-            FileName = "Folder Selection."
+            Description = "Select the browser's profile data directory.",
+            UseDescriptionForTitle = true
         };
 
         if (!string.IsNullOrEmpty(EditableBrowser.DataDirectoryPath) && Directory.Exists(EditableBrowser.DataDirectoryPath))
         {
-            dialog.InitialDirectory = EditableBrowser.DataDirectoryPath;
+            dialog.SelectedPath = EditableBrowser.DataDirectoryPath;
         }
 
-        if (dialog.ShowDialog() == true)
+        if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
         {
-            var path = Path.GetDirectoryName(dialog.FileName);
+            var path = dialog.SelectedPath;
             if (!string.IsNullOrEmpty(path))
             {
                 EditableBrowser.DataDirectoryPath = path;
