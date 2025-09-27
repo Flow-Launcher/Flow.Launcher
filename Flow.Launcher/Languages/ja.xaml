@@ -214,6 +214,8 @@
     <system:String x:Key="plugin_query_version">バージョン</system:String>
     <system:String x:Key="plugin_query_web">ウェブサイト</system:String>
     <system:String x:Key="plugin_uninstall">アンインストール</system:String>
+    <system:String x:Key="plugin_default_search_delay_time">Search delay time: default</system:String>
+    <system:String x:Key="plugin_search_delay_time">Search delay time: {0}ms</system:String>
     <system:String x:Key="failedToRemovePluginSettingsTitle">プラグイン設定の削除に失敗</system:String>
     <system:String x:Key="failedToRemovePluginSettingsMessage">プラグイン: {0} - プラグイン設定ファイルの削除に失敗しました。手動で削除してください</system:String>
     <system:String x:Key="failedToRemovePluginCacheTitle">プラグインキャッシュの削除に失敗</system:String>
@@ -595,7 +597,7 @@
         指定されたファイルマネージャーが見つかりませんでした。設定 &gt; 一般でカスタムファイルマネージャの設定を確認してください。
     </system:String>
     <system:String x:Key="errorTitle">エラー</system:String>
-    <system:String x:Key="folderOpenError">フォルダを開く際にエラーが発生しました。 {0}</system:String>
+    <system:String x:Key="folderOpenError">An error occurred while opening the folder.</system:String>
     <system:String x:Key="browserOpenError">ブラウザでURLを開く際にエラーが発生しました。設定ウィンドウの一般セクションでデフォルトのウェブブラウザ設定を確認してください</system:String>
     <system:String x:Key="fileNotFoundError">File or directory not found: {0}</system:String>
 
