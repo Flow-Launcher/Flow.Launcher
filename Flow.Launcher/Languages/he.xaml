@@ -213,6 +213,8 @@
     <system:String x:Key="plugin_query_version">גרסה</system:String>
     <system:String x:Key="plugin_query_web">אתר</system:String>
     <system:String x:Key="plugin_uninstall">הסר התקנה</system:String>
+    <system:String x:Key="plugin_default_search_delay_time">Search delay time: default</system:String>
+    <system:String x:Key="plugin_search_delay_time">Search delay time: {0}ms</system:String>
     <system:String x:Key="failedToRemovePluginSettingsTitle">נכשל בהסרת הגדרות התוסף</system:String>
     <system:String x:Key="failedToRemovePluginSettingsMessage">תוספים: {0} - נכשל בהסרת קבצי הגדרות התוסף, יש להסירם ידנית</system:String>
     <system:String x:Key="failedToRemovePluginCacheTitle">נכשל בהסרת מטמון התוסף</system:String>
@@ -594,7 +596,7 @@
         לא ניתן היה למצוא את מנהל הקבצים שצוין. אנא בדוק את ההגדרה של מנהל קבצים מותאם אישית תחת הגדרות &gt; כללי.
     </system:String>
     <system:String x:Key="errorTitle">שגיאה</system:String>
-    <system:String x:Key="folderOpenError">אירעה שגיאה בעת פתיחת התיקייה. {0}</system:String>
+    <system:String x:Key="folderOpenError">An error occurred while opening the folder.</system:String>
     <system:String x:Key="browserOpenError">אירעה שגיאה בעת פתיחת כתובת ה-URL בדפדפן. אנא בדוק את תצורת דפדפן האינטרנט המוגדר כברירת מחדל שלך במקטע הכללי של חלון ההגדרות</system:String>
     <system:String x:Key="fileNotFoundError">File or directory not found: {0}</system:String>
 
