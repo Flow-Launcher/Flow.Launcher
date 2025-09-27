@@ -214,6 +214,8 @@
     <system:String x:Key="plugin_query_version">Versión</system:String>
     <system:String x:Key="plugin_query_web">Sitio web</system:String>
     <system:String x:Key="plugin_uninstall">Desinstalar</system:String>
+    <system:String x:Key="plugin_default_search_delay_time">Search delay time: default</system:String>
+    <system:String x:Key="plugin_search_delay_time">Search delay time: {0}ms</system:String>
     <system:String x:Key="failedToRemovePluginSettingsTitle">Fallo al eliminar la configuración del complemento</system:String>
     <system:String x:Key="failedToRemovePluginSettingsMessage">Complementos: {0} - Fallo al eliminar los archivos de configuración del complemento, por favor elimínelos manualmente</system:String>
     <system:String x:Key="failedToRemovePluginCacheTitle">Fallo al eliminar la caché del complemento</system:String>
@@ -595,7 +597,7 @@ Si añade un prefijo &quot;@&quot; al introducir un acceso directo, éste coinci
         No se ha encontrado el administrador de archivos especificado. Compruebe la configuración del Administrador de archivos personalizado en Configuración &gt; General.
     </system:String>
     <system:String x:Key="errorTitle">Error</system:String>
-    <system:String x:Key="folderOpenError">Se ha producido un error al abrir la carpeta. {0}</system:String>
+    <system:String x:Key="folderOpenError">An error occurred while opening the folder.</system:String>
     <system:String x:Key="browserOpenError">Se ha producido un error al abrir la URL en el navegador. Por favor, compruebe la configuración de su navegador web predeterminado en la sección General de la ventana de configuración</system:String>
     <system:String x:Key="fileNotFoundError">File or directory not found: {0}</system:String>
 
