@@ -215,6 +215,8 @@ Nevykonali sa žiadne zmeny.</system:String>
     <system:String x:Key="plugin_query_version">Verzia</system:String>
     <system:String x:Key="plugin_query_web">Webstránka</system:String>
     <system:String x:Key="plugin_uninstall">Odinštalovať</system:String>
+    <system:String x:Key="plugin_default_search_delay_time">Search delay time: default</system:String>
+    <system:String x:Key="plugin_search_delay_time">Search delay time: {0}ms</system:String>
     <system:String x:Key="failedToRemovePluginSettingsTitle">Nepodarilo sa odstrániť nastavenia pluginu</system:String>
     <system:String x:Key="failedToRemovePluginSettingsMessage">Pluginy: {0} – Nepodarilo sa odstrániť súbory s nastaveniami pluginu, odstráňte ich manuálne</system:String>
     <system:String x:Key="failedToRemovePluginCacheTitle">Nepodarilo sa odstrániť vyrovnávaciu pamäť pluginu</system:String>
@@ -596,7 +598,7 @@ Ak pri zadávaní skratky pred ňu pridáte &quot;@&quot;, bude sa zhodovať s �
         Zadaný správca súborov sa nenašiel. Skontrolujte nastavenie vlastného správcu súborov v Nastavenia &gt; Všeobecné.
     </system:String>
     <system:String x:Key="errorTitle">Chyba</system:String>
-    <system:String x:Key="folderOpenError">Počas otvárania priečinka sa vyskytla chyba. {0}</system:String>
+    <system:String x:Key="folderOpenError">An error occurred while opening the folder.</system:String>
     <system:String x:Key="browserOpenError">Pri otváraní adresy URL v prehliadači došlo k chybe. Skontrolujte konfiguráciu predvoleného webového prehliadača v nastaveniach Všeobecné</system:String>
     <system:String x:Key="fileNotFoundError">Súbor alebo priečinok sa nenašiel: {0}</system:String>
 
