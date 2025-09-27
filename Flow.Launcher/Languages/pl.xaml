@@ -213,6 +213,8 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="plugin_query_version">Wersja</system:String>
     <system:String x:Key="plugin_query_web">Strona</system:String>
     <system:String x:Key="plugin_uninstall">Odinstalowywanie</system:String>
+    <system:String x:Key="plugin_default_search_delay_time">Search delay time: default</system:String>
+    <system:String x:Key="plugin_search_delay_time">Search delay time: {0}ms</system:String>
     <system:String x:Key="failedToRemovePluginSettingsTitle">Nie udało się usunąć ustawień wtyczki</system:String>
     <system:String x:Key="failedToRemovePluginSettingsMessage">Wtyczki: {0} – nie udało się usunąć plików ustawień wtyczek, usuń je ręcznie</system:String>
     <system:String x:Key="failedToRemovePluginCacheTitle">Nie udało się usunąć cache wtyczki</system:String>
@@ -594,7 +596,7 @@ Jeśli dodasz prefiks '@' podczas wprowadzania skrótu, będzie on pasował do d
         Nie można znaleźć określonego menedżera plików. Sprawdź ustawienie Niestandardowy menedżer plików w Ustawienia &gt; Ogólne.
     </system:String>
     <system:String x:Key="errorTitle">Błąd</system:String>
-    <system:String x:Key="folderOpenError">Wystąpił błąd podczas otwierania folderu. {0}</system:String>
+    <system:String x:Key="folderOpenError">An error occurred while opening the folder.</system:String>
     <system:String x:Key="browserOpenError">Wystąpił błąd podczas otwierania adresu URL w przeglądarce. Sprawdź konfigurację domyślnej przeglądarki internetowej w sekcji Ogólne okna ustawień</system:String>
     <system:String x:Key="fileNotFoundError">File or directory not found: {0}</system:String>
 
