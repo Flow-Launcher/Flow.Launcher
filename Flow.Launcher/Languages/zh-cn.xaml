@@ -214,6 +214,8 @@
     <system:String x:Key="plugin_query_version">版本</system:String>
     <system:String x:Key="plugin_query_web">官方网站</system:String>
     <system:String x:Key="plugin_uninstall">卸载</system:String>
+    <system:String x:Key="plugin_default_search_delay_time">Search delay time: default</system:String>
+    <system:String x:Key="plugin_search_delay_time">Search delay time: {0}ms</system:String>
     <system:String x:Key="failedToRemovePluginSettingsTitle">移除插件设置失败</system:String>
     <system:String x:Key="failedToRemovePluginSettingsMessage">插件：{0} - 移除插件设置文件失败，请手动删除</system:String>
     <system:String x:Key="failedToRemovePluginCacheTitle">移除插件缓存失败</system:String>
@@ -595,7 +597,7 @@
         找不到指定的文件管理器。请在“设置 &gt; 通用”下检查自定义文件管理器设置。
     </system:String>
     <system:String x:Key="errorTitle">错误</system:String>
-    <system:String x:Key="folderOpenError">打开文件夹时发生错误。{0}</system:String>
+    <system:String x:Key="folderOpenError">An error occurred while opening the folder.</system:String>
     <system:String x:Key="browserOpenError">打开浏览器中的 URL 时发生错误。请在设置窗口的常规部分检查您的默认网页浏览器配置</system:String>
     <system:String x:Key="fileNotFoundError">File or directory not found: {0}</system:String>
 
