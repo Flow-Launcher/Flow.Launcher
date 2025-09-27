@@ -214,6 +214,8 @@
     <system:String x:Key="plugin_query_version">Sürüm</system:String>
     <system:String x:Key="plugin_query_web">İnternet Sitesi</system:String>
     <system:String x:Key="plugin_uninstall">Kaldır</system:String>
+    <system:String x:Key="plugin_default_search_delay_time">Search delay time: default</system:String>
+    <system:String x:Key="plugin_search_delay_time">Search delay time: {0}ms</system:String>
     <system:String x:Key="failedToRemovePluginSettingsTitle">Eklenti ayarları kaldırılamıyor</system:String>
     <system:String x:Key="failedToRemovePluginSettingsMessage">Eklentiler: {0} - Ayar dosyaları kaldırılamadı, lütfen elle silin</system:String>
     <system:String x:Key="failedToRemovePluginCacheTitle">Eklenti ön belleği kaldırılamıyor</system:String>
@@ -593,7 +595,7 @@
         Belirtilen dosya yöneticisi bulunamadı. Lütfen Ayarlar &gt; Genel bölümündeki Özel Dosya Yöneticisi ayarını kontrol edin.
     </system:String>
     <system:String x:Key="errorTitle">Hata</system:String>
-    <system:String x:Key="folderOpenError">Klasör açılırken bir hata oluştu. {0}</system:String>
+    <system:String x:Key="folderOpenError">An error occurred while opening the folder.</system:String>
     <system:String x:Key="browserOpenError">URL tarayıcıda açılırken bir hata oluştu. Lütfen ayarlar penceresindeki Genel bölümden Varsayılan Web Tarayıcısı ayarını kontrol edin</system:String>
     <system:String x:Key="fileNotFoundError">Dosya veya dizin bulunamadı: {0}</system:String>
 
