@@ -213,6 +213,8 @@
     <system:String x:Key="plugin_query_version">Versão</system:String>
     <system:String x:Key="plugin_query_web">Site</system:String>
     <system:String x:Key="plugin_uninstall">Desinstalar</system:String>
+    <system:String x:Key="plugin_default_search_delay_time">Search delay time: default</system:String>
+    <system:String x:Key="plugin_search_delay_time">Search delay time: {0}ms</system:String>
     <system:String x:Key="failedToRemovePluginSettingsTitle">Falha ao remover as definições do plugin</system:String>
     <system:String x:Key="failedToRemovePluginSettingsMessage">Plugin: {0} - Falha ao remover o ficheiro de definições do plugin. Experimente remover manualmente.</system:String>
     <system:String x:Key="failedToRemovePluginCacheTitle">Falha ao limpar a cache do plugin</system:String>
@@ -593,7 +595,7 @@ Se adicionar o prefixo '@' durante a introdução do atalho, será utilizada qua
         Não foi possível encontrar o gestor de ficheiros. Verifique a definição 'Gestor de ficheiros personalizado' em Definições -&gt; Geral.
     </system:String>
     <system:String x:Key="errorTitle">Erro</system:String>
-    <system:String x:Key="folderOpenError">Ocorreu um erro ao abrir a pasta: {0}</system:String>
+    <system:String x:Key="folderOpenError">An error occurred while opening the folder.</system:String>
     <system:String x:Key="browserOpenError">Ocorreu um erro ao abrir o URL no navegador. Verifique a configuração Navegador web padrão na secção Geral das definições.</system:String>
     <system:String x:Key="fileNotFoundError">Ficheiro ou diretório não encontrado: {0}</system:String>
 
