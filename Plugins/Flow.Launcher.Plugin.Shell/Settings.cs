@@ -5,11 +5,11 @@ namespace Flow.Launcher.Plugin.Shell
     public class Settings
     {
         public Shell Shell { get; set; } = Shell.Cmd;
-        
+
         public bool ReplaceWinR { get; set; } = false;
 
         public bool CloseShellAfterPress { get; set; } = false;
-        
+
         public bool LeaveShellOpen { get; set; }
 
         public bool RunAsAdministrator { get; set; } = true;
@@ -20,17 +20,13 @@ namespace Flow.Launcher.Plugin.Shell
 
         public int ShowOnlyMostUsedCMDsNumber { get; set; }
 
-        public Dictionary<string, int> CommandHistory { get; set; } = new Dictionary<string, int>();
+        public Dictionary<string, int> CommandHistory { get; set; } = [];
 
         public void AddCmdHistory(string cmdName)
         {
-            if (CommandHistory.ContainsKey(cmdName))
+            if (!CommandHistory.TryAdd(cmdName, 1))
             {
                 CommandHistory[cmdName] += 1;
-            }
-            else
-            {
-                CommandHistory.Add(cmdName, 1);
             }
         }
     }

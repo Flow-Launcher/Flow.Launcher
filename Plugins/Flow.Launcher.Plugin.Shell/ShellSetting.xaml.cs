@@ -19,18 +19,18 @@ namespace Flow.Launcher.Plugin.Shell
             ReplaceWinR.IsChecked = _settings.ReplaceWinR;
 
             CloseShellAfterPress.IsChecked = _settings.CloseShellAfterPress;
-            
+
             LeaveShellOpen.IsChecked = _settings.LeaveShellOpen;
-            
+
             AlwaysRunAsAdministrator.IsChecked = _settings.RunAsAdministrator;
 
             UseWindowsTerminal.IsChecked = _settings.UseWindowsTerminal;
-            
+
             LeaveShellOpen.IsEnabled = _settings.Shell != Shell.RunCommand;
-            
+
             ShowOnlyMostUsedCMDs.IsChecked = _settings.ShowOnlyMostUsedCMDs;
-            
-            if ((bool)!ShowOnlyMostUsedCMDs.IsChecked)
+
+            if (ShowOnlyMostUsedCMDs.IsChecked != true)
                 ShowOnlyMostUsedCMDsNumber.IsEnabled = false;
 
             ShowOnlyMostUsedCMDsNumber.ItemsSource = new List<int>() { 5, 10, 20 };
@@ -137,7 +137,6 @@ namespace Flow.Launcher.Plugin.Shell
             {
                 _settings.ShowOnlyMostUsedCMDsNumber = (int)ShowOnlyMostUsedCMDsNumber.SelectedItem;
             };
-
         }
     }
 }
