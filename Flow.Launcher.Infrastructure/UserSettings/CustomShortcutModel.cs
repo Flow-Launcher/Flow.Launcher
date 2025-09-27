@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.DependencyInjection;
-using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Infrastructure.UserSettings
 {
@@ -55,11 +53,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
     {
         public string Description { get; set; }
 
-        public string LocalizedDescription => API.GetTranslation(Description);
-
-        // We should not initialize API in static constructor because it will create another API instance
-        private static IPublicAPI api = null;
-        private static IPublicAPI API => api ??= Ioc.Default.GetRequiredService<IPublicAPI>();
+        public string LocalizedDescription => PublicApi.Instance.GetTranslation(Description);
 
         public BaseBuiltinShortcutModel(string key, string description)
         {

@@ -14,6 +14,12 @@
         "resolved": "8.4.0",
         "contentHash": "tqVU8yc/ADO9oiTRyTnwhFN68hCwvkliMierptWOudIAvWY1mWCh5VFh+guwHJmpMwfg0J0rY+yyd5Oy7ty9Uw=="
       },
+      "Flow.Launcher.Localization": {
+        "type": "Direct",
+        "requested": "[0.0.6, )",
+        "resolved": "0.0.6",
+        "contentHash": "WNI/TLGPDr3XdOW8gaALN0Uyz9h+bzqOaNZev2nHEuA3HW9o7XuqaM6C0PqNi96mNgxiypwWpVazBNzaylJ2Aw=="
+      },
       "Fody": {
         "type": "Direct",
         "requested": "[6.9.3, )",
@@ -845,6 +851,7 @@
           "Droplex": "[1.7.0, )",
           "FSharp.Core": "[9.0.303, )",
           "Flow.Launcher.Infrastructure": "[1.0.0, )",
+          "Flow.Launcher.Localization": "[0.0.6, )",
           "Flow.Launcher.Plugin": "[5.0.0, )",
           "Meziantou.Framework.Win32.Jobs": "[3.4.4, )",
           "Microsoft.IO.RecyclableMemoryStream": "[3.0.1, )",
@@ -859,6 +866,7 @@
           "Ben.Demystifier": "[0.4.1, )",
           "BitFaster.Caching": "[2.5.4, )",
           "CommunityToolkit.Mvvm": "[8.4.0, )",
+          "Flow.Launcher.Localization": "[0.0.6, )",
           "Flow.Launcher.Plugin": "[5.0.0, )",
           "InputSimulator": "[1.0.4, )",
           "MemoryPack": "[1.21.4, )",
