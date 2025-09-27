@@ -214,6 +214,8 @@
     <system:String x:Key="plugin_query_version">Версія</system:String>
     <system:String x:Key="plugin_query_web">Сайт</system:String>
     <system:String x:Key="plugin_uninstall">Видалити</system:String>
+    <system:String x:Key="plugin_default_search_delay_time">Search delay time: default</system:String>
+    <system:String x:Key="plugin_search_delay_time">Search delay time: {0}ms</system:String>
     <system:String x:Key="failedToRemovePluginSettingsTitle">Не вдалося видалити налаштування плагіну</system:String>
     <system:String x:Key="failedToRemovePluginSettingsMessage">Плагіни: {0} — Не вдалося видалити файли налаштувань плагінів, видаліть їх вручну.</system:String>
     <system:String x:Key="failedToRemovePluginCacheTitle">Не вдалося видалити кеш плагіну</system:String>
@@ -595,7 +597,7 @@
         Вказаний файловий менеджер не знайдено. Перевірте налаштування вашого файлового менеджера в розділі Налаштування &gt; Загальні.
     </system:String>
     <system:String x:Key="errorTitle">Помилка</system:String>
-    <system:String x:Key="folderOpenError">Під час відкриття теки сталася помилка. {0}</system:String>
+    <system:String x:Key="folderOpenError">An error occurred while opening the folder.</system:String>
     <system:String x:Key="browserOpenError">Під час відкриття URL-адреси в браузері сталася помилка. Перевірте налаштування типового веббраузера у розділі «Загальні» вікна налаштувань.</system:String>
     <system:String x:Key="fileNotFoundError">File or directory not found: {0}</system:String>
 
