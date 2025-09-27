@@ -60,6 +60,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="ini-parser" Version="2.5.2" />
     <PackageReference Include="InputSimulator" Version="1.0.4" />
     <PackageReference Include="MemoryPack" Version="1.21.4" />
     <PackageReference Include="Microsoft.VisualStudio.Threading" Version="17.14.15" />
