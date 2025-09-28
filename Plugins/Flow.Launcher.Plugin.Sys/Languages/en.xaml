@@ -78,4 +78,9 @@
     <system:String x:Key="flowlauncher_plugin_sys_plugin_name">System Commands</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_plugin_description">Provides System related commands. e.g. shutdown, lock, settings etc.</system:String>
 
+    <!--  Theme Selector  -->
+    <system:String x:Key="flowlauncher_plugin_sys_type_isdark_hasblur">This theme supports two (light/dark) modes and Blur Transparent Background</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_type_isdark">This theme supports two (light/dark) modes</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_type_hasblur">This theme supports Blur Transparent Background</system:String>
+
 </ResourceDictionary>

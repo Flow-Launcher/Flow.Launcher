@@ -4,40 +4,30 @@ using Flow.Launcher.Plugin.SharedModels;
 
 namespace Flow.Launcher.Plugin.Sys
 {
-    public class ThemeSelector
+    public static class ThemeSelector
     {
         public const string Keyword = "fltheme";
 
-        private readonly PluginInitContext _context;
-
-        public ThemeSelector(PluginInitContext context)
+        public static List<Result> Query(Query query)
         {
-            _context = context;
-        }
-
-        public List<Result> Query(Query query)
-        {
-            var themes = _context.API.GetAvailableThemes();
-            var selectedTheme = _context.API.GetCurrentTheme();
+            var themes = Main.Context.API.GetAvailableThemes();
+            var selectedTheme = Main.Context.API.GetCurrentTheme();
 
             var search = query.SecondToEndSearch;
             if (string.IsNullOrWhiteSpace(search))
             {
-                return themes.Select(x => CreateThemeResult(x, selectedTheme))
-                    .OrderBy(x => x.Title)
-                    .ToList();
+                return [.. themes.Select(x => CreateThemeResult(x, selectedTheme)).OrderBy(x => x.Title)];
             }
 
-            return themes.Select(theme => (theme, matchResult: _context.API.FuzzySearch(search, theme.Name)))
-                .Where(x => x.matchResult.IsSearchPrecisionScoreMet())
-                .Select(x => CreateThemeResult(x.theme, selectedTheme, x.matchResult.Score, x.matchResult.MatchData))
-                .OrderBy(x => x.Title)
-                .ToList();
+            return [.. themes.Select(theme => (theme, matchResult: Main.Context.API.FuzzySearch(search, theme.Name)))
+            .Where(x => x.matchResult.IsSearchPrecisionScoreMet())
+            .Select(x => CreateThemeResult(x.theme, selectedTheme, x.matchResult.Score, x.matchResult.MatchData))
+            .OrderBy(x => x.Title)];
         }
 
-        private Result CreateThemeResult(ThemeData theme, ThemeData selectedTheme) => CreateThemeResult(theme, selectedTheme, 0, null);
+        private static Result CreateThemeResult(ThemeData theme, ThemeData selectedTheme) => CreateThemeResult(theme, selectedTheme, 0, null);
 
-        private Result CreateThemeResult(ThemeData theme, ThemeData selectedTheme, int score, IList<int> highlightData)
+        private static Result CreateThemeResult(ThemeData theme, ThemeData selectedTheme, int score, IList<int> highlightData)
         {
             string title;
             if (theme == selectedTheme)
@@ -53,17 +43,28 @@ namespace Flow.Launcher.Plugin.Sys
                 score = 1000;
             }
 
-            string description = string.Empty;
+            string description;
             if (theme.IsDark == true)
             {
-                description += _context.API.GetTranslation("TypeIsDarkToolTip");
+                if (theme.HasBlur == true)
+                {
+                    description = Localize.flowlauncher_plugin_sys_type_isdark_hasblur();
+                }
+                else
+                {
+                    description = Localize.flowlauncher_plugin_sys_type_isdark();
+                }
             }
-
-            if (theme.HasBlur == true)
+            else
             {
-                if (!string.IsNullOrEmpty(description))
-                    description += " ";
-                description += _context.API.GetTranslation("TypeHasBlurToolTip");
+                if (theme.HasBlur == true)
+                {
+                    description = Localize.flowlauncher_plugin_sys_type_hasblur();
+                }
+                else
+                {
+                    description = string.Empty;
+                }
             }
 
             return new Result
@@ -76,9 +77,9 @@ namespace Flow.Launcher.Plugin.Sys
                 Score = score,
                 Action = c =>
                 {
-                    if (_context.API.SetCurrentTheme(theme))
+                    if (Main.Context.API.SetCurrentTheme(theme))
                     {
-                        _context.API.ReQuery();
+                        Main.Context.API.ReQuery();
                     }
                     return false;
                 }

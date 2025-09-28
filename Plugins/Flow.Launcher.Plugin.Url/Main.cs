@@ -41,11 +41,9 @@ namespace Flow.Launcher.Plugin.Url
             // resource path
             "(?:/\\S*)?" +
             "$";
-        private readonly Regex UrlRegex = new(UrlPattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
-
-        public static PluginInitContext Context { get; private set; }
-
-        public static Settings Settings { get; private set; }
+        Regex reg = new Regex(urlPattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        internal static PluginInitContext Context { get; private set; }
+        internal static Settings Settings { get; private set; }
 
         public List<Result> Query(Query query)
         {
@@ -57,7 +55,7 @@ namespace Flow.Launcher.Plugin.Url
                     new()
                     {
                         Title = raw,
-                        SubTitle = string.Format(Context.API.GetTranslation("flowlauncher_plugin_url_open_url"),raw),
+                        SubTitle = Localize.flowlauncher_plugin_url_open_url(raw),
                         IcoPath = "Images/url.png",
                         Score = 8,
                         Action = _ =>
@@ -83,11 +81,12 @@ namespace Flow.Launcher.Plugin.Url
                                 {
                                     Context.API.OpenWebUrl(raw);
                                 }
+
                                 return true;
                             }
                             catch(Exception)
                             {
-                                Context.API.ShowMsgError(string.Format(Context.API.GetTranslation("flowlauncher_plugin_url_cannot_open_url"), raw));
+                                Context.API.ShowMsgError(Localize.flowlauncher_plugin_url_cannot_open_url(raw));
                                 return false;
                             }
                         }
@@ -118,17 +117,18 @@ namespace Flow.Launcher.Plugin.Url
         public void Init(PluginInitContext context)
         {
             Context = context;
+            
             Settings = context.API.LoadSettingJsonStorage<Settings>();
         }
 
         public string GetTranslatedPluginTitle()
         {
-            return Context.API.GetTranslation("flowlauncher_plugin_url_plugin_name");
+            return Localize.flowlauncher_plugin_url_plugin_name();
         }
 
         public string GetTranslatedPluginDescription()
         {
-            return Context.API.GetTranslation("flowlauncher_plugin_url_plugin_description");
+            return Localize.flowlauncher_plugin_url_plugin_description();
         }
 
         public Control CreateSettingPanel()
