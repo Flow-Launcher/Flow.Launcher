@@ -5,18 +5,12 @@ using System.IO;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin;
 using System.Text.Json;
-using CommunityToolkit.Mvvm.DependencyInjection;
-using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher.Core.Plugin
 {
     internal abstract class PluginConfig
     {
         private static readonly string ClassName = nameof(PluginConfig);
-
-        // We should not initialize API in static constructor because it will create another API instance
-        private static IPublicAPI api = null;
-        private static IPublicAPI API => api ??= Ioc.Default.GetRequiredService<IPublicAPI>();
 
         /// <summary>
         /// Parse plugin metadata in the given directories
@@ -39,7 +33,7 @@ namespace Flow.Launcher.Core.Plugin
                     }
                     catch (Exception e)
                     {
-                        API.LogException(ClassName, $"Can't delete <{directory}>", e);
+                        PublicApi.Instance.LogException(ClassName, $"Can't delete <{directory}>", e);
                     }
                 }
                 else
@@ -56,7 +50,7 @@ namespace Flow.Launcher.Core.Plugin
 
             duplicateList
                 .ForEach(
-                    x => API.LogWarn(ClassName, 
+                    x => PublicApi.Instance.LogWarn(ClassName, 
                         string.Format("Duplicate plugin name: {0}, id: {1}, version: {2} " +
                             "not loaded due to version not the highest of the duplicates",
                             x.Name, x.ID, x.Version),
@@ -108,7 +102,7 @@ namespace Flow.Launcher.Core.Plugin
             string configPath = Path.Combine(pluginDirectory, Constant.PluginMetadataFileName);
             if (!File.Exists(configPath))
             {
-                API.LogError(ClassName, $"Didn't find config file <{configPath}>");
+                PublicApi.Instance.LogError(ClassName, $"Didn't find config file <{configPath}>");
                 return null;
             }
 
@@ -124,19 +118,19 @@ namespace Flow.Launcher.Core.Plugin
             }
             catch (Exception e)
             {
-                API.LogException(ClassName, $"Invalid json for config <{configPath}>", e);
+                PublicApi.Instance.LogException(ClassName, $"Invalid json for config <{configPath}>", e);
                 return null;
             }
 
             if (!AllowedLanguage.IsAllowed(metadata.Language))
             {
-                API.LogError(ClassName, $"Invalid language <{metadata.Language}> for config <{configPath}>");
+                PublicApi.Instance.LogError(ClassName, $"Invalid language <{metadata.Language}> for config <{configPath}>");
                 return null;
             }
 
             if (!File.Exists(metadata.ExecuteFilePath))
             {
-                API.LogError(ClassName, $"Execute file path didn't exist <{metadata.ExecuteFilePath}> for conifg <{configPath}");
+                PublicApi.Instance.LogError(ClassName, $"Execute file path didn't exist <{metadata.ExecuteFilePath}> for conifg <{configPath}");
                 return null;
             }
 

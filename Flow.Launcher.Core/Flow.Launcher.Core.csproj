@@ -34,6 +34,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <NoWarn>$(NoWarn);FLSG0007</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -55,6 +56,7 @@
   
   <ItemGroup>
     <PackageReference Include="Droplex" Version="1.7.0" />
+    <PackageReference Include="Flow.Launcher.Localization" Version="0.0.6" />
     <PackageReference Include="FSharp.Core" Version="9.0.303" />
     <PackageReference Include="Meziantou.Framework.Win32.Jobs" Version="3.4.5" />
     <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="3.0.1" />
@@ -62,6 +64,17 @@
     <!-- Do not upgrade this to higher version since higher version removes UpdateManager instance -->
     <PackageReference Include="squirrel.windows" Version="1.9.0" NoWarn="NU1701" />
     <PackageReference Include="StreamJsonRpc" Version="2.22.11" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <FLLUseDependencyInjection>true</FLLUseDependencyInjection>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Remove="Languages\en.xaml" />
+    <AdditionalFiles Include="..\Flow.Launcher\Languages\en.xaml">
+      <Link>Languages\en.xaml</Link>
+    </AdditionalFiles>
   </ItemGroup>
   
   <ItemGroup>

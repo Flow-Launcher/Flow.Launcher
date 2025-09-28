@@ -26,7 +26,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
     private readonly Theme _theme;
 
     private readonly string DefaultFont = Win32Helper.GetSystemDefaultFont();
-    public string BackdropSubText => !Win32Helper.IsBackdropSupported() ? App.API.GetTranslation("BackdropTypeDisabledToolTip") : ""; 
+    public string BackdropSubText => !Win32Helper.IsBackdropSupported() ? Localize.BackdropTypeDisabledToolTip(): ""; 
 
     public static string LinkHowToCreateTheme => @"https://www.flowlauncher.com/theme-builder/";
     public static string LinkThemeGallery => "https://github.com/Flow-Launcher/Flow.Launcher/discussions/1438";
@@ -272,7 +272,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
 
     public string PlaceholderTextTip
     {
-        get => string.Format(App.API.GetTranslation("PlaceholderTextTip"), App.API.GetTranslation("queryTextBoxPlaceholder"));
+        get => Localize.PlaceholderTextTip(Localize.queryTextBoxPlaceholder());
     }
 
     public string PlaceholderText
@@ -447,8 +447,8 @@ public partial class SettingsPaneThemeViewModel : BaseModel
             {
                 new()
                 {
-                    Title = App.API.GetTranslation("SampleTitleExplorer"),
-                    SubTitle = App.API.GetTranslation("SampleSubTitleExplorer"),
+                    Title = Localize.SampleTitleExplorer(),
+                    SubTitle = Localize.SampleSubTitleExplorer(),
                     IcoPath = Path.Combine(
                         Constant.ProgramDirectory,
                         @"Plugins\Flow.Launcher.Plugin.Explorer\Images\explorer.png"
@@ -456,8 +456,8 @@ public partial class SettingsPaneThemeViewModel : BaseModel
                 },
                 new()
                 {
-                    Title = App.API.GetTranslation("SampleTitleWebSearch"),
-                    SubTitle = App.API.GetTranslation("SampleSubTitleWebSearch"),
+                    Title = Localize.SampleTitleWebSearch(),
+                    SubTitle = Localize.SampleSubTitleWebSearch(),
                     IcoPath = Path.Combine(
                         Constant.ProgramDirectory,
                         @"Plugins\Flow.Launcher.Plugin.WebSearch\Images\web_search.png"
@@ -465,8 +465,8 @@ public partial class SettingsPaneThemeViewModel : BaseModel
                 },
                 new()
                 {
-                    Title = App.API.GetTranslation("SampleTitleProgram"),
-                    SubTitle = App.API.GetTranslation("SampleSubTitleProgram"),
+                    Title = Localize.SampleTitleProgram(),
+                    SubTitle = Localize.SampleSubTitleProgram(),
                     IcoPath = Path.Combine(
                         Constant.ProgramDirectory,
                         @"Plugins\Flow.Launcher.Plugin.Program\Images\program.png"
@@ -474,8 +474,8 @@ public partial class SettingsPaneThemeViewModel : BaseModel
                 },
                 new()
                 {
-                    Title = App.API.GetTranslation("SampleTitleProcessKiller"),
-                    SubTitle = App.API.GetTranslation("SampleSubTitleProcessKiller"),
+                    Title = Localize.SampleTitleProcessKiller(),
+                    SubTitle = Localize.SampleSubTitleProcessKiller(),
                     IcoPath = Path.Combine(
                         Constant.ProgramDirectory,
                         @"Plugins\Flow.Launcher.Plugin.ProcessKiller\Images\app.png"

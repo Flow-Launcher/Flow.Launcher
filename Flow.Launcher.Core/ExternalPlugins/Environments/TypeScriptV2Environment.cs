@@ -46,7 +46,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
                 }
                 catch (System.Exception e)
                 {
-                    API.ShowMsgError(API.GetTranslation("failToInstallTypeScriptEnv"));
+                    API.ShowMsgError(Localize.failToInstallTypeScriptEnv());
                     API.LogException(ClassName, "Failed to install TypeScript environment", e);
                 }
             });
