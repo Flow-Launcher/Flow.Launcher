@@ -77,8 +77,8 @@
     <system:String x:Key="flowlauncher_plugin_sys_plugin_description">提供操作系统相关的命令，如关机、锁定、设置等。</system:String>
 
     <!--  Theme Selector  -->
-    <system:String x:Key="flowlauncher_plugin_sys_type_isdark_hasblur">This theme supports two (light/dark) modes and Blur Transparent Background</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_type_isdark">This theme supports two (light/dark) modes</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_type_hasblur">This theme supports Blur Transparent Background</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_type_isdark_hasblur">该主题支持两种（浅色/深色）模式和模糊透明背景</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_type_isdark">该主题支持两种（浅色/深色）模式</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_type_hasblur">该主题支持模糊透明背景</system:String>
 
 </ResourceDictionary>
