@@ -1,6 +1,5 @@
-#nullable enable
+﻿#nullable enable
 
-using Flow.Launcher.Plugin.BrowserBookmark.Models;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -11,6 +10,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Flow.Launcher.Plugin.BrowserBookmark.Models;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark.Services;
 

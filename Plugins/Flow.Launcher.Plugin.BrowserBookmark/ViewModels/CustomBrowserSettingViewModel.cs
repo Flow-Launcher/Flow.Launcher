@@ -1,11 +1,11 @@
-#nullable enable
+﻿#nullable enable
+using System;
+using System.ComponentModel;
+using System.IO;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Plugin.BrowserBookmark.Models;
 using Flow.Launcher.Plugin.BrowserBookmark.Services;
-using System;
-using System.ComponentModel;
-using System.IO;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark.ViewModels;
 

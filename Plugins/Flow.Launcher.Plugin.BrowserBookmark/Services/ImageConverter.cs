@@ -1,12 +1,12 @@
-#nullable enable
-using SkiaSharp;
-using Svg.Skia;
+﻿#nullable enable
 using System;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
+using SkiaSharp;
+using Svg.Skia;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark.Services;
 
@@ -37,7 +37,7 @@ public class ImageConverter
         ms.Position = 0;
         (pngData, size) = TryConvertIcoToPng(ms);
         if (pngData is not null) return (pngData, size);
-        
+
         ms.Position = 0;
         (pngData, size) = TryConvertBitmapToPng(ms);
         return (pngData, size);
@@ -100,7 +100,7 @@ public class ImageConverter
 
         return (null, 0);
     }
-    
+
     private (byte[]? PngData, int Size) TryConvertBitmapToPng(Stream stream)
     {
         try

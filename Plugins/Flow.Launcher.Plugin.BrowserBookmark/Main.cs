@@ -1,15 +1,15 @@
-#nullable enable
-using Flow.Launcher.Plugin.BrowserBookmark.Models;
+﻿#nullable enable
 using System;
 using System.Collections.Generic;
-using System.Windows.Controls;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using Flow.Launcher.Plugin.BrowserBookmark.Models;
 using Flow.Launcher.Plugin.BrowserBookmark.Services;
-using System.ComponentModel;
-using System.Linq;
-using System.Collections.Specialized;
-using System.IO;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark;
 

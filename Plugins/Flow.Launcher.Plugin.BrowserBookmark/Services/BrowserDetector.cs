@@ -1,8 +1,8 @@
-#nullable enable
-using Flow.Launcher.Plugin.BrowserBookmark.Models;
+﻿#nullable enable
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Flow.Launcher.Plugin.BrowserBookmark.Models;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark.Services;
 

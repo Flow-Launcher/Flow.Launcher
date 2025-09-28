@@ -23,7 +23,7 @@ public class Settings : BaseModel
             }
         }
     }
-    
+
     public bool LoadFirefoxBookmark
     {
         get => _loadFirefoxBookmark;
@@ -36,7 +36,7 @@ public class Settings : BaseModel
             }
         }
     }
-    
+
     public bool LoadEdgeBookmark
     {
         get => _loadEdgeBookmark;
@@ -75,7 +75,7 @@ public class Settings : BaseModel
             }
         }
     }
-    
+
     public bool FetchMissingFavicons
     {
         get => _fetchMissingFavicons;
@@ -88,7 +88,7 @@ public class Settings : BaseModel
             }
         }
     }
-    
+
     private ObservableCollection<CustomBrowser> _customBrowsers = new();
 
     public ObservableCollection<CustomBrowser> CustomBrowsers

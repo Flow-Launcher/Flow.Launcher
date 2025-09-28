@@ -1,6 +1,6 @@
-using Flow.Launcher.Plugin.BrowserBookmark.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading;
+using Flow.Launcher.Plugin.BrowserBookmark.Models;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark.Services;
 

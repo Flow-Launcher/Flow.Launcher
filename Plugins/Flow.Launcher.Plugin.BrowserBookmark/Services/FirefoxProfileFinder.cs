@@ -1,4 +1,4 @@
-#nullable enable
+﻿#nullable enable
 using System;
 using System.IO;
 using System.Linq;
@@ -13,20 +13,20 @@ public static class FirefoxProfileFinder
         // Standard MSI installer path
         var standardPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Mozilla\Firefox");
         var placesPath = GetPlacesPathFromProfileDir(standardPath);
-        
+
         return !string.IsNullOrEmpty(placesPath) ? placesPath : null;
     }
 
     public static string? GetFirefoxMsixPlacesPath()
     {
         var packagesPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Packages");
-        if (!Directory.Exists(packagesPath)) 
+        if (!Directory.Exists(packagesPath))
             return null;
 
         try
         {
             var firefoxPackageFolder = Directory.EnumerateDirectories(packagesPath, "Mozilla.Firefox*", SearchOption.TopDirectoryOnly).FirstOrDefault();
-            if (firefoxPackageFolder == null) 
+            if (firefoxPackageFolder == null)
                 return null;
 
             var profileFolderPath = Path.Combine(firefoxPackageFolder, @"LocalCache\Roaming\Mozilla\Firefox");
@@ -75,7 +75,7 @@ public static class FirefoxProfileFinder
             targetSection = profileSections.FirstOrDefault(s =>
                 Regex.IsMatch(s, @"^Name\s*=\s*default-release", RegexOptions.Multiline | RegexOptions.IgnoreCase) &&
                 Regex.IsMatch(s, @"^Default\s*=\s*1", RegexOptions.Multiline | RegexOptions.IgnoreCase));
-            
+
             // Find any profile marked as default.
             if (targetSection == null)
             {
@@ -87,19 +87,19 @@ public static class FirefoxProfileFinder
             {
                 targetSection = profileSections.FirstOrDefault();
             }
-            
-            if (targetSection == null) 
+
+            if (targetSection == null)
                 return null;
-            
+
             var pathMatch = Regex.Match(targetSection, @"^Path\s*=\s*(.+)", RegexOptions.Multiline | RegexOptions.IgnoreCase);
-            if (!pathMatch.Success) 
+            if (!pathMatch.Success)
                 return null;
 
             var pathValue = pathMatch.Groups[1].Value.Trim();
-            
+
             // IsRelative=0 means it's an absolute path. The default is relative (IsRelative=1).
             var isRelative = !Regex.IsMatch(targetSection, @"^IsRelative\s*=\s*0", RegexOptions.Multiline | RegexOptions.IgnoreCase);
-            
+
             var finalProfilePath = isRelative ? Path.Combine(profileFolderPath, pathValue.Replace('/', Path.DirectorySeparatorChar)) : pathValue;
             var finalPlacesDb = Path.Combine(finalProfilePath, "places.sqlite");
 

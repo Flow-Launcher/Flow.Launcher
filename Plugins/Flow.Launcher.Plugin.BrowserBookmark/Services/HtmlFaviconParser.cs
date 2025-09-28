@@ -1,9 +1,8 @@
-#nullable enable
+﻿#nullable enable
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
-using static Flow.Launcher.Plugin.BrowserBookmark.Services.FaviconService;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark.Services;
 

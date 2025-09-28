@@ -1,7 +1,7 @@
-﻿using Flow.Launcher.Plugin.BrowserBookmark.Models;
-using Flow.Launcher.Plugin.BrowserBookmark.ViewModels;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
+using Flow.Launcher.Plugin.BrowserBookmark.Models;
+using Flow.Launcher.Plugin.BrowserBookmark.ViewModels;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark.Views;

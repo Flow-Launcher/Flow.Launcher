@@ -1,11 +1,11 @@
-#nullable enable
-using Flow.Launcher.Plugin.BrowserBookmark.Models;
-using Microsoft.Data.Sqlite;
+﻿#nullable enable
 using System;
 using System.IO;
 using System.IO.Compression;
 using System.Threading;
 using System.Threading.Tasks;
+using Flow.Launcher.Plugin.BrowserBookmark.Models;
+using Microsoft.Data.Sqlite;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark.Services;
 
