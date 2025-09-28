@@ -5,6 +5,7 @@ using System.IO;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin;
 using System.Text.Json;
+using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher.Core.Plugin
 {
