@@ -49,57 +49,58 @@ internal static class HotKeyMapper
         var list = new List<RegisteredHotkeyData>
         {
             // System default window hotkeys
-            new(RegisteredHotkeyType.Up, HotkeyType.SearchWindow, "Up", "HotkeyLeftRightDesc", null),
-            new(RegisteredHotkeyType.Down, HotkeyType.SearchWindow, "Down", "HotkeyLeftRightDesc", null),
-            new(RegisteredHotkeyType.Left, HotkeyType.SearchWindow, "Left", "HotkeyUpDownDesc", null),
-            new(RegisteredHotkeyType.Right, HotkeyType.SearchWindow, "Right", "HotkeyUpDownDesc", null),
+            // Here the description of Up/Down and Left/Right are swapped - it is intentional
+            new(RegisteredHotkeyType.Up, HotkeyType.SearchWindow, "Up", nameof(Localize.HotkeyLeftRightDesc), null),
+            new(RegisteredHotkeyType.Down, HotkeyType.SearchWindow, "Down", nameof(Localize.HotkeyLeftRightDesc), null),
+            new(RegisteredHotkeyType.Left, HotkeyType.SearchWindow, "Left", nameof(Localize.HotkeyUpDownDesc), null),
+            new(RegisteredHotkeyType.Right, HotkeyType.SearchWindow, "Right", nameof(Localize.HotkeyUpDownDesc), null),
 
             // Flow Launcher window hotkeys
-            new(RegisteredHotkeyType.Esc, HotkeyType.SearchWindow, "Escape", "HotkeyESCDesc", _mainViewModel.EscCommand),
-            new(RegisteredHotkeyType.Reload, HotkeyType.SearchWindow, "F5", "ReloadPluginHotkey", _mainViewModel.ReloadPluginDataCommand),
-            new(RegisteredHotkeyType.SelectFirstResult, HotkeyType.SearchWindow, "Alt+Home", "HotkeySelectFirstResult", _mainViewModel.SelectFirstResultCommand),
-            new(RegisteredHotkeyType.SelectLastResult, HotkeyType.SearchWindow, "Alt+End", "HotkeySelectLastResult", _mainViewModel.SelectLastResultCommand),
-            new(RegisteredHotkeyType.ReQuery, HotkeyType.SearchWindow, "Ctrl+R", "HotkeyRequery", _mainViewModel.ReQueryCommand),
-            new(RegisteredHotkeyType.IncreaseWidth, HotkeyType.SearchWindow, "Ctrl+OemCloseBrackets", "QuickWidthHotkey", _mainViewModel.IncreaseWidthCommand),
-            new(RegisteredHotkeyType.DecreaseWidth, HotkeyType.SearchWindow, "Ctrl+OemOpenBrackets", "QuickWidthHotkey", _mainViewModel.DecreaseWidthCommand),
-            new(RegisteredHotkeyType.IncreaseMaxResult, HotkeyType.SearchWindow, "Ctrl+OemPlus", "QuickHeightHotkey", _mainViewModel.IncreaseMaxResultCommand),
-            new(RegisteredHotkeyType.DecreaseMaxResult, HotkeyType.SearchWindow, "Ctrl+OemMinus", "QuickHeightHotkey", _mainViewModel.DecreaseMaxResultCommand),
-            new(RegisteredHotkeyType.ShiftEnter, HotkeyType.SearchWindow, "Shift+Enter", "OpenContextMenuHotkey", _mainViewModel.LoadContextMenuCommand),
-            new(RegisteredHotkeyType.Enter, HotkeyType.SearchWindow, "Enter", "HotkeyRunDesc", _mainViewModel.OpenResultCommand),
-            new(RegisteredHotkeyType.ToggleGameMode, HotkeyType.SearchWindow, "Ctrl+F12", "ToggleGameModeHotkey", _mainViewModel.ToggleGameModeCommand),
-            new(RegisteredHotkeyType.CopyFilePath, HotkeyType.SearchWindow, "Ctrl+Shift+C", "CopyFilePathHotkey", _mainViewModel.CopyAlternativeCommand),
+            new(RegisteredHotkeyType.Esc, HotkeyType.SearchWindow, "Escape", nameof(Localize.HotkeyESCDesc), _mainViewModel.EscCommand),
+            new(RegisteredHotkeyType.Reload, HotkeyType.SearchWindow, "F5", nameof(Localize.ReloadPluginHotkey), _mainViewModel.ReloadPluginDataCommand),
+            new(RegisteredHotkeyType.SelectFirstResult, HotkeyType.SearchWindow, "Alt+Home", nameof(Localize.HotkeySelectFirstResult), _mainViewModel.SelectFirstResultCommand),
+            new(RegisteredHotkeyType.SelectLastResult, HotkeyType.SearchWindow, "Alt+End", nameof(Localize.HotkeySelectLastResult), _mainViewModel.SelectLastResultCommand),
+            new(RegisteredHotkeyType.ReQuery, HotkeyType.SearchWindow, "Ctrl+R", nameof(Localize.HotkeyRequery), _mainViewModel.ReQueryCommand),
+            new(RegisteredHotkeyType.IncreaseWidth, HotkeyType.SearchWindow, "Ctrl+OemCloseBrackets", nameof(Localize.QuickWidthHotkey), _mainViewModel.IncreaseWidthCommand),
+            new(RegisteredHotkeyType.DecreaseWidth, HotkeyType.SearchWindow, "Ctrl+OemOpenBrackets", nameof(Localize.QuickWidthHotkey), _mainViewModel.DecreaseWidthCommand),
+            new(RegisteredHotkeyType.IncreaseMaxResult, HotkeyType.SearchWindow, "Ctrl+OemPlus", nameof(Localize.QuickHeightHotkey), _mainViewModel.IncreaseMaxResultCommand),
+            new(RegisteredHotkeyType.DecreaseMaxResult, HotkeyType.SearchWindow, "Ctrl+OemMinus", nameof(Localize.QuickHeightHotkey), _mainViewModel.DecreaseMaxResultCommand),
+            new(RegisteredHotkeyType.ShiftEnter, HotkeyType.SearchWindow, "Shift+Enter", nameof(Localize.OpenContextMenuHotkey), _mainViewModel.LoadContextMenuCommand),
+            new(RegisteredHotkeyType.Enter, HotkeyType.SearchWindow, "Enter", nameof(Localize.HotkeyRunDesc), _mainViewModel.OpenResultCommand),
+            new(RegisteredHotkeyType.ToggleGameMode, HotkeyType.SearchWindow, "Ctrl+F12", nameof(Localize.ToggleGameModeHotkey), _mainViewModel.ToggleGameModeCommand),
+            new(RegisteredHotkeyType.CopyFilePath, HotkeyType.SearchWindow, "Ctrl+Shift+C", nameof(Localize.CopyFilePathHotkey), _mainViewModel.CopyAlternativeCommand),
             
             // Result Modifier Hotkeys
-            new(RegisteredHotkeyType.OpenResultN1, HotkeyType.SearchWindow, $"{_settings.OpenResultModifiers}+D1", "HotkeyOpenResultN", 1, _mainViewModel.OpenResultCommand, "0"),
-            new(RegisteredHotkeyType.OpenResultN2, HotkeyType.SearchWindow, $"{_settings.OpenResultModifiers}+D2", "HotkeyOpenResultN", 2, _mainViewModel.OpenResultCommand, "1"),
-            new(RegisteredHotkeyType.OpenResultN3, HotkeyType.SearchWindow, $"{_settings.OpenResultModifiers}+D3", "HotkeyOpenResultN", 3, _mainViewModel.OpenResultCommand, "2"),
-            new(RegisteredHotkeyType.OpenResultN4, HotkeyType.SearchWindow, $"{_settings.OpenResultModifiers}+D4", "HotkeyOpenResultN", 4, _mainViewModel.OpenResultCommand, "3"),
-            new(RegisteredHotkeyType.OpenResultN5, HotkeyType.SearchWindow, $"{_settings.OpenResultModifiers}+D5", "HotkeyOpenResultN", 5, _mainViewModel.OpenResultCommand, "4"),
-            new(RegisteredHotkeyType.OpenResultN6, HotkeyType.SearchWindow, $"{_settings.OpenResultModifiers}+D6", "HotkeyOpenResultN", 6, _mainViewModel.OpenResultCommand, "5"),
-            new(RegisteredHotkeyType.OpenResultN7, HotkeyType.SearchWindow, $"{_settings.OpenResultModifiers}+D7", "HotkeyOpenResultN", 7, _mainViewModel.OpenResultCommand, "6"),
-            new(RegisteredHotkeyType.OpenResultN8, HotkeyType.SearchWindow, $"{_settings.OpenResultModifiers}+D8", "HotkeyOpenResultN", 8, _mainViewModel.OpenResultCommand, "7"),
-            new(RegisteredHotkeyType.OpenResultN9, HotkeyType.SearchWindow, $"{_settings.OpenResultModifiers}+D9", "HotkeyOpenResultN", 9, _mainViewModel.OpenResultCommand, "8"),
-            new(RegisteredHotkeyType.OpenResultN10, HotkeyType.SearchWindow, $"{_settings.OpenResultModifiers}+D0", "HotkeyOpenResultN", 10, _mainViewModel.OpenResultCommand, "9"),
+            new(RegisteredHotkeyType.OpenResultN1, HotkeyType.SearchWindow, $"{_settings.OpenResultModifiers}+D1", nameof(Localize.HotkeyOpenResultN), 1, _mainViewModel.OpenResultCommand, "0"),
+            new(RegisteredHotkeyType.OpenResultN2, HotkeyType.SearchWindow, $"{_settings.OpenResultModifiers}+D2", nameof(Localize.HotkeyOpenResultN), 2, _mainViewModel.OpenResultCommand, "1"),
+            new(RegisteredHotkeyType.OpenResultN3, HotkeyType.SearchWindow, $"{_settings.OpenResultModifiers}+D3", nameof(Localize.HotkeyOpenResultN), 3, _mainViewModel.OpenResultCommand, "2"),
+            new(RegisteredHotkeyType.OpenResultN4, HotkeyType.SearchWindow, $"{_settings.OpenResultModifiers}+D4", nameof(Localize.HotkeyOpenResultN), 4, _mainViewModel.OpenResultCommand, "3"),
+            new(RegisteredHotkeyType.OpenResultN5, HotkeyType.SearchWindow, $"{_settings.OpenResultModifiers}+D5", nameof(Localize.HotkeyOpenResultN), 5, _mainViewModel.OpenResultCommand, "4"),
+            new(RegisteredHotkeyType.OpenResultN6, HotkeyType.SearchWindow, $"{_settings.OpenResultModifiers}+D6", nameof(Localize.HotkeyOpenResultN), 6, _mainViewModel.OpenResultCommand, "5"),
+            new(RegisteredHotkeyType.OpenResultN7, HotkeyType.SearchWindow, $"{_settings.OpenResultModifiers}+D7", nameof(Localize.HotkeyOpenResultN), 7, _mainViewModel.OpenResultCommand, "6"),
+            new(RegisteredHotkeyType.OpenResultN8, HotkeyType.SearchWindow, $"{_settings.OpenResultModifiers}+D8", nameof(Localize.HotkeyOpenResultN), 8, _mainViewModel.OpenResultCommand, "7"),
+            new(RegisteredHotkeyType.OpenResultN9, HotkeyType.SearchWindow, $"{_settings.OpenResultModifiers}+D9", nameof(Localize.HotkeyOpenResultN), 9, _mainViewModel.OpenResultCommand, "8"),
+            new(RegisteredHotkeyType.OpenResultN10, HotkeyType.SearchWindow, $"{_settings.OpenResultModifiers}+D0", nameof(Localize.HotkeyOpenResultN), 10, _mainViewModel.OpenResultCommand, "9"),
             
             // Flow Launcher global hotkeys
-            new(RegisteredHotkeyType.Toggle, HotkeyType.Global, _settings.Hotkey, "flowlauncherHotkey", _mainViewModel.CheckAndToggleFlowLauncherCommand, null, () => _settings.Hotkey = ""),
-            new(RegisteredHotkeyType.DialogJump, HotkeyType.Global, _settings.DialogJumpHotkey, "dialogJumpHotkey", DialogJump.DialogJumpCommand, null, () => _settings.DialogJumpHotkey = ""),
+            new(RegisteredHotkeyType.Toggle, HotkeyType.Global, _settings.Hotkey, nameof(Localize.flowlauncherHotkey), _mainViewModel.CheckAndToggleFlowLauncherCommand, null, () => _settings.Hotkey = ""),
+            new(RegisteredHotkeyType.DialogJump, HotkeyType.Global, _settings.DialogJumpHotkey, nameof(Localize.dialogJumpHotkey), DialogJump.DialogJumpCommand, null, () => _settings.DialogJumpHotkey = ""),
 
             // Flow Launcher window hotkeys
-            new(RegisteredHotkeyType.Preview, HotkeyType.SearchWindow, _settings.PreviewHotkey, "previewHotkey", _mainViewModel.TogglePreviewCommand, null, () => _settings.PreviewHotkey = ""),
-            new(RegisteredHotkeyType.AutoComplete, HotkeyType.SearchWindow, _settings.AutoCompleteHotkey, "autoCompleteHotkey", _mainViewModel.AutocompleteQueryCommand, null, () => _settings.AutoCompleteHotkey = ""),
-            new(RegisteredHotkeyType.AutoComplete2, HotkeyType.SearchWindow, _settings.AutoCompleteHotkey2, "autoCompleteHotkey", _mainViewModel.AutocompleteQueryCommand, null, () => _settings.AutoCompleteHotkey2 = ""),
-            new(RegisteredHotkeyType.SelectNextItem, HotkeyType.SearchWindow, _settings.SelectNextItemHotkey, "SelectNextItemHotkey", _mainViewModel.SelectNextItemCommand, null, () => _settings.SelectNextItemHotkey = ""),
-            new(RegisteredHotkeyType.SelectNextItem2, HotkeyType.SearchWindow, _settings.SelectNextItemHotkey2, "SelectNextItemHotkey", _mainViewModel.SelectNextItemCommand, null, () => _settings.SelectNextItemHotkey2 = ""),
-            new(RegisteredHotkeyType.SelectPrevItem, HotkeyType.SearchWindow, _settings.SelectPrevItemHotkey, "SelectPrevItemHotkey", _mainViewModel.SelectPrevItemCommand, null, () => _settings.SelectPrevItemHotkey = ""),
-            new(RegisteredHotkeyType.SelectPrevItem2, HotkeyType.SearchWindow, _settings.SelectPrevItemHotkey2, "SelectPrevItemHotkey", _mainViewModel.SelectPrevItemCommand, null, () => _settings.SelectPrevItemHotkey2 = ""),
-            new(RegisteredHotkeyType.SettingWindow, HotkeyType.SearchWindow, _settings.SettingWindowHotkey, "SettingWindowHotkey", _mainViewModel.OpenSettingCommand, null, () => _settings.SettingWindowHotkey = ""),
-            new(RegisteredHotkeyType.OpenHistory, HotkeyType.SearchWindow, _settings.OpenHistoryHotkey, "OpenHistoryHotkey", _mainViewModel.LoadHistoryCommand, null, () => _settings.OpenHistoryHotkey = ""),
-            new(RegisteredHotkeyType.OpenContextMenu, HotkeyType.SearchWindow, _settings.OpenContextMenuHotkey, "OpenContextMenuHotkey", _mainViewModel.LoadContextMenuCommand, null, () => _settings.OpenContextMenuHotkey = ""),
-            new(RegisteredHotkeyType.SelectNextPage, HotkeyType.SearchWindow, _settings.SelectNextPageHotkey, "SelectNextPageHotkey", _mainViewModel.SelectNextPageCommand, null, () => _settings.SelectNextPageHotkey = ""),
-            new(RegisteredHotkeyType.SelectPrevPage, HotkeyType.SearchWindow, _settings.SelectPrevPageHotkey, "SelectPrevPageHotkey", _mainViewModel.SelectPrevPageCommand, null, () => _settings.SelectPrevPageHotkey = ""),
-            new(RegisteredHotkeyType.CycleHistoryUp, HotkeyType.SearchWindow, _settings.CycleHistoryUpHotkey, "CycleHistoryUpHotkey", _mainViewModel.ReverseHistoryCommand, null, () => _settings.CycleHistoryUpHotkey = ""),
-            new(RegisteredHotkeyType.CycleHistoryDown, HotkeyType.SearchWindow, _settings.CycleHistoryDownHotkey, "CycleHistoryDownHotkey", _mainViewModel.ForwardHistoryCommand, null, () => _settings.CycleHistoryDownHotkey = "")
+            new(RegisteredHotkeyType.Preview, HotkeyType.SearchWindow, _settings.PreviewHotkey, nameof(Localize.previewHotkey), _mainViewModel.TogglePreviewCommand, null, () => _settings.PreviewHotkey = ""),
+            new(RegisteredHotkeyType.AutoComplete, HotkeyType.SearchWindow, _settings.AutoCompleteHotkey, nameof(Localize.autoCompleteHotkey), _mainViewModel.AutocompleteQueryCommand, null, () => _settings.AutoCompleteHotkey = ""),
+            new(RegisteredHotkeyType.AutoComplete2, HotkeyType.SearchWindow, _settings.AutoCompleteHotkey2, nameof(Localize.autoCompleteHotkey), _mainViewModel.AutocompleteQueryCommand, null, () => _settings.AutoCompleteHotkey2 = ""),
+            new(RegisteredHotkeyType.SelectNextItem, HotkeyType.SearchWindow, _settings.SelectNextItemHotkey, nameof(Localize.SelectNextItemHotkey), _mainViewModel.SelectNextItemCommand, null, () => _settings.SelectNextItemHotkey = ""),
+            new(RegisteredHotkeyType.SelectNextItem2, HotkeyType.SearchWindow, _settings.SelectNextItemHotkey2, nameof(Localize.SelectNextItemHotkey), _mainViewModel.SelectNextItemCommand, null, () => _settings.SelectNextItemHotkey2 = ""),
+            new(RegisteredHotkeyType.SelectPrevItem, HotkeyType.SearchWindow, _settings.SelectPrevItemHotkey, nameof(Localize.SelectPrevItemHotkey), _mainViewModel.SelectPrevItemCommand, null, () => _settings.SelectPrevItemHotkey = ""),
+            new(RegisteredHotkeyType.SelectPrevItem2, HotkeyType.SearchWindow, _settings.SelectPrevItemHotkey2, nameof(Localize.SelectPrevItemHotkey), _mainViewModel.SelectPrevItemCommand, null, () => _settings.SelectPrevItemHotkey2 = ""),
+            new(RegisteredHotkeyType.SettingWindow, HotkeyType.SearchWindow, _settings.SettingWindowHotkey, nameof(Localize.SettingWindowHotkey), _mainViewModel.OpenSettingCommand, null, () => _settings.SettingWindowHotkey = ""),
+            new(RegisteredHotkeyType.OpenHistory, HotkeyType.SearchWindow, _settings.OpenHistoryHotkey, nameof(Localize.ToggleHistoryHotkey), _mainViewModel.LoadHistoryCommand, null, () => _settings.OpenHistoryHotkey = ""),
+            new(RegisteredHotkeyType.OpenContextMenu, HotkeyType.SearchWindow, _settings.OpenContextMenuHotkey, nameof(Localize.OpenContextMenuHotkey), _mainViewModel.LoadContextMenuCommand, null, () => _settings.OpenContextMenuHotkey = ""),
+            new(RegisteredHotkeyType.SelectNextPage, HotkeyType.SearchWindow, _settings.SelectNextPageHotkey, nameof(Localize.SelectNextPageHotkey), _mainViewModel.SelectNextPageCommand, null, () => _settings.SelectNextPageHotkey = ""),
+            new(RegisteredHotkeyType.SelectPrevPage, HotkeyType.SearchWindow, _settings.SelectPrevPageHotkey, nameof(Localize.SelectPrevPageHotkey), _mainViewModel.SelectPrevPageCommand, null, () => _settings.SelectPrevPageHotkey = ""),
+            new(RegisteredHotkeyType.CycleHistoryUp, HotkeyType.SearchWindow, _settings.CycleHistoryUpHotkey, nameof(Localize.CycleHistoryUpHotkey), _mainViewModel.ReverseHistoryCommand, null, () => _settings.CycleHistoryUpHotkey = ""),
+            new(RegisteredHotkeyType.CycleHistoryDown, HotkeyType.SearchWindow, _settings.CycleHistoryDownHotkey, nameof(Localize.CycleHistoryDownHotkey), _mainViewModel.ForwardHistoryCommand, null, () => _settings.CycleHistoryDownHotkey = "")
         };
 
         // Custom query global hotkeys
@@ -748,9 +749,9 @@ internal static class HotKeyMapper
         // Fixed hotkeys for ActionContext
         _actionContextRegisteredHotkeys = new List<RegisteredHotkeyData>
         {
-            new(RegisteredHotkeyType.CtrlShiftEnter, HotkeyType.SearchWindow, "Ctrl+Shift+Enter", "HotkeyCtrlShiftEnterDesc", _mainViewModel.OpenResultCommand),
-            new(RegisteredHotkeyType.CtrlEnter, HotkeyType.SearchWindow, "Ctrl+Enter", "OpenContainFolderHotkey", _mainViewModel.OpenResultCommand),
-            new(RegisteredHotkeyType.AltEnter, HotkeyType.SearchWindow, "Alt+Enter", "HotkeyOpenResult", _mainViewModel.OpenResultCommand),
+            new(RegisteredHotkeyType.CtrlShiftEnter, HotkeyType.SearchWindow, "Ctrl+Shift+Enter", nameof(Localize.HotkeyCtrlShiftEnterDesc), _mainViewModel.OpenResultCommand),
+            new(RegisteredHotkeyType.CtrlEnter, HotkeyType.SearchWindow, "Ctrl+Enter", nameof(Localize.OpenContainFolderHotkey), _mainViewModel.OpenResultCommand),
+            new(RegisteredHotkeyType.AltEnter, HotkeyType.SearchWindow, "Alt+Enter", nameof(Localize.HotkeyOpenResult), _mainViewModel.OpenResultCommand),
         };
 
         // Register ActionContext hotkeys and they will be cached and restored in _actionContextHotkeyEvents
