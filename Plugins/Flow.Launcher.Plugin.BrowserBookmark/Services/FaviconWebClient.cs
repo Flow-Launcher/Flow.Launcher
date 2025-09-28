@@ -1,4 +1,4 @@
-#nullable enable
+﻿#nullable enable
 using System;
 using System.IO;
 using System.Net;
@@ -13,12 +13,10 @@ namespace Flow.Launcher.Plugin.BrowserBookmark.Services;
 public class FaviconWebClient : IDisposable
 {
     private readonly HttpClient _httpClient;
-    private readonly PluginInitContext _context;
     private const int MaxFaviconBytes = 250 * 1024;
 
-    public FaviconWebClient(PluginInitContext context)
+    public FaviconWebClient()
     {
-        _context = context;
         var handler = new HttpClientHandler
         {
             AllowAutoRedirect = true,
@@ -62,12 +60,12 @@ public class FaviconWebClient : IDisposable
         }
         catch (TaskCanceledException) when (!token.IsCancellationRequested)
         {
-            _context.API.LogWarn(nameof(FaviconWebClient), $"HttpClient timed out fetching HTML for {pageUri}.");
+            Main.Context.API.LogWarn(nameof(FaviconWebClient), $"HttpClient timed out fetching HTML for {pageUri}.");
         }
         catch (OperationCanceledException) { /* Expected if another task cancels this one */ }
         catch (Exception ex)
         {
-            _context.API.LogException(nameof(FaviconWebClient), $"Failed to fetch or parse HTML head for {pageUri}", ex);
+            Main.Context.API.LogException(nameof(FaviconWebClient), $"Failed to fetch or parse HTML head for {pageUri}", ex);
         }
         return null;
     }
@@ -108,16 +106,16 @@ public class FaviconWebClient : IDisposable
         }
         catch (HttpRequestException ex) when (ex.InnerException is SocketException { SocketErrorCode: SocketError.HostNotFound })
         {
-            _context.API.LogDebug(nameof(FaviconWebClient), $"Favicon host not found for URI: {faviconUri}");
+            Main.Context.API.LogDebug(nameof(FaviconWebClient), $"Favicon host not found for URI: {faviconUri}");
         }
         catch (TaskCanceledException) when (!token.IsCancellationRequested)
         {
-            _context.API.LogWarn(nameof(FaviconWebClient), $"HttpClient timed out for {faviconUri}.");
+            Main.Context.API.LogWarn(nameof(FaviconWebClient), $"HttpClient timed out for {faviconUri}.");
         }
         catch (OperationCanceledException) { /* Expected if another task cancels this one */ }
         catch (Exception ex)
         {
-            _context.API.LogException(nameof(FaviconWebClient), $"Favicon fetch failed for {faviconUri}", ex);
+            Main.Context.API.LogException(nameof(FaviconWebClient), $"Favicon fetch failed for {faviconUri}", ex);
         }
         return null;
     }

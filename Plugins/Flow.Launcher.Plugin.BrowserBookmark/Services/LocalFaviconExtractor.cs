@@ -11,12 +11,10 @@ namespace Flow.Launcher.Plugin.BrowserBookmark.Services;
 
 public class LocalFaviconExtractor
 {
-    private readonly PluginInitContext _context;
     private readonly string _tempPath;
 
-    public LocalFaviconExtractor(PluginInitContext context, string tempPath)
+    public LocalFaviconExtractor(string tempPath)
     {
-        _context = context;
         _tempPath = tempPath;
     }
 
@@ -89,13 +87,13 @@ public class LocalFaviconExtractor
             if (await cmd.ExecuteScalarAsync(token) is not byte[] data || data.Length == 0)
                 return null;
 
-            _context.API.LogDebug(nameof(LocalFaviconExtractor), $"Extracted {data.Length} bytes for {bookmark.Url} from {dbFileName}.");
+            Main.Context.API.LogDebug(nameof(LocalFaviconExtractor), $"Extracted {data.Length} bytes for {bookmark.Url} from {dbFileName}.");
 
             return postProcessor != null ? await postProcessor(data, token) : data;
         }
         catch (Exception ex)
         {
-            _context.API.LogException(nameof(LocalFaviconExtractor), $"Failed to extract favicon for {bookmark.Url} from {bookmark.Source}'s {dbFileName}", ex);
+            Main.Context.API.LogException(nameof(LocalFaviconExtractor), $"Failed to extract favicon for {bookmark.Url} from {bookmark.Source}'s {dbFileName}", ex);
             return null;
         }
         finally
@@ -138,13 +136,13 @@ public class LocalFaviconExtractor
                 catch (Exception ex)
                 {
                     // Log failure to delete a specific chunk, but don't stop the process
-                    _context.API.LogException(nameof(LocalFaviconExtractor), $"Failed to delete temporary file chunk: {file}", ex);
+                    Main.Context.API.LogException(nameof(LocalFaviconExtractor), $"Failed to delete temporary file chunk: {file}", ex);
                 }
             }
         }
         catch (Exception ex)
         {
-            _context.API.LogException(nameof(LocalFaviconExtractor), $"Failed to clean up temporary files for base: {mainTempDbPath}", ex);
+            Main.Context.API.LogException(nameof(LocalFaviconExtractor), $"Failed to clean up temporary files for base: {mainTempDbPath}", ex);
         }
     }
 }

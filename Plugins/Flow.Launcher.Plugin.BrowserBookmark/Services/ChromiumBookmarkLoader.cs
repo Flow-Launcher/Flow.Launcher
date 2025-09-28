@@ -14,16 +14,14 @@ public class ChromiumBookmarkLoader : IBookmarkLoader
 {
     private readonly string _browserName;
     private readonly string _browserDataPath;
-    private readonly Action<string, string, Exception?> _logException;
     private readonly ConcurrentBag<string> _discoveredFiles;
 
     public string Name => _browserName;
 
-    public ChromiumBookmarkLoader(string browserName, string browserDataPath, Action<string, string, Exception?> logException, ConcurrentBag<string> discoveredFiles)
+    public ChromiumBookmarkLoader(string browserName, string browserDataPath, ConcurrentBag<string> discoveredFiles)
     {
         _browserName = browserName;
         _browserDataPath = browserDataPath;
-        _logException = logException;
         _discoveredFiles = discoveredFiles;
     }
 
@@ -57,19 +55,19 @@ public class ChromiumBookmarkLoader : IBookmarkLoader
             }
             catch (IOException ex)
             {
-                _logException(nameof(ChromiumBookmarkLoader), $"IO error reading {_browserName} bookmarks: {bookmarkPath}", ex);
+                Main.Context.API.LogException(nameof(ChromiumBookmarkLoader), $"IO error reading {_browserName} bookmarks: {bookmarkPath}", ex);
             }
             catch (UnauthorizedAccessException ex)
             {
-                _logException(nameof(ChromiumBookmarkLoader), $"Unauthorized to read {_browserName} bookmarks: {bookmarkPath}", ex);
+                Main.Context.API.LogException(nameof(ChromiumBookmarkLoader), $"Unauthorized to read {_browserName} bookmarks: {bookmarkPath}", ex);
             }
             catch (JsonException ex)
             {
-                _logException(nameof(ChromiumBookmarkLoader), $"Failed to parse bookmarks file for {_browserName}: {bookmarkPath}", ex);
+                Main.Context.API.LogException(nameof(ChromiumBookmarkLoader), $"Failed to parse bookmarks file for {_browserName}: {bookmarkPath}", ex);
             }
             catch (Exception ex)
             {
-                _logException(nameof(ChromiumBookmarkLoader), $"Unexpected error loading {_browserName} bookmarks: {bookmarkPath}", ex);
+                Main.Context.API.LogException(nameof(ChromiumBookmarkLoader), $"Unexpected error loading {_browserName} bookmarks: {bookmarkPath}", ex);
             }
 
             foreach (var bookmark in bookmarks)
@@ -124,7 +122,7 @@ public class ChromiumBookmarkLoader : IBookmarkLoader
             }
             else
             {
-                _logException(nameof(ChromiumBookmarkLoader), "type property not found in bookmark node.", null);
+                Main.Context.API.LogException(nameof(ChromiumBookmarkLoader), "type property not found in bookmark node.", null);
             }
         }
     }

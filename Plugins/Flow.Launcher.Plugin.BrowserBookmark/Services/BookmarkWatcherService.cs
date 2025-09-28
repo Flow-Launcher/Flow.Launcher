@@ -10,8 +10,8 @@ public class BookmarkWatcherService : IDisposable
     public event Action OnBookmarkFileChanged;
 
     // Timer to debounce file change events
-    private Timer _debounceTimer;
-    private readonly object _lock = new();
+    private readonly Timer _debounceTimer;
+    private readonly Lock _lock = new();
     private volatile bool _disposed;
 
     public BookmarkWatcherService()

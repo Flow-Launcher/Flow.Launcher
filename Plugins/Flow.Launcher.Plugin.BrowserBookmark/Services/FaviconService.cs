@@ -18,7 +18,6 @@ public readonly record struct FaviconCandidate(string Url, int Score);
 
 public partial class FaviconService : IDisposable
 {
-    private readonly PluginInitContext _context;
     private readonly Settings _settings;
     private readonly string _faviconCacheDir;
     private readonly LocalFaviconExtractor _localExtractor;
@@ -33,24 +32,23 @@ public partial class FaviconService : IDisposable
     private record struct FetchResult(byte[]? PngData, int Size);
     private static readonly TimeSpan FailedFaviconCooldown = TimeSpan.FromHours(24);
 
-    public FaviconService(PluginInitContext context, Settings settings, string tempPath)
+    public FaviconService(Settings settings, string tempPath)
     {
-        _context = context;
         _settings = settings;
 
-        _faviconCacheDir = Path.Combine(context.CurrentPluginMetadata.PluginCacheDirectoryPath, "FaviconCache");
+        _faviconCacheDir = Path.Combine(Main.Context.CurrentPluginMetadata.PluginCacheDirectoryPath, "FaviconCache");
         Directory.CreateDirectory(_faviconCacheDir);
 
-        var failsDir = Path.Combine(context.CurrentPluginMetadata.PluginCacheDirectoryPath, "FaviconFails");
+        var failsDir = Path.Combine(Main.Context.CurrentPluginMetadata.PluginCacheDirectoryPath, "FaviconFails");
         Directory.CreateDirectory(failsDir);
         _failsFilePath = Path.Combine(failsDir, "FaviconFails.json");
 
         LoadFailedFetches();
 
-        _localExtractor = new LocalFaviconExtractor(context, tempPath);
-        _webClient = new FaviconWebClient(context);
-        _htmlParser = new HtmlFaviconParser(context);
-        _imageConverter = new ImageConverter(context);
+        _localExtractor = new LocalFaviconExtractor(tempPath);
+        _webClient = new FaviconWebClient();
+        _htmlParser = new HtmlFaviconParser();
+        _imageConverter = new ImageConverter();
     }
 
     private void LoadFailedFetches()
@@ -68,7 +66,7 @@ public partial class FaviconService : IDisposable
         }
         catch (Exception ex)
         {
-            _context.API.LogException(nameof(FaviconService), $"Failed to load failed favicons file from {_failsFilePath}", ex);
+            Main.Context.API.LogException(nameof(FaviconService), $"Failed to load failed favicons file from {_failsFilePath}", ex);
         }
     }
 
@@ -86,7 +84,7 @@ public partial class FaviconService : IDisposable
         catch (ObjectDisposedException) { /* Swallow if disposing */ }
         catch (Exception ex)
         {
-            _context.API.LogException(nameof(FaviconService), $"Failed to save failed favicons file to {_failsFilePath}", ex);
+            Main.Context.API.LogException(nameof(FaviconService), $"Failed to save failed favicons file to {_failsFilePath}", ex);
         }
         finally
         {
@@ -172,7 +170,7 @@ public partial class FaviconService : IDisposable
         if (_failedFetches.TryGetValue(authority, out var lastAttemptTime) &&
             (DateTime.UtcNow - lastAttemptTime < FailedFaviconCooldown))
         {
-            _context.API.LogDebug(nameof(FaviconService),
+            Main.Context.API.LogDebug(nameof(FaviconService),
                 $"Skipping favicon fetch for {authority} due to recent failure (cooldown active).");
             return null;
         }
@@ -249,7 +247,7 @@ public partial class FaviconService : IDisposable
                 }
                 if (File.Exists(cachePath))
                 {
-                    _context.API.LogDebug(nameof(FaviconService), $"Favicon for {urlString} cached successfully.");
+                    Main.Context.API.LogDebug(nameof(FaviconService), $"Favicon for {urlString} cached successfully.");
                     if (_failedFetches.TryRemove(urlString, out _))
                     {
                         _ = SaveFailedFetchesAsync();
@@ -259,11 +257,11 @@ public partial class FaviconService : IDisposable
                 // Do not treat as success; let finally record failure if needed.
             }
 
-            _context.API.LogDebug(nameof(FaviconService), $"No suitable favicon found for {urlString} after all tasks.");
+            Main.Context.API.LogDebug(nameof(FaviconService), $"No suitable favicon found for {urlString} after all tasks.");
         }
         catch (Exception ex)
         {
-            _context.API.LogException(nameof(FaviconService), $"Error in favicon fetch for {urlString}", ex);
+            Main.Context.API.LogException(nameof(FaviconService), $"Error in favicon fetch for {urlString}", ex);
             fetchAttempted = true;
         }
         finally

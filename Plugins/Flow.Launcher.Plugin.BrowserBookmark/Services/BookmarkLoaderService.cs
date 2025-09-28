@@ -12,13 +12,11 @@ namespace Flow.Launcher.Plugin.BrowserBookmark.Services;
 
 public class BookmarkLoaderService
 {
-    private readonly PluginInitContext _context;
     private readonly Settings _settings;
     private readonly string _tempPath;
 
-    public BookmarkLoaderService(PluginInitContext context, Settings settings, string tempPath)
+    public BookmarkLoaderService(Settings settings, string tempPath)
     {
-        _context = context;
         _settings = settings;
         _tempPath = tempPath;
     }
@@ -44,7 +42,7 @@ public class BookmarkLoaderService
             }
             catch (Exception e)
             {
-                _context.API.LogException(nameof(BookmarkLoaderService), $"Failed to load bookmarks from {loader.Name}.", e);
+                Main.Context.API.LogException(nameof(BookmarkLoaderService), $"Failed to load bookmarks from {loader.Name}.", e);
             }
         });
 
@@ -60,40 +58,39 @@ public class BookmarkLoaderService
 
     public IEnumerable<IBookmarkLoader> GetChromiumBookmarkLoaders(ConcurrentBag<string> discoveredBookmarkFiles)
     {
-        var logAction = (string tag, string msg, Exception? ex) => _context.API.LogException(tag, msg, ex);
         var localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 
         if (_settings.LoadChromeBookmark)
         {
             var path = Path.Combine(localAppData, @"Google\Chrome\User Data");
             if (Directory.Exists(path))
-                yield return new ChromiumBookmarkLoader("Google Chrome", path, logAction, discoveredBookmarkFiles);
+                yield return new ChromiumBookmarkLoader("Google Chrome", path, discoveredBookmarkFiles);
 
             var canaryPath = Path.Combine(localAppData, @"Google\Chrome SxS\User Data");
             if (Directory.Exists(canaryPath))
-                yield return new ChromiumBookmarkLoader("Google Chrome Canary", canaryPath, logAction, discoveredBookmarkFiles);
+                yield return new ChromiumBookmarkLoader("Google Chrome Canary", canaryPath, discoveredBookmarkFiles);
         }
 
         if (_settings.LoadEdgeBookmark)
         {
             var path = Path.Combine(localAppData, @"Microsoft\Edge\User Data");
             if (Directory.Exists(path))
-                yield return new ChromiumBookmarkLoader("Microsoft Edge", path, logAction, discoveredBookmarkFiles);
+                yield return new ChromiumBookmarkLoader("Microsoft Edge", path, discoveredBookmarkFiles);
 
             var devPath = Path.Combine(localAppData, @"Microsoft\Edge Dev\User Data");
             if (Directory.Exists(devPath))
-                yield return new ChromiumBookmarkLoader("Microsoft Edge Dev", devPath, logAction, discoveredBookmarkFiles);
+                yield return new ChromiumBookmarkLoader("Microsoft Edge Dev", devPath, discoveredBookmarkFiles);
 
             var canaryPath = Path.Combine(localAppData, @"Microsoft\Edge SxS\User Data");
             if (Directory.Exists(canaryPath))
-                yield return new ChromiumBookmarkLoader("Microsoft Edge Canary", canaryPath, logAction, discoveredBookmarkFiles);
+                yield return new ChromiumBookmarkLoader("Microsoft Edge Canary", canaryPath, discoveredBookmarkFiles);
         }
 
         if (_settings.LoadChromiumBookmark)
         {
             var path = Path.Combine(localAppData, @"Chromium\User Data");
             if (Directory.Exists(path))
-                yield return new ChromiumBookmarkLoader("Chromium", path, logAction, discoveredBookmarkFiles);
+                yield return new ChromiumBookmarkLoader("Chromium", path, discoveredBookmarkFiles);
         }
 
         foreach (var browser in _settings.CustomBrowsers.Where(b => b.BrowserType == BrowserType.Chromium))
@@ -101,14 +98,12 @@ public class BookmarkLoaderService
             if (string.IsNullOrEmpty(browser.Name) || string.IsNullOrEmpty(browser.DataDirectoryPath) || !Directory.Exists(browser.DataDirectoryPath))
                 continue;
 
-            yield return new ChromiumBookmarkLoader(browser.Name, browser.DataDirectoryPath, logAction, discoveredBookmarkFiles);
+            yield return new ChromiumBookmarkLoader(browser.Name, browser.DataDirectoryPath, discoveredBookmarkFiles);
         }
     }
 
     public IEnumerable<IBookmarkLoader> GetFirefoxBookmarkLoaders()
     {
-        var logAction = (string tag, string msg, Exception? ex) => _context.API.LogException(tag, msg, ex);
-
         if (_settings.LoadFirefoxBookmark)
         {
             string? placesPath = null;
@@ -118,11 +113,11 @@ public class BookmarkLoaderService
             }
             catch (Exception ex)
             {
-                _context.API.LogException(nameof(BookmarkLoaderService), "Failed to find Firefox profile", ex);
+                Main.Context.API.LogException(nameof(BookmarkLoaderService), "Failed to find Firefox profile", ex);
             }
             if (!string.IsNullOrEmpty(placesPath))
             {
-                yield return new FirefoxBookmarkLoader("Firefox", placesPath, _tempPath, logAction);
+                yield return new FirefoxBookmarkLoader("Firefox", placesPath, _tempPath);
             }
 
             string? msixPlacesPath = null;
@@ -132,11 +127,11 @@ public class BookmarkLoaderService
             }
             catch (Exception ex)
             {
-                _context.API.LogException(nameof(BookmarkLoaderService), "Failed to find Firefox MSIX package", ex);
+                Main.Context.API.LogException(nameof(BookmarkLoaderService), "Failed to find Firefox MSIX package", ex);
             }
             if (!string.IsNullOrEmpty(msixPlacesPath))
             {
-                yield return new FirefoxBookmarkLoader("Firefox (Store)", msixPlacesPath, _tempPath, logAction);
+                yield return new FirefoxBookmarkLoader("Firefox (Store)", msixPlacesPath, _tempPath);
             }
         }
 
@@ -151,7 +146,6 @@ public class BookmarkLoaderService
 
     private IBookmarkLoader CreateCustomFirefoxLoader(string name, string dataDirectoryPath)
     {
-        var logAction = (string tag, string msg, Exception? ex) => _context.API.LogException(tag, msg, ex);
         // Custom Firefox paths might point to the root profile dir (e.g. ...\Mozilla\Firefox)
         var placesPath = FirefoxProfileFinder.GetPlacesPathFromProfileDir(dataDirectoryPath);
         if (string.IsNullOrEmpty(placesPath))
@@ -161,6 +155,6 @@ public class BookmarkLoaderService
         }
 
         // Do not add Firefox places.sqlite to the watcher as it's updated constantly for history.
-        return new FirefoxBookmarkLoader(name, placesPath, _tempPath, logAction);
+        return new FirefoxBookmarkLoader(name, placesPath, _tempPath);
     }
 }

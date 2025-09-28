@@ -12,13 +12,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark.Services;
 
 public class ImageConverter
 {
-    private readonly PluginInitContext _context;
     public const int TargetIconSize = 48;
-
-    public ImageConverter(PluginInitContext context)
-    {
-        _context = context;
-    }
 
     public async Task<(byte[]? PngData, int Size)> ToPngAsync(Stream stream, CancellationToken token)
     {
@@ -121,7 +115,7 @@ public class ImageConverter
         }
         catch (Exception ex)
         {
-            _context.API.LogException(nameof(ImageConverter), "Failed to decode or convert bitmap with final fallback", ex);
+            Main.Context.API.LogException(nameof(ImageConverter), "Failed to decode or convert bitmap with final fallback", ex);
         }
 
         return (null, 0);

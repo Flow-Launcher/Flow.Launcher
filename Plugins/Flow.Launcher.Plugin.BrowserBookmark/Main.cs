@@ -37,8 +37,8 @@ public class Main : ISettingProvider, IPlugin, IAsyncReloadable, IPluginI18n, IC
 
         var tempPath = SetupTempDirectory();
 
-        _bookmarkLoader = new BookmarkLoaderService(Context, _settings, tempPath);
-        _faviconService = new FaviconService(Context, _settings, tempPath);
+        _bookmarkLoader = new BookmarkLoaderService(_settings, tempPath);
+        _faviconService = new FaviconService(_settings, tempPath);
         _bookmarkWatcher = new BookmarkWatcherService();
         _bookmarkWatcher.OnBookmarkFileChanged += OnBookmarkFileChanged;
 
@@ -89,7 +89,7 @@ public class Main : ISettingProvider, IPlugin, IAsyncReloadable, IPluginI18n, IC
         return bookmarks.Select(b => CreateResult(b, 0)).ToList();
     }
 
-    private Result CreateResult(Bookmark bookmark, int score) => new()
+    private static Result CreateResult(Bookmark bookmark, int score) => new()
     {
         Title = bookmark.Name,
         SubTitle = bookmark.Url,
@@ -179,7 +179,7 @@ public class Main : ISettingProvider, IPlugin, IAsyncReloadable, IPluginI18n, IC
             Context.API.LogInfo(nameof(Main), "Starting periodic reload of Firefox bookmarks.");
 
             var firefoxLoaders = _bookmarkLoader.GetFirefoxBookmarkLoaders().ToList();
-            if (!firefoxLoaders.Any())
+            if (firefoxLoaders.Count == 0)
             {
                 Context.API.LogInfo(nameof(Main), "No Firefox bookmark loaders enabled, skipping reload.");
                 return;
@@ -210,7 +210,7 @@ public class Main : ISettingProvider, IPlugin, IAsyncReloadable, IPluginI18n, IC
             var results = await Task.WhenAll(tasks);
             var successfulResults = results.Where(r => r.Success).ToList();
 
-            if (!successfulResults.Any())
+            if (successfulResults.Count == 0)
             {
                 Context.API.LogInfo(nameof(Main), "No Firefox bookmarks successfully reloaded.");
                 return;

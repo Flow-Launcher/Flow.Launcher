@@ -14,7 +14,6 @@ public class FirefoxBookmarkLoader : IBookmarkLoader
 {
     private readonly string _browserName;
     private readonly string _placesPath;
-    private readonly Action<string, string, Exception?> _logException;
     private readonly string _tempPath;
 
     public string Name => _browserName;
@@ -30,11 +29,10 @@ public class FirefoxBookmarkLoader : IBookmarkLoader
         ORDER BY moz_places.visit_count DESC
         """;
 
-    public FirefoxBookmarkLoader(string browserName, string placesPath, string tempPath, Action<string, string, Exception?> logException)
+    public FirefoxBookmarkLoader(string browserName, string placesPath, string tempPath)
     {
         _browserName = browserName;
         _placesPath = placesPath;
-        _logException = logException;
         _tempPath = tempPath;
     }
 
@@ -72,12 +70,12 @@ public class FirefoxBookmarkLoader : IBookmarkLoader
             }
             catch (Exception copyEx)
             {
-                _logException(nameof(FirefoxBookmarkLoader), $"Failed to load {_browserName} bookmarks from fallback copy: {_placesPath}", copyEx);
+                Main.Context.API.LogException(nameof(FirefoxBookmarkLoader), $"Failed to load {_browserName} bookmarks from fallback copy: {_placesPath}", copyEx);
             }
         }
         catch (Exception e)
         {
-            _logException(nameof(FirefoxBookmarkLoader), $"Failed to load {_browserName} bookmarks: {_placesPath}", e);
+            Main.Context.API.LogException(nameof(FirefoxBookmarkLoader), $"Failed to load {_browserName} bookmarks: {_placesPath}", e);
         }
         finally
         {
@@ -135,13 +133,13 @@ public class FirefoxBookmarkLoader : IBookmarkLoader
                 catch (Exception ex)
                 {
                     // Log failure to delete a specific chunk, but don't stop the process
-                    _logException(nameof(FirefoxBookmarkLoader), $"Failed to delete temporary file chunk: {file}", ex);
+                    Main.Context.API.LogException(nameof(FirefoxBookmarkLoader), $"Failed to delete temporary file chunk: {file}", ex);
                 }
             }
         }
         catch (Exception ex)
         {
-            _logException(nameof(FirefoxBookmarkLoader), $"Failed to clean up temporary files for base: {mainTempDbPath}", ex);
+            Main.Context.API.LogException(nameof(FirefoxBookmarkLoader), $"Failed to clean up temporary files for base: {mainTempDbPath}", ex);
         }
     }
 }

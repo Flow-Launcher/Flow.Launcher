@@ -11,7 +11,7 @@ public static class BrowserDetector
     public static IEnumerable<string> GetChromiumProfileDirectories(string basePath)
     {
         if (!Directory.Exists(basePath))
-            return Enumerable.Empty<string>();
+            return [];
 
         var profileDirs = Directory.EnumerateDirectories(basePath, "Profile *").ToList();
 
