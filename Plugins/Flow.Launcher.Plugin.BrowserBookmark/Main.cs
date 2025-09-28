@@ -22,7 +22,7 @@ public class Main : ISettingProvider, IPlugin, IAsyncReloadable, IPluginI18n, IC
     private FaviconService _faviconService = null!;
     private BookmarkWatcherService _bookmarkWatcher = null!;
 
-    private List<Bookmark> _bookmarks = new();
+    private List<Bookmark> _bookmarks = [];
     private readonly CancellationTokenSource _cancellationTokenSource = new();
     private PeriodicTimer? _firefoxBookmarkTimer;
     private static readonly TimeSpan FirefoxPollingInterval = TimeSpan.FromHours(3);
@@ -255,10 +255,10 @@ public class Main : ISettingProvider, IPlugin, IAsyncReloadable, IPluginI18n, IC
     public List<Result> LoadContextMenus(Result selectedResult)
     {
         if (selectedResult.ContextData is not string url)
-            return new List<Result>();
+            return [];
 
-        return new List<Result>
-        {
+        return
+        [
             new()
             {
                 Title = Localize.flowlauncher_plugin_browserbookmark_copyurl_title(),
@@ -280,7 +280,7 @@ public class Main : ISettingProvider, IPlugin, IAsyncReloadable, IPluginI18n, IC
                     }
                 }
             }
-        };
+        ];
     }
 
     public void Dispose()

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
@@ -6,7 +6,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark.Services;
 
 public class BookmarkWatcherService : IDisposable
 {
-    private readonly List<FileSystemWatcher> _watchers = new();
+    private readonly List<FileSystemWatcher> _watchers = [];
     public event Action OnBookmarkFileChanged;
 
     // Timer to debounce file change events
