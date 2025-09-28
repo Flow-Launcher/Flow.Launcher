@@ -117,7 +117,7 @@ namespace Flow.Launcher.Plugin.Url
         public void Init(PluginInitContext context)
         {
             Context = context;
-            
+
             Settings = context.API.LoadSettingJsonStorage<Settings>();
         }
 

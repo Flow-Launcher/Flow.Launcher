@@ -16,7 +16,7 @@ public partial class SettingsControl : UserControl
     {
         var dlg = new Microsoft.Win32.OpenFileDialog
         {
-            Filter = Main.Context.API.GetTranslation("flowlauncher_plugin_url_plugin_filter")
+            Filter = Localize.flowlauncher_plugin_url_plugin_filter()
         };
 
         if (dlg.ShowDialog() == true && !string.IsNullOrEmpty(dlg.FileName))
