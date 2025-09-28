@@ -214,8 +214,8 @@
     <system:String x:Key="plugin_query_version">Version</system:String>
     <system:String x:Key="plugin_query_web">Site Web</system:String>
     <system:String x:Key="plugin_uninstall">Désinstaller</system:String>
-    <system:String x:Key="plugin_default_search_delay_time">Search delay time: default</system:String>
-    <system:String x:Key="plugin_search_delay_time">Search delay time: {0}ms</system:String>
+    <system:String x:Key="plugin_default_search_delay_time">Délai de recherche : par défaut</system:String>
+    <system:String x:Key="plugin_search_delay_time">Délai de recherche : {0}ms</system:String>
     <system:String x:Key="failedToRemovePluginSettingsTitle">Échec de la suppression des paramètres du plugin</system:String>
     <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins : {0} - Échec de la suppression des fichiers de configuration des plugins, veuillez les supprimer manuellement</system:String>
     <system:String x:Key="failedToRemovePluginCacheTitle">Échec de la suppression du cache du plugin</system:String>
@@ -596,7 +596,7 @@ Si vous ajoutez un préfixe &quot;@&quot; lors de la saisie d'un raccourci, celu
         Le gestionnaire de fichiers spécifié n'a pas été trouvé. Veuillez vérifier le paramètre Gestionnaire de fichiers personnalisé dans Paramètres &gt; Général.
     </system:String>
     <system:String x:Key="errorTitle">Erreur</system:String>
-    <system:String x:Key="folderOpenError">An error occurred while opening the folder.</system:String>
+    <system:String x:Key="folderOpenError">Une erreur s'est produite lors de l'ouverture du dossier.</system:String>
     <system:String x:Key="browserOpenError">Une erreur s'est produite lors de l'ouverture de l'URL dans le navigateur. Veuillez vérifier la configuration de votre navigateur Web par défaut dans la section &quot;Général&quot; de la fenêtre des paramètres</system:String>
     <system:String x:Key="fileNotFoundError">Fichier ou répertoire introuvable : {0}</system:String>
 
