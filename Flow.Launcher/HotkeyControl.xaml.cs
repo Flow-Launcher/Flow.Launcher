@@ -251,7 +251,7 @@ namespace Flow.Launcher
         private static bool CheckHotkeyAvailability(HotkeyModel hotkey, bool validateKeyGesture) =>
             hotkey.Validate(validateKeyGesture) && HotKeyMapper.CheckAvailability(hotkey);
 
-        public string EmptyHotkey => App.API.GetTranslation("none");
+        public string EmptyHotkey => Localize.none();
 
         public ObservableCollection<string> KeysToDisplay { get; set; } = new();
 

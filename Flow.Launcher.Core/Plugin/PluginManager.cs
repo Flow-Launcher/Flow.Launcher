@@ -6,8 +6,6 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Input;
-using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.DialogJump;
@@ -32,10 +30,6 @@ namespace Flow.Launcher.Core.Plugin
         public static readonly Dictionary<string, PluginPair> NonGlobalPlugins = new();
 
         public static event Action<PluginHotkeyChangedEvent> PluginHotkeyChanged;
-
-        // We should not initialize API in static constructor because it will create another API instance
-        private static IPublicAPI api = null;
-        private static IPublicAPI API => api ??= Ioc.Default.GetRequiredService<IPublicAPI>();
 
         private static PluginsSettings Settings;
         private static readonly ConcurrentBag<string> ModifiedPlugins = new();
@@ -83,12 +77,12 @@ namespace Flow.Launcher.Core.Plugin
                 }
                 catch (Exception e)
                 {
-                    API.LogException(ClassName, $"Failed to save plugin {pluginPair.Metadata.Name}", e);
+                    PublicApi.Instance.LogException(ClassName, $"Failed to save plugin {pluginPair.Metadata.Name}", e);
                 }
             }
 
-            API.SavePluginSettings();
-            API.SavePluginCaches();
+            PublicApi.Instance.SavePluginSettings();
+            PublicApi.Instance.SavePluginCaches();
         }
 
         public static async ValueTask DisposePluginsAsync()
@@ -115,7 +109,7 @@ namespace Flow.Launcher.Core.Plugin
             }
             catch (Exception e)
             {
-                API.LogException(ClassName, $"Failed to dispose plugin {pluginPair.Metadata.Name}", e);
+                PublicApi.Instance.LogException(ClassName, $"Failed to dispose plugin {pluginPair.Metadata.Name}", e);
             }
         }
 
@@ -227,7 +221,7 @@ namespace Flow.Launcher.Core.Plugin
                 {
                     if (string.IsNullOrEmpty(metadata.AssemblyName))
                     {
-                        API.LogWarn(ClassName, $"AssemblyName is empty for plugin with metadata: {metadata.Name}");
+                        PublicApi.Instance.LogWarn(ClassName, $"AssemblyName is empty for plugin with metadata: {metadata.Name}");
                         continue; // Skip if AssemblyName is not set, which can happen for erroneous plugins
                     }
                     metadata.PluginSettingsDirectoryPath = Path.Combine(DataLocation.PluginSettingsDirectory, metadata.AssemblyName);
@@ -237,7 +231,7 @@ namespace Flow.Launcher.Core.Plugin
                 {
                     if (string.IsNullOrEmpty(metadata.Name))
                     {
-                        API.LogWarn(ClassName, $"Name is empty for plugin with metadata: {metadata.Name}");
+                        PublicApi.Instance.LogWarn(ClassName, $"Name is empty for plugin with metadata: {metadata.Name}");
                         continue; // Skip if Name is not set, which can happen for erroneous plugins
                     }
                     metadata.PluginSettingsDirectoryPath = Path.Combine(DataLocation.PluginSettingsDirectory, metadata.Name);
@@ -258,28 +252,28 @@ namespace Flow.Launcher.Core.Plugin
             {
                 try
                 {
-                    var milliseconds = await API.StopwatchLogDebugAsync(ClassName, $"Init method time cost for <{pair.Metadata.Name}>",
-                        () => pair.Plugin.InitAsync(new PluginInitContext(pair.Metadata, API)));
+                    var milliseconds = await PublicApi.Instance.StopwatchLogDebugAsync(ClassName, $"Init method time cost for <{pair.Metadata.Name}>",
+                        () => pair.Plugin.InitAsync(new PluginInitContext(pair.Metadata, PublicApi.Instance)));
 
                     pair.Metadata.InitTime += milliseconds;
-                    API.LogInfo(ClassName,
+                    PublicApi.Instance.LogInfo(ClassName,
                         $"Total init cost for <{pair.Metadata.Name}> is <{pair.Metadata.InitTime}ms>");
                 }
                 catch (Exception e)
                 {
-                    API.LogException(ClassName, $"Fail to Init plugin: {pair.Metadata.Name}", e);
+                    PublicApi.Instance.LogException(ClassName, $"Fail to Init plugin: {pair.Metadata.Name}", e);
                     if (pair.Metadata.Disabled && pair.Metadata.HomeDisabled)
                     {
                         // If this plugin is already disabled, do not show error message again
                         // Or else it will be shown every time
-                        API.LogDebug(ClassName, $"Skipped init for <{pair.Metadata.Name}> due to error");
+                        PublicApi.Instance.LogDebug(ClassName, $"Skipped init for <{pair.Metadata.Name}> due to error");
                     }
                     else
                     {
                         pair.Metadata.Disabled = true;
                         pair.Metadata.HomeDisabled = true;
                         failedPlugins.Enqueue(pair);
-                        API.LogDebug(ClassName, $"Disable plugin <{pair.Metadata.Name}> because init failed");
+                        PublicApi.Instance.LogDebug(ClassName, $"Disable plugin <{pair.Metadata.Name}> because init failed");
                     }
                 }
             }));
@@ -308,15 +302,12 @@ namespace Flow.Launcher.Core.Plugin
                 }
             }
 
-            if (failedPlugins.Any())
+            if (!failedPlugins.IsEmpty)
             {
                 var failed = string.Join(",", failedPlugins.Select(x => x.Metadata.Name));
-                API.ShowMsg(
-                    API.GetTranslation("failedToInitializePluginsTitle"),
-                    string.Format(
-                        API.GetTranslation("failedToInitializePluginsMessage"),
-                        failed
-                    ),
+                PublicApi.Instance.ShowMsg(
+                    Localize.failedToInitializePluginsTitle(),
+                    Localize.failedToInitializePluginsMessage(failed),
                     "",
                     false
                 );
@@ -339,7 +330,7 @@ namespace Flow.Launcher.Core.Plugin
             if (dialogJump && plugin.Plugin is not IAsyncDialogJump)
                 return Array.Empty<PluginPair>();
 
-            if (API.PluginModified(plugin.Metadata.ID))
+            if (PublicApi.Instance.PluginModified(plugin.Metadata.ID))
                 return Array.Empty<PluginPair>();
 
             return new List<PluginPair>
@@ -360,7 +351,7 @@ namespace Flow.Launcher.Core.Plugin
 
             try
             {
-                var milliseconds = await API.StopwatchLogDebugAsync(ClassName, $"Cost for {metadata.Name}",
+                var milliseconds = await PublicApi.Instance.StopwatchLogDebugAsync(ClassName, $"Cost for {metadata.Name}",
                     async () => results = await pair.Plugin.QueryAsync(query, token).ConfigureAwait(false));
 
                 token.ThrowIfCancellationRequested();
@@ -404,7 +395,7 @@ namespace Flow.Launcher.Core.Plugin
 
             try
             {
-                var milliseconds = await API.StopwatchLogDebugAsync(ClassName, $"Cost for {metadata.Name}",
+                var milliseconds = await PublicApi.Instance.StopwatchLogDebugAsync(ClassName, $"Cost for {metadata.Name}",
                     async () => results = await ((IAsyncHomeQuery)pair.Plugin).HomeQueryAsync(token).ConfigureAwait(false));
 
                 token.ThrowIfCancellationRequested();
@@ -421,7 +412,7 @@ namespace Flow.Launcher.Core.Plugin
             }
             catch (Exception e)
             {
-                API.LogException(ClassName, $"Failed to query home for plugin: {metadata.Name}", e);
+                PublicApi.Instance.LogException(ClassName, $"Failed to query home for plugin: {metadata.Name}", e);
                 return null;
             }
             return results;
@@ -434,7 +425,7 @@ namespace Flow.Launcher.Core.Plugin
 
             try
             {
-                var milliseconds = await API.StopwatchLogDebugAsync(ClassName, $"Cost for {metadata.Name}",
+                var milliseconds = await PublicApi.Instance.StopwatchLogDebugAsync(ClassName, $"Cost for {metadata.Name}",
                     async () => results = await ((IAsyncDialogJump)pair.Plugin).QueryDialogJumpAsync(query, token).ConfigureAwait(false));
 
                 token.ThrowIfCancellationRequested();
@@ -451,7 +442,7 @@ namespace Flow.Launcher.Core.Plugin
             }
             catch (Exception e)
             {
-                API.LogException(ClassName, $"Failed to query Dialog Jump for plugin: {metadata.Name}", e);
+                PublicApi.Instance.LogException(ClassName, $"Failed to query Dialog Jump for plugin: {metadata.Name}", e);
                 return null;
             }
             return results;
@@ -523,7 +514,7 @@ namespace Flow.Launcher.Core.Plugin
                 }
                 catch (Exception e)
                 {
-                    API.LogException(ClassName, 
+                    PublicApi.Instance.LogException(ClassName, 
                         $"Can't load context menus for plugin <{pluginPair.Metadata.Name}>",
                         e);
                 }
@@ -779,8 +770,8 @@ namespace Flow.Launcher.Core.Plugin
         {
             if (PluginModified(existingVersion.ID))
             {
-                API.ShowMsgError(string.Format(API.GetTranslation("pluginModifiedAlreadyTitle"), existingVersion.Name),
-                    API.GetTranslation("pluginModifiedAlreadyMessage"));
+                PublicApi.Instance.ShowMsgError(Localize.pluginModifiedAlreadyTitle(existingVersion.Name),
+                    Localize.pluginModifiedAlreadyMessage());
                 return false;
             }
 
@@ -812,8 +803,8 @@ namespace Flow.Launcher.Core.Plugin
         {
             if (checkModified && PluginModified(plugin.ID))
             {
-                API.ShowMsgError(string.Format(API.GetTranslation("pluginModifiedAlreadyTitle"), plugin.Name),
-                    API.GetTranslation("pluginModifiedAlreadyMessage"));
+                PublicApi.Instance.ShowMsgError(Localize.pluginModifiedAlreadyTitle(plugin.Name),
+                    Localize.pluginModifiedAlreadyMessage());
                 return false;
             }
 
@@ -832,15 +823,15 @@ namespace Flow.Launcher.Core.Plugin
 
             if (string.IsNullOrEmpty(metadataJsonFilePath) || string.IsNullOrEmpty(pluginFolderPath))
             {
-                API.ShowMsgError(string.Format(API.GetTranslation("failedToInstallPluginTitle"), plugin.Name),
-                    string.Format(API.GetTranslation("fileNotFoundMessage"), pluginFolderPath));
+                PublicApi.Instance.ShowMsgError(Localize.failedToInstallPluginTitle(plugin.Name),
+                    Localize.fileNotFoundMessage(pluginFolderPath));
                 return false;
             }
 
             if (SameOrLesserPluginVersionExists(metadataJsonFilePath))
             {
-                API.ShowMsgError(string.Format(API.GetTranslation("failedToInstallPluginTitle"), plugin.Name),
-                    API.GetTranslation("pluginExistAlreadyMessage"));
+                PublicApi.Instance.ShowMsgError(Localize.failedToInstallPluginTitle(plugin.Name),
+                    Localize.pluginExistAlreadyMessage());
                 return false;
             }
 
@@ -869,7 +860,7 @@ namespace Flow.Launcher.Core.Plugin
 
             var newPluginPath = Path.Combine(installDirectory, folderName);
 
-            FilesFolders.CopyAll(pluginFolderPath, newPluginPath, (s) => API.ShowMsgBox(s));
+            FilesFolders.CopyAll(pluginFolderPath, newPluginPath, (s) => PublicApi.Instance.ShowMsgBox(s));
 
             try
             {
@@ -878,7 +869,7 @@ namespace Flow.Launcher.Core.Plugin
             }
             catch (Exception e)
             {
-                API.LogException(ClassName, $"Failed to delete temp folder {tempFolderPluginPath}", e);
+                PublicApi.Instance.LogException(ClassName, $"Failed to delete temp folder {tempFolderPluginPath}", e);
             }
 
             if (checkModified)
@@ -893,8 +884,8 @@ namespace Flow.Launcher.Core.Plugin
         {
             if (checkModified && PluginModified(plugin.ID))
             {
-                API.ShowMsgError(string.Format(API.GetTranslation("pluginModifiedAlreadyTitle"), plugin.Name),
-                    API.GetTranslation("pluginModifiedAlreadyMessage"));
+                PublicApi.Instance.ShowMsgError(Localize.pluginModifiedAlreadyTitle(plugin.Name),
+                    Localize.pluginModifiedAlreadyMessage());
                 return false;
             }
 
@@ -913,7 +904,7 @@ namespace Flow.Launcher.Core.Plugin
             if (removePluginSettings)
             {
                 // For dotnet plugins, we need to remove their PluginJsonStorage and PluginBinaryStorage instances
-                if (AllowedLanguage.IsDotNet(plugin.Language) && API is IRemovable removable)
+                if (AllowedLanguage.IsDotNet(plugin.Language) && PublicApi.Instance is IRemovable removable)
                 {
                     removable.RemovePluginSettings(plugin.AssemblyName);
                     removable.RemovePluginCaches(plugin.PluginCacheDirectoryPath);
@@ -927,9 +918,9 @@ namespace Flow.Launcher.Core.Plugin
                 }
                 catch (Exception e)
                 {
-                    API.LogException(ClassName, $"Failed to delete plugin settings folder for {plugin.Name}", e);
-                    API.ShowMsgError(API.GetTranslation("failedToRemovePluginSettingsTitle"),
-                        string.Format(API.GetTranslation("failedToRemovePluginSettingsMessage"), plugin.Name));
+                    PublicApi.Instance.LogException(ClassName, $"Failed to delete plugin settings folder for {plugin.Name}", e);
+                    PublicApi.Instance.ShowMsgError(Localize.failedToRemovePluginSettingsTitle(),
+                        Localize.failedToRemovePluginSettingsMessage(plugin.Name));
                 }
             }
 
@@ -943,9 +934,9 @@ namespace Flow.Launcher.Core.Plugin
                 }
                 catch (Exception e)
                 {
-                    API.LogException(ClassName, $"Failed to delete plugin cache folder for {plugin.Name}", e);
-                    API.ShowMsgError(API.GetTranslation("failedToRemovePluginCacheTitle"),
-                        string.Format(API.GetTranslation("failedToRemovePluginCacheMessage"), plugin.Name));
+                    PublicApi.Instance.LogException(ClassName, $"Failed to delete plugin cache folder for {plugin.Name}", e);
+                    PublicApi.Instance.ShowMsgError(Localize.failedToRemovePluginCacheTitle(),
+                        Localize.failedToRemovePluginCacheMessage(plugin.Name));
                 }
                 Settings.RemovePluginSettings(plugin.ID);
                 AllPlugins.RemoveAll(p => p.Metadata.ID == plugin.ID);

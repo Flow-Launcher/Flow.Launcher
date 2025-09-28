@@ -1,17 +1,16 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Flow.Launcher.Plugin.Sys
 {
     public partial class SysSettings : UserControl
     {
-        private readonly PluginInitContext _context;
         private readonly Settings _settings;
 
-        public SysSettings(PluginInitContext context, SettingsViewModel viewModel)
+        public SysSettings(SettingsViewModel viewModel)
         {
             InitializeComponent();
-            _context = context;
             _settings = viewModel.Settings;
             DataContext = viewModel;
         }
@@ -37,15 +36,15 @@ namespace Flow.Launcher.Plugin.Sys
 
         public void OnEditCommandKeywordClick(object sender, RoutedEventArgs e)
         {
-            var commandKeyword = new CommandKeywordSettingWindow(_context, _settings.SelectedCommand);
+            var commandKeyword = new CommandKeywordSettingWindow(_settings.SelectedCommand);
             commandKeyword.ShowDialog();
         }
 
-        private void MouseDoubleClickItem(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void MouseDoubleClickItem(object sender, MouseButtonEventArgs e)
         {
             if (((FrameworkElement)e.OriginalSource).DataContext is Command && _settings.SelectedCommand != null)
             {
-                var commandKeyword = new CommandKeywordSettingWindow(_context, _settings.SelectedCommand);
+                var commandKeyword = new CommandKeywordSettingWindow(_settings.SelectedCommand);
                 commandKeyword.ShowDialog();
             }
         }

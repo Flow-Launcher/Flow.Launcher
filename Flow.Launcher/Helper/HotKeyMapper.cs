@@ -470,8 +470,8 @@ internal static class HotKeyMapper
                 string.Format("Error registering hotkey: {0} \nStackTrace:{1}",
                               e.Message,
                               e.StackTrace));
-            string errorMsg = string.Format(App.API.GetTranslation("registerHotkeyFailed"), hotkeyStr);
-            string errorMsgTitle = App.API.GetTranslation("MessageBoxTitle");
+            string errorMsg = Localize.registerHotkeyFailed(hotkeyStr);
+            string errorMsgTitle = Localize.MessageBoxTitle();
             App.API.ShowMsgBox(errorMsg, errorMsgTitle);
         }
     }
@@ -515,8 +515,8 @@ internal static class HotKeyMapper
         catch (Exception e)
         {
             App.API.LogError(ClassName, $"Error registering window hotkey {hotkey}: {e.Message} \nStackTrace:{e.StackTrace}");
-            var errorMsg = string.Format(App.API.GetTranslation("registerHotkeyFailed"), hotkey);
-            var errorMsgTitle = App.API.GetTranslation("MessageBoxTitle");
+            var errorMsg = Localize.registerHotkeyFailed(hotkey);
+            var errorMsgTitle = Localize.MessageBoxTitle();
             App.API.ShowMsgBox(errorMsg, errorMsgTitle);
         }
     }
@@ -539,8 +539,8 @@ internal static class HotKeyMapper
         catch (Exception e)
         {
             App.API.LogError(ClassName, $"Error removing hotkey: {e.Message} \nStackTrace:{e.StackTrace}");
-            var errorMsg = string.Format(App.API.GetTranslation("unregisterHotkeyFailed"), hotkeyStr);
-            var errorMsgTitle = App.API.GetTranslation("MessageBoxTitle");
+            var errorMsg = Localize.unregisterHotkeyFailed(hotkeyStr);
+            var errorMsgTitle = Localize.MessageBoxTitle();
             App.API.ShowMsgBox(errorMsg, errorMsgTitle);
         }
     }

@@ -151,6 +151,16 @@ namespace Flow.Launcher.Plugin.SharedCommands
         }
 
         /// <summary>
+        /// Checks if a file or directory exists
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static bool FileOrLocationExists(this string path)
+        {
+            return LocationExists(path) || FileExists(path);
+        }
+
+        /// <summary>
         /// Open a directory window (using the OS's default handler, usually explorer)
         /// </summary>
         /// <param name="fileOrFolderPath"></param>

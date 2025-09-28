@@ -342,8 +342,8 @@ namespace Flow.Launcher.ViewModel
             Hide();
 
             await PluginManager.ReloadDataAsync().ConfigureAwait(false);
-            App.API.ShowMsg(App.API.GetTranslation("success"),
-                App.API.GetTranslation("completedSuccessfully"));
+            App.API.ShowMsg(Localize.success(),
+                Localize.completedSuccessfully());
         }
 
         [RelayCommand]
@@ -915,7 +915,7 @@ namespace Flow.Launcher.ViewModel
         private string _placeholderText;
         public string PlaceholderText
         {
-            get => string.IsNullOrEmpty(_placeholderText) ? App.API.GetTranslation("queryTextBoxPlaceholder") : _placeholderText;
+            get => string.IsNullOrEmpty(_placeholderText) ? Localize.queryTextBoxPlaceholder(): _placeholderText;
             set
             {
                 _placeholderText = value;
@@ -1319,12 +1319,10 @@ namespace Flow.Launcher.ViewModel
             var results = new List<Result>();
             foreach (var h in historyItems)
             {
-                var title = App.API.GetTranslation("executeQuery");
-                var time = App.API.GetTranslation("lastExecuteTime");
                 var result = new Result
                 {
-                    Title = string.Format(title, h.Query),
-                    SubTitle = string.Format(time, h.ExecutedDateTime),
+                    Title = Localize.executeQuery(h.Query),
+                    SubTitle = Localize.lastExecuteTime(h.ExecutedDateTime),
                     IcoPath = Constant.HistoryIcon,
                     OriginQuery = new Query { RawQuery = h.Query },
                     Action = _ =>
@@ -1721,13 +1719,13 @@ namespace Flow.Launcher.ViewModel
             {
                 menu = new Result
                 {
-                    Title = App.API.GetTranslation("cancelTopMostInThisQuery"),
+                    Title = Localize.cancelTopMostInThisQuery(),
                     IcoPath = "Images\\down.png",
                     PluginDirectory = Constant.ProgramDirectory,
                     Action = _ =>
                     {
                         _topMostRecord.Remove(result);
-                        App.API.ShowMsg(App.API.GetTranslation("success"));
+                        App.API.ShowMsg(Localize.success());
                         App.API.ReQuery();
                         return false;
                     },
@@ -1739,13 +1737,13 @@ namespace Flow.Launcher.ViewModel
             {
                 menu = new Result
                 {
-                    Title = App.API.GetTranslation("setAsTopMostInThisQuery"),
+                    Title = Localize.setAsTopMostInThisQuery(),
                     IcoPath = "Images\\up.png",
                     PluginDirectory = Constant.ProgramDirectory,
                     Action = _ =>
                     {
                         _topMostRecord.AddOrUpdate(result);
-                        App.API.ShowMsg(App.API.GetTranslation("success"));
+                        App.API.ShowMsg(Localize.success());
                         App.API.ReQuery();
                         return false;
                     },
@@ -1763,10 +1761,10 @@ namespace Flow.Launcher.ViewModel
             var metadata = PluginManager.GetPluginForId(id).Metadata;
             var translator = App.API;
 
-            var author = translator.GetTranslation("author");
-            var website = translator.GetTranslation("website");
-            var version = translator.GetTranslation("version");
-            var plugin = translator.GetTranslation("plugin");
+            var author = Localize.author();
+            var website = Localize.website();
+            var version = Localize.version();
+            var plugin = Localize.plugin();
             var title = $"{plugin}: {metadata.Name}";
             var icon = metadata.IcoPath;
             var subtitle = $"{author} {metadata.Author}";
