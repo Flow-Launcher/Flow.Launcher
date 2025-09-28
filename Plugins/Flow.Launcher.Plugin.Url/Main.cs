@@ -41,7 +41,7 @@ namespace Flow.Launcher.Plugin.Url
             // resource path
             "(?:/\\S*)?" +
             "$";
-        Regex reg = new Regex(urlPattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private readonly Regex UrlRegex = new(UrlPattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
         internal static PluginInitContext Context { get; private set; }
         internal static Settings Settings { get; private set; }
 
