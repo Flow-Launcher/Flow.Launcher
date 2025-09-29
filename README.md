@@ -5,9 +5,6 @@
         <img src="https://user-images.githubusercontent.com/6903107/207168016-85d0dd16-1f3b-4d42-9d37-0e0d5a596ead.png" width="400">
 </p>
 <p align="center">
-<a href="https://github.com/iNKORE-NET/UI.WPF.Modern">
-  <img src="https://github.com/iNKORE-NET/UI.WPF.Modern/blob/main/assets/images/badges/UI.WPF.Modern_Main_Shield.svg?raw=true" alt="iNKORE.UI.WPF.Modern">
-</a>
 <img src="https://img.shields.io/maintenance/yes/3000">
 <a href="https://crowdin.com/project/flow-launcher"><img src="https://badges.crowdin.net/flow-launcher/localized.svg"></a>
 <a href="https://ci.appveyor.com/project/JohnTheGr8/flow-launcher/branch/dev"><img src="https://ci.appveyor.com/api/projects/status/32r7s2skrgm9ubva?svg=true&retina=true"></a>
@@ -390,6 +387,12 @@ Yes please, let us know in the [Q&A](https://github.com/Flow-Launcher/Flow.Launc
 ### Localization
 
 Our project localization is based on [Crowdin](https://crowdin.com). If you would like to change them, please go to https://crowdin.com/project/flow-launcher.
+
+### WPF UI Library
+
+<a href="https://docs.inkore.net/ui-wpf-modern/introduction">
+  <img src="https://github.com/iNKORE-NET/UI.WPF.Modern/blob/main/assets/images/banners/UI.WPF.Modern_Main_1280w.png?raw=true" alt="iNKORE.UI.WPF.Modern">
+</a>
 
 ### New changes
 
