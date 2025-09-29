@@ -391,7 +391,7 @@ Our project localization is based on [Crowdin](https://crowdin.com). If you woul
 ### WPF UI Library
 
 <a href="https://docs.inkore.net/ui-wpf-modern/introduction">
-  <img src="https://github.com/iNKORE-NET/UI.WPF.Modern/blob/main/assets/images/banners/UI.WPF.Modern_Main_1280w.png?raw=true" alt="iNKORE.UI.WPF.Modern">
+  <img src="https://github.com/iNKORE-NET/UI.WPF.Modern/blob/main/assets/images/banners/UI.WPF.Modern_Main_1280w.png?raw=true" alt="iNKORE.UI.WPF.Modern" width="600">
 </a>
 
 ### New changes
