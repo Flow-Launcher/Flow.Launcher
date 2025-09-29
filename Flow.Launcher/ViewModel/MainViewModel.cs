@@ -1346,6 +1346,8 @@ namespace Flow.Launcher.ViewModel
                 return;
             }
 
+            App.API.LogDebug(ClassName, $"Start query with ActionKeyword <{query.ActionKeyword}> and RawQuery <{query.RawQuery}>");
+
             var currentIsHomeQuery = query.IsHomeQuery;
             var currentIsDialogJump = _isDialogJump;
 
@@ -1355,8 +1357,6 @@ namespace Flow.Launcher.ViewModel
                 ClearResults();
                 return;
             }
-
-            App.API.LogDebug(ClassName, $"Start query with ActionKeyword <{query.ActionKeyword}> and RawQuery <{query.RawQuery}>");
 
             try
             {
