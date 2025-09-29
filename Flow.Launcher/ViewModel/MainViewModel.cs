@@ -1443,7 +1443,7 @@ namespace Flow.Launcher.ViewModel
                 {
                     if (ShouldClearExistingResultsForNonQuery(plugins))
                     {
-                        // No update tasks and just return
+                        // there are no update tasks and so we can directly return
                         ClearResults();
                         return;
                     }
@@ -1493,7 +1493,7 @@ namespace Flow.Launcher.ViewModel
             }
             finally
             {
-                // this make sures running query is null even if the query is canceled
+                // this make sures progress query is null when this query is canceled
                 _progressQuery = null;
             }
 
