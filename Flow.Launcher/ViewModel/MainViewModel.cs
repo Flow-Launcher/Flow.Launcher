@@ -1335,7 +1335,6 @@ namespace Flow.Launcher.ViewModel
         private async Task QueryResultsAsync(bool searchDelay, bool isReQuery = false, bool reSelect = true)
         {
             _updateSource?.Cancel();
-            _progressQuery = null;
 
             App.API.LogDebug(ClassName, $"Start query with text: <{QueryText}>");
 
