@@ -48,9 +48,8 @@ public partial class SelectFileManagerViewModel : BaseModel
         if (!IsFileManagerValid(CustomExplorer.Path))
         {
             var result = App.API.ShowMsgBox(
-                string.Format(App.API.GetTranslation("fileManagerPathNotFound"),
-                    CustomExplorer.Name, CustomExplorer.Path),
-                    App.API.GetTranslation("fileManagerPathError"),
+                Localize.fileManagerPathNotFound(CustomExplorer.Name, CustomExplorer.Path),
+                Localize.fileManagerPathError(),
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Warning);
 
@@ -105,7 +104,7 @@ public partial class SelectFileManagerViewModel : BaseModel
     {
         CustomExplorers.Add(new()
         {
-            Name = App.API.GetTranslation("defaultBrowser_new_profile")
+            Name = Localize.defaultBrowser_new_profile()
         });
         SelectedCustomExplorerIndex = CustomExplorers.Count - 1;
     }
