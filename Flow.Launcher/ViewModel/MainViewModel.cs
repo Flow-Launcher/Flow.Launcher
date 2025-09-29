@@ -1356,13 +1356,10 @@ namespace Flow.Launcher.ViewModel
                 return;
             }
 
+            App.API.LogDebug(ClassName, $"Start query with ActionKeyword <{query.ActionKeyword}> and RawQuery <{query.RawQuery}>");
+
             try
             {
-                // Check if the input text matches the query text
-                if (query.Input != QueryText) return;
-
-                App.API.LogDebug(ClassName, $"Start query with ActionKeyword <{query.ActionKeyword}> and RawQuery <{query.RawQuery}>");
-
                 _updateSource?.Dispose();
 
                 var currentUpdateSource = new CancellationTokenSource();
