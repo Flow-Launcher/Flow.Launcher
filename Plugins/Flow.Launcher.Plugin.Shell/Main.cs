@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Flow.Launcher.Plugin.SharedCommands;
+using Flow.Launcher.Plugin.Shell.Views;
 using WindowsInput;
 using WindowsInput.Native;
 using Control = System.Windows.Controls.Control;
