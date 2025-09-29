@@ -11,8 +11,7 @@
     d:DesignWidth="300"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <converters:CloseShellAfterPressEnabledConverter x:Key="CloseShellAfterPressEnabledConverter" />
-        <converters:LeaveShellOpenEnabledConverter x:Key="LeaveShellOpenEnabledConverter" />
+        <converters:LeaveShellOpenOrCloseShellAfterPressEnabledConverter x:Key="LeaveShellOpenOrCloseShellAfterPressEnabledConverter" />
     </UserControl.Resources>
 
     <Grid Margin="{StaticResource SettingPanelMargin}" VerticalAlignment="Top">
@@ -38,8 +37,14 @@
             Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
             HorizontalAlignment="Left"
             Content="{DynamicResource flowlauncher_plugin_cmd_close_cmd_after_press}"
-            IsChecked="{Binding CloseShellAfterPress, Mode=TwoWay}"
-            IsEnabled="{Binding LeaveShellOpen, Converter={StaticResource CloseShellAfterPressEnabledConverter}, Mode=OneWay}" />
+            IsChecked="{Binding CloseShellAfterPress, Mode=TwoWay}">
+            <CheckBox.IsEnabled>
+                <MultiBinding Converter="{StaticResource LeaveShellOpenOrCloseShellAfterPressEnabledConverter}">
+                    <Binding Mode="OneWay" Path="LeaveShellOpen" />
+                    <Binding Mode="OneWay" Path="SelectedShell" />
+                </MultiBinding>
+            </CheckBox.IsEnabled>
+        </CheckBox>
         <CheckBox
             x:Name="LeaveShellOpen"
             Grid.Row="2"
@@ -48,7 +53,7 @@
             Content="{DynamicResource flowlauncher_plugin_cmd_leave_cmd_open}"
             IsChecked="{Binding LeaveShellOpen, Mode=TwoWay}">
             <CheckBox.IsEnabled>
-                <MultiBinding Converter="{StaticResource LeaveShellOpenEnabledConverter}">
+                <MultiBinding Converter="{StaticResource LeaveShellOpenOrCloseShellAfterPressEnabledConverter}">
                     <Binding Mode="OneWay" Path="CloseShellAfterPress" />
                     <Binding Mode="OneWay" Path="SelectedShell" />
                 </MultiBinding>
