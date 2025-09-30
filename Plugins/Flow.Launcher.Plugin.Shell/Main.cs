@@ -386,6 +386,7 @@ namespace Flow.Launcher.Plugin.Shell
             context.API.RegisterGlobalKeyboardCallback(API_GlobalKeyboardEvent);
             // Since the old Settings class set default value of ShowOnlyMostUsedCMDsNumber to 0 which is a wrong value,
             // we need to fix it here to make sure the default value is 5
+            // todo: remove this code block after release v2.2.0
             if (_settings.ShowOnlyMostUsedCMDsNumber == 0)
             {
                 _settings.ShowOnlyMostUsedCMDsNumber = 5;
