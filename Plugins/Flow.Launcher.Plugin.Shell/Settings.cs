@@ -103,7 +103,7 @@ namespace Flow.Launcher.Plugin.Shell
             }
         }
 
-        private int _showOnlyMostUsedCMDsNumber;
+        private int _showOnlyMostUsedCMDsNumber = 5;
         public int ShowOnlyMostUsedCMDsNumber
         {
             get => _showOnlyMostUsedCMDsNumber;
