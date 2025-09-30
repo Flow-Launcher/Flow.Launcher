@@ -95,6 +95,7 @@ namespace Flow.Launcher
             UpdatePosition();
 
             InitSoundEffects();
+            RegisterSoundEffectsEvent();
             DataObject.AddPastingHandler(QueryTextBox, QueryTextBox_OnPaste);
             _viewModel.ActualApplicationThemeChanged += ViewModel_ActualApplicationThemeChanged;
         }
@@ -668,16 +669,6 @@ namespace Flow.Launcher
                         handled = true;
                     }
                     break;
-                case Win32Helper.WM_POWERBROADCAST: // Handle power broadcast messages
-                    // https://learn.microsoft.com/en-us/windows/win32/power/wm-powerbroadcast
-                    if (wParam.ToInt32() == Win32Helper.PBT_APMRESUMEAUTOMATIC)
-                    {
-                        // Fix for sound not playing after sleep / hibernate
-                        // https://stackoverflow.com/questions/64805186/mediaplayer-doesnt-play-after-computer-sleeps
-                        InitSoundEffects();
-                    }
-                    handled = true;
-                    break;
             }
 
             return IntPtr.Zero;
@@ -720,6 +711,47 @@ namespace Flow.Launcher
                 {
                     _animationSoundWPF.Play();
                 }
+            }
+        }
+
+        private void RegisterSoundEffectsEvent()
+        {
+            // Fix for sound not playing after sleep / hibernate for both modern standby and legacy standby
+            // https://stackoverflow.com/questions/64805186/mediaplayer-doesnt-play-after-computer-sleeps
+            try
+            {
+                Win32Helper.RegisterSleepModeListener(() =>
+                {
+                    if (Application.Current == null)
+                    {
+                        return;
+                    }
+
+                    // We must run InitSoundEffects on UI thread because MediaPlayer is a DispatcherObject
+                    if (!Application.Current.Dispatcher.CheckAccess())
+                    {
+                        Application.Current.Dispatcher.Invoke(InitSoundEffects);
+                        return;
+                    }
+
+                    InitSoundEffects();
+                });
+            }
+            catch (Exception e)
+            {
+                App.API.LogException(ClassName, "Failed to register sound effect event", e);
+            }
+        }
+
+        private static void UnregisterSoundEffectsEvent()
+        {
+            try
+            {
+                Win32Helper.UnregisterSleepModeListener();
+            }
+            catch (Exception e)
+            {
+                App.API.LogException(ClassName, "Failed to unregister sound effect event", e);
             }
         }
 
@@ -1447,6 +1479,7 @@ namespace Flow.Launcher
                     _animationSoundWMP?.Close();
                     _animationSoundWPF?.Dispose();
                     _viewModel.ActualApplicationThemeChanged -= ViewModel_ActualApplicationThemeChanged;
+                    UnregisterSoundEffectsEvent();
                 }
 
                 _disposed = true;
