@@ -982,12 +982,12 @@ namespace Flow.Launcher.Infrastructure
             {
                 case PInvoke.PBT_APMRESUMEAUTOMATIC:
                     // Operation is resuming automatically from a low-power state.This message is sent every time the system resumes
-                    _func();
+                    _func?.Invoke();
                     break;
 
                 case PInvoke.PBT_APMRESUMESUSPEND:
                     // Operation is resuming from a low-power state.This message is sent after PBT_APMRESUMEAUTOMATIC if the resume is triggered by user input, such as pressing a key
-                    _func();
+                    _func?.Invoke();
                     break;
             }
 
