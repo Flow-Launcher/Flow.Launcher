@@ -10,7 +10,6 @@ namespace Flow.Launcher.Plugin.Shell.Views
             var viewModel = new ShellSettingViewModel(settings);
             DataContext = viewModel;
             InitializeComponent();
-            DataContext = viewModel;
         }
     }
 }
