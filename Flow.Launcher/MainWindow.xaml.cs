@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Media;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -61,8 +62,9 @@ namespace Flow.Launcher
         private bool _isArrowKeyPressed = false;
 
         // Window Sound Effects
-        private MediaPlayer animationSoundWMP;
-        private SoundPlayer animationSoundWPF;
+        private MediaPlayer _animationSoundWMP;
+        private SoundPlayer _animationSoundWPF;
+        private readonly Lock _soundLock = new();
 
         // Window WndProc
         private HwndSource _hwndSource;
@@ -687,31 +689,37 @@ namespace Flow.Launcher
 
         private void InitSoundEffects()
         {
-            if (_settings.WMPInstalled)
+            lock (_soundLock)
             {
-                animationSoundWMP?.Close();
-                animationSoundWMP = new MediaPlayer();
-                animationSoundWMP.Open(new Uri(AppContext.BaseDirectory + "Resources\\open.wav"));
-            }
-            else
-            {
-                animationSoundWPF?.Dispose();
-                animationSoundWPF = new SoundPlayer(AppContext.BaseDirectory + "Resources\\open.wav");
-                animationSoundWPF.Load();
+                if (_settings.WMPInstalled)
+                {
+                    _animationSoundWMP?.Close();
+                    _animationSoundWMP = new MediaPlayer();
+                    _animationSoundWMP.Open(new Uri(AppContext.BaseDirectory + "Resources\\open.wav"));
+                }
+                else
+                {
+                    _animationSoundWPF?.Dispose();
+                    _animationSoundWPF = new SoundPlayer(AppContext.BaseDirectory + "Resources\\open.wav");
+                    _animationSoundWPF.Load();
+                }
             }
         }
 
         private void SoundPlay()
         {
-            if (_settings.WMPInstalled)
+            lock (_soundLock)
             {
-                animationSoundWMP.Position = TimeSpan.Zero;
-                animationSoundWMP.Volume = _settings.SoundVolume / 100.0;
-                animationSoundWMP.Play();
-            }
-            else
-            {
-                animationSoundWPF.Play();
+                if (_settings.WMPInstalled)
+                {
+                    _animationSoundWMP.Position = TimeSpan.Zero;
+                    _animationSoundWMP.Volume = _settings.SoundVolume / 100.0;
+                    _animationSoundWMP.Play();
+                }
+                else
+                {
+                    _animationSoundWPF.Play();
+                }
             }
         }
 
@@ -1436,8 +1444,8 @@ namespace Flow.Launcher
                 {
                     _hwndSource?.Dispose();
                     _notifyIcon?.Dispose();
-                    animationSoundWMP?.Close();
-                    animationSoundWPF?.Dispose();
+                    _animationSoundWMP?.Close();
+                    _animationSoundWPF?.Dispose();
                     _viewModel.ActualApplicationThemeChanged -= ViewModel_ActualApplicationThemeChanged;
                 }
 
