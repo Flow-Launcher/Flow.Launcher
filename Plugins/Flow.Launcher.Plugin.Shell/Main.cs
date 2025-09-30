@@ -384,9 +384,15 @@ namespace Flow.Launcher.Plugin.Shell
             Context = context;
             _settings = context.API.LoadSettingJsonStorage<Settings>();
             context.API.RegisterGlobalKeyboardCallback(API_GlobalKeyboardEvent);
+            // Since the old Settings class set default value of ShowOnlyMostUsedCMDsNumber to 0 which is a wrong value,
+            // we need to fix it here to make sure the default value is 5
+            if (_settings.ShowOnlyMostUsedCMDsNumber == 0)
+            {
+                _settings.ShowOnlyMostUsedCMDsNumber = 5;
+            }
         }
 
-        bool API_GlobalKeyboardEvent(int keyevent, int vkcode, SpecialKeyState state)
+        private bool API_GlobalKeyboardEvent(int keyevent, int vkcode, SpecialKeyState state)
         {
             if (!Context.CurrentPluginMetadata.Disabled && _settings.ReplaceWinR)
             {
