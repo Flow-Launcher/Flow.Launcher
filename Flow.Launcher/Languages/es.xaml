@@ -597,7 +597,7 @@ Si añade un prefijo &quot;@&quot; al introducir un acceso directo, éste coinci
         No se ha encontrado el administrador de archivos especificado. Compruebe la configuración del Administrador de archivos personalizado en Configuración &gt; General.
     </system:String>
     <system:String x:Key="errorTitle">Error</system:String>
-    <system:String x:Key="folderOpenError">An error occurred while opening the folder.</system:String>
+    <system:String x:Key="folderOpenError">Se ha producido un error al abrir la carpeta.</system:String>
     <system:String x:Key="browserOpenError">Se ha producido un error al abrir la URL en el navegador. Por favor, compruebe la configuración de su navegador web predeterminado en la sección General de la ventana de configuración</system:String>
     <system:String x:Key="fileNotFoundError">No se encuentra el archivo o directorio: {0}</system:String>
 
