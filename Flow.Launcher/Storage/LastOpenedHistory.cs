@@ -25,6 +25,7 @@ public class LastOpenedHistory
             ExecutedDateTime = DateTime.Now
         };
 
+        // Aparenta estar duplicando...
         var existing = Items.FirstOrDefault(x => x.OriginQuery.RawQuery == item.OriginQuery.RawQuery && x.PluginID == item.PluginID);
         if (existing != null)
         {

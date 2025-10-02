@@ -168,9 +168,9 @@
     <system:String x:Key="homePageHistoryTooltip">Choose the type of history to show on the home page</system:String>
     <system:String x:Key="queryHistory">Query History</system:String>
     <system:String x:Key="executedHistory">Last Opened History</system:String>
-    <system:String x:Key="historyQueryResultsForHomePage">Show History Query Results in Home Page</system:String>
-    <system:String x:Key="historyLastOpenedResultsForHomePage">Show History Last Opened Results in Home Page</system:String>
-    <system:String x:Key="historyResultsCountForHomePage">Maximum History Results Shown in Home Page</system:String>
+    <system:String x:Key="historyQueryResultsForHomePage">Show Query History</system:String>
+    <system:String x:Key="historyLastOpenedResultsForHomePage">Show Last Opened History</system:String>
+    <system:String x:Key="historyResultsCountForHomePage">Maximum History Results Shown</system:String>
     <system:String x:Key="homeToggleBoxToolTip">This can only be edited if plugin supports Home feature and Home Page is enabled.</system:String>
     <system:String x:Key="showAtTopmost">Show Search Window at Foremost</system:String>
     <system:String x:Key="showAtTopmostToolTip">Overrides other programs' 'Always on Top' setting and displays Flow in the foremost position.</system:String>
