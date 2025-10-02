@@ -43,7 +43,7 @@ namespace Flow.Launcher.Core.Configuration
 
                 PublicApi.Instance.ShowMsgBox(Localize.restartToDisablePortableMode());
 
-                API.RestartApp();
+                PublicApi.Instance.RestartApp();
             }
             catch (Exception e)
             {
@@ -66,7 +66,7 @@ namespace Flow.Launcher.Core.Configuration
 
                 PublicApi.Instance.ShowMsgBox(Localize.restartToEnablePortableMode());
 
-                API.RestartApp();
+                PublicApi.Instance.RestartApp();
             }
             catch (Exception e)
             {
