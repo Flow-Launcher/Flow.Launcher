@@ -184,7 +184,7 @@ namespace Flow.Launcher.Core.Plugin
                 }
                 catch (Exception e)
                 {
-                    API.LogDebug(ClassName, $"Failed to delete {binding} in {subDirectory}: {e.Message}");
+                    PublicApi.Instance.LogDebug(ClassName, $"Failed to delete {binding} in {subDirectory}: {e.Message}");
                 }
             }
         }
@@ -300,11 +300,8 @@ namespace Flow.Launcher.Core.Plugin
             {
                 var failed = string.Join(",", _initFailedPlugins.Values.Select(x => x.Metadata.Name));
                 PublicApi.Instance.ShowMsg(
-                    PublicApi.Instance.GetTranslation("failedToInitializePluginsTitle"),
-                    string.Format(
-                        API.GetTranslation("failedToInitializePluginsMessage"),
-                        failed
-                    ),
+                    Localize.failedToInitializePluginsTitle(),
+                    Localize.failedToInitializePluginsMessage(failed),
                     "",
                     false
                 );

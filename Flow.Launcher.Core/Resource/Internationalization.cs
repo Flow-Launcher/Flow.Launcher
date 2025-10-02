@@ -389,7 +389,7 @@ namespace Flow.Launcher.Core.Resource
             }
             catch (Exception e)
             {
-                API.LogException(ClassName, $"Failed for <{p.Metadata.Name}>", e);
+                PublicApi.Instance.LogException(ClassName, $"Failed for <{p.Metadata.Name}>", e);
             }
         }
 
