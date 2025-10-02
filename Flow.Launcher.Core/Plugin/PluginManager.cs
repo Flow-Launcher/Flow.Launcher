@@ -383,6 +383,28 @@ namespace Flow.Launcher.Core.Plugin
             var results = new List<Result>();
             var metadata = pair.Metadata;
 
+            if (IsPluginInitializing(metadata))
+            {
+                Result r = new()
+                {
+                    Title = Localize.pluginStillInitializing(metadata.Name),
+                    SubTitle = Localize.pluginStillInitializingSubtitle(),
+                    IcoPath = metadata.IcoPath,
+                    PluginDirectory = metadata.PluginDirectory,
+                    ActionKeywordAssigned = query.ActionKeyword,
+                    PluginID = metadata.ID,
+                    OriginQuery = query,
+                    Action = _ =>
+                    {
+                        PublicApi.Instance.ReQuery();
+                        return false;
+                    },
+                    Score = -100
+                };
+                results.Add(r);
+                return results;
+            }
+
             try
             {
                 var milliseconds = await PublicApi.Instance.StopwatchLogDebugAsync(ClassName, $"Cost for {metadata.Name}",
@@ -427,6 +449,28 @@ namespace Flow.Launcher.Core.Plugin
             var results = new List<Result>();
             var metadata = pair.Metadata;
 
+            if (IsPluginInitializing(metadata))
+            {
+                Result r = new()
+                {
+                    Title = Localize.pluginStillInitializing(metadata.Name),
+                    SubTitle = Localize.pluginStillInitializingSubtitle(),
+                    IcoPath = metadata.IcoPath,
+                    PluginDirectory = metadata.PluginDirectory,
+                    ActionKeywordAssigned = query.ActionKeyword,
+                    PluginID = metadata.ID,
+                    OriginQuery = query,
+                    Action = _ =>
+                    {
+                        PublicApi.Instance.ReQuery();
+                        return false;
+                    },
+                    Score = -100
+                };
+                results.Add(r);
+                return results;
+            }
+
             try
             {
                 var milliseconds = await PublicApi.Instance.StopwatchLogDebugAsync(ClassName, $"Cost for {metadata.Name}",
@@ -457,6 +501,12 @@ namespace Flow.Launcher.Core.Plugin
             var results = new List<DialogJumpResult>();
             var metadata = pair.Metadata;
 
+            if (IsPluginInitializing(metadata))
+            {
+                // null will be fine since the results will only be added into queue if the token hasn't been cancelled
+                return null;
+            }
+
             try
             {
                 var milliseconds = await PublicApi.Instance.StopwatchLogDebugAsync(ClassName, $"Cost for {metadata.Name}",
@@ -480,6 +530,11 @@ namespace Flow.Launcher.Core.Plugin
                 return null;
             }
             return results;
+        }
+
+        private static bool IsPluginInitializing(PluginMetadata metadata)
+        {
+            return !_allInitializedPlugins.ContainsKey(metadata.ID);
         }
 
         #endregion

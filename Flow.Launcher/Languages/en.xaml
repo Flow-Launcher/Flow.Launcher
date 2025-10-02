@@ -66,6 +66,8 @@
     <system:String x:Key="PositionReset">Position Reset</system:String>
     <system:String x:Key="PositionResetToolTip">Reset search window position</system:String>
     <system:String x:Key="queryTextBoxPlaceholder">Type here to search</system:String>
+    <system:String x:Key="pluginStillInitializing">{0}: This plugin is still initializing!</system:String>
+    <system:String x:Key="pluginStillInitializingSubtitle">Please wait for a while and select this result to requery</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Settings</system:String>
