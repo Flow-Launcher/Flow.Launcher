@@ -41,8 +41,8 @@ namespace Flow.Launcher.Core
             try
             {
                 if (!silentUpdate)
-                    _api.ShowMsg(_api.GetTranslation("pleaseWait"),
-                        _api.GetTranslation("update_flowlauncher_update_check"));
+                    _api.ShowMsg(Localize.pleaseWait(),
+                        Localize.update_flowlauncher_update_check());
 
                 using var updateManager = await GitHubUpdateManagerAsync(GitHubRepository).ConfigureAwait(false);
 
@@ -58,13 +58,13 @@ namespace Flow.Launcher.Core
                 if (newReleaseVersion <= currentVersion)
                 {
                     if (!silentUpdate)
-                        _api.ShowMsgBox(_api.GetTranslation("update_flowlauncher_already_on_latest"));
+                        _api.ShowMsgBox(Localize.update_flowlauncher_already_on_latest());
                     return;
                 }
 
                 if (!silentUpdate)
-                    _api.ShowMsg(_api.GetTranslation("update_flowlauncher_update_found"),
-                        _api.GetTranslation("update_flowlauncher_updating"));
+                    _api.ShowMsg(Localize.update_flowlauncher_update_found(),
+                        Localize.update_flowlauncher_updating());
 
                 await updateManager.DownloadReleases(newUpdateInfo.ReleasesToApply).ConfigureAwait(false);
 
@@ -77,10 +77,7 @@ namespace Flow.Launcher.Core
                     FilesFolders.CopyAll(DataLocation.PortableDataPath, targetDestination, (s) => _api.ShowMsgBox(s));
                     if (!FilesFolders.VerifyBothFolderFilesEqual(DataLocation.PortableDataPath, targetDestination,
                             (s) => _api.ShowMsgBox(s)))
-                        _api.ShowMsgBox(string.Format(
-                            _api.GetTranslation("update_flowlauncher_fail_moving_portable_user_profile_data"),
-                            DataLocation.PortableDataPath,
-                            targetDestination));
+                        _api.ShowMsgBox(Localize.update_flowlauncher_fail_moving_portable_user_profile_data(DataLocation.PortableDataPath, targetDestination));
                 }
                 else
                 {
@@ -91,7 +88,7 @@ namespace Flow.Launcher.Core
 
                 _api.LogInfo(ClassName, $"Update success:{newVersionTips}");
 
-                if (_api.ShowMsgBox(newVersionTips, _api.GetTranslation("update_flowlauncher_new_update"),
+                if (_api.ShowMsgBox(newVersionTips, Localize.update_flowlauncher_new_update(),
                         MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     _api.RestartApp();
@@ -111,8 +108,8 @@ namespace Flow.Launcher.Core
                 }
 
                 if (!silentUpdate)
-                    _api.ShowMsgError(_api.GetTranslation("update_flowlauncher_fail"),
-                        _api.GetTranslation("update_flowlauncher_check_connection"));
+                    _api.ShowMsgError(Localize.update_flowlauncher_fail(),
+                        Localize.update_flowlauncher_check_connection());
             }
             finally
             {
@@ -150,9 +147,9 @@ namespace Flow.Launcher.Core
             return manager;
         }
 
-        private string NewVersionTips(string version)
+        private static string NewVersionTips(string version)
         {
-            var tips = string.Format(_api.GetTranslation("newVersionTips"), version);
+            var tips = Localize.newVersionTips(version);
 
             return tips;
         }

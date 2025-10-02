@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Flow.Launcher.Plugin.SharedCommands;
+using Flow.Launcher.Plugin.Shell.Views;
 using WindowsInput;
 using WindowsInput.Native;
 using Control = System.Windows.Controls.Control;
@@ -27,7 +28,7 @@ namespace Flow.Launcher.Plugin.Shell
 
         public List<Result> Query(Query query)
         {
-            List<Result> results = new List<Result>();
+            List<Result> results = [];
             string cmd = query.Search;
             if (string.IsNullOrEmpty(cmd))
             {
@@ -45,7 +46,7 @@ namespace Flow.Launcher.Plugin.Shell
                     string basedir = null;
                     string dir = null;
                     string excmd = Environment.ExpandEnvironmentVariables(cmd);
-                    if (Directory.Exists(excmd) && (cmd.EndsWith("/") || cmd.EndsWith(@"\")))
+                    if (Directory.Exists(excmd) && (cmd.EndsWith('/') || cmd.EndsWith('\\')))
                     {
                         basedir = excmd;
                         dir = cmd;
@@ -54,7 +55,7 @@ namespace Flow.Launcher.Plugin.Shell
                     {
                         basedir = Path.GetDirectoryName(excmd);
                         var dirName = Path.GetDirectoryName(cmd);
-                        dir = (dirName.EndsWith("/") || dirName.EndsWith(@"\")) ? dirName : cmd[..(dirName.Length + 1)];
+                        dir = (dirName.EndsWith('/') || dirName.EndsWith('\\')) ? dirName : cmd[..(dirName.Length + 1)];
                     }
 
                     if (basedir != null)
@@ -103,14 +104,14 @@ namespace Flow.Launcher.Plugin.Shell
                 {
                     if (m.Key == cmd)
                     {
-                        result.SubTitle = string.Format(Context.API.GetTranslation("flowlauncher_plugin_cmd_cmd_has_been_executed_times"), m.Value);
+                        result.SubTitle = Localize.flowlauncher_plugin_cmd_cmd_has_been_executed_times(m.Value);
                         return null;
                     }
 
                     var ret = new Result
                     {
                         Title = m.Key,
-                        SubTitle = string.Format(Context.API.GetTranslation("flowlauncher_plugin_cmd_cmd_has_been_executed_times"), m.Value),
+                        SubTitle = Localize.flowlauncher_plugin_cmd_cmd_has_been_executed_times(m.Value),
                         IcoPath = Image,
                         Action = c =>
                         {
@@ -129,9 +130,9 @@ namespace Flow.Launcher.Plugin.Shell
                 }).Where(o => o != null);
 
             if (_settings.ShowOnlyMostUsedCMDs)
-                return history.Take(_settings.ShowOnlyMostUsedCMDsNumber).ToList();
+                return [.. history.Take(_settings.ShowOnlyMostUsedCMDsNumber)];
 
-            return history.ToList();
+            return [.. history];
         }
 
         private Result GetCurrentCmd(string cmd)
@@ -140,7 +141,7 @@ namespace Flow.Launcher.Plugin.Shell
             {
                 Title = cmd,
                 Score = 5000,
-                SubTitle = Context.API.GetTranslation("flowlauncher_plugin_cmd_execute_through_shell"),
+                SubTitle = Localize.flowlauncher_plugin_cmd_execute_through_shell(),
                 IcoPath = Image,
                 Action = c =>
                 {
@@ -165,7 +166,7 @@ namespace Flow.Launcher.Plugin.Shell
                 .Select(m => new Result
                 {
                     Title = m.Key,
-                    SubTitle = string.Format(Context.API.GetTranslation("flowlauncher_plugin_cmd_cmd_has_been_executed_times"), m.Value),
+                    SubTitle = Localize.flowlauncher_plugin_cmd_cmd_has_been_executed_times(m.Value),
                     IcoPath = Image,
                     Action = c =>
                     {
@@ -182,9 +183,9 @@ namespace Flow.Launcher.Plugin.Shell
                 });
 
             if (_settings.ShowOnlyMostUsedCMDs)
-                return history.Take(_settings.ShowOnlyMostUsedCMDsNumber).ToList();
+                return [.. history.Take(_settings.ShowOnlyMostUsedCMDsNumber)];
 
-            return history.ToList();
+            return [.. history];
         }
 
         private ProcessStartInfo PrepareProcessStartInfo(string command, bool runAsAdministrator = false)
@@ -199,7 +200,7 @@ namespace Flow.Launcher.Plugin.Shell
                 Verb = runAsAdministratorArg,
                 WorkingDirectory = workingDirectory,
             };
-            var notifyStr = Context.API.GetTranslation("flowlauncher_plugin_cmd_press_any_key_to_close");
+            var notifyStr = Localize.flowlauncher_plugin_cmd_press_any_key_to_close();
             var addedCharacter = _settings.UseWindowsTerminal ? "\\" : "";
             switch (_settings.Shell)
             {
@@ -288,10 +289,10 @@ namespace Flow.Launcher.Plugin.Shell
 
                 case Shell.RunCommand:
                     {
-                        var parts = command.Split(new[]
-                        {
+                        var parts = command.Split(
+                        [
                             ' '
-                        }, 2);
+                        ], 2);
                         if (parts.Length == 2)
                         {
                             var filename = parts[0];
@@ -347,12 +348,12 @@ namespace Flow.Launcher.Plugin.Shell
             catch (FileNotFoundException e)
             {
                 Context.API.ShowMsgError(GetTranslatedPluginTitle(),
-                    string.Format(Context.API.GetTranslation("flowlauncher_plugin_cmd_command_not_found"), e.Message));
+                    Localize.flowlauncher_plugin_cmd_command_not_found(e.Message));
             }
             catch (Win32Exception e)
             {
                 Context.API.ShowMsgError(GetTranslatedPluginTitle(),
-                    string.Format(Context.API.GetTranslation("flowlauncher_plugin_cmd_error_running_command"), e.Message));
+                    Localize.flowlauncher_plugin_cmd_error_running_command(e.Message));
             }
             catch (Exception e)
             {
@@ -394,9 +395,16 @@ namespace Flow.Launcher.Plugin.Shell
             Context = context;
             _settings = context.API.LoadSettingJsonStorage<Settings>();
             context.API.RegisterGlobalKeyboardCallback(API_GlobalKeyboardEvent);
+            // Since the old Settings class set default value of ShowOnlyMostUsedCMDsNumber to 0 which is a wrong value,
+            // we need to fix it here to make sure the default value is 5
+            // todo: remove this code block after release v2.2.0
+            if (_settings.ShowOnlyMostUsedCMDsNumber == 0)
+            {
+                _settings.ShowOnlyMostUsedCMDsNumber = 5;
+            }
         }
 
-        bool API_GlobalKeyboardEvent(int keyevent, int vkcode, SpecialKeyState state)
+        private bool API_GlobalKeyboardEvent(int keyevent, int vkcode, SpecialKeyState state)
         {
             if (!Context.CurrentPluginMetadata.Disabled && _settings.ReplaceWinR)
             {
@@ -439,12 +447,12 @@ namespace Flow.Launcher.Plugin.Shell
 
         public string GetTranslatedPluginTitle()
         {
-            return Context.API.GetTranslation("flowlauncher_plugin_cmd_plugin_name");
+            return Localize.flowlauncher_plugin_cmd_plugin_name();
         }
 
         public string GetTranslatedPluginDescription()
         {
-            return Context.API.GetTranslation("flowlauncher_plugin_cmd_plugin_description");
+            return Localize.flowlauncher_plugin_cmd_plugin_description();
         }
 
         public List<Result> LoadContextMenus(Result selectedResult)
@@ -453,7 +461,7 @@ namespace Flow.Launcher.Plugin.Shell
             {
                 new()
                 {
-                    Title = Context.API.GetTranslation("flowlauncher_plugin_cmd_run_as_different_user"),
+                    Title = Localize.flowlauncher_plugin_cmd_run_as_different_user(),
                     Action = c =>
                     {
                         Execute(ShellCommand.RunAsDifferentUser, PrepareProcessStartInfo(selectedResult.Title));
@@ -464,7 +472,7 @@ namespace Flow.Launcher.Plugin.Shell
                 },
                 new()
                 {
-                    Title = Context.API.GetTranslation("flowlauncher_plugin_cmd_run_as_administrator"),
+                    Title = Localize.flowlauncher_plugin_cmd_run_as_administrator(),
                     Action = c =>
                     {
                         Execute(StartProcess, PrepareProcessStartInfo(selectedResult.Title, true));
@@ -475,7 +483,7 @@ namespace Flow.Launcher.Plugin.Shell
                 },
                 new()
                 {
-                    Title = Context.API.GetTranslation("flowlauncher_plugin_cmd_copy"),
+                    Title = Localize.flowlauncher_plugin_cmd_copy(),
                     Action = c =>
                     {
                         Context.API.CopyToClipboard(selectedResult.Title);

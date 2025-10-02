@@ -33,7 +33,7 @@ public partial class HotkeyControlDialog : ContentDialog
 
     public EResultType ResultType { get; private set; } = EResultType.Cancel;
     public string ResultValue { get; private set; } = string.Empty;
-    public static string EmptyHotkey => App.API.GetTranslation("none");
+    public static string EmptyHotkey => Localize.none();
 
     private static bool isOpenFlowHotkey;
 
@@ -41,7 +41,7 @@ public partial class HotkeyControlDialog : ContentDialog
     {
         WindowTitle = windowTitle switch
         {
-            "" or null => App.API.GetTranslation("hotkeyRegTitle"),
+            "" or null => Localize.hotkeyRegTitle(),
             _ => windowTitle
         };
         DefaultHotkey = defaultHotkey;
@@ -146,10 +146,7 @@ public partial class HotkeyControlDialog : ContentDialog
             Alert.Visibility = Visibility.Visible;
             if (registeredHotkeyData.RemoveHotkey is not null)
             {
-                tbMsg.Text = string.Format(
-                    App.API.GetTranslation("hotkeyUnavailableEditable"),
-                    description
-                );
+                tbMsg.Text = Localize.hotkeyUnavailableEditable(description);
                 SaveBtn.IsEnabled = false;
                 SaveBtn.Visibility = Visibility.Collapsed;
                 OverwriteBtn.IsEnabled = true;
@@ -158,10 +155,7 @@ public partial class HotkeyControlDialog : ContentDialog
             }
             else
             {
-                tbMsg.Text = string.Format(
-                    App.API.GetTranslation("hotkeyUnavailableUneditable"),
-                    description
-                );
+                tbMsg.Text = Localize.hotkeyUnavailableUneditable(description);
                 SaveBtn.IsEnabled = false;
                 SaveBtn.Visibility = Visibility.Visible;
                 OverwriteBtn.IsEnabled = false;
@@ -175,7 +169,7 @@ public partial class HotkeyControlDialog : ContentDialog
 
         if (!CheckHotkeyAvailability(hotkey.Value, true))
         {
-            tbMsg.Text = App.API.GetTranslation("hotkeyUnavailable");
+            tbMsg.Text = Localize.hotkeyUnavailable();
             Alert.Visibility = Visibility.Visible;
             SaveBtn.IsEnabled = false;
             SaveBtn.Visibility = Visibility.Visible;

@@ -3,10 +3,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
-using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.UserSettings;
-using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using Microsoft.Win32;
 using Squirrel;
@@ -16,8 +14,6 @@ namespace Flow.Launcher.Core.Configuration
     public class Portable : IPortable
     {
         private static readonly string ClassName = nameof(Portable);
-
-        private readonly IPublicAPI API = Ioc.Default.GetRequiredService<IPublicAPI>();
 
         /// <summary>
         /// As at Squirrel.Windows version 1.5.2, UpdateManager needs to be disposed after finish
@@ -45,13 +41,13 @@ namespace Flow.Launcher.Core.Configuration
 #endif
                 IndicateDeletion(DataLocation.PortableDataPath);
 
-                API.ShowMsgBox(API.GetTranslation("restartToDisablePortableMode"));
+                PublicApi.Instance.ShowMsgBox(Localize.restartToDisablePortableMode());
 
                 API.RestartApp();
             }
             catch (Exception e)
             {
-                API.LogException(ClassName, "Error occurred while disabling portable mode", e);
+                PublicApi.Instance.LogException(ClassName, "Error occurred while disabling portable mode", e);
             }
         }
 
@@ -68,13 +64,13 @@ namespace Flow.Launcher.Core.Configuration
 #endif
                 IndicateDeletion(DataLocation.RoamingDataPath);
 
-                API.ShowMsgBox(API.GetTranslation("restartToEnablePortableMode"));
+                PublicApi.Instance.ShowMsgBox(Localize.restartToEnablePortableMode());
 
                 API.RestartApp();
             }
             catch (Exception e)
             {
-                API.LogException(ClassName, "Error occurred while enabling portable mode", e);
+                PublicApi.Instance.LogException(ClassName, "Error occurred while enabling portable mode", e);
             }
         }
 
@@ -94,13 +90,13 @@ namespace Flow.Launcher.Core.Configuration
 
         public void MoveUserDataFolder(string fromLocation, string toLocation)
         {
-            FilesFolders.CopyAll(fromLocation, toLocation, (s) => API.ShowMsgBox(s));
+            FilesFolders.CopyAll(fromLocation, toLocation, (s) => PublicApi.Instance.ShowMsgBox(s));
             VerifyUserDataAfterMove(fromLocation, toLocation);
         }
 
         public void VerifyUserDataAfterMove(string fromLocation, string toLocation)
         {
-            FilesFolders.VerifyBothFolderFilesEqual(fromLocation, toLocation, (s) => API.ShowMsgBox(s));
+            FilesFolders.VerifyBothFolderFilesEqual(fromLocation, toLocation, (s) => PublicApi.Instance.ShowMsgBox(s));
         }
 
         public void CreateShortcuts()
@@ -150,12 +146,12 @@ namespace Flow.Launcher.Core.Configuration
             // delete it and prompt the user to pick the portable data location
             if (File.Exists(roamingDataDeleteFilePath))
             {
-                FilesFolders.RemoveFolderIfExists(roamingDataDir, (s) => API.ShowMsgBox(s));
+                FilesFolders.RemoveFolderIfExists(roamingDataDir, (s) => PublicApi.Instance.ShowMsgBox(s));
 
-                if (API.ShowMsgBox(API.GetTranslation("moveToDifferentLocation"), 
+                if (PublicApi.Instance.ShowMsgBox(Localize.moveToDifferentLocation(), 
                     string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
-                    FilesFolders.OpenPath(Constant.RootDirectory, (s) => API.ShowMsgBox(s));
+                    FilesFolders.OpenPath(Constant.RootDirectory, (s) => PublicApi.Instance.ShowMsgBox(s));
 
                     Environment.Exit(0);
                 }
@@ -164,9 +160,9 @@ namespace Flow.Launcher.Core.Configuration
             // delete it and notify the user about it.
             else if (File.Exists(portableDataDeleteFilePath))
             {
-                FilesFolders.RemoveFolderIfExists(portableDataDir, (s) => API.ShowMsgBox(s));
+                FilesFolders.RemoveFolderIfExists(portableDataDir, (s) => PublicApi.Instance.ShowMsgBox(s));
 
-                API.ShowMsgBox(API.GetTranslation("shortcutsUninstallerCreated"));
+                PublicApi.Instance.ShowMsgBox(Localize.shortcutsUninstallerCreated());
             }
         }
 
@@ -177,8 +173,7 @@ namespace Flow.Launcher.Core.Configuration
 
             if (roamingLocationExists && portableLocationExists)
             {
-                API.ShowMsgBox(string.Format(API.GetTranslation("userDataDuplicated"), 
-                    DataLocation.PortableDataPath, DataLocation.RoamingDataPath, Environment.NewLine));
+                PublicApi.Instance.ShowMsgBox(Localize.userDataDuplicated(DataLocation.PortableDataPath, DataLocation.RoamingDataPath, Environment.NewLine));
 
                 return false;
             }
