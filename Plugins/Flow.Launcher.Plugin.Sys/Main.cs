@@ -260,7 +260,7 @@ namespace Flow.Launcher.Plugin.Sys
                             MessageBoxButton.YesNo, MessageBoxImage.Warning);
                         if (result == MessageBoxResult.Yes)
                         {
-                            // Save settings before restart to avoid data loss
+                            // Save settings before advanced restart to avoid data loss
                             Context.API.SaveAppAllSettings();
 
                             if (EnableShutdownPrivilege())
