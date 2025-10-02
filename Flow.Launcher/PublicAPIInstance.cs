@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -73,7 +73,6 @@ namespace Flow.Launcher
             _mainVM.ChangeQueryText(query, requery);
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
         public void RestartApp()
         {
             _mainVM.Hide();
@@ -178,20 +177,20 @@ namespace Flow.Launcher
 
                     Clipboard.SetFileDropList(paths);
                 });
-                
+
                 if (exception == null)
                 {
                     if (showDefaultNotification)
                     {
                         ShowMsg(
-                            $"{GetTranslation("copy")} {(isFile ? GetTranslation("fileTitle") : GetTranslation("folderTitle"))}",
-                            GetTranslation("completedSuccessfully"));
+                            $"{Localize.copy()} {(isFile ? Localize.fileTitle(): Localize.folderTitle())}",
+                            Localize.completedSuccessfully());
                     }
                 }
                 else
                 {
                     LogException(nameof(PublicAPIInstance), "Failed to copy file/folder to clipboard", exception);
-                    ShowMsgError(GetTranslation("failedToCopy"));
+                    ShowMsgError(Localize.failedToCopy());
                 }
             }
             else
@@ -209,15 +208,15 @@ namespace Flow.Launcher
                     if (showDefaultNotification)
                     {
                         ShowMsg(
-                            $"{GetTranslation("copy")} {GetTranslation("textTitle")}",
-                            GetTranslation("completedSuccessfully"));
+                            $"{Localize.copy()} {Localize.textTitle()}",
+                            Localize.completedSuccessfully());
                     }
                 }
                 else
                 {
                     LogException(nameof(PublicAPIInstance), "Failed to copy text to clipboard", exception);
-                    ShowMsgError(GetTranslation("failedToCopy"));
-                }  
+                    ShowMsgError(Localize.failedToCopy());
+                }
             }
         }
 
@@ -326,7 +325,7 @@ namespace Flow.Launcher
 
             ((PluginJsonStorage<T>)_pluginJsonStorages[type]).Save();
         }
-        
+
         public void OpenDirectory(string directoryPath, string fileNameOrFilePath = null)
         {
             try
@@ -393,24 +392,30 @@ namespace Flow.Launcher
             }
             catch (Win32Exception ex) when (ex.NativeErrorCode == 2)
             {
-                LogError(ClassName, "File Manager not found");
+                LogException(ClassName, "File Manager not found", ex);
                 ShowMsgError(
-                    GetTranslation("fileManagerNotFoundTitle"),
-                    string.Format(GetTranslation("fileManagerNotFound"), ex.Message)
+                    Localize.fileManagerNotFoundTitle(),
+                    Localize.fileManagerNotFound()
                 );
             }
             catch (Exception ex)
             {
                 LogException(ClassName, "Failed to open folder", ex);
                 ShowMsgError(
-                    GetTranslation("errorTitle"),
-                    string.Format(GetTranslation("folderOpenError"), ex.Message)
+                    Localize.errorTitle(),
+                    Localize.folderOpenError()
                 );
             }
         }
 
         private void OpenUri(Uri uri, bool? inPrivate = null, bool forceBrowser = false)
         {
+            if (uri.IsFile && !FilesFolders.FileOrLocationExists(uri.LocalPath))
+            {
+                ShowMsgError(Localize.errorTitle(), Localize.fileNotFoundError(uri.LocalPath));
+                return;
+            }
+
             if (forceBrowser || uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps)
             {
                 var browserInfo = _settings.CustomBrowser;
@@ -433,20 +438,26 @@ namespace Flow.Launcher
                     var tabOrWindow = browserInfo.OpenInTab ? "tab" : "window";
                     LogException(ClassName, $"Failed to open URL in browser {tabOrWindow}: {path}, {inPrivate ?? browserInfo.EnablePrivate}, {browserInfo.PrivateArg}", e);
                     ShowMsgError(
-                        GetTranslation("errorTitle"),
-                        GetTranslation("browserOpenError")
+                        Localize.errorTitle(),
+                        Localize.browserOpenError()
                     );
                 }
             }
             else
             {
-                Process.Start(new ProcessStartInfo()
+                try
                 {
-                    FileName = uri.AbsoluteUri,
-                    UseShellExecute = true
-                })?.Dispose();
-
-                return;
+                    Process.Start(new ProcessStartInfo()
+                    {
+                        FileName = uri.AbsoluteUri,
+                        UseShellExecute = true
+                    })?.Dispose();
+                }
+                catch (Exception e)
+                {
+                    LogException(ClassName, $"Failed to open: {uri.AbsoluteUri}", e);
+                    ShowMsgError(Localize.errorTitle(), e.Message);
+                }
             }
         }
 
@@ -480,7 +491,7 @@ namespace Flow.Launcher
             OpenUri(appUri);
         }
 
-        public void ToggleGameMode() 
+        public void ToggleGameMode()
         {
             _mainVM.ToggleGameMode();
         }

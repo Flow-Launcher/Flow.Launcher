@@ -59,21 +59,17 @@ namespace Flow.Launcher.Infrastructure.DialogJump
 
         private static readonly Settings _settings = Ioc.Default.GetRequiredService<Settings>();
 
-        // We should not initialize API in static constructor because it will create another API instance
-        private static IPublicAPI api = null;
-        private static IPublicAPI API => api ??= Ioc.Default.GetRequiredService<IPublicAPI>();
-
         private static HWND _mainWindowHandle = HWND.Null;
 
         private static readonly ConcurrentDictionary<DialogJumpExplorerPair, IDialogJumpExplorerWindow> _dialogJumpExplorers = new();
 
         private static DialogJumpExplorerPair _lastExplorer = null;
-        private static readonly object _lastExplorerLock = new();
+        private static readonly Lock _lastExplorerLock = new();
 
         private static readonly ConcurrentDictionary<DialogJumpDialogPair, IDialogJumpDialogWindow> _dialogJumpDialogs = new();
 
         private static IDialogJumpDialogWindow _dialogWindow = null;
-        private static readonly object _dialogWindowLock = new();
+        private static readonly Lock _dialogWindowLock = new();
 
         private static HWINEVENTHOOK _foregroundChangeHook = HWINEVENTHOOK.Null;
         private static HWINEVENTHOOK _locationChangeHook = HWINEVENTHOOK.Null;
@@ -90,8 +86,8 @@ namespace Flow.Launcher.Infrastructure.DialogJump
         private static DispatcherTimer _dragMoveTimer = null;
 
         // A list of all file dialog windows that are auto switched already
-        private static readonly List<HWND> _autoSwitchedDialogs = new();
-        private static readonly object _autoSwitchedDialogsLock = new();
+        private static readonly List<HWND> _autoSwitchedDialogs = [];
+        private static readonly Lock _autoSwitchedDialogsLock = new();
 
         private static HWINEVENTHOOK _moveSizeHook = HWINEVENTHOOK.Null;
         private static readonly WINEVENTPROC _moveProc = MoveSizeCallBack;
@@ -330,7 +326,7 @@ namespace Flow.Launcher.Infrastructure.DialogJump
                 {
                     foreach (var explorer in _dialogJumpExplorers.Keys)
                     {
-                        if (API.PluginModified(explorer.Metadata.ID) || // Plugin is modified
+                        if (PublicApi.Instance.PluginModified(explorer.Metadata.ID) || // Plugin is modified
                             explorer.Metadata.Disabled) continue; // Plugin is disabled
 
                         var explorerWindow = explorer.Plugin.CheckExplorerWindow(hWnd);
@@ -508,7 +504,7 @@ namespace Flow.Launcher.Infrastructure.DialogJump
                 var dialogWindowChanged = false;
                 foreach (var dialog in _dialogJumpDialogs.Keys)
                 {
-                    if (API.PluginModified(dialog.Metadata.ID) || // Plugin is modified
+                    if (PublicApi.Instance.PluginModified(dialog.Metadata.ID) || // Plugin is modified
                         dialog.Metadata.Disabled) continue; // Plugin is disabled
 
                     IDialogJumpDialogWindow dialogWindow;
@@ -611,7 +607,7 @@ namespace Flow.Launcher.Infrastructure.DialogJump
                         {
                             foreach (var explorer in _dialogJumpExplorers.Keys)
                             {
-                                if (API.PluginModified(explorer.Metadata.ID) || // Plugin is modified
+                                if (PublicApi.Instance.PluginModified(explorer.Metadata.ID) || // Plugin is modified
                                     explorer.Metadata.Disabled) continue; // Plugin is disabled
 
                                 var explorerWindow = explorer.Plugin.CheckExplorerWindow(hwnd);
@@ -886,7 +882,7 @@ namespace Flow.Launcher.Infrastructure.DialogJump
             // Then check all dialog windows
             foreach (var dialog in _dialogJumpDialogs.Keys)
             {
-                if (API.PluginModified(dialog.Metadata.ID) || // Plugin is modified
+                if (PublicApi.Instance.PluginModified(dialog.Metadata.ID) || // Plugin is modified
                     dialog.Metadata.Disabled) continue; // Plugin is disabled
 
                 var dialogWindow = _dialogJumpDialogs[dialog];
@@ -899,7 +895,7 @@ namespace Flow.Launcher.Infrastructure.DialogJump
             // Finally search for the dialog window again
             foreach (var dialog in _dialogJumpDialogs.Keys)
             {
-                if (API.PluginModified(dialog.Metadata.ID) || // Plugin is modified
+                if (PublicApi.Instance.PluginModified(dialog.Metadata.ID) || // Plugin is modified
                     dialog.Metadata.Disabled) continue; // Plugin is disabled
 
                 IDialogJumpDialogWindow dialogWindow;
@@ -1082,11 +1078,8 @@ namespace Flow.Launcher.Infrastructure.DialogJump
             _navigationLock.Dispose();
 
             // Stop drag move timer
-            if (_dragMoveTimer != null)
-            {
-                _dragMoveTimer.Stop();
-                _dragMoveTimer = null;
-            }
+            _dragMoveTimer?.Stop();
+            _dragMoveTimer = null;
         }
 
         #endregion

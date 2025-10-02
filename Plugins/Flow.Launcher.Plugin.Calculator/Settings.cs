@@ -1,5 +1,4 @@
-﻿
-namespace Flow.Launcher.Plugin.Calculator;
+﻿namespace Flow.Launcher.Plugin.Calculator;
 
 public class Settings
 {
