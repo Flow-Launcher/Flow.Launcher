@@ -211,6 +211,9 @@ namespace Flow.Launcher.Plugin.Sys
                             Localize.flowlauncher_plugin_sys_shutdown_computer(),
                             MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
+                        // Save settings before shutdown to avoid data loss
+                        Context.API.SaveAppAllSettings();
+
                         if (result == MessageBoxResult.Yes)
                             if (EnableShutdownPrivilege())
                                 PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_SHUTDOWN | EXIT_WINDOWS_FLAGS.EWX_POWEROFF, REASON);
@@ -232,6 +235,9 @@ namespace Flow.Launcher.Plugin.Sys
                             Localize.flowlauncher_plugin_sys_restart_computer(),
                             MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
+                        // Save settings before restart to avoid data loss
+                        Context.API.SaveAppAllSettings();
+
                         if (result == MessageBoxResult.Yes)
                             if (EnableShutdownPrivilege())
                                 PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_REBOOT, REASON);
@@ -252,6 +258,9 @@ namespace Flow.Launcher.Plugin.Sys
                             Localize.flowlauncher_plugin_sys_dlgtext_restart_computer_advanced(),
                             Localize.flowlauncher_plugin_sys_restart_computer(),
                             MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+                        // Save settings before restart to avoid data loss
+                        Context.API.SaveAppAllSettings();
 
                         if (result == MessageBoxResult.Yes)
                             if (EnableShutdownPrivilege())
