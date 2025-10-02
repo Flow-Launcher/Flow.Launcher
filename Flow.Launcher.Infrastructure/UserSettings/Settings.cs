@@ -230,6 +230,21 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
 
+
+        private bool _showHistoryExecutedResultsForHomePage = false;
+        public bool ShowHistoryExecutedResultsForHomePage
+        {
+            get => _showHistoryExecutedResultsForHomePage;
+            set
+            {
+                if (_showHistoryExecutedResultsForHomePage != value)
+                {
+                    _showHistoryExecutedResultsForHomePage = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public int MaxHistoryResultsToShowForHomePage { get; set; } = 5;
 
         public bool AutoRestartAfterChanging { get; set; } = false;
