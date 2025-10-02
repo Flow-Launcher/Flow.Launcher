@@ -282,10 +282,8 @@ namespace Flow.Launcher.Plugin.Sys
                             Localize.flowlauncher_plugin_sys_dlgtext_logoff_computer(),
                             Localize.flowlauncher_plugin_sys_log_off(),
                             MessageBoxButton.YesNo, MessageBoxImage.Warning);
-
                         if (result == MessageBoxResult.Yes)
                             PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_LOGOFF, REASON);
-
                         return true;
                     }
                 },
@@ -351,7 +349,6 @@ namespace Flow.Launcher.Plugin.Sys
                                 Localize.flowlauncher_plugin_sys_dlgtitle_error(),
                                 MessageBoxButton.OK, MessageBoxImage.Error);
                         }
-
                         return true;
                     }
                 },
@@ -425,13 +422,11 @@ namespace Flow.Launcher.Plugin.Sys
                     {
                         // Hide the window first then show msg after done because sometimes the reload could take a while, so not to make user think it's frozen. 
                         Context.API.HideMainWindow();
-
                         _ = Context.API.ReloadAllPluginData().ContinueWith(_ =>
                             Context.API.ShowMsg(
                                 Localize.flowlauncher_plugin_sys_dlgtitle_success(),
                                 Localize.flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded()),
                             TaskScheduler.Current);
-
                         return true;
                     }
                 },
@@ -511,7 +506,6 @@ namespace Flow.Launcher.Plugin.Sys
                         else
                         {
                             Context.API.ChangeQuery($"{query.ActionKeyword}{Plugin.Query.ActionKeywordSeparator}{ThemeSelector.Keyword}{Plugin.Query.ActionKeywordSeparator}");
-
                         }
                         return false;
                     }
