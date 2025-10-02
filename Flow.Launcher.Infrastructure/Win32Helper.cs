@@ -19,6 +19,7 @@ using Microsoft.Win32.SafeHandles;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.Graphics.Dwm;
+using Windows.Win32.System.Power;
 using Windows.Win32.System.Threading;
 using Windows.Win32.UI.Input.KeyboardAndMouse;
 using Windows.Win32.UI.Shell.Common;
@@ -337,9 +338,6 @@ namespace Flow.Launcher.Infrastructure
 
         public const int SC_MAXIMIZE = (int)PInvoke.SC_MAXIMIZE;
         public const int SC_MINIMIZE = (int)PInvoke.SC_MINIMIZE;
-
-        public const int WM_POWERBROADCAST = (int)PInvoke.WM_POWERBROADCAST;
-        public const int PBT_APMRESUMEAUTOMATIC = (int)PInvoke.PBT_APMRESUMEAUTOMATIC;
 
         #endregion
 
@@ -915,6 +913,106 @@ namespace Flow.Launcher.Infrastructure
                 return dlg.FileName;
 
             return string.Empty;
+        }
+
+        #endregion
+
+        #region Sleep Mode Listener
+
+        private static Action _func;
+        private static PDEVICE_NOTIFY_CALLBACK_ROUTINE _callback = null;
+        private static DEVICE_NOTIFY_SUBSCRIBE_PARAMETERS _recipient;
+        private static SafeHandle _recipientHandle;
+        private static HPOWERNOTIFY _handle = HPOWERNOTIFY.Null;
+
+        /// <summary>
+        /// Registers a listener for sleep mode events.
+        /// Inspired from: https://github.com/XKaguya/LenovoLegionToolkit
+        /// https://blog.csdn.net/mochounv/article/details/114668594
+        /// </summary>
+        /// <param name="func"></param>
+        /// <exception cref="Win32Exception"></exception>
+        public static unsafe void RegisterSleepModeListener(Action func)
+        {
+            if (_callback != null)
+            {
+                // Only register if not already registered
+                return;
+            }
+
+            _func = func;
+            _callback = new PDEVICE_NOTIFY_CALLBACK_ROUTINE(DeviceNotifyCallback);
+            _recipient = new DEVICE_NOTIFY_SUBSCRIBE_PARAMETERS()
+            {
+                Callback = _callback,
+                Context = null
+            };
+
+            _recipientHandle = new StructSafeHandle<DEVICE_NOTIFY_SUBSCRIBE_PARAMETERS>(_recipient);
+            _handle = PInvoke.PowerRegisterSuspendResumeNotification(
+                REGISTER_NOTIFICATION_FLAGS.DEVICE_NOTIFY_CALLBACK,
+                _recipientHandle,
+                out var handle) == WIN32_ERROR.ERROR_SUCCESS ?
+                new HPOWERNOTIFY(new IntPtr(handle)) :
+                HPOWERNOTIFY.Null;
+            if (_handle.IsNull)
+            {
+                throw new Win32Exception("Error registering for power notifications: " + Marshal.GetLastWin32Error());
+            }
+        }
+
+        /// <summary>
+        /// Unregisters the sleep mode listener.
+        /// </summary>
+        public static void UnregisterSleepModeListener()
+        {
+            if (!_handle.IsNull)
+            {
+                PInvoke.PowerUnregisterSuspendResumeNotification(_handle);
+                _handle = HPOWERNOTIFY.Null;
+                _func = null;
+                _callback = null;
+                _recipientHandle = null;
+            }
+        }
+
+        private static unsafe uint DeviceNotifyCallback(void* context, uint type, void* setting)
+        {
+            switch (type)
+            {
+                case PInvoke.PBT_APMRESUMEAUTOMATIC:
+                    // Operation is resuming automatically from a low-power state.This message is sent every time the system resumes
+                    _func?.Invoke();
+                    break;
+
+                case PInvoke.PBT_APMRESUMESUSPEND:
+                    // Operation is resuming from a low-power state.This message is sent after PBT_APMRESUMEAUTOMATIC if the resume is triggered by user input, such as pressing a key
+                    _func?.Invoke();
+                    break;
+            }
+
+            return 0;
+        }
+
+        private sealed class StructSafeHandle<T> : SafeHandle where T : struct
+        {
+            private readonly nint _ptr = nint.Zero;
+
+            public StructSafeHandle(T recipient) : base(nint.Zero, true)
+            {
+                var pRecipient = Marshal.AllocHGlobal(Marshal.SizeOf<T>());
+                Marshal.StructureToPtr(recipient, pRecipient, false);
+                SetHandle(pRecipient);
+                _ptr = pRecipient;
+            }
+
+            public override bool IsInvalid => handle == nint.Zero;
+
+            protected override bool ReleaseHandle()
+            {
+                Marshal.FreeHGlobal(_ptr);
+                return true;
+            }
         }
 
         #endregion
