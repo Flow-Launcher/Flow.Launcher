@@ -429,8 +429,8 @@ namespace Flow.Launcher.Core.Plugin
             {
                 Result r = new()
                 {
-                    Title = $"{metadata.Name}: Failed to respond!",
-                    SubTitle = "Select this result for more info",
+                    Title = Localize.pluginFailedToRespond(metadata.Name),
+                    SubTitle = Localize.pluginFailedToRespondSubtitle(),
                     IcoPath = Constant.ErrorIcon,
                     PluginDirectory = metadata.PluginDirectory,
                     ActionKeywordAssigned = query.ActionKeyword,
