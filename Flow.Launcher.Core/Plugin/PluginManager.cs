@@ -246,6 +246,9 @@ namespace Flow.Launcher.Core.Plugin
         {
             var initTasks = _allLoadedPlugins.Select(pair => Task.Run(async () =>
             {
+                // Register plugin action keywords so that plugins can be queried in results
+                RegisterPluginActionKeywords(pair);
+
                 try
                 {
                     var milliseconds = await PublicApi.Instance.StopwatchLogDebugAsync(ClassName, $"Init method time cost for <{pair.Metadata.Name}>",
@@ -283,9 +286,6 @@ namespace Flow.Launcher.Core.Plugin
 
                 // Update plugin metadata translation after the plugin is initialized with IPublicAPI instance
                 Internationalization.UpdatePluginMetadataTranslation(pair);
-
-                // Register plugin action keywords so that plugins can be queried in results
-                RegisterPluginActionKeywords(pair);
 
                 // Add plugin to Dialog Jump plugin list after the plugin is initialized
                 DialogJump.InitializeDialogJumpPlugin(pair);
