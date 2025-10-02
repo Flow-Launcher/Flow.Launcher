@@ -41,9 +41,11 @@ namespace Flow.Launcher.ViewModel
         private string _ignoredQueryText; // Used to ignore query text change when switching between context menu and query results
 
         private readonly FlowLauncherJsonStorage<History> _historyItemsStorage;
+        private readonly FlowLauncherJsonStorage<ExecutedHistory> _executedHistoryStorage;
         private readonly FlowLauncherJsonStorage<UserSelectedRecord> _userSelectedRecordStorage;
         private readonly FlowLauncherJsonStorageTopMostRecord _topMostRecord;
         private readonly History _history;
+        private readonly ExecutedHistory _executedHistory;
         private int lastHistoryIndex = 1;
         private readonly UserSelectedRecord _userSelectedRecord;
 
@@ -148,9 +150,11 @@ namespace Flow.Launcher.ViewModel
             };
 
             _historyItemsStorage = new FlowLauncherJsonStorage<History>();
+            _executedHistoryStorage = new FlowLauncherJsonStorage<ExecutedHistory>();
             _userSelectedRecordStorage = new FlowLauncherJsonStorage<UserSelectedRecord>();
             _topMostRecord = new FlowLauncherJsonStorageTopMostRecord();
             _history = _historyItemsStorage.Load();
+            _executedHistory = _executedHistoryStorage.Load();
             _userSelectedRecord = _userSelectedRecordStorage.Load();
 
             ContextMenu = new ResultsViewModel(Settings, this)
@@ -529,6 +533,9 @@ namespace Flow.Launcher.ViewModel
 
             if (QueryResultsSelected())
             {
+                if(Settings.ShowHistoryExecutedResultsForHomePage)
+                    _executedHistory.Add(result);
+
                 _userSelectedRecord.Add(result);
                 _history.Add(result.OriginQuery.RawQuery);
                 lastHistoryIndex = 1;
@@ -1448,9 +1455,13 @@ namespace Flow.Launcher.ViewModel
                 }).ToArray();
 
                 // Query history results for home page firstly so it will be put on top of the results
-                if (Settings.ShowHistoryResultsForHomePage)
+                if (Settings.ShowHistoryQueryResultsForHomePage)
                 {
                     QueryHistoryTask(currentCancellationToken);
+                }
+                else if (Settings.ShowHistoryExecutedResultsForHomePage)
+                {
+                    QueryExecutedHistoryTask(currentCancellationToken);
                 }
             }
             else
@@ -1567,6 +1578,41 @@ namespace Flow.Launcher.ViewModel
                 if (token.IsCancellationRequested) return;
 
                 App.API.LogDebug(ClassName, $"Update results for history");
+
+                if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(results, _historyMetadata, query,
+                    token, reSelect)))
+                {
+                    App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
+                }
+            }
+
+            void QueryExecutedHistoryTask(CancellationToken token)
+            {
+                var historyItems = _executedHistory.Items.TakeLast(Settings.MaxHistoryResultsToShowForHomePage).Reverse();
+
+                var results = new List<Result>();
+                foreach (var item in historyItems)
+                {
+                    var result = new Result
+                    {
+                        Title = item.Title,
+                        SubTitle = item.SubTitle,
+                        IcoPath = item.IcoPath,
+                        PluginID = item.PluginID,
+                        OriginQuery = item.OriginQuery,
+                        Action = _ =>
+                        {
+                            App.API.ChangeQuery(item.OriginQuery.RawQuery);
+                            return false;
+                        },
+                        Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE81C")
+                    };
+                    results.Add(result);
+                }
+
+                if (token.IsCancellationRequested) return;
+
+                App.API.LogDebug(ClassName, "Update results for executed history");
 
                 if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(results, _historyMetadata, query,
                     token, reSelect)))
@@ -1698,7 +1744,7 @@ namespace Flow.Launcher.ViewModel
         /// <returns>True if existing results should be cleared, false otherwise.</returns>
         private bool ShouldClearExistingResultsForNonQuery(ICollection<PluginPair> plugins)
         {
-            if (!Settings.ShowHistoryResultsForHomePage && (plugins.Count == 0 || plugins.All(x => x.Metadata.HomeDisabled == true)))
+            if (!Settings.ShowHistoryQueryResultsForHomePage && (plugins.Count == 0 || plugins.All(x => x.Metadata.HomeDisabled == true)))
             {
                 App.API.LogDebug(ClassName, $"Existing results should be cleared for non-query");
                 return true;
@@ -2163,6 +2209,7 @@ namespace Flow.Launcher.ViewModel
         public void Save()
         {
             _historyItemsStorage.Save();
+            _executedHistoryStorage.Save();
             _userSelectedRecordStorage.Save();
             _topMostRecord.Save();
         }

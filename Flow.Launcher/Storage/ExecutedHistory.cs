@@ -5,17 +5,37 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Flow.Launcher.Plugin;
+using Flow.Launcher.ViewModel;
 
 namespace Flow.Launcher.Storage;
 public class ExecutedHistory
 {
-    [JsonInclude]
-    public List<Result> Items { get; private set; } = new List<Result>();
-    private int _maxHistory = 300;
+    [JsonInclude] public List<ExecutedHistoryItem> Items { get; private set; } = [];
+    private const int MaxHistory = 300;
 
     public void Add(Result result)
     {
-        Items.Add(result);
-    }
+        var item = new ExecutedHistoryItem
+        {
+            Title = result.Title,
+            SubTitle = result.SubTitle,
+            IcoPath = result.IcoPath ?? string.Empty,
+            PluginID = result.PluginID,
+            OriginQuery = result.OriginQuery,
+            ExecutedDateTime = DateTime.Now
+        };
 
+        var existing = Items.FirstOrDefault(x => x.OriginQuery.RawQuery == item.OriginQuery.RawQuery && x.PluginID == item.PluginID);
+        if (existing != null)
+        {
+            Items.Remove(existing);
+        }
+
+        Items.Add(item);
+
+        if (Items.Count > MaxHistory)
+        {
+            Items.RemoveAt(0);
+        }
+    }
 }

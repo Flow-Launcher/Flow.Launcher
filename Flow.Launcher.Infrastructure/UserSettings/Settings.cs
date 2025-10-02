@@ -216,16 +216,21 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
 
-        private bool _showHistoryResultsForHomePage = false;
-        public bool ShowHistoryResultsForHomePage
+        private bool _showHistoryQueryResultsForHomePage = false;
+        public bool ShowHistoryQueryResultsForHomePage
         {
-            get => _showHistoryResultsForHomePage;
+            get => _showHistoryQueryResultsForHomePage;
             set
             {
-                if (_showHistoryResultsForHomePage != value)
+                if (_showHistoryQueryResultsForHomePage != value)
                 {
-                    _showHistoryResultsForHomePage = value;
+                    _showHistoryQueryResultsForHomePage = value;
                     OnPropertyChanged();
+                    if (value && _showHistoryExecutedResultsForHomePage)
+                    {
+                        _showHistoryExecutedResultsForHomePage = false;
+                        OnPropertyChanged(nameof(ShowHistoryExecutedResultsForHomePage));
+                    }
                 }
             }
         }
@@ -241,6 +246,11 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 {
                     _showHistoryExecutedResultsForHomePage = value;
                     OnPropertyChanged();
+                    if (value && _showHistoryQueryResultsForHomePage)
+                    {
+                        _showHistoryQueryResultsForHomePage = false;
+                        OnPropertyChanged(nameof(ShowHistoryQueryResultsForHomePage));
+                    }
                 }
             }
         }
