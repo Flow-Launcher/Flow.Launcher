@@ -8,14 +8,14 @@ using Flow.Launcher.Plugin;
 using Flow.Launcher.ViewModel;
 
 namespace Flow.Launcher.Storage;
-public class ExecutedHistory
+public class LastOpenedHistory
 {
-    [JsonInclude] public List<ExecutedHistoryItem> Items { get; private set; } = [];
+    [JsonInclude] public List<LastOpenedHistoryItem> Items { get; private set; } = [];
     private const int MaxHistory = 300;
 
     public void Add(Result result)
     {
-        var item = new ExecutedHistoryItem
+        var item = new LastOpenedHistoryItem
         {
             Title = result.Title,
             SubTitle = result.SubTitle,

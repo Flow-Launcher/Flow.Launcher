@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Storage;
-public class ExecutedHistoryItem
+public class LastOpenedHistoryItem
 {
     public string Title { get; set; } = string.Empty;
     public string SubTitle { get; set; } = string.Empty;

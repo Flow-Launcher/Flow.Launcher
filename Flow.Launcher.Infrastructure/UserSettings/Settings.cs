@@ -226,25 +226,25 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 {
                     _showHistoryQueryResultsForHomePage = value;
                     OnPropertyChanged();
-                    if (value && _showHistoryExecutedResultsForHomePage)
+                    if (value && _showHistoryLastOpenedResultsForHomePage)
                     {
-                        _showHistoryExecutedResultsForHomePage = false;
-                        OnPropertyChanged(nameof(ShowHistoryExecutedResultsForHomePage));
+                        _showHistoryLastOpenedResultsForHomePage = false;
+                        OnPropertyChanged(nameof(ShowHistoryLastOpenedResultsForHomePage));
                     }
                 }
             }
         }
 
 
-        private bool _showHistoryExecutedResultsForHomePage = false;
-        public bool ShowHistoryExecutedResultsForHomePage
+        private bool _showHistoryLastOpenedResultsForHomePage = false;
+        public bool ShowHistoryLastOpenedResultsForHomePage
         {
-            get => _showHistoryExecutedResultsForHomePage;
+            get => _showHistoryLastOpenedResultsForHomePage;
             set
             {
-                if (_showHistoryExecutedResultsForHomePage != value)
+                if (_showHistoryLastOpenedResultsForHomePage != value)
                 {
-                    _showHistoryExecutedResultsForHomePage = value;
+                    _showHistoryLastOpenedResultsForHomePage = value;
                     OnPropertyChanged();
                     if (value && _showHistoryQueryResultsForHomePage)
                     {

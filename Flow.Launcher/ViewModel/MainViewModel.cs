@@ -41,11 +41,11 @@ namespace Flow.Launcher.ViewModel
         private string _ignoredQueryText; // Used to ignore query text change when switching between context menu and query results
 
         private readonly FlowLauncherJsonStorage<History> _historyItemsStorage;
-        private readonly FlowLauncherJsonStorage<ExecutedHistory> _executedHistoryStorage;
+        private readonly FlowLauncherJsonStorage<LastOpenedHistory> _lastOpenedHistoryStorage;
         private readonly FlowLauncherJsonStorage<UserSelectedRecord> _userSelectedRecordStorage;
         private readonly FlowLauncherJsonStorageTopMostRecord _topMostRecord;
         private readonly History _history;
-        private readonly ExecutedHistory _executedHistory;
+        private readonly LastOpenedHistory _lastOpenedHistory;
         private int lastHistoryIndex = 1;
         private readonly UserSelectedRecord _userSelectedRecord;
 
@@ -150,11 +150,11 @@ namespace Flow.Launcher.ViewModel
             };
 
             _historyItemsStorage = new FlowLauncherJsonStorage<History>();
-            _executedHistoryStorage = new FlowLauncherJsonStorage<ExecutedHistory>();
+            _lastOpenedHistoryStorage = new FlowLauncherJsonStorage<LastOpenedHistory>();
             _userSelectedRecordStorage = new FlowLauncherJsonStorage<UserSelectedRecord>();
             _topMostRecord = new FlowLauncherJsonStorageTopMostRecord();
             _history = _historyItemsStorage.Load();
-            _executedHistory = _executedHistoryStorage.Load();
+            _lastOpenedHistory = _lastOpenedHistoryStorage.Load();
             _userSelectedRecord = _userSelectedRecordStorage.Load();
 
             ContextMenu = new ResultsViewModel(Settings, this)
@@ -533,8 +533,8 @@ namespace Flow.Launcher.ViewModel
 
             if (QueryResultsSelected())
             {
-                if(Settings.ShowHistoryExecutedResultsForHomePage)
-                    _executedHistory.Add(result);
+                if(Settings.ShowHistoryLastOpenedResultsForHomePage)
+                    _lastOpenedHistory.Add(result);
 
                 _userSelectedRecord.Add(result);
                 _history.Add(result.OriginQuery.RawQuery);
@@ -1459,9 +1459,9 @@ namespace Flow.Launcher.ViewModel
                 {
                     QueryHistoryTask(currentCancellationToken);
                 }
-                else if (Settings.ShowHistoryExecutedResultsForHomePage)
+                else if (Settings.ShowHistoryLastOpenedResultsForHomePage)
                 {
-                    QueryExecutedHistoryTask(currentCancellationToken);
+                    QueryLastOpenedHistoryTask(currentCancellationToken);
                 }
             }
             else
@@ -1586,9 +1586,9 @@ namespace Flow.Launcher.ViewModel
                 }
             }
 
-            void QueryExecutedHistoryTask(CancellationToken token)
+            void QueryLastOpenedHistoryTask(CancellationToken token)
             {
-                var historyItems = _executedHistory.Items.TakeLast(Settings.MaxHistoryResultsToShowForHomePage).Reverse();
+                var historyItems = _lastOpenedHistory.Items.TakeLast(Settings.MaxHistoryResultsToShowForHomePage).Reverse();
 
                 var results = new List<Result>();
                 foreach (var item in historyItems)
@@ -1612,7 +1612,7 @@ namespace Flow.Launcher.ViewModel
 
                 if (token.IsCancellationRequested) return;
 
-                App.API.LogDebug(ClassName, "Update results for executed history");
+                App.API.LogDebug(ClassName, "Update results for last opened history");
 
                 if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(results, _historyMetadata, query,
                     token, reSelect)))
@@ -2209,7 +2209,7 @@ namespace Flow.Launcher.ViewModel
         public void Save()
         {
             _historyItemsStorage.Save();
-            _executedHistoryStorage.Save();
+            _lastOpenedHistoryStorage.Save();
             _userSelectedRecordStorage.Save();
             _topMostRecord.Save();
         }

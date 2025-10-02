@@ -377,8 +377,8 @@
                 <StackPanel Margin="15,10,0,0">
                     <RadioButton GroupName="HistoryType" Content="{DynamicResource historyQueryResultsForHomePage}"
                                  IsChecked="{Binding Settings.ShowHistoryQueryResultsForHomePage}" />
-                    <RadioButton GroupName="HistoryType" Content="{DynamicResource historyExecutedResultsForHomePage}"
-                                 IsChecked="{Binding Settings.ShowHistoryExecutedResultsForHomePage}"
+                    <RadioButton GroupName="HistoryType" Content="{DynamicResource historyLastOpenedResultsForHomePage}"
+                                 IsChecked="{Binding Settings.ShowHistoryLastOpenedResultsForHomePage}"
                                  Margin="0 0 0 0" />
                     
                     <cc:Card Title="{DynamicResource historyResultsCountForHomePage}" Type="InsideFit" Margin="0 10 0 0">
