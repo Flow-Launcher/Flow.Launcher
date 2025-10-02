@@ -249,6 +249,9 @@ namespace Flow.Launcher
 
         public List<PluginPair> GetAllPlugins() => PluginManager.GetAllLoadedPlugins();
 
+        public List<PluginPair> GetAllInitializedPlugins(bool includeFailed) =>
+            PluginManager.GetAllInitializedPlugins(includeFailed);
+
         public MatchResult FuzzySearch(string query, string stringToCompare) =>
             StringMatcher.FuzzySearch(query, stringToCompare);
 

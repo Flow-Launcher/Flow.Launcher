@@ -491,7 +491,7 @@ namespace Flow.Launcher.Core.Plugin
             return [.. _allLoadedPlugins];
         }
 
-        private static List<PluginPair> GetAllInitializedPlugins(bool includeFailed)
+        public static List<PluginPair> GetAllInitializedPlugins(bool includeFailed)
         {
             if (includeFailed)
             {
@@ -504,7 +504,7 @@ namespace Flow.Launcher.Core.Plugin
             }
         }
 
-        public static List<PluginPair> GetGlobalPlugins()
+        private static List<PluginPair> GetGlobalPlugins()
         {
             return [.. _globalPlugins.Values];
         }
