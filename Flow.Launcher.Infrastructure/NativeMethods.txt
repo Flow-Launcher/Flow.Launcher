@@ -92,7 +92,6 @@ PBT_APMRESUMEAUTOMATIC
 PBT_APMRESUMESUSPEND
 PowerRegisterSuspendResumeNotification
 PowerUnregisterSuspendResumeNotification
-DeviceNotifyCallbackRoutine
 
 OpenProcessToken
 GetCurrentProcess
