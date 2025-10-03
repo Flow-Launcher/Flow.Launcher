@@ -727,7 +727,7 @@ namespace Flow.Launcher.Core.Plugin
 
             if (oldActionkeyword != Query.GlobalPluginWildcardSign)
             {
-                _nonGlobalPlugins.TryRemove(oldActionkeyword, out var item);
+                _nonGlobalPlugins.TryRemove(oldActionkeyword, out _);
             }
 
             // Update action keywords and action keyword in plugin metadata
@@ -976,7 +976,7 @@ namespace Flow.Launcher.Core.Plugin
                 var keysToRemove = _nonGlobalPlugins.Where(p => p.Value.Metadata.ID == plugin.ID).Select(p => p.Key).ToList();
                 foreach (var key in keysToRemove)
                 {
-                    _nonGlobalPlugins.Remove(key, out var ite3);
+                    _nonGlobalPlugins.TryRemove(key, out var _);
                 }
             }
 
