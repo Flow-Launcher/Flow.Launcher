@@ -670,7 +670,7 @@ namespace Flow.Launcher.Core.Plugin
         public static bool IsInitializingOrInitFailed(string id)
         {
             // Id does not exist in loaded plugins
-            if (!_allLoadedPlugins.Any(x => x.Value.Metadata.ID == id)) return false;
+            if (!_allLoadedPlugins.ContainsKey(id)) return false;
 
             // Plugin initialized already
             if (_allInitializedPlugins.ContainsKey(id))
@@ -688,7 +688,7 @@ namespace Flow.Launcher.Core.Plugin
         public static bool IsInitializing(string id)
         {
             // Id does not exist in loaded plugins
-            if (!_allLoadedPlugins.Any(x => x.Value.Metadata.ID == id)) return false;
+            if (!_allLoadedPlugins.ContainsKey(id)) return false;
 
             // Plugin initialized already
             if (_allInitializedPlugins.ContainsKey(id))
@@ -705,7 +705,7 @@ namespace Flow.Launcher.Core.Plugin
         public static bool IsInitializationFailed(string id)
         {
             // Id does not exist in loaded plugins
-            if (!_allLoadedPlugins.Any(x => x.Value.Metadata.ID == id)) return false;
+            if (!_allLoadedPlugins.ContainsKey(id)) return false;
 
             // Plugin initialized already
             if (_allInitializedPlugins.ContainsKey(id))
