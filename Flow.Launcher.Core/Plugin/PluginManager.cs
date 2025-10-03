@@ -25,7 +25,7 @@ namespace Flow.Launcher.Core.Plugin
     {
         private static readonly string ClassName = nameof(PluginManager);
 
-        private static List<PluginPair> _allLoadedPlugins;
+        private static readonly ConcurrentDictionary<string, PluginPair> _allLoadedPlugins = [];
         private static readonly ConcurrentDictionary<string, PluginPair> _allInitializedPlugins = [];
         private static readonly ConcurrentDictionary<string, PluginPair> _initFailedPlugins = [];
         private static readonly ConcurrentDictionary<string, PluginPair> _globalPlugins = [];
@@ -204,7 +204,17 @@ namespace Flow.Launcher.Core.Plugin
             Settings.UpdatePluginSettings(metadatas);
 
             // Load plugins
-            _allLoadedPlugins = PluginsLoader.Plugins(metadatas, Settings);
+            var allLoadedPlugins = PluginsLoader.Plugins(metadatas, Settings);
+            foreach (var plugin in allLoadedPlugins)
+            {
+                if (plugin != null)
+                {
+                    if (!_allLoadedPlugins.TryAdd(plugin.Metadata.ID, plugin))
+                    {
+                        PublicApi.Instance.LogError(ClassName, $"Plugin with ID {plugin.Metadata.ID} already loaded");
+                    }
+                }
+            }
 
             // Since dotnet plugins need to get assembly name first, we should update plugin directory after loading plugins
             UpdatePluginDirectory(metadatas);
@@ -244,8 +254,10 @@ namespace Flow.Launcher.Core.Plugin
         /// <returns>return the list of failed to init plugins or null for none</returns>
         public static async Task InitializePluginsAsync(IResultUpdateRegister register)
         {
-            var initTasks = _allLoadedPlugins.Select(pair => Task.Run(async () =>
+            var initTasks = _allLoadedPlugins.Select(x => Task.Run(async () =>
             {
+                var pair = x.Value;
+
                 // Register plugin action keywords so that plugins can be queried in results
                 RegisterPluginActionKeywords(pair);
 
@@ -543,7 +555,7 @@ namespace Flow.Launcher.Core.Plugin
 
         public static List<PluginPair> GetAllLoadedPlugins()
         {
-            return [.. _allLoadedPlugins];
+            return [.. _allLoadedPlugins.Values];
         }
 
         public static List<PluginPair> GetAllInitializedPlugins(bool includeFailed)
@@ -655,7 +667,7 @@ namespace Flow.Launcher.Core.Plugin
         public static bool IsInitializingOrInitFailed(string id)
         {
             // Id does not exist in loaded plugins
-            if (!_allLoadedPlugins.Any(x => x.Metadata.ID == id)) return false;
+            if (!_allLoadedPlugins.Any(x => x.Value.Metadata.ID == id)) return false;
 
             // Plugin initialized already
             if (_allInitializedPlugins.ContainsKey(id))
@@ -962,7 +974,7 @@ namespace Flow.Launcher.Core.Plugin
                 }
                 Settings.RemovePluginSettings(plugin.ID);
                 {
-                    _allLoadedPlugins.RemoveAll(p => p.Metadata.ID == plugin.ID);
+                    _allLoadedPlugins.TryRemove(plugin.ID, out var _);
                 }
                 {
                     _allInitializedPlugins.TryRemove(plugin.ID, out var _);
