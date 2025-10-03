@@ -401,6 +401,7 @@ namespace Flow.Launcher.Core.Plugin
                 {
                     Title = Localize.pluginStillInitializing(metadata.Name),
                     SubTitle = Localize.pluginStillInitializingSubtitle(),
+                    AutoCompleteText = query.RawQuery,
                     IcoPath = metadata.IcoPath,
                     PluginDirectory = metadata.PluginDirectory,
                     ActionKeywordAssigned = query.ActionKeyword,
@@ -443,6 +444,7 @@ namespace Flow.Launcher.Core.Plugin
                 {
                     Title = Localize.pluginFailedToRespond(metadata.Name),
                     SubTitle = Localize.pluginFailedToRespondSubtitle(),
+                    AutoCompleteText = query.RawQuery,
                     IcoPath = Constant.ErrorIcon,
                     PluginDirectory = metadata.PluginDirectory,
                     ActionKeywordAssigned = query.ActionKeyword,
@@ -467,6 +469,7 @@ namespace Flow.Launcher.Core.Plugin
                 {
                     Title = Localize.pluginStillInitializing(metadata.Name),
                     SubTitle = Localize.pluginStillInitializingSubtitle(),
+                    AutoCompleteText = query.RawQuery,
                     IcoPath = metadata.IcoPath,
                     PluginDirectory = metadata.PluginDirectory,
                     ActionKeywordAssigned = query.ActionKeyword,
