@@ -25,7 +25,7 @@ public partial class SettingsPaneAboutViewModel : BaseModel
         get
         {
             var size = GetLogFiles().Sum(file => file.Length);
-            return $"{App.API.GetTranslation("clearlogfolder")} ({BytesToReadableString(size)})";
+            return $"{Localize.clearlogfolder()} ({BytesToReadableString(size)})";
         }
     }
 
@@ -34,7 +34,7 @@ public partial class SettingsPaneAboutViewModel : BaseModel
         get
         {
             var size = GetCacheFiles().Sum(file => file.Length);
-            return $"{App.API.GetTranslation("clearcachefolder")} ({BytesToReadableString(size)})";
+            return $"{Localize.clearcachefolder()} ({BytesToReadableString(size)})";
         }
     }
 
@@ -51,10 +51,7 @@ public partial class SettingsPaneAboutViewModel : BaseModel
         _ => Constant.Version
     };
 
-    public string ActivatedTimes => string.Format(
-        App.API.GetTranslation("about_activate_times"),
-        _settings.ActivateTimes
-    );
+    public string ActivatedTimes => Localize.about_activate_times(_settings.ActivateTimes);
 
     public class LogLevelData : DropdownDataGeneric<LOGLEVEL> { }
 
@@ -98,8 +95,8 @@ public partial class SettingsPaneAboutViewModel : BaseModel
     private void AskClearLogFolderConfirmation()
     {
         var confirmResult = App.API.ShowMsgBox(
-            App.API.GetTranslation("clearlogfolderMessage"),
-            App.API.GetTranslation("clearlogfolder"),
+            Localize.clearlogfolderMessage(),
+            Localize.clearlogfolder(),
             MessageBoxButton.YesNo
         );
 
@@ -107,7 +104,7 @@ public partial class SettingsPaneAboutViewModel : BaseModel
         {
             if (!ClearLogFolder())
             {
-                App.API.ShowMsgBox(App.API.GetTranslation("clearfolderfailMessage"));
+                App.API.ShowMsgBox(Localize.clearfolderfailMessage());
             }
         }
     }
@@ -116,8 +113,8 @@ public partial class SettingsPaneAboutViewModel : BaseModel
     private void AskClearCacheFolderConfirmation()
     {
         var confirmResult = App.API.ShowMsgBox(
-            App.API.GetTranslation("clearcachefolderMessage"),
-            App.API.GetTranslation("clearcachefolder"),
+            Localize.clearcachefolderMessage(),
+            Localize.clearcachefolder(),
             MessageBoxButton.YesNo
         );
 
@@ -125,7 +122,7 @@ public partial class SettingsPaneAboutViewModel : BaseModel
         {
             if (!ClearCacheFolder())
             {
-                App.API.ShowMsgBox(App.API.GetTranslation("clearfolderfailMessage"));
+                App.API.ShowMsgBox(Localize.clearfolderfailMessage());
             }
         }
     }

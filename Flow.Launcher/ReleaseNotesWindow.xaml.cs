@@ -132,8 +132,8 @@ namespace Flow.Launcher
                     RefreshButton.Visibility = Visibility.Visible;
                     MarkdownViewer.Visibility = Visibility.Collapsed;
                     App.API.ShowMsgError(
-                        App.API.GetTranslation("checkNetworkConnectionTitle"),
-                        App.API.GetTranslation("checkNetworkConnectionSubTitle"));
+                        Localize.checkNetworkConnectionTitle(),
+                        Localize.checkNetworkConnectionSubTitle());
                 }
                 else
                 {

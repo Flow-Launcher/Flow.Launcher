@@ -50,7 +50,7 @@ public partial class SelectBrowserViewModel : BaseModel
     {
         CustomBrowsers.Add(new()
         {
-            Name = App.API.GetTranslation("defaultBrowser_new_profile")
+            Name = Localize.defaultBrowser_new_profile()
         });
         SelectedCustomBrowserIndex = CustomBrowsers.Count - 1;
     }
