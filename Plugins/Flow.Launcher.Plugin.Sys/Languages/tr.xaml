@@ -77,8 +77,8 @@
     <system:String x:Key="flowlauncher_plugin_sys_plugin_description">Sistem ile ilgili komutlara erişim sağlar. ör. shutdown, lock, settings vb.</system:String>
 
     <!--  Theme Selector  -->
-    <system:String x:Key="flowlauncher_plugin_sys_type_isdark_hasblur">This theme supports two (light/dark) modes and Blur Transparent Background</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_type_isdark">This theme supports two (light/dark) modes</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_type_hasblur">This theme supports Blur Transparent Background</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_type_isdark_hasblur">Bu tema iki modu (açık/koyu) ve Bulanık Şeffaf Arka Planı destekler</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_type_isdark">Bu tema iki (açık/koyu) modu destekler</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_type_hasblur">Bu tema Bulanık Şeffaf Arka Planı destekler</system:String>
 
 </ResourceDictionary>
