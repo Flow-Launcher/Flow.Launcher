@@ -40,11 +40,11 @@ namespace Flow.Launcher.ViewModel
         private string _queryTextBeforeLeaveResults;
         private string _ignoredQueryText; // Used to ignore query text change when switching between context menu and query results
 
-        private readonly FlowLauncherJsonStorage<History> _historyItemsStorage;
+        private readonly FlowLauncherJsonStorage<History> _queryHistoryItemsStorage;
         private readonly FlowLauncherJsonStorage<LastOpenedHistory> _lastOpenedHistoryStorage;
         private readonly FlowLauncherJsonStorage<UserSelectedRecord> _userSelectedRecordStorage;
         private readonly FlowLauncherJsonStorageTopMostRecord _topMostRecord;
-        private readonly History _history;
+        private readonly History _queryHistory;
         private readonly LastOpenedHistory _lastOpenedHistory;
         private int lastHistoryIndex = 1;
         private readonly UserSelectedRecord _userSelectedRecord;
@@ -149,11 +149,11 @@ namespace Flow.Launcher.ViewModel
                 }
             };
 
-            _historyItemsStorage = new FlowLauncherJsonStorage<History>();
+            _queryHistoryItemsStorage = new FlowLauncherJsonStorage<History>();
             _lastOpenedHistoryStorage = new FlowLauncherJsonStorage<LastOpenedHistory>();
             _userSelectedRecordStorage = new FlowLauncherJsonStorage<UserSelectedRecord>();
             _topMostRecord = new FlowLauncherJsonStorageTopMostRecord();
-            _history = _historyItemsStorage.Load();
+            _queryHistory = _queryHistoryItemsStorage.Load();
             _lastOpenedHistory = _lastOpenedHistoryStorage.Load();
             _userSelectedRecord = _userSelectedRecordStorage.Load();
 
@@ -356,7 +356,7 @@ namespace Flow.Launcher.ViewModel
             if (QueryResultsSelected())
             {
                 SelectedResults = History;
-                History.SelectedIndex = _history.Items.Count - 1;
+                History.SelectedIndex = _queryHistory.Items.Count - 1;
             }
             else
             {
@@ -384,10 +384,10 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         public void ReverseHistory()
         {
-            if (_history.Items.Count > 0)
+            if (_queryHistory.Items.Count > 0)
             {
-                ChangeQueryText(_history.Items[^lastHistoryIndex].Query);
-                if (lastHistoryIndex < _history.Items.Count)
+                ChangeQueryText(_queryHistory.Items[^lastHistoryIndex].Query);
+                if (lastHistoryIndex < _queryHistory.Items.Count)
                 {
                     lastHistoryIndex++;
                 }
@@ -397,9 +397,9 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         public void ForwardHistory()
         {
-            if (_history.Items.Count > 0)
+            if (_queryHistory.Items.Count > 0)
             {
-                ChangeQueryText(_history.Items[^lastHistoryIndex].Query);
+                ChangeQueryText(_queryHistory.Items[^lastHistoryIndex].Query);
                 if (lastHistoryIndex > 1)
                 {
                     lastHistoryIndex--;
@@ -535,9 +535,12 @@ namespace Flow.Launcher.ViewModel
             {
                 if(Settings.ShowHistoryLastOpenedResultsForHomePage)
                     _lastOpenedHistory.Add(result);
+                else
+                {
+                    _queryHistory.Add(result.OriginQuery.RawQuery);
+                }
 
                 _userSelectedRecord.Add(result);
-                _history.Add(result.OriginQuery.RawQuery);
                 lastHistoryIndex = 1;
             }
         }
@@ -616,7 +619,7 @@ namespace Flow.Launcher.ViewModel
             if (QueryResultsSelected() // Results selected
                 && string.IsNullOrEmpty(QueryText) // No input
                 && Results.Visibility != Visibility.Visible // No items in result list, e.g. when home page is off and no query text is entered, therefore the view is collapsed.
-                && _history.Items.Count > 0) // Have history items
+                && _queryHistory.Items.Count > 0) // Have history items
             {
                 lastHistoryIndex = 1;
                 ReverseHistory();
@@ -1297,7 +1300,7 @@ namespace Flow.Launcher.ViewModel
             var query = QueryText.ToLower().Trim();
             History.Clear();
 
-            var results = GetHistoryItems(_history.Items);
+            var results = GetHistoryItems(_queryHistory.Items);
 
             if (!string.IsNullOrEmpty(query))
             {
@@ -1571,7 +1574,7 @@ namespace Flow.Launcher.ViewModel
             void QueryHistoryTask(CancellationToken token)
             {
                 // Select last history results and revert its order to make sure last history results are on top
-                var historyItems = _history.Items.TakeLast(Settings.MaxHistoryResultsToShowForHomePage).Reverse();
+                var historyItems = _queryHistory.Items.TakeLast(Settings.MaxHistoryResultsToShowForHomePage).Reverse();
 
                 var results = GetHistoryItems(historyItems);
 
@@ -2208,7 +2211,7 @@ namespace Flow.Launcher.ViewModel
         /// </summary>
         public void Save()
         {
-            _historyItemsStorage.Save();
+            _queryHistoryItemsStorage.Save();
             _lastOpenedHistoryStorage.Save();
             _userSelectedRecordStorage.Save();
             _topMostRecord.Save();
