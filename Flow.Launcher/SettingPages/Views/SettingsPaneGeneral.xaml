@@ -51,7 +51,10 @@
                 </ui:SettingsExpander.Items>
             </ui:SettingsExpander>
 
-            <ui:SettingsCard Description="{DynamicResource alwaysRunAsAdministratorToolTip}" Header="{DynamicResource alwaysRunAsAdministrator}">
+            <ui:SettingsCard
+                Margin="0 4 0 0"
+                Description="{DynamicResource alwaysRunAsAdministratorToolTip}"
+                Header="{DynamicResource alwaysRunAsAdministrator}">
                 <ui:SettingsCard.HeaderIcon>
                     <ui:FontIcon Glyph="&#xE7EF;" />
                 </ui:SettingsCard.HeaderIcon>
