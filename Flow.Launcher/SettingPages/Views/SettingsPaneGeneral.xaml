@@ -43,14 +43,28 @@
 
                 <ui:SettingsExpander.Items>
                     <ui:SettingsCard Description="{DynamicResource useLogonTaskForStartupTooltip}" Header="{DynamicResource useLogonTaskForStartup}">
+                        <ui:SettingsCard.HeaderIcon>
+                            <ui:FontIcon Glyph="&#xE823;" />
+                        </ui:SettingsCard.HeaderIcon>
                         <ui:ToggleSwitch
                             IsOn="{Binding UseLogonTaskForStartup}"
                             OffContent="{DynamicResource disable}"
                             OnContent="{DynamicResource enable}" />
                     </ui:SettingsCard>
                 </ui:SettingsExpander.Items>
-
             </ui:SettingsExpander>
+
+            <ui:SettingsCard Description="{DynamicResource alwaysRunAsAdministratorToolTip}" Header="{DynamicResource alwaysRunAsAdministrator}">
+                <ui:SettingsCard.HeaderIcon>
+                    <ui:FontIcon Glyph="&#xE7EF;" />
+                </ui:SettingsCard.HeaderIcon>
+
+                <ui:ToggleSwitch
+                    IsOn="{Binding AlwaysRunAsAdministrator}"
+                    OffContent="{DynamicResource disable}"
+                    OnContent="{DynamicResource enable}" />
+            </ui:SettingsCard>
+
             <ui:SettingsCard
                 Margin="0 4 0 0"
                 Description="{DynamicResource hideOnStartupToolTip}"
