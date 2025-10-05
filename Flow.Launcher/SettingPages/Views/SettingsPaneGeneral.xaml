@@ -53,20 +53,6 @@
 
             <ui:SettingsCard
                 Margin="0 4 0 0"
-                Description="{DynamicResource alwaysRunAsAdministratorToolTip}"
-                Header="{DynamicResource alwaysRunAsAdministrator}">
-                <ui:SettingsCard.HeaderIcon>
-                    <ui:FontIcon Glyph="&#xE7EF;" />
-                </ui:SettingsCard.HeaderIcon>
-
-                <ui:ToggleSwitch
-                    IsOn="{Binding AlwaysRunAsAdministrator}"
-                    OffContent="{DynamicResource disable}"
-                    OnContent="{DynamicResource enable}" />
-            </ui:SettingsCard>
-
-            <ui:SettingsCard
-                Margin="0 4 0 0"
                 Description="{DynamicResource hideOnStartupToolTip}"
                 Header="{DynamicResource hideOnStartup}">
                 <ui:SettingsCard.HeaderIcon>
@@ -75,6 +61,20 @@
 
                 <ui:ToggleSwitch
                     IsOn="{Binding Settings.HideOnStartup}"
+                    OffContent="{DynamicResource disable}"
+                    OnContent="{DynamicResource enable}" />
+            </ui:SettingsCard>
+
+            <ui:SettingsCard
+                Margin="0 4 0 0"
+                Description="{DynamicResource alwaysRunAsAdministratorToolTip}"
+                Header="{DynamicResource alwaysRunAsAdministrator}">
+                <ui:SettingsCard.HeaderIcon>
+                    <ui:FontIcon Glyph="&#xE7EF;" />
+                </ui:SettingsCard.HeaderIcon>
+
+                <ui:ToggleSwitch
+                    IsOn="{Binding AlwaysRunAsAdministrator}"
                     OffContent="{DynamicResource disable}"
                     OnContent="{DynamicResource enable}" />
             </ui:SettingsCard>
