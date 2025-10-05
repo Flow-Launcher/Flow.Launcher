@@ -210,14 +210,17 @@ namespace Flow.Launcher.Plugin.Sys
                             Localize.flowlauncher_plugin_sys_dlgtext_shutdown_computer(),
                             Localize.flowlauncher_plugin_sys_shutdown_computer(),
                             MessageBoxButton.YesNo, MessageBoxImage.Warning);
-
                         if (result == MessageBoxResult.Yes)
+                        {
+                            // Save settings before shutdown to avoid data loss
+                            Context.API.SaveAppAllSettings();
+
                             if (EnableShutdownPrivilege())
                                 PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_SHUTDOWN | EXIT_WINDOWS_FLAGS.EWX_POWEROFF, REASON);
                             else
                                 // No need to de-elevate since we already have message box asking for confirmation
                                 Process.Start("shutdown", "/s /t 0");
-
+                        }
                         return true;
                     }
                 },
@@ -232,14 +235,17 @@ namespace Flow.Launcher.Plugin.Sys
                             Localize.flowlauncher_plugin_sys_dlgtext_restart_computer(),
                             Localize.flowlauncher_plugin_sys_restart_computer(),
                             MessageBoxButton.YesNo, MessageBoxImage.Warning);
-
                         if (result == MessageBoxResult.Yes)
+                        {
+                            // Save settings before restart to avoid data loss
+                            Context.API.SaveAppAllSettings();
+
                             if (EnableShutdownPrivilege())
                                 PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_REBOOT, REASON);
                             else
                                 // No need to de-elevate since we already have message box asking for confirmation
                                 Process.Start("shutdown", "/r /t 0");
-
+                        }
                         return true;
                     }
                 },
@@ -254,14 +260,17 @@ namespace Flow.Launcher.Plugin.Sys
                             Localize.flowlauncher_plugin_sys_dlgtext_restart_computer_advanced(),
                             Localize.flowlauncher_plugin_sys_restart_computer(),
                             MessageBoxButton.YesNo, MessageBoxImage.Warning);
-
                         if (result == MessageBoxResult.Yes)
+                        {
+                            // Save settings before advanced restart to avoid data loss
+                            Context.API.SaveAppAllSettings();
+
                             if (EnableShutdownPrivilege())
                                 PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_REBOOT | EXIT_WINDOWS_FLAGS.EWX_BOOTOPTIONS, REASON);
                             else
                                 // No need to de-elevate since we already have message box asking for confirmation
                                 Process.Start("shutdown", "/r /o /t 0");
-
+                        }
                         return true;
                     }
                 },
@@ -276,10 +285,8 @@ namespace Flow.Launcher.Plugin.Sys
                             Localize.flowlauncher_plugin_sys_dlgtext_logoff_computer(),
                             Localize.flowlauncher_plugin_sys_log_off(),
                             MessageBoxButton.YesNo, MessageBoxImage.Warning);
-
                         if (result == MessageBoxResult.Yes)
                             PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_LOGOFF, REASON);
-
                         return true;
                     }
                 },
@@ -346,7 +353,6 @@ namespace Flow.Launcher.Plugin.Sys
                                 Localize.flowlauncher_plugin_sys_dlgtitle_error(),
                                 MessageBoxButton.OK, MessageBoxImage.Error);
                         }
-
                         return true;
                     }
                 },
@@ -421,13 +427,11 @@ namespace Flow.Launcher.Plugin.Sys
                     {
                         // Hide the window first then show msg after done because sometimes the reload could take a while, so not to make user think it's frozen. 
                         Context.API.HideMainWindow();
-
                         _ = Context.API.ReloadAllPluginData().ContinueWith(_ =>
                             Context.API.ShowMsg(
                                 Localize.flowlauncher_plugin_sys_dlgtitle_success(),
                                 Localize.flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded()),
                             TaskScheduler.Current);
-
                         return true;
                     }
                 },
@@ -507,7 +511,6 @@ namespace Flow.Launcher.Plugin.Sys
                         else
                         {
                             Context.API.ChangeQuery($"{query.ActionKeyword}{Plugin.Query.ActionKeywordSeparator}{ThemeSelector.Keyword}{Plugin.Query.ActionKeywordSeparator}");
-
                         }
                         return false;
                     }
