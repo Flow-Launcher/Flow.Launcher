@@ -7,7 +7,7 @@
     xmlns:flowlauncher="clr-namespace:Flow.Launcher"
     xmlns:local="clr-namespace:Flow.Launcher.Resources.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:ui="http://schemas.modernwpf.com/2019"
+    xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
     Title="WelcomePage2"
     DataContext="{Binding RelativeSource={RelativeSource Self}}"
     mc:Ignorable="d">
@@ -34,7 +34,7 @@
             </Style.Triggers>
         </Style>
     </Page.Resources>
-    <ScrollViewer>
+    <ui:ScrollViewerEx>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="250" />
@@ -89,7 +89,7 @@
                 </StackPanel>
             </Border>
 
-            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Visible">
+            <Grid Grid.Row="1">
                 <StackPanel Margin="24 20 24 20">
                     <TextBlock
                         FontSize="20"
@@ -118,8 +118,7 @@
                         ValidateKeyGesture="True"
                         WindowTitle="{DynamicResource flowlauncherHotkey}" />
                 </StackPanel>
-
-            </ScrollViewer>
+            </Grid>
         </Grid>
-    </ScrollViewer>
+    </ui:ScrollViewerEx>
 </ui:Page>

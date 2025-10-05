@@ -4,9 +4,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:cc="clr-namespace:Flow.Launcher.Resources.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ikw="http://schemas.inkore.net/lib/ui/wpf"
     xmlns:local="clr-namespace:Flow.Launcher.Resources.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:ui="http://schemas.modernwpf.com/2019"
+    xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
     Title="WelcomePage3"
     VerticalAlignment="Stretch"
     mc:Ignorable="d">
@@ -40,13 +41,83 @@
             FontSize="20"
             FontWeight="SemiBold"
             Text="{DynamicResource Welcome_Page3_Title}" />
-        <ScrollViewer
+        <ui:ScrollViewerEx
             Grid.Row="1"
-            Height="478"
-            Margin="0 0 0 0"
+            Height="483"
             HorizontalAlignment="Stretch"
             FontSize="13">
             <StackPanel Margin="24 0 24 0">
+                <ui:SettingsCard
+                    Background="Transparent"
+                    BorderThickness="0 0 0 0"
+                    Header="{DynamicResource HotkeyUpDownDesc}">
+                    <StackPanel Orientation="Horizontal">
+                        <cc:HotkeyDisplay Keys="←+→" Type="Small" />
+                    </StackPanel>
+                </ui:SettingsCard>
+                <Border
+                    Height="1"
+                    Background="{DynamicResource Color03B}"
+                    BorderThickness="0" />
+
+                <ui:SettingsCard
+                    Background="Transparent"
+                    BorderThickness="0 0 0 0"
+                    Header="{DynamicResource HotkeyLeftRightDesc}">
+                    <StackPanel Orientation="Horizontal">
+                        <cc:HotkeyDisplay Keys="↑+↓" Type="Small" />
+                    </StackPanel>
+                </ui:SettingsCard>
+                <Border
+                    Height="1"
+                    Background="{DynamicResource Color03B}"
+                    BorderThickness="0" />
+
+                <ui:SettingsCard
+                    Background="Transparent"
+                    BorderThickness="0 0 0 0"
+                    Header="{DynamicResource HotkeyESCDesc}">
+                    <StackPanel Orientation="Horizontal">
+                        <cc:HotkeyDisplay Keys="ESC" Type="Small" />
+                    </StackPanel>
+                </ui:SettingsCard>
+                <Border
+                    Height="1"
+                    Background="{DynamicResource Color03B}"
+                    BorderThickness="0" />
+
+                <ui:SettingsCard
+                    Background="Transparent"
+                    BorderThickness="0 0 0 0"
+                    Header="{DynamicResource HotkeyRunDesc}">
+                    <cc:HotkeyDisplay Keys="ENTER" Type="Small" />
+                </ui:SettingsCard>
+                <Border
+                    Height="1"
+                    Background="{DynamicResource Color03B}"
+                    BorderThickness="0" />
+
+                <ui:SettingsCard
+                    Background="Transparent"
+                    BorderThickness="0 0 0 0"
+                    Header="{DynamicResource HotkeyShiftEnterDesc}">
+                    <StackPanel Orientation="Horizontal">
+                        <cc:HotkeyDisplay Keys="SHIFT+ENTER" Type="Small" />
+                    </StackPanel>
+                </ui:SettingsCard>
+                <Border
+                    Height="1"
+                    Background="{DynamicResource Color03B}"
+                    BorderThickness="0" />
+
+                <ui:SettingsCard
+                    Background="Transparent"
+                    BorderThickness="0 0 0 0"
+                    Header="{DynamicResource HotkeyCtrlEnterDesc}">
+                    <StackPanel Orientation="Horizontal">
+                        <cc:HotkeyDisplay Keys="CTRL+ENTER" Type="Small" />
+                    </StackPanel>
+                </ui:SettingsCard>
                 <Border
                     BorderBrush="{DynamicResource Color03B}"
                     BorderThickness="0"
@@ -163,8 +234,8 @@
                             </StackPanel>
                         </cc:Card>
                     </StackPanel>
-                </Border>
+                </ui:SettingsCard>
             </StackPanel>
-        </ScrollViewer>
+        </ui:ScrollViewerEx>
     </Grid>
 </ui:Page>

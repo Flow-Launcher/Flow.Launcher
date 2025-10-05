@@ -26,6 +26,15 @@
         "resolved": "6.9.3",
         "contentHash": "1CUGgFdyECDKgi5HaUBhdv6k+VG9Iy4OCforGfHyar3xQXAJypZkzymgKtWj/4SPd6nSG0Qi7NH71qHrDSZLaA=="
       },
+      "iNKORE.UI.WPF.Modern": {
+        "type": "Direct",
+        "requested": "[0.10.1, )",
+        "resolved": "0.10.1",
+        "contentHash": "nRYmBosiL+42eUpLbHeqP7qJqtp5EpzuIMZTpvq4mFV33VB/JjkFg1y82gk50pjkXlAQWDvRyrfSAmPR5AM+3g==",
+        "dependencies": {
+          "iNKORE.UI.WPF": "1.2.8"
+        }
+      },
       "MdXaml": {
         "type": "Direct",
         "requested": "[1.27.0, )",
@@ -126,12 +135,6 @@
           "System.ValueTuple": "4.5.0"
         }
       },
-      "ModernWpfUI": {
-        "type": "Direct",
-        "requested": "[0.9.4, )",
-        "resolved": "0.9.4",
-        "contentHash": "HJ07Be9KOiGKGcMLz/AwY+84h3yGHRPuYpYXCE6h1yPtaFwGMWfanZ70jX7W5XWx8+Qk1vGox+WGKgxxsy6EHw=="
-      },
       "PropertyChanged.Fody": {
         "type": "Direct",
         "requested": "[4.1.0, )",
@@ -214,6 +217,11 @@
         "type": "Transitive",
         "resolved": "2.5.2",
         "contentHash": "hp3gKmC/14+6eKLgv7Jd1Z7OV86lO+tNfOXr/stQbwmRhdQuXVSvrRAuAe7G5+lwhkov0XkqZ8/bn1PYWMx6eg=="
+      },
+      "iNKORE.UI.WPF": {
+        "type": "Transitive",
+        "resolved": "1.2.8",
+        "contentHash": "7b+z25JFdhGAfyJqlVIF0vLbmgsRvqDZMvhGPTz20gzQigDPMqVUOoCCKB5824GtYsjFCYNilmaowb+4yWATkQ=="
       },
       "InputSimulator": {
         "type": "Transitive",
