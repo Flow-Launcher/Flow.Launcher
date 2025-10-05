@@ -10,6 +10,7 @@ using Flow.Launcher.Plugin;
 using Flow.Launcher.Resources.Controls;
 using Flow.Launcher.SettingPages.ViewModels;
 using Flow.Launcher.ViewModel;
+using iNKORE.UI.WPF.Modern.Controls;
 
 namespace Flow.Launcher.SettingPages.Views;
 
@@ -50,9 +51,9 @@ public partial class SettingsPaneHotkey
             var allHotkeyInvisible = hotkeyInfo.All(h => !h.Visible);
             if (allHotkeyInvisible) continue;
 
-            var excard = new ExCard()
+            var excard = new SettingsExpander()
             {
-                Title = metadata.Name,
+                Header = metadata.Name,
                 Margin = new Thickness(0, 4, 0, 0),
             };
             var hotkeyStackPanel = new StackPanel
@@ -66,12 +67,11 @@ public partial class SettingsPaneHotkey
                 // Skip invisible hotkeys
                 if (!hotkey.Visible) continue;
 
-                var card = new Card()
+                var card = new SettingsCard()
                 {
-                    Title = hotkey.Name,
-                    Sub = hotkey.Description,
-                    Icon = hotkey.Glyph.Glyph,
-                    Type = Card.CardType.Inside
+                    Header = hotkey.Name,
+                    Description = hotkey.Description,
+                    HeaderIcon = new FontIcon() { Glyph = hotkey.Glyph.Glyph }
                 };
                 var hotkeySetting = metadata.PluginHotkeys.Find(h => h.Id == hotkey.Id)?.Hotkey ?? hotkey.DefaultHotkey;
                 if (hotkey.Editable)
@@ -83,9 +83,9 @@ public partial class SettingsPaneHotkey
                             HotkeyControl.HotkeyType.WindowPluginHotkey,
                         DefaultHotkey = hotkey.DefaultHotkey,
                         ValidateKeyGesture = false,
-                        Hotkey = hotkeySetting
+                        Hotkey = hotkeySetting,
+                        ChangeHotkey = new RelayCommand<HotkeyModel>((h) => ChangePluginHotkey(metadata, hotkey, h))
                     };
-                    hotkeyControl.ChangeHotkey = new RelayCommand<HotkeyModel>((h) => ChangePluginHotkey(metadata, hotkey, h));
                     card.Content = hotkeyControl;
                 }
                 else
