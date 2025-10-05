@@ -8,20 +8,20 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">Wybierz plik wykonywalny {0}</system:String>
     <system:String x:Key="runtimeExecutableInvalidChooseDownload">
-        Your selected {0} executable is invalid.
+        Wybrany plik wykonywalny {0} jest nieprawidłowy.
         {2}{2}
-        Click yes if you would like select the {0} executable again. Click no if you would like to download {1}
+        Kliknij Tak, jeśli chcesz ponownie wybrać plik wykonywalny {0}. Kliknij Nie, jeśli chcesz pobrać {1}
     </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">Nie można ustawić ścieżki do pliku wykonywalnego {0}. Spróbuj ponownie w ustawieniach Flow (przewiń na sam dół).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">Nie udało się zainicjować wtyczek</system:String>
     <system:String x:Key="failedToInitializePluginsMessage">Wtyczki: {0} – nie udało się ich wczytać i zostaną wyłączone. Skontaktuj się z twórcą wtyczki, aby uzyskać pomoc</system:String>
 
     <!--  Portable  -->
-    <system:String x:Key="restartToDisablePortableMode">Flow Launcher needs to restart to finish disabling portable mode, after the restart your portable data profile will be deleted and roaming data profile kept</system:String>
-    <system:String x:Key="restartToEnablePortableMode">Flow Launcher needs to restart to finish enabling portable mode, after the restart your roaming data profile will be deleted and portable data profile kept</system:String>
-    <system:String x:Key="moveToDifferentLocation">Flow Launcher has detected you enabled portable mode, would you like to move it to a different location?</system:String>
-    <system:String x:Key="shortcutsUninstallerCreated">Flow Launcher has detected you disabled portable mode, the relevant shortcuts and uninstaller entry have been created</system:String>
-    <system:String x:Key="userDataDuplicated">Flow Launcher detected your user data exists both in {0} and {1}. {2}{2}Please delete {1} in order to proceed. No changes have occurred.</system:String>
+    <system:String x:Key="restartToDisablePortableMode">Flow Launcher musi zostać ponownie uruchomiony, aby wyłączyć tryb przenośny. Spowoduje to usunięcie profilu przenośnego i zachowanie profilu mobilnego</system:String>
+    <system:String x:Key="restartToEnablePortableMode">Flow Launcher musi zostać ponownie uruchomiony, aby włączyć tryb przenośny. Spowoduje to usunięcie profilu mobilnego i zachowanie profilu przenośnego</system:String>
+    <system:String x:Key="moveToDifferentLocation">Flow Launcher wykrył włączenie trybu przenośnego. Czy chcesz przenieść aplikację do innej lokalizacji?</system:String>
+    <system:String x:Key="shortcutsUninstallerCreated">Wykryto wyłączenie trybu przenośnego. Odpowiednie skróty oraz deinstalator zostały utworzone</system:String>
+    <system:String x:Key="userDataDuplicated">Flow Launcher wykrył zduplikowane dane użytkownika w dwóch lokalizacjach: {0} oraz {1}.{2}{2}Aby kontynuować, usuń dane znajdujące się w {1}. Nie wprowadzono żadnych zmian.</system:String>
 
     <!--  Plugin Loader  -->
     <system:String x:Key="pluginHasErrored">The following plugin has errored and cannot be loaded:</system:String>
