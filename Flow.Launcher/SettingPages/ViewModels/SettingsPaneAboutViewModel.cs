@@ -324,4 +324,10 @@ public partial class SettingsPaneAboutViewModel : BaseModel
         var releaseNotesWindow = new ReleaseNotesWindow();
         releaseNotesWindow.Show();
     }
+
+    [RelayCommand]
+    private void OpenSponsorPage()
+    {
+        App.API.OpenUrl(SponsorPage);
+    }
 }

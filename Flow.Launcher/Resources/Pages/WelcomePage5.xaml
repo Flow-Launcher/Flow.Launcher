@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Flow.Launcher.Resources.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:ui="http://schemas.modernwpf.com/2019"
+    xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
     xmlns:userSettings="clr-namespace:Flow.Launcher.Infrastructure.UserSettings;assembly=Flow.Launcher.Infrastructure"
     Title="WelcomePage5"
     d:DesignHeight="450"
@@ -49,11 +49,11 @@
             </Style.Triggers>
         </Style>
     </Page.Resources>
-    <ScrollViewer>
+    <ui:ScrollViewerEx>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="250" />
-                <RowDefinition Height="340"/>
+                <RowDefinition Height="340" />
             </Grid.RowDefinitions>
 
             <Border Grid.Row="0" HorizontalAlignment="Stretch">
@@ -79,12 +79,13 @@
                 </StackPanel>
             </Border>
 
-            <StackPanel Grid.Row="1" Margin="24 20 24 20" >
+            <StackPanel Grid.Row="1" Margin="24 20 24 20">
                 <StackPanel>
                     <TextBlock
                         FontSize="20"
                         FontWeight="SemiBold"
-                        Text="{DynamicResource Welcome_Page5_Title}" TextWrapping="WrapWithOverflow"/>
+                        Text="{DynamicResource Welcome_Page5_Title}"
+                        TextWrapping="WrapWithOverflow" />
                     <TextBlock
                         Margin="0 10 0 0"
                         FontSize="14"
@@ -118,5 +119,5 @@
 
             </StackPanel>
         </Grid>
-    </ScrollViewer>
+    </ui:ScrollViewerEx>
 </ui:Page>

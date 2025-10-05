@@ -14,8 +14,7 @@ using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
 using Flow.Launcher.ViewModel;
-using ModernWpf;
-using ThemeManagerForColorSchemeSwitch = ModernWpf.ThemeManager;
+using iNKORE.UI.WPF.Modern;
 
 namespace Flow.Launcher.SettingPages.ViewModels;
 
@@ -41,7 +40,11 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         set
         {
             _selectedTheme = value;
-            App.API.SetCurrentTheme(value);
+            if (!App.API.SetCurrentTheme(value))
+            {
+                // Revert selection if failed to set theme
+                OnPropertyChanged();
+            }
 
             // Update UI state
             OnPropertyChanged(nameof(BackdropType));
@@ -127,12 +130,12 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         get => Settings.ColorScheme;
         set
         {
-            ThemeManagerForColorSchemeSwitch.Current.ApplicationTheme = value switch
+            ThemeManager.Current.ApplicationTheme = value switch
             {
                 Constant.Light => ApplicationTheme.Light,
                 Constant.Dark => ApplicationTheme.Dark,
                 Constant.System => null,
-                _ => ThemeManagerForColorSchemeSwitch.Current.ApplicationTheme
+                _ => ThemeManager.Current.ApplicationTheme
             };
             Settings.ColorScheme = value;
             _ = _theme.RefreshFrameAsync();
