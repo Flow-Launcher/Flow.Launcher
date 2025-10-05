@@ -43,9 +43,6 @@
 
                 <ui:SettingsExpander.Items>
                     <ui:SettingsCard Description="{DynamicResource useLogonTaskForStartupTooltip}" Header="{DynamicResource useLogonTaskForStartup}">
-                        <ui:SettingsCard.HeaderIcon>
-                            <ui:FontIcon Glyph="&#xE823;" />
-                        </ui:SettingsCard.HeaderIcon>
                         <ui:ToggleSwitch
                             IsOn="{Binding UseLogonTaskForStartup}"
                             OffContent="{DynamicResource disable}"
