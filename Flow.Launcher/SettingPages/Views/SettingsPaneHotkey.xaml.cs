@@ -6,11 +6,14 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure.Hotkey;
+using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Resources.Controls;
 using Flow.Launcher.SettingPages.ViewModels;
 using Flow.Launcher.ViewModel;
 using iNKORE.UI.WPF.Modern.Controls;
+using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace Flow.Launcher.SettingPages.Views;
 
@@ -53,8 +56,10 @@ public partial class SettingsPaneHotkey
 
             var excard = new SettingsExpander()
             {
-                Header = metadata.Name,
-                Margin = new Thickness(0, 4, 0, 0)
+                Header = metadata.Name + " " + Localize.hotkeys(),
+                Margin = new Thickness(0, 4, 0, 0),
+                HeaderIcon = new Image() { Source = ImageLoader.LoadingImage },
+                Tag = metadata
             };
 
             var sortedHotkeyInfo = hotkeyInfo.OrderBy(h => h.Id).ToList();
@@ -96,6 +101,9 @@ public partial class SettingsPaneHotkey
             }
             PluginHotkeySettings.Children.Add(excard);
         }
+
+        // Load plugin icons into SettingsExpander asynchronously
+        _ = LoadPluginIconsAsync();
     }
 
     private static void ChangePluginHotkey(PluginMetadata metadata, BasePluginHotkey pluginHotkey, HotkeyModel newHotkey)
@@ -107,6 +115,54 @@ public partial class SettingsPaneHotkey
         else if (pluginHotkey is SearchWindowPluginHotkey windowPluginHotkey)
         {
             PluginManager.ChangePluginHotkey(metadata, windowPluginHotkey, newHotkey);
+        }
+    }
+
+    private async Task LoadPluginIconsAsync()
+    {
+        // Snapshot list to avoid collection modification issues
+        var expanders = PluginHotkeySettings.Children
+            .OfType<SettingsExpander>()
+            .Where(e => e.Tag is PluginMetadata m && !string.IsNullOrEmpty(m.IcoPath))
+            .ToList();
+
+        // Fire all loads concurrently
+        var tasks = expanders.Select(async expander =>
+        {
+            if (expander.Tag is not PluginMetadata metadata) return;
+            try
+            {
+                var iconSource = await App.API.LoadImageAsync(metadata.IcoPath);
+                if (iconSource == null) return;
+
+                // Marshal back to UI thread if needed
+                if (!Dispatcher.CheckAccess())
+                {
+                    await Dispatcher.InvokeAsync(() => ApplyIcon(expander, iconSource));
+                }
+                else
+                {
+                    ApplyIcon(expander, iconSource);
+                }
+            }
+            catch
+            {
+                // Swallow exceptions to avoid impacting UI; optionally log if logging infra exists
+            }
+        });
+
+        await Task.WhenAll(tasks);
+    }
+
+    private static void ApplyIcon(SettingsExpander expander, ImageSource iconSource)
+    {
+        if (expander.HeaderIcon is Image img)
+        {
+            img.Source = iconSource;
+        }
+        else
+        {
+            expander.HeaderIcon = new Image { Source = iconSource };
         }
     }
 }
