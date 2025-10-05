@@ -28,10 +28,4 @@ public partial class SettingsPaneAbout
         }
         base.OnNavigatedTo(e);
     }
-
-    private void OnRequestNavigate(object sender, RequestNavigateEventArgs e)
-    {
-        App.API.OpenUrl(e.Uri.AbsoluteUri);
-        e.Handled = true;
-    }
 }

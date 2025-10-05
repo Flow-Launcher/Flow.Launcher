@@ -8,7 +8,7 @@ using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.ViewModel;
-using ModernWpf.Controls;
+using iNKORE.UI.WPF.Modern.Controls;
 
 #nullable enable
 
