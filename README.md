@@ -390,23 +390,25 @@ Our project localization is based on [Crowdin](https://crowdin.com). If you woul
 
 ### WPF UI Library
 
+Our UI library is using [iNKORE.UI.WPF.Modern](https://github.com/iNKORE-NET/UI.WPF.Modern). 
+
 <a href="https://docs.inkore.net/ui-wpf-modern/introduction">
-  <img src="https://github.com/iNKORE-NET/UI.WPF.Modern/blob/main/assets/images/banners/UI.WPF.Modern_Main_1280w.png?raw=true" alt="iNKORE.UI.WPF.Modern" width="600">
+  <img src="https://github.com/iNKORE-NET/UI.WPF.Modern/blob/main/assets/images/banners/UI.WPF.Modern_Main_1280w.png?raw=true" alt="iNKORE.UI.WPF.Modern" width="400">
 </a>
 
 ### New changes
 
-All changes to flow are captured via pull requests. Some new changes will have been merged but still pending release, this means whilst a change may not exist in the current release, it may very well have been accepted and merged into the dev branch and available as a pre-release download. It is therefore a good idea that before you start to make changes, search through the open and closed pull requests to make sure the change you intend to make is not already done.
+All changes to flow are captured via pull requests. Some new changes will have been merged but still pending release, this means while a change may not exist in the current release, it may very well have been accepted and merged into the dev branch and available as a pre-release download. It is therefore a good idea to search through the open and closed pull requests before you start to make changes to ensure the change you intend to make is not already done.
 
 Each of the pull requests will be marked with a milestone indicating the planned release version for the change.  
 
 ### Contributing
 
-Contributions are very welcome, in addition to the main project(C#) there are also [documentation](https://github.com/Flow-Launcher/docs)(md), [website](https://github.com/Flow-Launcher/flow-launcher.github.io)(html/css) and [others](https://github.com/Flow-Launcher) that can be contributed to. If you are unsure of a change you want to make, let us know in the [Discussions](https://github.com/Flow-Launcher/Flow.Launcher/discussions/categories/ideas), otherwise feel free to put in a pull request.
+Contributions are very welcome, in addition to the main project (C#) there are also [documentation](https://github.com/Flow-Launcher/docs) (md), [website](https://github.com/Flow-Launcher/flow-launcher.github.io) (html/css) and [others](https://github.com/Flow-Launcher) that can be contributed to. If you are unsure of a change you want to make, let us know in the [Discussions](https://github.com/Flow-Launcher/Flow.Launcher/discussions/categories/ideas), otherwise feel free to submit a pull request.
 
 You will find the main goals of flow placed under the [Projects board](https://github.com/orgs/Flow-Launcher/projects/4), so feel free to contribute on that. If you would like to make small incremental changes, feel free to do so as well.
 
-Get in touch if you like to join the Flow-Launcher Team and help build this great tool.
+Get in touch if you would like to join the Flow-Launcher Team and help build this great tool.
 
 ### Developing/Debugging
 
