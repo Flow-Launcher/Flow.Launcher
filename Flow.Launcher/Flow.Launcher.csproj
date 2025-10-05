@@ -192,5 +192,4 @@
       <Analyzer Include="@(FilteredAnalyzer)" />
     </ItemGroup>
   </Target>
-
 </Project>
