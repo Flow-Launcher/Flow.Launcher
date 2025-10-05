@@ -24,17 +24,17 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="userDataDuplicated">Flow Launcher wykrył zduplikowane dane użytkownika w dwóch lokalizacjach: {0} oraz {1}.{2}{2}Aby kontynuować, usuń dane znajdujące się w {1}. Nie wprowadzono żadnych zmian.</system:String>
 
     <!--  Plugin Loader  -->
-    <system:String x:Key="pluginHasErrored">The following plugin has errored and cannot be loaded:</system:String>
-    <system:String x:Key="pluginsHaveErrored">The following plugins have errored and cannot be loaded:</system:String>
-    <system:String x:Key="referToLogs">Please refer to the logs for more information</system:String>
+    <system:String x:Key="pluginHasErrored">Nie można załadować następującej wtyczki z powodu błędu:</system:String>
+    <system:String x:Key="pluginsHaveErrored">Nie można załadować następujących wtyczek z powodu błędu:</system:String>
+    <system:String x:Key="referToLogs">Aby uzyskać więcej informacji, zapoznaj się z logami</system:String>
 
     <!--  Http  -->
-    <system:String x:Key="pleaseTryAgain">Please try again</system:String>
-    <system:String x:Key="parseProxyFailed">Unable to parse Http Proxy</system:String>
+    <system:String x:Key="pleaseTryAgain">Proszę spróbować ponownie</system:String>
+    <system:String x:Key="parseProxyFailed">Nie można przetworzyć adresu serwera proxy HTTP</system:String>
 
     <!--  AbstractPluginEnvironment  -->
-    <system:String x:Key="failToInstallTypeScriptEnv">Failed to install TypeScript environment. Please try again later</system:String>
-    <system:String x:Key="failToInstallPythonEnv">Failed to install Python environment. Please try again later.</system:String>
+    <system:String x:Key="failToInstallTypeScriptEnv">Instalacja środowiska TypeScript nie powiodła się. Spróbuj ponownie później.</system:String>
+    <system:String x:Key="failToInstallPythonEnv">Instalacja środowiska Python nie powiodła się. Spróbuj ponownie później.</system:String>
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Nie udało się zarejestrować skrótu klawiszowego „{0}”. Skrót może być używany przez inny program. Zmień skrót na inny lub zamknij program, który go używa.</system:String>
@@ -111,7 +111,7 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="typingStartEn">Zawsze rozpoczynaj wpisywanie w trybie angielskim</system:String>
     <system:String x:Key="typingStartEnTooltip">Tymczasowo zmień metodę wprowadzania na tryb angielski podczas aktywacji Flow.</system:String>
     <system:String x:Key="autoUpdates">Automatyczne aktualizacje</system:String>
-    <system:String x:Key="autoUpdatesTooltip">Automatically check and update the app when available</system:String>
+    <system:String x:Key="autoUpdatesTooltip">Automatycznie sprawdzaj i instaluj aktualizacje, gdy będą dostępne</system:String>
     <system:String x:Key="select">Wybierz</system:String>
     <system:String x:Key="hideOnStartup">Uruchamiaj Flow Launcher zminimalizowany</system:String>
     <system:String x:Key="hideOnStartupToolTip">Okno wyszukiwania Flow Launcher jest ukryte w zasobniku systemowym po uruchomieniu.</system:String>
@@ -123,7 +123,7 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="SearchPrecisionLow">Niska</system:String>
     <system:String x:Key="SearchPrecisionRegular">Standardowa</system:String>
     <system:String x:Key="ShouldUsePinyin">Szukaj z Pinyin</system:String>
-    <system:String x:Key="ShouldUsePinyinToolTip">Pinyin is the standard system of romanized spelling for translating Chinese. Please note, enabling this can significantly increase memory usage during search.</system:String>
+    <system:String x:Key="ShouldUsePinyinToolTip">Pinyin to standardowy system zapisu języka chińskiego za pomocą alfabetu łacińskiego. Należy pamiętać, że włączenie tej opcji może znacznie zwiększyć zużycie pamięci podczas wyszukiwania.</system:String>
     <system:String x:Key="ShouldUseDoublePinyin">Use Double Pinyin</system:String>
     <system:String x:Key="ShouldUseDoublePinyinToolTip">Use Double Pinyin instead of Full Pinyin to search.</system:String>
     <system:String x:Key="DoublePinyinSchema">Double Pinyin Schema</system:String>
