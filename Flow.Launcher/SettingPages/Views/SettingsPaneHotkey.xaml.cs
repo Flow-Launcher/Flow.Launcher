@@ -54,11 +54,7 @@ public partial class SettingsPaneHotkey
             var excard = new SettingsExpander()
             {
                 Header = metadata.Name,
-                Margin = new Thickness(0, 4, 0, 0),
-            };
-            var hotkeyStackPanel = new StackPanel
-            {
-                Orientation = Orientation.Vertical
+                Margin = new Thickness(0, 4, 0, 0)
             };
 
             var sortedHotkeyInfo = hotkeyInfo.OrderBy(h => h.Id).ToList();
@@ -96,9 +92,8 @@ public partial class SettingsPaneHotkey
                     };
                     card.Content = hotkeyDisplay;
                 }
-                hotkeyStackPanel.Children.Add(card);
+                excard.Items.Add(card);
             }
-            excard.Content = hotkeyStackPanel;
             PluginHotkeySettings.Children.Add(excard);
         }
     }
