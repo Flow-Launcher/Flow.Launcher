@@ -88,7 +88,6 @@
                 </ui:SettingsCard.HeaderIcon>
 
                 <flowlauncher:HotkeyControl
-                    ChangeHotkey="{Binding SetDialogJumpHotkeyCommand}"
                     DefaultHotkey="Alt+G"
                     Type="DialogJumpHotkey"
                     ValidateKeyGesture="False"
@@ -97,89 +96,104 @@
 
             <ui:SettingsExpander
                 Margin="0 14 0 0"
-                Icon="&#xf0e2;"
-                Sub="{DynamicResource hotkeyPresetsToolTip}">
-                <StackPanel>
-                    <cc:Card
-                        Title="{DynamicResource HotkeyUpDownDesc}"
-                        Icon="&#xede3;"
-                        Type="Inside">
+                Description="{DynamicResource hotkeyPresetsToolTip}"
+                Header="{DynamicResource hotkeyPresets}">
+                <ui:SettingsExpander.HeaderIcon>
+                    <ui:FontIcon Glyph="&#xf0e2;" />
+                </ui:SettingsExpander.HeaderIcon>
+
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsCard Header="{DynamicResource HotkeyUpDownDesc}">
+                        <ui:SettingsCard.HeaderIcon>
+                            <ui:FontIcon Glyph="&#xede3;" />
+                        </ui:SettingsCard.HeaderIcon>
+
                         <cc:HotkeyDisplay Keys="←+→" />
-                    </cc:Card>
-                    <cc:Card
-                        Title="{DynamicResource HotkeyLeftRightDesc}"
-                        Icon="&#xEC8F;"
-                        Type="Inside">
+                    </ui:SettingsCard>
+                    <ui:SettingsCard Header="{DynamicResource HotkeyLeftRightDesc}">
+                        <ui:SettingsCard.HeaderIcon>
+                            <ui:FontIcon Glyph="&#xEC8F;" />
+                        </ui:SettingsCard.HeaderIcon>
+
                         <cc:HotkeyDisplay Keys="↑+↓" />
-                    </cc:Card>
-                    <cc:Card
-                        Title="{DynamicResource HotkeyESCDesc}"
-                        Icon="&#xE72B;"
-                        Type="Inside">
+                    </ui:SettingsCard>
+                    <ui:SettingsCard Header="{DynamicResource HotkeyESCDesc}">
+                        <ui:SettingsCard.HeaderIcon>
+                            <ui:FontIcon Glyph="&#xE72B;" />
+                        </ui:SettingsCard.HeaderIcon>
+
                         <cc:HotkeyDisplay Keys="ESC" />
-                    </cc:Card>
-                    <cc:Card
-                        Title="{DynamicResource HotkeyRunDesc}"
-                        Icon="&#xE8A7;"
-                        Type="Inside">
+                    </ui:SettingsCard>
+                    <ui:SettingsCard Header="{DynamicResource HotkeyRunDesc}">
+                        <ui:SettingsCard.HeaderIcon>
+                            <ui:FontIcon Glyph="&#xE8A7;" />
+                        </ui:SettingsCard.HeaderIcon>
+
                         <cc:HotkeyDisplay Keys="ENTER" />
-                    </cc:Card>
-                    <cc:Card
-                        Title="{DynamicResource OpenContextMenuHotkey}"
-                        Icon="&#xede3;"
-                        Type="Inside">
+                    </ui:SettingsCard>
+                    <ui:SettingsCard Header="{DynamicResource OpenContextMenuHotkey}">
+                        <ui:SettingsCard.HeaderIcon>
+                            <ui:FontIcon Glyph="&#xede3;" />
+                        </ui:SettingsCard.HeaderIcon>
+
                         <cc:HotkeyDisplay Keys="Shift+Enter" />
-                    </cc:Card>
-                    <cc:Card
-                        Title="{DynamicResource OpenContextMenuHotkey}"
-                        Icon="&#xede3;"
-                        Type="Inside">
+                    </ui:SettingsCard>
+                    <ui:SettingsCard Header="{DynamicResource OpenContextMenuHotkey}">
+                        <ui:SettingsCard.HeaderIcon>
+                            <ui:FontIcon Glyph="&#xede3;" />
+                        </ui:SettingsCard.HeaderIcon>
+
                         <flowlauncher:HotkeyControl
                             DefaultHotkey="Ctrl+I"
                             Type="OpenContextMenuHotkey"
                             ValidateKeyGesture="False" />
-                    </cc:Card>
-                    <cc:Card
-                        Title="{DynamicResource ToggleHistoryHotkey}"
-                        Icon="&#xf738;"
-                        Type="Inside">
+                    </ui:SettingsCard>
+                    <ui:SettingsCard Header="{DynamicResource ToggleHistoryHotkey}">
+                        <ui:SettingsCard.HeaderIcon>
+                            <ui:FontIcon Glyph="&#xf738;" />
+                        </ui:SettingsCard.HeaderIcon>
+
                         <flowlauncher:HotkeyControl
                             DefaultHotkey="Ctrl+H"
                             Type="OpenHistoryHotkey"
                             ValidateKeyGesture="False" />
-                    </cc:Card>
-                    <cc:Card
-                        Title="{DynamicResource SettingWindowHotkey}"
-                        Icon="&#xe713;"
-                        Type="Inside">
+                    </ui:SettingsCard>
+                    <ui:SettingsCard Header="{DynamicResource SettingWindowHotkey}">
+                        <ui:SettingsCard.HeaderIcon>
+                            <ui:FontIcon Glyph="&#xe713;" />
+                        </ui:SettingsCard.HeaderIcon>
+
                         <flowlauncher:HotkeyControl
                             DefaultHotkey="Ctrl+I"
                             Type="SettingWindowHotkey"
                             ValidateKeyGesture="False" />
-                    </cc:Card>
-                    <cc:Card
-                        Title="{DynamicResource ReloadPluginHotkey}"
-                        Icon="&#xe72c;"
-                        Sub="{DynamicResource ReloadPluginHotkeyToolTip}"
-                        Type="Inside">
+                    </ui:SettingsCard>
+                    <ui:SettingsCard Description="{DynamicResource ReloadPluginHotkeyToolTip}" Header="{DynamicResource ReloadPluginHotkey}">
+                        <ui:SettingsCard.HeaderIcon>
+                            <ui:FontIcon Glyph="&#xe72c;" />
+                        </ui:SettingsCard.HeaderIcon>
+
                         <cc:HotkeyDisplay Keys="F5" />
-                    </cc:Card>
-                    <cc:Card
-                        Title="{DynamicResource HotkeySelectFirstResult}"
-                        Icon="&#xE898;"
-                        Type="Inside">
+                    </ui:SettingsCard>
+                    <ui:SettingsCard Header="{DynamicResource HotkeySelectFirstResult}">
+                        <ui:SettingsCard.HeaderIcon>
+                            <ui:FontIcon Glyph="&#xE898;" />
+                        </ui:SettingsCard.HeaderIcon>
+
                         <cc:HotkeyDisplay Keys="Alt+Home" />
-                    </cc:Card>
-                    <cc:Card
-                        Title="{DynamicResource HotkeySelectLastResult}"
-                        Icon="&#xE896;"
-                        Type="Inside">
+                    </ui:SettingsCard>
+                    <ui:SettingsCard Header="{DynamicResource HotkeySelectLastResult}">
+                        <ui:SettingsCard.HeaderIcon>
+                            <ui:FontIcon Glyph="&#xE896;" />
+                        </ui:SettingsCard.HeaderIcon>
+
                         <cc:HotkeyDisplay Keys="Alt+End" />
-                    </cc:Card>
-                    <cc:Card
-                        Title="{DynamicResource CycleHistoryUpHotkey}"
-                        Icon="&#xe70e;"
-                        Type="Inside">
+                    </ui:SettingsCard>
+                    <ui:SettingsCard Header="{DynamicResource CycleHistoryUpHotkey}">
+                        <ui:SettingsCard.HeaderIcon>
+                            <ui:FontIcon Glyph="&#xe70e;" />
+                        </ui:SettingsCard.HeaderIcon>
+
                         <flowlauncher:HotkeyControl
                             DefaultHotkey="Alt+Up"
                             Type="CycleHistoryUpHotkey"
@@ -194,11 +208,12 @@
                             DefaultHotkey="Alt+Down"
                             Type="CycleHistoryDownHotkey"
                             ValidateKeyGesture="False" />
-                    </cc:Card>
-                    <cc:Card
-                        Title="{DynamicResource SelectPrevPageHotkey}"
-                        Icon="&#xf0ad;"
-                        Type="Inside">
+                    </ui:SettingsCard>
+                    <ui:SettingsCard Header="{DynamicResource SelectPrevPageHotkey}">
+                        <ui:SettingsCard.HeaderIcon>
+                            <ui:FontIcon Glyph="&#xf0ad;" />
+                        </ui:SettingsCard.HeaderIcon>
+
                         <flowlauncher:HotkeyControl
                             DefaultHotkey=""
                             Type="SelectPrevPageHotkey"
@@ -213,29 +228,33 @@
                             DefaultHotkey=""
                             Type="SelectNextPageHotkey"
                             ValidateKeyGesture="False" />
-                    </cc:Card>
-                    <cc:Card
-                        Title="{DynamicResource RequeryHotkey}"
-                        Icon="&#xe72c;"
-                        Type="Inside">
+                    </ui:SettingsCard>
+                    <ui:SettingsCard Header="{DynamicResource RequeryHotkey}">
+                        <ui:SettingsCard.HeaderIcon>
+                            <ui:FontIcon Glyph="&#xe72c;" />
+                        </ui:SettingsCard.HeaderIcon>
+
                         <cc:HotkeyDisplay Keys="Ctrl+R" />
-                    </cc:Card>
-                    <cc:Card
-                        Title="{DynamicResource ToggleGameModeHotkey}"
-                        Icon="&#xe7fc;"
-                        Type="Inside">
+                    </ui:SettingsCard>
+                    <ui:SettingsCard Header="{DynamicResource ToggleGameModeHotkey}">
+                        <ui:SettingsCard.HeaderIcon>
+                            <ui:FontIcon Glyph="&#xe7fc;" />
+                        </ui:SettingsCard.HeaderIcon>
+
                         <cc:HotkeyDisplay Keys="Ctrl+F12" />
-                    </cc:Card>
-                    <cc:Card
-                        Title="{DynamicResource CopyFilePathHotkey}"
-                        Icon="&#xe8c8;"
-                        Type="Inside">
+                    </ui:SettingsCard>
+                    <ui:SettingsCard Header="{DynamicResource CopyFilePathHotkey}">
+                        <ui:SettingsCard.HeaderIcon>
+                            <ui:FontIcon Glyph="&#xe8c8;" />
+                        </ui:SettingsCard.HeaderIcon>
+
                         <cc:HotkeyDisplay Keys="Ctrl+Shift+C" />
-                    </cc:Card>
-                    <cc:Card
-                        Title="{DynamicResource QuickWidthHotkey}"
-                        Icon="&#xe7ea;"
-                        Type="Inside">
+                    </ui:SettingsCard>
+                    <ui:SettingsCard Header="{DynamicResource QuickWidthHotkey}">
+                        <ui:SettingsCard.HeaderIcon>
+                            <ui:FontIcon Glyph="&#xe7ea;" />
+                        </ui:SettingsCard.HeaderIcon>
+
                         <StackPanel Orientation="Horizontal">
                             <cc:HotkeyDisplay Keys="Ctrl+[" />
                             <cc:HotkeyDisplay Margin="4 0 0 0" Keys="Ctrl+]" />
@@ -250,73 +269,72 @@
                             <cc:HotkeyDisplay Keys="Ctrl+Minus" />
                             <cc:HotkeyDisplay Margin="4 0 0 0" Keys="Ctrl+Plus" />
                         </StackPanel>
-                    </cc:Card>
-                </StackPanel>
-            </cc:ExCard>
+                    </ui:SettingsCard>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
 
-            <cc:ExCard
-                Title="{DynamicResource autoCompleteHotkey}"
+            <ui:SettingsExpander
                 Margin="0 14 0 0"
-                Icon="&#xe893;"
-                Sub="{DynamicResource autoCompleteHotkeyToolTip}">
-                <cc:ExCard.SideContent>
-                    <flowlauncher:HotkeyControl
-                        DefaultHotkey="Ctrl+Tab"
-                        Type="AutoCompleteHotkey"
-                        ValidateKeyGesture="False" />
-                </cc:ExCard.SideContent>
-                <cc:Card
-                    Title="{DynamicResource autoCompleteHotkey}"
-                    Sub="{DynamicResource AdditionalHotkeyToolTip}"
-                    Type="InsideFit">
-                    <flowlauncher:HotkeyControl
-                        DefaultHotkey=""
-                        Type="AutoCompleteHotkey2"
-                        ValidateKeyGesture="False" />
-                </cc:Card>
-            </cc:ExCard>
+                Description="{DynamicResource autoCompleteHotkeyToolTip}"
+                Header="{DynamicResource autoCompleteHotkey}">
+                <ui:SettingsExpander.HeaderIcon>
+                    <ui:FontIcon Glyph="&#xe893;" />
+                </ui:SettingsExpander.HeaderIcon>
 
-            <cc:ExCard
-                Title="{DynamicResource SelectPrevItemHotkey}"
-                Margin="0 4 0 0"
-                Icon="&#xe74a;">
-                <cc:ExCard.SideContent>
-                    <flowlauncher:HotkeyControl
-                        DefaultHotkey="Shift+Tab"
-                        Type="SelectPrevItemHotkey"
-                        ValidateKeyGesture="False" />
-                </cc:ExCard.SideContent>
-                <cc:Card
-                    Title="{DynamicResource SelectPrevItemHotkey}"
-                    Sub="{DynamicResource AdditionalHotkeyToolTip}"
-                    Type="InsideFit">
-                    <flowlauncher:HotkeyControl
-                        DefaultHotkey=""
-                        Type="SelectPrevItemHotkey2"
-                        ValidateKeyGesture="False" />
-                </cc:Card>
-            </cc:ExCard>
+                <flowlauncher:HotkeyControl
+                    DefaultHotkey="Ctrl+Tab"
+                    Type="AutoCompleteHotkey"
+                    ValidateKeyGesture="False" />
 
-            <cc:ExCard
-                Title="{DynamicResource SelectNextItemHotkey}"
-                Margin="0 4 0 0"
-                Icon="&#xe74b;">
-                <cc:ExCard.SideContent>
-                    <flowlauncher:HotkeyControl
-                        DefaultHotkey="Tab"
-                        Type="SelectNextItemHotkey"
-                        ValidateKeyGesture="False" />
-                </cc:ExCard.SideContent>
-                <cc:Card
-                    Title="{DynamicResource SelectNextItemHotkey}"
-                    Sub="{DynamicResource AdditionalHotkeyToolTip}"
-                    Type="InsideFit">
-                    <flowlauncher:HotkeyControl
-                        DefaultHotkey=""
-                        Type="SelectNextItemHotkey2"
-                        ValidateKeyGesture="False" />
-                </cc:Card>
-            </cc:ExCard>
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsCard Description="{DynamicResource AdditionalHotkeyToolTip}" Header="{DynamicResource autoCompleteHotkey}">
+                        <flowlauncher:HotkeyControl
+                            DefaultHotkey=""
+                            Type="AutoCompleteHotkey2"
+                            ValidateKeyGesture="False" />
+                    </ui:SettingsCard>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
+
+            <ui:SettingsExpander Margin="0 4 0 0" Header="{DynamicResource SelectPrevItemHotkey}">
+                <ui:SettingsExpander.HeaderIcon>
+                    <ui:FontIcon Glyph="&#xe74a;" />
+                </ui:SettingsExpander.HeaderIcon>
+
+                <flowlauncher:HotkeyControl
+                    DefaultHotkey="Shift+Tab"
+                    Type="SelectPrevItemHotkey"
+                    ValidateKeyGesture="False" />
+
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsCard Description="{DynamicResource AdditionalHotkeyToolTip}" Header="{DynamicResource SelectPrevItemHotkey}">
+                        <flowlauncher:HotkeyControl
+                            DefaultHotkey=""
+                            Type="SelectPrevItemHotkey2"
+                            ValidateKeyGesture="False" />
+                    </ui:SettingsCard>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
+
+            <ui:SettingsExpander Margin="0 4 0 0" Header="{DynamicResource SelectNextItemHotkey}">
+                <ui:SettingsExpander.HeaderIcon>
+                    <ui:FontIcon Glyph="&#xe74b;" />
+                </ui:SettingsExpander.HeaderIcon>
+
+                <flowlauncher:HotkeyControl
+                    DefaultHotkey="Tab"
+                    Type="SelectNextItemHotkey"
+                    ValidateKeyGesture="False" />
+
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsCard Description="{DynamicResource AdditionalHotkeyToolTip}" Header="{DynamicResource SelectNextItemHotkey}">
+                        <flowlauncher:HotkeyControl
+                            DefaultHotkey=""
+                            Type="SelectNextItemHotkey2"
+                            ValidateKeyGesture="False" />
+                    </ui:SettingsCard>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
 
             <StackPanel
                 x:Name="PluginHotkeySettings"
@@ -324,19 +342,15 @@
                 Loaded="PluginHotkeySettings_Loaded"
                 Orientation="Vertical" />
 
-            <cc:ExCard
-                Title="{DynamicResource customQueryHotkey}"
-                Margin="0 20 0 0"
-                Icon="&#xf26c;">
-                <StackPanel>
-                    <Separator
-                        Width="Auto"
-                        Margin="0"
-                        BorderThickness="1"
-                        Style="{StaticResource SettingSeparatorStyle}" />
-                    <StackPanel Margin="18 18 18 0">
-                        <ListView
-                            MinHeight="160"
+            <ui:SettingsExpander Margin="0 20 0 0" Header="{DynamicResource customQueryHotkey}">
+                <ui:SettingsExpander.HeaderIcon>
+                    <ui:FontIcon Glyph="&#xf26c;" />
+                </ui:SettingsExpander.HeaderIcon>
+
+                <ui:SettingsExpander.ItemsHeader>
+                    <StackPanel Background="{DynamicResource SettingsCardBackground}">
+                        <Separator
+                            Width="Auto"
                             Margin="0"
                             BorderThickness="1"
                             Style="{StaticResource SettingSeparatorStyle}" />
