@@ -1,5 +1,4 @@
-﻿using Flow.Launcher.Plugin.Everything.Everything;
-using Flow.Launcher.Plugin.Explorer.Search;
+﻿using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.Everything;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
@@ -15,9 +14,9 @@ namespace Flow.Launcher.Plugin.Explorer
     {
         public int MaxResult { get; set; } = 100;
 
-        public ObservableCollection<AccessLink> QuickAccessLinks { get; set; } = new();
+        public ObservableCollection<AccessLink> QuickAccessLinks { get; set; } = [];
 
-        public ObservableCollection<AccessLink> IndexSearchExcludedSubdirectoryPaths { get; set; } = new ObservableCollection<AccessLink>();
+        public ObservableCollection<AccessLink> IndexSearchExcludedSubdirectoryPaths { get; set; } = [];
 
         public string EditorPath { get; set; } = "";
 
@@ -59,7 +58,6 @@ namespace Flow.Launcher.Plugin.Explorer
 
         public bool QuickAccessKeywordEnabled { get; set; }
 
-
         public bool WarnWindowsSearchServiceOff { get; set; } = true;
 
         public bool ShowFileSizeInPreviewPanel { get; set; } = true;
@@ -69,7 +67,6 @@ namespace Flow.Launcher.Plugin.Explorer
         public bool ShowModifiedDateInPreviewPanel { get; set; } = true;
         
         public bool ShowFileAgeInPreviewPanel { get; set; } = false;
-
 
         public string PreviewPanelDateFormat { get; set; } = "yyyy-MM-dd";
 
@@ -83,8 +80,8 @@ namespace Flow.Launcher.Plugin.Explorer
         private EverythingSearchManager EverythingManagerInstance => _everythingManagerInstance ??= new EverythingSearchManager(this);
         private WindowsIndexSearchManager WindowsIndexSearchManager => _windowsIndexSearchManager ??= new WindowsIndexSearchManager(this);
 
-
         public IndexSearchEngineOption IndexSearchEngine { get; set; } = IndexSearchEngineOption.WindowsIndex;
+
         [JsonIgnore]
         public IIndexProvider IndexProvider => IndexSearchEngine switch
         {
@@ -140,15 +137,11 @@ namespace Flow.Launcher.Plugin.Explorer
 
         #endregion
 
-
         #region Everything Settings
 
         public string EverythingInstalledPath { get; set; }
 
-        [JsonIgnore]
-        public SortOption[] SortOptions { get; set; } = Enum.GetValues<SortOption>();
-
-        public SortOption SortOption { get; set; } = SortOption.NAME_ASCENDING;
+        public EverythingSortOption SortOption { get; set; } = EverythingSortOption.NAME_ASCENDING;
 
         public bool EnableEverythingContentSearch { get; set; } = false;
 

@@ -11,17 +11,18 @@
     <system:String x:Key="flowlauncher_plugin_websearch_edit">Редагувати</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_add">Додати</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enabled_label">Увімкнено</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_private_mode_label">Приватний режим</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_true">Увімкнено</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_false">Вимкнено</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_confirm">Підтвердити</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">Ключове слово дії</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_url">URL</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_search">Пошук</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Use Search Query Autocomplete</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Використовувати автозаповнення пошукового запиту</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">Автозаповнення даних з:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">Будь ласка, виберіть пошуковий запит в Інтернеті</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">Ви впевнені, що хочете видалити {0}?</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_guide_1">Якщо ви хочете додати до Flow пошук певного веб-сайту, спочатку введіть фіктивний текстовий рядок у пошуковий рядок цього веб-сайту і розпочніть пошук. Тепер скопіюйте вміст адресного рядка браузера і вставте його в поле URL нижче. Замініть тестовий рядок на {q}. Наприклад, якщо ви шукаєте казино на сайті Netflix, його адресний рядок матиме такий вигляд</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_guide_1">Якщо ви хочете додати до Flow пошук певного вебсайту, спочатку введіть фіктивний текстовий рядок у пошуковий рядок цього вебсайту і розпочніть пошук. Тепер скопіюйте вміст адресного рядка браузера і вставте його в поле URL нижче. Замініть тестовий рядок на {q}. Наприклад, якщо ви шукаєте казино на сайті Netflix, його адресний рядок матиме такий вигляд</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_guide_2">https://www.netflix.com/search?q=Casino</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_guide_3">
         Тепер скопіюйте весь цей рядок і вставте його в поле URL нижче.
@@ -29,8 +30,8 @@
         Таким чином, загальна формула для пошуку на Netflix має вигляд https://www.netflix.com/search?q={q}
     </system:String>
 
-    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_title">Copy URL</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_subtitle">Copy search URL to clipboard</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_title">Копіювати URL</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_subtitle">Скопіювати URL-адресу пошуку в буфер обміну</system:String>
 
     <!--  web search edit  -->
     <system:String x:Key="flowlauncher_plugin_websearch_title">Назва</system:String>
@@ -38,7 +39,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_select_icon">Обрати значок</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_icon">Іконка</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_cancel">Скасувати</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_invalid_web_search">Неправильний веб-пошук</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_invalid_web_search">Неправильний вебпошук</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_input_title">Будь ласка, введіть назву</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_input_action_keyword">Будь ласка, введіть ключове слово дії</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_input_url">Будь ласка, введіть URL-адресу</system:String>
@@ -46,7 +47,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_succeed">Успішно</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_iconpath_hint">Підказка: Вам не потрібно розміщувати власні зображення в цьому каталозі, якщо версія Flow оновиться, вони будуть втрачені. Flow автоматично копіює всі зображення з цього каталогу до спеціального каталогу WebSearch.</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_websearch_plugin_name">Веб-пошук</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_plugin_description">Дозволяє здійснювати веб-пошук</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_plugin_name">Вебпошук</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_plugin_description">Дозволяє здійснювати вебпошук</system:String>
 
 </ResourceDictionary>

@@ -5,6 +5,9 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">浏览器书签</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">搜索您的浏览器书签</system:String>
 
+    <!--  Main  -->
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copy_failed">无法复制 URL 到剪切板 </system:String>
+
     <!--  Settings  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">书签数据</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">在以下位置打开书签：</system:String>
@@ -25,4 +28,6 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserEngine">浏览器引擎</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">如果你没有使用 Chrome、 Firefox 或 Edge，或者正在使用它们的绿色版， 那么你需要添加书签数据目录并选择正确的浏览器引擎才能使此插件正常工作。</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">例如：Brave 浏览器的引擎是 Chromium；其默认书签数据位置是 &quot;%LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData&quot;。 对于 Firefox 引擎的浏览器，书签目录是 places.sqlite 文件所在的用户数据文件夹。</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_enable_favicons">载入收藏夹图标 (启动时可能十分耗时)</system:String>
+
 </ResourceDictionary>

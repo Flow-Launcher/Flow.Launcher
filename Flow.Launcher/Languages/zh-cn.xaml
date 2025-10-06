@@ -16,6 +16,26 @@
     <system:String x:Key="failedToInitializePluginsTitle">无法初始化插件</system:String>
     <system:String x:Key="failedToInitializePluginsMessage">插件：{0} - 无法加载并将被禁用，请联系插件创建者寻求帮助</system:String>
 
+    <!--  Portable  -->
+    <system:String x:Key="restartToDisablePortableMode">Flow Launcher 需要重启以完成禁用便携模式。重新启动后，您的便携数据配置文件将被删除而漫游数据配置文件将被保留</system:String>
+    <system:String x:Key="restartToEnablePortableMode">Flow Launcher 需要重启以完成启用便携模式。重新启动后，您的漫游数据配置文件将被删除而便携数据配置文件将被保留</system:String>
+    <system:String x:Key="moveToDifferentLocation">Flow Launcher 检测到您启用了便携模式。您想要将其移动到别的位置吗？</system:String>
+    <system:String x:Key="shortcutsUninstallerCreated">Flow Launcher 检测到您已禁用便携模式。相关的快捷方式和卸载器条目已创建</system:String>
+    <system:String x:Key="userDataDuplicated">Flow Launcher 检测到您的用户数据存在于 {0} 和 {1} 中。 {2}{2}请删除 {1} 以便继续。目前将不会做任何更改。</system:String>
+
+    <!--  Plugin Loader  -->
+    <system:String x:Key="pluginHasErrored">下列插件出现错误无法加载：</system:String>
+    <system:String x:Key="pluginsHaveErrored">下列插件发现错误无法加载：</system:String>
+    <system:String x:Key="referToLogs">请参阅日志以获取更多信息</system:String>
+
+    <!--  Http  -->
+    <system:String x:Key="pleaseTryAgain">请重试</system:String>
+    <system:String x:Key="parseProxyFailed">无法解析 Http 代理</system:String>
+
+    <!--  AbstractPluginEnvironment  -->
+    <system:String x:Key="failToInstallTypeScriptEnv">无法安装 TypeScript 环境。请稍后再试</system:String>
+    <system:String x:Key="failToInstallPythonEnv">无法安装 Python 环境。请稍后再试。</system:String>
+
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">无法注册热键“{0}”。该热键可能正在被其他程序使用。更改为不同的热键，或退出其他程序。</system:String>
     <system:String x:Key="unregisterHotkeyFailed">未能取消注册快捷键&quot;{0}&quot;。请重试或查看日志以获取详细信息</system:String>
@@ -91,6 +111,7 @@
     <system:String x:Key="typingStartEn">以英文模式开始输入</system:String>
     <system:String x:Key="typingStartEnTooltip">激活 Flow 时暂时将输入法更改为英文模式。</system:String>
     <system:String x:Key="autoUpdates">自动更新</system:String>
+    <system:String x:Key="autoUpdatesTooltip">自动检查并更新应用程序</system:String>
     <system:String x:Key="select">选择</system:String>
     <system:String x:Key="hideOnStartup">系统启动时不显示主窗口</system:String>
     <system:String x:Key="hideOnStartupToolTip">Flow Launcher 启动后搜索窗口隐藏在托盘中。</system:String>
@@ -102,7 +123,20 @@
     <system:String x:Key="SearchPrecisionLow">低</system:String>
     <system:String x:Key="SearchPrecisionRegular">常规</system:String>
     <system:String x:Key="ShouldUsePinyin">使用拼音搜索</system:String>
-    <system:String x:Key="ShouldUsePinyinToolTip">允许使用拼音进行搜索。</system:String>
+    <system:String x:Key="ShouldUsePinyinToolTip">拼音是翻译中文的罗马化拼写的标准系统。请注意，启用此功能可以大大增加搜索时的内存使用量。</system:String>
+    <system:String x:Key="ShouldUseDoublePinyin">使用双拼</system:String>
+    <system:String x:Key="ShouldUseDoublePinyinToolTip">使用双拼而不是全拼进行搜索。</system:String>
+    <system:String x:Key="DoublePinyinSchema">双拼方案</system:String>
+    <system:String x:Key="DoublePinyinSchemasXiaoHe">小鹤双拼</system:String>
+    <system:String x:Key="DoublePinyinSchemasZiRanMa">自然码</system:String>
+    <system:String x:Key="DoublePinyinSchemasWeiRuan">微软双拼</system:String>
+    <system:String x:Key="DoublePinyinSchemasZhiNengABC">智能ABC双拼</system:String>
+    <system:String x:Key="DoublePinyinSchemasZiGuangPinYin">紫光双拼</system:String>
+    <system:String x:Key="DoublePinyinSchemasPinYinJiaJia">拼音加加</system:String>
+    <system:String x:Key="DoublePinyinSchemasXingKongJianDao">星空键道</system:String>
+    <system:String x:Key="DoublePinyinSchemasDaNiu">大牛双拼</system:String>
+    <system:String x:Key="DoublePinyinSchemasXiaoLang">小浪双拼</system:String>
+
     <system:String x:Key="AlwaysPreview">始终打开预览</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Flow 启动时总是打开预览面板。按 {0} 以切换预览。</system:String>
     <system:String x:Key="shadowEffectNotAllowed">当前主题已启用模糊效果，不允许启用阴影效果</system:String>
@@ -131,11 +165,21 @@
     <system:String x:Key="KoreanImeOpenLinkButton">打开</system:String>
     <system:String x:Key="KoreanImeRegistry">使用以前的韩语输入法</system:String>
     <system:String x:Key="KoreanImeRegistryTooltip">您可以直接从这里更改前韩语输入法设置</system:String>
+    <system:String x:Key="KoreanImeSettingChangeFailTitle">更改韩语输入法设置失败</system:String>
+    <system:String x:Key="KoreanImeSettingChangeFailSubTitle">请检查您的系统注册表访问权限或联系支持。</system:String>
     <system:String x:Key="homePage">首页</system:String>
     <system:String x:Key="homePageToolTip">当查询文本为空时显示主页结果。</system:String>
     <system:String x:Key="historyResultsForHomePage">在主页中显示历史记录</system:String>
     <system:String x:Key="historyResultsCountForHomePage">在主页显示的最大历史结果数</system:String>
     <system:String x:Key="homeToggleBoxToolTip">这只能在插件支持主页功能和主页启用时进行编辑。</system:String>
+    <system:String x:Key="showAtTopmost">将搜索窗口置于顶层</system:String>
+    <system:String x:Key="showAtTopmostToolTip">覆盖其他“总是在顶部”的程序窗口并在最顶层的位置显示 Flow Launcher 搜索窗口。</system:String>
+    <system:String x:Key="autoRestartAfterChanging">通过插件商店修改插件后重启</system:String>
+    <system:String x:Key="autoRestartAfterChangingToolTip">通过插件商店安装/卸载/更新插件后自动重启 Flow Launcher</system:String>
+    <system:String x:Key="showUnknownSourceWarning">显示未知来源警告</system:String>
+    <system:String x:Key="showUnknownSourceWarningToolTip">安装来自未知来源的插件时显示警告</system:String>
+    <system:String x:Key="autoUpdatePlugins">自动更新插件</system:String>
+    <system:String x:Key="autoUpdatePluginsToolTip">自动检查插件更新并通知是否有任何可用更新</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">搜索插件</system:String>
@@ -174,6 +218,13 @@
     <system:String x:Key="failedToRemovePluginSettingsMessage">插件：{0} - 移除插件设置文件失败，请手动删除</system:String>
     <system:String x:Key="failedToRemovePluginCacheTitle">移除插件缓存失败</system:String>
     <system:String x:Key="failedToRemovePluginCacheMessage">插件：{0} - 移除插件设置文件失败，请手动删除</system:String>
+    <system:String x:Key="pluginModifiedAlreadyTitle">{0} 已修改</system:String>
+    <system:String x:Key="pluginModifiedAlreadyMessage">请在进行任何进一步更改之前重新启动 Flow</system:String>
+    <system:String x:Key="failedToInstallPluginTitle">安装 {0} 失败</system:String>
+    <system:String x:Key="failedToUninstallPluginTitle">卸载 {0} 失败</system:String>
+    <system:String x:Key="fileNotFoundMessage">无法从提取的zip文件中找到plugin.json，或者此路径 {0} 不存在</system:String>
+    <system:String x:Key="pluginExistAlreadyMessage">已存在相同ID和版本的插件，或者存在版本大于此下载的插件</system:String>
+    <system:String x:Key="errorCreatingSettingPanel">Error creating setting panel for plugin {0}:{1}{2}</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">插件商店</system:String>
@@ -189,6 +240,34 @@
     <system:String x:Key="LabelNew">新版本</system:String>
     <system:String x:Key="LabelNewToolTip">此插件在过去7天内有更新</system:String>
     <system:String x:Key="LabelUpdateToolTip">有可用的更新</system:String>
+    <system:String x:Key="ErrorInstallingPlugin">安装插件时出错</system:String>
+    <system:String x:Key="ErrorUninstallingPlugin">卸载插件时出错</system:String>
+    <system:String x:Key="ErrorUpdatingPlugin">更新插件时出错</system:String>
+    <system:String x:Key="KeepPluginSettingsTitle">保留插件设置</system:String>
+    <system:String x:Key="KeepPluginSettingsSubtitle">你想要保留插件设置以便下一次的使用吗？</system:String>
+    <system:String x:Key="InstallSuccessNoRestart">成功安装插件{0}。请重新启动 Flow Launcher。</system:String>
+    <system:String x:Key="UninstallSuccessNoRestart">成功卸载插件{0}。请重新启动 Flow Launcher。</system:String>
+    <system:String x:Key="UpdateSuccessNoRestart">成功更新插件{0}。请重新启动 Flow Launcher。</system:String>
+    <system:String x:Key="InstallPromptTitle">插件安装</system:String>
+    <system:String x:Key="InstallPromptSubtitle">{0} 作者： {1} {2}{2}您想要安装这个插件吗？</system:String>
+    <system:String x:Key="UninstallPromptTitle">插件卸载</system:String>
+    <system:String x:Key="UninstallPromptSubtitle">{0} 作者： {1} {2}{2}您想要卸载这个插件吗？</system:String>
+    <system:String x:Key="UpdatePromptTitle">插件更新</system:String>
+    <system:String x:Key="UpdatePromptSubtitle">{0} 作者： {1} {2}{2}您想要更新这个插件吗？</system:String>
+    <system:String x:Key="DownloadingPlugin">下载插件</system:String>
+    <system:String x:Key="AutoRestartAfterChange">插件商店安装/卸载/更新插件后自动重启</system:String>
+    <system:String x:Key="ZipFileNotHavePluginJson">Zip 文件没有有效的 plugin.json 配置</system:String>
+    <system:String x:Key="InstallFromUnknownSourceTitle">从未知源安装</system:String>
+    <system:String x:Key="InstallFromUnknownSourceSubtitle">您正在从未知源安装此插件，它可能包含潜在风险！{0}{0}请确保您了解来源以及安全性。{0}{0}您想要继续吗？{0}{0}(您可以通过设置关闭此警告)</system:String>
+    <system:String x:Key="ZipFiles">Zip 文件</system:String>
+    <system:String x:Key="SelectZipFile">请选择 zip 文件</system:String>
+    <system:String x:Key="installLocalPluginTooltip">从本地路径安装插件</system:String>
+    <system:String x:Key="updateNoResultTitle">无可用更新</system:String>
+    <system:String x:Key="updateNoResultSubtitle">所有插件都是最新</system:String>
+    <system:String x:Key="updateAllPluginsTitle">插件更新可用</system:String>
+    <system:String x:Key="updateAllPluginsButtonContent">更新插件</system:String>
+    <system:String x:Key="checkPluginUpdatesTooltip">检查插件更新</system:String>
+    <system:String x:Key="PluginsUpdateSuccessNoRestart">插件更新成功。请重新启动 Flow Launcher。</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">主题</system:String>
@@ -239,7 +318,7 @@
     <system:String x:Key="AnimationSpeedCustom">自定义</system:String>
     <system:String x:Key="Clock">时钟</system:String>
     <system:String x:Key="Date">日期</system:String>
-    <system:String x:Key="BackdropType">返回类型</system:String>
+    <system:String x:Key="BackdropType">背景类型</system:String>
     <system:String x:Key="BackdropInfo">预览中没有应用背景效果。</system:String>
     <system:String x:Key="BackdropTypeDisabledToolTip">自 Windows 11 Build 22000 起支持背景效果</system:String>
     <system:String x:Key="BackdropTypesNone">无</system:String>
@@ -254,6 +333,7 @@
     <system:String x:Key="PlaceholderTextTip">更改占位符文本。输入空将使用：{0}</system:String>
     <system:String x:Key="KeepMaxResults">固定窗口大小</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">窗口高度不能通过拖动来调整。</system:String>
+    <system:String x:Key="MaxShowResultsCannotWorkWithAlwaysPreview">由于始终打开预览已开启，最大结果显示个数可能无法生效，因为预览面板需要一定的最低高度</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">热键</system:String>
@@ -316,6 +396,28 @@
     <system:String x:Key="showBadges">显示结果徽章</system:String>
     <system:String x:Key="showBadgesToolTip">对于支持的插件，将显示徽章以帮助更容易区分它们。</system:String>
     <system:String x:Key="showBadgesGlobalOnly">仅在全局查询下显示结果徽章</system:String>
+    <system:String x:Key="showBadgesGlobalOnlyToolTip">仅对全局查询结果显示徽章</system:String>
+    <system:String x:Key="dialogJumpHotkey">对话框跳转</system:String>
+    <system:String x:Key="dialogJumpHotkeyToolTip">输入快捷键以快速导航打开或保存作为对话框窗口到当前文件管理器路径。</system:String>
+    <system:String x:Key="dialogJump">对话框跳转</system:String>
+    <system:String x:Key="dialogJumpToolTip">当打开了打开或保存对话框窗口时，快速导航到文件管理器当前路径。</system:String>
+    <system:String x:Key="autoDialogJump">自动跳转对话框</system:String>
+    <system:String x:Key="autoDialogJumpToolTip">当显示打开或保存对话框窗口时，自动导航到当前文件管理器的路径。(实验性)</system:String>
+    <system:String x:Key="showDialogJumpWindow">显示对话框跳转窗口</system:String>
+    <system:String x:Key="showDialogJumpWindowToolTip">当显示打开或保存对话框窗口以快速导航到文件或文件夹位置时，显示对话框跳转搜索窗口。</system:String>
+    <system:String x:Key="dialogJumpWindowPosition">对话框跳转窗口位置</system:String>
+    <system:String x:Key="dialogJumpWindowPositionToolTip">选择对话框跳转搜索窗口的位置</system:String>
+    <system:String x:Key="DialogJumpWindowPositionUnderDialog">固定在打开或保存为对话框窗口下。在打开时显示并保持直到窗口关闭</system:String>
+    <system:String x:Key="DialogJumpWindowPositionFollowDefault">默认搜索窗口位置。当被搜索窗口快捷键触发时显示</system:String>
+    <system:String x:Key="dialogJumpResultBehaviour">对话框跳转文件导航行为</system:String>
+    <system:String x:Key="dialogJumpResultBehaviourToolTip">当结果为文件路径时对打开或保存对话框窗口的导航行为</system:String>
+    <system:String x:Key="DialogJumpResultBehaviourLeftClick">左键单击或回车按键</system:String>
+    <system:String x:Key="DialogJumpResultBehaviourRightClick">右键单击</system:String>
+    <system:String x:Key="dialogJumpFileResultBehaviour">对话框跳转文件导航行为</system:String>
+    <system:String x:Key="dialogJumpFileResultBehaviourToolTip">当结果为文件路径时对打开或保存对话框窗口的导航行为</system:String>
+    <system:String x:Key="DialogJumpFileResultBehaviourFullPath">在文件名框中填写完整路径</system:String>
+    <system:String x:Key="DialogJumpFileResultBehaviourFullPathOpen">在文件名框中填写完整路径并打开</system:String>
+    <system:String x:Key="DialogJumpFileResultBehaviourDirectory">在路径框中填写目录</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">HTTP 代理</system:String>
@@ -366,9 +468,18 @@
     <system:String x:Key="userdatapathButton">打开文件夹</system:String>
     <system:String x:Key="advanced">高级</system:String>
     <system:String x:Key="logLevel">日志等级</system:String>
-    <system:String x:Key="LogLevelDEBUG">调试</system:String>
+    <system:String x:Key="LogLevelNONE">静默</system:String>
+    <system:String x:Key="LogLevelERROR">错误</system:String>
     <system:String x:Key="LogLevelINFO">信息</system:String>
+    <system:String x:Key="LogLevelDEBUG">调试</system:String>
     <system:String x:Key="settingWindowFontTitle">设置窗口字体</system:String>
+
+    <!--  Release Notes Window  -->
+    <system:String x:Key="seeMoreReleaseNotes">在 GitHub 上查看更多版本说明</system:String>
+    <system:String x:Key="checkNetworkConnectionTitle">无法获取版本说明</system:String>
+    <system:String x:Key="checkNetworkConnectionSubTitle">请检查您的网络连接或确认 GitHub 可访问</system:String>
+    <system:String x:Key="appUpdateTitle">Flow Launcher 已更新到 {0}</system:String>
+    <system:String x:Key="appUpdateButtonContent">单击此处查看版本说明</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">默认文件管理器</system:String>
@@ -382,6 +493,7 @@
     <system:String x:Key="fileManager_file_arg">选中文件路径参数</system:String>
     <system:String x:Key="fileManagerPathNotFound">文件管理器 '{0}' 不能在 '{1}'中定位。您想要继续吗？</system:String>
     <system:String x:Key="fileManagerPathError">文件管理器路径错误</system:String>
+    <system:String x:Key="fileManagerExplorer">文件资源管理器</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">默认浏览器</system:String>
@@ -392,6 +504,8 @@
     <system:String x:Key="defaultBrowser_newWindow">新窗口</system:String>
     <system:String x:Key="defaultBrowser_newTab">新标签</system:String>
     <system:String x:Key="defaultBrowser_parameter">隐身模式</system:String>
+    <system:String x:Key="defaultBrowser_default">默认</system:String>
+    <system:String x:Key="defaultBrowser_new_profile">新配置</system:String>
 
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">更改优先级</system:String>
@@ -425,13 +539,14 @@
     <system:String x:Key="customeQueryHotkeyTips">输入一个自定义的快捷键来打开 Flow Launcher 并自动输入指定的查询。</system:String>
     <system:String x:Key="preview">预览</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">热键不可用，请选择一个新的热键</system:String>
-    <system:String x:Key="invalidPluginHotkey">插件热键不合法</system:String>
+    <system:String x:Key="invalidPluginHotkey">热键无效</system:String>
     <system:String x:Key="update">更新</system:String>
     <system:String x:Key="hotkeyRegTitle">绑定热键</system:String>
     <system:String x:Key="hotkeyUnavailable">当前热键不可用。</system:String>
     <system:String x:Key="hotkeyUnavailableUneditable">此热键为“{0}”保留，无法使用。请选择其他热键。</system:String>
     <system:String x:Key="hotkeyUnavailableEditable">此热键已被“{0}”使用。如果按“覆盖”，则会将其从“{0}”中删除。</system:String>
     <system:String x:Key="hotkeyRegGuide">按下您想要用于此功能的键。</system:String>
+    <system:String x:Key="emptyPluginHotkey">热键和操作关键字为空</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">自定义查询捷径</system:String>
@@ -442,6 +557,7 @@
     </system:String>
     <system:String x:Key="duplicateShortcut">捷径已存在，请输入一个新的或者编辑已有的。</system:String>
     <system:String x:Key="emptyShortcut">捷径及其展开均不能为空。</system:String>
+    <system:String x:Key="invalidShortcut">快捷键无效</system:String>
 
     <!--  Common Action  -->
     <system:String x:Key="commonSave">保存</system:String>
@@ -480,6 +596,7 @@
     </system:String>
     <system:String x:Key="errorTitle">错误</system:String>
     <system:String x:Key="folderOpenError">打开文件夹时发生错误。{0}</system:String>
+    <system:String x:Key="browserOpenError">打开浏览器中的 URL 时发生错误。请在设置窗口的常规部分检查您的默认网页浏览器配置</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">请稍等...</system:String>
@@ -504,6 +621,11 @@
     <system:String x:Key="update_flowlauncher_update_update_files">下列文件会被更新</system:String>
     <system:String x:Key="update_flowlauncher_update_files">更新文件</system:String>
     <system:String x:Key="update_flowlauncher_update_update_description">更新日志</system:String>
+
+    <!--  Plugin Update Window  -->
+    <system:String x:Key="restartAfterUpdating">更新插件后重启 Flow Launcher</system:String>
+    <system:String x:Key="updatePluginCheckboxContent">{0}: 更新从 v{1} 到 v{2}</system:String>
+    <system:String x:Key="updatePluginNoSelected">没有选择插件</system:String>
 
     <!--  Welcome Window  -->
     <system:String x:Key="Skip">跳过</system:String>

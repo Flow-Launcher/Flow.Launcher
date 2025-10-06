@@ -8,28 +8,30 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core;
+using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
-using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Core.Storage;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Http;
 using Flow.Launcher.Infrastructure.Hotkey;
+using Flow.Launcher.Infrastructure.Http;
 using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
-using Flow.Launcher.Plugin.SharedModels;
 using Flow.Launcher.Plugin.SharedCommands;
+using Flow.Launcher.Plugin.SharedModels;
 using Flow.Launcher.ViewModel;
+using iNKORE.UI.WPF.Modern;
 using JetBrains.Annotations;
 using Squirrel;
 using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
@@ -72,8 +74,7 @@ namespace Flow.Launcher
             _mainVM.ChangeQueryText(query, requery);
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
-        public async void RestartApp()
+        public void RestartApp()
         {
             _mainVM.Hide();
 
@@ -81,9 +82,6 @@ namespace Flow.Launcher
             // UpdateManager.RestartApp() will call Environment.Exit(0)
             // which will cause ungraceful exit
             SaveAppAllSettings();
-
-            // Wait for all image caches to be saved before restarting
-            await ImageLoader.WaitSaveAsync();
 
             // Restart requires Squirrel's Update.exe to be present in the parent folder, 
             // it is only published from the project's release pipeline. When debugging without it,
@@ -114,8 +112,8 @@ namespace Flow.Launcher
                 _settings.Save();
                 PluginManager.Save();
                 _mainVM.Save();
+                ImageLoader.Save();
             }
-            _ = ImageLoader.SaveAsync();
         }
 
         public Task ReloadAllPluginData() => PluginManager.ReloadDataAsync();
@@ -180,20 +178,20 @@ namespace Flow.Launcher
 
                     Clipboard.SetFileDropList(paths);
                 });
-                
+
                 if (exception == null)
                 {
                     if (showDefaultNotification)
                     {
                         ShowMsg(
-                            $"{GetTranslation("copy")} {(isFile ? GetTranslation("fileTitle") : GetTranslation("folderTitle"))}",
-                            GetTranslation("completedSuccessfully"));
+                            $"{Localize.copy()} {(isFile ? Localize.fileTitle(): Localize.folderTitle())}",
+                            Localize.completedSuccessfully());
                     }
                 }
                 else
                 {
                     LogException(nameof(PublicAPIInstance), "Failed to copy file/folder to clipboard", exception);
-                    ShowMsgError(GetTranslation("failedToCopy"));
+                    ShowMsgError(Localize.failedToCopy());
                 }
             }
             else
@@ -211,15 +209,15 @@ namespace Flow.Launcher
                     if (showDefaultNotification)
                     {
                         ShowMsg(
-                            $"{GetTranslation("copy")} {GetTranslation("textTitle")}",
-                            GetTranslation("completedSuccessfully"));
+                            $"{Localize.copy()} {Localize.textTitle()}",
+                            Localize.completedSuccessfully());
                     }
                 }
                 else
                 {
                     LogException(nameof(PublicAPIInstance), "Failed to copy text to clipboard", exception);
-                    ShowMsgError(GetTranslation("failedToCopy"));
-                }  
+                    ShowMsgError(Localize.failedToCopy());
+                }
             }
         }
 
@@ -328,7 +326,7 @@ namespace Flow.Launcher
 
             ((PluginJsonStorage<T>)_pluginJsonStorages[type]).Save();
         }
-        
+
         public void OpenDirectory(string directoryPath, string fileNameOrFilePath = null)
         {
             try
@@ -378,32 +376,48 @@ namespace Flow.Launcher
                     explorer.Start();
                 }
             }
+            catch (COMException ex) when (ex.ErrorCode == unchecked((int)0x80004004))
+            {
+                /*
+                 * The COMException with HResult 0x80004004 is E_ABORT (operation aborted).
+                 * Shell APIs often return this when the operation is canceled or the shell cannot complete it cleanly.
+                 * It most likely comes from Win32Helper.OpenFolderAndSelectFile(targetPath).
+                 * Typical triggers:
+                 * The target file/folder was deleted/moved between computing targetPath and the shell call.
+                 * The folder is on an offline network/removable drive.
+                 * Explorer is restarting/busy and aborts the request.
+                 * A selection request to a new/closing Explorer window is canceled.
+                 * Because it is commonly user- or environment-driven and not actionable,
+                 * we should treat it as expected noise and ignore it to avoid bothering users.
+                 */
+            }
             catch (Win32Exception ex) when (ex.NativeErrorCode == 2)
             {
-                LogError(ClassName, "File Manager not found");
-                ShowMsgBox(
-                    string.Format(GetTranslation("fileManagerNotFound"), ex.Message),
-                    GetTranslation("fileManagerNotFoundTitle"),
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error
+                LogException(ClassName, "File Manager not found", ex);
+                ShowMsgError(
+                    Localize.fileManagerNotFoundTitle(),
+                    Localize.fileManagerNotFound()
                 );
             }
             catch (Exception ex)
             {
                 LogException(ClassName, "Failed to open folder", ex);
-                ShowMsgBox(
-                    string.Format(GetTranslation("folderOpenError"), ex.Message),
-                    GetTranslation("errorTitle"),
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error
+                ShowMsgError(
+                    Localize.errorTitle(),
+                    Localize.folderOpenError()
                 );
             }
         }
 
-
-        private void OpenUri(Uri uri, bool? inPrivate = null)
+        private void OpenUri(Uri uri, bool? inPrivate = null, bool forceBrowser = false)
         {
-            if (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps)
+            if (uri.IsFile && !FilesFolders.FileOrLocationExists(uri.LocalPath))
+            {
+                ShowMsgError(Localize.errorTitle(), Localize.fileNotFoundError(uri.LocalPath));
+                return;
+            }
+
+            if (forceBrowser || uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps)
             {
                 var browserInfo = _settings.CustomBrowser;
 
@@ -424,24 +438,38 @@ namespace Flow.Launcher
                 {
                     var tabOrWindow = browserInfo.OpenInTab ? "tab" : "window";
                     LogException(ClassName, $"Failed to open URL in browser {tabOrWindow}: {path}, {inPrivate ?? browserInfo.EnablePrivate}, {browserInfo.PrivateArg}", e);
-                    ShowMsgBox(
-                        GetTranslation("browserOpenError"),
-                        GetTranslation("errorTitle"),
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Error
+                    ShowMsgError(
+                        Localize.errorTitle(),
+                        Localize.browserOpenError()
                     );
                 }
             }
             else
             {
-                Process.Start(new ProcessStartInfo()
+                try
                 {
-                    FileName = uri.AbsoluteUri,
-                    UseShellExecute = true
-                })?.Dispose();
-
-                return;
+                    Process.Start(new ProcessStartInfo()
+                    {
+                        FileName = uri.AbsoluteUri,
+                        UseShellExecute = true
+                    })?.Dispose();
+                }
+                catch (Exception e)
+                {
+                    LogException(ClassName, $"Failed to open: {uri.AbsoluteUri}", e);
+                    ShowMsgError(Localize.errorTitle(), e.Message);
+                }
             }
+        }
+
+        public void OpenWebUrl(string url, bool? inPrivate = null)
+        {
+            OpenUri(new Uri(url), inPrivate, true);
+        }
+
+        public void OpenWebUrl(Uri url, bool? inPrivate = null)
+        {
+            OpenUri(url, inPrivate, true);
         }
 
         public void OpenUrl(string url, bool? inPrivate = null)
@@ -464,7 +492,7 @@ namespace Flow.Launcher
             OpenUri(appUri);
         }
 
-        public void ToggleGameMode() 
+        public void ToggleGameMode()
         {
             _mainVM.ToggleGameMode();
         }
@@ -557,13 +585,13 @@ namespace Flow.Launcher
 
         public bool PluginModified(string id) => PluginManager.PluginModified(id);
 
-        public Task UpdatePluginAsync(PluginMetadata pluginMetadata, UserPlugin plugin, string zipFilePath) =>
+        public Task<bool> UpdatePluginAsync(PluginMetadata pluginMetadata, UserPlugin plugin, string zipFilePath) =>
             PluginManager.UpdatePluginAsync(pluginMetadata, plugin, zipFilePath);
 
-        public void InstallPlugin(UserPlugin plugin, string zipFilePath) =>
+        public bool InstallPlugin(UserPlugin plugin, string zipFilePath) =>
             PluginManager.InstallPlugin(plugin, zipFilePath);
 
-        public Task UninstallPluginAsync(PluginMetadata pluginMetadata, bool removePluginSettings = false) =>
+        public Task<bool> UninstallPluginAsync(PluginMetadata pluginMetadata, bool removePluginSettings = false) =>
             PluginManager.UninstallPluginAsync(pluginMetadata, removePluginSettings);
 
         public long StopwatchLogDebug(string className, string message, Action action, [CallerMemberName] string methodName = "") =>
@@ -577,6 +605,21 @@ namespace Flow.Launcher
 
         public Task<long> StopwatchLogInfoAsync(string className, string message, Func<Task> action, [CallerMemberName] string methodName = "") =>
             Stopwatch.InfoAsync(className, message, action, methodName);
+
+        public bool IsApplicationDarkTheme()
+        {
+            return ThemeManager.Current.ActualApplicationTheme == ApplicationTheme.Dark;
+        }
+
+        public event ActualApplicationThemeChangedEventHandler ActualApplicationThemeChanged
+        {
+            add => _mainVM.ActualApplicationThemeChanged += value;
+            remove => _mainVM.ActualApplicationThemeChanged -= value;
+        }
+
+        public string GetDataDirectory() => DataLocation.DataDirectory();
+
+        public string GetLogDirectory() => DataLocation.VersionLogDirectory;
 
         #endregion
 

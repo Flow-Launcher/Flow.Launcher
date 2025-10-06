@@ -296,7 +296,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                 return;
             }
 
-            var actionKeywordWindow = new ActionKeywordSetting(actionKeyword, Context.API);
+            var actionKeywordWindow = new ActionKeywordSetting(actionKeyword);
 
             if (!(actionKeywordWindow.ShowDialog() ?? false))
             {
@@ -431,10 +431,24 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             {
                 case "QuickAccessLink":
                     if (SelectedQuickAccessLink == null) return;
+                    if (Context.API.ShowMsgBox(
+                            Localize.plugin_explorer_delete_quick_access_link(),
+                            Localize.plugin_explorer_delete(),
+                            MessageBoxButton.OKCancel,
+                            MessageBoxImage.Warning)
+                        == MessageBoxResult.Cancel)
+                        return;
                     Settings.QuickAccessLinks.Remove(SelectedQuickAccessLink);
                     break;
                 case "IndexSearchExcludedPaths":
                     if (SelectedIndexSearchExcludedPath == null) return;
+                    if (Context.API.ShowMsgBox(
+                            Localize.plugin_explorer_delete_index_search_excluded_path(),
+                            Localize.plugin_explorer_delete(),
+                            MessageBoxButton.OKCancel,
+                            MessageBoxImage.Warning)
+                        == MessageBoxResult.Cancel)
+                        return;
                     Settings.IndexSearchExcludedSubdirectoryPaths.Remove(SelectedIndexSearchExcludedPath);
                     break;
             }
@@ -443,7 +457,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
         
         private void ShowUnselectedMessage()
         {
-            var warning = Context.API.GetTranslation("plugin_explorer_make_selection_warning");
+            var warning = Localize.plugin_explorer_make_selection_warning();
             Context.API.ShowMsgBox(warning);
         }
 
@@ -563,8 +577,8 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             }
         }
 
-        public int MaxResultLowerLimit => 1;
-        public int MaxResultUpperLimit => 100000;
+        public int MaxResultLowerLimit { get; } = 1;
+        public int MaxResultUpperLimit { get; } = 100000;
 
         public int MaxResult
         {
@@ -577,6 +591,22 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
         }
 
         #region Everything FastSortWarning
+
+        public List<EverythingSortOptionLocalized> AllEverythingSortOptions { get; } = EverythingSortOptionLocalized.GetValues();
+
+        public EverythingSortOption SelectedEverythingSortOption
+        {
+            get => Settings.SortOption;
+            set
+            {
+                if (value == Settings.SortOption)
+                    return;
+                Settings.SortOption = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(FastSortWarningVisibility));
+                OnPropertyChanged(nameof(SortOptionWarningMessage));
+            }
+        }
 
         public Visibility FastSortWarningVisibility
         {
@@ -598,6 +628,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                 }
             }
         }
+
         public string SortOptionWarningMessage
         {
             get
@@ -607,15 +638,15 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                     // this method is used to determine if Everything service is running because as at Everything v1.4.1
                     // the sdk does not provide a dedicated interface to determine if it is running.
                     return EverythingApi.IsFastSortOption(Settings.SortOption) ? string.Empty
-                        : Context.API.GetTranslation("flowlauncher_plugin_everything_nonfastsort_warning");
+                        : Localize.flowlauncher_plugin_everything_nonfastsort_warning();
                 }
                 catch (IPCErrorException)
                 {
-                    return Context.API.GetTranslation("flowlauncher_plugin_everything_is_not_running");
+                    return Localize.flowlauncher_plugin_everything_is_not_running();
                 }
                 catch (DllNotFoundException)
                 {
-                    return Context.API.GetTranslation("flowlauncher_plugin_everything_sdk_issue");
+                    return Localize.flowlauncher_plugin_everything_sdk_issue();
                 }
             }
         }

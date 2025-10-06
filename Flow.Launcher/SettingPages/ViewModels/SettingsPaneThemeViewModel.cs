@@ -14,8 +14,7 @@ using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
 using Flow.Launcher.ViewModel;
-using ModernWpf;
-using ThemeManagerForColorSchemeSwitch = ModernWpf.ThemeManager;
+using iNKORE.UI.WPF.Modern;
 
 namespace Flow.Launcher.SettingPages.ViewModels;
 
@@ -26,7 +25,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
     private readonly Theme _theme;
 
     private readonly string DefaultFont = Win32Helper.GetSystemDefaultFont();
-    public string BackdropSubText => !Win32Helper.IsBackdropSupported() ? App.API.GetTranslation("BackdropTypeDisabledToolTip") : ""; 
+    public string BackdropSubText => !Win32Helper.IsBackdropSupported() ? Localize.BackdropTypeDisabledToolTip(): ""; 
 
     public static string LinkHowToCreateTheme => @"https://www.flowlauncher.com/theme-builder/";
     public static string LinkThemeGallery => "https://github.com/Flow-Launcher/Flow.Launcher/discussions/1438";
@@ -41,7 +40,11 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         set
         {
             _selectedTheme = value;
-            App.API.SetCurrentTheme(value);
+            if (!App.API.SetCurrentTheme(value))
+            {
+                // Revert selection if failed to set theme
+                OnPropertyChanged();
+            }
 
             // Update UI state
             OnPropertyChanged(nameof(BackdropType));
@@ -127,15 +130,16 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         get => Settings.ColorScheme;
         set
         {
-            ThemeManagerForColorSchemeSwitch.Current.ApplicationTheme = value switch
+            ThemeManager.Current.ApplicationTheme = value switch
             {
                 Constant.Light => ApplicationTheme.Light,
                 Constant.Dark => ApplicationTheme.Dark,
                 Constant.System => null,
-                _ => ThemeManagerForColorSchemeSwitch.Current.ApplicationTheme
+                _ => ThemeManager.Current.ApplicationTheme
             };
             Settings.ColorScheme = value;
             _ = _theme.RefreshFrameAsync();
+            Win32Helper.EnableWin32DarkMode(value);
         }
     }
 
@@ -170,7 +174,9 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         "dddd dd', 'MMMM",
         "dd', 'MMMM",
         "dd.MM.yy",
-        "dd.MM.yyyy"
+        "dd.MM.yyyy",
+        "dd MMMM yyyy",
+        "yyyy-MM-dd"
     };
 
     public string TimeFormat
@@ -269,7 +275,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
 
     public string PlaceholderTextTip
     {
-        get => string.Format(App.API.GetTranslation("PlaceholderTextTip"), App.API.GetTranslation("queryTextBoxPlaceholder"));
+        get => Localize.PlaceholderTextTip(Localize.queryTextBoxPlaceholder());
     }
 
     public string PlaceholderText
@@ -444,8 +450,8 @@ public partial class SettingsPaneThemeViewModel : BaseModel
             {
                 new()
                 {
-                    Title = App.API.GetTranslation("SampleTitleExplorer"),
-                    SubTitle = App.API.GetTranslation("SampleSubTitleExplorer"),
+                    Title = Localize.SampleTitleExplorer(),
+                    SubTitle = Localize.SampleSubTitleExplorer(),
                     IcoPath = Path.Combine(
                         Constant.ProgramDirectory,
                         @"Plugins\Flow.Launcher.Plugin.Explorer\Images\explorer.png"
@@ -453,8 +459,8 @@ public partial class SettingsPaneThemeViewModel : BaseModel
                 },
                 new()
                 {
-                    Title = App.API.GetTranslation("SampleTitleWebSearch"),
-                    SubTitle = App.API.GetTranslation("SampleSubTitleWebSearch"),
+                    Title = Localize.SampleTitleWebSearch(),
+                    SubTitle = Localize.SampleSubTitleWebSearch(),
                     IcoPath = Path.Combine(
                         Constant.ProgramDirectory,
                         @"Plugins\Flow.Launcher.Plugin.WebSearch\Images\web_search.png"
@@ -462,8 +468,8 @@ public partial class SettingsPaneThemeViewModel : BaseModel
                 },
                 new()
                 {
-                    Title = App.API.GetTranslation("SampleTitleProgram"),
-                    SubTitle = App.API.GetTranslation("SampleSubTitleProgram"),
+                    Title = Localize.SampleTitleProgram(),
+                    SubTitle = Localize.SampleSubTitleProgram(),
                     IcoPath = Path.Combine(
                         Constant.ProgramDirectory,
                         @"Plugins\Flow.Launcher.Plugin.Program\Images\program.png"
@@ -471,8 +477,8 @@ public partial class SettingsPaneThemeViewModel : BaseModel
                 },
                 new()
                 {
-                    Title = App.API.GetTranslation("SampleTitleProcessKiller"),
-                    SubTitle = App.API.GetTranslation("SampleSubTitleProcessKiller"),
+                    Title = Localize.SampleTitleProcessKiller(),
+                    SubTitle = Localize.SampleSubTitleProcessKiller(),
                     IcoPath = Path.Combine(
                         Constant.ProgramDirectory,
                         @"Plugins\Flow.Launcher.Plugin.ProcessKiller\Images\app.png"

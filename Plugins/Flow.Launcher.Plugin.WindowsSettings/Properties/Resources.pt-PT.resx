@@ -1779,7 +1779,7 @@
     <value>Alterar definições padrão para multimédia e dispositivos</value>
   </data>
   <data name="PrintTheSpeechReferenceCard" xml:space="preserve">
-    <value>Imprimir o cartão de referência de fala</value>
+    <value>Imprimir cartão de referência de fala</value>
   </data>
   <data name="CalibrateDisplayColour" xml:space="preserve">
     <value>Calibrar ecrã</value>
@@ -2016,7 +2016,7 @@
     <value>Agrupar janelas semelhantes na barra de tarefas</value>
   </data>
   <data name="ChangeWindowsSideshowSettings" xml:space="preserve">
-    <value>Alterar configurações do Windows SideShow</value>
+    <value>Alterar definições do Windows SideShow</value>
   </data>
   <data name="UseAudioDescriptionForVideo" xml:space="preserve">
     <value>Usar descrição de áudio para vídeos</value>
@@ -2176,7 +2176,7 @@
     <value>Alterar configurações avançadas de gerenciamento de cores para telas, scanners e impressoras</value>
   </data>
   <data name="LetWindowsSuggestEaseOfAccessSettings" xml:space="preserve">
-    <value>Permitir que o Windows sugira Facilidade de Acesso</value>
+    <value>Permitir que o Windows sugira a Facilidade de acesso</value>
   </data>
   <data name="ClearDiskSpaceByDeletingUnnecessaryFiles" xml:space="preserve">
     <value>Limpar espaço em disco excluindo arquivos desnecessários</value>
@@ -2227,10 +2227,10 @@
     <value>Identificar e reparar problemas de rede</value>
   </data>
   <data name="FindAndFixNetworkingAndConnectionProblems" xml:space="preserve">
-    <value>Encontrar e corrigir problemas de rede e conexão</value>
+    <value>Encontrar e corrigir problemas de rede e ligações</value>
   </data>
   <data name="PlayCdsOrOtherMediaAutomatically" xml:space="preserve">
-    <value>Reproduzir CDs ou outras mídias automaticamente</value>
+    <value>Reproduzir CDs ou outas unidades automaticamente</value>
   </data>
   <data name="ViewBasicInformationAboutYourComputer" xml:space="preserve">
     <value>Ver informações básicas sobre seu computador</value>
@@ -2332,7 +2332,7 @@
     <value>Move the pointer with the keypad using MouseKeys</value>
   </data>
   <data name="ChangeWindowsSideshowCompatibleDeviceSettings" xml:space="preserve">
-    <value>Change Windows SideShow-compatible device settings</value>
+    <value>Alterar definições dos dispositivos compatíveis com SideShow</value>
   </data>
   <data name="AdjustCommonlyUsedMobilitySettings" xml:space="preserve">
     <value>Adjust commonly used mobility settings</value>

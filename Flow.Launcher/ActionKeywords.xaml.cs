@@ -20,7 +20,9 @@ namespace Flow.Launcher
 
         private void ActionKeyword_OnLoaded(object sender, RoutedEventArgs e)
         {
-            tbOldActionKeyword.Text = string.Join(Query.ActionKeywordSeparator, _plugin.Metadata.ActionKeywords.ToArray());
+            tbOldActionKeyword.Text = string.Join(Query.ActionKeywordSeparator, _plugin.Metadata.ActionKeywords);
+            tbAction.Text = tbOldActionKeyword.Text;
+            tbAction.SelectAll();
             tbAction.Focus();
         }
 
@@ -33,38 +35,39 @@ namespace Flow.Launcher
         {
             var oldActionKeywords = _plugin.Metadata.ActionKeywords;
 
-            var newActionKeywords = tbAction.Text.Split(Query.ActionKeywordSeparator).ToList();
-            newActionKeywords.RemoveAll(string.IsNullOrEmpty);
-            newActionKeywords = newActionKeywords.Distinct().ToList();
+            var newActionKeywords = tbAction.Text.Split(Query.ActionKeywordSeparator)
+                                                 .Where(s => !string.IsNullOrEmpty(s))
+                                                 .Distinct()
+                                                 .ToList();
 
             newActionKeywords = newActionKeywords.Count > 0 ? newActionKeywords : new() { Query.GlobalPluginWildcardSign };
 
             var addedActionKeywords = newActionKeywords.Except(oldActionKeywords).ToList();
             var removedActionKeywords = oldActionKeywords.Except(newActionKeywords).ToList();
-            if (!addedActionKeywords.Any(App.API.ActionKeywordAssigned))
+
+            if (addedActionKeywords.Any(App.API.ActionKeywordAssigned))
             {
-                if (oldActionKeywords.Count != newActionKeywords.Count)
-                {
-                    ReplaceActionKeyword(_plugin.Metadata.ID, removedActionKeywords, addedActionKeywords);
-                    return;
-                }
+                App.API.ShowMsgBox(Localize.newActionKeywordsHasBeenAssigned());
+                return;
+            }
 
-                var sortedOldActionKeywords = oldActionKeywords.OrderBy(s => s).ToList();
-                var sortedNewActionKeywords = newActionKeywords.OrderBy(s => s).ToList();
+            if (oldActionKeywords.Count != newActionKeywords.Count)
+            {
+                ReplaceActionKeyword(_plugin.Metadata.ID, removedActionKeywords, addedActionKeywords);
+                return;
+            }
 
-                if (sortedOldActionKeywords.SequenceEqual(sortedNewActionKeywords))
-                {
-                    // User just changes the sequence of action keywords
-                    App.API.ShowMsgBox(App.API.GetTranslation("newActionKeywordsSameAsOld"));
-                }
-                else
-                {
-                    ReplaceActionKeyword(_plugin.Metadata.ID, removedActionKeywords, addedActionKeywords);
-                }
+            var sortedOldActionKeywords = oldActionKeywords.OrderBy(s => s).ToList();
+            var sortedNewActionKeywords = newActionKeywords.OrderBy(s => s).ToList();
+
+            if (sortedOldActionKeywords.SequenceEqual(sortedNewActionKeywords))
+            {
+                // User just changes the sequence of action keywords
+                App.API.ShowMsgBox(Localize.newActionKeywordsSameAsOld());
             }
             else
             {
-                App.API.ShowMsgBox(App.API.GetTranslation("newActionKeywordsHasBeenAssigned"));
+                ReplaceActionKeyword(_plugin.Metadata.ID, removedActionKeywords, addedActionKeywords);
             }
         }
 

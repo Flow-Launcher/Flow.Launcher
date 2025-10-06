@@ -2,13 +2,11 @@
     x:Class="Flow.Launcher.Plugin.Explorer.Views.ExplorerSettings"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:converters="clr-namespace:Flow.Launcher.Plugin.Explorer.Views.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:qa="clr-namespace:Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks"
-    xmlns:ui="http://schemas.modernwpf.com/2019"
+    xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
     xmlns:viewModels="clr-namespace:Flow.Launcher.Plugin.Explorer.ViewModels"
-    xmlns:views="clr-namespace:Flow.Launcher.Plugin.Explorer.Views"
     d:DataContext="{d:DesignInstance viewModels:SettingsViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -18,10 +16,10 @@
         <DataTemplate x:Key="ListViewTemplateAccessLinks" DataType="qa:AccessLink">
             <TextBlock Margin="0 5 0 5" Text="{Binding Path, Mode=OneTime}" />
         </DataTemplate>
-        <DataTemplate x:Key="ListViewActionKeywords" DataType="{x:Type views:ActionKeywordModel}">
+        <DataTemplate x:Key="ListViewActionKeywords" DataType="{x:Type viewModels:ActionKeywordModel}">
             <Grid>
                 <TextBlock
-                    Margin="0 5 0 0"
+                    Margin="0 5 0 5"
                     IsEnabled="{Binding Enabled}"
                     Text="{Binding LocalizedDescription, Mode=OneTime}">
                     <TextBlock.Style>
@@ -39,7 +37,7 @@
                 </TextBlock>
 
                 <TextBlock
-                    Margin="250 5 0 0"
+                    Margin="250 5 0 5"
                     IsEnabled="{Binding Enabled}"
                     Text="{Binding Keyword}">
                     <TextBlock.Style>
@@ -56,7 +54,7 @@
                     </TextBlock.Style>
                 </TextBlock>
 
-                <TextBlock Margin="480 5 0 0">
+                <TextBlock Margin="480 5 0 5">
                     <TextBlock.Style>
                         <Style TargetType="{x:Type TextBlock}">
                             <Style.Triggers>
@@ -74,8 +72,6 @@
                 </TextBlock>
             </Grid>
         </DataTemplate>
-
-        <converters:EnumNameConverter x:Key="EnumNameConverter" />
 
         <Style x:Key="CustomExpanderStyle" TargetType="Expander">
             <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
@@ -107,7 +103,7 @@
                                     ContentTemplate="{TemplateBinding HeaderTemplate}"
                                     ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
                                     DockPanel.Dock="Top"
-                                    FocusVisualStyle="{StaticResource ExpanderHeaderFocusVisual}"
+                                    FocusVisualStyle="{DynamicResource ExpanderHeaderFocusVisual}"
                                     FontFamily="{TemplateBinding FontFamily}"
                                     FontSize="{TemplateBinding FontSize}"
                                     FontStretch="{TemplateBinding FontStretch}"
@@ -632,17 +628,10 @@
                     Grid.Column="1"
                     Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
                     VerticalAlignment="Center"
-                    ItemsSource="{Binding Settings.SortOptions, Mode=OneWay}"
-                    SelectedItem="{Binding Settings.SortOption}"
-                    SelectionChanged="EverythingSortOptionChanged">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <TextBlock Text="{Binding Converter={StaticResource EnumNameConverter}}" />
-                            </Grid>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
+                    DisplayMemberPath="Display"
+                    ItemsSource="{Binding AllEverythingSortOptions}"
+                    SelectedValue="{Binding SelectedEverythingSortOption, Mode=TwoWay}"
+                    SelectedValuePath="Value" />
 
                 <TextBlock
                     Grid.Row="3"
@@ -667,10 +656,10 @@
                     Margin="{StaticResource SettingPanelItemTopBottomMargin}"
                     VerticalAlignment="Center"
                     Foreground="Orange"
-                    Text="{Binding SortOptionWarningMessage, Mode=OneTime}"
+                    Text="{Binding SortOptionWarningMessage, Mode=OneWay}"
                     TextAlignment="Left"
                     TextWrapping="Wrap"
-                    Visibility="{Binding FastSortWarningVisibility, Mode=OneTime}" />
+                    Visibility="{Binding FastSortWarningVisibility, Mode=OneWay}" />
             </Grid>
         </Expander>
 

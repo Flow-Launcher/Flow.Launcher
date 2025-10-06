@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using CommunityToolkit.Mvvm.Input;
+using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.ViewModel;
 
@@ -94,6 +97,48 @@ public partial class SettingsPanePluginStoreViewModel : BaseModel
         {
             OnPropertyChanged(nameof(ExternalPlugins));
         }
+    }
+
+    [RelayCommand]
+    private async Task InstallPluginAsync()
+    {
+        var file = GetFileFromDialog(
+            Localize.SelectZipFile(),
+            $"{Localize.ZipFiles()} (*.zip)|*.zip");
+
+        if (!string.IsNullOrEmpty(file))
+            await PluginInstaller.InstallPluginAndCheckRestartAsync(file);
+    }
+
+    [RelayCommand]
+    private async Task CheckPluginUpdatesAsync()
+    {
+        await PluginInstaller.CheckForPluginUpdatesAsync((plugins) =>
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                var pluginUpdateWindow = new PluginUpdateWindow(plugins);
+                pluginUpdateWindow.ShowDialog();
+            });
+        }, silentUpdate: false);
+    }
+
+    private static string GetFileFromDialog(string title, string filter = "")
+    {
+        var dlg = new Microsoft.Win32.OpenFileDialog
+        {
+            InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\Downloads",
+            Multiselect = false,
+            CheckFileExists = true,
+            CheckPathExists = true,
+            Title = title,
+            Filter = filter
+        };
+        var result = dlg.ShowDialog();
+        if (result == true)
+            return dlg.FileName;
+
+        return string.Empty;
     }
 
     public bool SatisfiesFilter(PluginStoreItemViewModel plugin)

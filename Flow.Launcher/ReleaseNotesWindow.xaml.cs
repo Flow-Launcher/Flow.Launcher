@@ -10,27 +10,27 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using Flow.Launcher.Infrastructure.Http;
+using iNKORE.UI.WPF.Modern;
 
 namespace Flow.Launcher
 {
     public partial class ReleaseNotesWindow : Window
     {
-        private static readonly string ReleaseNotes = Properties.Settings.Default.GithubRepo + "/releases";
+        public string ReleaseNotes => Properties.Settings.Default.GithubRepo + "/releases";
 
         public ReleaseNotesWindow()
         {
             InitializeComponent();
-            SeeMore.Uri = ReleaseNotes;
-            ModernWpf.ThemeManager.Current.ActualApplicationThemeChanged += ThemeManager_ActualApplicationThemeChanged;
+            ThemeManager.Current.ActualApplicationThemeChanged += ThemeManager_ActualApplicationThemeChanged;
         }
 
         #region Window Events
 
-        private void ThemeManager_ActualApplicationThemeChanged(ModernWpf.ThemeManager sender, object args)
+        private void ThemeManager_ActualApplicationThemeChanged(ThemeManager sender, object args)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                if (ModernWpf.ThemeManager.Current.ActualApplicationTheme == ModernWpf.ApplicationTheme.Light)
+                if (ThemeManager.Current.ActualApplicationTheme == ApplicationTheme.Light)
                 {
                     MarkdownViewer.MarkdownStyle = (Style)Application.Current.Resources["DocumentStyleGithubLikeLight"];
                     MarkdownViewer.Foreground = Brushes.Black;
@@ -58,7 +58,7 @@ namespace Flow.Launcher
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            ModernWpf.ThemeManager.Current.ActualApplicationThemeChanged -= ThemeManager_ActualApplicationThemeChanged;
+            ThemeManager.Current.ActualApplicationThemeChanged -= ThemeManager_ActualApplicationThemeChanged;
         }
 
         #endregion
@@ -132,8 +132,8 @@ namespace Flow.Launcher
                     RefreshButton.Visibility = Visibility.Visible;
                     MarkdownViewer.Visibility = Visibility.Collapsed;
                     App.API.ShowMsgError(
-                        App.API.GetTranslation("checkNetworkConnectionTitle"),
-                        App.API.GetTranslation("checkNetworkConnectionSubTitle"));
+                        Localize.checkNetworkConnectionTitle(),
+                        Localize.checkNetworkConnectionSubTitle());
                 }
                 else
                 {
@@ -147,7 +147,6 @@ namespace Flow.Launcher
         private void Grid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             MarkdownScrollViewer.Height = e.NewSize.Height;
-            MarkdownScrollViewer.Width = e.NewSize.Width;
         }
 
         private void MarkdownViewer_MouseWheel(object sender, MouseWheelEventArgs e)
@@ -189,31 +188,46 @@ namespace Flow.Launcher
             var releases = JsonSerializer.Deserialize<List<GitHubReleaseInfo>>(releaseNotesJSON);
 
             // Get the latest releases
-            var latestReleases = releases.OrderByDescending(release => release.PublishedDate).Take(3);
+            var latestReleases = releases.OrderByDescending(release => release.PublishedDate).Take(3).ToList();
 
             // Build the release notes in Markdown format
             var releaseNotesHtmlBuilder = new StringBuilder(string.Empty);
-            foreach (var release in latestReleases)
+
+            for (int i = 0; i < latestReleases.Count; i++)
             {
+                var release = latestReleases[i];
                 releaseNotesHtmlBuilder.AppendLine("# " + release.Name);
 
                 // Because MdXaml.Html package cannot correctly render images without units,
                 // We need to manually add unit for images
                 // E.g. Replace <img src="..." width="500"> with <img src="..." width="500px">
                 var notes = ImageUnitRegex().Replace(release.ReleaseNotes, m =>
-                    {
-                        var prefix = m.Groups[1].Value;
-                        var widthValue = m.Groups[2].Value;
-                        var quote = m.Groups[3].Value;
-                        var suffix = m.Groups[4].Value;
-                        // Only replace if width is number like 500 without units like 500px
-                        if (IsNumber(widthValue))
-                            return $"{prefix}{widthValue}px{quote}{suffix}";
-                        return m.Value;
-                    });
+                {
+                    var prefix = m.Groups[1].Value;
+                    var widthValue = m.Groups[2].Value;
+                    var quote = m.Groups[3].Value;
+                    var suffix = m.Groups[4].Value;
+                    // Only replace if width is number like 500 without units like 500px
+                    if (IsNumber(widthValue))
+                        return $"{prefix}{widthValue}px{quote}{suffix}";
+                    return m.Value;
+                });
 
                 releaseNotesHtmlBuilder.AppendLine(notes);
                 releaseNotesHtmlBuilder.AppendLine();
+
+                // Add separator if it is not last release note
+                if (i < latestReleases.Count - 1)
+                {
+                    releaseNotesHtmlBuilder.Append("<br />"); 
+                    releaseNotesHtmlBuilder.Append("\n\n"); 
+
+                    releaseNotesHtmlBuilder.AppendLine("---");
+
+                    releaseNotesHtmlBuilder.Append("\n\n"); 
+                    releaseNotesHtmlBuilder.Append("<br />"); 
+                    releaseNotesHtmlBuilder.Append("\n\n"); 
+                }
             }
 
             return releaseNotesHtmlBuilder.ToString();

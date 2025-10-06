@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:flowlauncher="clr-namespace:Flow.Launcher"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:ui="http://schemas.modernwpf.com/2019"
+    xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
     xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
     Name="FlowMainWindow"
     Title="Flow Launcher"
@@ -534,10 +534,8 @@
                             MinHeight="380"
                             MaxHeight="{Binding ElementName=ResultListBox, Path=ActualHeight}"
                             Padding="0 0 10 10"
-                            d:DataContext="{d:DesignInstance vm:ResultViewModel}"
-                            DataContext="{Binding PreviewSelectedItem, Mode=OneWay}"
                             Visibility="{Binding ShowCustomizedPreview}">
-                            <ContentControl Content="{Binding Result.PreviewPanel.Value}" />
+                            <ContentControl Content="{Binding CustomizedPreviewControl}" />
                         </Border>
                     </Grid>
                 </Grid>

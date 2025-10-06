@@ -16,11 +16,13 @@ using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Http;
 using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Infrastructure.DialogJump;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.SettingPages.ViewModels;
 using Flow.Launcher.ViewModel;
+using iNKORE.UI.WPF.Modern.Common;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.VisualStudio.Threading;
@@ -41,9 +43,10 @@ namespace Flow.Launcher
         private static readonly string ClassName = nameof(App);
 
         private static bool _disposed;
+        private static Settings _settings;
         private static MainWindow _mainWindow;
         private readonly MainViewModel _mainVM;
-        private readonly Settings _settings;
+        private readonly Internationalization _internationalization;
 
         // To prevent two disposals running at the same time.
         private static readonly object _disposingLock = new();
@@ -54,19 +57,11 @@ namespace Flow.Launcher
 
         public App()
         {
+            // Do not use bitmap cache since it can cause WPF second window freezing issue
+            ShadowAssist.UseBitmapCache = false;
+
             // Initialize settings
-            try
-            {
-                var storage = new FlowLauncherJsonStorage<Settings>();
-                _settings = storage.Load();
-                _settings.SetStorage(storage);
-                _settings.WMPInstalled = WindowsMediaPlayerHelper.IsWindowsMediaPlayerInstalled();
-            }
-            catch (Exception e)
-            {
-                ShowErrorMsgBoxAndFailFast("Cannot load setting storage, please check local data directory", e);
-                return;
-            }
+            _settings.WMPInstalled = WindowsMediaPlayerHelper.IsWindowsMediaPlayerInstalled();
 
             // Configure the dependency injection container
             try
@@ -121,21 +116,12 @@ namespace Flow.Launcher
                 API = Ioc.Default.GetRequiredService<IPublicAPI>();
                 _settings.Initialize();
                 _mainVM = Ioc.Default.GetRequiredService<MainViewModel>();
+                _internationalization = Ioc.Default.GetRequiredService<Internationalization>();
             }
             catch (Exception e)
             {
                 ShowErrorMsgBoxAndFailFast("Cannot initialize api and settings, please open new issue in Flow.Launcher", e);
                 return;
-            }
-
-            // Local function
-            static void ShowErrorMsgBoxAndFailFast(string message, Exception e)
-            {
-                // Firstly show users the message
-                MessageBox.Show(e.ToString(), message, MessageBoxButton.OK, MessageBoxImage.Error);
-
-                // Flow cannot construct its App instance, so ensure Flow crashes w/ the exception info.
-                Environment.FailFast(message, e);
             }
         }
 
@@ -146,12 +132,48 @@ namespace Flow.Launcher
         [STAThread]
         public static void Main()
         {
+            // Initialize settings so that we can get language code
+            try
+            {
+                var storage = new FlowLauncherJsonStorage<Settings>();
+                _settings = storage.Load();
+                _settings.SetStorage(storage);
+            }
+            catch (Exception e)
+            {
+                ShowErrorMsgBoxAndFailFast("Cannot load setting storage, please check local data directory", e);
+                return;
+            }
+
+            // Initialize system language before changing culture info
+            Internationalization.InitSystemLanguageCode();
+
+            // Change culture info before application creation to localize WinForm windows
+            if (_settings.Language != Constant.SystemLanguageCode)
+            {
+                Internationalization.ChangeCultureInfo(_settings.Language);
+            }
+
+            // Start the application as a single instance
             if (SingleInstance<App>.InitializeAsFirstInstance())
             {
                 using var application = new App();
                 application.InitializeComponent();
                 application.Run();
             }
+        }
+
+        #endregion
+
+        #region Fail Fast
+
+        private static void ShowErrorMsgBoxAndFailFast(string message, Exception e)
+        {
+            // Firstly show users the message
+            MessageBox.Show(e.ToString(), message, MessageBoxButton.OK, MessageBoxImage.Error);
+
+            // Flow cannot construct its App instance, so ensure Flow crashes w/ the exception info.
+            Environment.FailFast(message, e);
         }
 
         #endregion
@@ -177,6 +199,12 @@ namespace Flow.Launcher
 
                 Notification.Install();
 
+                // Enable Win32 dark mode if the system is in dark mode before creating all windows
+                Win32Helper.EnableWin32DarkMode(_settings.ColorScheme);
+
+                // Initialize language before portable clean up since it needs translations
+                await _internationalization.InitializeLanguageAsync();
+
                 Ioc.Default.GetRequiredService<Portable>().PreStartCleanUpAfterPortabilityUpdate();
 
                 API.LogInfo(ClassName, "Begin Flow Launcher startup ----------------------------------------------------");
@@ -197,10 +225,13 @@ namespace Flow.Launcher
 
                 Http.Proxy = _settings.Proxy;
 
+                // Initialize plugin manifest before initializing plugins so that they can use the manifest instantly
+                await API.UpdatePluginManifestAsync();
+
                 await PluginManager.InitializePluginsAsync();
 
-                // Change language after all plugins are initialized because we need to update plugin title based on their api
-                await Ioc.Default.GetRequiredService<Internationalization>().InitializeLanguageAsync();
+                // Update plugin titles after plugins are initialized with their api instances
+                Internationalization.UpdatePluginMetadataTranslations();
 
                 await imageLoadertask;
 
@@ -216,12 +247,16 @@ namespace Flow.Launcher
                 // Initialize theme for main window
                 Ioc.Default.GetRequiredService<Theme>().ChangeTheme();
 
+                DialogJump.InitializeDialogJump(PluginManager.GetDialogJumpExplorers(), PluginManager.GetDialogJumpDialogs());
+                DialogJump.SetupDialogJump(_settings.EnableDialogJump);
+
                 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
                 RegisterExitEvents();
 
                 AutoStartup();
                 AutoUpdates();
+                AutoPluginUpdates();
 
                 API.SaveAppAllSettings();
                 API.LogInfo(ClassName, "End Flow Launcher startup ----------------------------------------------------");
@@ -234,7 +269,7 @@ namespace Flow.Launcher
         /// Check startup only for Release
         /// </summary>
         [Conditional("RELEASE")]
-        private void AutoStartup()
+        private static void AutoStartup()
         {
             // we try to enable auto-startup on first launch, or reenable if it was removed
             // but the user still has the setting set
@@ -249,13 +284,13 @@ namespace Flow.Launcher
                     // but if it fails (permissions, etc) then don't keep retrying
                     // this also gives the user a visual indication in the Settings widget
                     _settings.StartFlowLauncherOnSystemStartup = false;
-                    API.ShowMsg(API.GetTranslation("setAutoStartFailed"), e.Message);
+                    API.ShowMsgError(Localize.setAutoStartFailed(), e.Message);
                 }
             }
         }
 
         [Conditional("RELEASE")]
-        private void AutoUpdates()
+        private static void AutoUpdates()
         {
             _ = Task.Run(async () =>
             {
@@ -268,6 +303,38 @@ namespace Flow.Launcher
                     while (await timer.WaitForNextTickAsync())
                         // check updates on startup
                         await Ioc.Default.GetRequiredService<Updater>().UpdateAppAsync();
+                }
+            });
+        }
+
+        [Conditional("RELEASE")]
+        private static void AutoPluginUpdates()
+        {
+            _ = Task.Run(async () =>
+            {
+                if (_settings.AutoUpdatePlugins)
+                {
+                    // check plugin updates every 5 hour
+                    var timer = new PeriodicTimer(TimeSpan.FromHours(5));
+                    await PluginInstaller.CheckForPluginUpdatesAsync((plugins) =>
+                    {
+                        Current.Dispatcher.Invoke(() =>
+                        {
+                            var pluginUpdateWindow = new PluginUpdateWindow(plugins);
+                            pluginUpdateWindow.ShowDialog();
+                        });
+                    });
+
+                    while (await timer.WaitForNextTickAsync())
+                        // check updates on startup
+                        await PluginInstaller.CheckForPluginUpdatesAsync((plugins) =>
+                        {
+                            Current.Dispatcher.Invoke(() =>
+                            {
+                                var pluginUpdateWindow = new PluginUpdateWindow(plugins);
+                                pluginUpdateWindow.ShowDialog();
+                            });
+                        });
                 }
             });
         }
@@ -363,6 +430,8 @@ namespace Flow.Launcher
                     // since some resources owned by the thread need to be disposed.
                     _mainWindow?.Dispatcher.Invoke(_mainWindow.Dispose);
                     _mainVM?.Dispose();
+                    DialogJump.Dispose();
+                    _internationalization.Dispose();
                 }
 
                 API.LogInfo(ClassName, "End Flow Launcher dispose ----------------------------------------------------");

@@ -6,7 +6,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.Program.Programs;
 using Flow.Launcher.Plugin.Program.Views;
 using Flow.Launcher.Plugin.Program.Views.Models;
@@ -32,7 +31,7 @@ namespace Flow.Launcher.Plugin.Program
 
         internal static PluginInitContext Context { get; private set; }
 
-        private static readonly List<Result> emptyResults = new();
+        private static readonly List<Result> emptyResults = [];
 
         private static readonly MemoryCacheOptions cacheOptions = new() { SizeLimit = 1560 };
         private static MemoryCache cache = new(cacheOptions);
@@ -85,7 +84,6 @@ namespace Flow.Launcher.Plugin.Program
                 {
                     await _win32sLock.WaitAsync(token);
                     await _uwpsLock.WaitAsync(token);
-
                     try
                     {
                         // Collect all UWP Windows app directories
@@ -104,7 +102,7 @@ namespace Flow.Launcher.Plugin.Program
                             .Where(p => HideDuplicatedWindowsAppFilter(p, uwpsDirectories))
                             .Where(p => p.Enabled)
                             .Select(p => p.Result(query.Search, Context.API))
-                            .Where(r => r?.Score > 0)
+                            .Where(r => string.IsNullOrEmpty(query.Search) || r?.Score > 0)
                             .ToList();
                     }
                     catch (OperationCanceledException)
@@ -118,7 +116,7 @@ namespace Flow.Launcher.Plugin.Program
                     }
                 }, token);
 
-                resultList = resultList.Any() ? resultList : emptyResults;
+                resultList = resultList.Count != 0 ? resultList : emptyResults;
 
                 entry.SetSize(resultList.Count);
                 entry.SetSlidingExpiration(TimeSpan.FromHours(8));
@@ -234,23 +232,43 @@ namespace Flow.Launcher.Plugin.Program
                     }
                 }
 
-                // Move old cache files to the new cache directory
-                var oldWin32CacheFile = Path.Combine(DataLocation.CacheDirectory, $"{Win32CacheName}.cache");
-                var newWin32CacheFile = Path.Combine(pluginCacheDirectory, $"{Win32CacheName}.cache");
-                MoveFile(oldWin32CacheFile, newWin32CacheFile);
-                var oldUWPCacheFile = Path.Combine(DataLocation.CacheDirectory, $"{UwpCacheName}.cache");
-                var newUWPCacheFile = Path.Combine(pluginCacheDirectory, $"{UwpCacheName}.cache");
-                MoveFile(oldUWPCacheFile, newUWPCacheFile);
+                // If plugin cache directory is this: D:\\Data\\Cache\\Plugins\\Flow.Launcher.Plugin.Program
+                // then the parent directory is: D:\\Data\\Cache
+                // So we can use the parent of the parent directory to get the cache directory path
+                var directoryInfo = new DirectoryInfo(pluginCacheDirectory);
+                var cacheDirectory = directoryInfo.Parent?.Parent?.FullName;
+                // Move old cache files to the new cache directory if cache directory exists
+                if (!string.IsNullOrEmpty(cacheDirectory))
+                {
+                    var oldWin32CacheFile = Path.Combine(cacheDirectory, $"{Win32CacheName}.cache");
+                    var newWin32CacheFile = Path.Combine(pluginCacheDirectory, $"{Win32CacheName}.cache");
+                    MoveFile(oldWin32CacheFile, newWin32CacheFile);
+                    var oldUWPCacheFile = Path.Combine(cacheDirectory, $"{UwpCacheName}.cache");
+                    var newUWPCacheFile = Path.Combine(pluginCacheDirectory, $"{UwpCacheName}.cache");
+                    MoveFile(oldUWPCacheFile, newUWPCacheFile);
+                }
 
                 await _win32sLock.WaitAsync();
-                _win32s = await context.API.LoadCacheBinaryStorageAsync(Win32CacheName, pluginCacheDirectory, new List<Win32>());
-                _win32sCount = _win32s.Count;
-                _win32sLock.Release();
+                try
+                {
+                    _win32s = await context.API.LoadCacheBinaryStorageAsync(Win32CacheName, pluginCacheDirectory, new List<Win32>());
+                    _win32sCount = _win32s.Count;
+                }
+                finally
+                {
+                    _win32sLock.Release();
+                }
 
                 await _uwpsLock.WaitAsync();
-                _uwps = await context.API.LoadCacheBinaryStorageAsync(UwpCacheName, pluginCacheDirectory, new List<UWPApp>());
-                _uwpsCount = _uwps.Count;
-                _uwpsLock.Release();
+                try
+                {
+                    _uwps = await context.API.LoadCacheBinaryStorageAsync(UwpCacheName, pluginCacheDirectory, new List<UWPApp>());
+                    _uwpsCount = _uwps.Count;
+                }
+                finally
+                {
+                    _uwpsLock.Release();
+                }
             });
             Context.API.LogInfo(ClassName, $"Number of preload win32 programs <{_win32sCount}>");
             Context.API.LogInfo(ClassName, $"Number of preload uwps <{_uwpsCount}>");
@@ -401,37 +419,45 @@ namespace Flow.Launcher.Plugin.Program
                 return;
 
             await _uwpsLock.WaitAsync();
-            if (_uwps.Any(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier))
+            var reindexUwps = true;
+            try
             {
+                reindexUwps = _uwps.Any(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier);
                 var program = _uwps.First(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier);
                 program.Enabled = false;
                 _settings.DisabledProgramSources.Add(new ProgramSource(program));
+            }
+            finally
+            {
                 _uwpsLock.Release();
+            }
 
-                // Reindex UWP programs
+            // Reindex UWP programs
+            if (reindexUwps)
+            {
                 _ = Task.Run(IndexUwpProgramsAsync);
                 return;
             }
-            else
-            {
-                _uwpsLock.Release();
-            }
 
             await _win32sLock.WaitAsync();
-            if (_win32s.Any(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier))
+            var reindexWin32s = true;
+            try
             {
+                reindexWin32s = _win32s.Any(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier);
                 var program = _win32s.First(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier);
                 program.Enabled = false;
                 _settings.DisabledProgramSources.Add(new ProgramSource(program));
-                _win32sLock.Release();
-
-                // Reindex Win32 programs
-                _ = Task.Run(IndexWin32ProgramsAsync);
-                return;
             }
-            else
+            finally
             {
                 _win32sLock.Release();
+            }
+
+            // Reindex Win32 programs
+            if (reindexWin32s)
+            {
+                _ = Task.Run(IndexWin32ProgramsAsync);
+                return;
             }
         }
 
@@ -446,7 +472,7 @@ namespace Flow.Launcher.Plugin.Program
                 var title = Context.API.GetTranslation("flowlauncher_plugin_program_disable_dlgtitle_error");
                 var message = string.Format(Context.API.GetTranslation("flowlauncher_plugin_program_run_failed"),
                     info.FileName);
-                Context.API.ShowMsg(title, string.Format(message, info.FileName), string.Empty);
+                Context.API.ShowMsgError(title, message);
             }
         }
 

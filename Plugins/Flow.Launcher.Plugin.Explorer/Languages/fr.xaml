@@ -3,6 +3,10 @@
 
     <!--  Dialogues  -->
     <system:String x:Key="plugin_explorer_make_selection_warning">Veuillez d'abord effectuer une sélection</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_no_folder_selected">Veuillez sélectionner un chemin d'accès au dossier.</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_path_already_exists">Veuillez choisir un nom ou un chemin d'accès différent.</system:String>
+    <system:String x:Key="plugin_explorer_delete_quick_access_link">Êtes-vous sûr de vouloir supprimer ce lien d'accès rapide ?</system:String>
+    <system:String x:Key="plugin_explorer_delete_index_search_excluded_path">Êtes-vous sûr de vouloir supprimer ce chemin de recherche d'index exclu ?</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">Veuillez sélectionner un lien vers un dossier</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">Êtes-vous sûr de vouloir supprimer {0} ?</system:String>
     <system:String x:Key="plugin_explorer_deletefileconfirm">Êtes-vous sûr de vouloir supprimer définitivement ce fichier ?</system:String>
@@ -18,6 +22,7 @@
     <system:String x:Key="plugin_explorer_directoryinfosearch_error">Une erreur s'est produite pendant la recherche : {0}</system:String>
     <system:String x:Key="plugin_explorer_opendir_error">Impossible d'ouvrir le dossier</system:String>
     <system:String x:Key="plugin_explorer_openfile_error">Impossible d'ouvrir le fichier</system:String>
+    <system:String x:Key="plugin_explorer_new_action_keyword_assigned">This new action keyword is already assigned to another plugin, please choose a different one</system:String>
 
     <!--  Controls  -->
     <system:String x:Key="plugin_explorer_delete">Supprimer</system:String>
@@ -25,6 +30,7 @@
     <system:String x:Key="plugin_explorer_add">Ajouter</system:String>
     <system:String x:Key="plugin_explorer_generalsetting_header">Paramètres généraux</system:String>
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Personnaliser les mots-clés d'action</system:String>
+    <system:String x:Key="plugin_explorer_manage_quick_access_links_header">Personnaliser l'accès rapide</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Liens d'accès rapide</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">Paramètres Everything</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_setting_header">Panneau d'aperçu</system:String>
@@ -41,6 +47,7 @@
     <system:String x:Key="plugin_explorer_shell_path">Chemin d'accès au Shell</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Chemins exclus de la recherche d'index</system:String>
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">Utiliser l'emplacement du résultat de la recherche comme répertoire de travail de l'exécutable</system:String>
+    <system:String x:Key="plugin_explorer_display_more_info_in_tooltip">Afficher plus d'informations comme la taille et l'âge dans les infobulles</system:String>
     <system:String x:Key="plugin_explorer_default_open_in_file_manager">Appuyez sur Entrée pour ouvrir le dossier dans le gestionnaire de fichiers par défaut</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Utiliser la recherche d'index pour la recherche de chemin d'accès</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Options d'indexation</system:String>
@@ -77,6 +84,9 @@
     <!--  Plugin Tooltip  -->
     <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Ctrl + Entrée pour ouvrir le répertoire</system:String>
     <system:String x:Key="plugin_explorer_plugin_ToolTipOpenContainingFolder">Ctrl + Entrée pour ouvrir le dossier contenant</system:String>
+    <system:String x:Key="plugin_explorer_plugin_tooltip_more_info">{0}{4} Taille : {1}{4}Date de création : {2}{4}Date de modification : {3}</system:String>
+    <system:String x:Key="plugin_explorer_plugin_tooltip_more_info_unknown">Inconnu</system:String>
+    <system:String x:Key="plugin_explorer_plugin_tooltip_more_info_volume">{0}{3}Espace libre : {1}{3}Taille totale : {2}</system:String>
 
     <!--  Context menu items  -->
     <system:String x:Key="plugin_explorer_copypath">Copier le chemin</system:String>
@@ -89,7 +99,11 @@
     <system:String x:Key="plugin_explorer_deletefilefolder">Supprimer</system:String>
     <system:String x:Key="plugin_explorer_deletefile_subtitle">Supprimer définitivement le fichier actuel</system:String>
     <system:String x:Key="plugin_explorer_deletefolder_subtitle">Supprimer définitivement le dossier actuel</system:String>
-    <system:String x:Key="plugin_explorer_path">Chemin :</system:String>
+    <system:String x:Key="plugin_explorer_name">Nom</system:String>
+    <system:String x:Key="plugin_explorer_type">Type</system:String>
+    <system:String x:Key="plugin_explorer_path">Chemin</system:String>
+    <system:String x:Key="plugin_explorer_file">Fichier</system:String>
+    <system:String x:Key="plugin_explorer_folder">Dossier</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Supprimer la sélection</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">Exécuter en tant qu'utilisateur différent</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Exécuter le programme sélectionné en utilisant un autre compte d'utilisateur</system:String>
@@ -117,6 +131,11 @@
     <system:String x:Key="plugin_explorer_show_contextmenu_title">Afficher le menu contextuel de Windows</system:String>
     <system:String x:Key="plugin_explorer_openwith">Ouvrir avec</system:String>
     <system:String x:Key="plugin_explorer_openwith_subtitle">Sélectionnez un programme à ouvrir avec</system:String>
+    <system:String x:Key="plugin_explorer_fail_to_delete">Échec de la suppression de {0}</system:String>
+    <system:String x:Key="plugin_explorer_file_not_found">Fichier introuvable : {0}</system:String>
+    <system:String x:Key="plugin_explorer_fail_to_open">Échec de l'ouverture de {0}</system:String>
+    <system:String x:Key="plugin_explorer_fail_to_set_text">Impossible de mettre le texte dans le presse-papiers</system:String>
+    <system:String x:Key="plugin_explorer_fail_to_set_files">Impossible de définir les fichiers/dossiers dans le presse-papiers</system:String>
 
     <!--  Special Results  -->
     <system:String x:Key="plugin_explorer_diskfreespace">{0} libres sur {1}</system:String>
@@ -130,19 +149,32 @@
     <system:String x:Key="flowlauncher_plugin_everything_is_not_running">Avertissement : Le service Everything n'est pas en cours d'exécution</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_query_error">Erreur lors de l'interrogation de Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by">Trier par</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_name">Nom</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_path">Xhemin</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_size">Taille</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_extension">Extension</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_type_name">Nom du type</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_created">Date de création</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_modified">Date de modification</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_attributes">Attributs</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_file_list_filename">Fichiers Liste Nom du fichier</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_run_count">Nombre d'exécutions</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_recently_changed">Date récemment modifiée</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_accessed">Date d'accès</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_run">Date d'exécution</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_name_ascending">Nom ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_name_descending">Nom ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_path_ascending">Chemin ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_path_descending">Chemin ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_size_ascending">Taille ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_size_descending">Taille ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_extension_ascending">Extension ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_extension_descending">Extension ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_type_name_ascending">Nom du type ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_type_name_descending">Nom du type ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_created_ascending">Date de création ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_created_descending">Date de création ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_modified_ascending">Date de modification ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_modified_descending">Date de modification ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_attributes_ascending">Attributs ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_attributes_descending">Attributs ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_file_list_filename_ascending">Nom de fichier de la liste de fichiers ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_file_list_filename_descending">Nom de fichier de la liste de fichiers ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_run_count_ascending">Nombre d'exécutions ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_run_count_descending">Nombre d'exécutions ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_recently_changed_ascending">Date récemment modifié ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_recently_changed_descending">Date récemment modifié ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_accessed_ascending">Date d'accès ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_accessed_descending">Date d'accès ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_run_ascending">Date d'exécution ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_run_descending">Date d'exécution ↓</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_ascending">↑</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_descending">↓</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">Avertissement : Il ne s'agit pas d'une option de tri rapide, les recherches peuvent être lentes.</system:String>
@@ -159,6 +191,9 @@
     <system:String x:Key="flowlauncher_plugin_everything_installing_select">Impossible de trouver une installation d'Everything, souhaitez-vous sélectionner manuellement un emplacement ? {0}{0} Cliquez sur non et Everything sera automatiquement installé pour vous.</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">Voulez-vous activer la recherche de contenu pour Everything ?</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">Il peut être très lent sans index (qui n'est supporté que dans Everything v1.5+).</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_everything_not_found">Impossible de trouver Everything.exe</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_install_issue">Impossible d'installer Everything, veuillez l'installer manuellement</system:String>
 
     <!--  Native Context Menu  -->
     <system:String x:Key="plugin_explorer_native_context_menu_header">Menu contextuel natif</system:String>

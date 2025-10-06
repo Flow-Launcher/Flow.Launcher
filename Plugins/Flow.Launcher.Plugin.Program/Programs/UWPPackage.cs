@@ -290,12 +290,13 @@ namespace Flow.Launcher.Plugin.Program.Programs
         }
 
         private static readonly Channel<byte> PackageChangeChannel = Channel.CreateBounded<byte>(1);
+        private static PackageCatalog? catalog;
 
         public static async Task WatchPackageChangeAsync()
         {
             if (Environment.OSVersion.Version.Major >= 10)
             {
-                var catalog = PackageCatalog.OpenForCurrentUser();
+                catalog ??= PackageCatalog.OpenForCurrentUser();
                 catalog.PackageInstalling += (_, args) =>
                 {
                     if (args.IsComplete)
@@ -424,7 +425,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 }
             }
 
-            if (!matchResult.IsSearchPrecisionScoreMet())
+            if (!matchResult.IsSearchPrecisionScoreMet() && !string.IsNullOrEmpty(query))
                 return null;
 
             var result = new Result
@@ -461,13 +462,12 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         var message =
                             api.GetTranslation(
                                 "flowlauncher_plugin_program_run_as_administrator_not_supported_message");
-                        api.ShowMsg(title, message, string.Empty);
+                        api.ShowMsgError(title, message);
                     }
 
                     return true;
                 }
             };
-
 
             return result;
         }

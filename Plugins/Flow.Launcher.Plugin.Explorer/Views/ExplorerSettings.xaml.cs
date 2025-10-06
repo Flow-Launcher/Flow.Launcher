@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -44,7 +44,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
         {
             var files = (string[])e.Data.GetData(DataFormats.FileDrop);
 
-            if (files == null || !files.Any())
+            if (files == null || files.Length == 0)
             {
                 return;
             }
@@ -77,14 +77,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
         {
             SettingsViewModel.OpenWindowsIndexingOptions();
         }
-        private void EverythingSortOptionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (tbFastSortWarning is not null)
-            {
-                tbFastSortWarning.Visibility = _viewModel.FastSortWarningVisibility;
-                tbFastSortWarning.Text = _viewModel.SortOptionWarningMessage;
-            }
-        }
+
         private void LbxAccessLinks_OnDrop(object sender, DragEventArgs e)
         {
             AccessLinkDragDrop("QuickAccessLink", e);
@@ -104,7 +97,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             if (sender is Expander expandedExpander)
             {
                 // Ensure _expanders is not null and contains items
-                if (_expanders == null || !_expanders.Any()) return;
+                if (_expanders == null || _expanders.Count == 0) return;
 
                 foreach (var expander in _expanders)
                 {

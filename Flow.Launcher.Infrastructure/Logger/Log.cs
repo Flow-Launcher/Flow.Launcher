@@ -34,7 +34,7 @@ namespace Flow.Launcher.Infrastructure.Logger
             
             var fileTarget = new FileTarget
             {
-                FileName = CurrentLogDirectory.Replace(@"\", "/") + "/${shortdate}.txt",
+                FileName = CurrentLogDirectory.Replace(@"\", "/") + "/Flow.Launcher.${date:format=yyyy-MM-dd}.log",
                 Layout = layout
             };
 
@@ -65,26 +65,22 @@ namespace Flow.Launcher.Infrastructure.Logger
 
         public static void SetLogLevel(LOGLEVEL level)
         {
-            switch (level)
+            var rule = LogManager.Configuration.FindRuleByName("file");
+
+            var nlogLevel = level switch
             {
-                case LOGLEVEL.DEBUG:
-                    UseDebugLogLevel();
-                    break;
-                default:
-                    UseInfoLogLevel();
-                    break;
-            }
-            Info(nameof(Logger), $"Using log level: {level}.");
-        }
+                LOGLEVEL.NONE => LogLevel.Off,
+                LOGLEVEL.ERROR => LogLevel.Error,
+                LOGLEVEL.DEBUG => LogLevel.Debug,
+                _ => LogLevel.Info
+            };
 
-        private static void UseDebugLogLevel()
-        {
-            LogManager.Configuration.FindRuleByName("file").SetLoggingLevels(LogLevel.Debug, LogLevel.Fatal);
-        }
+            rule.SetLoggingLevels(nlogLevel, LogLevel.Fatal);
 
-        private static void UseInfoLogLevel()
-        {
-            LogManager.Configuration.FindRuleByName("file").SetLoggingLevels(LogLevel.Info, LogLevel.Fatal);
+            LogManager.ReconfigExistingLoggers();
+
+            // We can't log Info when level is set to Error or None, so we use Debug
+            Debug(nameof(Logger), $"Using log level: {level}.");
         }
 
         private static void LogFaultyFormat(string message)
@@ -169,7 +165,9 @@ namespace Flow.Launcher.Infrastructure.Logger
 
     public enum LOGLEVEL
     {
-        DEBUG,
-        INFO
+        NONE,
+        ERROR,
+        INFO,
+        DEBUG
     }
 }

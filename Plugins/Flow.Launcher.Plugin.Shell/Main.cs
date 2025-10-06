@@ -5,9 +5,10 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Flow.Launcher.Plugin.SharedCommands;
+using Flow.Launcher.Plugin.Shell.Views;
 using WindowsInput;
 using WindowsInput.Native;
-using Flow.Launcher.Plugin.SharedCommands;
 using Control = System.Windows.Controls.Control;
 using Keys = System.Windows.Forms.Keys;
 
@@ -17,7 +18,7 @@ namespace Flow.Launcher.Plugin.Shell
     {
         private static readonly string ClassName = nameof(Main);
 
-        internal PluginInitContext Context { get; private set; }
+        internal static PluginInitContext Context { get; private set; }
 
         private const string Image = "Images/shell.png";
         private bool _winRStroked;
@@ -27,7 +28,7 @@ namespace Flow.Launcher.Plugin.Shell
 
         public List<Result> Query(Query query)
         {
-            List<Result> results = new List<Result>();
+            List<Result> results = [];
             string cmd = query.Search;
             if (string.IsNullOrEmpty(cmd))
             {
@@ -45,7 +46,7 @@ namespace Flow.Launcher.Plugin.Shell
                     string basedir = null;
                     string dir = null;
                     string excmd = Environment.ExpandEnvironmentVariables(cmd);
-                    if (Directory.Exists(excmd) && (cmd.EndsWith("/") || cmd.EndsWith(@"\")))
+                    if (Directory.Exists(excmd) && (cmd.EndsWith('/') || cmd.EndsWith('\\')))
                     {
                         basedir = excmd;
                         dir = cmd;
@@ -54,7 +55,7 @@ namespace Flow.Launcher.Plugin.Shell
                     {
                         basedir = Path.GetDirectoryName(excmd);
                         var dirName = Path.GetDirectoryName(cmd);
-                        dir = (dirName.EndsWith("/") || dirName.EndsWith(@"\")) ? dirName : cmd[..(dirName.Length + 1)];
+                        dir = (dirName.EndsWith('/') || dirName.EndsWith('\\')) ? dirName : cmd[..(dirName.Length + 1)];
                     }
 
                     if (basedir != null)
@@ -103,14 +104,14 @@ namespace Flow.Launcher.Plugin.Shell
                 {
                     if (m.Key == cmd)
                     {
-                        result.SubTitle = string.Format(Context.API.GetTranslation("flowlauncher_plugin_cmd_cmd_has_been_executed_times"), m.Value);
+                        result.SubTitle = Localize.flowlauncher_plugin_cmd_cmd_has_been_executed_times(m.Value);
                         return null;
                     }
 
                     var ret = new Result
                     {
                         Title = m.Key,
-                        SubTitle = string.Format(Context.API.GetTranslation("flowlauncher_plugin_cmd_cmd_has_been_executed_times"), m.Value),
+                        SubTitle = Localize.flowlauncher_plugin_cmd_cmd_has_been_executed_times(m.Value),
                         IcoPath = Image,
                         Action = c =>
                         {
@@ -129,9 +130,9 @@ namespace Flow.Launcher.Plugin.Shell
                 }).Where(o => o != null);
 
             if (_settings.ShowOnlyMostUsedCMDs)
-                return history.Take(_settings.ShowOnlyMostUsedCMDsNumber).ToList();
+                return [.. history.Take(_settings.ShowOnlyMostUsedCMDsNumber)];
 
-            return history.ToList();
+            return [.. history];
         }
 
         private Result GetCurrentCmd(string cmd)
@@ -140,7 +141,7 @@ namespace Flow.Launcher.Plugin.Shell
             {
                 Title = cmd,
                 Score = 5000,
-                SubTitle = Context.API.GetTranslation("flowlauncher_plugin_cmd_execute_through_shell"),
+                SubTitle = Localize.flowlauncher_plugin_cmd_execute_through_shell(),
                 IcoPath = Image,
                 Action = c =>
                 {
@@ -165,7 +166,7 @@ namespace Flow.Launcher.Plugin.Shell
                 .Select(m => new Result
                 {
                     Title = m.Key,
-                    SubTitle = string.Format(Context.API.GetTranslation("flowlauncher_plugin_cmd_cmd_has_been_executed_times"), m.Value),
+                    SubTitle = Localize.flowlauncher_plugin_cmd_cmd_has_been_executed_times(m.Value),
                     IcoPath = Image,
                     Action = c =>
                     {
@@ -182,9 +183,9 @@ namespace Flow.Launcher.Plugin.Shell
                 });
 
             if (_settings.ShowOnlyMostUsedCMDs)
-                return history.Take(_settings.ShowOnlyMostUsedCMDsNumber).ToList();
+                return [.. history.Take(_settings.ShowOnlyMostUsedCMDsNumber)];
 
-            return history.ToList();
+            return [.. history];
         }
 
         private ProcessStartInfo PrepareProcessStartInfo(string command, bool runAsAdministrator = false)
@@ -194,10 +195,13 @@ namespace Flow.Launcher.Plugin.Shell
             var workingDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
             var runAsAdministratorArg = !runAsAdministrator && !_settings.RunAsAdministrator ? "" : "runas";
 
-            ProcessStartInfo info = new()
+            var info = new ProcessStartInfo()
             {
-                Verb = runAsAdministratorArg, WorkingDirectory = workingDirectory,
+                Verb = runAsAdministratorArg,
+                WorkingDirectory = workingDirectory,
             };
+            var notifyStr = Localize.flowlauncher_plugin_cmd_press_any_key_to_close();
+            var addedCharacter = _settings.UseWindowsTerminal ? "\\" : "";
             switch (_settings.Shell)
             {
                 case Shell.Cmd:
@@ -211,8 +215,19 @@ namespace Flow.Launcher.Plugin.Shell
                         {
                             info.FileName = "cmd.exe";
                         }
-
-                        info.ArgumentList.Add($"{(_settings.LeaveShellOpen ? "/k" : "/c")} {command} {(_settings.CloseShellAfterPress ? $"&& echo {Context.API.GetTranslation("flowlauncher_plugin_cmd_press_any_key_to_close")} && pause > nul /c" : "")}");
+                        if (_settings.LeaveShellOpen)
+                        {
+                            info.ArgumentList.Add("/k");
+                        }
+                        else
+                        {
+                            info.ArgumentList.Add("/c");
+                        }
+                        info.ArgumentList.Add(
+                            $"{command}" +
+                            $"{(_settings.CloseShellAfterPress ?
+                                $" && echo {notifyStr} && pause > nul /c" :
+                                "")}");
                         break;
                     }
 
@@ -220,7 +235,6 @@ namespace Flow.Launcher.Plugin.Shell
                     {
                         // Using just a ; doesn't work with wt, as it's used to create a new tab for the terminal window
                         // \\ must be escaped for it to work properly, or breaking it into multiple arguments
-                        var addedCharacter = _settings.UseWindowsTerminal ? "\\" : "";
                         if (_settings.UseWindowsTerminal)
                         {
                             info.FileName = "wt.exe";
@@ -238,7 +252,11 @@ namespace Flow.Launcher.Plugin.Shell
                         else
                         {
                             info.ArgumentList.Add("-Command");
-                            info.ArgumentList.Add($"{command}{addedCharacter}; {(_settings.CloseShellAfterPress ? $"Write-Host '{Context.API.GetTranslation("flowlauncher_plugin_cmd_press_any_key_to_close")}'{addedCharacter}; [System.Console]::ReadKey(){addedCharacter}; exit" : "")}");
+                            info.ArgumentList.Add(
+                                $"{command}{addedCharacter};" +
+                                $"{(_settings.CloseShellAfterPress ?
+                                    $" Write-Host '{notifyStr}'{addedCharacter}; [System.Console]::ReadKey(){addedCharacter}; exit" :
+                                    "")}");
                         }
                         break;
                     }
@@ -247,7 +265,6 @@ namespace Flow.Launcher.Plugin.Shell
                     {
                         // Using just a ; doesn't work with wt, as it's used to create a new tab for the terminal window
                         // \\ must be escaped for it to work properly, or breaking it into multiple arguments
-                        var addedCharacter = _settings.UseWindowsTerminal ? "\\" : "";
                         if (_settings.UseWindowsTerminal)
                         {
                             info.FileName = "wt.exe";
@@ -262,16 +279,20 @@ namespace Flow.Launcher.Plugin.Shell
                             info.ArgumentList.Add("-NoExit");
                         }
                         info.ArgumentList.Add("-Command");
-                        info.ArgumentList.Add($"{command}{addedCharacter}; {(_settings.CloseShellAfterPress ? $"Write-Host '{Context.API.GetTranslation("flowlauncher_plugin_cmd_press_any_key_to_close")}'{addedCharacter}; [System.Console]::ReadKey(){addedCharacter}; exit" : "")}");
+                        info.ArgumentList.Add(
+                            $"{command}{addedCharacter};" +
+                            $"{(_settings.CloseShellAfterPress ?
+                                $" Write-Host '{notifyStr}'{addedCharacter}; [System.Console]::ReadKey(){addedCharacter}; exit" :
+                                "")}");
                         break;
                     }
 
                 case Shell.RunCommand:
                     {
-                        var parts = command.Split(new[]
-                        {
+                        var parts = command.Split(
+                        [
                             ' '
-                        }, 2);
+                        ], 2);
                         if (parts.Length == 2)
                         {
                             var filename = parts[0];
@@ -315,15 +336,17 @@ namespace Flow.Launcher.Plugin.Shell
             }
             catch (FileNotFoundException e)
             {
-                var name = "Plugin: Shell";
-                var message = $"Command not found: {e.Message}";
-                Context.API.ShowMsg(name, message);
+                Context.API.ShowMsgError(GetTranslatedPluginTitle(),
+                    Localize.flowlauncher_plugin_cmd_command_not_found(e.Message));
             }
             catch (Win32Exception e)
             {
-                var name = "Plugin: Shell";
-                var message = $"Error running the command: {e.Message}";
-                Context.API.ShowMsg(name, message);
+                Context.API.ShowMsgError(GetTranslatedPluginTitle(),
+                    Localize.flowlauncher_plugin_cmd_error_running_command(e.Message));
+            }
+            catch (Exception e)
+            {
+                Context.API.LogException(ClassName, $"Error executing command: {info.FileName} {string.Join(" ", info.ArgumentList)}", e);
             }
         }
 
@@ -361,9 +384,16 @@ namespace Flow.Launcher.Plugin.Shell
             Context = context;
             _settings = context.API.LoadSettingJsonStorage<Settings>();
             context.API.RegisterGlobalKeyboardCallback(API_GlobalKeyboardEvent);
+            // Since the old Settings class set default value of ShowOnlyMostUsedCMDsNumber to 0 which is a wrong value,
+            // we need to fix it here to make sure the default value is 5
+            // todo: remove this code block after release v2.2.0
+            if (_settings.ShowOnlyMostUsedCMDsNumber == 0)
+            {
+                _settings.ShowOnlyMostUsedCMDsNumber = 5;
+            }
         }
 
-        bool API_GlobalKeyboardEvent(int keyevent, int vkcode, SpecialKeyState state)
+        private bool API_GlobalKeyboardEvent(int keyevent, int vkcode, SpecialKeyState state)
         {
             if (!Context.CurrentPluginMetadata.Disabled && _settings.ReplaceWinR)
             {
@@ -383,7 +413,7 @@ namespace Flow.Launcher.Plugin.Shell
             return true;
         }
 
-        private void OnWinRPressed()
+        private static void OnWinRPressed()
         {
             Context.API.ShowMainWindow();
             // show the main window and set focus to the query box
@@ -406,12 +436,12 @@ namespace Flow.Launcher.Plugin.Shell
 
         public string GetTranslatedPluginTitle()
         {
-            return Context.API.GetTranslation("flowlauncher_plugin_cmd_plugin_name");
+            return Localize.flowlauncher_plugin_cmd_plugin_name();
         }
 
         public string GetTranslatedPluginDescription()
         {
-            return Context.API.GetTranslation("flowlauncher_plugin_cmd_plugin_description");
+            return Localize.flowlauncher_plugin_cmd_plugin_description();
         }
 
         public List<Result> LoadContextMenus(Result selectedResult)
@@ -420,7 +450,7 @@ namespace Flow.Launcher.Plugin.Shell
             {
                 new()
                 {
-                    Title = Context.API.GetTranslation("flowlauncher_plugin_cmd_run_as_different_user"),
+                    Title = Localize.flowlauncher_plugin_cmd_run_as_different_user(),
                     Action = c =>
                     {
                         Execute(ShellCommand.RunAsDifferentUser, PrepareProcessStartInfo(selectedResult.Title));
@@ -431,7 +461,7 @@ namespace Flow.Launcher.Plugin.Shell
                 },
                 new()
                 {
-                    Title = Context.API.GetTranslation("flowlauncher_plugin_cmd_run_as_administrator"),
+                    Title = Localize.flowlauncher_plugin_cmd_run_as_administrator(),
                     Action = c =>
                     {
                         Execute(Process.Start, PrepareProcessStartInfo(selectedResult.Title, true));
@@ -442,7 +472,7 @@ namespace Flow.Launcher.Plugin.Shell
                 },
                 new()
                 {
-                    Title = Context.API.GetTranslation("flowlauncher_plugin_cmd_copy"),
+                    Title = Localize.flowlauncher_plugin_cmd_copy(),
                     Action = c =>
                     {
                         Context.API.CopyToClipboard(selectedResult.Title);

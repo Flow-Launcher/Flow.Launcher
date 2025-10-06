@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -71,7 +71,7 @@ namespace Flow.Launcher.Plugin.WebSearch
                         Score = score,
                         Action = c =>
                         {
-                            _context.API.OpenUrl(searchSource.Url.Replace("{q}", Uri.EscapeDataString(keyword)));
+                            _context.API.OpenWebUrl(searchSource.Url.Replace("{q}", Uri.EscapeDataString(keyword)), searchSource.IsPrivateMode);
 
                             return true;
                         },
@@ -135,7 +135,7 @@ namespace Flow.Launcher.Plugin.WebSearch
                 ActionKeywordAssigned = searchSource.ActionKeyword == SearchSourceGlobalPluginWildCardSign ? string.Empty : searchSource.ActionKeyword,
                 Action = c =>
                 {
-                    _context.API.OpenUrl(searchSource.Url.Replace("{q}", Uri.EscapeDataString(o)));
+                    _context.API.OpenWebUrl(searchSource.Url.Replace("{q}", Uri.EscapeDataString(o)), searchSource.IsPrivateMode);
 
                     return true;
                 },

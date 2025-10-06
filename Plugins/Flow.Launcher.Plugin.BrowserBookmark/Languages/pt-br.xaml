@@ -5,6 +5,9 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">Favoritos do Navegador</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">Pesquisar favoritos do seu navegador</system:String>
 
+    <!--  Main  -->
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copy_failed">Failed to set url in clipboard</system:String>
+
     <!--  Settings  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Dados de Favoritos</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">Abrir favoritos em:</system:String>
@@ -25,4 +28,6 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserEngine">Motor do Navegador</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">Se você não estiver usando o Chrome, Firefox ou Edge, ou se estiver usando suas versões portáteis, você precisa adicionar o diretório de dados dos favoritos e selecionar a ferramenta de busca correta para fazer este plugin funcionar.</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">Por exemplo: O motor do Brave é o Chromium; e seu diretório padrão de favoritos é &quot;%LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData&quot;. Para o motor do Firefox, o diretório de favoritos é a pasta do usuário que contém o arquivo &quot;places.sqlite&quot;.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_enable_favicons">Load favicons (can be time consuming during startup)</system:String>
+
 </ResourceDictionary>

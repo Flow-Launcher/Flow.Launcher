@@ -1,16 +1,13 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
+﻿using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
+using Flow.Launcher.Plugin.Explorer.ViewModels;
 
 namespace Flow.Launcher.Plugin.Explorer.Views
 {
-    /// <summary>
-    /// Interaction logic for ActionKeywordSetting.xaml
-    /// </summary>
-    public partial class ActionKeywordSetting : INotifyPropertyChanged
+    [INotifyPropertyChanged]
+    public partial class ActionKeywordSetting
     {
         private ActionKeywordModel CurrentActionKeyword { get; }
 
@@ -21,24 +18,22 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             {
                 // Set Enable to be true if user change ActionKeyword
                 KeywordEnabled = true;
-                _ = SetField(ref actionKeyword, value);
+                _ = SetProperty(ref actionKeyword, value);
             }
         }
 
         public bool KeywordEnabled
         {
             get => _keywordEnabled;
-            set => SetField(ref _keywordEnabled, value);
+            set => _ = SetProperty(ref _keywordEnabled, value);
         }
 
         private string actionKeyword;
-        private readonly IPublicAPI _api;
         private bool _keywordEnabled;
 
-        public ActionKeywordSetting(ActionKeywordModel selectedActionKeyword, IPublicAPI api)
+        public ActionKeywordSetting(ActionKeywordModel selectedActionKeyword)
         {
             CurrentActionKeyword = selectedActionKeyword;
-            _api = api;
             ActionKeyword = selectedActionKeyword.Keyword;
             KeywordEnabled = selectedActionKeyword.Enabled;
 
@@ -63,14 +58,14 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                 switch (CurrentActionKeyword.KeywordProperty, KeywordEnabled)
                 {
                     case (Settings.ActionKeyword.FileContentSearchActionKeyword, true):
-                        _api.ShowMsgBox(_api.GetTranslation("plugin_explorer_globalActionKeywordInvalid"));
+                        Main.Context.API.ShowMsgBox(Localize.plugin_explorer_globalActionKeywordInvalid());
                         return;
                     case (Settings.ActionKeyword.QuickAccessActionKeyword, true):
-                        _api.ShowMsgBox(_api.GetTranslation("plugin_explorer_quickaccess_globalActionKeywordInvalid"));
+                        Main.Context.API.ShowMsgBox(Localize.plugin_explorer_quickaccess_globalActionKeywordInvalid());
                         return;
                 }
 
-            if (!KeywordEnabled || !_api.ActionKeywordAssigned(ActionKeyword))
+            if (!KeywordEnabled || !Main.Context.API.ActionKeywordAssigned(ActionKeyword))
             {
                 DialogResult = true;
                 Close();
@@ -78,7 +73,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             }
 
             // The keyword is not valid, so show message
-            _api.ShowMsgBox(_api.GetTranslation("newActionKeywordsHasBeenAssigned"));
+            Main.Context.API.ShowMsgBox(Localize.plugin_explorer_new_action_keyword_assigned());
         }
 
         private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
@@ -115,21 +110,6 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             {
                 e.CancelCommand();
             }
-        }
-        
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        
-        private bool SetField<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
-        {
-            if (EqualityComparer<T>.Default.Equals(field, value))
-                return false;
-            field = value;
-            OnPropertyChanged(propertyName);
-            return true;
         }
     }
 }

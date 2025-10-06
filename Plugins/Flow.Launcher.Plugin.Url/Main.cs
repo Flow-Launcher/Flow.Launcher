@@ -40,7 +40,7 @@ namespace Flow.Launcher.Plugin.Url
             "(?:/\\S*)?" +
             "$";
         Regex reg = new Regex(urlPattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        private PluginInitContext context;
+        internal static PluginInitContext Context { get; private set; }
         private Settings _settings;
         
         public List<Result> Query(Query query)
@@ -53,7 +53,7 @@ namespace Flow.Launcher.Plugin.Url
                     new Result
                     {
                         Title = raw,
-                        SubTitle = string.Format(context.API.GetTranslation("flowlauncher_plugin_url_open_url"),raw),
+                        SubTitle = Localize.flowlauncher_plugin_url_open_url(raw),
                         IcoPath = "Images/url.png",
                         Score = 8,
                         Action = _ =>
@@ -64,13 +64,13 @@ namespace Flow.Launcher.Plugin.Url
                             }
                             try
                             {
-                                context.API.OpenUrl(raw);
+                                Context.API.OpenUrl(raw);
                                 
                                 return true;
                             }
                             catch(Exception)
                             {
-                                context.API.ShowMsg(string.Format(context.API.GetTranslation("flowlauncher_plugin_url_cannot_open_url"), raw));
+                                Context.API.ShowMsgError(Localize.flowlauncher_plugin_url_cannot_open_url(raw));
                                 return false;
                             }
                         }
@@ -99,19 +99,19 @@ namespace Flow.Launcher.Plugin.Url
 
         public void Init(PluginInitContext context)
         {
-            this.context = context;
+            Context = context;
             
             _settings = context.API.LoadSettingJsonStorage<Settings>();
         }
 
         public string GetTranslatedPluginTitle()
         {
-            return context.API.GetTranslation("flowlauncher_plugin_url_plugin_name");
+            return Localize.flowlauncher_plugin_url_plugin_name();
         }
 
         public string GetTranslatedPluginDescription()
         {
-            return context.API.GetTranslation("flowlauncher_plugin_url_plugin_description");
+            return Localize.flowlauncher_plugin_url_plugin_description();
         }
     }
 }

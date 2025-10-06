@@ -3,6 +3,10 @@
 
     <!--  Dialogues  -->
     <system:String x:Key="plugin_explorer_make_selection_warning">请先进行选择</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_no_folder_selected">请选择一个文件夹路径。</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_path_already_exists">请选择不同的名称或文件夹路径。</system:String>
+    <system:String x:Key="plugin_explorer_delete_quick_access_link">您确定要删除此快速访问链接吗？</system:String>
+    <system:String x:Key="plugin_explorer_delete_index_search_excluded_path">您确定要删除此索引搜索排除路径吗？</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">请选择一个文件夹链接</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">您确定要删除 {0} 吗?</system:String>
     <system:String x:Key="plugin_explorer_deletefileconfirm">您确定要永久删除此文件吗？</system:String>
@@ -18,6 +22,7 @@
     <system:String x:Key="plugin_explorer_directoryinfosearch_error">搜索时发生错误：{0}</system:String>
     <system:String x:Key="plugin_explorer_opendir_error">无法打开文件夹</system:String>
     <system:String x:Key="plugin_explorer_openfile_error">无法打开文件</system:String>
+    <system:String x:Key="plugin_explorer_new_action_keyword_assigned">This new action keyword is already assigned to another plugin, please choose a different one</system:String>
 
     <!--  Controls  -->
     <system:String x:Key="plugin_explorer_delete">删除</system:String>
@@ -25,6 +30,7 @@
     <system:String x:Key="plugin_explorer_add">添加</system:String>
     <system:String x:Key="plugin_explorer_generalsetting_header">通用设置</system:String>
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">自定义动作关键字</system:String>
+    <system:String x:Key="plugin_explorer_manage_quick_access_links_header">自定义快速访问</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">快速访问链接</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">Everything 设置</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_setting_header">预览面板</system:String>
@@ -41,6 +47,7 @@
     <system:String x:Key="plugin_explorer_shell_path">Shell 路径</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">索引搜索排除的路径</system:String>
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">使用搜索结果的位置作为应用程序的工作目录</system:String>
+    <system:String x:Key="plugin_explorer_display_more_info_in_tooltip">在提示框中显示更多信息，例如大小和年龄</system:String>
     <system:String x:Key="plugin_explorer_default_open_in_file_manager">点击回车在默认文件管理器中打开文件夹</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">使用索引进行路径搜索</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">索引选项</system:String>
@@ -77,6 +84,9 @@
     <!--  Plugin Tooltip  -->
     <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Ctrl + Enter 以打开目录</system:String>
     <system:String x:Key="plugin_explorer_plugin_ToolTipOpenContainingFolder">Ctrl + Enter 以打开所在的文件夹</system:String>
+    <system:String x:Key="plugin_explorer_plugin_tooltip_more_info">{0}{4}大小：{1}{4}创建日期：{2}{4}修改日期：{3}</system:String>
+    <system:String x:Key="plugin_explorer_plugin_tooltip_more_info_unknown">未知</system:String>
+    <system:String x:Key="plugin_explorer_plugin_tooltip_more_info_volume">{0}{3}空闲空间：{1}{3}总空间：{2}</system:String>
 
     <!--  Context menu items  -->
     <system:String x:Key="plugin_explorer_copypath">复制路径</system:String>
@@ -89,7 +99,11 @@
     <system:String x:Key="plugin_explorer_deletefilefolder">删除</system:String>
     <system:String x:Key="plugin_explorer_deletefile_subtitle">永久删除当前文件</system:String>
     <system:String x:Key="plugin_explorer_deletefolder_subtitle">永久删除当前文件夹</system:String>
-    <system:String x:Key="plugin_explorer_path">路径:</system:String>
+    <system:String x:Key="plugin_explorer_name">名称</system:String>
+    <system:String x:Key="plugin_explorer_type">类型</system:String>
+    <system:String x:Key="plugin_explorer_path">路径</system:String>
+    <system:String x:Key="plugin_explorer_file">文件</system:String>
+    <system:String x:Key="plugin_explorer_folder">目录</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">删除所选内容</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">以其他用户身份运行</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">使用其他用户帐户运行所选内容</system:String>
@@ -117,6 +131,11 @@
     <system:String x:Key="plugin_explorer_show_contextmenu_title">显示 Windows 上下文菜单</system:String>
     <system:String x:Key="plugin_explorer_openwith">打开方式</system:String>
     <system:String x:Key="plugin_explorer_openwith_subtitle">选择要打开的程序</system:String>
+    <system:String x:Key="plugin_explorer_fail_to_delete">无法删除 {0}</system:String>
+    <system:String x:Key="plugin_explorer_file_not_found">未找到文件：{0}</system:String>
+    <system:String x:Key="plugin_explorer_fail_to_open">无法打开 {0}</system:String>
+    <system:String x:Key="plugin_explorer_fail_to_set_text">无法复制文本到剪切板 </system:String>
+    <system:String x:Key="plugin_explorer_fail_to_set_files">无法复制文件/文件夹到剪切板 </system:String>
 
     <!--  Special Results  -->
     <system:String x:Key="plugin_explorer_diskfreespace">{0} 可用，共 {1}</system:String>
@@ -130,19 +149,32 @@
     <system:String x:Key="flowlauncher_plugin_everything_is_not_running">警告：Everything 服务未运行</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_query_error">Everything 插件发生了一个错误（回车拷贝具体错误信息）</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by">排序依据</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_name">名称</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_path">路径</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_size">大小</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_extension">扩展名</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_type_name">类型名称</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_created">创建日期</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_modified">修改日期</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_attributes">属性</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_file_list_filename">文件列表名</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_run_count">运行次数</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_recently_changed">最近更改日期</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_accessed">访问日期</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_run">运行日期</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_name_ascending">名称 ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_name_descending">名称 ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_path_ascending">路径 ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_path_descending">路径 ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_size_ascending">大小 ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_size_descending">大小 ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_extension_ascending">扩展名 ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_extension_descending">扩展名 ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_type_name_ascending">类型名称 ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_type_name_descending">类型名称 ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_created_ascending">创建日期 ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_created_descending">创建日期 ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_modified_ascending">修改日期 ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_modified_descending">修改日期 ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_attributes_ascending">属性 ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_attributes_descending">属性 ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_file_list_filename_ascending">文件列表名 ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_file_list_filename_descending">文件列表名 ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_run_count_ascending">运行次数 ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_run_count_descending">运行次数 ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_recently_changed_ascending">最近更改日期 ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_recently_changed_descending">最近更改日期 ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_accessed_ascending">访问日期 ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_accessed_descending">访问日期 ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_run_ascending">运行日期 ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_run_descending">运行日期 ↓</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_ascending">↑</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_descending">↓</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">警告：这不是一个快速排序选项，搜索可能较慢。</system:String>
@@ -159,6 +191,9 @@
     <system:String x:Key="flowlauncher_plugin_everything_installing_select">无法找到任何 Everything 安装，您想手动选择一个位置吗？{0}{0} 单击 不 将自动为您安装 Everything。</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">您想要启用 Everything 的内容搜索功能吗？</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">如果没有索引，它可能会非常慢（索引仅在 Everything v1.5+ 中支持）</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_everything_not_found">找不到 Everything.exe</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_install_issue">安装 Everything 失败，请手动安装</system:String>
 
     <!--  Native Context Menu  -->
     <system:String x:Key="plugin_explorer_native_context_menu_header">本机上下文菜单</system:String>

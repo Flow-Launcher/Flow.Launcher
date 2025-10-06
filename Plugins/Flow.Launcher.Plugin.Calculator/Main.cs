@@ -1,36 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
-using Mages.Core;
 using Flow.Launcher.Plugin.Calculator.ViewModels;
 using Flow.Launcher.Plugin.Calculator.Views;
+using Mages.Core;
 
 namespace Flow.Launcher.Plugin.Calculator
 {
     public class Main : IPlugin, IPluginI18n, ISettingProvider
     {
-        private static readonly Regex RegValidExpressChar = new Regex(
-                        @"^(" +
-                        @"ceil|floor|exp|pi|e|max|min|det|abs|log|ln|sqrt|" +
-                        @"sin|cos|tan|arcsin|arccos|arctan|" +
-                        @"eigval|eigvec|eig|sum|polar|plot|round|sort|real|zeta|" +
-                        @"bin2dec|hex2dec|oct2dec|" +
-                        @"factorial|sign|isprime|isinfty|" +
-                        @"==|~=|&&|\|\||(?:\<|\>)=?|" +
-                        @"[ei]|[0-9]|[\+\%\-\*\/\^\., ""]|[\(\)\|\!\[\]]" +
-                        @")+$", RegexOptions.Compiled);
-        private static readonly Regex RegBrackets = new Regex(@"[\(\)\[\]]", RegexOptions.Compiled);
+        private static readonly Regex ThousandGroupRegex = MainRegexHelper.GetThousandGroupRegex();
+        private static readonly Regex NumberRegex = MainRegexHelper.GetNumberRegex();
+        private static readonly Regex PowRegex = MainRegexHelper.GetPowRegex();
+        private static readonly Regex LogRegex = MainRegexHelper.GetLogRegex();
+        private static readonly Regex LnRegex = MainRegexHelper.GetLnRegex();
+        private static readonly Regex FunctionRegex = MainRegexHelper.GetFunctionRegex();
+
         private static Engine MagesEngine;
-        private const string comma = ",";
-        private const string dot = ".";
+        private const string Comma = ",";
+        private const string Dot = ".";
+        private const string IcoPath = "Images/calculator.png";
+        private static readonly List<Result> EmptyResults = [];
 
-        private PluginInitContext Context { get; set; }
+        internal static PluginInitContext Context { get; private set; } = null!;
 
-        private static Settings _settings;
-        private static SettingsViewModel _viewModel;
+        private Settings _settings;
+        private SettingsViewModel _viewModel;
 
         public void Init(PluginInitContext context)
         {
@@ -49,47 +48,98 @@ namespace Flow.Launcher.Plugin.Calculator
 
         public List<Result> Query(Query query)
         {
-            if (!CanCalculate(query))
+            if (string.IsNullOrWhiteSpace(query.Search))
             {
-                return new List<Result>();
+                return EmptyResults;
             }
 
             try
             {
-                string expression;
+                var search = query.Search;
+                bool isFunctionPresent = FunctionRegex.IsMatch(search);
 
-                switch (_settings.DecimalSeparator)
+                // Mages is case sensitive, so we need to convert all function names to lower case.
+                search = FunctionRegex.Replace(search, m => m.Value.ToLowerInvariant());
+
+                var decimalSep = GetDecimalSeparator();
+                var groupSep = GetGroupSeparator(decimalSep);
+                var expression = NumberRegex.Replace(search, m => NormalizeNumber(m.Value, isFunctionPresent, decimalSep, groupSep));
+
+                // WORKAROUND START: The 'pow' function in Mages v3.0.0 is broken.
+                // https://github.com/FlorianRappl/Mages/issues/132
+                // We bypass it by rewriting any pow(x,y) expression to the equivalent (x^y) expression
+                // before the engine sees it. This loop handles nested calls.
                 {
-                    case DecimalSeparator.Comma:
-                    case DecimalSeparator.UseSystemLocale when CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator == ",":
-                        expression = query.Search.Replace(",", ".");
-                        break;
-                    default:
-                        expression = query.Search;
-                        break;
+                    string previous;
+                    do
+                    {
+                        previous = expression;
+                        expression = PowRegex.Replace(previous, PowMatchEvaluator);
+                    } while (previous != expression);
                 }
+                // WORKAROUND END
+
+                // WORKAROUND START: The 'log' & 'ln' function in Mages v3.0.0 are broken.
+                // https://github.com/FlorianRappl/Mages/issues/137
+                // We bypass it by rewriting any log & ln expression to the equivalent (log10 & log) expression
+                // before the engine sees it. This loop handles nested calls.
+                {
+                    string previous;
+                    do
+                    {
+                        previous = expression;
+                        expression = LogRegex.Replace(previous, LogMatchEvaluator);
+                    } while (previous != expression);
+                }
+                {
+                    string previous;
+                    do
+                    {
+                        previous = expression;
+                        expression = LnRegex.Replace(previous, LnMatchEvaluator);
+                    } while (previous != expression);
+                }
+                // WORKAROUND END
 
                 var result = MagesEngine.Interpret(expression);
 
-                if (result?.ToString() == "NaN")
-                    result = Context.API.GetTranslation("flowlauncher_plugin_calculator_not_a_number");
+                if (result == null || string.IsNullOrEmpty(result.ToString()))
+                {
+                    if (!_settings.ShowErrorMessage) return EmptyResults;
+                    return
+                    [
+                        new Result
+                        {
+                            Title = Localize.flowlauncher_plugin_calculator_expression_not_complete(),
+                            IcoPath = IcoPath
+                        }
+                    ];
+                }
+
+                if (result.ToString() == "NaN")
+                {
+                    result = Localize.flowlauncher_plugin_calculator_not_a_number();
+                }
 
                 if (result is Function)
-                    result = Context.API.GetTranslation("flowlauncher_plugin_calculator_expression_not_complete");
+                {
+                    result = Localize.flowlauncher_plugin_calculator_expression_not_complete();
+                }
 
-                if (!string.IsNullOrEmpty(result?.ToString()))
+                if (!string.IsNullOrEmpty(result.ToString()))
                 {
                     decimal roundedResult = Math.Round(Convert.ToDecimal(result), _settings.MaxDecimalPlaces, MidpointRounding.AwayFromZero);
-                    string newResult = ChangeDecimalSeparator(roundedResult, GetDecimalSeparator());
+                    string newResult = FormatResult(roundedResult);
 
-                    return new List<Result>
-                    {
+                    return
+                    [
                         new Result
                         {
                             Title = newResult,
-                            IcoPath = "Images/calculator.png",
+                            IcoPath = IcoPath,
                             Score = 300,
-                            SubTitle = Context.API.GetTranslation("flowlauncher_plugin_calculator_copy_number_to_clipboard"),
+                            // Check context nullability for unit testing
+                            SubTitle = Context == null ? string.Empty : Localize.flowlauncher_plugin_calculator_copy_number_to_clipboard(),
                             CopyText = newResult,
                             Action = c =>
                             {
@@ -100,105 +150,283 @@ namespace Flow.Launcher.Plugin.Calculator
                                 }
                                 catch (ExternalException)
                                 {
-                                    Context.API.ShowMsgBox("Copy failed, please try later");
+                                    Context.API.ShowMsgBox(Localize.flowlauncher_plugin_calculator_failed_to_copy());
                                     return false;
                                 }
                             }
                         }
-                    };
+                    ];
                 }
             }
             catch (Exception)
             {
-                // ignored
+                // Mages engine can throw various exceptions, for simplicity we catch them all and show a generic message.
+                if (!_settings.ShowErrorMessage) return EmptyResults;
+                return
+                [
+                    new Result
+                    {
+                        Title = Localize.flowlauncher_plugin_calculator_expression_not_complete(),
+                        IcoPath = IcoPath
+                    }
+                ];
             }
 
-            return new List<Result>();
+            return EmptyResults;
         }
 
-        private bool CanCalculate(Query query)
+        private static string PowMatchEvaluator(Match m)
         {
-            // Don't execute when user only input "e" or "i" keyword
-            if (query.Search.Length < 2)
+            // m.Groups[1].Value will be `(...)` with parens
+            var contentWithParen = m.Groups[1].Value;
+            // remove outer parens. `(min(2,3), 4)` becomes `min(2,3), 4`
+            var argsContent = contentWithParen[1..^1];
+
+            var bracketCount = 0;
+            var splitIndex = -1;
+
+            // Find the top-level comma that separates the two arguments of pow.
+            for (var i = 0; i < argsContent.Length; i++)
             {
-                return false;
+                switch (argsContent[i])
+                {
+                    case '(':
+                    case '[':
+                        bracketCount++;
+                        break;
+                    case ')':
+                    case ']':
+                        bracketCount--;
+                        break;
+                    case ',' when bracketCount == 0:
+                        splitIndex = i;
+                        break;
+                }
+
+                if (splitIndex != -1)
+                    break;
             }
 
-            if (!RegValidExpressChar.IsMatch(query.Search))
+            if (splitIndex == -1)
             {
-                return false;
+                // This indicates malformed arguments for pow, e.g., pow(5) or pow().
+                // Return original string to let Mages handle the error.
+                return m.Value;
             }
 
-            if (!IsBracketComplete(query.Search))
+            var arg1 = argsContent[..splitIndex].Trim();
+            var arg2 = argsContent[(splitIndex + 1)..].Trim();
+
+            // Check for empty arguments which can happen with stray commas, e.g., pow(,5)
+            if (string.IsNullOrEmpty(arg1) || string.IsNullOrEmpty(arg2))
             {
-                return false;
+                return m.Value;
             }
 
-            if ((query.Search.Contains(dot) && GetDecimalSeparator() != dot) ||
-                (query.Search.Contains(comma) && GetDecimalSeparator() != comma))
-                return false;
+            return $"({arg1}^{arg2})";
+        }
+
+        private static string LogMatchEvaluator(Match m)
+        {
+            // m.Groups[1].Value will be `(...)` with parens
+            var contentWithParen = m.Groups[1].Value;
+            var argsContent = contentWithParen[1..^1];
+
+            // log is unary — if malformed, return original to let Mages handle it
+            var arg = argsContent.Trim();
+            if (string.IsNullOrEmpty(arg)) return m.Value;
+
+            // log(x) -> log10(x)   (natural log)
+            return $"(log10({arg}))";
+        }
+
+        private static string LnMatchEvaluator(Match m)
+        {
+            // m.Groups[1].Value will be `(...)` with parens
+            var contentWithParen = m.Groups[1].Value;
+            var argsContent = contentWithParen[1..^1];
+
+            // ln is unary — if malformed, return original to let Mages handle it
+            var arg = argsContent.Trim();
+            if (string.IsNullOrEmpty(arg)) return m.Value;
+
+            // ln(x) -> log(x)   (natural log)
+            return $"(log({arg}))";
+        }
+        private static string NormalizeNumber(string numberStr, bool isFunctionPresent, string decimalSep, string groupSep)
+        {
+            if (isFunctionPresent)
+            {
+                // STRICT MODE: When functions are present, ',' is ALWAYS an argument separator.
+                if (numberStr.Contains(','))
+                {
+                    return numberStr;
+                }
+
+                string processedStr = numberStr;
+
+                // Handle group separator, with special care for ambiguous dot.
+                if (!string.IsNullOrEmpty(groupSep))
+                {
+                    if (groupSep == ".")
+                    {
+                        var parts = processedStr.Split('.');
+                        if (parts.Length > 1)
+                        {
+                            var culture = CultureInfo.CurrentCulture;
+                            if (IsValidGrouping(parts, culture.NumberFormat.NumberGroupSizes))
+                            {
+                                processedStr = processedStr.Replace(groupSep, "");
+                            }
+                            // If not grouped, it's likely a decimal number, so we don't strip dots.
+                        }
+                    }
+                    else
+                    {
+                        processedStr = processedStr.Replace(groupSep, "");
+                    }
+                }
+
+                // Handle decimal separator.
+                if (decimalSep != ".")
+                {
+                    processedStr = processedStr.Replace(decimalSep, ".");
+                }
+
+                return processedStr;
+            }
+            else
+            {
+                // LENIENT MODE: No functions are present, so we can be flexible.
+                string processedStr = numberStr;
+                if (!string.IsNullOrEmpty(groupSep))
+                {
+                    processedStr = processedStr.Replace(groupSep, "");
+                }
+                if (decimalSep != ".")
+                {
+                    processedStr = processedStr.Replace(decimalSep, ".");
+                }
+                return processedStr;
+            }
+        }
+
+        private static bool IsValidGrouping(string[] parts, int[] groupSizes)
+        {
+            if (parts.Length <= 1) return true;
+
+            if (groupSizes is null || groupSizes.Length == 0 || groupSizes[0] == 0)
+                return false; // has groups, but culture defines none.
+
+            var firstPart = parts[0];
+            if (firstPart.StartsWith('-')) firstPart = firstPart[1..];
+            if (firstPart.Length == 0) return false; // e.g. ",123"
+
+            if (firstPart.Length > groupSizes[0]) return false;
+
+            var lastGroupSize = groupSizes.Last();
+            var canRepeatLastGroup = lastGroupSize != 0;
+
+            int groupIndex = 0;
+            for (int i = parts.Length - 1; i > 0; i--)
+            {
+                int expectedSize;
+                if (groupIndex < groupSizes.Length)
+                {
+                    expectedSize = groupSizes[groupIndex];
+                }
+                else if (canRepeatLastGroup)
+                {
+                    expectedSize = lastGroupSize;
+                }
+                else
+                {
+                    return false;
+                }
+
+                if (parts[i].Length != expectedSize) return false;
+
+                groupIndex++;
+            }
 
             return true;
         }
 
-        private string ChangeDecimalSeparator(decimal value, string newDecimalSeparator)
+        private string FormatResult(decimal roundedResult)
         {
-            if (String.IsNullOrEmpty(newDecimalSeparator))
+            string decimalSeparator = GetDecimalSeparator();
+            string groupSeparator = GetGroupSeparator(decimalSeparator);
+
+            string resultStr = roundedResult.ToString(CultureInfo.InvariantCulture);
+
+            string[] parts = resultStr.Split('.');
+            string integerPart = parts[0];
+            string fractionalPart = parts.Length > 1 ? parts[1] : string.Empty;
+
+            if (integerPart.Length > 3)
             {
-                return value.ToString();
+                integerPart = ThousandGroupRegex.Replace(integerPart, groupSeparator);
             }
 
-            var numberFormatInfo = new NumberFormatInfo
+            if (!string.IsNullOrEmpty(fractionalPart))
             {
-                NumberDecimalSeparator = newDecimalSeparator
-            };
-            return value.ToString(numberFormatInfo);
+                return integerPart + decimalSeparator + fractionalPart;
+            }
+
+            return integerPart;
         }
 
-        private static string GetDecimalSeparator()
+        private string GetGroupSeparator(string decimalSeparator)
+        {
+            var culture = CultureInfo.CurrentCulture;
+            var systemGroupSeparator = culture.NumberFormat.NumberGroupSeparator;
+
+            if (_settings.DecimalSeparator == DecimalSeparator.UseSystemLocale)
+            {
+                return systemGroupSeparator;
+            }
+
+            // When a custom decimal separator is used,
+            // use the system's group separator unless it conflicts with the custom decimal separator.
+            if (decimalSeparator == systemGroupSeparator)
+            {
+                // Conflict: use the opposite of the decimal separator as a fallback.
+                return decimalSeparator == Dot ? Comma : Dot;
+            }
+
+            return systemGroupSeparator;
+        }
+
+        private string GetDecimalSeparator()
         {
             string systemDecimalSeparator = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
             return _settings.DecimalSeparator switch
             {
                 DecimalSeparator.UseSystemLocale => systemDecimalSeparator,
-                DecimalSeparator.Dot => dot,
-                DecimalSeparator.Comma => comma,
+                DecimalSeparator.Dot => Dot,
+                DecimalSeparator.Comma => Comma,
                 _ => systemDecimalSeparator,
             };
         }
 
-        private bool IsBracketComplete(string query)
-        {
-            var matchs = RegBrackets.Matches(query);
-            var leftBracketCount = 0;
-            foreach (Match match in matchs)
-            {
-                if (match.Value == "(" || match.Value == "[")
-                {
-                    leftBracketCount++;
-                }
-                else
-                {
-                    leftBracketCount--;
-                }
-            }
-
-            return leftBracketCount == 0;
-        }
-
         public string GetTranslatedPluginTitle()
         {
-            return Context.API.GetTranslation("flowlauncher_plugin_caculator_plugin_name");
+            return Localize.flowlauncher_plugin_calculator_plugin_name();
         }
 
         public string GetTranslatedPluginDescription()
         {
-            return Context.API.GetTranslation("flowlauncher_plugin_caculator_plugin_description");
+            return Localize.flowlauncher_plugin_calculator_plugin_description();
         }
 
         public Control CreateSettingPanel()
         {
-            return new CalculatorSettings(_viewModel);
+            return new CalculatorSettings(_settings);
+        }
+
+        public void OnCultureInfoChanged(CultureInfo newCulture)
+        {
+            DecimalSeparatorLocalized.UpdateLabels(_viewModel.AllDecimalSeparator);
         }
     }
 }

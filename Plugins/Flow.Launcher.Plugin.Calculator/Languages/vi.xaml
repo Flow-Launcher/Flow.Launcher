@@ -1,15 +1,17 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
-    <system:String x:Key="flowlauncher_plugin_caculator_plugin_name">Máy tính</system:String>
-    <system:String x:Key="flowlauncher_plugin_caculator_plugin_description">Cho phép thực hiện các phép tính toán học. (Thử 5*3-2 trong Flow Launcher)</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_plugin_name">Máy tính</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_plugin_description">Perform mathematical calculations, including hex values and advanced functions such as 'min(1,2,3)', 'sqrt(123)' and 'cos(123)'.</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_not_a_number">Không phải là số (NaN)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_expression_not_complete">Biểu thức sai hoặc không đầy đủ (Bạn có quên một số dấu ngoặc đơn không?)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_copy_number_to_clipboard">Sao chép số này vào clipboard</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_output_decimal_seperator">Dấu tách thập phân</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_output_decimal_seperator_help">Dấu phân cách thập phân được sử dụng ở đầu ra.</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_use_system_locale">Sử dụng ngôn ngữ hệ thống</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_comma">Dấu phẩy (,)</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_dot">dấu chấm (.)</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_output_decimal_separator">Dấu tách thập phân</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_output_decimal_separator_help">Dấu phân cách thập phân được sử dụng ở đầu ra.</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_use_system_locale">Sử dụng ngôn ngữ hệ thống</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_comma">Dấu phẩy (,)</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_dot">dấu chấm (.)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_max_decimal_places">Tối đa. chữ số thập phân</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_failed_to_copy">Copy failed, please try later</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_show_error_message">Show error message when calculation fails</system:String>
 </ResourceDictionary>

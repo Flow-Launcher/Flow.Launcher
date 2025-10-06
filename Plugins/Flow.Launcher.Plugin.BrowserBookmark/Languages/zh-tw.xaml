@@ -5,6 +5,9 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">瀏覽器書籤</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">搜尋你的瀏覽器書籤</system:String>
 
+    <!--  Main  -->
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copy_failed">Failed to set url in clipboard</system:String>
+
     <!--  Settings  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">書籤資料</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">載入書籤至:</system:String>
@@ -25,4 +28,6 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserEngine">瀏覽器引擎</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">如果你沒有使用 Chrome、Firefox 或 Edge，或者使用它們的便攜版，你需要新增書籤資料位置並選擇正確的瀏覽器引擎，才能讓這個擴充功能正常運作。</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">例如：Brave 瀏覽器的引擎是 Chromium；而它的預設書籤資料位置是「%LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData」。對於 Firefox 瀏覽器引擎，書籤資料位置是包含 places.sqlite 檔案的 userdata 資料夾。</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_enable_favicons">Load favicons (can be time consuming during startup)</system:String>
+
 </ResourceDictionary>

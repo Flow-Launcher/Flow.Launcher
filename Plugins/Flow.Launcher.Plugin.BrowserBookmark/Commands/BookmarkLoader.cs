@@ -9,11 +9,11 @@ internal static class BookmarkLoader
 {
     internal static MatchResult MatchProgram(Bookmark bookmark, string queryString)
     {
-        var match = Main._context.API.FuzzySearch(queryString, bookmark.Name);
+        var match = Main.Context.API.FuzzySearch(queryString, bookmark.Name);
         if (match.IsSearchPrecisionScoreMet())
             return match;
 
-        return Main._context.API.FuzzySearch(queryString, bookmark.Url);
+        return Main.Context.API.FuzzySearch(queryString, bookmark.Url);
     }
 
     internal static List<Bookmark> LoadAllBookmarks(Settings setting)

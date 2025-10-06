@@ -5,6 +5,9 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">Favoris du Navigateur</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">Rechercher dans les favoris de votre navigateur</system:String>
 
+    <!--  Main  -->
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copy_failed">Impossible de mettre l'url dans le presse-papiers</system:String>
+
     <!--  Settings  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Données des favoris</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">Ouvrir les favoris dans :</system:String>
@@ -25,4 +28,6 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserEngine">Navigateur</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">Si vous n'utilisez pas Chrome, Firefox ou Edge, ou que vous utilisez leur version portable, vous devez ajouter un dossier de favoris et sélectionner le bon navigateur pour que ce plugin fonctionne.</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">Par exemple : le moteur de Brave est Chromium ; et son emplacement par défaut des favoris est : &quot;%LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData&quot;. Pour le moteur Firefox, le dossier des favoris est le dossier userdata contenant le fichier places.sqlite.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_enable_favicons">Charger les favicons (peut prendre du temps au démarrage)</system:String>
+
 </ResourceDictionary>

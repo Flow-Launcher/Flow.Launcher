@@ -4,10 +4,8 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
-using Flow.Launcher.Plugin;
 using JetBrains.Annotations;
 
 namespace Flow.Launcher.Infrastructure.Http
@@ -78,7 +76,7 @@ namespace Flow.Launcher.Infrastructure.Http
             }
             catch (UriFormatException e)
             {
-                Ioc.Default.GetRequiredService<IPublicAPI>().ShowMsg("Please try again", "Unable to parse Http Proxy");
+                PublicApi.Instance.ShowMsgError(Localize.pleaseTryAgain(), Localize.parseProxyFailed());
                 Log.Exception(ClassName, "Unable to parse Uri", e);
             }
         }

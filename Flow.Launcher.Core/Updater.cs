@@ -49,29 +49,30 @@ namespace Flow.Launcher.Core
             try
             {
                 if (!silentUpdate)
-                    _api.ShowMsg(_api.GetTranslation("pleaseWait"),
-                        _api.GetTranslation("update_flowlauncher_update_check"));
+                    _api.ShowMsg(Localize.pleaseWait(),
+                        Localize.update_flowlauncher_update_check());
 
                 using var updateManager = await GitHubUpdateManagerAsync(GitHubRepository).ConfigureAwait(false);
 
                 // UpdateApp CheckForUpdate will return value only if the app is squirrel installed
                 var newUpdateInfo = await updateManager.CheckForUpdate().NonNull().ConfigureAwait(false);
 
-                var newReleaseVersion = Version.Parse(newUpdateInfo.FutureReleaseEntry.Version.ToString());
-                var currentVersion = Version.Parse(Constant.Version);
+                var newReleaseVersion =
+                    SemanticVersioning.Version.Parse(newUpdateInfo.FutureReleaseEntry.Version.ToString());
+                var currentVersion = SemanticVersioning.Version.Parse(Constant.Version);
 
                 _api.LogInfo(ClassName, $"Future Release <{Formatted(newUpdateInfo.FutureReleaseEntry)}>");
 
                 if (newReleaseVersion <= currentVersion)
                 {
                     if (!silentUpdate)
-                        _api.ShowMsgBox(_api.GetTranslation("update_flowlauncher_already_on_latest"));
+                        _api.ShowMsgBox(Localize.update_flowlauncher_already_on_latest());
                     return;
                 }
 
                 if (!silentUpdate)
-                    _api.ShowMsg(_api.GetTranslation("update_flowlauncher_update_found"),
-                        _api.GetTranslation("update_flowlauncher_updating"));
+                    _api.ShowMsg(Localize.update_flowlauncher_update_found(),
+                        Localize.update_flowlauncher_updating());
 
                 await updateManager.DownloadReleases(newUpdateInfo.ReleasesToApply).ConfigureAwait(false);
 
@@ -79,12 +80,12 @@ namespace Flow.Launcher.Core
 
                 if (DataLocation.PortableDataLocationInUse())
                 {
-                    var targetDestination = updateManager.RootAppDirectory + $"\\app-{newReleaseVersion}\\{DataLocation.PortableFolderName}";
+                    var targetDestination = updateManager.RootAppDirectory +
+                                            $"\\app-{newReleaseVersion}\\{DataLocation.PortableFolderName}";
                     FilesFolders.CopyAll(DataLocation.PortableDataPath, targetDestination, (s) => _api.ShowMsgBox(s));
-                    if (!FilesFolders.VerifyBothFolderFilesEqual(DataLocation.PortableDataPath, targetDestination, (s) => _api.ShowMsgBox(s)))
-                        _api.ShowMsgBox(string.Format(_api.GetTranslation("update_flowlauncher_fail_moving_portable_user_profile_data"),
-                            DataLocation.PortableDataPath,
-                            targetDestination));
+                    if (!FilesFolders.VerifyBothFolderFilesEqual(DataLocation.PortableDataPath, targetDestination,
+                            (s) => _api.ShowMsgBox(s)))
+                        _api.ShowMsgBox(Localize.update_flowlauncher_fail_moving_portable_user_profile_data(DataLocation.PortableDataPath, targetDestination));
                 }
                 else
                 {
@@ -95,16 +96,19 @@ namespace Flow.Launcher.Core
 
                 _api.LogInfo(ClassName, $"Update success:{newVersionTips}");
 
-                if (_api.ShowMsgBox(newVersionTips, _api.GetTranslation("update_flowlauncher_new_update"), MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (_api.ShowMsgBox(newVersionTips, Localize.update_flowlauncher_new_update(),
+                        MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     UpdateManager.RestartApp(Constant.ApplicationFileName);
                 }
             }
             catch (Exception e)
             {
-                if (e is HttpRequestException or WebException or SocketException || e.InnerException is TimeoutException)
+                if (e is HttpRequestException or WebException or SocketException ||
+                    e.InnerException is TimeoutException)
                 {
-                    _api.LogException(ClassName, $"Check your connection and proxy settings to github-cloud.s3.amazonaws.com.", e);
+                    _api.LogException(ClassName,
+                        $"Check your connection and proxy settings to github-cloud.s3.amazonaws.com.", e);
                 }
                 else
                 {
@@ -112,8 +116,8 @@ namespace Flow.Launcher.Core
                 }
 
                 if (!silentUpdate)
-                    _api.ShowMsg(_api.GetTranslation("update_flowlauncher_fail"),
-                        _api.GetTranslation("update_flowlauncher_check_connection"));
+                    _api.ShowMsgError(Localize.update_flowlauncher_fail(),
+                        Localize.update_flowlauncher_check_connection());
             }
             finally
             {
@@ -124,14 +128,11 @@ namespace Flow.Launcher.Core
         [UsedImplicitly]
         private class GithubRelease
         {
-            [JsonPropertyName("prerelease")]
-            public bool Prerelease { get; [UsedImplicitly] set; }
+            [JsonPropertyName("prerelease")] public bool Prerelease { get; [UsedImplicitly] set; }
 
-            [JsonPropertyName("published_at")]
-            public DateTime PublishedAt { get; [UsedImplicitly] set; }
+            [JsonPropertyName("published_at")] public DateTime PublishedAt { get; [UsedImplicitly] set; }
 
-            [JsonPropertyName("html_url")]
-            public string HtmlUrl { get; [UsedImplicitly] set; }
+            [JsonPropertyName("html_url")] public string HtmlUrl { get; [UsedImplicitly] set; }
         }
 
         // https://github.com/Squirrel/Squirrel.Windows/blob/master/src/Squirrel/UpdateManager.Factory.cs
@@ -146,10 +147,7 @@ namespace Flow.Launcher.Core
             var latest = releases.Where(r => !r.Prerelease).OrderByDescending(r => r.PublishedAt).First();
             var latestUrl = latest.HtmlUrl.Replace("/tag/", "/download/");
 
-            var client = new WebClient
-            {
-                Proxy = Http.WebProxy
-            };
+            var client = new WebClient { Proxy = Http.WebProxy };
             var downloader = new FileDownloader(client);
 
             var manager = new UpdateManager(latestUrl, urlDownloader: downloader);
@@ -157,19 +155,16 @@ namespace Flow.Launcher.Core
             return manager;
         }
 
-        private string NewVersionTips(string version)
+        private static string NewVersionTips(string version)
         {
-            var tips = string.Format(_api.GetTranslation("newVersionTips"), version);
+            var tips = Localize.newVersionTips(version);
 
             return tips;
         }
 
         private static string Formatted<T>(T t)
         {
-            var formatted = JsonSerializer.Serialize(t, new JsonSerializerOptions
-            {
-                WriteIndented = true
-            });
+            var formatted = JsonSerializer.Serialize(t, new JsonSerializerOptions { WriteIndented = true });
 
             return formatted;
         }

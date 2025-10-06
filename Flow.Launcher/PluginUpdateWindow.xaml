@@ -1,0 +1,112 @@
+<Window
+    x:Class="Flow.Launcher.PluginUpdateWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:flowlauncher="clr-namespace:Flow.Launcher"
+    xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
+    Title="{DynamicResource updateAllPluginsButtonContent}"
+    Width="530"
+    Background="{DynamicResource PopuBGColor}"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
+    Foreground="{DynamicResource PopupTextColor}"
+    Icon="Images\app.png"
+    ResizeMode="NoResize"
+    SizeToContent="Height"
+    Topmost="True"
+    WindowStartupLocation="CenterScreen">
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="32" ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
+    </WindowChrome.WindowChrome>
+    <Window.InputBindings>
+        <KeyBinding Key="Escape" Command="Close" />
+    </Window.InputBindings>
+    <Window.CommandBindings>
+        <CommandBinding Command="Close" Executed="cmdEsc_OnPress" />
+    </Window.CommandBindings>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="80" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Button
+                        Grid.Column="1"
+                        Click="BtnCancel_OnClick"
+                        Style="{StaticResource TitleBarCloseButtonStyle}">
+                        <Path
+                            Width="46"
+                            Height="32"
+                            Data="M 18,11 27,20 M 18,20 27,11"
+                            Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                            StrokeThickness="1">
+                            <Path.Style>
+                                <Style TargetType="Path">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path=IsActive, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Value="False">
+                                            <Setter Property="Opacity" Value="0.5" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Path.Style>
+                        </Path>
+                    </Button>
+                </Grid>
+            </StackPanel>
+            <StackPanel Margin="26 0 26 0">
+                <TextBlock
+                    Margin="0 0 0 12"
+                    FontSize="20"
+                    FontWeight="SemiBold"
+                    Text="{DynamicResource updateAllPluginsButtonContent}"
+                    TextAlignment="Left" />
+
+                <ui:ScrollViewerEx
+                    MaxHeight="300"
+                    Margin="0 5 0 5"
+                    HorizontalScrollBarVisibility="Disabled"
+                    VerticalScrollBarVisibility="Auto">
+                    <StackPanel x:Name="UpdatePluginStackPanel" />
+                </ui:ScrollViewerEx>
+
+                <Rectangle
+                    Height="1"
+                    Margin="0 5 0 5"
+                    Fill="{DynamicResource SeparatorForeground}" />
+
+                <CheckBox
+                    Margin="0 10 0 10"
+                    Content="{DynamicResource restartAfterUpdating}"
+                    IsChecked="{Binding Restart, Mode=TwoWay}" />
+            </StackPanel>
+        </StackPanel>
+        <Border
+            Grid.Row="1"
+            Margin="0 14 0 0"
+            Background="{DynamicResource PopupButtonAreaBGColor}"
+            BorderBrush="{DynamicResource PopupButtonAreaBorderColor}"
+            BorderThickness="0 1 0 0">
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                <Button
+                    x:Name="btnCancel"
+                    MinWidth="140"
+                    Margin="10 0 5 0"
+                    Click="BtnCancel_OnClick"
+                    Content="{DynamicResource cancel}" />
+                <Button
+                    x:Name="btnUpdate"
+                    MinWidth="140"
+                    Margin="5 0 10 0"
+                    Click="btnUpdate_OnClick"
+                    Content="{DynamicResource update}"
+                    Style="{StaticResource AccentButtonStyle}" />
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

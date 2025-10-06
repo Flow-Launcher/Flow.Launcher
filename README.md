@@ -42,7 +42,7 @@ Dedicated to making your work flow more seamless. Search everything from applica
 
 ### Installation
 
-[Windows 7+ Installer](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest/download/Flow-Launcher-Setup.exe) or [Portable Version](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest/download/Flow-Launcher-Portable.zip)
+[Windows 10+ Installer](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest/download/Flow-Launcher-Setup.exe) or [Portable Version](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest/download/Flow-Launcher-Portable.zip)
 
 #### Winget
 
@@ -117,22 +117,29 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
 
 - Save file or folder locations for quick access.
 
-#### Drag & Drop
-
-<img src="https://user-images.githubusercontent.com/6903107/207159486-1993510f-09f2-4e33-bba7-4ca59ca1bc5a.png" width="500">
-
-- Drag a file/folder to File Explorer, or even Discord.
-- Copy/move behavior can be change via <kbd>Ctrl</kbd> or <kbd>Shift</kbd>, and the operation is displayed on the mouse cursor.
-
 ### Windows & Control Panel Settings
 
 <img src="https://user-images.githubusercontent.com/6903107/207140658-52c1bea6-5b14-4db8-ae35-acc65e6bda85.png" width="400">
 
 - Search for Windows & Control Panel settings.
 
+### Dialog Jump
+
+<img src="https://github.com/user-attachments/assets/046c00da-6e4e-4960-8424-b413852300ad" width="400"/>
+
+- Search for a file/folder and quickly jump to its path in the Open/Save As dialog window.
+- Use <kbd>Alt</kbd>+<kbd>G</kbd> to quickly jump the Open/Save As dialog window path to the path of the active file manager.
+
+### Drag & Drop
+
+<img src="https://user-images.githubusercontent.com/6903107/207159486-1993510f-09f2-4e33-bba7-4ca59ca1bc5a.png" width="400">
+
+- Drag a file/folder to File Explorer, or even Discord.
+- Copy/move behavior can be change via <kbd>Ctrl</kbd> or <kbd>Shift</kbd>, and the operation is displayed on the mouse cursor.
+
 ### Priority
 
-<img src="https://user-images.githubusercontent.com/6903107/144517677-857a2b0a-4b94-4be0-bc89-f35723ecddf9.png" width="500">
+<img src="https://user-images.githubusercontent.com/6903107/144517677-857a2b0a-4b94-4be0-bc89-f35723ecddf9.png" width="400">
 
 - Prioritise the order of each plugin's results.
 
@@ -145,19 +152,18 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
 - Turn on preview permanently via Settings (Always Preview).
 - Use <kbd>Ctrl</kbd>+<kbd>+</kbd>/<kbd>-</kbd> and <kbd>Ctrl</kbd>+<kbd>[</kbd>/<kbd>]</kbd> to adjust search window width and height quickly if the preview area is too narrow.
 
-
 ### Customizations
 
-<img src="https://user-images.githubusercontent.com/6903107/144693887-1b92ed16-dca1-4b7e-8644-5e9524cdfb31.gif" width="500">
+<img src="https://user-images.githubusercontent.com/6903107/144693887-1b92ed16-dca1-4b7e-8644-5e9524cdfb31.gif" width="400">
 
 - Window size adjustment, animation, and sound
 - Color Scheme (aka Dark Mode)
 
-<img src="https://user-images.githubusercontent.com/6903107/144527796-7c06ca31-d933-4f6b-9eb0-4fb06fa94384.png" width="500">
+<img src="https://user-images.githubusercontent.com/6903107/144527796-7c06ca31-d933-4f6b-9eb0-4fb06fa94384.png" width="400">
 
 - There are various themes and you also can make your own.
 
-#### Date & Time Display In Search Window
+### Date & Time Display In Search Window
 
 <img src="https://user-images.githubusercontent.com/6903107/207159348-8b0c7a2b-0836-4764-916b-e0236087f7f3.png" width="400">
 
@@ -185,6 +191,7 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
   <li>de, Deutsch</li>
   <li>ko, 한국어</li>
   <li>Srpski</li>
+  <li>Српски</li>
   <li>Português</li>
   <li>Português (Brasil)</li>
   <li>Spanish</li>
@@ -196,6 +203,7 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
   <li>čeština</li>
   <li>اللغة العربية</li>
   <li>Tiếng Việt</li>
+  <li>עברית</li>
 </ul>
 </details>
 
@@ -264,7 +272,7 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
 
 ### 🛒 Plugin Store
 
-<img src="https://user-images.githubusercontent.com/6903107/207155616-d559f0d2-ee95-4072-a7bc-3ffcc2faec27.png" width="700">
+<img src="https://cdn.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@plugin_api_v2/assets/plugin_store.png" width="700">
 
 - You can view the full plugin list or quickly install a plugin via the Plugin Store menu inside Settings
 
@@ -322,6 +330,7 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
 | Flow Launcher Tips                 | Visit Flow Launcher's documentation for more help and how to use tips       |
 | Flow Launcher UserData Folder      | Open the location where Flow Launcher's settings are stored                 |
 | Toggle Game Mode                   | Toggle Game Mode                                                            |
+| Set Flow Launcher Theme            | Set the Flow Launcher Theme                                                 |
 
 ### 💁‍♂️ Tips
 
@@ -379,27 +388,35 @@ Yes please, let us know in the [Q&A](https://github.com/Flow-Launcher/Flow.Launc
 
 Our project localization is based on [Crowdin](https://crowdin.com). If you would like to change them, please go to https://crowdin.com/project/flow-launcher.
 
+### WPF UI Library
+
+Our UI library is using [iNKORE.UI.WPF.Modern](https://github.com/iNKORE-NET/UI.WPF.Modern). 
+
+<a href="https://docs.inkore.net/ui-wpf-modern/introduction">
+  <img src="https://github.com/iNKORE-NET/UI.WPF.Modern/blob/main/assets/images/banners/UI.WPF.Modern_Main_1280w.png?raw=true" alt="iNKORE.UI.WPF.Modern" width="400">
+</a>
+
 ### New changes
 
-All changes to flow are captured via pull requests. Some new changes will have been merged but still pending release, this means whilst a change may not exist in the current release, it may very well have been accepted and merged into the dev branch and available as a pre-release download. It is therefore a good idea that before you start to make changes, search through the open and closed pull requests to make sure the change you intend to make is not already done.
+All changes to flow are captured via pull requests. Some new changes will have been merged but still pending release, this means while a change may not exist in the current release, it may very well have been accepted and merged into the dev branch and available as a pre-release download. It is therefore a good idea to search through the open and closed pull requests before you start to make changes to ensure the change you intend to make is not already done.
 
 Each of the pull requests will be marked with a milestone indicating the planned release version for the change.  
 
 ### Contributing
 
-Contributions are very welcome, in addition to the main project(C#) there are also [documentation](https://github.com/Flow-Launcher/docs)(md), [website](https://github.com/Flow-Launcher/flow-launcher.github.io)(html/css) and [others](https://github.com/Flow-Launcher) that can be contributed to. If you are unsure of a change you want to make, let us know in the [Discussions](https://github.com/Flow-Launcher/Flow.Launcher/discussions/categories/ideas), otherwise feel free to put in a pull request.
+Contributions are very welcome, in addition to the main project (C#) there are also [documentation](https://github.com/Flow-Launcher/docs) (md), [website](https://github.com/Flow-Launcher/flow-launcher.github.io) (html/css) and [others](https://github.com/Flow-Launcher) that can be contributed to. If you are unsure of a change you want to make, let us know in the [Discussions](https://github.com/Flow-Launcher/Flow.Launcher/discussions/categories/ideas), otherwise feel free to submit a pull request.
 
-You will find the main goals of flow placed under the [Projects board](https://github.com/Flow-Launcher/Flow.Launcher/projects), so feel free to contribute on that. If you would like to make small incremental changes, feel free to do so as well.
+You will find the main goals of flow placed under the [Projects board](https://github.com/orgs/Flow-Launcher/projects/4), so feel free to contribute on that. If you would like to make small incremental changes, feel free to do so as well.
 
-Get in touch if you like to join the Flow-Launcher Team and help build this great tool.
+Get in touch if you would like to join the Flow-Launcher Team and help build this great tool.
 
 ### Developing/Debugging
 
-- Flow Launcher's target framework is .Net 7
+- Flow Launcher's target framework is .Net 9
 
-- Install Visual Studio 2022
+- Install Visual Studio 2022 (v17.12+)
 
-- Install .Net 7 SDK
+- Install .Net 9 SDK
   - via Visual Studio installer
-  - via winget `winget install Microsoft.DotNet.SDK.7`
-  - Manually from [here](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)
+  - via winget `winget install Microsoft.DotNet.SDK.9`
+  - Manually from [here](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)

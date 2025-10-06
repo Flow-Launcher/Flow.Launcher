@@ -5,6 +5,9 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">Закладки браузера</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">Поиск закладок в браузере</system:String>
 
+    <!--  Main  -->
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copy_failed">Failed to set url in clipboard</system:String>
+
     <!--  Settings  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Данные закладок</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">Открыть закладки в:</system:String>
@@ -25,4 +28,6 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserEngine">Движок браузера</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">Если вы не используете Chrome, Firefox или Edge, или используете их портативную версию, вам необходимо добавить каталог данных закладок и выбрать правильный движок браузера, чтобы этот плагин работал.</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">Например: Движок Brave - Chromium; и его местоположение данных закладок по умолчанию: «%LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData». Для движка Firefox каталог закладок находится в папке userdata и содержит файл places.sqlite.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_enable_favicons">Load favicons (can be time consuming during startup)</system:String>
+
 </ResourceDictionary>

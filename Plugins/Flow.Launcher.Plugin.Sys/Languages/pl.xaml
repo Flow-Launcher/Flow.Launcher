@@ -61,6 +61,8 @@
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer">Czy na pewno chcesz zrestartować komputer?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer_advanced">Czy na pewno chcesz ponownie uruchomić komputer z Zaawansowanymi opcjami rozruchu?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_logoff_computer">Czy na pewno chcesz się wylogować?</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_error">Błąd</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_empty_recycle_bin_failed">Failed to empty the recycle bin. This might happen if:{0}- Some items are currently in use{0}- Some items can't be deleted due to permissions{0}Please close any applications that might be using these files and try again.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_command_keyword_setting_window_title">Command Keyword Setting</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword">Custom Command Keyword</system:String>
@@ -69,7 +71,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_reset">Zresetuj</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_confirm">Potwierdź</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_cancel">Anuluj</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_input_command_keyword">Please enter a non-empty command keyword</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_input_command_keyword">Proszę wprowadzić niepuste słowo kluczowe polecenia</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_plugin_name">Komendy systemowe</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_plugin_description">Wykonywanie komend systemowych, np. wyłącz, zablokuj komputer, otwórz ustawienia itp.</system:String>

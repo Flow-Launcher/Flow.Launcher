@@ -40,15 +40,17 @@ namespace Flow.Launcher
         {
             if (string.IsNullOrEmpty(Key) || string.IsNullOrEmpty(Value))
             {
-                App.API.ShowMsgBox(App.API.GetTranslation("emptyShortcut"));
+                App.API.ShowMsgBox(Localize.emptyShortcut());
                 return;
             }
+
             // Check if key is modified or adding a new one
             if (((update && originalKey != Key) || !update) && _hotkeyVm.DoesShortcutExist(Key))
             {
-                App.API.ShowMsgBox(App.API.GetTranslation("duplicateShortcut"));
+                App.API.ShowMsgBox(Localize.duplicateShortcut());
                 return;
             }
+
             DialogResult = !update || originalKey != Key || originalValue != Value;
             Close();
         }

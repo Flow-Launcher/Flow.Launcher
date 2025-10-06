@@ -27,6 +27,7 @@ namespace Flow.Launcher.Core.Plugin
 
         private JsonStorage<ConcurrentDictionary<string, object?>> _storage = null!;
 
+        private static readonly double MainGridColumn0MaxWidthRatio = 0.6;
         private static readonly Thickness SettingPanelMargin = (Thickness)Application.Current.FindResource("SettingPanelMargin");
         private static readonly Thickness SettingPanelItemLeftMargin = (Thickness)Application.Current.FindResource("SettingPanelItemLeftMargin");
         private static readonly Thickness SettingPanelItemTopBottomMargin = (Thickness)Application.Current.FindResource("SettingPanelItemTopBottomMargin");
@@ -156,7 +157,7 @@ namespace Flow.Launcher.Core.Plugin
         {
             if (!NeedCreateSettingPanel()) return null!;
 
-            // Create main grid with two columns (Column 1: Auto, Column 2: *)
+            // Create main grid with two columns (Column 0: Auto, Column 1: *)
             var mainPanel = new Grid { Margin = SettingPanelMargin, VerticalAlignment = VerticalAlignment.Center };
             mainPanel.ColumnDefinitions.Add(new ColumnDefinition()
             {
@@ -200,7 +201,7 @@ namespace Flow.Launcher.Core.Plugin
                     {
                         Text = attributes.Label,
                         VerticalAlignment = VerticalAlignment.Center,
-                        TextWrapping = TextWrapping.WrapWithOverflow
+                        TextWrapping = TextWrapping.Wrap
                     };
 
                     // Create a text block for description
@@ -211,7 +212,7 @@ namespace Flow.Launcher.Core.Plugin
                         {
                             Text = attributes.Description,
                             VerticalAlignment = VerticalAlignment.Center,
-                            TextWrapping = TextWrapping.WrapWithOverflow
+                            TextWrapping = TextWrapping.Wrap
                         };
 
                         desc.SetResourceReference(TextBlock.StyleProperty, "SettingPanelTextBlockDescriptionStyle"); // for theme change
@@ -247,7 +248,8 @@ namespace Flow.Launcher.Core.Plugin
                                 VerticalAlignment = VerticalAlignment.Center,
                                 Margin = SettingPanelItemLeftTopBottomMargin,
                                 Text = Settings[attributes.Name] as string ?? string.Empty,
-                                ToolTip = attributes.Description
+                                ToolTip = attributes.Description,
+                                TextWrapping = TextWrapping.Wrap
                             };
 
                             textBox.TextChanged += (_, _) =>
@@ -269,7 +271,8 @@ namespace Flow.Launcher.Core.Plugin
                                 VerticalAlignment = VerticalAlignment.Center,
                                 Margin = SettingPanelItemLeftMargin,
                                 Text = Settings[attributes.Name] as string ?? string.Empty,
-                                ToolTip = attributes.Description
+                                ToolTip = attributes.Description,
+                                TextWrapping = TextWrapping.Wrap
                             };
 
                             textBox.TextChanged += (_, _) =>
@@ -282,7 +285,7 @@ namespace Flow.Launcher.Core.Plugin
                                 HorizontalAlignment = HorizontalAlignment.Left,
                                 VerticalAlignment = VerticalAlignment.Center,
                                 Margin = SettingPanelItemLeftMargin,
-                                Content = API.GetTranslation("select")
+                                Content = Localize.select()
                             };
 
                             Btn.Click += (_, _) =>
@@ -333,7 +336,7 @@ namespace Flow.Launcher.Core.Plugin
                                 HorizontalAlignment = HorizontalAlignment.Stretch,
                                 VerticalAlignment = VerticalAlignment.Center,
                                 Margin = SettingPanelItemLeftTopBottomMargin,
-                                TextWrapping = TextWrapping.WrapWithOverflow,
+                                TextWrapping = TextWrapping.Wrap,
                                 AcceptsReturn = true,
                                 Text = Settings[attributes.Name] as string ?? string.Empty,
                                 ToolTip = attributes.Description
@@ -488,11 +491,35 @@ namespace Flow.Launcher.Core.Plugin
                 rowCount++;
             }
 
+            mainPanel.SizeChanged += MainPanel_SizeChanged;
+
             // Wrap the main grid in a user control
             return new UserControl()
             {
                 Content = mainPanel
             };
+        }
+
+        private void MainPanel_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (sender is not Grid grid) return;
+
+            var workingWidth = grid.ActualWidth;
+
+            if (workingWidth <= 0) return;
+
+            var constrainedWidth = MainGridColumn0MaxWidthRatio * workingWidth;
+
+            // Set MaxWidth of column 0 and its children
+            // We must set MaxWidth of its children to make text wrapping work correctly
+            grid.ColumnDefinitions[0].MaxWidth = constrainedWidth;
+            foreach (var child in grid.Children)
+            {
+                if (child is FrameworkElement element && Grid.GetColumn(element) == 0 && Grid.GetColumnSpan(element) == 1)
+                {
+                    element.MaxWidth = constrainedWidth;
+                }
+            }
         }
 
         private static bool NeedSaveInSettings(string type)

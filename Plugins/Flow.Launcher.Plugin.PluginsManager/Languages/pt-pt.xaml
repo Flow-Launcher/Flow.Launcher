@@ -43,10 +43,15 @@
     <system:String x:Key="plugin_pluginsmanager_update_success_no_restart">Plugin {0} atualizado com sucesso. Por favor, reinicie o Flow Launcher.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_all_success_no_restart">{0} plugins atualizados com sucesso. Deve reiniciar Flow Launcher.</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_modified_error">O plugin {0} foi modificado. Por favor, reinicie o Flow Launcher antes de fazer mais alterações.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_modified_error_title">{0} já modificado</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_modified_error_message">Reinicie Flow Launcher antes de fazer mais alterações</system:String>
+
+    <system:String x:Key="plugin_pluginsmanager_invalid_zip_title">Ficheiro Zip inválido</system:String>
+    <system:String x:Key="plugin_pluginsmanager_invalid_zip_subtitle">Verifique se existe o ficheiro &quot;plugin.json&quot; em {0}</system:String>
 
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_pluginsmanager_plugin_name">Gestor de plugins</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_description">Módulo para instalar, desinstalar e atualizar os plugins do Flow Launcher</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_description">Instalar, desinstalar ou atualizar plugins do Flow Launcher através da janela de pesquisa</system:String>
     <system:String x:Key="plugin_pluginsmanager_unknown_author">Autor desconhecido</system:String>
 
     <!--  Context menu items  -->
@@ -61,5 +66,5 @@
 
     <!--  Settings menu items  -->
     <system:String x:Key="plugin_pluginsmanager_plugin_settings_unknown_source">Aviso ao instalar de fontes desconhecidas</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_settings_auto_restart">Reiniciar automaticamente após instalar/desinstalar/atualizar plugins</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_settings_auto_restart">Reiniciar Flow Launcher após instalar/desinstalar/atualizar um plugin via Gestor de plugins</system:String>
 </ResourceDictionary>

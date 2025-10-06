@@ -5,6 +5,9 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">Záložky prohlížeče</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">Hledat záložky v prohlížeči</system:String>
 
+    <!--  Main  -->
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copy_failed">Failed to set url in clipboard</system:String>
+
     <!--  Settings  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Data záložek</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">Otevřít záložky v:</system:String>
@@ -25,4 +28,6 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserEngine">Jádro webového prohlížeče</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">Pokud nepoužíváte prohlížeč Chrome, Firefox nebo Edge nebo používáte přenosnou verzi prohlížeče Chrome, Firefox nebo Edge, musíte přidat složku záložek a vybrat správné jádro prohlížeče, aby tento doplněk fungoval.</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">Například: prohlížeč Brave má jádro Chromium; výchozí umístění pro data záložek je: &quot;%LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData&quot;. V případě jádra Firefox je složkou záložek složka userdata, která obsahuje soubor places.sqlite.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_enable_favicons">Load favicons (can be time consuming during startup)</system:String>
+
 </ResourceDictionary>

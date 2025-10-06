@@ -19,37 +19,42 @@ namespace Flow.Launcher.Infrastructure.Image
         private static readonly string ClassName = nameof(ImageLoader);
 
         private static readonly ImageCache ImageCache = new();
-        private static SemaphoreSlim storageLock { get; } = new SemaphoreSlim(1, 1);
+        private static Lock storageLock { get; } = new();
         private static BinaryStorage<List<(string, bool)>> _storage;
         private static readonly ConcurrentDictionary<string, string> GuidToKey = new();
-        private static IImageHashGenerator _hashGenerator;
+        private static ImageHashGenerator _hashGenerator;
         private static readonly bool EnableImageHash = true;
-        public static ImageSource Image { get; } = new BitmapImage(new Uri(Constant.ImageIcon));
-        public static ImageSource MissingImage { get; } = new BitmapImage(new Uri(Constant.MissingImgIcon));
-        public static ImageSource LoadingImage { get; } = new BitmapImage(new Uri(Constant.LoadingImgIcon));
+        public static ImageSource Image => ImageCache[Constant.ImageIcon, false];
+        public static ImageSource MissingImage => ImageCache[Constant.MissingImgIcon, false];
+        public static ImageSource LoadingImage => ImageCache[Constant.LoadingImgIcon, false];
         public const int SmallIconSize = 64;
         public const int FullIconSize = 256;
         public const int FullImageSize = 320;
 
-        private static readonly string[] ImageExtensions = { ".png", ".jpg", ".jpeg", ".gif", ".bmp", ".tiff", ".ico" };
+        private static readonly string[] ImageExtensions = [".png", ".jpg", ".jpeg", ".gif", ".bmp", ".tiff", ".ico"];
         private static readonly string SvgExtension = ".svg";
 
         public static async Task InitializeAsync()
         {
-            _storage = new BinaryStorage<List<(string, bool)>>("Image");
-            _hashGenerator = new ImageHashGenerator();
-
-            var usage = await LoadStorageToConcurrentDictionaryAsync();
-            _storage.ClearData();
-
-            ImageCache.Initialize(usage);
-
-            foreach (var icon in new[] { Constant.DefaultIcon, Constant.MissingImgIcon })
+            var usage = await Task.Run(() =>
             {
-                ImageSource img = new BitmapImage(new Uri(icon));
-                img.Freeze();
-                ImageCache[icon, false] = img;
-            }
+                _storage = new BinaryStorage<List<(string, bool)>>("Image");
+                _hashGenerator = new ImageHashGenerator();
+
+                var usage = LoadStorageToConcurrentDictionary();
+                _storage.ClearData();
+
+                ImageCache.Initialize(usage);
+
+                foreach (var icon in new[] { Constant.DefaultIcon, Constant.ImageIcon, Constant.MissingImgIcon, Constant.LoadingImgIcon })
+                {
+                    ImageSource img = new BitmapImage(new Uri(icon));
+                    img.Freeze();
+                    ImageCache[icon, false] = img;
+                }
+
+                return usage;
+            });
 
             _ = Task.Run(async () =>
             {
@@ -64,42 +69,26 @@ namespace Flow.Launcher.Infrastructure.Image
             });
         }
 
-        public static async Task SaveAsync()
+        public static void Save()
         {
-            await storageLock.WaitAsync();
-
-            try
+            lock (storageLock)
             {
-                await _storage.SaveAsync(ImageCache.EnumerateEntries()
-                    .Select(x => x.Key)
-                    .ToList());
-            }
-            catch (System.Exception e)
-            {
-                Log.Exception(ClassName, "Failed to save image cache to file", e);
-            }
-            finally
-            {
-                storageLock.Release();
+                try
+                {
+                    _storage.Save([.. ImageCache.EnumerateEntries().Select(x => x.Key)]);
+                }
+                catch (System.Exception e)
+                {
+                    Log.Exception(ClassName, "Failed to save image cache to file", e);
+                }
             }
         }
 
-        public static async Task WaitSaveAsync()
+        private static List<(string, bool)> LoadStorageToConcurrentDictionary()
         {
-            await storageLock.WaitAsync();
-            storageLock.Release();
-        }
-
-        private static async Task<List<(string, bool)>> LoadStorageToConcurrentDictionaryAsync()
-        {
-            await storageLock.WaitAsync();
-            try
+            lock (storageLock)
             {
-                return await _storage.TryLoadAsync(new List<(string, bool)>());
-            }
-            finally
-            {
-                storageLock.Release();
+                return _storage.TryLoad([]);
             }
         }
 
@@ -174,7 +163,7 @@ namespace Flow.Launcher.Infrastructure.Image
                     Log.Exception(ClassName, $"Failed to get thumbnail for {path} on first try", e);
                     Log.Exception(ClassName, $"Failed to get thumbnail for {path} on second try", e2);
 
-                    ImageSource image = ImageCache[Constant.MissingImgIcon, false];
+                    ImageSource image = MissingImage;
                     ImageCache[path, false] = image;
                     imageResult = new ImageResult(image, ImageType.Error);
                 }
@@ -273,7 +262,7 @@ namespace Flow.Launcher.Infrastructure.Image
             }
             else
             {
-                image = ImageCache[Constant.MissingImgIcon, false];
+                image = MissingImage;
                 path = Constant.MissingImgIcon;
             }
 
@@ -338,7 +327,7 @@ namespace Flow.Launcher.Infrastructure.Image
             return img;
         }
 
-        private static ImageSource LoadFullImage(string path)
+        private static BitmapImage LoadFullImage(string path)
         {
             BitmapImage image = new BitmapImage();
             image.BeginInit();
@@ -375,7 +364,7 @@ namespace Flow.Launcher.Infrastructure.Image
             return image;
         }
 
-        private static ImageSource LoadSvgImage(string path, bool loadFullImage = false)
+        private static RenderTargetBitmap LoadSvgImage(string path, bool loadFullImage = false)
         {
             // Set up drawing settings
             var desiredHeight = loadFullImage ? FullImageSize : SmallIconSize;
