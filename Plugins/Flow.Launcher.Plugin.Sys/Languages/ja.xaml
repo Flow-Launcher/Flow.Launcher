@@ -77,8 +77,8 @@
     <system:String x:Key="flowlauncher_plugin_sys_plugin_description">システム関連のコマンドを提供します。例:シャットダウン、ロック、設定など</system:String>
 
     <!--  Theme Selector  -->
-    <system:String x:Key="flowlauncher_plugin_sys_type_isdark_hasblur">This theme supports two (light/dark) modes and Blur Transparent Background</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_type_isdark">This theme supports two (light/dark) modes</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_type_hasblur">This theme supports Blur Transparent Background</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_type_isdark_hasblur">このテーマは2つのモード（明るい/暗い）と透明な背景をぼかし効果が使用できます</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_type_isdark">このテーマはライト／ダークの2モードに対応しています</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_type_hasblur">このテーマは背景のぼかした透明効果をサポートしています</system:String>
 
 </ResourceDictionary>
