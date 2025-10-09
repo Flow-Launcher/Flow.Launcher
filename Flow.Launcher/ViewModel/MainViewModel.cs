@@ -1458,7 +1458,10 @@ namespace Flow.Launcher.ViewModel
                     true => Task.CompletedTask
                 }).ToArray();
 
-                QueryHistoryTask(currentCancellationToken);
+                if (Settings.ShowHistoryOnHomePage)
+                {
+                    QueryHistoryTask(currentCancellationToken);
+                }
             }
             else
             {
