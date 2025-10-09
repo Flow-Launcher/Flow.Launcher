@@ -40,7 +40,10 @@ namespace Flow.Launcher.ViewModel
         private Query _lastQuery;
         private bool _previousIsHomeQuery;
         private string _queryTextBeforeLeaveResults;
-        private string _ignoredQueryText; // Used to ignore query text change when switching between context menu and query results
+
+        private string
+            _ignoredQueryText; // Used to ignore query text change when switching between context menu and query results
+
         private readonly FlowLauncherJsonStorage<History> _historyStorage;
         private readonly FlowLauncherJsonStorage<UserSelectedRecord> _userSelectedRecordStorage;
         private readonly FlowLauncherJsonStorageTopMostRecord _topMostRecord;
@@ -241,14 +244,16 @@ namespace Flow.Launcher.ViewModel
                             // Indicate if to clear existing results so to show only ones from plugins with action keywords
                             var query = item.Query;
                             var currentIsHomeQuery = query.IsHomeQuery;
-                            var shouldClearExistingResults = ShouldClearExistingResultsForQuery(query, currentIsHomeQuery);
+                            var shouldClearExistingResults =
+                                ShouldClearExistingResultsForQuery(query, currentIsHomeQuery);
                             _lastQuery = item.Query;
                             _previousIsHomeQuery = currentIsHomeQuery;
 
                             // If the queue already has the item, we need to pass the shouldClearExistingResults flag
                             if (queue.TryGetValue(item.ID, out var existingItem))
                             {
-                                item.ShouldClearExistingResults = shouldClearExistingResults || existingItem.ShouldClearExistingResults;
+                                item.ShouldClearExistingResults = shouldClearExistingResults ||
+                                                                  existingItem.ShouldClearExistingResults;
                             }
                             else
                             {
@@ -319,7 +324,7 @@ namespace Flow.Launcher.ViewModel
                     App.API.LogDebug(ClassName, $"Update results for plugin <{pair.Metadata.Name}>");
 
                     if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, pair.Metadata, e.Query,
-                        token)))
+                            token)))
                     {
                         App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
                     }
@@ -422,9 +427,11 @@ namespace Flow.Launcher.ViewModel
                     if (result is DialogJumpResult dialogJumpResult)
                     {
                         Win32Helper.SetForegroundWindow(DialogWindowHandle);
-                        _ = Task.Run(() => DialogJump.JumpToPathAsync(DialogWindowHandle, dialogJumpResult.DialogJumpPath));
+                        _ = Task.Run(() =>
+                            DialogJump.JumpToPathAsync(DialogWindowHandle, dialogJumpResult.DialogJumpPath));
                     }
                 }
+
                 return;
             }
 
@@ -540,12 +547,14 @@ namespace Flow.Launcher.ViewModel
                 {
                     _history.AddToHistory(result, Settings);
                 }
+
                 _userSelectedRecord.Add(result);
                 lastHistoryIndex = 1;
             }
         }
 
-        private static IReadOnlyList<Result> DeepCloneResults(IReadOnlyList<Result> results, bool isDialogJump, CancellationToken token = default)
+        private static IReadOnlyList<Result> DeepCloneResults(IReadOnlyList<Result> results, bool isDialogJump,
+            CancellationToken token = default)
         {
             var resultsCopy = new List<Result>();
 
@@ -569,7 +578,7 @@ namespace Flow.Launcher.ViewModel
                     resultsCopy.Add(resultCopy);
                 }
             }
-            
+
             return resultsCopy;
         }
 
@@ -619,7 +628,8 @@ namespace Flow.Launcher.ViewModel
             var historyItems = _history.GetHistoryItems(Settings);
             if (QueryResultsSelected() // Results selected
                 && string.IsNullOrEmpty(QueryText) // No input
-                && Results.Visibility != Visibility.Visible // No items in result list, e.g. when home page is off and no query text is entered, therefore the view is collapsed.
+                && Results.Visibility !=
+                Visibility.Visible // No items in result list, e.g. when home page is off and no query text is entered, therefore the view is collapsed.
                 && historyItems.Count > 0) // Have history items
             {
                 lastHistoryIndex = 1;
@@ -692,6 +702,7 @@ namespace Flow.Launcher.ViewModel
         public bool GameModeStatus { get; set; } = false;
 
         private string _queryText;
+
         public string QueryText
         {
             get => _queryText;
@@ -853,7 +864,8 @@ namespace Flow.Launcher.ViewModel
 
                     // If we are returning from history and we have not set select item yet,
                     // we need to clear the preview selected item
-                    if (isReturningFromHistory && _selectedItemFromQueryResults.HasValue && (!_selectedItemFromQueryResults.Value))
+                    if (isReturningFromHistory && _selectedItemFromQueryResults.HasValue &&
+                        (!_selectedItemFromQueryResults.Value))
                     {
                         PreviewSelectedItem = null;
                     }
@@ -871,6 +883,7 @@ namespace Flow.Launcher.ViewModel
                         ContextMenu.Visibility = Visibility.Visible;
                         History.Visibility = Visibility.Collapsed;
                     }
+
                     _queryTextBeforeLeaveResults = QueryText;
 
                     // Because of Fody's optimization
@@ -886,7 +899,8 @@ namespace Flow.Launcher.ViewModel
                     {
                         // If we are returning from query results and we have not set select item yet,
                         // we need to clear the preview selected item
-                        if (isReturningFromQueryResults && _selectedItemFromQueryResults.HasValue && _selectedItemFromQueryResults.Value)
+                        if (isReturningFromQueryResults && _selectedItemFromQueryResults.HasValue &&
+                            _selectedItemFromQueryResults.Value)
                         {
                             PreviewSelectedItem = null;
                         }
@@ -896,7 +910,9 @@ namespace Flow.Launcher.ViewModel
         }
 
         public Visibility ShowCustomizedPreview
-            => InternalPreviewVisible && PreviewSelectedItem?.Result.PreviewPanel != null ? Visibility.Visible : Visibility.Collapsed;
+            => InternalPreviewVisible && PreviewSelectedItem?.Result.PreviewPanel != null
+                ? Visibility.Visible
+                : Visibility.Collapsed;
 
         public UserControl CustomizedPreviewControl
             => ShowCustomizedPreview == Visibility.Visible ? PreviewSelectedItem?.Result.PreviewPanel.Value : null;
@@ -917,9 +933,10 @@ namespace Flow.Launcher.ViewModel
         public double SearchIconOpacity { get; set; } = 1;
 
         private string _placeholderText;
+
         public string PlaceholderText
         {
-            get => string.IsNullOrEmpty(_placeholderText) ? Localize.queryTextBoxPlaceholder(): _placeholderText;
+            get => string.IsNullOrEmpty(_placeholderText) ? Localize.queryTextBoxPlaceholder() : _placeholderText;
             set
             {
                 _placeholderText = value;
@@ -1015,6 +1032,7 @@ namespace Flow.Launcher.ViewModel
         private bool? _selectedItemFromQueryResults;
 
         private ResultViewModel _previewSelectedItem;
+
         public ResultViewModel PreviewSelectedItem
         {
             get => _previewSelectedItem;
@@ -1035,7 +1053,8 @@ namespace Flow.Launcher.ViewModel
                 if (ResultAreaColumn == ResultAreaColumnPreviewHidden)
                     return false;
 #if DEBUG
-                throw new NotImplementedException("ResultAreaColumn should match ResultAreaColumnPreviewShown/ResultAreaColumnPreviewHidden value");
+                throw new NotImplementedException(
+                    "ResultAreaColumn should match ResultAreaColumnPreviewShown/ResultAreaColumnPreviewHidden value");
 #else
                 App.API.LogError(ClassName, "ResultAreaColumnPreviewHidden/ResultAreaColumnPreviewShown int value not implemented", "InternalPreviewVisible");
                 return false;
@@ -1161,6 +1180,7 @@ namespace Flow.Launcher.ViewModel
                         HideInternalPreview();
                         _ = OpenExternalPreviewAsync(path);
                     }
+
                     break;
                 case true
                     when !CanExternalPreviewSelectedResult(out var _):
@@ -1169,6 +1189,7 @@ namespace Flow.Launcher.ViewModel
                         await CloseExternalPreviewAsync();
                         ShowInternalPreview();
                     }
+
                     break;
                 case false
                     when InternalPreviewVisible:
@@ -1257,10 +1278,7 @@ namespace Flow.Launcher.ViewModel
                 List<Result> results;
                 if (selected.PluginID == null) // SelectedItem from history in home page.
                 {
-                    results = new()
-                    {
-                        ContextMenuTopMost(selected)
-                    };
+                    results = new() { ContextMenuTopMost(selected) };
                 }
                 else
                 {
@@ -1272,20 +1290,19 @@ namespace Flow.Launcher.ViewModel
                 if (!string.IsNullOrEmpty(query))
                 {
                     var filtered = results.Select(x => x.Clone()).Where
-                    (
-                        r =>
+                    (r =>
+                    {
+                        var match = App.API.FuzzySearch(query, r.Title);
+                        if (!match.IsSearchPrecisionScoreMet())
                         {
-                            var match = App.API.FuzzySearch(query, r.Title);
-                            if (!match.IsSearchPrecisionScoreMet())
-                            {
-                                match = App.API.FuzzySearch(query, r.SubTitle);
-                            }
+                            match = App.API.FuzzySearch(query, r.SubTitle);
+                        }
 
-                            if (!match.IsSearchPrecisionScoreMet()) return false;
+                        if (!match.IsSearchPrecisionScoreMet()) return false;
 
-                            r.Score = match.Score;
-                            return true;
-                        }).ToList();
+                        r.Score = match.Score;
+                        return true;
+                    }).ToList();
                     ContextMenu.AddResults(filtered, id);
                 }
                 else
@@ -1308,9 +1325,8 @@ namespace Flow.Launcher.ViewModel
             if (!string.IsNullOrEmpty(query))
             {
                 var filtered = results.Where
-                (
-                    r => App.API.FuzzySearch(query, r.Title).IsSearchPrecisionScoreMet() ||
-                         App.API.FuzzySearch(query, r.SubTitle).IsSearchPrecisionScoreMet()
+                (r => App.API.FuzzySearch(query, r.Title).IsSearchPrecisionScoreMet() ||
+                      App.API.FuzzySearch(query, r.SubTitle).IsSearchPrecisionScoreMet()
                 ).ToList();
                 History.AddResults(filtered, id);
             }
@@ -1320,14 +1336,15 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private  List<Result> GetHistoryResults(IEnumerable<HistoryItem> historyItems)
+        private List<Result> GetHistoryResults(IEnumerable<HistoryItem> historyItems)
         {
             var results = new List<Result>();
             foreach (var h in historyItems)
             {
                 var result = new Result
                 {
-                    Title = Settings.ShowHistoryLastOpenedResultsForHomePage ? Localize.executeQuery(h.Query) : h.Title
+                    Title =
+                        Settings.ShowHistoryQueryResultsForHomePage ? Localize.executeQuery(h.OriginQuery.RawQuery) : h.Title,
                     SubTitle = Localize.lastExecuteTime(h.ExecutedDateTime),
                     IcoPath = Constant.HistoryIcon,
                     PluginID = h.PluginID,
@@ -1337,10 +1354,11 @@ namespace Flow.Launcher.ViewModel
                 };
                 results.Add(result);
             }
+
             return results;
         }
 
-        private async Task QueryResultsAsync(bool searchDelay, bool isReQuery = false, bool reSelect = true)
+    private async Task QueryResultsAsync(bool searchDelay, bool isReQuery = false, bool reSelect = true)
         {
             _updateSource?.Cancel();
 
