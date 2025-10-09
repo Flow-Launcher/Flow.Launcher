@@ -20,7 +20,7 @@ namespace Flow.Launcher.Storage
         private int _maxHistory = 300;
 
         public void AddToHistory(Result result, Settings settings)
-        {
+        { 
             if (settings.ShowHistoryQueryResultsForHomePage)
             {
                 AddLastQuery(result);
@@ -44,7 +44,7 @@ namespace Flow.Launcher.Storage
                 QueryHistoryItems.RemoveAt(0);
             }
 
-            if (QueryHistoryItems.Count > 0 && QueryHistoryItems.Last().OriginQuery == result.OriginQuery)
+            if (QueryHistoryItems.Count > 0 && QueryHistoryItems.Last().OriginQuery.RawQuery == result.OriginQuery.RawQuery)
             {
                 QueryHistoryItems.Last().ExecutedDateTime = DateTime.Now;
             }
@@ -53,7 +53,13 @@ namespace Flow.Launcher.Storage
                 QueryHistoryItems.Add(new HistoryItem
                 {
                     OriginQuery = result.OriginQuery,
-                    ExecutedDateTime = DateTime.Now
+                    ExecutedDateTime = DateTime.Now,
+                    QueryAction = _ =>
+                    {
+                        App.API.BackToQueryResults();
+                        App.API.ChangeQuery(result.OriginQuery.RawQuery);
+                        return false;
+                    }
                 });
             }
         }
@@ -68,6 +74,7 @@ namespace Flow.Launcher.Storage
                 PluginID = result.PluginID,
                 OriginQuery = result.OriginQuery,
                 ExecutedDateTime = DateTime.Now,
+                ExecuteAction =  result.Action
             };
 
             var existing = LastOpenedHistoryItems.
