@@ -1,7 +1,10 @@
-﻿using System.Windows;
-using System.Windows.Controls;
+﻿using System;
 using System.ComponentModel;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Media;
 
 namespace Flow.Launcher.Plugin.WebSearch
 {
@@ -12,6 +15,7 @@ namespace Flow.Launcher.Plugin.WebSearch
     {
         private readonly Settings _settings;
         private readonly PluginInitContext _context;
+        private Point _dragStartPoint;
 
         public SettingsControl(PluginInitContext context, SettingsViewModel viewModel)
         {
@@ -162,6 +166,77 @@ namespace Flow.Launcher.Plugin.WebSearch
             gView.Columns[2].Width = workingWidth * col3;
             gView.Columns[3].Width = workingWidth * col4;
             gView.Columns[4].Width = workingWidth * col5;
+        }
+
+        private void ListView_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            _dragStartPoint = e.GetPosition(null);
+        }
+
+        private void ListView_PreviewMouseMove(object sender, MouseEventArgs e)
+        {
+            Point mousePos = e.GetPosition(null);
+            Vector diff = _dragStartPoint - mousePos;
+
+            if (e.LeftButton == MouseButtonState.Pressed &&
+                (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance ||
+                 Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance))
+            {
+                ListView listView = sender as ListView;
+                ListViewItem listViewItem = FindAncestor<ListViewItem>((DependencyObject)e.OriginalSource);
+
+                if (listViewItem == null) return;
+
+                SearchSource item = (SearchSource)listView.ItemContainerGenerator.ItemFromContainer(listViewItem);
+                if (item == null) return;
+
+                DragDrop.DoDragDrop(listViewItem, item, DragDropEffects.Move);
+            }
+        }
+
+        private void ListView_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(typeof(SearchSource)))
+            {
+                SearchSource droppedData = e.Data.GetData(typeof(SearchSource)) as SearchSource;
+                ListView listView = sender as ListView;
+                var target = GetNearestContainer(e.OriginalSource);
+
+                if (target == null)
+                    return;
+
+                SearchSource targetData = (SearchSource)listView.ItemContainerGenerator.ItemFromContainer(target);
+
+                var items = _settings.SearchSources;
+                int removedIdx = items.IndexOf(droppedData);
+                int targetIdx = items.IndexOf(targetData);
+
+                if (removedIdx == targetIdx)
+                    return;
+
+                items.RemoveAt(removedIdx);
+                items.Insert(targetIdx, droppedData);
+            }
+        }
+
+        private ListViewItem GetNearestContainer(object source)
+        {
+            var element = source as UIElement;
+            while (element != null && !(element is ListViewItem))
+                element = VisualTreeHelper.GetParent(element) as UIElement;
+
+            return element as ListViewItem;
+        }
+
+        private static T FindAncestor<T>(DependencyObject current) where T : DependencyObject
+        {
+            while (current != null)
+            {
+                if (current is T)
+                    return (T)current;
+                current = VisualTreeHelper.GetParent(current);
+            }
+            return null;
         }
     }
 }
