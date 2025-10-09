@@ -59,7 +59,7 @@ namespace Flow.Launcher.Plugin.Url
                         Score = 8,
                         Action = _ =>
                         {
-                            if (!raw.ToLower().StartsWith(GetHttpPreference()))
+                            if (!raw.StartsWith("http://", StringComparison.OrdinalIgnoreCase) && !raw.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
                             {
                                 raw = GetHttpPreference() + "://" + raw;
                             }
