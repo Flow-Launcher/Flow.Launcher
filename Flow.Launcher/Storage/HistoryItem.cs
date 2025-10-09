@@ -14,6 +14,9 @@ public class HistoryItem
     public string PluginID { get; set; } = string.Empty;
     public Query OriginQuery { get; set; } = null!;
     public DateTime ExecutedDateTime { get; set; }
+    public Func<ActionContext, bool> ExecuteAction { get; set; }
+    public Func<ActionContext, bool> QueryAction { get; set; }
+
 
     public string GetTimeAgo()
     {
