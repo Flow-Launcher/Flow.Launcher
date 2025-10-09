@@ -1,10 +1,13 @@
-﻿using Flow.Launcher.Plugin;
+﻿using System.Text.Json.Serialization;
+using Flow.Launcher.Plugin;
 
-namespace Flow.Launcher.ViewModel
+namespace Flow.Launcher.Infrastructure.UserSettings
 {
     public class CustomExplorerViewModel : BaseModel
     {
         public string Name { get; set; }
+        [JsonIgnore]
+        public string DisplayName => Name == "Explorer" ? Localize.fileManagerExplorer() : Name;
         public string Path { get; set; }
         public string FileArgument { get; set; } = "\"%d\"";
         public string DirectoryArgument { get; set; } = "\"%d\"";
@@ -20,6 +23,11 @@ namespace Flow.Launcher.ViewModel
                 DirectoryArgument = DirectoryArgument,
                 Editable = Editable
             };
+        }
+
+        public void OnDisplayNameChanged()
+        {
+            OnPropertyChanged(nameof(DisplayName));
         }
     }
 }

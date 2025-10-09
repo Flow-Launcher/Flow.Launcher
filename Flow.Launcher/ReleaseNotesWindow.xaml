@@ -7,7 +7,7 @@
     xmlns:local="clr-namespace:Flow.Launcher"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mdxam="clr-namespace:MdXaml;assembly=MdXaml"
-    xmlns:ui="http://schemas.modernwpf.com/2019"
+    xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
     xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
     Title="{DynamicResource releaseNotes}"
     Width="940"
@@ -16,6 +16,7 @@
     MinHeight="600"
     Background="{DynamicResource PopuBGColor}"
     Closed="Window_Closed"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
     Foreground="{DynamicResource PopupTextColor}"
     Loaded="Window_Loaded"
     ResizeMode="CanResize"
@@ -44,7 +45,7 @@
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="32" />
-                    <RowDefinition Height="24" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <!--  TitleBar and Control  -->
@@ -161,18 +162,23 @@
                     Grid.Row="1"
                     Grid.Column="0"
                     Grid.ColumnSpan="5"
-                    Margin="18 0 18 0">
-                    <cc:HyperLink x:Name="SeeMore" Text="{DynamicResource seeMoreReleaseNotes}" />
+                    Margin="6 0 18 0">
+                    <ui:HyperlinkButton
+                        x:Name="SeeMore"
+                        Content="{DynamicResource seeMoreReleaseNotes}"
+                        NavigateUri="{Binding ReleaseNotes}" />
                 </Grid>
 
                 <!--  Do not use scroll function of MarkdownViewer because it does not support smooth scroll  -->
-                <ScrollViewer
+                <ui:ScrollViewerEx
                     x:Name="MarkdownScrollViewer"
                     Grid.Row="2"
                     Grid.Column="0"
                     Grid.ColumnSpan="5"
-                    Width="500"
-                    Height="500">
+                    Height="500"
+                    Margin="15 0 0 0"
+                    Padding="0 0 15 0"
+                    HorizontalAlignment="Stretch">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -193,11 +199,11 @@
                             VerticalScrollBarVisibility="Disabled"
                             Visibility="Collapsed" />
                     </Grid>
-                </ScrollViewer>
+                </ui:ScrollViewerEx>
 
                 <!--  This Grid is for display progress ring and refresh button.  -->
                 <!--  And it is also for changing the size of the MarkdownViewer.  -->
-                <!--  Because VerticalAlignment="Stretch" can cause size issue with MarkdownScrollViewer.  -->
+                <!--  Because VerticalAlignment="Stretch" can cause height issue with MarkdownScrollViewer.  -->
                 <Grid
                     Grid.Row="2"
                     Grid.Column="0"

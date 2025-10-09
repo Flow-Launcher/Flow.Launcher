@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -6,7 +6,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.UserSettings;
@@ -14,13 +13,9 @@ using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Core.Resource
 {
-    public class Internationalization
+    public class Internationalization : IDisposable
     {
         private static readonly string ClassName = nameof(Internationalization);
-
-        // We should not initialize API in static constructor because it will create another API instance
-        private static IPublicAPI api = null;
-        private static IPublicAPI API => api ??= Ioc.Default.GetRequiredService<IPublicAPI>();
 
         private const string Folder = "Languages";
         private const string DefaultLanguageCode = "en";
@@ -30,6 +25,7 @@ namespace Flow.Launcher.Core.Resource
         private readonly List<string> _languageDirectories = [];
         private readonly List<ResourceDictionary> _oldResources = [];
         private static string SystemLanguageCode;
+        private readonly SemaphoreSlim _langChangeLock = new(1, 1);
 
         public Internationalization(Settings settings)
         {
@@ -103,7 +99,7 @@ namespace Flow.Launcher.Core.Resource
             var directory = Path.Combine(Constant.ProgramDirectory, Folder);
             if (!Directory.Exists(directory))
             {
-                API.LogError(ClassName, $"Flow Launcher language directory can't be found <{directory}>");
+                PublicApi.Instance.LogError(ClassName, $"Flow Launcher language directory can't be found <{directory}>");
                 return;
             }
 
@@ -174,7 +170,7 @@ namespace Flow.Launcher.Core.Resource
                 FirstOrDefault(o => o.LanguageCode.Equals(languageCode, StringComparison.OrdinalIgnoreCase));
             if (language == null)
             {
-                API.LogError(ClassName, $"Language code can't be found <{languageCode}>");
+                PublicApi.Instance.LogError(ClassName, $"Language code can't be found <{languageCode}>");
                 return AvailableLanguages.English;
             }
             else
@@ -185,20 +181,33 @@ namespace Flow.Launcher.Core.Resource
 
         private async Task ChangeLanguageAsync(Language language, bool updateMetadata = true)
         {
-            // Remove old language files and load language
-            RemoveOldLanguageFiles();
-            if (language != AvailableLanguages.English)
+            await _langChangeLock.WaitAsync();
+
+            try
             {
-                LoadLanguage(language);
+                // Remove old language files and load language
+                RemoveOldLanguageFiles();
+                if (language != AvailableLanguages.English)
+                {
+                    LoadLanguage(language);
+                }
+
+                // Change culture info
+                ChangeCultureInfo(language.LanguageCode);
+
+                if (updateMetadata)
+                {
+                    // Raise event for plugins after culture is set
+                    await Task.Run(UpdatePluginMetadataTranslations);
+                }
             }
-
-            // Change culture info
-            ChangeCultureInfo(language.LanguageCode);
-
-            if (updateMetadata)
+            catch (Exception e)
             {
-                // Raise event for plugins after culture is set
-                await Task.Run(UpdatePluginMetadataTranslations);
+                PublicApi.Instance.LogException(ClassName, $"Failed to change language to <{language.LanguageCode}>", e);
+            }
+            finally
+            {
+                _langChangeLock.Release();
             }
         }
 
@@ -240,7 +249,7 @@ namespace Flow.Launcher.Core.Resource
             // "Do you want to search with pinyin?"
             string text = languageToSet == AvailableLanguages.Chinese ? "是否启用拼音搜索？" : "是否啓用拼音搜索？";
 
-            if (API.ShowMsgBox(text, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.No)
+            if (PublicApi.Instance.ShowMsgBox(text, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.No)
                 return false;
 
             return true;
@@ -257,6 +266,7 @@ namespace Flow.Launcher.Core.Resource
             {
                 dicts.Remove(r);
             }
+            _oldResources.Clear();
         }
 
         private void LoadLanguage(Language language)
@@ -296,7 +306,7 @@ namespace Flow.Launcher.Core.Resource
                 }
                 else
                 {
-                    API.LogError(ClassName, $"Language path can't be found <{path}>");
+                    PublicApi.Instance.LogError(ClassName, $"Language path can't be found <{path}>");
                     var english = Path.Combine(folder, DefaultFile);
                     if (File.Exists(english))
                     {
@@ -304,7 +314,7 @@ namespace Flow.Launcher.Core.Resource
                     }
                     else
                     {
-                        API.LogError(ClassName, $"Default English Language path can't be found <{path}>");
+                        PublicApi.Instance.LogError(ClassName, $"Default English Language path can't be found <{path}>");
                         return string.Empty;
                     }
                 }
@@ -339,7 +349,7 @@ namespace Flow.Launcher.Core.Resource
             }
             else
             {
-                API.LogError(ClassName, $"No Translation for key {key}");
+                PublicApi.Instance.LogError(ClassName, $"No Translation for key {key}");
                 return $"No Translation for key {key}";
             }
         }
@@ -362,9 +372,19 @@ namespace Flow.Launcher.Core.Resource
                 }
                 catch (Exception e)
                 {
-                    API.LogException(ClassName, $"Failed for <{p.Metadata.Name}>", e);
+                    PublicApi.Instance.LogException(ClassName, $"Failed for <{p.Metadata.Name}>", e);
                 }
             }
+        }
+
+        #endregion
+
+        #region IDisposable
+
+        public void Dispose()
+        {
+            RemoveOldLanguageFiles();
+            _langChangeLock.Dispose();
         }
 
         #endregion

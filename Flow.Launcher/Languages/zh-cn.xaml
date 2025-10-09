@@ -224,6 +224,7 @@
     <system:String x:Key="failedToUninstallPluginTitle">卸载 {0} 失败</system:String>
     <system:String x:Key="fileNotFoundMessage">无法从提取的zip文件中找到plugin.json，或者此路径 {0} 不存在</system:String>
     <system:String x:Key="pluginExistAlreadyMessage">已存在相同ID和版本的插件，或者存在版本大于此下载的插件</system:String>
+    <system:String x:Key="errorCreatingSettingPanel">Error creating setting panel for plugin {0}:{1}{2}</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">插件商店</system:String>
@@ -467,8 +468,10 @@
     <system:String x:Key="userdatapathButton">打开文件夹</system:String>
     <system:String x:Key="advanced">高级</system:String>
     <system:String x:Key="logLevel">日志等级</system:String>
-    <system:String x:Key="LogLevelDEBUG">调试</system:String>
+    <system:String x:Key="LogLevelNONE">静默</system:String>
+    <system:String x:Key="LogLevelERROR">错误</system:String>
     <system:String x:Key="LogLevelINFO">信息</system:String>
+    <system:String x:Key="LogLevelDEBUG">调试</system:String>
     <system:String x:Key="settingWindowFontTitle">设置窗口字体</system:String>
 
     <!--  Release Notes Window  -->
@@ -490,6 +493,7 @@
     <system:String x:Key="fileManager_file_arg">选中文件路径参数</system:String>
     <system:String x:Key="fileManagerPathNotFound">文件管理器 '{0}' 不能在 '{1}'中定位。您想要继续吗？</system:String>
     <system:String x:Key="fileManagerPathError">文件管理器路径错误</system:String>
+    <system:String x:Key="fileManagerExplorer">文件资源管理器</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">默认浏览器</system:String>
@@ -500,6 +504,8 @@
     <system:String x:Key="defaultBrowser_newWindow">新窗口</system:String>
     <system:String x:Key="defaultBrowser_newTab">新标签</system:String>
     <system:String x:Key="defaultBrowser_parameter">隐身模式</system:String>
+    <system:String x:Key="defaultBrowser_default">默认</system:String>
+    <system:String x:Key="defaultBrowser_new_profile">新配置</system:String>
 
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">更改优先级</system:String>

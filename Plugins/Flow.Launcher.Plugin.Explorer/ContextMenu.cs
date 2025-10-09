@@ -66,8 +66,8 @@ namespace Flow.Launcher.Plugin.Explorer
                 {
                     contextMenus.Add(new Result
                     {
-                        Title = Context.API.GetTranslation("plugin_explorer_add_to_quickaccess_title"),
-                        SubTitle = Context.API.GetTranslation("plugin_explorer_add_to_quickaccess_subtitle"),
+                        Title = Localize.plugin_explorer_add_to_quickaccess_title(),
+                        SubTitle = Localize.plugin_explorer_add_to_quickaccess_subtitle(),
                         Action = (context) =>
                         {
                             Settings.QuickAccessLinks.Add(new AccessLink
@@ -77,16 +77,14 @@ namespace Flow.Launcher.Plugin.Explorer
                                 Type = record.Type
                             });
 
-                            Context.API.ShowMsg(Context.API.GetTranslation("plugin_explorer_addfilefoldersuccess"),
-                                    Context.API.GetTranslation("plugin_explorer_addfilefoldersuccess_detail"),
-                                    Constants.ExplorerIconImageFullPath);
-
-
+                            Context.API.ShowMsg(Localize.plugin_explorer_addfilefoldersuccess(),
+                                Localize.plugin_explorer_addfilefoldersuccess_detail(),
+                                Constants.ExplorerIconImageFullPath);
 
                             return true;
                         },
-                        SubTitleToolTip = Context.API.GetTranslation("plugin_explorer_contextmenu_titletooltip"),
-                        TitleToolTip = Context.API.GetTranslation("plugin_explorer_contextmenu_titletooltip"),
+                        SubTitleToolTip = Localize.plugin_explorer_contextmenu_titletooltip(),
+                        TitleToolTip = Localize.plugin_explorer_contextmenu_titletooltip(),
                         IcoPath = Constants.QuickAccessImagePath,
                         Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\ue718"),
                     });
@@ -95,22 +93,20 @@ namespace Flow.Launcher.Plugin.Explorer
                 {
                     contextMenus.Add(new Result
                     {
-                        Title = Context.API.GetTranslation("plugin_explorer_remove_from_quickaccess_title"),
-                        SubTitle = Context.API.GetTranslation("plugin_explorer_remove_from_quickaccess_subtitle"),
+                        Title = Localize.plugin_explorer_remove_from_quickaccess_title(),
+                        SubTitle = Localize.plugin_explorer_remove_from_quickaccess_subtitle(),
                         Action = (context) =>
                         {
                             Settings.QuickAccessLinks.Remove(Settings.QuickAccessLinks.FirstOrDefault(x => string.Equals(x.Path, record.FullPath, StringComparison.OrdinalIgnoreCase)));
 
-                            Context.API.ShowMsg(Context.API.GetTranslation("plugin_explorer_removefilefoldersuccess"),
-                                    Context.API.GetTranslation("plugin_explorer_removefilefoldersuccess_detail"),
-                                    Constants.ExplorerIconImageFullPath);
-
-                            
+                            Context.API.ShowMsg(Localize.plugin_explorer_removefilefoldersuccess(),
+                                Localize.plugin_explorer_removefilefoldersuccess_detail(),
+                                Constants.ExplorerIconImageFullPath);
 
                             return true;
                         },
-                        SubTitleToolTip = Context.API.GetTranslation("plugin_explorer_contextmenu_remove_titletooltip"),
-                        TitleToolTip = Context.API.GetTranslation("plugin_explorer_contextmenu_remove_titletooltip"),
+                        SubTitleToolTip = Localize.plugin_explorer_contextmenu_remove_titletooltip(),
+                        TitleToolTip = Localize.plugin_explorer_contextmenu_remove_titletooltip(),
                         IcoPath = Constants.RemoveQuickAccessImagePath,
                         Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uecc9")
                     });
@@ -118,8 +114,8 @@ namespace Flow.Launcher.Plugin.Explorer
 
                 contextMenus.Add(new Result
                 {
-                    Title = Context.API.GetTranslation("plugin_explorer_copypath"),
-                    SubTitle = Context.API.GetTranslation("plugin_explorer_copypath_subtitle"),
+                    Title = Localize.plugin_explorer_copypath(),
+                    SubTitle = Localize.plugin_explorer_copypath_subtitle(),
                     Action = _ =>
                     {
                         try
@@ -130,7 +126,7 @@ namespace Flow.Launcher.Plugin.Explorer
                         catch (Exception e)
                         {
                             LogException("Fail to set text in clipboard", e);
-                            Context.API.ShowMsgError(Context.API.GetTranslation("plugin_explorer_fail_to_set_text"));
+                            Context.API.ShowMsgError(Localize.plugin_explorer_fail_to_set_text());
                             return false;
                         }
                     },
@@ -140,8 +136,8 @@ namespace Flow.Launcher.Plugin.Explorer
 
                 contextMenus.Add(new Result
                 {
-                    Title = Context.API.GetTranslation("plugin_explorer_copyname"),
-                    SubTitle = Context.API.GetTranslation("plugin_explorer_copyname_subtitle"),
+                    Title = Localize.plugin_explorer_copyname(),
+                    SubTitle = Localize.plugin_explorer_copyname_subtitle(),
                     Action = _ =>
                     {
                         try
@@ -152,7 +148,7 @@ namespace Flow.Launcher.Plugin.Explorer
                         catch (Exception e)
                         {
                             LogException("Fail to set text in clipboard", e);
-                            Context.API.ShowMsgError(Context.API.GetTranslation("plugin_explorer_fail_to_set_text"));
+                            Context.API.ShowMsgError(Localize.plugin_explorer_fail_to_set_text());
                             return false;
                         }
                     },
@@ -162,8 +158,8 @@ namespace Flow.Launcher.Plugin.Explorer
 
                 contextMenus.Add(new Result
                 {
-                    Title = Context.API.GetTranslation("plugin_explorer_copyfilefolder"),
-                    SubTitle = isFile ? Context.API.GetTranslation("plugin_explorer_copyfile_subtitle") : Context.API.GetTranslation("plugin_explorer_copyfolder_subtitle"),
+                    Title = Localize.plugin_explorer_copyfilefolder(),
+                    SubTitle = isFile ? Localize.plugin_explorer_copyfile_subtitle(): Localize.plugin_explorer_copyfolder_subtitle(),
                     Action = _ =>
                     {
                         try
@@ -174,28 +170,26 @@ namespace Flow.Launcher.Plugin.Explorer
                         catch (Exception e)
                         {
                             LogException($"Fail to set file/folder in clipboard", e);
-                            Context.API.ShowMsgError(Context.API.GetTranslation("plugin_explorer_fail_to_set_files"));
+                            Context.API.ShowMsgError(Localize.plugin_explorer_fail_to_set_files());
                             return false;
                         }
-
                     },
                     IcoPath = icoPath,
                     Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uf12b")
                 });
 
-
                 if (record.Type is ResultType.File or ResultType.Folder)
                     contextMenus.Add(new Result
                     {
-                        Title = Context.API.GetTranslation("plugin_explorer_deletefilefolder"),
-                        SubTitle = isFile ? Context.API.GetTranslation("plugin_explorer_deletefile_subtitle") : Context.API.GetTranslation("plugin_explorer_deletefolder_subtitle"),
+                        Title = Localize.plugin_explorer_deletefilefolder(),
+                        SubTitle = isFile ? Localize.plugin_explorer_deletefile_subtitle(): Localize.plugin_explorer_deletefolder_subtitle(),
                         Action = (context) =>
                         {
                             try
                             {
                                 if (Context.API.ShowMsgBox(
-                                        string.Format(Context.API.GetTranslation("plugin_explorer_delete_folder_link"), record.FullPath),
-                                        Context.API.GetTranslation("plugin_explorer_deletefilefolder"),
+                                        Localize.plugin_explorer_delete_folder_link(record.FullPath),
+                                        Localize.plugin_explorer_deletefilefolder(),
                                         MessageBoxButton.OKCancel,
                                         MessageBoxImage.Warning)
                                     == MessageBoxResult.Cancel)
@@ -208,15 +202,15 @@ namespace Flow.Launcher.Plugin.Explorer
 
                                 _ = Task.Run(() =>
                                 {
-                                    Context.API.ShowMsg(Context.API.GetTranslation("plugin_explorer_deletefilefoldersuccess"),
-                                        string.Format(Context.API.GetTranslation("plugin_explorer_deletefilefoldersuccess_detail"), record.FullPath),
+                                    Context.API.ShowMsg(Localize.plugin_explorer_deletefilefoldersuccess(),
+                                        Localize.plugin_explorer_deletefilefoldersuccess_detail(record.FullPath),
                                         Constants.ExplorerIconImageFullPath);
                                 });
                             }
                             catch (Exception e)
                             {
                                 LogException($"Fail to delete {record.FullPath}", e);
-                                Context.API.ShowMsgError(string.Format(Context.API.GetTranslation("plugin_explorer_fail_to_delete"), record.FullPath));
+                                Context.API.ShowMsgError(Localize.plugin_explorer_fail_to_delete(record.FullPath));
                                 return false;
                             }
 
@@ -230,7 +224,7 @@ namespace Flow.Launcher.Plugin.Explorer
                 {
                     contextMenus.Add(new Result()
                     {
-                        Title = Context.API.GetTranslation("plugin_explorer_show_contextmenu_title"),
+                        Title = Localize.plugin_explorer_show_contextmenu_title(),
                         IcoPath = Constants.ShowContextMenuImagePath,
                         Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\ue700"),
                         Action = _ =>
@@ -248,8 +242,8 @@ namespace Flow.Launcher.Plugin.Explorer
                 if (record.Type == ResultType.File && CanRunAsDifferentUser(record.FullPath))
                     contextMenus.Add(new Result
                     {
-                        Title = Context.API.GetTranslation("plugin_explorer_runasdifferentuser"),
-                        SubTitle = Context.API.GetTranslation("plugin_explorer_runasdifferentuser_subtitle"),
+                        Title = Localize.plugin_explorer_runasdifferentuser(),
+                        SubTitle = Localize.plugin_explorer_runasdifferentuser_subtitle(),
                         Action = (context) =>
                         {
                             try
@@ -259,8 +253,8 @@ namespace Flow.Launcher.Plugin.Explorer
                             catch (FileNotFoundException e)
                             {
                                 Context.API.ShowMsgError(
-                                    Context.API.GetTranslation("plugin_explorer_plugin_name"),
-                                    string.Format(Context.API.GetTranslation("plugin_explorer_file_not_found"), e.Message));
+                                    Localize.plugin_explorer_plugin_name(),
+                                    Localize.plugin_explorer_file_not_found(e.Message));
                                 return false;
                             }
 
@@ -317,8 +311,8 @@ namespace Flow.Launcher.Plugin.Explorer
         {
             return new Result
             {
-                Title = Context.API.GetTranslation("plugin_explorer_opencontainingfolder"),
-                SubTitle = Context.API.GetTranslation("plugin_explorer_opencontainingfolder_subtitle"),
+                Title = Localize.plugin_explorer_opencontainingfolder(),
+                SubTitle = Localize.plugin_explorer_opencontainingfolder_subtitle(),
                 Action = _ =>
                 {
                     try
@@ -328,7 +322,7 @@ namespace Flow.Launcher.Plugin.Explorer
                     catch (Exception e)
                     {
                         LogException($"Fail to open file at {record.FullPath}", e);
-                        Context.API.ShowMsgError(string.Format(Context.API.GetTranslation("plugin_explorer_fail_to_open"), record.FullPath));
+                        Context.API.ShowMsgError(Localize.plugin_explorer_fail_to_open(record.FullPath));
                         return false;
                     }
 
@@ -339,11 +333,9 @@ namespace Flow.Launcher.Plugin.Explorer
             };
         }
 
-
-
         private Result CreateOpenWithEditorResult(SearchResult record, string editorPath)
         {
-            var name = $"{Context.API.GetTranslation("plugin_explorer_openwitheditor")} {Path.GetFileNameWithoutExtension(editorPath)}";
+            var name = $"{Localize.plugin_explorer_openwitheditor()} {Path.GetFileNameWithoutExtension(editorPath)}";
 
             return new Result
             {
@@ -361,8 +353,7 @@ namespace Flow.Launcher.Plugin.Explorer
                     }
                     catch (Exception e)
                     {
-                        var raw_message = Context.API.GetTranslation("plugin_explorer_openwitheditor_error");
-                        var message = string.Format(raw_message, record.FullPath, Path.GetFileNameWithoutExtension(editorPath), editorPath);
+                        var message = Localize.plugin_explorer_openwitheditor_error(record.FullPath, Path.GetFileNameWithoutExtension(editorPath), editorPath);
                         LogException(message, e);
                         Context.API.ShowMsgError(message);
                         return false;
@@ -377,7 +368,7 @@ namespace Flow.Launcher.Plugin.Explorer
         {
             string shellPath = Settings.ShellPath;
 
-            var name = $"{Context.API.GetTranslation("plugin_explorer_openwithshell")} {Path.GetFileNameWithoutExtension(shellPath)}";
+            var name = $"{Localize.plugin_explorer_openwithshell()} {Path.GetFileNameWithoutExtension(shellPath)}";
 
             return new Result
             {
@@ -394,8 +385,7 @@ namespace Flow.Launcher.Plugin.Explorer
                     }
                     catch (Exception e)
                     {
-                        var raw_message = Context.API.GetTranslation("plugin_explorer_openwithshell_error");
-                        var message = string.Format(raw_message, record.FullPath, Path.GetFileNameWithoutExtension(shellPath), shellPath);
+                        var message = Localize.plugin_explorer_openwithshell_error(record.FullPath, Path.GetFileNameWithoutExtension(shellPath), shellPath);
                         LogException(message, e);
                         Context.API.ShowMsgError(message);
                         return false;
@@ -410,8 +400,8 @@ namespace Flow.Launcher.Plugin.Explorer
         {
             return new Result
             {
-                Title = Context.API.GetTranslation("plugin_explorer_excludefromindexsearch"),
-                SubTitle = Context.API.GetTranslation("plugin_explorer_path") + " " + record.FullPath,
+                Title = Localize.plugin_explorer_excludefromindexsearch(),
+                SubTitle = Localize.plugin_explorer_path()+ " " + record.FullPath,
                 Action = c_ =>
                 {
                     if (!Settings.IndexSearchExcludedSubdirectoryPaths.Any(x => string.Equals(x.Path, record.FullPath, StringComparison.OrdinalIgnoreCase)))
@@ -422,8 +412,8 @@ namespace Flow.Launcher.Plugin.Explorer
 
                     _ = Task.Run(() =>
                     {
-                        Context.API.ShowMsg(Context.API.GetTranslation("plugin_explorer_excludedfromindexsearch_msg"),
-                            Context.API.GetTranslation("plugin_explorer_path") +
+                        Context.API.ShowMsg(Localize.plugin_explorer_excludedfromindexsearch_msg(),
+                            Localize.plugin_explorer_path()+
                             " " + record.FullPath, Constants.ExplorerIconImageFullPath);
 
                         // so the new path can be persisted to storage and not wait till next ViewModel save.
@@ -441,8 +431,8 @@ namespace Flow.Launcher.Plugin.Explorer
         {
             return new Result
             {
-                Title = Context.API.GetTranslation("plugin_explorer_openindexingoptions"),
-                SubTitle = Context.API.GetTranslation("plugin_explorer_openindexingoptions_subtitle"),
+                Title = Localize.plugin_explorer_openindexingoptions(),
+                SubTitle = Localize.plugin_explorer_openindexingoptions_subtitle(),
                 Action = _ =>
                 {
                     try
@@ -459,7 +449,7 @@ namespace Flow.Launcher.Plugin.Explorer
                     }
                     catch (Exception e)
                     {
-                        var message = Context.API.GetTranslation("plugin_explorer_openindexingoptions_errormsg");
+                        var message = Localize.plugin_explorer_openindexingoptions_errormsg();
                         LogException(message, e);
                         Context.API.ShowMsgError(message);
                         return false;
@@ -470,12 +460,12 @@ namespace Flow.Launcher.Plugin.Explorer
             };
         }
 
-        private Result CreateOpenWithMenu(SearchResult record)
+        private static Result CreateOpenWithMenu(SearchResult record)
         {
             return new Result
             {
-                Title = Context.API.GetTranslation("plugin_explorer_openwith"),
-                SubTitle = Context.API.GetTranslation("plugin_explorer_openwith_subtitle"),
+                Title = Localize.plugin_explorer_openwith(),
+                SubTitle = Localize.plugin_explorer_openwith_subtitle(),
                 Action = _ =>
                 {
                     Process.Start("rundll32.exe", $"{Path.Combine(Environment.SystemDirectory, "shell32.dll")},OpenAs_RunDLL {record.FullPath}");

@@ -48,10 +48,10 @@ namespace Flow.Launcher
                 _ => Constant.IssuesUrl
             };
 
-            var paragraph = Hyperlink(App.API.GetTranslation("reportWindow_please_open_issue"), websiteUrl);
-            paragraph.Inlines.Add(string.Format(App.API.GetTranslation("reportWindow_upload_log"), log.FullName));
+            var paragraph = Hyperlink(Localize.reportWindow_please_open_issue(), websiteUrl);
+            paragraph.Inlines.Add(Localize.reportWindow_upload_log(log.FullName));
             paragraph.Inlines.Add("\n");
-            paragraph.Inlines.Add(App.API.GetTranslation("reportWindow_copy_below"));
+            paragraph.Inlines.Add(Localize.reportWindow_copy_below());
             ErrorTextbox.Document.Blocks.Add(paragraph);
 
             StringBuilder content = new StringBuilder();

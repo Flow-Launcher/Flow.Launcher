@@ -3,14 +3,13 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Interop;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.SharedModels;
 using Flow.Launcher.SettingPages.Views;
 using Flow.Launcher.ViewModel;
-using ModernWpf.Controls;
+using iNKORE.UI.WPF.Modern.Controls;
 
 namespace Flow.Launcher;
 
@@ -42,12 +41,6 @@ public partial class SettingWindow
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
         RefreshMaximizeRestoreButton();
-
-        // Fix (workaround) for the window freezes after lock screen (Win+L) or sleep
-        // https://stackoverflow.com/questions/4951058/software-rendering-mode-wpf
-        HwndSource hwndSource = PresentationSource.FromVisual(this) as HwndSource;
-        HwndTarget hwndTarget = hwndSource.CompositionTarget;
-        hwndTarget.RenderMode = RenderMode.SoftwareOnly;  // Must use software only render mode here
 
         UpdatePositionAndState();
 

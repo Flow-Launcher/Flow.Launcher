@@ -22,6 +22,7 @@ using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.SettingPages.ViewModels;
 using Flow.Launcher.ViewModel;
+using iNKORE.UI.WPF.Modern.Common;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.VisualStudio.Threading;
@@ -45,6 +46,7 @@ namespace Flow.Launcher
         private static Settings _settings;
         private static MainWindow _mainWindow;
         private readonly MainViewModel _mainVM;
+        private readonly Internationalization _internationalization;
 
         // To prevent two disposals running at the same time.
         private static readonly object _disposingLock = new();
@@ -55,6 +57,9 @@ namespace Flow.Launcher
 
         public App()
         {
+            // Do not use bitmap cache since it can cause WPF second window freezing issue
+            ShadowAssist.UseBitmapCache = false;
+
             // Initialize settings
             _settings.WMPInstalled = WindowsMediaPlayerHelper.IsWindowsMediaPlayerInstalled();
 
@@ -107,6 +112,7 @@ namespace Flow.Launcher
                 API = Ioc.Default.GetRequiredService<IPublicAPI>();
                 _settings.Initialize();
                 _mainVM = Ioc.Default.GetRequiredService<MainViewModel>();
+                _internationalization = Ioc.Default.GetRequiredService<Internationalization>();
             }
             catch (Exception e)
             {
@@ -193,7 +199,7 @@ namespace Flow.Launcher
                 Win32Helper.EnableWin32DarkMode(_settings.ColorScheme);
 
                 // Initialize language before portable clean up since it needs translations
-                await Ioc.Default.GetRequiredService<Internationalization>().InitializeLanguageAsync();
+                await _internationalization.InitializeLanguageAsync();
 
                 Ioc.Default.GetRequiredService<Portable>().PreStartCleanUpAfterPortabilityUpdate();
 
@@ -274,7 +280,7 @@ namespace Flow.Launcher
                     // but if it fails (permissions, etc) then don't keep retrying
                     // this also gives the user a visual indication in the Settings widget
                     _settings.StartFlowLauncherOnSystemStartup = false;
-                    API.ShowMsgError(API.GetTranslation("setAutoStartFailed"), e.Message);
+                    API.ShowMsgError(Localize.setAutoStartFailed(), e.Message);
                 }
             }
         }
@@ -421,6 +427,7 @@ namespace Flow.Launcher
                     _mainWindow?.Dispatcher.Invoke(_mainWindow.Dispose);
                     _mainVM?.Dispose();
                     DialogJump.Dispose();
+                    _internationalization.Dispose();
                 }
 
                 API.LogInfo(ClassName, "End Flow Launcher dispose ----------------------------------------------------");

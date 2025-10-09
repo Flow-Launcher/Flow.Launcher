@@ -1,11 +1,13 @@
+﻿using System.Text.Json.Serialization;
 using Flow.Launcher.Plugin;
-using System.Text.Json.Serialization;
 
 namespace Flow.Launcher.Infrastructure.UserSettings
 {
     public class CustomBrowserViewModel : BaseModel
     {
         public string Name { get; set; }
+        [JsonIgnore]
+        public string DisplayName => Name == "Default" ? Localize.defaultBrowser_default() : Name;
         public string Path { get; set; }
         public string PrivateArg { get; set; }
         public bool EnablePrivate { get; set; }
@@ -26,8 +28,10 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 Editable = Editable
             };
         }
+
+        public void OnDisplayNameChanged()
+        {
+            OnPropertyChanged(nameof(DisplayName));
+        }
     }
 }
-
-
-

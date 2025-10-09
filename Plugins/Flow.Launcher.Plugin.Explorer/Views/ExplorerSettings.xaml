@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:qa="clr-namespace:Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks"
-    xmlns:ui="http://schemas.modernwpf.com/2019"
+    xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
     xmlns:viewModels="clr-namespace:Flow.Launcher.Plugin.Explorer.ViewModels"
     d:DataContext="{d:DesignInstance viewModels:SettingsViewModel}"
     d:DesignHeight="450"
@@ -19,7 +19,7 @@
         <DataTemplate x:Key="ListViewActionKeywords" DataType="{x:Type viewModels:ActionKeywordModel}">
             <Grid>
                 <TextBlock
-                    Margin="0 5 0 0"
+                    Margin="0 5 0 5"
                     IsEnabled="{Binding Enabled}"
                     Text="{Binding LocalizedDescription, Mode=OneTime}">
                     <TextBlock.Style>
@@ -37,7 +37,7 @@
                 </TextBlock>
 
                 <TextBlock
-                    Margin="250 5 0 0"
+                    Margin="250 5 0 5"
                     IsEnabled="{Binding Enabled}"
                     Text="{Binding Keyword}">
                     <TextBlock.Style>
@@ -54,7 +54,7 @@
                     </TextBlock.Style>
                 </TextBlock>
 
-                <TextBlock Margin="480 5 0 0">
+                <TextBlock Margin="480 5 0 5">
                     <TextBlock.Style>
                         <Style TargetType="{x:Type TextBlock}">
                             <Style.Triggers>
@@ -103,7 +103,7 @@
                                     ContentTemplate="{TemplateBinding HeaderTemplate}"
                                     ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
                                     DockPanel.Dock="Top"
-                                    FocusVisualStyle="{StaticResource ExpanderHeaderFocusVisual}"
+                                    FocusVisualStyle="{DynamicResource ExpanderHeaderFocusVisual}"
                                     FontFamily="{TemplateBinding FontFamily}"
                                     FontSize="{TemplateBinding FontSize}"
                                     FontStretch="{TemplateBinding FontStretch}"
@@ -628,11 +628,10 @@
                     Grid.Column="1"
                     Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
                     VerticalAlignment="Center"
+                    DisplayMemberPath="Display"
                     ItemsSource="{Binding AllEverythingSortOptions}"
                     SelectedValue="{Binding SelectedEverythingSortOption, Mode=TwoWay}"
-                    SelectedValuePath="Value"
-                    DisplayMemberPath="Display">
-                </ComboBox>
+                    SelectedValuePath="Value" />
 
                 <TextBlock
                     Grid.Row="3"

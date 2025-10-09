@@ -7,8 +7,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
     {
         public const string PortableFolderName = "UserData";
         public const string DeletionIndicatorFile = ".dead";
-        public static string PortableDataPath = Path.Combine(Constant.ProgramDirectory, PortableFolderName);
-        public static string RoamingDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FlowLauncher");
+        public static readonly string PortableDataPath = Path.Combine(Constant.ProgramDirectory, PortableFolderName);
+        public static readonly string RoamingDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FlowLauncher");
         public static string DataDirectory()
         {
             if (PortableDataLocationInUse())
@@ -19,7 +19,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         public static bool PortableDataLocationInUse()
         {
-            if (Directory.Exists(PortableDataPath) && !File.Exists(DeletionIndicatorFile))
+            if (Directory.Exists(PortableDataPath) &&
+                !File.Exists(Path.Combine(PortableDataPath, DeletionIndicatorFile)))
                 return true;
 
             return false;

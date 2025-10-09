@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -14,7 +15,12 @@ namespace Flow.Launcher.ViewModel
 {
     public partial class PluginViewModel : BaseModel
     {
+        private static readonly string ClassName = nameof(PluginViewModel);
+
         private static readonly Settings Settings = Ioc.Default.GetRequiredService<Settings>();
+
+        private static readonly Thickness SettingPanelMargin = (Thickness)Application.Current.FindResource("SettingPanelMargin");
+        private static readonly Thickness SettingPanelItemTopBottomMargin = (Thickness)Application.Current.FindResource("SettingPanelItemTopBottomMargin");
 
         private readonly PluginPair _pluginPair;
         public PluginPair PluginPair
@@ -131,25 +137,43 @@ namespace Flow.Launcher.ViewModel
             => IsExpanded
                 ? _settingControl
                     ??= HasSettingControl
-                        ? ((ISettingProvider)PluginPair.Plugin).CreateSettingPanel()
+                        ? TryCreateSettingPanel(PluginPair)
                         : null
                 : null;
         private ImageSource _image = ImageLoader.MissingImage;
+
+        private static Control TryCreateSettingPanel(PluginPair pair)
+        {
+            try
+            {
+                // We can safely cast here as we already check this in HasSettingControl
+                return ((ISettingProvider)pair.Plugin).CreateSettingPanel();
+            }
+            catch (Exception e)
+            {
+                // Log exception
+                App.API.LogException(ClassName, $"Failed to create setting panel for {pair.Metadata.Name}", e);
+
+                // Show error message in UI
+                var errorMsg = Localize.errorCreatingSettingPanel(pair.Metadata.Name, Environment.NewLine, e.Message);
+                return CreateErrorSettingPanel(errorMsg);
+            }
+        }
 
         public Visibility ActionKeywordsVisibility => PluginPair.Metadata.HideActionKeywordPanel ?
             Visibility.Collapsed : Visibility.Visible;
         public string InitializeTime => PluginPair.Metadata.InitTime + "ms";
         public string QueryTime => PluginPair.Metadata.AvgQueryTime + "ms";
-        public string Version => App.API.GetTranslation("plugin_query_version") + " " + PluginPair.Metadata.Version;
+        public string Version => Localize.plugin_query_version() + " " + PluginPair.Metadata.Version;
         public string InitAndQueryTime =>
-            App.API.GetTranslation("plugin_init_time") + " " +
+            Localize.plugin_init_time() + " " +
             PluginPair.Metadata.InitTime + "ms, " +
-            App.API.GetTranslation("plugin_query_time") + " " +
+            Localize.plugin_query_time() + " " +
             PluginPair.Metadata.AvgQueryTime + "ms";
         public string ActionKeywordsText => string.Join(Query.ActionKeywordSeparator, PluginPair.Metadata.ActionKeywords);
         public string SearchDelayTimeText => PluginPair.Metadata.SearchDelayTime == null ?
-            App.API.GetTranslation("default") :
-            App.API.GetTranslation($"SearchDelayTime{PluginPair.Metadata.SearchDelayTime}");
+            Localize.plugin_default_search_delay_time() :
+            Localize.plugin_search_delay_time(PluginPair.Metadata.SearchDelayTime);
         public Infrastructure.UserSettings.Plugin PluginSettingsObject{ get; init; }
         public bool SearchDelayEnabled => Settings.SearchQueryResultsWithDelay;
         public string DefaultSearchDelay => Settings.SearchDelayTime.ToString();
@@ -185,6 +209,29 @@ namespace Flow.Launcher.ViewModel
         {
             var changeKeywordsWindow = new ActionKeywords(this);
             changeKeywordsWindow.ShowDialog();
+        }
+
+        private static UserControl CreateErrorSettingPanel(string text)
+        {
+            var grid = new Grid()
+            {
+                Margin = SettingPanelMargin
+            };
+            var textBox = new TextBox
+            {
+                Text = text,
+                IsReadOnly = true,
+                HorizontalAlignment = HorizontalAlignment.Stretch,
+                VerticalAlignment = VerticalAlignment.Top,
+                TextWrapping = TextWrapping.Wrap,
+                Margin = SettingPanelItemTopBottomMargin
+            };
+            textBox.SetResourceReference(TextBox.ForegroundProperty, "Color04B");
+            grid.Children.Add(textBox);
+            return new UserControl
+            {
+                Content = grid
+            };
         }
     }
 }

@@ -3,25 +3,25 @@
 
     <system:String x:Key="flowlauncher_plugin_websearch_window_title">Search Source Setting</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_open_search_in">Open search in:</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_new_window">New Window</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_new_tab">New Tab</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_new_window">Новое окно</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_new_tab">Новая вкладка</system:String>
     <system:String x:Key="flowlaucnher_plugin_websearch_set_browser_path">Установить браузер по пути:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_choose">Выберите</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete">Удалить</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_edit">Редактировать</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_add">Добавить</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enabled_label">Enabled</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enabled_label">Включено</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_private_mode_label">Приватный режим</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_true">Enabled</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_true">Включено</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_false">Отключён</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_confirm">Confirm</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_confirm">Подтвердить</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">Action Keyword</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_url">URL</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_search">Search</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_search">Поиск</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Use Search Query Autocomplete</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">Autocomplete Data from:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">Please select a web search</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">Are you sure you want to delete {0}?</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">Вы уверены, что хотите удалить {0}?</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_guide_1">If you want to add a search for a particular website to Flow, first enter a dummy text string in the search bar of that website, and launch the search. Now copy the contents of the browser's address bar, and paste it in the URL field below. Replace your test string with {q}. For example, if you search for casino on Netflix, its address bar reads</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_guide_2">https://www.netflix.com/search?q=Casino</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_guide_3">
@@ -34,13 +34,13 @@
     <system:String x:Key="flowlauncher_plugin_websearch_copyurl_subtitle">Copy search URL to clipboard</system:String>
 
     <!--  web search edit  -->
-    <system:String x:Key="flowlauncher_plugin_websearch_title">Title</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_title">Название</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable">Состояние</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_select_icon">Select Icon</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_icon">Icon</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_select_icon">Выбрать иконку</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_icon">Иконка</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_cancel">Отменить</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_invalid_web_search">Invalid web search</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_input_title">Please enter a title</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_input_title">Пожалуйста, укажите название</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_input_action_keyword">Please enter an action keyword</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_input_url">Please enter a URL</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword_exist">Action keyword already exists, please enter a different one</system:String>

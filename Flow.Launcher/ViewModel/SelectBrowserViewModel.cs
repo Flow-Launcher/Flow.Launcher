@@ -17,8 +17,13 @@ public partial class SelectBrowserViewModel : BaseModel
         get => selectedCustomBrowserIndex;
         set
         {
-            selectedCustomBrowserIndex = value;
-            OnPropertyChanged(nameof(CustomBrowser));
+            // When one custom browser is selected and removed, the index will become -1, so we need to ignore this change
+            if (value < 0) return;
+            if (selectedCustomBrowserIndex != value)
+            {
+                selectedCustomBrowserIndex = value;
+                OnPropertyChanged(nameof(CustomBrowser));
+            }
         }
     }
 
@@ -40,22 +45,12 @@ public partial class SelectBrowserViewModel : BaseModel
         return true;
     }
 
-    internal string SelectFile()
-    {
-        var dlg = new Microsoft.Win32.OpenFileDialog();
-        var result = dlg.ShowDialog();
-        if (result == true)
-            return dlg.FileName;
-
-        return string.Empty;
-    }
-
     [RelayCommand]
     private void Add()
     {
         CustomBrowsers.Add(new()
         {
-            Name = "New Profile"
+            Name = Localize.defaultBrowser_new_profile()
         });
         SelectedCustomBrowserIndex = CustomBrowsers.Count - 1;
     }

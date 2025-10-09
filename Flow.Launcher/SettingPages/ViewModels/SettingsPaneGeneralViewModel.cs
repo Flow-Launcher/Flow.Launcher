@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
@@ -65,7 +65,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
             }
             catch (Exception e)
             {
-                App.API.ShowMsgError(App.API.GetTranslation("setAutoStartFailed"), e.Message);
+                App.API.ShowMsgError(Localize.setAutoStartFailed(), e.Message);
             }
         }
     }
@@ -92,7 +92,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
                 }
                 catch (Exception e)
                 {
-                    App.API.ShowMsgError(App.API.GetTranslation("setAutoStartFailed"), e.Message);
+                    App.API.ShowMsgError(Localize.setAutoStartFailed(), e.Message);
                 }
             } 
         }
@@ -123,7 +123,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     }
 
     // This is only required to set at startup. When portable mode enabled/disabled a restart is always required
-    private static bool _portableMode = DataLocation.PortableDataLocationInUse();
+    private static readonly bool _portableMode = DataLocation.PortableDataLocationInUse();
 
     public bool PortableMode
     {
@@ -219,6 +219,8 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         DropdownDataGeneric<DialogJumpFileResultBehaviours>.UpdateLabels(DialogJumpFileResultBehaviours);
         // Since we are using Binding instead of DynamicResource, we need to manually trigger the update
         OnPropertyChanged(nameof(AlwaysPreviewToolTip));
+        Settings.CustomExplorer.OnDisplayNameChanged();
+        Settings.CustomBrowser.OnDisplayNameChanged();
     }
 
     public string Language
@@ -255,7 +257,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
             else
             {
                 // Since this is rarely seen text, language support is not provided.
-                App.API.ShowMsgError(App.API.GetTranslation("KoreanImeSettingChangeFailTitle"), App.API.GetTranslation("KoreanImeSettingChangeFailSubTitle"));
+                App.API.ShowMsgError(Localize.KoreanImeSettingChangeFailTitle(), Localize.KoreanImeSettingChangeFailSubTitle());
             }
         }
     }
@@ -323,10 +325,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
 
     public List<Language> Languages => _translater.LoadAvailableLanguages();
 
-    public string AlwaysPreviewToolTip => string.Format(
-        App.API.GetTranslation("AlwaysPreviewToolTip"),
-        Settings.PreviewHotkey
-    );
+    public string AlwaysPreviewToolTip => Localize.AlwaysPreviewToolTip(Settings.PreviewHotkey);
 
     private static string GetFileFromDialog(string title, string filter = "")
     {
@@ -370,7 +369,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     private void SelectPython()
     {
         var selectedFile = GetFileFromDialog(
-            App.API.GetTranslation("selectPythonExecutable"),
+            Localize.selectPythonExecutable(),
             "Python|pythonw.exe"
         );
 
@@ -382,7 +381,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     private void SelectNode()
     {
         var selectedFile = GetFileFromDialog(
-            App.API.GetTranslation("selectNodeExecutable"),
+            Localize.selectNodeExecutable(),
             "node|*.exe"
         );
 
