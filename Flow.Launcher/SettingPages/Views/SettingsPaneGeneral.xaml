@@ -374,27 +374,48 @@
             </cc:Card>
 
             <cc:ExCard Title="{DynamicResource homePageHistory}" Margin="0 14 0 0" Icon="&#xE81C;" Sub="{DynamicResource homePageHistoryTooltip}">
-                <StackPanel Margin="15,10,0,0">
-                    <RadioButton GroupName="HistoryType" Content="{DynamicResource historyQueryResultsForHomePage}"
-                                 IsChecked="{Binding Settings.ShowHistoryQueryResultsForHomePage}" />
-                    <RadioButton GroupName="HistoryType" Content="{DynamicResource historyLastOpenedResultsForHomePage}"
-                                 IsChecked="{Binding Settings.ShowHistoryLastOpenedResultsForHomePage}"
-                                 Margin="0 0 0 0" />
-                    
-                    <cc:Card Title="{DynamicResource historyResultsCountForHomePage}" Type="InsideFit" Margin="0 10 0 0">
-                        <StackPanel Orientation="Vertical">
-                            <ui:NumberBox
-                                Width="120"
-                                Margin="0 0 0 0"
-                                Maximum="100"
-                                Minimum="0"
-                                SmallChange="5"
-                                SpinButtonPlacementMode="Compact"
-                                ValidationMode="InvalidInputOverwritten"
-                                Value="{Binding MaxHistoryResultsToShowValue}" />
-                        </StackPanel>
-                    </cc:Card>
-                </StackPanel>
+                <cc:ExCard.SideContent>
+                    <ui:ToggleSwitch
+                        IsOn="{Binding Settings.ShowHistoryOnHomePage}"
+                        OffContent="{DynamicResource disable}"
+                        OnContent="{DynamicResource enable}" />
+                </cc:ExCard.SideContent>
+                <ContentControl>
+                    <ContentControl.Style>
+                        <Style TargetType="ContentControl">
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <StackPanel Margin="15,10,0,0">
+                                        <RadioButton GroupName="HistoryType" Content="{DynamicResource historyQueryResultsForHomePage}"
+                                                     IsChecked="{Binding Settings.ShowHistoryQueryResultsForHomePage}" />
+                                        <RadioButton GroupName="HistoryType" Content="{DynamicResource historyLastOpenedResultsForHomePage}"
+                                                     IsChecked="{Binding Settings.ShowHistoryLastOpenedResultsForHomePage}"
+                                                     Margin="0 0 0 0" />
+
+                                        <cc:Card Title="{DynamicResource historyResultsCountForHomePage}" Type="InsideFit" Margin="0 10 0 0">
+                                            <StackPanel Orientation="Vertical">
+                                                <ui:NumberBox
+                                                    Width="120"
+                                                    Margin="0 0 0 0"
+                                                    Maximum="100"
+                                                    Minimum="0"
+                                                    SmallChange="5"
+                                                    SpinButtonPlacementMode="Compact"
+                                                    ValidationMode="InvalidInputOverwritten"
+                                                    Value="{Binding MaxHistoryResultsToShowValue}" />
+                                            </StackPanel>
+                                        </cc:Card>
+                                    </StackPanel>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Settings.ShowHistoryOnHomePage}" Value="False">
+                                    <Setter Property="Content" Value="{x:Null}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ContentControl.Style>
+                </ContentControl>
             </cc:ExCard>
 
             <cc:Card
