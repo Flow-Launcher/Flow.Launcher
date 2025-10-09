@@ -215,6 +215,28 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 }
             }
         }
+        private bool _showHistoryOnHomePage = true;
+        public bool ShowHistoryOnHomePage
+        {
+            get
+            {
+                if (ShowHistoryQueryResultsForHomePage || ShowHistoryLastOpenedResultsForHomePage) return true;
+                return _showHistoryOnHomePage;
+            }
+            set
+            {
+                if (_showHistoryOnHomePage != value)
+                {
+                    _showHistoryOnHomePage = value;
+                    OnPropertyChanged();
+                    if (value == false)
+                    {
+                        ShowHistoryQueryResultsForHomePage = false;
+                        ShowHistoryLastOpenedResultsForHomePage = false;
+                    }
+                }
+            }
+        }
 
         private bool _showHistoryQueryResultsForHomePage = false;
         public bool ShowHistoryQueryResultsForHomePage

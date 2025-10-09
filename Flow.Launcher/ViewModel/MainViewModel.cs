@@ -536,7 +536,10 @@ namespace Flow.Launcher.ViewModel
 
             if (QueryResultsSelected())
             {
-                _history.AddToHistory(result, Settings);
+                if (Settings.ShowHistoryOnHomePage)
+                {
+                    _history.AddToHistory(result, Settings);
+                }
                 _userSelectedRecord.Add(result);
                 lastHistoryIndex = 1;
             }
@@ -1320,38 +1323,8 @@ namespace Flow.Launcher.ViewModel
         private  List<Result> GetHistoryResults(IEnumerable<HistoryItem> historyItems)
         {
             var results = new List<Result>();
-            Func<ActionContext, bool> defaultAction = _ => false;
-
             foreach (var h in historyItems)
             {
-                // Achar uma forma melhor de fazer isso
-                if (Settings.ShowHistoryLastOpenedResultsForHomePage)
-                {
-                    var pluginPair = PluginManager.GetPluginForId(h.PluginID);
-                    if (pluginPair != null)
-                    {
-                        var queryResults = PluginManager
-                            .QueryForPluginAsync(pluginPair, h.OriginQuery, CancellationToken.None)
-                            .GetAwaiter()
-                            .GetResult();
-                        var originalResult = queryResults?.FirstOrDefault(r =>
-                            r.Title == h.Title && r.SubTitle == h.SubTitle);
-                        if (originalResult?.Action != null)
-                        {
-                            defaultAction = originalResult.Action;
-                        }
-
-                    }
-                }
-                else
-                {
-                    defaultAction = _ =>
-                    {
-                        App.API.BackToQueryResults();
-                        App.API.ChangeQuery(h.OriginQuery.RawQuery);
-                        return false;
-                    };
-                }
                 var timeT = App.API.GetTranslation("lastExecuteTime");
                 var result = new Result
                 {
@@ -1360,7 +1333,7 @@ namespace Flow.Launcher.ViewModel
                     IcoPath = Constant.HistoryIcon,
                     PluginID = h.PluginID,
                     OriginQuery = h.OriginQuery,
-                    Action = defaultAction,
+                    Action = Settings.ShowHistoryLastOpenedResultsForHomePage ? h.ExecuteAction : h.QueryAction,
                     Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE81C")
                 };
                 results.Add(result);
