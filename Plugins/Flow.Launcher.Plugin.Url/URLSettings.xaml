@@ -1,0 +1,31 @@
+<UserControl
+    x:Class="Flow.Launcher.Plugin.Url.URLSettings"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:url="clr-namespace:Flow.Launcher.Plugin.Url"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:Flow.Launcher.Plugin.Url"
+    d:DataContext="{d:DesignInstance Type=viewModels:SettingsViewModel}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+
+    <Grid Margin="{StaticResource SettingPanelMargin}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+       
+        <CheckBox
+            Grid.Row="0"
+            Grid.Column="0"
+            Margin="{StaticResource SettingPanelItemTopBottomMargin}"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Content="{DynamicResource flowlauncher_plugin_url_usehttps}"
+            IsChecked="{Binding Settings.AlwaysOpenWithHttps, Mode=TwoWay}" />
+    </Grid>
+</UserControl>

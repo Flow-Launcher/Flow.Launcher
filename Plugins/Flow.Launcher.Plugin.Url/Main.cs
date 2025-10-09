@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Windows.Controls;
 
 namespace Flow.Launcher.Plugin.Url
 {
-    public class Main : IPlugin, IPluginI18n
+    public class Main : IPlugin, IPluginI18n, ISettingProvider
     {
         //based on https://gist.github.com/dperini/729294
         private const string urlPattern = "^" +
@@ -58,13 +59,13 @@ namespace Flow.Launcher.Plugin.Url
                         Score = 8,
                         Action = _ =>
                         {
-                            if (!raw.ToLower().StartsWith("http"))
+                            if (!raw.ToLower().StartsWith(GetHttpPreference()))
                             {
-                                raw = "http://" + raw;
+                                raw = GetHttpPreference() + "://" + raw;
                             }
                             try
                             {
-                                Context.API.OpenUrl(raw);
+                                Context.API.OpenUrl(raw); 
                                 
                                 return true;
                             }
@@ -78,6 +79,11 @@ namespace Flow.Launcher.Plugin.Url
                 };
             }
             return new List<Result>(0);
+        }
+
+        private string GetHttpPreference()
+        {
+            return _settings.AlwaysOpenWithHttps ? "https": "http";
         }
 
         public bool IsURL(string raw)
@@ -112,6 +118,11 @@ namespace Flow.Launcher.Plugin.Url
         public string GetTranslatedPluginDescription()
         {
             return Localize.flowlauncher_plugin_url_plugin_description();
+        }
+
+        public Control CreateSettingPanel()
+        {
+            return new URLSettings(_settings);
         }
     }
 }
