@@ -14,7 +14,4 @@
     <system:String x:Key="flowlauncher_plugin_url_plugin_set_tip">Bitte legen Sie Ihren Browser-Pfad fest:</system:String>
     <system:String x:Key="flowlauncher_plugin_url_plugin_choose">Wählen</system:String>
     <system:String x:Key="flowlauncher_plugin_url_plugin_filter">Anwendung (*.exe)|*.exe|Alle Dateien|*.*</system:String>
-
-    <system:String x:Key="flowlauncher_plugin_url_usehttps">https über http bevorzugen</system:String>
-
 </ResourceDictionary>
