@@ -182,7 +182,7 @@ namespace Flow.Launcher.Plugin.WebSearch
                 (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance ||
                  Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance))
             {
-                ListView listView = sender as ListView;
+                var listView = (ListView)sender;
                 ListViewItem listViewItem = FindAncestor<ListViewItem>((DependencyObject)e.OriginalSource);
 
                 if (listViewItem == null) return;
@@ -199,13 +199,16 @@ namespace Flow.Launcher.Plugin.WebSearch
             if (e.Data.GetDataPresent(typeof(SearchSource)))
             {
                 SearchSource droppedData = e.Data.GetData(typeof(SearchSource)) as SearchSource;
-                ListView listView = sender as ListView;
+                var listView = (ListView)sender;
                 var target = GetNearestContainer(e.OriginalSource);
 
                 if (target == null)
                     return;
 
                 SearchSource targetData = (SearchSource)listView.ItemContainerGenerator.ItemFromContainer(target);
+
+                if (targetData == null)
+                    return;
 
                 var items = _settings.SearchSources;
                 int removedIdx = items.IndexOf(droppedData);
