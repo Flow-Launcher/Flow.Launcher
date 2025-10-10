@@ -83,7 +83,7 @@ namespace Flow.Launcher.Plugin.Url
 
         private string GetHttpPreference()
         {
-            return _settings.AlwaysOpenWithHttps ? "https": "http";
+            return _settings.AlwaysOpenWithHttps ? "https" : "http";
         }
 
         public bool IsURL(string raw)
