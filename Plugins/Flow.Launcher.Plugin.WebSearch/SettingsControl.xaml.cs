@@ -215,7 +215,7 @@ namespace Flow.Launcher.Plugin.WebSearch
                     return;
 
                 items.RemoveAt(removedIdx);
-                items.Insert(targetIdx, droppedData);
+                items.Insert(removedIdx < targetIdx ? targetIdx - 1 : targetIdx, droppedData);
             }
         }
 
