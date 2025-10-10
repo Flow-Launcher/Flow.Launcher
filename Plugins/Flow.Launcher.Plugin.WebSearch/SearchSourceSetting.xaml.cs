@@ -124,10 +124,6 @@ namespace Flow.Launcher.Plugin.WebSearch
                 else
                 {
                     var warning = _api.GetTranslation("flowlauncher_plugin_websearch_edit_failed");
-                    if (string.IsNullOrEmpty(warning))
-                    {
-                        warning = "Failed to update search source. The item may have been removed.";
-                    }
                     _context.API.ShowMsgBox(warning);
                     Close();
                 }
