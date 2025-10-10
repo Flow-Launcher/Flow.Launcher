@@ -32,8 +32,7 @@ namespace Flow.Launcher.Storage
         public List<HistoryItem> GetHistoryItems(Settings settings)
         { 
             if (settings.ShowHistoryQueryResultsForHomePage) return QueryHistoryItems;
-            if (settings.ShowHistoryLastOpenedResultsForHomePage) return LastOpenedHistoryItems;
-            return new List<HistoryItem>();
+            return LastOpenedHistoryItems;
         }
 
         private void AddLastQuery(Result result)
