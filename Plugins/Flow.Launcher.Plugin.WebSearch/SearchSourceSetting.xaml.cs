@@ -109,12 +109,6 @@ namespace Flow.Launcher.Plugin.WebSearch
 
                 var index = _searchSources.IndexOf(_oldSearchSource);
                 
-                // If the old search source is not found by reference, try to find it by ActionKeyword
-                if (index == -1)
-                {
-                    index = _searchSources.ToList().FindIndex(s => s.ActionKeyword == oldKeyword);
-                }
-                
                 // Only update if we found the item in the collection
                 if (index >= 0 && index < _searchSources.Count)
                 {
