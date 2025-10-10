@@ -217,8 +217,7 @@ namespace Flow.Launcher.Plugin.WebSearch
                 if (removedIdx == targetIdx)
                     return;
 
-                items.RemoveAt(removedIdx);
-                items.Insert(removedIdx < targetIdx ? targetIdx - 1 : targetIdx, droppedData);
+                items.Move(removedIdx, targetIdx);
             }
         }
 
