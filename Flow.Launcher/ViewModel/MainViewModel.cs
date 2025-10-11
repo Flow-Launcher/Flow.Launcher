@@ -536,11 +536,7 @@ namespace Flow.Launcher.ViewModel
 
             if (QueryResultsSelected())
             {
-                if (Settings.ShowHistoryOnHomePage)
-                {
-                    _history.AddToHistory(result, Settings.ShowHistoryQueryResultsForHomePage);
-                }
-
+                _history.AddToHistory(result, Settings);
                 _userSelectedRecord.Add(result);
                 lastHistoryIndex = 1;
             }

@@ -16,14 +16,14 @@ namespace Flow.Launcher.Storage
 
         private int _maxHistory = 300;
 
-        public void AddToHistory(Result result, bool isQuery)
+        public void AddToHistory(Result result, Settings settings)
         {
-            if (isQuery)
-            {
-                AddLastQuery(result); 
+            if (!settings.ShowHistoryOnHomePage) return;
+            if (settings.ShowHistoryQueryResultsForHomePage)
+            { 
+                AddLastQuery(result);
                 return;
             }
-
             AddLastOpened(result);
         }
 
