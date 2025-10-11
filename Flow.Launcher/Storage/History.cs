@@ -50,7 +50,7 @@ namespace Flow.Launcher.Storage
                     QueryAction = HistoryHelper.GetQueryAction(item.Query)
                 });
             }
-            if (Items.Any()) Items.Clear();
+            if (Items.Count > 0) Items.Clear();
         }
 
        
