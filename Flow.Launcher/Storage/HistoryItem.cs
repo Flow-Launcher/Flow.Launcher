@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using Flow.Launcher.Plugin;
 
@@ -15,5 +16,7 @@ public class HistoryItem
     public Func<ActionContext, bool> ExecuteAction { get; set; }
     [JsonIgnore]
     public Func<ActionContext, bool> QueryAction { get; set; }
+
+   
 
 }

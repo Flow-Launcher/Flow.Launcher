@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
-using System.Threading;
-using Flow.Launcher.Core.Plugin;
+using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Storage
 {
-
     public class History
     {
         //Legacy
@@ -30,11 +28,15 @@ namespace Flow.Launcher.Storage
         }
 
 
-
-        public List<HistoryItem> GetHistoryItems(bool isQuery)
+        public List<HistoryItem> GetHistoryItems(Settings  settings)
         {
-            if (isQuery) return PopulateActions(QueryHistoryItems, isQuery);
-            return PopulateActions(LastOpenedHistoryItems, isQuery);
+            if (settings.ShowHistoryOnHomePage)
+            {
+                if (settings.ShowHistoryQueryResultsForHomePage) return QueryHistoryItems.PopulateActions(true);
+                return LastOpenedHistoryItems.PopulateActions(false);
+            }
+
+            return new List<HistoryItem>();
         }
 
         public void PopulateHistoryWithLegacyHistory()
@@ -45,46 +47,13 @@ namespace Flow.Launcher.Storage
                 {
                     RawQuery = item.Query,
                     ExecutedDateTime = item.ExecutedDateTime ?? DateTime.Now,
-                    QueryAction = GetQueryAction(item.Query)
+                    QueryAction = HistoryHelper.GetQueryAction(item.Query)
                 });
             }
             if (Items.Any()) Items.Clear();
         }
 
-        private List<HistoryItem> PopulateActions(List<HistoryItem> items,bool isQuery)
-        {
-
-            foreach (var item in items)
-            {
-                if (item.QueryAction != null && item.ExecuteAction != null) continue;
-                if (isQuery && item.QueryAction == null) item.QueryAction = GetQueryAction(item.RawQuery);
-                if (!isQuery && item.ExecuteAction == null) item.ExecuteAction = GetExecuteAction(item.PluginID, item.RawQuery, item.Title, item.SubTitle);
-            }
-
-            return items;
-        }
-
-        private Func<ActionContext, bool> GetExecuteAction(string pluginId, string rawQuery, string title, string subTitle)
-        {
-            var plugin = PluginManager.GetPluginForId(pluginId);
-
-            var query = QueryBuilder.Build(rawQuery, PluginManager.NonGlobalPlugins);
-            var freshResults = plugin.Plugin
-                .QueryAsync(query, CancellationToken.None)
-                .GetAwaiter()
-                .GetResult();
-            return freshResults?.FirstOrDefault(r => r.Title == title
-                                                                && r.SubTitle == subTitle)?.Action;
-        }
-        private Func<ActionContext, bool> GetQueryAction(string query)
-        {
-            return _=>
-            {
-                App.API.BackToQueryResults();
-                App.API.ChangeQuery(query);
-                return false;
-            };
-        }
+       
 
         private void AddLastQuery(Result result)
         {
@@ -104,7 +73,7 @@ namespace Flow.Launcher.Storage
                 {
                     RawQuery = result.OriginQuery.RawQuery,
                     ExecutedDateTime = DateTime.Now,
-                    QueryAction = GetQueryAction(result.OriginQuery.RawQuery)
+                    QueryAction = HistoryHelper.GetQueryAction(result.OriginQuery.RawQuery)
                 });
             }
         }
