@@ -153,6 +153,7 @@ namespace Flow.Launcher.ViewModel
             _topMostRecord = new FlowLauncherJsonStorageTopMostRecord();
 
             _history = _historyStorage.Load();
+            _history.PopulateHistoryWithLegacyHistory();
             _userSelectedRecord = _userSelectedRecordStorage.Load();
 
             ContextMenu = new ResultsViewModel(Settings, this)
@@ -354,7 +355,7 @@ namespace Flow.Launcher.ViewModel
             if (QueryResultsSelected())
             {
                 SelectedResults = History;
-                History.SelectedIndex = _history.GetHistoryItems(Settings).Count - 1;
+                History.SelectedIndex = _history.GetHistoryItems(Settings.ShowHistoryQueryResultsForHomePage).Count - 1;
             }
             else
             {
@@ -382,10 +383,10 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         public void ReverseHistory()
         {
-            var historyItems = _history.GetHistoryItems(Settings);
+            var historyItems = _history.GetHistoryItems(Settings.ShowHistoryQueryResultsForHomePage);
             if (historyItems.Count > 0)
             {
-                ChangeQueryText(historyItems[^lastHistoryIndex].OriginQuery.RawQuery);
+                ChangeQueryText(historyItems[^lastHistoryIndex].RawQuery);
                 if (lastHistoryIndex < historyItems.Count)
                 {
                     lastHistoryIndex++;
@@ -396,11 +397,11 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         public void ForwardHistory()
         {
-            var historyItems = _history.GetHistoryItems(Settings);
+            var historyItems = _history.GetHistoryItems(Settings.ShowHistoryQueryResultsForHomePage);
 
             if (historyItems.Count > 0)
             {
-                ChangeQueryText(historyItems[^lastHistoryIndex].OriginQuery.RawQuery);
+                ChangeQueryText(historyItems[^lastHistoryIndex].RawQuery);
                 if (lastHistoryIndex > 1)
                 {
                     lastHistoryIndex--;
@@ -537,7 +538,7 @@ namespace Flow.Launcher.ViewModel
             {
                 if (Settings.ShowHistoryOnHomePage)
                 {
-                    _history.AddToHistory(result, Settings);
+                    _history.AddToHistory(result, Settings.ShowHistoryQueryResultsForHomePage);
                 }
 
                 _userSelectedRecord.Add(result);
@@ -615,7 +616,7 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void SelectPrevItem()
         {
-            var historyItems = _history.GetHistoryItems(Settings);
+            var historyItems = _history.GetHistoryItems(Settings.ShowHistoryQueryResultsForHomePage);
             if (QueryResultsSelected() // Results selected
                 && string.IsNullOrEmpty(QueryText) // No input
                 && Results.Visibility != Visibility.Visible // No items in result list, e.g. when home page is off and no query text is entered, therefore the view is collapsed.
@@ -1301,7 +1302,7 @@ namespace Flow.Launcher.ViewModel
             var query = QueryText.ToLower().Trim();
             History.Clear();
 
-            var items = _history.GetHistoryItems(Settings);
+            var items = _history.GetHistoryItems(Settings.ShowHistoryQueryResultsForHomePage);
 
             var results = GetHistoryResults(items);
 
@@ -1323,16 +1324,17 @@ namespace Flow.Launcher.ViewModel
         private List<Result> GetHistoryResults(IEnumerable<HistoryItem> historyItems)
         {
             var results = new List<Result>();
+
             foreach (var h in historyItems)
             {
                 var result = new Result
                 {
                     Title =
-                        Settings.ShowHistoryQueryResultsForHomePage ? Localize.executeQuery(h.OriginQuery.RawQuery) : h.Title,
+                        Settings.ShowHistoryQueryResultsForHomePage ? Localize.executeQuery(h.RawQuery) : h.Title,
                     SubTitle = Localize.lastExecuteTime(h.ExecutedDateTime),
                     IcoPath = Constant.HistoryIcon,
                     PluginID = h.PluginID,
-                    OriginQuery = h.OriginQuery,
+                    OriginQuery = QueryBuilder.Build(h.RawQuery, PluginManager.NonGlobalPlugins),
                     Action = Settings.ShowHistoryLastOpenedResultsForHomePage ? h.ExecuteAction : h.QueryAction,
                     Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE81C")
                 };
@@ -1568,7 +1570,7 @@ namespace Flow.Launcher.ViewModel
             void QueryHistoryTask(CancellationToken token)
             {
                 // Select last history results and revert its order to make sure last history results are on top
-                var historyItems = _history.GetHistoryItems(Settings).TakeLast(Settings.MaxHistoryResultsToShowForHomePage).Reverse();
+                var historyItems = _history.GetHistoryItems(Settings.ShowHistoryQueryResultsForHomePage).TakeLast(Settings.MaxHistoryResultsToShowForHomePage).Reverse();
 
                 var results = GetHistoryResults(historyItems);
 

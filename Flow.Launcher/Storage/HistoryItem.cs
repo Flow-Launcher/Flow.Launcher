@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Storage;
@@ -8,9 +9,12 @@ public class HistoryItem
     public string SubTitle { get; set; } = string.Empty;
     public string IcoPath { get; set; } = string.Empty;
     public string PluginID { get; set; } = string.Empty;
-    public Query OriginQuery { get; set; } = null!;
+    public string RawQuery { get; set; }
+
     public DateTime ExecutedDateTime { get; set; }
+    [JsonIgnore]
     public Func<ActionContext, bool> ExecuteAction { get; set; }
+    [JsonIgnore]
     public Func<ActionContext, bool> QueryAction { get; set; }
 
 }
