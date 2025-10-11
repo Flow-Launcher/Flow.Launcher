@@ -153,7 +153,7 @@ namespace Flow.Launcher.ViewModel
             _topMostRecord = new FlowLauncherJsonStorageTopMostRecord();
 
             _history = _historyStorage.Load();
-            _history.PopulateHistoryWithLegacyHistory();
+            _history.PopulateHistoryFromLegacyHistory();
             _userSelectedRecord = _userSelectedRecordStorage.Load();
 
             ContextMenu = new ResultsViewModel(Settings, this)

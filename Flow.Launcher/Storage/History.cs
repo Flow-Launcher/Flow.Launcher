@@ -39,7 +39,7 @@ namespace Flow.Launcher.Storage
             return new List<HistoryItem>();
         }
 
-        public void PopulateHistoryWithLegacyHistory()
+        public void PopulateHistoryFromLegacyHistory()
         {
             foreach (var item in Items)
             {
