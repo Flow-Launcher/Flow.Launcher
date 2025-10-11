@@ -30,6 +30,7 @@ namespace Flow.Launcher.Storage
         }
 
 
+
         public List<HistoryItem> GetHistoryItems(bool isQuery)
         {
             if (isQuery) return PopulateActions(QueryHistoryItems, isQuery);
@@ -121,7 +122,7 @@ namespace Flow.Launcher.Storage
             };
 
             var existing = LastOpenedHistoryItems.
-                FirstOrDefault(x => x.Title == item.Title && x.PluginID == item.PluginID);
+                FirstOrDefault(x => x.Title == item.Title && x.SubTitle == item.SubTitle &&  x.PluginID == item.PluginID);
 
 
             if (existing != null)
