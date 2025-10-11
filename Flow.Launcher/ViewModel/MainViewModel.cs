@@ -355,7 +355,7 @@ namespace Flow.Launcher.ViewModel
             if (QueryResultsSelected())
             {
                 SelectedResults = History;
-                History.SelectedIndex = _history.GetHistoryItems(Settings.ShowHistoryQueryResultsForHomePage).Count - 1;
+                History.SelectedIndex = _history.GetHistoryItems(Settings).Count - 1;
             }
             else
             {
@@ -383,7 +383,7 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         public void ReverseHistory()
         {
-            var historyItems = _history.GetHistoryItems(Settings.ShowHistoryQueryResultsForHomePage);
+            var historyItems = _history.GetHistoryItems(Settings);
             if (historyItems.Count > 0)
             {
                 ChangeQueryText(historyItems[^lastHistoryIndex].RawQuery);
@@ -397,7 +397,7 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         public void ForwardHistory()
         {
-            var historyItems = _history.GetHistoryItems(Settings.ShowHistoryQueryResultsForHomePage);
+            var historyItems = _history.GetHistoryItems(Settings);
 
             if (historyItems.Count > 0)
             {
@@ -616,7 +616,7 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void SelectPrevItem()
         {
-            var historyItems = _history.GetHistoryItems(Settings.ShowHistoryQueryResultsForHomePage);
+            var historyItems = _history.GetHistoryItems(Settings);
             if (QueryResultsSelected() // Results selected
                 && string.IsNullOrEmpty(QueryText) // No input
                 && Results.Visibility != Visibility.Visible // No items in result list, e.g. when home page is off and no query text is entered, therefore the view is collapsed.
@@ -1302,7 +1302,7 @@ namespace Flow.Launcher.ViewModel
             var query = QueryText.ToLower().Trim();
             History.Clear();
 
-            var items = _history.GetHistoryItems(Settings.ShowHistoryQueryResultsForHomePage);
+            var items = _history.GetHistoryItems(Settings);
 
             var results = GetHistoryResults(items);
 
@@ -1570,7 +1570,7 @@ namespace Flow.Launcher.ViewModel
             void QueryHistoryTask(CancellationToken token)
             {
                 // Select last history results and revert its order to make sure last history results are on top
-                var historyItems = _history.GetHistoryItems(Settings.ShowHistoryQueryResultsForHomePage).TakeLast(Settings.MaxHistoryResultsToShowForHomePage).Reverse();
+                var historyItems = _history.GetHistoryItems(Settings).TakeLast(Settings.MaxHistoryResultsToShowForHomePage).Reverse();
 
                 var results = GetHistoryResults(historyItems);
 
