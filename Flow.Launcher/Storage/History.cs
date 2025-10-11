@@ -30,13 +30,8 @@ namespace Flow.Launcher.Storage
 
         public List<HistoryItem> GetHistoryItems(Settings  settings)
         {
-            if (settings.ShowHistoryOnHomePage)
-            {
-                if (settings.ShowHistoryQueryResultsForHomePage) return QueryHistoryItems.PopulateActions(true);
-                return LastOpenedHistoryItems.PopulateActions(false);
-            }
-
-            return new List<HistoryItem>();
+            if (settings.ShowHistoryQueryResultsForHomePage) return QueryHistoryItems.PopulateActions(true);
+            return LastOpenedHistoryItems.PopulateActions(false);
         }
 
         public void PopulateHistoryFromLegacyHistory()
