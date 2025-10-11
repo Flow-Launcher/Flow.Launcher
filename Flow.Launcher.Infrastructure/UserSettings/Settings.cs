@@ -237,7 +237,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
 
-        private bool _showHistoryQueryResultsForHomePage = false;
+        private bool _showHistoryQueryResultsForHomePage = true;
         public bool ShowHistoryQueryResultsForHomePage
         {
             get => _showHistoryQueryResultsForHomePage;
@@ -257,7 +257,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         }
 
 
-        private bool _showHistoryLastOpenedResultsForHomePage = false;
+        private bool _showHistoryLastOpenedResultsForHomePage;
         public bool ShowHistoryLastOpenedResultsForHomePage
         {
             get => _showHistoryLastOpenedResultsForHomePage;

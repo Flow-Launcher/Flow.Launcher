@@ -7,7 +7,6 @@ public class HistoryItem
 {
     public string Title { get; set; } = string.Empty;
     public string SubTitle { get; set; } = string.Empty;
-    public string IcoPath { get; set; } = string.Empty;
     public string PluginID { get; set; } = string.Empty;
     public string RawQuery { get; set; }
 

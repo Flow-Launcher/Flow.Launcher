@@ -30,7 +30,6 @@ namespace Flow.Launcher.Storage
         }
 
 
-
         public List<HistoryItem> GetHistoryItems(bool isQuery)
         {
             if (isQuery) return PopulateActions(QueryHistoryItems, isQuery);
@@ -115,7 +114,6 @@ namespace Flow.Launcher.Storage
             {
                 Title = result.Title,
                 SubTitle = result.SubTitle,
-                IcoPath = result.IcoPath ?? string.Empty,
                 PluginID = result.PluginID,
                 RawQuery = result.OriginQuery.RawQuery,
                 ExecutedDateTime = DateTime.Now,
