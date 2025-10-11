@@ -322,6 +322,7 @@ namespace Flow.Launcher
                         break;
                     case nameof(Settings.ShowHomePage):
                     case nameof(Settings.ShowHistoryQueryResultsForHomePage):
+                    case nameof(Settings.ShowHistoryLastOpenedResultsForHomePage):
                         if (_viewModel.QueryResultsSelected() && string.IsNullOrEmpty(_viewModel.QueryText))
                         {
                             _viewModel.QueryResults();

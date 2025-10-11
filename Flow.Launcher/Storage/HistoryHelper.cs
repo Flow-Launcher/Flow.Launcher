@@ -21,18 +21,6 @@ public static class HistoryHelper
         return items;
     }
 
-    private static Func<ActionContext, bool> GetExecuteAction(string pluginId, string rawQuery, string title, string subTitle)
-    {
-        var plugin = PluginManager.GetPluginForId(pluginId);
-
-        var query = QueryBuilder.Build(rawQuery, PluginManager.NonGlobalPlugins);
-        var freshResults = plugin.Plugin
-            .QueryAsync(query, CancellationToken.None)
-            .GetAwaiter()
-            .GetResult();
-        return freshResults?.FirstOrDefault(r => r.Title == title
-                                                 && r.SubTitle == subTitle)?.Action;
-    }
     public static Func<ActionContext, bool> GetQueryAction(string query)
     {
         return _ =>
@@ -41,5 +29,17 @@ public static class HistoryHelper
             App.API.ChangeQuery(query);
             return false;
         };
+    }
+
+    private static Func<ActionContext, bool> GetExecuteAction(string pluginId, string rawQuery, string title, string subTitle)
+    {
+        var plugin = PluginManager.GetPluginForId(pluginId);
+        var query = QueryBuilder.Build(rawQuery, PluginManager.NonGlobalPlugins);
+        var freshResults = plugin.Plugin
+            .QueryAsync(query, CancellationToken.None)
+            .GetAwaiter()
+            .GetResult();
+        return freshResults?.FirstOrDefault(r => r.Title == title
+                                                 && r.SubTitle == subTitle)?.Action;
     }
 }
