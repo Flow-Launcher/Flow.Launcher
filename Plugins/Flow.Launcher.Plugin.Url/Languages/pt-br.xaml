@@ -17,4 +17,6 @@
     <system:String x:Key="flowlauncher_plugin_url_new_window">Nova janela</system:String>
 
     <system:String x:Key="flowlauncher_plugin_url_private_mode">Private mode</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_url_usehttps">Prefer https over http</system:String>
 </ResourceDictionary>
