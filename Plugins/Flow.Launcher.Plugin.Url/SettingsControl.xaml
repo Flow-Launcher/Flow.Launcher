@@ -19,6 +19,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
         <CheckBox
@@ -113,5 +114,13 @@
                     IsChecked="{Binding Settings.OpenInPrivateMode, Mode=TwoWay}" />
             </Grid>
         </Grid>
+
+        <CheckBox
+            Grid.Row="2"
+            Margin="{StaticResource SettingPanelItemTopBottomMargin}"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Content="{DynamicResource flowlauncher_plugin_url_usehttps}"
+            IsChecked="{Binding Settings.AlwaysOpenWithHttps, Mode=TwoWay}" />
     </Grid>
 </UserControl>

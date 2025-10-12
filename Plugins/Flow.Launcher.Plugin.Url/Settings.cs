@@ -47,5 +47,7 @@
         public bool OpenInPrivateMode { get; set; } = false;
 
         public string PrivateModeArgument { get; set; } = string.Empty;
+
+        public bool AlwaysOpenWithHttps { get; set; } = false;
     }
 }

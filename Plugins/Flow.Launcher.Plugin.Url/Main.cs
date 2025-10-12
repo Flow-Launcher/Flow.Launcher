@@ -60,9 +60,9 @@ namespace Flow.Launcher.Plugin.Url
                         Score = 8,
                         Action = _ =>
                         {
-                            if (!raw.StartsWith("http", StringComparison.OrdinalIgnoreCase))
+                            if (!raw.StartsWith("http://", StringComparison.OrdinalIgnoreCase) && !raw.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
                             {
-                                raw = "http://" + raw;
+                                raw = GetHttpPreference() + "://" + raw;
                             }
                             try
                             {
@@ -95,6 +95,11 @@ namespace Flow.Launcher.Plugin.Url
             }
 
             return [];
+        }
+
+        private static string GetHttpPreference()
+        {
+            return Settings.AlwaysOpenWithHttps ? "https" : "http";
         }
 
         public bool IsURL(string raw)
