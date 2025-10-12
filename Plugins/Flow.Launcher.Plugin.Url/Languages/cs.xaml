@@ -1,17 +1,20 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
-    <system:String x:Key="flowlauncher_plugin_url_open_search_in">Otevřít vyhledávání v:</system:String>
-    <system:String x:Key="flowlauncher_plugin_new_window">Nové okno</system:String>
-    <system:String x:Key="flowlauncher_plugin_new_tab">Nová karta</system:String>
-    
     <system:String x:Key="flowlauncher_plugin_url_open_url">Otevřít URL:{0}</system:String>
     <system:String x:Key="flowlauncher_plugin_url_cannot_open_url">Nelze otevřít URL:{0}</system:String>
 
     <system:String x:Key="flowlauncher_plugin_url_plugin_name">URL</system:String>
     <system:String x:Key="flowlauncher_plugin_url_plugin_description">Otevření zadané adresy URL z nástroje Flow Launcher</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_url_plugin_set_tip">Nastavte cestu k prohlížeči:</system:String>
     <system:String x:Key="flowlauncher_plugin_url_plugin_choose">Vybrat</system:String>
     <system:String x:Key="flowlauncher_plugin_url_plugin_filter">Aplikace(*.exe)|*.exe|Všechny soubory|*. *</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_url_use_custom_browser">Use custom instead of Flow's default web browser</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_browser_path">Browser path</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_url_new_tab">Nová záložka</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_new_window">Nové okno</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_url_private_mode">Private mode</system:String>
 </ResourceDictionary>
