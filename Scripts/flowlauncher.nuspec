@@ -6,11 +6,18 @@
     <version>$version$</version>
     <authors>Flow-Launcher Team</authors>
     <projectUrl>https://github.com/Flow-Launcher/Flow.Launcher</projectUrl>
-    <iconUrl>https://raw.githubusercontent.com/Flow-Launcher/Flow.Launcher/master/Flow.Launcher/Images/app.png</iconUrl>
+    <icon>images\app.png</icon>
+    <iconUrl>https://raw.githubusercontent.com/Flow-Launcher/Flow.Launcher/master/Flow.Launcher/Resources/app.ico</iconUrl>
+    <readme>README.md</readme>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Flow Launcher - Quick file search and app launcher for Windows with community-made plugins</description>
+    <dependencies>
+      <group targetFramework="net9.0" />
+    </dependencies>
   </metadata>
   <files>
     <file src="**\*.*" target="lib\net9.0\" exclude="Flow.Launcher.vshost.exe;Flow.Launcher.vshost.exe.config;Flow.Launcher.vshost.exe.manifest;*.nupkg;Setup.exe;RELEASES"/>
+    <file src="images\app.png" target="images\"/>
+    <file src="..\..\README.md" target="\"/>
   </files>
 </package>

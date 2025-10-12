@@ -7,7 +7,8 @@ Write-Host "Config: $config"
 function Build-Version {
     if ([string]::IsNullOrEmpty($env:flowVersion)) {
         $targetPath = Join-Path $solution "Output/Release/Flow.Launcher.dll" -Resolve
-        $v = (Get-Command ${targetPath}).FileVersionInfo.FileVersion
+        # Use Get-Item for reliability and ProductVersion to align with AssemblyInformationalVersion.
+        $v = (Get-Item $targetPath).VersionInfo.ProductVersion
     } else {
         $v = $env:flowVersion
     }
@@ -32,17 +33,25 @@ function Build-Path {
 }
 
 function Copy-Resources ($path) {
-    # making version static as multiple versions can exist in the nuget folder and in the case a breaking change is introduced.
-    Copy-Item -Force $env:USERPROFILE\.nuget\packages\squirrel.windows\1.5.2\tools\Squirrel.exe $path\Output\Update.exe
+    $squirrelExe = (Get-ChildItem -Path "$env:USERPROFILE\.nuget\packages\squirrel.windows\*" -Directory | Sort-Object Name -Descending | Select-Object -First 1).FullName + "\tools\Squirrel.exe"
+    if (Test-Path $squirrelExe) {
+        Copy-Item -Force $squirrelExe $path\Output\Update.exe
+    } else {
+        Write-Host "Warning: Squirrel.exe could not be found in the NuGet cache." -ForegroundColor Yellow
+    }
 }
 
-function Delete-Unused ($path, $config) {
+function Remove-UnusedFiles ($path, $config) {
     $target = "$path\Output\$config"
     $included = Get-ChildItem $target -Filter "*.dll"
     foreach ($i in $included){
-        $deleteList = Get-ChildItem $target\Plugins -Include $i -Recurse | Where { $_.VersionInfo.FileVersion -eq $i.VersionInfo.FileVersion -And $_.Name -eq "$i" }
-        $deleteList | ForEach-Object{ Write-Host Deleting duplicated $_.Name with version $_.VersionInfo.FileVersion at location $_.Directory.FullName }
-        $deleteList | Remove-Item
+        $deleteList = Get-ChildItem $target\Plugins -Include $i.Name -Recurse | Where-Object { $_.VersionInfo.FileVersion -eq $i.VersionInfo.FileVersion }
+        foreach ($fileToDelete in $deleteList) {
+            # A plugin's main DLL has the same name as its parent directory. We must not delete it.
+            if ($fileToDelete.Directory.Name -ne $fileToDelete.BaseName) {
+                Remove-Item $fileToDelete.FullName
+            }
+        }
     }
     Remove-Item -Path $target -Include "*.xml" -Recurse
 }
@@ -50,38 +59,47 @@ function Delete-Unused ($path, $config) {
 function Remove-CreateDumpExe ($path, $config) {
     $target = "$path\Output\$config"
 
-    $depjson = Get-Content $target\Flow.Launcher.deps.json -raw
-    $depjson -replace '(?s)(.createdump.exe": {.*?}.*?\n)\s*', "" | Out-File $target\Flow.Launcher.deps.json -Encoding UTF8
+    $depjsonPath = (Get-Item "$target\Flow.Launcher.deps.json").FullName
+    if (Test-Path $depjsonPath) {
+        $depjson = Get-Content $depjsonPath -raw
+        $depjson -replace '(?s)(.createdump.exe": {.*?}.*?\n)\s*', "" | Out-File $depjsonPath -Encoding UTF8
+    }
     Remove-Item -Path $target -Include "*createdump.exe" -Recurse
 }
 
 
-function Validate-Directory ($output) {
-    New-Item $output -ItemType Directory -Force
+function Initialize-Directory ($output) {
+    if (Test-Path $output) {
+        Remove-Item -Recurse -Force $output
+    }
+    New-Item $output -ItemType Directory -Force | Out-Null
 }
 
 
-function Pack-Squirrel-Installer ($path, $version, $output) {
+function New-SquirrelInstallerPackage ($path, $version, $output) {
     # msbuild based installer generation is not working in appveyor, not sure why
     Write-Host "Begin pack squirrel installer"
 
     $spec = "$path\Scripts\flowlauncher.nuspec"
-    $input = "$path\Output\Release"
+    $inputPath = "$path\Output\Release"
 
     Write-Host "Packing: $spec"
-    Write-Host "Input path:  $input"
+    Write-Host "Input path:  $inputPath"
 
-    # dotnet pack is not used because ran into issues, need to test installation and starting up if to use it.
-    nuget pack $spec -Version $version -BasePath $input -OutputDirectory $output -Properties Configuration=Release
+    nuget pack $spec -Version $version -BasePath $inputPath -OutputDirectory $output -Properties Configuration=Release
 
     $nupkg = "$output\FlowLauncher.$version.nupkg"
     Write-Host "nupkg path: $nupkg"
     $icon = "$path\Flow.Launcher\Resources\app.ico"
     Write-Host "icon: $icon"
-    # Squirrel.com: https://github.com/Squirrel/Squirrel.Windows/issues/369
-    New-Alias Squirrel $env:USERPROFILE\.nuget\packages\squirrel.windows\1.5.2\tools\Squirrel.exe -Force
-    # why we need Write-Output: https://github.com/Squirrel/Squirrel.Windows/issues/489#issuecomment-156039327
-    # directory of releaseDir in squirrel can't be same as directory ($nupkg) in releasify
+    
+    $squirrelExe = (Get-ChildItem -Path "$env:USERPROFILE\.nuget\packages\squirrel.windows\*" -Directory | Sort-Object Name -Descending | Select-Object -First 1).FullName + "\tools\Squirrel.exe"
+    if (-not (Test-Path $squirrelExe)) {
+        Write-Host "FATAL: Squirrel.exe could not be found, aborting installer creation." -ForegroundColor Red
+        exit 1
+    }
+    New-Alias Squirrel $squirrelExe -Force
+    
     $temp = "$output\Temp"
 
     Squirrel --releasify $nupkg --releaseDir $temp --setupIcon $icon --no-msi | Write-Output
@@ -96,41 +114,127 @@ function Pack-Squirrel-Installer ($path, $version, $output) {
     Write-Host "End pack squirrel installer"
 }
 
-function Publish-Self-Contained ($p) {
-
-    $csproj  = Join-Path "$p" "Flow.Launcher/Flow.Launcher.csproj" -Resolve
-    $profile = Join-Path "$p" "Flow.Launcher/Properties/PublishProfiles/Net9.0-SelfContained.pubxml" -Resolve
-
-    # we call dotnet publish on the main project. 
-    # The other projects should have been built in Release at this point.
-    dotnet publish -c Release $csproj /p:PublishProfile=$profile
+function Build-Solution ($p) {
+    Write-Host "Building solution..."
+    $solutionFile = Join-Path $p "Flow.Launcher.sln"
+    dotnet build $solutionFile -c Release
+    if ($LASTEXITCODE -ne 0) { return $false }
+    return $true
 }
 
-function Publish-Portable ($outputLocation, $version) {
+function Publish-SelfContainedToTemp($p, $outputPath) {
+    Write-Host "Publishing self-contained application to temporary directory..."
+    $csproj  = Join-Path "$p" "Flow.Launcher/Flow.Launcher.csproj" -Resolve
+    
+    # We publish to a temporary directory first to ensure a clean, self-contained build 
+    # without interfering with the main /Output/Release folder, which contains plugins.
+    # Let publish do its own build to ensure all self-contained dependencies are correctly resolved.
+    dotnet publish -c Release $csproj -r win-x64 --self-contained true -o $outputPath
+    if ($LASTEXITCODE -ne 0) { return $false }
+    return $true
+}
 
-    & $outputLocation\Flow-Launcher-Setup.exe --silent | Out-Null
-    mkdir "$env:LocalAppData\FlowLauncher\app-$version\UserData"
-    Compress-Archive -Path $env:LocalAppData\FlowLauncher -DestinationPath $outputLocation\Flow-Launcher-Portable.zip
+function Merge-PublishToRelease($publishPath, $releasePath) {
+    Write-Host "Merging published files into release directory..."
+    Copy-Item -Path "$publishPath\*" -Destination $releasePath -Recurse -Force
+    Remove-Item -Recurse -Force $publishPath
+}
+
+function Publish-Portable ($outputLocation, $version, $path) {
+    # The portable version is created by silently running the installer to a temporary location, 
+    # then packaging the result. This ensures the structure is identical to a real installation 
+    # and can be updated by Squirrel.
+    & "$outputLocation\Flow-Launcher-Setup.exe" --silent | Out-Null
+    
+    $installRoot = Join-Path $env:LocalAppData "FlowLauncher"
+    $appPath = Join-Path $installRoot "app-$version"
+    $appExePath = Join-Path $appPath "Flow.Launcher.exe"
+
+    # Wait for silent installation to complete
+    $waitTime = 0
+    $maxWaitTime = 60 # 60 seconds timeout
+    while (-not (Test-Path $appExePath) -and $waitTime -lt $maxWaitTime) {
+        Start-Sleep -Seconds 1
+        $waitTime++
+    }
+    
+    if (-not (Test-Path $appExePath)) {
+        Write-Host "Error: Timed out waiting for silent installation to complete." -ForegroundColor Red
+        return
+    }
+
+    # Create a temporary staging directory for the portable package
+    $stagingDir = Join-Path $outputLocation "PortableStaging"
+    Initialize-Directory $stagingDir
+
+    try {
+        # Copy installed files to staging directory
+        Copy-Item -Path "$installRoot\*" -Destination $stagingDir -Recurse -Force
+        
+        # Create the UserData folder inside app-<version> to enable portable mode.
+        New-Item -Path (Join-Path $stagingDir "app-$version" "UserData") -ItemType Directory -Force | Out-Null
+        
+        # Remove the unnecessary 'packages' directory before creating the archive
+        $packagesPath = Join-Path $stagingDir "packages"
+        if (Test-Path $packagesPath) {
+            Remove-Item -Path $packagesPath -Recurse -Force
+        }
+
+        # Create the zip from the staging directory's contents
+        Compress-Archive -Path "$stagingDir\*" -DestinationPath "$outputLocation\Flow-Launcher-Portable.zip" -Force
+    }
+    finally {
+        if (Test-Path $stagingDir) {
+            Remove-Item -Recurse -Force $stagingDir
+        }
+    }
+    
+    # Uninstall after packaging
+    $uninstallExe = Join-Path $installRoot "Update.exe"
+    if (Test-Path $uninstallExe) {
+        Write-Host "Uninstalling temporary application..."
+        Start-Process -FilePath $uninstallExe -ArgumentList "--uninstall -s" -Wait
+    }
 }
 
 function Main {
     $p = Build-Path
-    $v = Build-Version
-    Copy-Resources $p
 
     if ($config -eq "Release"){
 
-        Delete-Unused $p $config
+        if (-not (Build-Solution $p)) {
+            Write-Host "dotnet build failed. Aborting post-build script." -ForegroundColor Red
+            exit 1
+        }
+        
+        $tempPublishPath = Join-Path $p "Output\PublishTemp"
+        Initialize-Directory $tempPublishPath
+        if (-not (Publish-SelfContainedToTemp $p $tempPublishPath)) {
+            Write-Host "dotnet publish failed. Aborting." -ForegroundColor Red
+            exit 1
+        }
 
-        Publish-Self-Contained $p
+        Merge-PublishToRelease $tempPublishPath (Join-Path $p "Output\Release")
+        
+        $v = Build-Version
+        if ([string]::IsNullOrEmpty($v)) { 
+            Write-Host "Could not determine build version. Aborting." -ForegroundColor Red
+            exit 1
+        }
 
+        Copy-Resources $p
+        Remove-UnusedFiles $p $config
         Remove-CreateDumpExe $p $config
 
         $o = "$p\Output\Packages"
-        Validate-Directory $o
-        Pack-Squirrel-Installer $p $v $o
+        Initialize-Directory $o
+        New-SquirrelInstallerPackage $p $v $o
+        if ($LASTEXITCODE -ne 0) {
+            Write-Host "Squirrel packaging failed. Aborting." -ForegroundColor Red
+            exit 1
+        }
 
-        Publish-Portable $o $v
+        Publish-Portable $o $v $p
     }
 }
 
