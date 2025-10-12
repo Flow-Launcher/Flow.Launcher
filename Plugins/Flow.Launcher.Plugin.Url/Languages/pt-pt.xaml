@@ -1,17 +1,20 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
-    <system:String x:Key="flowlauncher_plugin_url_open_search_in">Abrir pesquisa em:</system:String>
-    <system:String x:Key="flowlauncher_plugin_new_window">Nova janela</system:String>
-    <system:String x:Key="flowlauncher_plugin_new_tab">Novo separador</system:String>
-    
     <system:String x:Key="flowlauncher_plugin_url_open_url">Abrir URL:{0}</system:String>
     <system:String x:Key="flowlauncher_plugin_url_cannot_open_url">Não foi possível abrir o URL:{0}</system:String>
 
     <system:String x:Key="flowlauncher_plugin_url_plugin_name">URL</system:String>
     <system:String x:Key="flowlauncher_plugin_url_plugin_description">Abrir o URL no Flow Launcher</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_url_plugin_set_tip">Defina o caminho do navegador:</system:String>
     <system:String x:Key="flowlauncher_plugin_url_plugin_choose">Escolher</system:String>
     <system:String x:Key="flowlauncher_plugin_url_plugin_filter">Aplicação(*.exe)|*.exe|Todos os ficheiros|*.*</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_url_use_custom_browser">Use custom instead of Flow's default web browser</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_browser_path">Browser path</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_url_new_tab">Novo separador</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_new_window">Nova janela</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_url_private_mode">Private mode</system:String>
 </ResourceDictionary>
