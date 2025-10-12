@@ -10,13 +10,13 @@
     <system:String x:Key="flowlauncher_plugin_url_plugin_choose">Prehliadať</system:String>
     <system:String x:Key="flowlauncher_plugin_url_plugin_filter">Aplikácie (*.exe)|*.exe|Všetky súbory|*.*</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_url_use_custom_browser">Use custom instead of Flow's default web browser</system:String>
-    <system:String x:Key="flowlauncher_plugin_url_browser_path">Browser path</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_use_custom_browser">Použiť vlastný prehliadač namiesto predvoleného webového prehliadača</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_browser_path">Cesta k prehliadaču</system:String>
 
     <system:String x:Key="flowlauncher_plugin_url_new_tab">Nová karta</system:String>
     <system:String x:Key="flowlauncher_plugin_url_new_window">Nové okno</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_url_private_mode">Private mode</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_private_mode">Privátny režim</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_url_usehttps">Prefer https over http</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_usehttps">Uprednostniť https pred http</system:String>
 </ResourceDictionary>
