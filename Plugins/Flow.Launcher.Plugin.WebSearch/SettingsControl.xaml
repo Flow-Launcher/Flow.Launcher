@@ -52,6 +52,10 @@
             MouseDoubleClick="MouseDoubleClickItem"
             SelectedItem="{Binding Settings.SelectedSearchSource}"
             SizeChanged="ListView_SizeChanged"
+            PreviewMouseLeftButtonDown="ListView_PreviewMouseLeftButtonDown"
+            PreviewMouseMove="ListView_PreviewMouseMove"
+            AllowDrop="True"
+            Drop="ListView_Drop"
             Style="{StaticResource {x:Static GridView.GridViewStyleKey}}">
             <ListView.View>
                 <GridView>
