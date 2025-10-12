@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
+using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher.Plugin.Url
 {
     public class Main : IPlugin, IPluginI18n, ISettingProvider
     {
         //based on https://gist.github.com/dperini/729294
-        private const string urlPattern = "^" +
+        private const string UrlPattern = "^" +
             // protocol identifier
             "(?:(?:https?|ftp)://|)" +
             // user:pass authentication
@@ -40,18 +41,18 @@ namespace Flow.Launcher.Plugin.Url
             // resource path
             "(?:/\\S*)?" +
             "$";
-        Regex reg = new Regex(urlPattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private readonly Regex UrlRegex = new(UrlPattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
         internal static PluginInitContext Context { get; private set; }
-        private Settings _settings;
-        
+        internal static Settings Settings { get; private set; }
+
         public List<Result> Query(Query query)
         {
             var raw = query.Search;
             if (IsURL(raw))
             {
-                return new List<Result>
-                {
-                    new Result
+                return
+                [
+                    new()
                     {
                         Title = raw,
                         SubTitle = Localize.flowlauncher_plugin_url_open_url(raw),
@@ -65,8 +66,22 @@ namespace Flow.Launcher.Plugin.Url
                             }
                             try
                             {
-                                Context.API.OpenUrl(raw); 
-                                
+                                if (Settings.UseCustomBrowser)
+                                {
+                                    if (Settings.OpenInNewBrowserWindow)
+                                    {
+                                        SearchWeb.OpenInBrowserWindow(raw, Settings.BrowserPath, Settings.OpenInPrivateMode, Settings.PrivateModeArgument);
+                                    }
+                                    else
+                                    {
+                                        SearchWeb.OpenInBrowserTab(raw, Settings.BrowserPath, Settings.OpenInPrivateMode, Settings.PrivateModeArgument);
+                                    }
+                                }
+                                else
+                                {
+                                    Context.API.OpenWebUrl(raw);
+                                }
+
                                 return true;
                             }
                             catch(Exception)
@@ -76,9 +91,10 @@ namespace Flow.Launcher.Plugin.Url
                             }
                         }
                     }
-                };
+                ];
             }
-            return new List<Result>(0);
+
+            return [];
         }
 
         private string GetHttpPreference()
@@ -90,7 +106,7 @@ namespace Flow.Launcher.Plugin.Url
         {
             raw = raw.ToLower();
 
-            if (reg.Match(raw).Value == raw) return true;
+            if (UrlRegex.Match(raw).Value == raw) return true;
 
             if (raw == "localhost" || raw.StartsWith("localhost:") ||
                 raw == "http://localhost" || raw.StartsWith("http://localhost:") ||
@@ -106,8 +122,8 @@ namespace Flow.Launcher.Plugin.Url
         public void Init(PluginInitContext context)
         {
             Context = context;
-            
-            _settings = context.API.LoadSettingJsonStorage<Settings>();
+
+            Settings = context.API.LoadSettingJsonStorage<Settings>();
         }
 
         public string GetTranslatedPluginTitle()
