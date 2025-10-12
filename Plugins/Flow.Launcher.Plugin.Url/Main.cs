@@ -97,9 +97,9 @@ namespace Flow.Launcher.Plugin.Url
             return [];
         }
 
-        private string GetHttpPreference()
+        private static string GetHttpPreference()
         {
-            return _settings.AlwaysOpenWithHttps ? "https" : "http";
+            return Settings.AlwaysOpenWithHttps ? "https" : "http";
         }
 
         public bool IsURL(string raw)
@@ -138,7 +138,7 @@ namespace Flow.Launcher.Plugin.Url
 
         public Control CreateSettingPanel()
         {
-            return new URLSettings(_settings);
+            return new SettingsControl();
         }
     }
 }
