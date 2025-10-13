@@ -8,8 +8,8 @@ using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -1280,9 +1280,9 @@ namespace Flow.Launcher.ViewModel
 
                            if (!match.IsSearchPrecisionScoreMet()) return false;
 
-                        r.Score = match.Score;
-                        return true;
-                    }).ToList();
+                           r.Score = match.Score;
+                           return true;
+                       }).ToList();
                     ContextMenu.AddResults(filtered, id);
                 }
                 else
@@ -1308,7 +1308,7 @@ namespace Flow.Launcher.ViewModel
                 (
                     r => App.API.FuzzySearch(query, r.Title).IsSearchPrecisionScoreMet() ||
                          App.API.FuzzySearch(query, r.SubTitle).IsSearchPrecisionScoreMet()
-                 ).ToList();
+                ).ToList();
                 History.AddResults(filtered, id);
             }
             else
@@ -1320,7 +1320,6 @@ namespace Flow.Launcher.ViewModel
         private List<Result> GetHistoryResults(IEnumerable<HistoryItem> historyItems)
         {
             var results = new List<Result>();
-
             foreach (var h in historyItems)
             {
                 var result = new Result
@@ -1336,11 +1335,10 @@ namespace Flow.Launcher.ViewModel
                 };
                 results.Add(result);
             }
-
             return results;
         }
 
-    private async Task QueryResultsAsync(bool searchDelay, bool isReQuery = false, bool reSelect = true)
+        private async Task QueryResultsAsync(bool searchDelay, bool isReQuery = false, bool reSelect = true)
         {
             _updateSource?.Cancel();
 

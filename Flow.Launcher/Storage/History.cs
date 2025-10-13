@@ -10,9 +10,14 @@ namespace Flow.Launcher.Storage
     public class History
     {
         //Legacy
-        [JsonInclude] public List<HistoryItemLegacy> Items { get; private set; } = [];
-        [JsonInclude] public List<HistoryItem> LastOpenedHistoryItems { get; private set; } = [];
-        [JsonInclude] public List<HistoryItem> QueryHistoryItems { get; private set; } = [];
+        [JsonInclude]
+        public List<HistoryItemLegacy> Items { get; private set; } = [];
+
+        [JsonInclude]
+        public List<HistoryItem> LastOpenedHistoryItems { get; private set; } = [];
+
+        [JsonInclude]
+        public List<HistoryItem> QueryHistoryItems { get; private set; } = [];
 
         private int _maxHistory = 300;
 
@@ -20,7 +25,7 @@ namespace Flow.Launcher.Storage
         {
             if (!settings.ShowHistoryOnHomePage) return;
             if (settings.ShowHistoryQueryResultsForHomePage)
-            { 
+            {
                 AddLastQuery(result);
                 return;
             }
@@ -28,7 +33,7 @@ namespace Flow.Launcher.Storage
         }
 
 
-        public List<HistoryItem> GetHistoryItems(Settings  settings)
+        public List<HistoryItem> GetHistoryItems(Settings settings)
         {
             if (settings.ShowHistoryQueryResultsForHomePage) return QueryHistoryItems.PopulateActions(true);
             return LastOpenedHistoryItems.PopulateActions(false);
@@ -47,8 +52,6 @@ namespace Flow.Launcher.Storage
             }
             if (Items.Count > 0) Items.Clear();
         }
-
-       
 
         private void AddLastQuery(Result result)
         {
@@ -83,11 +86,11 @@ namespace Flow.Launcher.Storage
                 RawQuery = result.OriginQuery.RawQuery,
                 RecordKey = result.RecordKey,
                 ExecutedDateTime = DateTime.Now,
-                ExecuteAction =  result.Action
+                ExecuteAction = result.Action
             };
 
             var existing = LastOpenedHistoryItems.
-                FirstOrDefault(x => x.Title == item.Title &&  x.PluginID == item.PluginID);
+                FirstOrDefault(x => x.Title == item.Title && x.PluginID == item.PluginID);
 
 
             if (existing != null)
