@@ -81,6 +81,7 @@ namespace Flow.Launcher.Storage
                 SubTitle = result.SubTitle,
                 PluginID = result.PluginID,
                 RawQuery = result.OriginQuery.RawQuery,
+                RecordKey = result.RecordKey,
                 ExecutedDateTime = DateTime.Now,
                 ExecuteAction =  result.Action
             };

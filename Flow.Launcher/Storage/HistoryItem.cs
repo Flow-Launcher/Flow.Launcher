@@ -10,6 +10,7 @@ public class HistoryItem
     public string SubTitle { get; set; } = string.Empty;
     public string PluginID { get; set; } = string.Empty;
     public string RawQuery { get; set; }
+    public string RecordKey { get; set; } = string.Empty;
 
     public DateTime ExecutedDateTime { get; set; }
     [JsonIgnore]
