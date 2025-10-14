@@ -491,6 +491,8 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private async Task OpenResultAsync(string index)
         {
+            // Must check query results selected before executing the action
+            var queryResultsSelected = QueryResultsSelected();
             var results = SelectedResults;
             if (index is not null)
             {
@@ -530,7 +532,7 @@ namespace Flow.Launcher.ViewModel
                     Hide();
                 }
             }
-            if (QueryResultsSelected())
+            if (queryResultsSelected)
             {
                 _userSelectedRecord.Add(result);
                 _history.Add(result);
