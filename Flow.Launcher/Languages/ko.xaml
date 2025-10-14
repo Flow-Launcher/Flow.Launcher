@@ -205,6 +205,8 @@
     <system:String x:Key="plugin_query_version">버전</system:String>
     <system:String x:Key="plugin_query_web">웹사이트</system:String>
     <system:String x:Key="plugin_uninstall">제거</system:String>
+    <system:String x:Key="plugin_default_search_delay_time">Search delay time: default</system:String>
+    <system:String x:Key="plugin_search_delay_time">Search delay time: {0}ms</system:String>
     <system:String x:Key="failedToRemovePluginSettingsTitle">Fail to remove plugin settings</system:String>
     <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
     <system:String x:Key="failedToRemovePluginCacheTitle">Fail to remove plugin cache</system:String>
@@ -586,8 +588,9 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
         The specified file manager could not be found. Please check the Custom File Manager setting under Settings &gt; General.
     </system:String>
     <system:String x:Key="errorTitle">Error</system:String>
-    <system:String x:Key="folderOpenError">An error occurred while opening the folder. {0}</system:String>
+    <system:String x:Key="folderOpenError">An error occurred while opening the folder.</system:String>
     <system:String x:Key="browserOpenError">An error occurred while opening the URL in the browser. Please check your Default Web Browser configuration in the General section of the settings window</system:String>
+    <system:String x:Key="fileNotFoundError">File or directory not found: {0}</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">잠시 기다려주세요...</system:String>

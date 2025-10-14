@@ -214,6 +214,8 @@
     <system:String x:Key="plugin_query_version">Version</system:String>
     <system:String x:Key="plugin_query_web">Website</system:String>
     <system:String x:Key="plugin_uninstall">Deinstallieren</system:String>
+    <system:String x:Key="plugin_default_search_delay_time">Search delay time: default</system:String>
+    <system:String x:Key="plugin_search_delay_time">Search delay time: {0}ms</system:String>
     <system:String x:Key="failedToRemovePluginSettingsTitle">Plug-in-Einstellungen können nicht entfernt werden</system:String>
     <system:String x:Key="failedToRemovePluginSettingsMessage">Plug-ins: {0} - Plug-in-Einstellungsdateien können nicht entfernt werden, bitte entfernen Sie diese manuell</system:String>
     <system:String x:Key="failedToRemovePluginCacheTitle">Plug-in-Cache kann nicht entfernt werden</system:String>
@@ -595,8 +597,9 @@ Wenn Sie bei der Eingabe eines Shortcuts ein '@'-Präfix hinzufügen, stimmt die
         Der spezifizierte Dateimanager konnte nicht gefunden werden. Bitte überprüfen Sie die Einstellung des benutzerdefinierten Dateimanagers unter Einstellungen &gt; Allgemein.
     </system:String>
     <system:String x:Key="errorTitle">Fehler</system:String>
-    <system:String x:Key="folderOpenError">Beim Öffnen des Ordners ist ein Fehler aufgetreten. {0}</system:String>
+    <system:String x:Key="folderOpenError">An error occurred while opening the folder.</system:String>
     <system:String x:Key="browserOpenError">Beim Öffnen der URL im Browser ist ein Fehler aufgetreten. Bitte überprüfen Sie die Konfiguration Ihres Default-Webbrowsers im Abschnitt „Allgemein“ des Einstellungsfensters</system:String>
+    <system:String x:Key="fileNotFoundError">File or directory not found: {0}</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Bitte warten Sie ...</system:String>

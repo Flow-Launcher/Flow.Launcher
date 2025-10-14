@@ -76,4 +76,9 @@
     <system:String x:Key="flowlauncher_plugin_sys_plugin_name">Systémové príkazy</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_plugin_description">Poskytuje príkazy súvisiace so systémom ako je vypnutie, uzamknutie počítača atď.</system:String>
 
+    <!--  Theme Selector  -->
+    <system:String x:Key="flowlauncher_plugin_sys_type_isdark_hasblur">Tento motív podporuje 2 režimy (svetlý/tmavý) a rozostrenie priehľadného pozadia</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_type_isdark">Tento motív podporuje 2 režimy (svetlý/tmavý)</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_type_hasblur">Tento motív podporuje rozostrenie priehľadného pozadia</system:String>
+
 </ResourceDictionary>

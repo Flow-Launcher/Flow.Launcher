@@ -5,6 +5,7 @@ using System.IO;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin;
 using System.Text.Json;
+using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher.Core.Plugin
 {
@@ -25,7 +26,7 @@ namespace Flow.Launcher.Core.Plugin
             // todo use linq when diable plugin is implmented since parallel.foreach + list is not thread saft
             foreach (var directory in directories)
             {
-                if (File.Exists(Path.Combine(directory, "NeedDelete.txt")))
+                if (File.Exists(Path.Combine(directory, DataLocation.PluginDeleteFile)))
                 {
                     try
                     {
