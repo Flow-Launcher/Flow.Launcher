@@ -13,7 +13,7 @@
     xmlns:userSettings="clr-namespace:Flow.Launcher.Infrastructure.UserSettings;assembly=Flow.Launcher.Infrastructure"
     Title="General"
     d:DataContext="{d:DesignInstance settingsViewModels:SettingsPaneGeneralViewModel}"
-    d:DesignHeight="10000"
+    d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
     <ui:Page.Resources>
