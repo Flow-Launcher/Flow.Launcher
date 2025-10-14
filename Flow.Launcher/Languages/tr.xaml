@@ -214,6 +214,8 @@
     <system:String x:Key="plugin_query_version">Sürüm</system:String>
     <system:String x:Key="plugin_query_web">İnternet Sitesi</system:String>
     <system:String x:Key="plugin_uninstall">Kaldır</system:String>
+    <system:String x:Key="plugin_default_search_delay_time">Arama gecikme süresi: varsayılan</system:String>
+    <system:String x:Key="plugin_search_delay_time">Arama gecikme süresi: {0}ms</system:String>
     <system:String x:Key="failedToRemovePluginSettingsTitle">Eklenti ayarları kaldırılamıyor</system:String>
     <system:String x:Key="failedToRemovePluginSettingsMessage">Eklentiler: {0} - Ayar dosyaları kaldırılamadı, lütfen elle silin</system:String>
     <system:String x:Key="failedToRemovePluginCacheTitle">Eklenti ön belleği kaldırılamıyor</system:String>
@@ -224,7 +226,7 @@
     <system:String x:Key="failedToUninstallPluginTitle">{0} kaldırılamıyor</system:String>
     <system:String x:Key="fileNotFoundMessage">plugin.json dosyası çıkarılan zip dosyasında bulunamadı veya {0} yolu mevcut değil</system:String>
     <system:String x:Key="pluginExistAlreadyMessage">Bu eklentiyle aynı ID ve sürüme sahip bir eklenti zaten var, ya da mevcut sürüm daha yüksek</system:String>
-    <system:String x:Key="errorCreatingSettingPanel">Error creating setting panel for plugin {0}:{1}{2}</system:String>
+    <system:String x:Key="errorCreatingSettingPanel">Eklenti {0} için ayar paneli oluşturulurken hata oluştu: {1}{2}</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Eklenti Mağazası</system:String>
@@ -333,7 +335,7 @@
     <system:String x:Key="PlaceholderTextTip">Yer tutucu metnini değiştirin. Boş bırakılırsa şu kullanılacak: {0}</system:String>
     <system:String x:Key="KeepMaxResults">Sabit Pencere Boyutu</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">Pencere boyutu sürüklenerek ayarlanamaz.</system:String>
-    <system:String x:Key="MaxShowResultsCannotWorkWithAlwaysPreview">Since Always Preview is on, maximum results shown may not take effect because preview panel requires a certain minimum height</system:String>
+    <system:String x:Key="MaxShowResultsCannotWorkWithAlwaysPreview">Always Preview (Her Zaman Önizleme) açık olduğundan, önizleme paneli belirli bir minimum yükseklik gerektirdiğinden, gösterilen maksimum sonuçlar etkili olmayabilir</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Kısayol Tuşu</system:String>
@@ -493,7 +495,7 @@
     <system:String x:Key="fileManager_file_arg">Dosya Açarken</system:String>
     <system:String x:Key="fileManagerPathNotFound">'{0}' dosya yöneticisi '{1}' konumunda bulunamadı. Devam etmek ister misiniz?</system:String>
     <system:String x:Key="fileManagerPathError">Dosya Yöneticisi Yol Hatası</system:String>
-    <system:String x:Key="fileManagerExplorer">File Explorer</system:String>
+    <system:String x:Key="fileManagerExplorer">Dosya Gezgini</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">İnternet Tarayıcı Seçenekleri</system:String>
@@ -504,8 +506,8 @@
     <system:String x:Key="defaultBrowser_newWindow">Yeni Pencere</system:String>
     <system:String x:Key="defaultBrowser_newTab">Yeni Sekme</system:String>
     <system:String x:Key="defaultBrowser_parameter">Gizli Mod için Bağımsız Değişken</system:String>
-    <system:String x:Key="defaultBrowser_default">Default</system:String>
-    <system:String x:Key="defaultBrowser_new_profile">New Profile</system:String>
+    <system:String x:Key="defaultBrowser_default">Varsayılan</system:String>
+    <system:String x:Key="defaultBrowser_new_profile">Yeni Profil</system:String>
 
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">Önceliği Ayarla</system:String>
@@ -593,8 +595,9 @@
         Belirtilen dosya yöneticisi bulunamadı. Lütfen Ayarlar &gt; Genel bölümündeki Özel Dosya Yöneticisi ayarını kontrol edin.
     </system:String>
     <system:String x:Key="errorTitle">Hata</system:String>
-    <system:String x:Key="folderOpenError">Klasör açılırken bir hata oluştu. {0}</system:String>
+    <system:String x:Key="folderOpenError">Klasör açılırken bir hata oluştu.</system:String>
     <system:String x:Key="browserOpenError">URL tarayıcıda açılırken bir hata oluştu. Lütfen ayarlar penceresindeki Genel bölümden Varsayılan Web Tarayıcısı ayarını kontrol edin</system:String>
+    <system:String x:Key="fileNotFoundError">Dosya veya dizin bulunamadı: {0}</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Lütfen bekleyin...</system:String>
