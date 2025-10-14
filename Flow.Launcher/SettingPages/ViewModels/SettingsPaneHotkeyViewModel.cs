@@ -73,8 +73,6 @@ public partial class SettingsPaneHotkeyViewModel : BaseModel
         if (index >= 0 && index < Settings.CustomPluginHotkeys.Count)
         {
             Settings.CustomPluginHotkeys[index] = new CustomPluginHotkey(window.Hotkey, window.ActionKeyword);
-            HotKeyMapper.RemoveHotkey(settingItem.Hotkey); // remove origin hotkey
-            HotKeyMapper.SetCustomQueryHotkey(Settings.CustomPluginHotkeys[index]); // set new hotkey
         }
     }
 
