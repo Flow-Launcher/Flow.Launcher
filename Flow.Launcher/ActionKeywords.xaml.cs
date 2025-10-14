@@ -47,7 +47,7 @@ namespace Flow.Launcher
 
             if (addedActionKeywords.Any(App.API.ActionKeywordAssigned))
             {
-                App.API.ShowMsgBox(App.API.GetTranslation("newActionKeywordsHasBeenAssigned"));
+                App.API.ShowMsgBox(Localize.newActionKeywordsHasBeenAssigned());
                 return;
             }
 
@@ -63,7 +63,7 @@ namespace Flow.Launcher
             if (sortedOldActionKeywords.SequenceEqual(sortedNewActionKeywords))
             {
                 // User just changes the sequence of action keywords
-                App.API.ShowMsgBox(App.API.GetTranslation("newActionKeywordsSameAsOld"));
+                App.API.ShowMsgBox(Localize.newActionKeywordsSameAsOld());
             }
             else
             {

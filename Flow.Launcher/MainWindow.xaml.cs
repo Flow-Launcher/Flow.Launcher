@@ -1,7 +1,8 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Media;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -24,7 +25,8 @@ using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Plugin.SharedModels;
 using Flow.Launcher.ViewModel;
-using ModernWpf.Controls;
+using iNKORE.UI.WPF.Modern;
+using iNKORE.UI.WPF.Modern.Controls;
 using DataObject = System.Windows.DataObject;
 using Key = System.Windows.Input.Key;
 using MouseButtons = System.Windows.Forms.MouseButtons;
@@ -61,8 +63,9 @@ namespace Flow.Launcher
         private bool _isArrowKeyPressed = false;
 
         // Window Sound Effects
-        private MediaPlayer animationSoundWMP;
-        private SoundPlayer animationSoundWPF;
+        private MediaPlayer _animationSoundWMP;
+        private SoundPlayer _animationSoundWPF;
+        private readonly Lock _soundLock = new();
 
         // Window WndProc
         private HwndSource _hwndSource;
@@ -93,6 +96,7 @@ namespace Flow.Launcher
             UpdatePosition();
 
             InitSoundEffects();
+            RegisterSoundEffectsEvent();
             DataObject.AddPastingHandler(QueryTextBox, QueryTextBox_OnPaste);
             _viewModel.ActualApplicationThemeChanged += ViewModel_ActualApplicationThemeChanged;
         }
@@ -145,8 +149,8 @@ namespace Flow.Launcher
                 _settings.ReleaseNotesVersion = Constant.Version;
                 // Show release note popup with button
                 App.API.ShowMsgWithButton(
-                    string.Format(App.API.GetTranslation("appUpdateTitle"), Constant.Version),
-                    App.API.GetTranslation("appUpdateButtonContent"),
+                    Localize.appUpdateTitle(Constant.Version),
+                    Localize.appUpdateButtonContent(),
                     () =>
                     {
                         Application.Current.Dispatcher.Invoke(() =>
@@ -188,11 +192,11 @@ namespace Flow.Launcher
             // Initialize color scheme
             if (_settings.ColorScheme == Constant.Light)
             {
-                ModernWpf.ThemeManager.Current.ApplicationTheme = ModernWpf.ApplicationTheme.Light;
+                ThemeManager.Current.ApplicationTheme = ApplicationTheme.Light;
             }
             else if (_settings.ColorScheme == Constant.Dark)
             {
-                ModernWpf.ThemeManager.Current.ApplicationTheme = ModernWpf.ApplicationTheme.Dark;
+                ThemeManager.Current.ApplicationTheme = ApplicationTheme.Dark;
             }
 
             // Initialize position
@@ -666,16 +670,6 @@ namespace Flow.Launcher
                         handled = true;
                     }
                     break;
-                case Win32Helper.WM_POWERBROADCAST: // Handle power broadcast messages
-                    // https://learn.microsoft.com/en-us/windows/win32/power/wm-powerbroadcast
-                    if (wParam.ToInt32() == Win32Helper.PBT_APMRESUMEAUTOMATIC)
-                    {
-                        // Fix for sound not playing after sleep / hibernate
-                        // https://stackoverflow.com/questions/64805186/mediaplayer-doesnt-play-after-computer-sleeps
-                        InitSoundEffects();
-                    }
-                    handled = true;
-                    break;
             }
 
             return IntPtr.Zero;
@@ -687,31 +681,78 @@ namespace Flow.Launcher
 
         private void InitSoundEffects()
         {
-            if (_settings.WMPInstalled)
+            lock (_soundLock)
             {
-                animationSoundWMP?.Close();
-                animationSoundWMP = new MediaPlayer();
-                animationSoundWMP.Open(new Uri(AppContext.BaseDirectory + "Resources\\open.wav"));
-            }
-            else
-            {
-                animationSoundWPF?.Dispose();
-                animationSoundWPF = new SoundPlayer(AppContext.BaseDirectory + "Resources\\open.wav");
-                animationSoundWPF.Load();
+                if (_settings.WMPInstalled)
+                {
+                    _animationSoundWMP?.Close();
+                    _animationSoundWMP = new MediaPlayer();
+                    _animationSoundWMP.Open(new Uri(AppContext.BaseDirectory + "Resources\\open.wav"));
+                }
+                else
+                {
+                    _animationSoundWPF?.Dispose();
+                    _animationSoundWPF = new SoundPlayer(AppContext.BaseDirectory + "Resources\\open.wav");
+                    _animationSoundWPF.Load();
+                }
             }
         }
 
         private void SoundPlay()
         {
-            if (_settings.WMPInstalled)
+            lock (_soundLock)
             {
-                animationSoundWMP.Position = TimeSpan.Zero;
-                animationSoundWMP.Volume = _settings.SoundVolume / 100.0;
-                animationSoundWMP.Play();
+                if (_settings.WMPInstalled)
+                {
+                    _animationSoundWMP.Position = TimeSpan.Zero;
+                    _animationSoundWMP.Volume = _settings.SoundVolume / 100.0;
+                    _animationSoundWMP.Play();
+                }
+                else
+                {
+                    _animationSoundWPF.Play();
+                }
             }
-            else
+        }
+
+        private void RegisterSoundEffectsEvent()
+        {
+            // Fix for sound not playing after sleep / hibernate for both modern standby and legacy standby
+            // https://stackoverflow.com/questions/64805186/mediaplayer-doesnt-play-after-computer-sleeps
+            try
             {
-                animationSoundWPF.Play();
+                Win32Helper.RegisterSleepModeListener(() =>
+                {
+                    if (Application.Current == null)
+                    {
+                        return;
+                    }
+
+                    // We must run InitSoundEffects on UI thread because MediaPlayer is a DispatcherObject
+                    if (!Application.Current.Dispatcher.CheckAccess())
+                    {
+                        Application.Current.Dispatcher.Invoke(InitSoundEffects);
+                        return;
+                    }
+
+                    InitSoundEffects();
+                });
+            }
+            catch (Exception e)
+            {
+                App.API.LogException(ClassName, "Failed to register sound effect event", e);
+            }
+        }
+
+        private static void UnregisterSoundEffectsEvent()
+        {
+            try
+            {
+                Win32Helper.UnregisterSleepModeListener();
+            }
+            catch (Exception e)
+            {
+                App.API.LogException(ClassName, "Failed to unregister sound effect event", e);
             }
         }
 
@@ -753,12 +794,12 @@ namespace Flow.Launcher
         private void UpdateNotifyIconText()
         {
             var menu = _contextMenu;
-            ((MenuItem)menu.Items[0]).Header = App.API.GetTranslation("iconTrayOpen") +
+            ((MenuItem)menu.Items[0]).Header = Localize.iconTrayOpen() +
                                                " (" + _settings.Hotkey + ")";
-            ((MenuItem)menu.Items[1]).Header = App.API.GetTranslation("GameMode");
-            ((MenuItem)menu.Items[2]).Header = App.API.GetTranslation("PositionReset");
-            ((MenuItem)menu.Items[3]).Header = App.API.GetTranslation("iconTraySettings");
-            ((MenuItem)menu.Items[4]).Header = App.API.GetTranslation("iconTrayExit");
+            ((MenuItem)menu.Items[1]).Header = Localize.GameMode();
+            ((MenuItem)menu.Items[2]).Header = Localize.PositionReset();
+            ((MenuItem)menu.Items[3]).Header = Localize.iconTraySettings();
+            ((MenuItem)menu.Items[4]).Header = Localize.iconTrayExit();
         }
 
         private void InitializeContextMenu()
@@ -768,31 +809,31 @@ namespace Flow.Launcher
             var openIcon = new FontIcon { Glyph = "\ue71e" };
             var open = new MenuItem
             {
-                Header = App.API.GetTranslation("iconTrayOpen") + " (" + _settings.Hotkey + ")",
+                Header = Localize.iconTrayOpen() + " (" + _settings.Hotkey + ")",
                 Icon = openIcon
             };
             var gamemodeIcon = new FontIcon { Glyph = "\ue7fc" };
             var gamemode = new MenuItem
             {
-                Header = App.API.GetTranslation("GameMode"),
+                Header = Localize.GameMode(),
                 Icon = gamemodeIcon
             };
             var positionresetIcon = new FontIcon { Glyph = "\ue73f" };
             var positionreset = new MenuItem
             {
-                Header = App.API.GetTranslation("PositionReset"),
+                Header = Localize.PositionReset(),
                 Icon = positionresetIcon
             };
             var settingsIcon = new FontIcon { Glyph = "\ue713" };
             var settings = new MenuItem
             {
-                Header = App.API.GetTranslation("iconTraySettings"),
+                Header = Localize.iconTraySettings(),
                 Icon = settingsIcon
             };
             var exitIcon = new FontIcon { Glyph = "\ue7e8" };
             var exit = new MenuItem
             {
-                Header = App.API.GetTranslation("iconTrayExit"),
+                Header = Localize.iconTrayExit(),
                 Icon = exitIcon
             };
 
@@ -802,8 +843,8 @@ namespace Flow.Launcher
             settings.Click += (o, e) => App.API.OpenSettingDialog();
             exit.Click += (o, e) => Close();
 
-            gamemode.ToolTip = App.API.GetTranslation("GameModeToolTip");
-            positionreset.ToolTip = App.API.GetTranslation("PositionResetToolTip");
+            gamemode.ToolTip = Localize.GameModeToolTip();
+            positionreset.ToolTip = Localize.PositionResetToolTip();
 
             _contextMenu.Items.Add(open);
             _contextMenu.Items.Add(gamemode);
@@ -1436,9 +1477,10 @@ namespace Flow.Launcher
                 {
                     _hwndSource?.Dispose();
                     _notifyIcon?.Dispose();
-                    animationSoundWMP?.Close();
-                    animationSoundWPF?.Dispose();
+                    _animationSoundWMP?.Close();
+                    _animationSoundWPF?.Dispose();
                     _viewModel.ActualApplicationThemeChanged -= ViewModel_ActualApplicationThemeChanged;
+                    UnregisterSoundEffectsEvent();
                 }
 
                 _disposed = true;

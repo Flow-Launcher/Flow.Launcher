@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Flow.Launcher"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:ui="http://schemas.modernwpf.com/2019"
+    xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
     xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
     Title="{DynamicResource fileManagerWindow}"
     Width="600"
@@ -75,9 +75,9 @@
                             <TextBlock Text="{DynamicResource fileManager_tips2}" TextWrapping="WrapWithOverflow" />
                         </TextBlock>
                         <TextBlock Margin="0 14 0 0" VerticalAlignment="Center">
-                            <Hyperlink NavigateUri="https://www.flowlauncher.com/docs/#/filemanager" RequestNavigate="Hyperlink_RequestNavigate">
+                            <ui:HyperlinkButton NavigateUri="https://www.flowlauncher.com/docs/#/filemanager">
                                 <TextBlock FontSize="14" Text="{DynamicResource fileManager_learnMore}" />
-                            </Hyperlink>
+                            </ui:HyperlinkButton>
                         </TextBlock>
                     </StackPanel>
                     <Rectangle

@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Windows.Controls;
+using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher.Plugin.Url
 {
-    public class Main : IPlugin, IPluginI18n
+    public class Main : IPlugin, IPluginI18n, ISettingProvider
     {
         //based on https://gist.github.com/dperini/729294
-        private const string urlPattern = "^" +
+        private const string UrlPattern = "^" +
             // protocol identifier
             "(?:(?:https?|ftp)://|)" +
             // user:pass authentication
@@ -39,52 +41,72 @@ namespace Flow.Launcher.Plugin.Url
             // resource path
             "(?:/\\S*)?" +
             "$";
-        Regex reg = new Regex(urlPattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        private PluginInitContext context;
-        private Settings _settings;
-        
+        private readonly Regex UrlRegex = new(UrlPattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        internal static PluginInitContext Context { get; private set; }
+        internal static Settings Settings { get; private set; }
+
         public List<Result> Query(Query query)
         {
             var raw = query.Search;
             if (IsURL(raw))
             {
-                return new List<Result>
-                {
-                    new Result
+                return
+                [
+                    new()
                     {
                         Title = raw,
-                        SubTitle = string.Format(context.API.GetTranslation("flowlauncher_plugin_url_open_url"),raw),
+                        SubTitle = Localize.flowlauncher_plugin_url_open_url(raw),
                         IcoPath = "Images/url.png",
                         Score = 8,
                         Action = _ =>
                         {
-                            if (!raw.ToLower().StartsWith("http"))
+                            if (!raw.StartsWith("http://", StringComparison.OrdinalIgnoreCase) && !raw.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
                             {
-                                raw = "http://" + raw;
+                                raw = GetHttpPreference() + "://" + raw;
                             }
                             try
                             {
-                                context.API.OpenUrl(raw);
-                                
+                                if (Settings.UseCustomBrowser)
+                                {
+                                    if (Settings.OpenInNewBrowserWindow)
+                                    {
+                                        SearchWeb.OpenInBrowserWindow(raw, Settings.BrowserPath, Settings.OpenInPrivateMode, Settings.PrivateModeArgument);
+                                    }
+                                    else
+                                    {
+                                        SearchWeb.OpenInBrowserTab(raw, Settings.BrowserPath, Settings.OpenInPrivateMode, Settings.PrivateModeArgument);
+                                    }
+                                }
+                                else
+                                {
+                                    Context.API.OpenWebUrl(raw);
+                                }
+
                                 return true;
                             }
                             catch(Exception)
                             {
-                                context.API.ShowMsgError(string.Format(context.API.GetTranslation("flowlauncher_plugin_url_cannot_open_url"), raw));
+                                Context.API.ShowMsgError(Localize.flowlauncher_plugin_url_cannot_open_url(raw));
                                 return false;
                             }
                         }
                     }
-                };
+                ];
             }
-            return new List<Result>(0);
+
+            return [];
+        }
+
+        private static string GetHttpPreference()
+        {
+            return Settings.AlwaysOpenWithHttps ? "https" : "http";
         }
 
         public bool IsURL(string raw)
         {
             raw = raw.ToLower();
 
-            if (reg.Match(raw).Value == raw) return true;
+            if (UrlRegex.Match(raw).Value == raw) return true;
 
             if (raw == "localhost" || raw.StartsWith("localhost:") ||
                 raw == "http://localhost" || raw.StartsWith("http://localhost:") ||
@@ -99,19 +121,24 @@ namespace Flow.Launcher.Plugin.Url
 
         public void Init(PluginInitContext context)
         {
-            this.context = context;
-            
-            _settings = context.API.LoadSettingJsonStorage<Settings>();
+            Context = context;
+
+            Settings = context.API.LoadSettingJsonStorage<Settings>();
         }
 
         public string GetTranslatedPluginTitle()
         {
-            return context.API.GetTranslation("flowlauncher_plugin_url_plugin_name");
+            return Localize.flowlauncher_plugin_url_plugin_name();
         }
 
         public string GetTranslatedPluginDescription()
         {
-            return context.API.GetTranslation("flowlauncher_plugin_url_plugin_description");
+            return Localize.flowlauncher_plugin_url_plugin_description();
+        }
+
+        public Control CreateSettingPanel()
+        {
+            return new SettingsControl();
         }
     }
 }
