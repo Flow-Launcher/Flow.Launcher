@@ -70,7 +70,12 @@ public partial class SettingsPaneHotkeyViewModel : BaseModel
         if (window.ShowDialog() is not true) return;
 
         var index = Settings.CustomPluginHotkeys.IndexOf(settingItem);
-        Settings.CustomPluginHotkeys[index] = new CustomPluginHotkey(window.Hotkey, window.ActionKeyword);
+        if (index >= 0 && index < Settings.CustomPluginHotkeys.Count)
+        {
+            Settings.CustomPluginHotkeys[index] = new CustomPluginHotkey(window.Hotkey, window.ActionKeyword);
+            HotKeyMapper.RemoveHotkey(settingItem.Hotkey); // remove origin hotkey
+            HotKeyMapper.SetCustomQueryHotkey(Settings.CustomPluginHotkeys[index]); // set new hotkey
+        }
     }
 
     [RelayCommand]
@@ -128,7 +133,10 @@ public partial class SettingsPaneHotkeyViewModel : BaseModel
         if (window.ShowDialog() is not true) return;
 
         var index = Settings.CustomShortcuts.IndexOf(settingItem);
-        Settings.CustomShortcuts[index] = new CustomShortcutModel(window.Key, window.Value);
+        if (index >= 0 && index < Settings.CustomShortcuts.Count)
+        {
+            Settings.CustomShortcuts[index] = new CustomShortcutModel(window.Key, window.Value);
+        }
     }
 
     [RelayCommand]
