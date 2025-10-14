@@ -807,7 +807,7 @@ namespace Flow.Launcher.Core.Plugin
             }
 
             // Marked for deletion. Will be deleted on next start up
-            using var _ = File.CreateText(Path.Combine(plugin.PluginDirectory, "NeedDelete.txt"));
+            using var _ = File.CreateText(Path.Combine(plugin.PluginDirectory, DataLocation.PluginDeleteFile));
 
             if (checkModified)
             {

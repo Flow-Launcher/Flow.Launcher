@@ -135,8 +135,8 @@ namespace Flow.Launcher.Core.Configuration
         public void PreStartCleanUpAfterPortabilityUpdate()
         {
             // Specify here so this method does not rely on other environment variables to initialise
-            var portableDataDir = Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location.NonNull()).ToString(), "UserData");
-            var roamingDataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FlowLauncher");
+            var portableDataDir = DataLocation.PortableDataPath;
+            var roamingDataDir = DataLocation.RoamingDataPath;
 
             // Get full path to the .dead files for each case
             var portableDataDeleteFilePath = Path.Combine(portableDataDir, DataLocation.DeletionIndicatorFile);
