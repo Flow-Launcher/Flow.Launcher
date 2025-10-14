@@ -45,6 +45,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_input_url">Будь ласка, введіть URL-адресу</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword_exist">Ключове слово дії вже існує, будь ласка, введіть інше</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_succeed">Успішно</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_edit_failed">Failed to update search source. The item may have been removed.</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_iconpath_hint">Підказка: Вам не потрібно розміщувати власні зображення в цьому каталозі, якщо версія Flow оновиться, вони будуть втрачені. Flow автоматично копіює всі зображення з цього каталогу до спеціального каталогу WebSearch.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_websearch_plugin_name">Вебпошук</system:String>
