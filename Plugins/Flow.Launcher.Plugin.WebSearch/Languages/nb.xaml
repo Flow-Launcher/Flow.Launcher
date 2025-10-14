@@ -45,6 +45,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_input_url">Angi en nettadresse</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword_exist">Nøkkelord for handlingen eksisterer allerede, velg et annet</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_succeed">Vellykket</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_edit_failed">Failed to update search source. The item may have been removed.</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_iconpath_hint">Tips: du trenger ikke å plassere egendefinerte bilder i denne katalogen, dersom versjonen av Flow blir oppdatert vil de gå tapt. Flow vil automatisk kopiere bilder utenfor denne katalogen over til WebSearch sin egendefinerte bildeplassering.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_websearch_plugin_name">Nettbaserte søk</system:String>
