@@ -13,7 +13,6 @@ public static class HistoryHelper
 {
     internal static List<HistoryItem> PopulateActions(this List<HistoryItem> items, bool isQuery)
     {
-
         foreach (var item in items)
         {
             if (item.QueryAction != null && item.ExecuteAction != null) continue;
