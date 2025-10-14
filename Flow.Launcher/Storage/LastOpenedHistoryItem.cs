@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text.Json.Serialization;
 using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Storage;
@@ -12,12 +11,6 @@ public class LastOpenedHistoryItem
     public string Query { get; set; } = string.Empty;
     public string RecordKey { get; set; } = string.Empty;
     public DateTime ExecutedDateTime { get; set; }
-
-    [JsonIgnore]
-    public Func<ActionContext, bool> ExecuteAction { get; set; }
-
-    [JsonIgnore]
-    public Func<ActionContext, bool> QueryAction { get; set; }
 
     public bool Equals(Result r)
     {

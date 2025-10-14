@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
-using CommunityToolkit.Mvvm.DependencyInjection;
-using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Storage
@@ -19,7 +17,6 @@ namespace Flow.Launcher.Storage
         public List<LastOpenedHistoryItem> LastOpenedHistoryItems { get; private set; } = [];
 
         private readonly int _maxHistory = 300;
-        private static readonly Settings _settings = Ioc.Default.GetRequiredService<Settings>();
 
         public void PopulateHistoryFromLegacyHistory()
         {
@@ -30,8 +27,7 @@ namespace Flow.Launcher.Storage
                 LastOpenedHistoryItems.Add(new LastOpenedHistoryItem
                 {
                     Query = item.Query,
-                    ExecutedDateTime = item.ExecutedDateTime,
-                    QueryAction = HistoryHelper.GetQueryAction(item.Query)
+                    ExecutedDateTime = item.ExecutedDateTime
                 });
             }
             Items.Clear();
@@ -62,15 +58,9 @@ namespace Flow.Launcher.Storage
                     PluginID = result.PluginID,
                     Query = result.OriginQuery.RawQuery,
                     RecordKey = result.RecordKey,
-                    ExecutedDateTime = DateTime.Now,
-                    ExecuteAction = result.Action
+                    ExecutedDateTime = DateTime.Now
                 });
             }
-        }
-
-        public List<LastOpenedHistoryItem> GetHistoryItems()
-        {
-            return LastOpenedHistoryItems.PopulateActions(_settings.HistoryStyle == HistoryStyle.Query);
         }
     }
 }

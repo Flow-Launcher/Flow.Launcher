@@ -15,6 +15,7 @@ using System.Windows.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core.Plugin;
+using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.DialogJump;
 using Flow.Launcher.Infrastructure.Hotkey;
@@ -353,7 +354,7 @@ namespace Flow.Launcher.ViewModel
             if (QueryResultsSelected())
             {
                 SelectedResults = History;
-                History.SelectedIndex = _history.GetHistoryItems().Count - 1;
+                History.SelectedIndex = _history.LastOpenedHistoryItems.Count - 1;
             }
             else
             {
@@ -381,7 +382,7 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         public void ReverseHistory()
         {
-            var historyItems = _history.GetHistoryItems();
+            var historyItems = _history.LastOpenedHistoryItems;
             if (historyItems.Count > 0)
             {
                 ChangeQueryText(historyItems[^lastHistoryIndex].Query);
@@ -395,7 +396,7 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         public void ForwardHistory()
         {
-            var historyItems = _history.GetHistoryItems();
+            var historyItems = _history.LastOpenedHistoryItems;
             if (historyItems.Count > 0)
             {
                 ChangeQueryText(historyItems[^lastHistoryIndex].Query);
@@ -611,7 +612,7 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void SelectPrevItem()
         {
-            var historyItems = _history.GetHistoryItems();
+            var historyItems = _history.LastOpenedHistoryItems;
             if (QueryResultsSelected() // Results selected
                 && string.IsNullOrEmpty(QueryText) // No input
                 && Results.Visibility != Visibility.Visible // No items in result list, e.g. when home page is off and no query text is entered, therefore the view is collapsed.
@@ -1297,7 +1298,7 @@ namespace Flow.Launcher.ViewModel
             var query = QueryText.ToLower().Trim();
             History.Clear();
 
-            var results = GetHistoryItems(_history.GetHistoryItems());
+            var results = GetHistoryItems(_history.LastOpenedHistoryItems);
 
             if (!string.IsNullOrEmpty(query))
             {
@@ -1317,22 +1318,65 @@ namespace Flow.Launcher.ViewModel
         private List<Result> GetHistoryItems(IEnumerable<LastOpenedHistoryItem> historyItems)
         {
             var results = new List<Result>();
-            foreach (var h in historyItems)
+            if (Settings.HistoryStyle == HistoryStyle.Query)
             {
-                var result = new Result
+                foreach (var h in historyItems)
                 {
-                    Title = Settings.HistoryStyle == HistoryStyle.Query ?
-                        Localize.executeQuery(h.Query) :
-                        string.IsNullOrEmpty(h.Title) ?  // Old migrated history items have no title
+                    var result = new Result
+                    {
+                        Title = Localize.executeQuery(h.Query),
+                        SubTitle = Localize.lastExecuteTime(h.ExecutedDateTime),
+                        IcoPath = Constant.HistoryIcon,
+                        OriginQuery = new Query { RawQuery = h.Query },
+                        Action = _ =>
+                        {
+                            App.API.BackToQueryResults();
+                            App.API.ChangeQuery(h.Query);
+                            return false;
+                        },
+                        Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE81C")
+                    };
+                    results.Add(result);
+                }
+            }
+            else
+            {
+                foreach (var h in historyItems)
+                {
+                    var result = new Result
+                    {
+                        Title = string.IsNullOrEmpty(h.Title) ?  // Old migrated history items have no title
                             Localize.executeQuery(h.Query) :
                             h.Title,
-                    SubTitle = Localize.lastExecuteTime(h.ExecutedDateTime),
-                    IcoPath = Constant.HistoryIcon,
-                    OriginQuery = new Query { RawQuery = h.Query },
-                    Action = Settings.HistoryStyle == HistoryStyle.Query ? h.QueryAction : h.ExecuteAction,
-                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE81C")
-                };
-                results.Add(result);
+                        SubTitle = Localize.lastExecuteTime(h.ExecutedDateTime),
+                        IcoPath = Constant.HistoryIcon,
+                        OriginQuery = new Query { RawQuery = h.Query },
+                        AsyncAction = async c =>
+                        {
+                            var reflectResult = await ResultHelper.PopulateResultsAsync(h);
+                            if (reflectResult != null)
+                            {
+                                if (reflectResult.Action != null)
+                                {
+                                    reflectResult.Action(c);
+                                }
+                                else if (reflectResult.AsyncAction != null)
+                                {
+                                    await reflectResult.AsyncAction(c);
+                                }
+                                return false;
+                            }
+                            else
+                            {
+                                App.API.BackToQueryResults();
+                                App.API.ChangeQuery(h.Query);
+                                return false;
+                            }
+                        },
+                        Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE81C")
+                    };
+                    results.Add(result);
+                }
             }
             return results;
         }
@@ -1564,7 +1608,7 @@ namespace Flow.Launcher.ViewModel
             void QueryHistoryTask(CancellationToken token)
             {
                 // Select last history results and revert its order to make sure last history results are on top
-                var historyItems = _history.GetHistoryItems().TakeLast(Settings.MaxHistoryResultsToShowForHomePage).Reverse();
+                var historyItems = _history.LastOpenedHistoryItems.TakeLast(Settings.MaxHistoryResultsToShowForHomePage).Reverse();
 
                 var results = GetHistoryItems(historyItems);
 
