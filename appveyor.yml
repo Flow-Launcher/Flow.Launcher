@@ -96,3 +96,4 @@ deploy:
     force_update: true
     on:
       branch: master
+
