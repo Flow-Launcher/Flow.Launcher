@@ -1,13 +1,14 @@
-﻿using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
-using Flow.Launcher.Plugin.Explorer.Search.Everything;
-using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
-using Flow.Launcher.Plugin.SharedCommands;
-using System;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Flow.Launcher.Plugin.Explorer.Exceptions;
+using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
+using Flow.Launcher.Plugin.Explorer.Search.Everything;
+using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
+using Flow.Launcher.Plugin.SharedCommands;
 using Path = System.IO.Path;
 
 namespace Flow.Launcher.Plugin.Explorer.Search
@@ -47,6 +48,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         internal async Task<List<Result>> SearchAsync(Query query, CancellationToken token)
         {
             var results = new HashSet<Result>(PathEqualityComparator.Instance);
+            bool isPathSearch = query.Search.IsLocationPathString()
+                                || EnvironmentVariables.IsEnvironmentVariableSearch(query.Search)
+                                || EnvironmentVariables.HasEnvironmentVar(query.Search);
 
             // This allows the user to type the below action keywords and see/search the list of quick folder links
             if (ActionKeywordMatch(query, Settings.ActionKeyword.SearchActionKeyword)
@@ -58,9 +62,13 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 if (string.IsNullOrEmpty(query.Search) && ActionKeywordMatch(query, Settings.ActionKeyword.QuickAccessActionKeyword))
                     return QuickAccess.AccessLinkListAll(query, Settings.QuickAccessLinks);
 
-                var quickAccessLinks = QuickAccess.AccessLinkListMatched(query, Settings.QuickAccessLinks);
 
-                results.UnionWith(quickAccessLinks);
+                if (!isPathSearch)
+                {
+                    var quickAccessLinks = QuickAccess.AccessLinkListMatched(query, Settings.QuickAccessLinks);
+                    results.UnionWith(quickAccessLinks);
+
+                }
             }
             else
             {
@@ -68,10 +76,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             }
 
             IAsyncEnumerable<SearchResult> searchResults;
-
-            bool isPathSearch = query.Search.IsLocationPathString() 
-                || EnvironmentVariables.IsEnvironmentVariableSearch(query.Search)
-                || EnvironmentVariables.HasEnvironmentVar(query.Search);
 
             string engineName;
 
@@ -103,6 +107,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     searchResults = Settings.IndexProvider.SearchAsync(query.Search, token);
                     engineName = Enum.GetName(Settings.IndexSearchEngine);
                     break;
+
+
+                    
                 default:
                     return results.ToList();
             }
@@ -239,7 +246,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             {
                 throw new SearchException(Enum.GetName(Settings.PathEnumerationEngine), e.Message, e);
             }
-
 
             return results.ToList();
         }
