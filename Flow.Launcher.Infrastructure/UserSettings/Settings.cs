@@ -7,6 +7,7 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
+using Flow.Launcher.Localization.Attributes;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
 
@@ -214,64 +215,17 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 }
             }
         }
-        private bool _showHistoryOnHomePage = true;
-        public bool ShowHistoryOnHomePage
+
+        private bool _showHistoryResultsForHomePage = false;
+        public bool ShowHistoryResultsForHomePage
         {
-            get
-            {
-                if (ShowHistoryQueryResultsForHomePage || ShowHistoryLastOpenedResultsForHomePage) return true;
-                return _showHistoryOnHomePage;
-            }
+            get => _showHistoryResultsForHomePage;
             set
             {
-                if (_showHistoryOnHomePage != value)
+                if (_showHistoryResultsForHomePage != value)
                 {
-                    _showHistoryOnHomePage = value;
+                    _showHistoryResultsForHomePage = value;
                     OnPropertyChanged();
-                    if (value == false)
-                    {
-                        ShowHistoryQueryResultsForHomePage = false;
-                        ShowHistoryLastOpenedResultsForHomePage = false;
-                    }
-                }
-            }
-        }
-
-        private bool _showHistoryQueryResultsForHomePage = true;
-        public bool ShowHistoryQueryResultsForHomePage
-        {
-            get => _showHistoryQueryResultsForHomePage;
-            set
-            {
-                if (_showHistoryQueryResultsForHomePage != value)
-                {
-                    _showHistoryQueryResultsForHomePage = value;
-                    OnPropertyChanged();
-                    if (value && _showHistoryLastOpenedResultsForHomePage)
-                    {
-                        _showHistoryLastOpenedResultsForHomePage = false;
-                        OnPropertyChanged(nameof(ShowHistoryLastOpenedResultsForHomePage));
-                    }
-                }
-            }
-        }
-
-
-        private bool _showHistoryLastOpenedResultsForHomePage;
-        public bool ShowHistoryLastOpenedResultsForHomePage
-        {
-            get => _showHistoryLastOpenedResultsForHomePage;
-            set
-            {
-                if (_showHistoryLastOpenedResultsForHomePage != value)
-                {
-                    _showHistoryLastOpenedResultsForHomePage = value;
-                    OnPropertyChanged();
-                    if (value && _showHistoryQueryResultsForHomePage)
-                    {
-                        _showHistoryQueryResultsForHomePage = false;
-                        OnPropertyChanged(nameof(ShowHistoryQueryResultsForHomePage));
-                    }
                 }
             }
         }
@@ -560,6 +514,21 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public LastQueryMode LastQueryMode { get; set; } = LastQueryMode.Selected;
 
+        private HistoryStyle _historyStyle = HistoryStyle.Query;
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public HistoryStyle HistoryStyle
+        {
+            get => _historyStyle;
+            set
+            {
+                if (_historyStyle != value)
+                {
+                    _historyStyle = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public AnimationSpeeds AnimationSpeed { get; set; } = AnimationSpeeds.Medium;
         public int CustomAnimationLength { get; set; } = 360;
@@ -741,5 +710,15 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         FullPath,
         FullPathOpen,
         Directory
+    }
+
+    [EnumLocalize]
+    public enum HistoryStyle
+    {
+        [EnumLocalizeKey(nameof(Localize.queryHistory))]
+        Query,
+
+        [EnumLocalizeKey(nameof(Localize.executedHistory))]
+        LastOpened
     }
 }

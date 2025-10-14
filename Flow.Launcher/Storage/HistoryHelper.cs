@@ -11,13 +11,13 @@ namespace Flow.Launcher.Storage;
 
 public static class HistoryHelper
 {
-    internal static List<HistoryItem> PopulateActions(this List<HistoryItem> items, bool isQuery)
+    internal static List<LastOpenedHistoryItem> PopulateActions(this List<LastOpenedHistoryItem> items, bool isQuery)
     {
         foreach (var item in items)
         {
             if (item.QueryAction != null && item.ExecuteAction != null) continue;
-            if (isQuery && item.QueryAction == null) item.QueryAction = GetQueryAction(item.RawQuery);
-            if (!isQuery && item.ExecuteAction == null) item.ExecuteAction = GetExecuteAction(item.PluginID, item.RawQuery, item.Title, item.SubTitle, item.RecordKey) ?? GetQueryAction(item.RawQuery);
+            if (isQuery && item.QueryAction == null) item.QueryAction = GetQueryAction(item.Query);
+            if (!isQuery && item.ExecuteAction == null) item.ExecuteAction = GetExecuteAction(item.PluginID, item.Query, item.Title, item.SubTitle, item.RecordKey) ?? GetQueryAction(item.Query);
         }
 
         return items;

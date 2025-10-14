@@ -40,7 +40,7 @@ namespace Flow.Launcher.ViewModel
         private string _queryTextBeforeLeaveResults;
         private string _ignoredQueryText; // Used to ignore query text change when switching between context menu and query results
 
-        private readonly FlowLauncherJsonStorage<History> _historyStorage;
+        private readonly FlowLauncherJsonStorage<History> _historyItemsStorage;
         private readonly FlowLauncherJsonStorage<UserSelectedRecord> _userSelectedRecordStorage;
         private readonly FlowLauncherJsonStorageTopMostRecord _topMostRecord;
         private readonly History _history;
@@ -147,12 +147,10 @@ namespace Flow.Launcher.ViewModel
                 }
             };
 
-            _historyStorage = new FlowLauncherJsonStorage<History>();
-
+            _historyItemsStorage = new FlowLauncherJsonStorage<History>();
             _userSelectedRecordStorage = new FlowLauncherJsonStorage<UserSelectedRecord>();
             _topMostRecord = new FlowLauncherJsonStorageTopMostRecord();
-
-            _history = _historyStorage.Load();
+            _history = _historyItemsStorage.Load();
             _history.PopulateHistoryFromLegacyHistory();
             _userSelectedRecord = _userSelectedRecordStorage.Load();
 
@@ -355,7 +353,7 @@ namespace Flow.Launcher.ViewModel
             if (QueryResultsSelected())
             {
                 SelectedResults = History;
-                History.SelectedIndex = _history.GetHistoryItems(Settings).Count - 1;
+                History.SelectedIndex = _history.GetHistoryItems().Count - 1;
             }
             else
             {
@@ -383,10 +381,10 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         public void ReverseHistory()
         {
-            var historyItems = _history.GetHistoryItems(Settings);
+            var historyItems = _history.GetHistoryItems();
             if (historyItems.Count > 0)
             {
-                ChangeQueryText(historyItems[^lastHistoryIndex].RawQuery);
+                ChangeQueryText(historyItems[^lastHistoryIndex].Query);
                 if (lastHistoryIndex < historyItems.Count)
                 {
                     lastHistoryIndex++;
@@ -397,11 +395,10 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         public void ForwardHistory()
         {
-            var historyItems = _history.GetHistoryItems(Settings);
-
+            var historyItems = _history.GetHistoryItems();
             if (historyItems.Count > 0)
             {
-                ChangeQueryText(historyItems[^lastHistoryIndex].RawQuery);
+                ChangeQueryText(historyItems[^lastHistoryIndex].Query);
                 if (lastHistoryIndex > 1)
                 {
                     lastHistoryIndex--;
@@ -533,11 +530,10 @@ namespace Flow.Launcher.ViewModel
                     Hide();
                 }
             }
-
             if (QueryResultsSelected())
             {
-                _history.AddToHistory(result, Settings);
                 _userSelectedRecord.Add(result);
+                _history.Add(result);
                 lastHistoryIndex = 1;
             }
         }
@@ -566,6 +562,7 @@ namespace Flow.Launcher.ViewModel
                     resultsCopy.Add(resultCopy);
                 }
             }
+
             return resultsCopy;
         }
 
@@ -612,11 +609,11 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void SelectPrevItem()
         {
-            var historyItems = _history.GetHistoryItems(Settings);
+            var historyItems = _history.GetHistoryItems();
             if (QueryResultsSelected() // Results selected
                 && string.IsNullOrEmpty(QueryText) // No input
                 && Results.Visibility != Visibility.Visible // No items in result list, e.g. when home page is off and no query text is entered, therefore the view is collapsed.
-                && historyItems.Count > 0)
+                && historyItems.Count > 0) // Have history items
             {
                 lastHistoryIndex = 1;
                 ReverseHistory();
@@ -1298,9 +1295,7 @@ namespace Flow.Launcher.ViewModel
             var query = QueryText.ToLower().Trim();
             History.Clear();
 
-            var items = _history.GetHistoryItems(Settings);
-
-            var results = GetHistoryResults(items);
+            var results = GetHistoryItems(_history.GetHistoryItems());
 
             if (!string.IsNullOrEmpty(query))
             {
@@ -1317,20 +1312,22 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private List<Result> GetHistoryResults(IEnumerable<HistoryItem> historyItems)
+        private List<Result> GetHistoryItems(IEnumerable<LastOpenedHistoryItem> historyItems)
         {
             var results = new List<Result>();
             foreach (var h in historyItems)
             {
                 var result = new Result
                 {
-                    Title =
-                        Settings.ShowHistoryQueryResultsForHomePage ? Localize.executeQuery(h.RawQuery) : h.Title,
+                    Title = Settings.HistoryStyle == HistoryStyle.Query ?
+                        Localize.executeQuery(h.Query) :
+                        string.IsNullOrEmpty(h.Title) ?  // Old migrated history items have no title
+                            Localize.executeQuery(h.Query) :
+                            h.Title,
                     SubTitle = Localize.lastExecuteTime(h.ExecutedDateTime),
                     IcoPath = Constant.HistoryIcon,
-                    PluginID = h.PluginID,
-                    OriginQuery = QueryBuilder.Build(h.RawQuery, PluginManager.NonGlobalPlugins),
-                    Action = Settings.ShowHistoryLastOpenedResultsForHomePage ? h.ExecuteAction : h.QueryAction,
+                    OriginQuery = new Query { RawQuery = h.Query },
+                    Action = Settings.HistoryStyle == HistoryStyle.Query ? h.QueryAction : h.ExecuteAction,
                     Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE81C")
                 };
                 results.Add(result);
@@ -1452,7 +1449,8 @@ namespace Flow.Launcher.ViewModel
                     true => Task.CompletedTask
                 }).ToArray();
 
-                if (Settings.ShowHistoryOnHomePage)
+                // Query history results for home page firstly so it will be put on top of the results
+                if (Settings.ShowHistoryResultsForHomePage)
                 {
                     QueryHistoryTask(currentCancellationToken);
                 }
@@ -1564,9 +1562,9 @@ namespace Flow.Launcher.ViewModel
             void QueryHistoryTask(CancellationToken token)
             {
                 // Select last history results and revert its order to make sure last history results are on top
-                var historyItems = _history.GetHistoryItems(Settings).TakeLast(Settings.MaxHistoryResultsToShowForHomePage).Reverse();
+                var historyItems = _history.GetHistoryItems().TakeLast(Settings.MaxHistoryResultsToShowForHomePage).Reverse();
 
-                var results = GetHistoryResults(historyItems);
+                var results = GetHistoryItems(historyItems);
 
                 if (token.IsCancellationRequested) return;
 
@@ -1702,7 +1700,7 @@ namespace Flow.Launcher.ViewModel
         /// <returns>True if existing results should be cleared, false otherwise.</returns>
         private bool ShouldClearExistingResultsForNonQuery(ICollection<PluginPair> plugins)
         {
-            if (!Settings.ShowHistoryQueryResultsForHomePage && (plugins.Count == 0 || plugins.All(x => x.Metadata.HomeDisabled == true)))
+            if (!Settings.ShowHistoryResultsForHomePage && (plugins.Count == 0 || plugins.All(x => x.Metadata.HomeDisabled == true)))
             {
                 App.API.LogDebug(ClassName, $"Existing results should be cleared for non-query");
                 return true;
@@ -2166,7 +2164,7 @@ namespace Flow.Launcher.ViewModel
         /// </summary>
         public void Save()
         {
-            _historyStorage.Save();
+            _historyItemsStorage.Save();
             _userSelectedRecordStorage.Save();
             _topMostRecord.Save();
         }

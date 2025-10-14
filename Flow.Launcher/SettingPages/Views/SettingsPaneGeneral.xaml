@@ -13,7 +13,7 @@
     xmlns:userSettings="clr-namespace:Flow.Launcher.Infrastructure.UserSettings;assembly=Flow.Launcher.Infrastructure"
     Title="General"
     d:DataContext="{d:DesignInstance settingsViewModels:SettingsPaneGeneralViewModel}"
-    d:DesignHeight="450"
+    d:DesignHeight="10000"
     d:DesignWidth="800"
     mc:Ignorable="d">
     <ui:Page.Resources>
@@ -247,6 +247,22 @@
 
             <ui:SettingsCard
                 Margin="0 14 0 0"
+                Description="{DynamicResource historyStyleTooltip}"
+                Header="{DynamicResource historyStyle}">
+                <ui:SettingsCard.HeaderIcon>
+                    <ui:FontIcon Glyph="&#xE81C;" />
+                </ui:SettingsCard.HeaderIcon>
+
+                <ComboBox
+                    MaxWidth="200"
+                    DisplayMemberPath="Display"
+                    ItemsSource="{Binding HistoryStyles}"
+                    SelectedValue="{Binding Settings.HistoryStyle}"
+                    SelectedValuePath="Value" />
+            </ui:SettingsCard>
+
+            <ui:SettingsCard
+                Margin="0 14 0 0"
                 Description="{DynamicResource autoRestartAfterChangingToolTip}"
                 Header="{DynamicResource autoRestartAfterChanging}">
                 <ui:SettingsCard.HeaderIcon>
@@ -392,24 +408,18 @@
                     OnContent="{DynamicResource enable}" />
             </ui:SettingsCard>
 
-            <ui:SettingsExpander Margin="0 4 0 0" Header="{DynamicResource homePageHistory}" Description="{DynamicResource homePageHistoryTooltip}" IsEnabled="{Binding Settings.ShowHomePage}">
+            <ui:SettingsExpander Margin="0 4 0 0" Header="{DynamicResource historyResultsForHomePage}">
                 <ui:SettingsExpander.HeaderIcon>
                     <ui:FontIcon Glyph="&#xE81C;" />
                 </ui:SettingsExpander.HeaderIcon>
 
                 <ui:ToggleSwitch
-                    IsOn="{Binding Settings.ShowHistoryOnHomePage}"
+                    IsOn="{Binding Settings.ShowHistoryResultsForHomePage}"
                     OffContent="{DynamicResource disable}"
                     OnContent="{DynamicResource enable}" />
 
                 <ui:SettingsExpander.Items>
-                    <ui:SettingsCard Header="{DynamicResource historyQueryResultsForHomePage}" IsEnabled="{Binding Settings.ShowHistoryOnHomePage}">
-                        <RadioButton GroupName="HistoryType" IsChecked="{Binding Settings.ShowHistoryQueryResultsForHomePage}" />
-                    </ui:SettingsCard>
-                    <ui:SettingsCard Header="{DynamicResource historyLastOpenedResultsForHomePage}" IsEnabled="{Binding Settings.ShowHistoryOnHomePage}">
-                        <RadioButton GroupName="HistoryType" IsChecked="{Binding Settings.ShowHistoryLastOpenedResultsForHomePage}" />
-                    </ui:SettingsCard>
-                    <ui:SettingsCard Header="{DynamicResource historyResultsCountForHomePage}" IsEnabled="{Binding Settings.ShowHistoryOnHomePage}">
+                    <ui:SettingsCard Header="{DynamicResource historyResultsCountForHomePage}">
                         <ui:NumberBox
                             Width="120"
                             MinWidth="120"
