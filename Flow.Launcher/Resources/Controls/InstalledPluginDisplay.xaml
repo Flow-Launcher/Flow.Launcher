@@ -6,7 +6,7 @@
     xmlns:converters="clr-namespace:Flow.Launcher.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:ui="http://schemas.modernwpf.com/2019"
+    xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
     xmlns:viewModel="clr-namespace:Flow.Launcher.ViewModel"
     d:DataContext="{d:DesignInstance viewModel:PluginViewModel}"
     d:DesignHeight="300"
@@ -66,6 +66,7 @@
                                 Text="{DynamicResource priority}"
                                 ToolTip="{DynamicResource priorityToolTip}" />
                             <ui:NumberBox
+                                MinWidth="120"
                                 Margin="0 0 8 0"
                                 Maximum="999"
                                 Minimum="-999"
@@ -89,6 +90,7 @@
                                 ToolTip="{DynamicResource searchDelayToolTip}" />
                             <ui:NumberBox
                                 Width="120"
+                                MinWidth="120"
                                 Margin="0 0 8 0"
                                 IsEnabled="{Binding SearchDelayEnabled}"
                                 Maximum="1000"

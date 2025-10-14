@@ -1,17 +1,22 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
-    <system:String x:Key="flowlauncher_plugin_url_open_search_in">Mở tìm kiếm</system:String>
-    <system:String x:Key="flowlauncher_plugin_new_window">Cửa sổ mới</system:String>
-    <system:String x:Key="flowlauncher_plugin_new_tab">Tab mới</system:String>
-    
     <system:String x:Key="flowlauncher_plugin_url_open_url">Mở url:{0}</system:String>
     <system:String x:Key="flowlauncher_plugin_url_cannot_open_url">Không thể mở url:{0}</system:String>
 
     <system:String x:Key="flowlauncher_plugin_url_plugin_name">Địa chỉ URL</system:String>
     <system:String x:Key="flowlauncher_plugin_url_plugin_description">Mở URL đã nhập từ Flow Launcher</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_url_plugin_set_tip">Vui lòng đặt đường dẫn trình duyệt của bạn:</system:String>
     <system:String x:Key="flowlauncher_plugin_url_plugin_choose">Chọn</system:String>
     <system:String x:Key="flowlauncher_plugin_url_plugin_filter">Ứng dụng(*.exe)|*.exe|Tất cả các tệp|*.*</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_url_use_custom_browser">Use custom instead of Flow's default web browser</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_browser_path">Browser path</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_url_new_tab">Thêm Tab mới</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_new_window">Cửa sổ mới</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_url_private_mode">Private mode</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_url_usehttps">Prefer https over http</system:String>
 </ResourceDictionary>

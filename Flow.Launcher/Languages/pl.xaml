@@ -8,33 +8,33 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">Wybierz plik wykonywalny {0}</system:String>
     <system:String x:Key="runtimeExecutableInvalidChooseDownload">
-        Your selected {0} executable is invalid.
+        Wybrany plik wykonywalny {0} jest nieprawidłowy.
         {2}{2}
-        Click yes if you would like select the {0} executable again. Click no if you would like to download {1}
+        Kliknij Tak, jeśli chcesz ponownie wybrać plik wykonywalny {0}. Kliknij Nie, jeśli chcesz pobrać {1}
     </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">Nie można ustawić ścieżki do pliku wykonywalnego {0}. Spróbuj ponownie w ustawieniach Flow (przewiń na sam dół).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">Nie udało się zainicjować wtyczek</system:String>
     <system:String x:Key="failedToInitializePluginsMessage">Wtyczki: {0} – nie udało się ich wczytać i zostaną wyłączone. Skontaktuj się z twórcą wtyczki, aby uzyskać pomoc</system:String>
 
     <!--  Portable  -->
-    <system:String x:Key="restartToDisablePortableMode">Flow Launcher needs to restart to finish disabling portable mode, after the restart your portable data profile will be deleted and roaming data profile kept</system:String>
-    <system:String x:Key="restartToEnablePortableMode">Flow Launcher needs to restart to finish enabling portable mode, after the restart your roaming data profile will be deleted and portable data profile kept</system:String>
-    <system:String x:Key="moveToDifferentLocation">Flow Launcher has detected you enabled portable mode, would you like to move it to a different location?</system:String>
-    <system:String x:Key="shortcutsUninstallerCreated">Flow Launcher has detected you disabled portable mode, the relevant shortcuts and uninstaller entry have been created</system:String>
-    <system:String x:Key="userDataDuplicated">Flow Launcher detected your user data exists both in {0} and {1}. {2}{2}Please delete {1} in order to proceed. No changes have occurred.</system:String>
+    <system:String x:Key="restartToDisablePortableMode">Flow Launcher musi zostać ponownie uruchomiony, aby wyłączyć tryb przenośny. Spowoduje to usunięcie profilu przenośnego i zachowanie profilu mobilnego</system:String>
+    <system:String x:Key="restartToEnablePortableMode">Flow Launcher musi zostać ponownie uruchomiony, aby włączyć tryb przenośny. Spowoduje to usunięcie profilu mobilnego i zachowanie profilu przenośnego</system:String>
+    <system:String x:Key="moveToDifferentLocation">Flow Launcher wykrył włączenie trybu przenośnego. Czy chcesz przenieść aplikację do innej lokalizacji?</system:String>
+    <system:String x:Key="shortcutsUninstallerCreated">Wykryto wyłączenie trybu przenośnego. Odpowiednie skróty oraz deinstalator zostały utworzone</system:String>
+    <system:String x:Key="userDataDuplicated">Flow Launcher wykrył zduplikowane dane użytkownika w dwóch lokalizacjach: {0} oraz {1}.{2}{2}Aby kontynuować, usuń dane znajdujące się w {1}. Nie wprowadzono żadnych zmian.</system:String>
 
     <!--  Plugin Loader  -->
-    <system:String x:Key="pluginHasErrored">The following plugin has errored and cannot be loaded:</system:String>
-    <system:String x:Key="pluginsHaveErrored">The following plugins have errored and cannot be loaded:</system:String>
-    <system:String x:Key="referToLogs">Please refer to the logs for more information</system:String>
+    <system:String x:Key="pluginHasErrored">Nie można załadować następującej wtyczki z powodu błędu:</system:String>
+    <system:String x:Key="pluginsHaveErrored">Nie można załadować następujących wtyczek z powodu błędu:</system:String>
+    <system:String x:Key="referToLogs">Aby uzyskać więcej informacji, zapoznaj się z logami</system:String>
 
     <!--  Http  -->
-    <system:String x:Key="pleaseTryAgain">Please try again</system:String>
-    <system:String x:Key="parseProxyFailed">Unable to parse Http Proxy</system:String>
+    <system:String x:Key="pleaseTryAgain">Proszę spróbować ponownie</system:String>
+    <system:String x:Key="parseProxyFailed">Nie można przetworzyć adresu serwera proxy HTTP</system:String>
 
     <!--  AbstractPluginEnvironment  -->
-    <system:String x:Key="failToInstallTypeScriptEnv">Failed to install TypeScript environment. Please try again later</system:String>
-    <system:String x:Key="failToInstallPythonEnv">Failed to install Python environment. Please try again later.</system:String>
+    <system:String x:Key="failToInstallTypeScriptEnv">Instalacja środowiska TypeScript nie powiodła się. Spróbuj ponownie później.</system:String>
+    <system:String x:Key="failToInstallPythonEnv">Instalacja środowiska Python nie powiodła się. Spróbuj ponownie później.</system:String>
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Nie udało się zarejestrować skrótu klawiszowego „{0}”. Skrót może być używany przez inny program. Zmień skrót na inny lub zamknij program, który go używa.</system:String>
@@ -111,7 +111,7 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="typingStartEn">Zawsze rozpoczynaj wpisywanie w trybie angielskim</system:String>
     <system:String x:Key="typingStartEnTooltip">Tymczasowo zmień metodę wprowadzania na tryb angielski podczas aktywacji Flow.</system:String>
     <system:String x:Key="autoUpdates">Automatyczne aktualizacje</system:String>
-    <system:String x:Key="autoUpdatesTooltip">Automatically check and update the app when available</system:String>
+    <system:String x:Key="autoUpdatesTooltip">Automatycznie sprawdzaj i instaluj aktualizacje, gdy będą dostępne</system:String>
     <system:String x:Key="select">Wybierz</system:String>
     <system:String x:Key="hideOnStartup">Uruchamiaj Flow Launcher zminimalizowany</system:String>
     <system:String x:Key="hideOnStartupToolTip">Okno wyszukiwania Flow Launcher jest ukryte w zasobniku systemowym po uruchomieniu.</system:String>
@@ -123,7 +123,7 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="SearchPrecisionLow">Niska</system:String>
     <system:String x:Key="SearchPrecisionRegular">Standardowa</system:String>
     <system:String x:Key="ShouldUsePinyin">Szukaj z Pinyin</system:String>
-    <system:String x:Key="ShouldUsePinyinToolTip">Pinyin is the standard system of romanized spelling for translating Chinese. Please note, enabling this can significantly increase memory usage during search.</system:String>
+    <system:String x:Key="ShouldUsePinyinToolTip">Pinyin to standardowy system zapisu języka chińskiego za pomocą alfabetu łacińskiego. Należy pamiętać, że włączenie tej opcji może znacznie zwiększyć zużycie pamięci podczas wyszukiwania.</system:String>
     <system:String x:Key="ShouldUseDoublePinyin">Use Double Pinyin</system:String>
     <system:String x:Key="ShouldUseDoublePinyinToolTip">Use Double Pinyin instead of Full Pinyin to search.</system:String>
     <system:String x:Key="DoublePinyinSchema">Double Pinyin Schema</system:String>
@@ -213,6 +213,8 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="plugin_query_version">Wersja</system:String>
     <system:String x:Key="plugin_query_web">Strona</system:String>
     <system:String x:Key="plugin_uninstall">Odinstalowywanie</system:String>
+    <system:String x:Key="plugin_default_search_delay_time">Search delay time: default</system:String>
+    <system:String x:Key="plugin_search_delay_time">Search delay time: {0}ms</system:String>
     <system:String x:Key="failedToRemovePluginSettingsTitle">Nie udało się usunąć ustawień wtyczki</system:String>
     <system:String x:Key="failedToRemovePluginSettingsMessage">Wtyczki: {0} – nie udało się usunąć plików ustawień wtyczek, usuń je ręcznie</system:String>
     <system:String x:Key="failedToRemovePluginCacheTitle">Nie udało się usunąć cache wtyczki</system:String>
@@ -594,8 +596,9 @@ Jeśli dodasz prefiks '@' podczas wprowadzania skrótu, będzie on pasował do d
         Nie można znaleźć określonego menedżera plików. Sprawdź ustawienie Niestandardowy menedżer plików w Ustawienia &gt; Ogólne.
     </system:String>
     <system:String x:Key="errorTitle">Błąd</system:String>
-    <system:String x:Key="folderOpenError">Wystąpił błąd podczas otwierania folderu. {0}</system:String>
+    <system:String x:Key="folderOpenError">An error occurred while opening the folder.</system:String>
     <system:String x:Key="browserOpenError">Wystąpił błąd podczas otwierania adresu URL w przeglądarce. Sprawdź konfigurację domyślnej przeglądarki internetowej w sekcji Ogólne okna ustawień</system:String>
+    <system:String x:Key="fileNotFoundError">File or directory not found: {0}</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Proszę czekać...</system:String>

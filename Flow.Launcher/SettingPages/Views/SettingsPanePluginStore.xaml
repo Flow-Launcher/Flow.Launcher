@@ -3,9 +3,10 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ikw="http://schemas.inkore.net/lib/ui/wpf"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
-    xmlns:ui="http://schemas.modernwpf.com/2019"
+    xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
     xmlns:viewModels="clr-namespace:Flow.Launcher.SettingPages.ViewModels"
     xmlns:wpftk="clr-namespace:WpfToolkit.Controls;assembly=VirtualizingWrapPanel"
     Title="PluginStore"
@@ -51,21 +52,22 @@
             Grid.Column="1"
             Margin="5 24 0 0">
 
-            <StackPanel
+            <ikw:SimpleStackPanel
                 HorizontalAlignment="Right"
                 VerticalAlignment="Center"
                 DockPanel.Dock="Right"
-                Orientation="Horizontal">
+                Orientation="Horizontal"
+                Spacing="8">
                 <Button
                     Height="34"
-                    Margin="0 5 10 5"
+                    Margin="0 5 0 5"
                     Padding="12 4"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
                     Command="{Binding RefreshExternalPluginsCommand}"
                     Content="{DynamicResource refresh}"
                     FontSize="13" />
-                <Button Height="34" Margin="0 0 10 0">
+                <Button Height="34">
                     <ui:FontIcon FontSize="14" Glyph="&#xe71c;" />
                     <ui:FlyoutService.Flyout>
                         <ui:MenuFlyout x:Name="FilterFlyout" Placement="Bottom">
@@ -94,14 +96,12 @@
                 </Button>
                 <Button
                     Height="34"
-                    Margin="0 0 10 0"
                     Command="{Binding InstallPluginCommand}"
                     ToolTip="{DynamicResource installLocalPluginTooltip}">
                     <ui:FontIcon FontSize="14" Glyph="&#xE8DA;" />
                 </Button>
                 <Button
                     Height="34"
-                    Margin="0 0 10 0"
                     Command="{Binding CheckPluginUpdatesCommand}"
                     ToolTip="{DynamicResource checkPluginUpdatesTooltip}">
                     <ui:FontIcon FontSize="14" Glyph="&#xecc5;" />
@@ -112,48 +112,19 @@
                     Height="34"
                     Margin="0 0 26 0"
                     HorizontalAlignment="Right"
+                    VerticalContentAlignment="Center"
+                    ui:ControlHelper.PlaceholderText="{DynamicResource searchplugin}"
                     ContextMenu="{StaticResource TextBoxContextMenu}"
                     DockPanel.Dock="Right"
                     FontSize="14"
                     Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}"
-                    TextAlignment="Left"
                     ToolTip="{DynamicResource searchpluginToolTip}"
                     ToolTipService.InitialShowDelay="200"
-                    ToolTipService.Placement="Top">
-                    <TextBox.Style>
-                        <Style BasedOn="{StaticResource DefaultTextBoxStyle}" TargetType="TextBox">
-                            <Style.Resources>
-                                <VisualBrush
-                                    x:Key="CueBannerBrush"
-                                    AlignmentX="Left"
-                                    AlignmentY="Center"
-                                    Stretch="None">
-                                    <VisualBrush.Visual>
-                                        <Label
-                                            Padding="10 0 0 0"
-                                            Content="{DynamicResource searchplugin}"
-                                            Foreground="{DynamicResource CustomContextDisabled}" />
-                                    </VisualBrush.Visual>
-                                </VisualBrush>
-                            </Style.Resources>
-                            <Style.Triggers>
-                                <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
-                                    <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
-                                </Trigger>
-                                <Trigger Property="Text" Value="{x:Null}">
-                                    <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
-                                </Trigger>
-                                <Trigger Property="IsKeyboardFocused" Value="True">
-                                    <Setter Property="Background" Value="{DynamicResource Color02B}" />
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TextBox.Style>
-                </TextBox>
-            </StackPanel>
-
+                    ToolTipService.Placement="Top" />
+            </ikw:SimpleStackPanel>
         </DockPanel>
-        <ListView
+
+        <ListBox
             x:Name="StoreListBox"
             Grid.Row="1"
             Grid.Column="0"
@@ -161,14 +132,17 @@
             Margin="4 0 0 0"
             Padding="0 0 18 0"
             FontSize="14"
-            ItemContainerStyle="{StaticResource StoreList}"
+            ItemContainerStyle="{DynamicResource StoreList}"
             ItemsSource="{Binding Source={StaticResource PluginStoreCollectionView}}"
+            ScrollViewer.CanContentScroll="True"
             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
             SelectionMode="Single"
             Style="{DynamicResource StoreListStyle}"
+            VirtualizingPanel.IsVirtualizing="True"
             VirtualizingPanel.IsVirtualizingWhenGrouping="True"
-            VirtualizingPanel.ScrollUnit="Pixel">
-            <ListView.ItemsPanel>
+            VirtualizingPanel.ScrollUnit="Pixel"
+            VirtualizingPanel.VirtualizationMode="Recycling">
+            <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <wpftk:VirtualizingWrapPanel
                         x:Name="ItemWrapPanel"
@@ -179,26 +153,25 @@
                         SpacingMode="None"
                         StretchItems="True" />
                 </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
-            <ListView.GroupStyle>
+            </ListBox.ItemsPanel>
+
+            <ListBox.GroupStyle>
                 <GroupStyle HidesIfEmpty="True">
                     <GroupStyle.ContainerStyle>
                         <Style TargetType="{x:Type GroupItem}">
                             <Setter Property="Template">
                                 <Setter.Value>
-                                    <ControlTemplate>
-                                        <Grid>
-                                            <StackPanel Orientation="Vertical">
-                                                <TextBlock
-                                                    Margin="2 0 0 10"
-                                                    VerticalAlignment="Top"
-                                                    FontSize="16"
-                                                    FontWeight="Bold"
-                                                    Foreground="{DynamicResource Color05B}"
-                                                    Text="{Binding Name, Converter={StaticResource TextConverter}}" />
-                                                <ItemsPresenter />
-                                            </StackPanel>
-                                        </Grid>
+                                    <ControlTemplate TargetType="{x:Type GroupItem}">
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBlock
+                                                Margin="2 0 0 10"
+                                                VerticalAlignment="Top"
+                                                FontSize="16"
+                                                FontWeight="Bold"
+                                                Foreground="{DynamicResource Color05B}"
+                                                Text="{Binding Name, Converter={StaticResource TextConverter}}" />
+                                            <ItemsPresenter />
+                                        </StackPanel>
                                     </ControlTemplate>
                                 </Setter.Value>
                             </Setter>
@@ -210,9 +183,9 @@
                         </ItemsPanelTemplate>
                     </GroupStyle.Panel>
                 </GroupStyle>
-            </ListView.GroupStyle>
+            </ListBox.GroupStyle>
 
-            <ListView.ItemTemplate>
+            <ListBox.ItemTemplate>
                 <DataTemplate>
                     <DataTemplate.Resources>
                         <Style x:Key="StoreListItemBtnStyle" TargetType="Button">
@@ -262,7 +235,6 @@
                         HorizontalContentAlignment="Stretch"
                         VerticalContentAlignment="Stretch"
                         BorderThickness="0"
-                        FocusVisualStyle="{StaticResource StoreItemFocusVisualStyleKey}"
                         Style="{DynamicResource StoreListItemBtnStyle}">
                         <ui:FlyoutService.Flyout>
                             <ui:Flyout x:Name="InstallFlyout" Placement="Bottom">
@@ -394,7 +366,7 @@
                         </Grid>
                     </Button>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </ui:Page>

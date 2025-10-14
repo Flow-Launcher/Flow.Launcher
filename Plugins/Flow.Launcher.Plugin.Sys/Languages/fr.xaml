@@ -76,4 +76,9 @@
     <system:String x:Key="flowlauncher_plugin_sys_plugin_name">Commandes système</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_plugin_description">Fournit des commandes liées au système. Par exemple, arrêt, verrouillage, paramètres, etc.</system:String>
 
+    <!--  Theme Selector  -->
+    <system:String x:Key="flowlauncher_plugin_sys_type_isdark_hasblur">Ce thème prend en charge deux modes (clair / sombre) et un fond transparent flou</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_type_isdark">Ce thème prend en charge deux modes (clair / sombre)</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_type_hasblur">Ce thème prend en charge un fond transparent flou</system:String>
+
 </ResourceDictionary>

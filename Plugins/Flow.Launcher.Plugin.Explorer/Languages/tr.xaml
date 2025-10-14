@@ -6,7 +6,7 @@
     <system:String x:Key="plugin_explorer_quick_access_link_no_folder_selected">Lütfen bir klasör yolu seçin.</system:String>
     <system:String x:Key="plugin_explorer_quick_access_link_path_already_exists">Lütfen farklı bir isim veya klasör yolu seçin.</system:String>
     <system:String x:Key="plugin_explorer_delete_quick_access_link">Bu hızlı erişim bağlantısını silmek istediğinizden emin misiniz?</system:String>
-    <system:String x:Key="plugin_explorer_delete_index_search_excluded_path">Are you sure you want to delete this index search excluded path?</system:String>
+    <system:String x:Key="plugin_explorer_delete_index_search_excluded_path">Bu dizin arama hariç tutulan yolu silmek istediğinizden emin misiniz?</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">Lütfen bir klasör bağlantısı seçin</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">{0} bağlantısını silmek istediğinize emin misiniz?</system:String>
     <system:String x:Key="plugin_explorer_deletefileconfirm">Bu dosyayı kalıcı olarak silmek istediğinizden emin misiniz?</system:String>
@@ -22,7 +22,7 @@
     <system:String x:Key="plugin_explorer_directoryinfosearch_error">Arama sırasında hata oluştu: {0}</system:String>
     <system:String x:Key="plugin_explorer_opendir_error">Klasör açılamadı</system:String>
     <system:String x:Key="plugin_explorer_openfile_error">Dosya açılamadı</system:String>
-    <system:String x:Key="plugin_explorer_new_action_keyword_assigned">This new action keyword is already assigned to another plugin, please choose a different one</system:String>
+    <system:String x:Key="plugin_explorer_new_action_keyword_assigned">Bu yeni anahtar kelime zaten başka bir eklentiye atanmıştır, lütfen farklı bir tane seçin</system:String>
 
     <!--  Controls  -->
     <system:String x:Key="plugin_explorer_delete">Sil</system:String>

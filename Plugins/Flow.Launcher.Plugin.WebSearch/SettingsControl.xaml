@@ -51,33 +51,46 @@
             ItemsSource="{Binding Settings.SearchSources}"
             MouseDoubleClick="MouseDoubleClickItem"
             SelectedItem="{Binding Settings.SelectedSearchSource}"
+            SizeChanged="ListView_SizeChanged"
+            PreviewMouseLeftButtonDown="ListView_PreviewMouseLeftButtonDown"
+            PreviewMouseMove="ListView_PreviewMouseMove"
+            AllowDrop="True"
+            Drop="ListView_Drop"
             Style="{StaticResource {x:Static GridView.GridViewStyleKey}}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="50">
+                    <!--  Margin="0 4" is a workaround to set this TextBlock to vertially center  -->
+                    <GridViewColumn Width="45">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Image
                                     Width="20"
                                     Height="20"
-                                    Margin="6 0 0 0"
+                                    Margin="6 4 0 4"
                                     Source="{Binding Path=IconPath}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn
-                        Width="130"
-                        DisplayMemberBinding="{Binding ActionKeyword}"
-                        Header="{DynamicResource flowlauncher_plugin_websearch_action_keyword}" />
-                    <GridViewColumn
-                        Width="239"
-                        DisplayMemberBinding="{Binding Title}"
-                        Header="{DynamicResource flowlauncher_plugin_websearch_title}" />
-                    <GridViewColumn Width="140" Header="{DynamicResource flowlauncher_plugin_websearch_enable}">
+                    <!--  Margin="0 6" is a workaround to set this TextBlock to vertially center  -->
+                    <GridViewColumn Width="135" Header="{DynamicResource flowlauncher_plugin_websearch_action_keyword}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock>
+                                <TextBlock Margin="0 6" Text="{Binding ActionKeyword}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="145" Header="{DynamicResource flowlauncher_plugin_websearch_title}">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Margin="0 6" Text="{Binding Title}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="112" Header="{DynamicResource flowlauncher_plugin_websearch_enable}">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Margin="0 6">
                                     <TextBlock.Style>
                                         <Style TargetType="TextBlock">
                                             <Setter Property="Text" Value="{DynamicResource flowlauncher_plugin_websearch_false}" />
@@ -92,17 +105,16 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn
-                        Width="120"
-                        Header="{DynamicResource flowlauncher_plugin_websearch_private_mode_label}">
+
+                    <!--  CheckBox is vertially center by default  -->
+                    <GridViewColumn Width="123" Header="{DynamicResource flowlauncher_plugin_websearch_private_mode_label}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <CheckBox
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
                                     IsChecked="{Binding IsPrivateMode}"
-                                    IsEnabled="False"
-                                    />
+                                    IsEnabled="False" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
