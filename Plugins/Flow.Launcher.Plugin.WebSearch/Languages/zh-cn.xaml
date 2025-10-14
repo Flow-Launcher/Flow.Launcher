@@ -45,6 +45,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_input_url">请输入URL</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword_exist">触发关键字已经存在，请选择一个新的关键字</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_succeed">操作成功</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_edit_failed">更新搜索来源失败。该项可能已被删除。</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_iconpath_hint">提示：您不需要在此目录中放置自定义图像，当 Flow 更新时，该目录下内容将会丢失。Flow 会自动将此目录之外的所有图像复制到网页搜索的自定义图像位置。</system:String>
 
     <system:String x:Key="flowlauncher_plugin_websearch_plugin_name">网页搜索</system:String>
