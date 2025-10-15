@@ -1318,9 +1318,10 @@ namespace Flow.Launcher.ViewModel
         private List<Result> GetHistoryItems(IEnumerable<LastOpenedHistoryItem> historyItems)
         {
             var results = new List<Result>();
+            var historyItemsFiltered = historyItems.Where(x => x.HistoryStyle == Settings.HistoryStyle).ToList();
             if (Settings.HistoryStyle == HistoryStyle.Query)
             {
-                foreach (var h in historyItems)
+                foreach (var h in historyItemsFiltered)
                 {
                     var result = new Result
                     {
@@ -1341,7 +1342,7 @@ namespace Flow.Launcher.ViewModel
             }
             else
             {
-                foreach (var h in historyItems)
+                foreach (var h in historyItemsFiltered)
                 {
                     var result = new Result
                     {
@@ -1364,15 +1365,14 @@ namespace Flow.Launcher.ViewModel
                                 {
                                     await reflectResult.AsyncAction(c);
                                 }
+
                                 return false;
                             }
-                            else
-                            {
-                                App.API.BackToQueryResults();
-                                App.API.ChangeQuery(h.Query);
-                                return false;
-                            }
-                        },
+
+                            App.API.BackToQueryResults();
+                            App.API.ChangeQuery(h.Query);
+                            return false;
+                    },
                         Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE81C")
                     };
                     results.Add(result);
