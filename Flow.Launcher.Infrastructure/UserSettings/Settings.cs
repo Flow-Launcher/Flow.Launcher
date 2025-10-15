@@ -716,9 +716,9 @@ namespace Flow.Launcher.Infrastructure.UserSettings
     public enum HistoryStyle
     {
         [EnumLocalizeKey(nameof(Localize.queryHistory))]
-        Query = 1,
+        Query,
 
         [EnumLocalizeKey(nameof(Localize.executedHistory))]
-        LastOpened = 2
+        LastOpened
     }
 }

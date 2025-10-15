@@ -2,7 +2,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Flow.Launcher.Core.Plugin;
-using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Storage;
 
@@ -41,21 +40,5 @@ public static class ResultHelper
         {
             return null;
         }
-    }
-
-    public static bool IsEquals(this Result result, LastOpenedHistoryItem item, HistoryStyle style)
-    {
-        bool keyMatches = string.IsNullOrEmpty(result.RecordKey) && string.IsNullOrEmpty(item.RecordKey)
-                        ? item.Title == result.Title
-                           : !string.IsNullOrEmpty(result.RecordKey) && !string.IsNullOrEmpty(item.RecordKey) && item.RecordKey == result.RecordKey;
-
-        bool queryMatches = style != HistoryStyle.Query || (result.OriginQuery != null && item.Query == result.OriginQuery.RawQuery);
-
-
-        return keyMatches
-               && queryMatches
-               && item.SubTitle == result.SubTitle
-               && item.PluginID == result.PluginID
-               && item.HistoryStyle == style;
     }
 }
