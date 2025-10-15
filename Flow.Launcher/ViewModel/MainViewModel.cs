@@ -535,7 +535,7 @@ namespace Flow.Launcher.ViewModel
 
             // Record user selected result for result ranking
             _userSelectedRecord.Add(result);
-            // Add item to histroy only if it is from results but not context menu or history
+            // Add item to history only if it is from results but not context menu or history
             if (queryResultsSelected)
             {
                 _history.Add(result);
