@@ -185,7 +185,7 @@
   </Target>
   
   <Target Name="RemoveDuplicateAnalyzers" BeforeTargets="CoreCompile">
-    <!-- Work around https://github.com/dotnet/wpf/issues/6792 -->
+    <!-- Workaround https://github.com/dotnet/wpf/issues/6792 -->
     <ItemGroup>
       <FilteredAnalyzer Include="@(Analyzer-&gt;Distinct())" />
       <Analyzer Remove="@(Analyzer)" />
