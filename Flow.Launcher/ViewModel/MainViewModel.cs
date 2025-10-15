@@ -422,7 +422,6 @@ namespace Flow.Launcher.ViewModel
                         _ = Task.Run(() => DialogJump.JumpToPathAsync(DialogWindowHandle, dialogJumpResult.DialogJumpPath));
                     }
                 }
-
                 return;
             }
 
@@ -1358,14 +1357,20 @@ namespace Flow.Launcher.ViewModel
                             {
                                 if (reflectResult.Action != null)
                                 {
+                                    // Since some actions may need to hide the Flow window to execute
+                                    // So let us populate the results of them
                                     return reflectResult.Action(c);
                                 }
                                 if (reflectResult.AsyncAction != null)
                                 {
-                                   return await reflectResult.AsyncAction(c);
+                                    // Since some actions may need to hide the Flow window to execute
+                                    // So let us populate the results of them
+                                    return await reflectResult.AsyncAction(c);
                                 }
                                 return false;
                             }
+
+                            // If we cannot get the result, fallback to re-query
                             App.API.BackToQueryResults();
                             App.API.ChangeQuery(h.Query);
                             return false;
