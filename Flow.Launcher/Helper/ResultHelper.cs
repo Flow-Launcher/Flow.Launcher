@@ -54,6 +54,7 @@ public static class ResultHelper
 
         return keyMatches
                && queryMatches
+               && item.SubTitle == result.SubTitle
                && item.PluginID == result.PluginID
                && item.HistoryStyle == style;
     }
