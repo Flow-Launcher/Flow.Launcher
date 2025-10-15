@@ -171,6 +171,10 @@
     <system:String x:Key="homePageToolTip">Afficher les résultats de la page d'accueil lorsque le texte de la requête est vide.</system:String>
     <system:String x:Key="historyResultsForHomePage">Afficher les résultats de l'historique sur la page d'accueil</system:String>
     <system:String x:Key="historyResultsCountForHomePage">Maximum de résultats de l'historique affichés sur la page d'accueil</system:String>
+    <system:String x:Key="historyStyle">History Style</system:String>
+    <system:String x:Key="historyStyleTooltip">Choose the type of history to show in the History and Home Page</system:String>
+    <system:String x:Key="queryHistory">Query history</system:String>
+    <system:String x:Key="executedHistory">Last opened history</system:String>
     <system:String x:Key="homeToggleBoxToolTip">Ceci ne peut être édité que si le plugin prend en charge la fonction Accueil et que la page d'accueil est activée.</system:String>
     <system:String x:Key="showAtTopmost">Afficher la fenêtre de recherche en premier plan</system:String>
     <system:String x:Key="showAtTopmostToolTip">Outrepasse le paramètre 'toujours en premier plan' des autres programmes et affiche Flow Launcher en première position.</system:String>
