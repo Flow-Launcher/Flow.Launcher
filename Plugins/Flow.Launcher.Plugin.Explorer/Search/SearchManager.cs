@@ -47,6 +47,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         internal async Task<List<Result>> SearchAsync(Query query, CancellationToken token)
         {
+            var results = new HashSet<Result>(PathEqualityComparator.Instance);
 
             // This allows the user to type the below action keywords and see/search the list of quick folder links
             if (ActionKeywordMatch(query, Settings.ActionKeyword.SearchActionKeyword)
@@ -64,7 +65,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 return new List<Result>();
 
             }
-            var results = new HashSet<Result>(PathEqualityComparator.Instance);
             bool isPathSearch = query.Search.IsLocationPathString()
                                 || EnvironmentVariables.IsEnvironmentVariableSearch(query.Search)
                                 || EnvironmentVariables.HasEnvironmentVar(query.Search);
