@@ -832,9 +832,25 @@ namespace Flow.Launcher.Infrastructure.DialogJump
                     return true;
                 }
                 // file: URI paths
-                var localPath = path.StartsWith("file:", StringComparison.OrdinalIgnoreCase)
-                    ? new Uri(path).LocalPath
-                    : path;
+                string localPath;
+                if (path.StartsWith("file:", StringComparison.OrdinalIgnoreCase))
+                {
+                    // Try to create a URI from the path
+                    if (Uri.TryCreate(path, UriKind.Absolute, out var uri))
+                    {
+                        localPath = uri.LocalPath;
+                    }
+                    else
+                    {
+                        // If URI creation fails, treat it as a regular path
+                        // by removing the "file:" prefix
+                        localPath = path.Substring(5);
+                    }
+                }
+                else
+                {
+                    localPath = path;
+                }
                 // Is folder?
                 var isFolder = Directory.Exists(localPath);
                 // Is file?
