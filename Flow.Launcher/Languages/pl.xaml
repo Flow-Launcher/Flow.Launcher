@@ -170,6 +170,10 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="homePageToolTip">Wyświetl wyniki strony głównej, gdy pole wyszukiwania jest puste.</system:String>
     <system:String x:Key="historyResultsForHomePage">Pokaż wyniki historii na stronie głównej</system:String>
     <system:String x:Key="historyResultsCountForHomePage">Maksymalna liczba wyników historii wyświetlanych na stronie głównej</system:String>
+    <system:String x:Key="historyStyle">History Style</system:String>
+    <system:String x:Key="historyStyleTooltip">Choose the type of history to show in the History and Home Page</system:String>
+    <system:String x:Key="queryHistory">Query history</system:String>
+    <system:String x:Key="executedHistory">Last opened history</system:String>
     <system:String x:Key="homeToggleBoxToolTip">Można edytować tylko wtedy, gdy wtyczka obsługuje funkcję Strona główna i jest ona włączona.</system:String>
     <system:String x:Key="showAtTopmost">Wyświetl okno wyszukiwania na wierzchu</system:String>
     <system:String x:Key="showAtTopmostToolTip">Wyświetl okno wyszukiwania ponad innymi oknami</system:String>
