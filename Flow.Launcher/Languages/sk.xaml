@@ -169,14 +169,14 @@ Nevykonali sa žiadne zmeny.</system:String>
     <system:String x:Key="KoreanImeSettingChangeFailTitle">Nepodarilo sa zmeniť nastavenie kórejského IME</system:String>
     <system:String x:Key="KoreanImeSettingChangeFailSubTitle">Skontrolujte prístup do systémového registra alebo kontaktujte podporu.</system:String>
     <system:String x:Key="homePage">Domovská stránka</system:String>
-    <system:String x:Key="homePageToolTip">Zobraziť výsledky Domovskej stránky, keď je text dopytu prázdny.</system:String>
-    <system:String x:Key="historyResultsForHomePage">Zobraziť výsledky histórie na Domovskej stránke</system:String>
-    <system:String x:Key="historyResultsCountForHomePage">Maximálny počet zobrazených výsledkov histórie na Domovskej stránke</system:String>
-    <system:String x:Key="historyStyle">History Style</system:String>
-    <system:String x:Key="historyStyleTooltip">Choose the type of history to show in the History and Home Page</system:String>
-    <system:String x:Key="queryHistory">Query history</system:String>
-    <system:String x:Key="executedHistory">Last opened history</system:String>
-    <system:String x:Key="homeToggleBoxToolTip">Úprava je možná len vtedy, ak plugin podporuje funkciu Domovská stránka a Domovská stránka je povolená.</system:String>
+    <system:String x:Key="homePageToolTip">Zobraziť výsledky domovskej stránky, keď je text dopytu prázdny.</system:String>
+    <system:String x:Key="historyResultsForHomePage">Zobraziť výsledky histórie na domovskej stránke</system:String>
+    <system:String x:Key="historyResultsCountForHomePage">Maximálny počet histórie výsledkov zobrazenej na domovskej stránke</system:String>
+    <system:String x:Key="historyStyle">Štýl histórie</system:String>
+    <system:String x:Key="historyStyleTooltip">Vyberte, ktorý typ histórie sa má zobraziť v histórii a na domovskej stránke</system:String>
+    <system:String x:Key="queryHistory">História dopytov</system:String>
+    <system:String x:Key="executedHistory">História naposledy otvorených</system:String>
+    <system:String x:Key="homeToggleBoxToolTip">Úprava je možná len vtedy, ak plugin podporuje funkciu domovská stránka a zároveň je povolená.</system:String>
     <system:String x:Key="showAtTopmost">Zobraziť vyhľadávacie okno v popredí</system:String>
     <system:String x:Key="showAtTopmostToolTip">Prepíše nastavenie &quot;Vždy na vrchu&quot; ostatných programov a zobrazí navrchu Flow.</system:String>
     <system:String x:Key="autoRestartAfterChanging">Reštartovať po úprave pluginu cez Repozitár pluginov</system:String>
@@ -539,7 +539,7 @@ Nevykonali sa žiadne zmeny.</system:String>
 
     <!--  Search Delay Settings Dialog  -->
     <system:String x:Key="homeTitle">Domovská stránka</system:String>
-    <system:String x:Key="homeTips">Ak chcete zobrazovať výsledky pluginu, keď je dopyt prázdny, povoľte funkciu Domovská stránka.</system:String>
+    <system:String x:Key="homeTips">Ak chcete zobrazovať výsledky pluginu, keď je dopyt prázdny, povoľte funkciu domovská stránka.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Klávesová skratka vlastného vyhľadávania</system:String>
