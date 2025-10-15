@@ -532,9 +532,12 @@ namespace Flow.Launcher.ViewModel
                     Hide();
                 }
             }
+
+            // Record user selected result for result ranking
+            _userSelectedRecord.Add(result);
+            // Add item to histroy only if it is from results but not context menu or history
             if (queryResultsSelected)
             {
-                _userSelectedRecord.Add(result);
                 _history.Add(result);
                 lastHistoryIndex = 1;
             }
