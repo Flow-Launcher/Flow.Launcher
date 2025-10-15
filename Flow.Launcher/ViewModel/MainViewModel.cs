@@ -8,16 +8,17 @@ using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core.Plugin;
+using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.DialogJump;
+using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
@@ -152,6 +153,7 @@ namespace Flow.Launcher.ViewModel
             _userSelectedRecordStorage = new FlowLauncherJsonStorage<UserSelectedRecord>();
             _topMostRecord = new FlowLauncherJsonStorageTopMostRecord();
             _history = _historyItemsStorage.Load();
+            _history.PopulateHistoryFromLegacyHistory();
             _userSelectedRecord = _userSelectedRecordStorage.Load();
 
             ContextMenu = new ResultsViewModel(Settings, this)
@@ -353,7 +355,7 @@ namespace Flow.Launcher.ViewModel
             if (QueryResultsSelected())
             {
                 SelectedResults = History;
-                History.SelectedIndex = _history.Items.Count - 1;
+                History.SelectedIndex = _history.LastOpenedHistoryItems.Count - 1;
             }
             else
             {
@@ -381,10 +383,11 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         public void ReverseHistory()
         {
-            if (_history.Items.Count > 0)
+            var historyItems = _history.LastOpenedHistoryItems;
+            if (historyItems.Count > 0)
             {
-                ChangeQueryText(_history.Items[^lastHistoryIndex].Query);
-                if (lastHistoryIndex < _history.Items.Count)
+                ChangeQueryText(historyItems[^lastHistoryIndex].Query);
+                if (lastHistoryIndex < historyItems.Count)
                 {
                     lastHistoryIndex++;
                 }
@@ -394,9 +397,10 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         public void ForwardHistory()
         {
-            if (_history.Items.Count > 0)
+            var historyItems = _history.LastOpenedHistoryItems;
+            if (historyItems.Count > 0)
             {
-                ChangeQueryText(_history.Items[^lastHistoryIndex].Query);
+                ChangeQueryText(historyItems[^lastHistoryIndex].Query);
                 if (lastHistoryIndex > 1)
                 {
                     lastHistoryIndex--;
@@ -488,6 +492,8 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private async Task OpenResultAsync(string index)
         {
+            // Must check query results selected before executing the action
+            var queryResultsSelected = QueryResultsSelected();
             var results = SelectedResults;
             if (index is not null)
             {
@@ -528,10 +534,12 @@ namespace Flow.Launcher.ViewModel
                 }
             }
 
-            if (QueryResultsSelected())
+            // Record user selected result for result ranking
+            _userSelectedRecord.Add(result);
+            // Add item to history only if it is from results but not context menu or history
+            if (queryResultsSelected)
             {
-                _userSelectedRecord.Add(result);
-                _history.Add(result.OriginQuery.RawQuery);
+                _history.Add(result);
                 lastHistoryIndex = 1;
             }
         }
@@ -560,7 +568,7 @@ namespace Flow.Launcher.ViewModel
                     resultsCopy.Add(resultCopy);
                 }
             }
-            
+
             return resultsCopy;
         }
 
@@ -607,10 +615,11 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void SelectPrevItem()
         {
+            var historyItems = _history.LastOpenedHistoryItems;
             if (QueryResultsSelected() // Results selected
                 && string.IsNullOrEmpty(QueryText) // No input
                 && Results.Visibility != Visibility.Visible // No items in result list, e.g. when home page is off and no query text is entered, therefore the view is collapsed.
-                && _history.Items.Count > 0) // Have history items
+                && historyItems.Count > 0) // Have history items
             {
                 lastHistoryIndex = 1;
                 ReverseHistory();
@@ -909,7 +918,7 @@ namespace Flow.Launcher.ViewModel
         private string _placeholderText;
         public string PlaceholderText
         {
-            get => string.IsNullOrEmpty(_placeholderText) ? Localize.queryTextBoxPlaceholder(): _placeholderText;
+            get => string.IsNullOrEmpty(_placeholderText) ? Localize.queryTextBoxPlaceholder() : _placeholderText;
             set
             {
                 _placeholderText = value;
@@ -1151,6 +1160,7 @@ namespace Flow.Launcher.ViewModel
                         HideInternalPreview();
                         _ = OpenExternalPreviewAsync(path);
                     }
+
                     break;
                 case true
                     when !CanExternalPreviewSelectedResult(out var _):
@@ -1264,18 +1274,18 @@ namespace Flow.Launcher.ViewModel
                     var filtered = results.Select(x => x.Clone()).Where
                     (
                         r =>
-                        {
-                            var match = App.API.FuzzySearch(query, r.Title);
-                            if (!match.IsSearchPrecisionScoreMet())
-                            {
-                                match = App.API.FuzzySearch(query, r.SubTitle);
-                            }
+                       {
+                           var match = App.API.FuzzySearch(query, r.Title);
+                           if (!match.IsSearchPrecisionScoreMet())
+                           {
+                               match = App.API.FuzzySearch(query, r.SubTitle);
+                           }
 
-                            if (!match.IsSearchPrecisionScoreMet()) return false;
+                           if (!match.IsSearchPrecisionScoreMet()) return false;
 
-                            r.Score = match.Score;
-                            return true;
-                        }).ToList();
+                           r.Score = match.Score;
+                           return true;
+                       }).ToList();
                     ContextMenu.AddResults(filtered, id);
                 }
                 else
@@ -1291,7 +1301,7 @@ namespace Flow.Launcher.ViewModel
             var query = QueryText.ToLower().Trim();
             History.Clear();
 
-            var results = GetHistoryItems(_history.Items);
+            var results = GetHistoryItems(_history.LastOpenedHistoryItems);
 
             if (!string.IsNullOrEmpty(query))
             {
@@ -1308,26 +1318,64 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private static List<Result> GetHistoryItems(IEnumerable<HistoryItem> historyItems)
+        private List<Result> GetHistoryItems(IEnumerable<LastOpenedHistoryItem> historyItems)
         {
             var results = new List<Result>();
-            foreach (var h in historyItems)
+            if (Settings.HistoryStyle == HistoryStyle.Query)
             {
-                var result = new Result
+                foreach (var h in historyItems)
                 {
-                    Title = Localize.executeQuery(h.Query),
-                    SubTitle = Localize.lastExecuteTime(h.ExecutedDateTime),
-                    IcoPath = Constant.HistoryIcon,
-                    OriginQuery = new Query { RawQuery = h.Query },
-                    Action = _ =>
+                    var result = new Result
                     {
-                        App.API.BackToQueryResults();
-                        App.API.ChangeQuery(h.Query);
-                        return false;
-                    },
-                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE81C")
-                };
-                results.Add(result);
+                        Title = Localize.executeQuery(h.Query),
+                        SubTitle = Localize.lastExecuteTime(h.ExecutedDateTime),
+                        IcoPath = Constant.HistoryIcon,
+                        OriginQuery = new Query { RawQuery = h.Query },
+                        Action = _ =>
+                        {
+                            App.API.BackToQueryResults();
+                            App.API.ChangeQuery(h.Query);
+                            return false;
+                        },
+                        Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE81C")
+                    };
+                    results.Add(result);
+                }
+            }
+            else
+            {
+                foreach (var h in historyItems)
+                {
+                    var result = new Result
+                    {
+                        Title = string.IsNullOrEmpty(h.Title) ?  // Old migrated history items have no title
+                            Localize.executeQuery(h.Query) :
+                            h.Title,
+                        SubTitle = Localize.lastExecuteTime(h.ExecutedDateTime),
+                        IcoPath = Constant.HistoryIcon,
+                        OriginQuery = new Query { RawQuery = h.Query },
+                        AsyncAction = async c =>
+                        {
+                            var reflectResult = await ResultHelper.PopulateResultsAsync(h);
+                            if (reflectResult != null)
+                            {
+                                // Record the user selected record for result ranking
+                                _userSelectedRecord.Add(reflectResult);
+
+                                // Since some actions may need to hide the Flow window to execute
+                                // So let us populate the results of them
+                                return await reflectResult.ExecuteAsync(c);
+                            }
+
+                            // If we cannot get the result, fallback to re-query
+                            App.API.BackToQueryResults();
+                            App.API.ChangeQuery(h.Query);
+                            return false;
+                        },
+                        Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE81C")
+                    };
+                    results.Add(result);
+                }
             }
             return results;
         }
@@ -1570,7 +1618,7 @@ namespace Flow.Launcher.ViewModel
             void QueryHistoryTask(CancellationToken token)
             {
                 // Select last history results and revert its order to make sure last history results are on top
-                var historyItems = _history.Items.TakeLast(Settings.MaxHistoryResultsToShowForHomePage).Reverse();
+                var historyItems = _history.LastOpenedHistoryItems.TakeLast(Settings.MaxHistoryResultsToShowForHomePage).Reverse();
 
                 var results = GetHistoryItems(historyItems);
 
