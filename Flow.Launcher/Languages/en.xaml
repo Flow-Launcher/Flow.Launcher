@@ -167,7 +167,7 @@
     <system:String x:Key="historyResultsForHomePage">Show History Results in Home Page</system:String>
     <system:String x:Key="historyResultsCountForHomePage">Maximum History Results Shown in Home Page</system:String>
     <system:String x:Key="historyStyle">History Style</system:String>
-    <system:String x:Key="historyStyleTooltip">Choose the type of history to show in the history and home page</system:String>
+    <system:String x:Key="historyStyleTooltip">Choose the type of history to show in the History and Home Page</system:String>
     <system:String x:Key="queryHistory">Query history</system:String>
     <system:String x:Key="executedHistory">Last opened history</system:String>
     <system:String x:Key="homeToggleBoxToolTip">This can only be edited if plugin supports Home feature and Home Page is enabled.</system:String>
