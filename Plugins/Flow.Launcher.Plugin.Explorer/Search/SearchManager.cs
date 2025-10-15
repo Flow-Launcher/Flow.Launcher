@@ -47,10 +47,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         internal async Task<List<Result>> SearchAsync(Query query, CancellationToken token)
         {
-            var results = new HashSet<Result>(PathEqualityComparator.Instance);
-            bool isPathSearch = query.Search.IsLocationPathString()
-                                || EnvironmentVariables.IsEnvironmentVariableSearch(query.Search)
-                                || EnvironmentVariables.HasEnvironmentVar(query.Search);
 
             // This allows the user to type the below action keywords and see/search the list of quick folder links
             if (ActionKeywordMatch(query, Settings.ActionKeyword.SearchActionKeyword)
@@ -62,18 +58,16 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 if (string.IsNullOrEmpty(query.Search) && ActionKeywordMatch(query, Settings.ActionKeyword.QuickAccessActionKeyword))
                     return QuickAccess.AccessLinkListAll(query, Settings.QuickAccessLinks);
 
-
-                if (!isPathSearch)
-                {
-                    var quickAccessLinks = QuickAccess.AccessLinkListMatched(query, Settings.QuickAccessLinks);
-                    results.UnionWith(quickAccessLinks);
-
-                }
             }
             else
             {
                 return new List<Result>();
+
             }
+            var results = new HashSet<Result>(PathEqualityComparator.Instance);
+            bool isPathSearch = query.Search.IsLocationPathString()
+                                || EnvironmentVariables.IsEnvironmentVariableSearch(query.Search)
+                                || EnvironmentVariables.HasEnvironmentVar(query.Search);
 
             IAsyncEnumerable<SearchResult> searchResults;
 
@@ -86,7 +80,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                          || ActionKeywordMatch(query, Settings.ActionKeyword.SearchActionKeyword):
 
                     results.UnionWith(await PathSearchAsync(query, token).ConfigureAwait(false));
-
                     return results.ToList();
 
                 case false
@@ -108,11 +101,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     engineName = Enum.GetName(Settings.IndexSearchEngine);
                     break;
 
-
-                    
                 default:
                     return results.ToList();
             }
+
+            results.UnionWith(QuickAccess.AccessLinkListMatched(query, Settings.QuickAccessLinks));
 
             try
             {
