@@ -171,6 +171,10 @@
     <system:String x:Key="homePageToolTip">Muestra los resultados de la página de inicio cuando el texto de la consulta está vacío.</system:String>
     <system:String x:Key="historyResultsForHomePage">Mostrar historial de resultados en la página de inicio</system:String>
     <system:String x:Key="historyResultsCountForHomePage">Número máximo de resultados del historial en la página de inicio</system:String>
+    <system:String x:Key="historyStyle">History Style</system:String>
+    <system:String x:Key="historyStyleTooltip">Choose the type of history to show in the History and Home Page</system:String>
+    <system:String x:Key="queryHistory">Query history</system:String>
+    <system:String x:Key="executedHistory">Last opened history</system:String>
     <system:String x:Key="homeToggleBoxToolTip">Esto solo se puede editar si el complemento soporta la función de Inicio y la Página de Inicio está activada.</system:String>
     <system:String x:Key="showAtTopmost">Mostrar ventana de búsqueda en primer plano</system:String>
     <system:String x:Key="showAtTopmostToolTip">Anula el ajuste «Siempre arriba» de otros programas y muestra Flow en primer plano.</system:String>
