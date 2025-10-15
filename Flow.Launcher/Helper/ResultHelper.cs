@@ -36,8 +36,9 @@ public static class ResultHelper
                     freshResults?.FirstOrDefault(r => r.Title == title && r.SubTitle == subTitle);
             }
         }
-        catch
+        catch (System.Exception e)
         {
+            App.API.LogException(nameof(ResultHelper), $"Failed to query results for {plugin.Metadata.Name}", e);
             return null;
         }
     }
