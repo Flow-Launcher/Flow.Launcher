@@ -1358,25 +1358,12 @@ namespace Flow.Launcher.ViewModel
                             var reflectResult = await ResultHelper.PopulateResultsAsync(h);
                             if (reflectResult != null)
                             {
-                                if (reflectResult.Action != null)
-                                {
-                                    // Record the user selected record for result ranking
-                                    _userSelectedRecord.Add(reflectResult);
+                                // Record the user selected record for result ranking
+                                _userSelectedRecord.Add(reflectResult);
 
-                                    // Since some actions may need to hide the Flow window to execute
-                                    // So let us populate the results of them
-                                    return reflectResult.Action(c);
-                                }
-                                if (reflectResult.AsyncAction != null)
-                                {
-                                    // Record the user selected record for result ranking
-                                    _userSelectedRecord.Add(reflectResult);
-
-                                    // Since some actions may need to hide the Flow window to execute
-                                    // So let us populate the results of them
-                                    return await reflectResult.AsyncAction(c);
-                                }
-                                return false;
+                                // Since some actions may need to hide the Flow window to execute
+                                // So let us populate the results of them
+                                return await reflectResult.ExecuteAsync(c);
                             }
 
                             // If we cannot get the result, fallback to re-query
