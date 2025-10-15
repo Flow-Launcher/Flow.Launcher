@@ -171,6 +171,10 @@
     <system:String x:Key="homePageToolTip">Sorgu metni boş olduğunda ana sayfa sonuçlarını gösterin.</system:String>
     <system:String x:Key="historyResultsForHomePage">Geçmiş Sonuçlarını Ana Sayfada Göster</system:String>
     <system:String x:Key="historyResultsCountForHomePage">Ana Sayfada Gösterilen Maksimum Geçmiş Sonuçları</system:String>
+    <system:String x:Key="historyStyle">History Style</system:String>
+    <system:String x:Key="historyStyleTooltip">Choose the type of history to show in the History and Home Page</system:String>
+    <system:String x:Key="queryHistory">Query history</system:String>
+    <system:String x:Key="executedHistory">Last opened history</system:String>
     <system:String x:Key="homeToggleBoxToolTip">Bu sadece eklenti Ana Sayfa özelliğini destekliyorsa ve Ana Sayfa etkinleştirilmiş ise düzenlenebilir.</system:String>
     <system:String x:Key="showAtTopmost">Arama Penceresini En Üstte Göster</system:String>
     <system:String x:Key="showAtTopmostToolTip">Diğer programların 'Her Zaman Üstte' ayarını geçersiz kılar ve Flow’u en önde gösterir.</system:String>
