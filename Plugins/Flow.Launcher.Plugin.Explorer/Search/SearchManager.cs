@@ -1,13 +1,13 @@
-﻿using System;
+﻿using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
+using Flow.Launcher.Plugin.Explorer.Search.Everything;
+using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
+using Flow.Launcher.Plugin.SharedCommands;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Flow.Launcher.Plugin.Explorer.Exceptions;
-using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
-using Flow.Launcher.Plugin.Explorer.Search.Everything;
-using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
-using Flow.Launcher.Plugin.SharedCommands;
 using Path = System.IO.Path;
 
 namespace Flow.Launcher.Plugin.Explorer.Search
