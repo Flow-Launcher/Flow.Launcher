@@ -20,7 +20,7 @@ public static class ResultHelper
     {
         var plugin = PluginManager.GetPluginForId(pluginId);
         if (plugin == null) return null;
-        var query = QueryBuilder.Build(rawQuery, PluginManager.NonGlobalPlugins);
+        var query = QueryBuilder.Build(rawQuery, rawQuery, PluginManager.NonGlobalPlugins);
         if (query == null) return null;
         try
         {
