@@ -45,11 +45,12 @@ public static class ResultHelper
 
     public static bool IsEquals(this Result result, LastOpenedHistoryItem item, HistoryStyle style)
     {
-        bool keyMatches = string.IsNullOrEmpty(result.RecordKey)
-            ? item.Title == result.Title
-            : item.RecordKey == result.RecordKey;
+        bool keyMatches = string.IsNullOrEmpty(result.RecordKey) && string.IsNullOrEmpty(item.RecordKey)
+                        ? item.Title == result.Title
+                           : !string.IsNullOrEmpty(result.RecordKey) && !string.IsNullOrEmpty(item.RecordKey) && item.RecordKey == result.RecordKey;
 
-        bool queryMatches = style != HistoryStyle.Query || item.Query == result.OriginQuery.RawQuery;
+        bool queryMatches = style != HistoryStyle.Query || (result.OriginQuery != null && item.Query == result.OriginQuery.RawQuery);
+
 
         return keyMatches
                && queryMatches
