@@ -171,6 +171,10 @@
     <system:String x:Key="homePageToolTip">当查询文本为空时显示主页结果。</system:String>
     <system:String x:Key="historyResultsForHomePage">在主页中显示历史记录</system:String>
     <system:String x:Key="historyResultsCountForHomePage">在主页显示的最大历史结果数</system:String>
+    <system:String x:Key="historyStyle">History Style</system:String>
+    <system:String x:Key="historyStyleTooltip">Choose the type of history to show in the History and Home Page</system:String>
+    <system:String x:Key="queryHistory">Query history</system:String>
+    <system:String x:Key="executedHistory">Last opened history</system:String>
     <system:String x:Key="homeToggleBoxToolTip">这只能在插件支持主页功能和主页启用时进行编辑。</system:String>
     <system:String x:Key="showAtTopmost">将搜索窗口置于顶层</system:String>
     <system:String x:Key="showAtTopmostToolTip">覆盖其他“总是在顶部”的程序窗口并在最顶层的位置显示 Flow Launcher 搜索窗口。</system:String>
