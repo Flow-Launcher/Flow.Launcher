@@ -67,8 +67,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             IAsyncEnumerable<SearchResult> searchResults;
 
             bool isPathSearch = query.Search.IsLocationPathString()
-                                || EnvironmentVariables.IsEnvironmentVariableSearch(query.Search)
-                                || EnvironmentVariables.HasEnvironmentVar(query.Search);
+                || EnvironmentVariables.IsEnvironmentVariableSearch(query.Search)
+                || EnvironmentVariables.HasEnvironmentVar(query.Search);
 
             string engineName;
 
@@ -79,7 +79,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                          || ActionKeywordMatch(query, Settings.ActionKeyword.SearchActionKeyword):
 
                     results.UnionWith(await PathSearchAsync(query, token).ConfigureAwait(false));
+
                     return results.ToList();
+
                 case false
                     when ActionKeywordMatch(query, Settings.ActionKeyword.FileContentSearchActionKeyword):
 
@@ -90,6 +92,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     searchResults = Settings.ContentIndexProvider.ContentSearchAsync("", query.Search, token);
                     engineName = Enum.GetName(Settings.ContentSearchEngine);
                     break;
+
                 case false
                     when ActionKeywordMatch(query, Settings.ActionKeyword.IndexSearchActionKeyword)
                          || ActionKeywordMatch(query, Settings.ActionKeyword.SearchActionKeyword):
