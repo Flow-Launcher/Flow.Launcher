@@ -1358,20 +1358,17 @@ namespace Flow.Launcher.ViewModel
                             {
                                 if (reflectResult.Action != null)
                                 {
-                                    reflectResult.Action(c);
+                                    return reflectResult.Action(c);
                                 }
-                                else if (reflectResult.AsyncAction != null)
+                                if (reflectResult.AsyncAction != null)
                                 {
-                                    await reflectResult.AsyncAction(c);
+                                   return await reflectResult.AsyncAction(c);
                                 }
                                 return false;
                             }
-                            else
-                            {
-                                App.API.BackToQueryResults();
-                                App.API.ChangeQuery(h.Query);
-                                return false;
-                            }
+                            App.API.BackToQueryResults();
+                            App.API.ChangeQuery(h.Query);
+                            return false;
                         },
                         Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE81C")
                     };

@@ -36,6 +36,7 @@ namespace Flow.Launcher.Storage
         public void Add(Result result)
         {
             if (string.IsNullOrEmpty(result.OriginQuery.RawQuery)) return;
+            if (string.IsNullOrEmpty(result.PluginID)) return;
 
             // Maintain the max history limit
             if (LastOpenedHistoryItems.Count > _maxHistory)
