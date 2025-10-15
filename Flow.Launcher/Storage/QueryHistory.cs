@@ -33,7 +33,8 @@ namespace Flow.Launcher.Storage
                 LastOpenedHistoryItems.Add(new LastOpenedHistoryItem
                 {   
                     Query = item.Query,
-                    ExecutedDateTime = item.ExecutedDateTime
+                    ExecutedDateTime = item.ExecutedDateTime,
+                    HistoryStyle = HistoryStyle.Query
                 });
             }
             Items.Clear();
