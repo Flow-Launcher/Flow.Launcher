@@ -62,13 +62,13 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             else
             {
                 return new List<Result>();
-
             }
+
+            IAsyncEnumerable<SearchResult> searchResults;
+
             bool isPathSearch = query.Search.IsLocationPathString()
                                 || EnvironmentVariables.IsEnvironmentVariableSearch(query.Search)
                                 || EnvironmentVariables.HasEnvironmentVar(query.Search);
-
-            IAsyncEnumerable<SearchResult> searchResults;
 
             string engineName;
 
@@ -80,7 +80,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
                     results.UnionWith(await PathSearchAsync(query, token).ConfigureAwait(false));
                     return results.ToList();
-
                 case false
                     when ActionKeywordMatch(query, Settings.ActionKeyword.FileContentSearchActionKeyword):
 
@@ -91,7 +90,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     searchResults = Settings.ContentIndexProvider.ContentSearchAsync("", query.Search, token);
                     engineName = Enum.GetName(Settings.ContentSearchEngine);
                     break;
-
                 case false
                     when ActionKeywordMatch(query, Settings.ActionKeyword.IndexSearchActionKeyword)
                          || ActionKeywordMatch(query, Settings.ActionKeyword.SearchActionKeyword):
@@ -99,7 +97,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     searchResults = Settings.IndexProvider.SearchAsync(query.Search, token);
                     engineName = Enum.GetName(Settings.IndexSearchEngine);
                     break;
-
                 default:
                     return results.ToList();
             }
@@ -238,6 +235,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             {
                 throw new SearchException(Enum.GetName(Settings.PathEnumerationEngine), e.Message, e);
             }
+
 
             return results.ToList();
         }
