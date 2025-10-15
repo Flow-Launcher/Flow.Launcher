@@ -171,6 +171,10 @@
     <system:String x:Key="homePageToolTip">Показувати результати на головній сторінці, коли текст запиту порожній.</system:String>
     <system:String x:Key="historyResultsForHomePage">Показати результати історії на головній</system:String>
     <system:String x:Key="historyResultsCountForHomePage">Максимальна кількість результатів історії, що показуються на головній</system:String>
+    <system:String x:Key="historyStyle">History Style</system:String>
+    <system:String x:Key="historyStyleTooltip">Choose the type of history to show in the History and Home Page</system:String>
+    <system:String x:Key="queryHistory">Query history</system:String>
+    <system:String x:Key="executedHistory">Last opened history</system:String>
     <system:String x:Key="homeToggleBoxToolTip">Це можна редагувати тільки в тому випадку, якщо плагін підтримує функцію «Головна сторінка» і вона ввімкнена.</system:String>
     <system:String x:Key="showAtTopmost">Показувати вікно пошуку на передньому плані</system:String>
     <system:String x:Key="showAtTopmostToolTip">Перекриває налаштування «Завжди зверху» інших програм і виводить Flow на передній план.</system:String>
