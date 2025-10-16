@@ -13,7 +13,7 @@ public class BasePluginHotkey
     /// <summary>
     /// Initializes a new instance of the <see cref="BasePluginHotkey"/> class with the specified hotkey type.
     /// </summary>
-    /// <param name="type"></param>
+    /// <param name="type">The type of hotkey (Global or SearchWindow).</param>
     protected BasePluginHotkey(HotkeyType type)
     {
         HotkeyType = type;
