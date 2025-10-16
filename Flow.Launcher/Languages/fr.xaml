@@ -64,8 +64,8 @@
     <system:String x:Key="PositionReset">Réinitialiser la position</system:String>
     <system:String x:Key="PositionResetToolTip">Réinitialiser la position de la fenêtre de recherche</system:String>
     <system:String x:Key="queryTextBoxPlaceholder">Tapez ici pour rechercher</system:String>
-    <system:String x:Key="pluginStillInitializing">{0}: This plugin is still initializing...</system:String>
-    <system:String x:Key="pluginStillInitializingSubtitle">Select this result to requery</system:String>
+    <system:String x:Key="pluginStillInitializing">{0}: Ce plugin est toujours en cours d'initialisation...</system:String>
+    <system:String x:Key="pluginStillInitializingSubtitle">Sélectionner ce résultat pour la requête</system:String>
     <system:String x:Key="pluginFailedToRespond">{0}: Failed to respond!</system:String>
     <system:String x:Key="pluginFailedToRespondSubtitle">Select this result for more info</system:String>
 
