@@ -376,7 +376,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
         }
 
         /// <summary>
-        /// Return true is the given name is a valid file name
+        /// Returns true if the given name is a valid file name
         /// </summary>
         public static bool IsValidFileName(string name)
         {
