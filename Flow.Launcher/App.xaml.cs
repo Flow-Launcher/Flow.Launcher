@@ -227,8 +227,8 @@ namespace Flow.Launcher
                 Current.MainWindow = _mainWindow;
                 Current.MainWindow.Title = Constant.FlowLauncher;
 
-                // Initialize quick jump before hotkey mapper since hotkey mapper will register quick jump hotkey
-                // Initialize quick jump after main window is created so that it can access main window handle
+                // Initialize Dialog Jump before hotkey mapper since hotkey mapper will register its hotkey
+                // Initialize Dialog Jump after main window is created so that it can access main window handle
                 DialogJump.InitializeDialogJump();
                 DialogJump.SetupDialogJump(_settings.EnableDialogJump);
 
