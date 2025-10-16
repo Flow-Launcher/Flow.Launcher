@@ -411,8 +411,7 @@ namespace Flow.Launcher.Core.Plugin
                     {
                         PublicApi.Instance.ReQuery();
                         return false;
-                    },
-                    Score = -100
+                    }
                 };
                 results.Add(r);
                 return results;
@@ -450,8 +449,7 @@ namespace Flow.Launcher.Core.Plugin
                     ActionKeywordAssigned = query.ActionKeyword,
                     PluginID = metadata.ID,
                     OriginQuery = query,
-                    Action = _ => { throw new FlowPluginException(metadata, e);},
-                    Score = -100
+                    Action = _ => { throw new FlowPluginException(metadata, e);}
                 };
                 results.Add(r);
             }
@@ -479,8 +477,7 @@ namespace Flow.Launcher.Core.Plugin
                     {
                         PublicApi.Instance.ReQuery();
                         return false;
-                    },
-                    Score = -100
+                    }
                 };
                 results.Add(r);
                 return results;
