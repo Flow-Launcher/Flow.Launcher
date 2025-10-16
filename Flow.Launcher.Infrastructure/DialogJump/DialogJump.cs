@@ -13,6 +13,7 @@ using NHotkey;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.UI.Accessibility;
+using System.Collections.Concurrent;
 
 namespace Flow.Launcher.Infrastructure.DialogJump
 {
@@ -60,12 +61,12 @@ namespace Flow.Launcher.Infrastructure.DialogJump
 
         private static HWND _mainWindowHandle = HWND.Null;
 
-        private static readonly Dictionary<DialogJumpExplorerPair, IDialogJumpExplorerWindow> _dialogJumpExplorers = new();
+        private static readonly ConcurrentDictionary<DialogJumpExplorerPair, IDialogJumpExplorerWindow> _dialogJumpExplorers = new();
 
         private static DialogJumpExplorerPair _lastExplorer = null;
         private static readonly Lock _lastExplorerLock = new();
 
-        private static readonly Dictionary<DialogJumpDialogPair, IDialogJumpDialogWindow> _dialogJumpDialogs = new();
+        private static readonly ConcurrentDictionary<DialogJumpDialogPair, IDialogJumpDialogWindow> _dialogJumpDialogs = new();
 
         private static IDialogJumpDialogWindow _dialogWindow = null;
         private static readonly Lock _dialogWindowLock = new();
@@ -101,22 +102,13 @@ namespace Flow.Launcher.Infrastructure.DialogJump
 
         #region Initialize & Setup
 
-        public static void InitializeDialogJump(IList<DialogJumpExplorerPair> dialogJumpExplorers,
-            IList<DialogJumpDialogPair> dialogJumpDialogs)
+        public static void InitializeDialogJump()
         {
             if (_initialized) return;
 
-            // Initialize Dialog Jump explorers & dialogs
-            _dialogJumpExplorers.Add(WindowsDialogJumpExplorer, null);
-            foreach (var explorer in dialogJumpExplorers)
-            {
-                _dialogJumpExplorers.Add(explorer, null);
-            }
-            _dialogJumpDialogs.Add(WindowsDialogJumpDialog, null);
-            foreach (var dialog in dialogJumpDialogs)
-            {
-                _dialogJumpDialogs.Add(dialog, null);
-            }
+            // Initialize preinstalled Dialog Jump explorers & dialogs
+            _dialogJumpExplorers.TryAdd(WindowsDialogJumpExplorer, null);
+            _dialogJumpDialogs.TryAdd(WindowsDialogJumpDialog, null);
 
             // Initialize main window handle
             _mainWindowHandle = Win32Helper.GetMainWindowHandle();
@@ -129,6 +121,29 @@ namespace Flow.Launcher.Infrastructure.DialogJump
             DialogJumpWindowPosition = _settings.DialogJumpWindowPosition;
 
             _initialized = true;
+        }
+
+        public static void InitializeDialogJumpPlugin(PluginPair pair)
+        {
+            // Add Dialog Jump explorers & dialogs
+            if (pair.Plugin is IDialogJumpExplorer explorer)
+            {
+                var dialogJumpExplorer = new DialogJumpExplorerPair
+                {
+                    Plugin = explorer,
+                    Metadata = pair.Metadata
+                };
+                _dialogJumpExplorers.TryAdd(dialogJumpExplorer, null);
+            }
+            if (pair.Plugin is IDialogJumpDialog dialog)
+            {
+                var dialogJumpDialog = new DialogJumpDialogPair
+                {
+                    Plugin = dialog,
+                    Metadata = pair.Metadata
+                };
+                _dialogJumpDialogs.TryAdd(dialogJumpDialog, null);
+            }
         }
 
         public static void SetupDialogJump(bool enabled)

@@ -477,7 +477,7 @@ namespace Flow.Launcher
                             && QueryTextBox.CaretIndex == QueryTextBox.Text.Length)
                         {
                             var queryWithoutActionKeyword =
-                                QueryBuilder.Build(QueryTextBox.Text.Trim(), PluginManager.NonGlobalPlugins)?.Search;
+                                QueryBuilder.Build(QueryTextBox.Text.Trim(), PluginManager.GetNonGlobalPlugins())?.Search;
 
                             if (FilesFolders.IsLocationPathString(queryWithoutActionKeyword))
                             {
