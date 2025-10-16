@@ -61,7 +61,7 @@ public class BasePluginHotkey
 }
 
 /// <summary>
-/// Represent a global plugin hotkey model.
+/// Represents a global plugin hotkey model.
 /// </summary>
 public class GlobalPluginHotkey : BasePluginHotkey
 {
