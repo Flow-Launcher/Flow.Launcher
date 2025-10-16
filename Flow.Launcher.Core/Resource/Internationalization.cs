@@ -360,7 +360,7 @@ namespace Flow.Launcher.Core.Resource
 
         public static void UpdatePluginMetadataTranslations()
         {
-            // Update plugin metadata name & description & plugin hotkey name & description
+            // Update plugin metadata name & description
             foreach (var p in PluginManager.GetTranslationPlugins())
             {
                 if (p.Plugin is not IPluginI18n pluginI18N) return;
@@ -368,7 +368,11 @@ namespace Flow.Launcher.Core.Resource
                 {
                     p.Metadata.Name = pluginI18N.GetTranslatedPluginTitle();
                     p.Metadata.Description = pluginI18N.GetTranslatedPluginDescription();
-                    PluginManager.UpdatePluginHotkeyInfoTranslations(p);
+                    if (p.Plugin is IPluginHotkey)
+                    {
+                        // Update plugin hotkey name & description
+                        PluginManager.UpdatePluginHotkeyInfoTranslations(p);
+                    }
                     pluginI18N.OnCultureInfoChanged(CultureInfo.CurrentCulture);
                 }
                 catch (Exception e)
@@ -386,7 +390,11 @@ namespace Flow.Launcher.Core.Resource
             {
                 p.Metadata.Name = pluginI18N.GetTranslatedPluginTitle();
                 p.Metadata.Description = pluginI18N.GetTranslatedPluginDescription();
-                PluginManager.UpdatePluginHotkeyInfoTranslations(p);
+                if (p.Plugin is IPluginHotkey)
+                {
+                    // Update plugin hotkey name & description
+                    PluginManager.UpdatePluginHotkeyInfoTranslations(p);
+                }
                 pluginI18N.OnCultureInfoChanged(CultureInfo.CurrentCulture);
             }
             catch (Exception e)
