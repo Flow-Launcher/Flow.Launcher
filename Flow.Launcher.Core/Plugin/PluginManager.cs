@@ -382,6 +382,7 @@ namespace Flow.Launcher.Core.Plugin
                     Settings.UpdatePluginHotkeyInfo(GetPluginHotkeyInfo(pair.Metadata.ID));
                 }
                 InitializeWindowPluginHotkey(pair);
+                _hotkeyPlugins.Add(pair);
             }
         }
 
