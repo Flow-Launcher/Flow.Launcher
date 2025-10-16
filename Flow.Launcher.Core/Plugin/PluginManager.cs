@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure;
@@ -944,7 +943,6 @@ namespace Flow.Launcher.Core.Plugin
             var oldHotkeyItem = plugin.PluginHotkeys.First(h => h.Id == pluginHotkey.Id);
             var settingHotkeyItem = Settings.GetPluginSettings(plugin.ID).pluginHotkeys.First(h => h.Id == pluginHotkey.Id);
             var oldHotkeyStr = settingHotkeyItem.Hotkey;
-            var converter = new KeyGestureConverter();
             var oldHotkey = new HotkeyModel(oldHotkeyStr);
             var newHotkeyStr = newHotkey.ToString();
 
