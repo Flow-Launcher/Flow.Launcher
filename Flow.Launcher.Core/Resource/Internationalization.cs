@@ -380,6 +380,22 @@ namespace Flow.Launcher.Core.Resource
             PluginManager.UpdatePluginHotkeyInfoTranslations();
         }
 
+        public static void UpdatePluginMetadataTranslation(PluginPair p)
+        {
+            // Update plugin metadata name & description
+            if (p.Plugin is not IPluginI18n pluginI18N) return;
+            try
+            {
+                p.Metadata.Name = pluginI18N.GetTranslatedPluginTitle();
+                p.Metadata.Description = pluginI18N.GetTranslatedPluginDescription();
+                pluginI18N.OnCultureInfoChanged(CultureInfo.CurrentCulture);
+            }
+            catch (Exception e)
+            {
+                PublicApi.Instance.LogException(ClassName, $"Failed for <{p.Metadata.Name}>", e);
+            }
+        }
+
         #endregion
 
         #region IDisposable

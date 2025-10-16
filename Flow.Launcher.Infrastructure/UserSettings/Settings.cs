@@ -7,6 +7,7 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
+using Flow.Launcher.Localization.Attributes;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
 
@@ -732,6 +733,21 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public LastQueryMode LastQueryMode { get; set; } = LastQueryMode.Selected;
 
+        private HistoryStyle _historyStyle = HistoryStyle.Query;
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public HistoryStyle HistoryStyle
+        {
+            get => _historyStyle;
+            set
+            {
+                if (_historyStyle != value)
+                {
+                    _historyStyle = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public AnimationSpeeds AnimationSpeed { get; set; } = AnimationSpeeds.Medium;
         public int CustomAnimationLength { get; set; } = 360;
@@ -826,5 +842,15 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         FullPath,
         FullPathOpen,
         Directory
+    }
+
+    [EnumLocalize]
+    public enum HistoryStyle
+    {
+        [EnumLocalizeKey(nameof(Localize.queryHistory))]
+        Query,
+
+        [EnumLocalizeKey(nameof(Localize.executedHistory))]
+        LastOpened
     }
 }
