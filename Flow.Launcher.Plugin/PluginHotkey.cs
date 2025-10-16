@@ -102,7 +102,7 @@ public class SearchWindowPluginHotkey : BasePluginHotkey
 public enum HotkeyType
 {
     /// <summary>
-    /// A hotkey that will be trigged globally, regardless of the active window.
+    /// A hotkey that will be triggered globally, regardless of the active window.
     /// </summary>
     Global,
 
