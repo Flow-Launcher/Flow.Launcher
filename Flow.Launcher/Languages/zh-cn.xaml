@@ -64,6 +64,10 @@
     <system:String x:Key="PositionReset">重置位置</system:String>
     <system:String x:Key="PositionResetToolTip">重置搜索窗口位置</system:String>
     <system:String x:Key="queryTextBoxPlaceholder">在此处输入以搜索</system:String>
+    <system:String x:Key="pluginStillInitializing">{0}: This plugin is still initializing...</system:String>
+    <system:String x:Key="pluginStillInitializingSubtitle">Select this result to requery</system:String>
+    <system:String x:Key="pluginFailedToRespond">{0}: Failed to respond!</system:String>
+    <system:String x:Key="pluginFailedToRespondSubtitle">Select this result for more info</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">设置</system:String>
