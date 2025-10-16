@@ -66,8 +66,8 @@
     <system:String x:Key="queryTextBoxPlaceholder">Tapez ici pour rechercher</system:String>
     <system:String x:Key="pluginStillInitializing">{0}: Ce plugin est toujours en cours d'initialisation...</system:String>
     <system:String x:Key="pluginStillInitializingSubtitle">Sélectionner ce résultat pour la requête</system:String>
-    <system:String x:Key="pluginFailedToRespond">{0}: Failed to respond!</system:String>
-    <system:String x:Key="pluginFailedToRespondSubtitle">Select this result for more info</system:String>
+    <system:String x:Key="pluginFailedToRespond">{0}: Ne répond pas !</system:String>
+    <system:String x:Key="pluginFailedToRespondSubtitle">Sélectionnez ce résultat pour plus d'informations</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Paramètres</system:String>
@@ -414,17 +414,17 @@
     <system:String x:Key="autoDialogJump">Saut de dialogue automatique</system:String>
     <system:String x:Key="autoDialogJumpToolTip">Lorsque la fenêtre de dialogue Ouvrir/Enregistrer sous est affichée, naviguez automatiquement vers le chemin du gestionnaire de fichiers actuel. (Expérimental)</system:String>
     <system:String x:Key="showDialogJumpWindow">Afficher la fenêtre de saut de dialogue</system:String>
-    <system:String x:Key="showDialogJumpWindowToolTip">Display Dialog Jump search window when the open/save dialog window is shown to quickly navigate to file/folder locations.</system:String>
-    <system:String x:Key="dialogJumpWindowPosition">Dialog Jump Window Position</system:String>
-    <system:String x:Key="dialogJumpWindowPositionToolTip">Select position for the Dialog Jump search window</system:String>
-    <system:String x:Key="DialogJumpWindowPositionUnderDialog">Fixed under the Open/Save As dialog window. Displayed on open and stays until the window is closed</system:String>
-    <system:String x:Key="DialogJumpWindowPositionFollowDefault">Default search window position. Displayed when triggered by search window hotkey</system:String>
-    <system:String x:Key="dialogJumpResultBehaviour">Dialog Jump Result Navigation Behaviour</system:String>
-    <system:String x:Key="dialogJumpResultBehaviourToolTip">Behaviour to navigate Open/Save As dialog window to the selected result path</system:String>
+    <system:String x:Key="showDialogJumpWindowToolTip">Afficher la fenêtre de recherche de saut de dialogue lorsque la fenêtre de dialogue Ouvrir/Enregistrer sous est affichée pour naviguer rapidement vers les emplacements de fichier/dossier.</system:String>
+    <system:String x:Key="dialogJumpWindowPosition">Position de la fenêtre de saut de dialogue</system:String>
+    <system:String x:Key="dialogJumpWindowPositionToolTip">Sélectionnez la position pour la fenêtre de recherche de saut de dialogue</system:String>
+    <system:String x:Key="DialogJumpWindowPositionUnderDialog">Fixé sous la fenêtre de dialogue Ouvrir/Enregistrer sous. Affiché à l'ouverture et reste jusqu'à ce que la fenêtre soit fermée.</system:String>
+    <system:String x:Key="DialogJumpWindowPositionFollowDefault">Position de la fenêtre de recherche par défaut. Affiché lorsqu'il est déclenché par le raccourci clavier de la fenêtre de recherche</system:String>
+    <system:String x:Key="dialogJumpResultBehaviour">Comportement de navigation des résultats du saut de dialogue</system:String>
+    <system:String x:Key="dialogJumpResultBehaviourToolTip">Comportement pour naviguer dans la fenêtre de dialogue Ouvrir/Enregistrer sous vers le chemin de résultat sélectionné</system:String>
     <system:String x:Key="DialogJumpResultBehaviourLeftClick">Clic gauche ou touche Entrée</system:String>
     <system:String x:Key="DialogJumpResultBehaviourRightClick">Clique droit</system:String>
-    <system:String x:Key="dialogJumpFileResultBehaviour">Dialog Jump File Navigation Behaviour</system:String>
-    <system:String x:Key="dialogJumpFileResultBehaviourToolTip">Behaviour to navigate Open/Save As dialog window when the result is a file path</system:String>
+    <system:String x:Key="dialogJumpFileResultBehaviour">Comportement de navigation des résultats du saut de dialogue</system:String>
+    <system:String x:Key="dialogJumpFileResultBehaviourToolTip">Comportement pour naviguer dans la fenêtre de dialogue Ouvrir/Enregistrer sous lorsque le résultat est un chemin de fichier</system:String>
     <system:String x:Key="DialogJumpFileResultBehaviourFullPath">Remplir le chemin complet dans la zone de nom de fichier</system:String>
     <system:String x:Key="DialogJumpFileResultBehaviourFullPathOpen">Remplir le chemin complet dans la zone de nom de fichier et ouvrir</system:String>
     <system:String x:Key="DialogJumpFileResultBehaviourDirectory">Remplir le répertoire dans la zone de chemin</system:String>
