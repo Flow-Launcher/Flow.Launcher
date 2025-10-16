@@ -75,7 +75,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
         private void OnDoneButtonClick(object sender, RoutedEventArgs e)
         {
             RenameThing.Rename(NewFileName, _info);
-            // Close the dialog no matter if it worked or not because error messages are popuped in RenameThing
+            // Close the dialog no matter if it worked or not because error messages are popped up in RenameThing
             Close();
         }
 
