@@ -29,7 +29,7 @@ using Microsoft.VisualStudio.Threading;
 
 namespace Flow.Launcher.ViewModel
 {
-    public partial class MainViewModel : BaseModel, ISavable, IDisposable
+    public partial class MainViewModel : BaseModel, ISavable, IDisposable, IResultUpdateRegister
     {
         #region Private Fields
 
@@ -278,52 +278,50 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        public void RegisterResultsUpdatedEvent()
+        public void RegisterResultsUpdatedEvent(PluginPair pair)
         {
-            foreach (var pair in PluginManager.GetResultUpdatePlugin())
+            if (pair.Plugin is not IResultUpdated plugin) return;
+
+            plugin.ResultsUpdated += (s, e) =>
             {
-                var plugin = (IResultUpdated)pair.Plugin;
-                plugin.ResultsUpdated += (s, e) =>
+                if (_updateQuery == null || e.Query.Input != _updateQuery.Input || e.Token.IsCancellationRequested)
                 {
-                    if (_updateQuery == null || e.Query.Input != _updateQuery.Input || e.Token.IsCancellationRequested)
+                    return;
+                }
+
+                var token = e.Token == default ? _updateToken : e.Token;
+
+                IReadOnlyList<Result> resultsCopy;
+                if (e.Results == null)
+                {
+                    resultsCopy = _emptyResult;
+                }
+                else
+                {
+                    // make a clone to avoid possible issue that plugin will also change the list and items when updating view model
+                    resultsCopy = DeepCloneResults(e.Results, false, token);
+                }
+
+                foreach (var result in resultsCopy)
+                {
+                    if (string.IsNullOrEmpty(result.BadgeIcoPath))
                     {
-                        return;
+                        result.BadgeIcoPath = pair.Metadata.IcoPath;
                     }
+                }
 
-                    var token = e.Token == default ? _updateToken : e.Token;
+                PluginManager.UpdatePluginMetadata(resultsCopy, pair.Metadata, e.Query);
 
-                    IReadOnlyList<Result> resultsCopy;
-                    if (e.Results == null)
-                    {
-                        resultsCopy = _emptyResult;
-                    }
-                    else
-                    {
-                        // make a clone to avoid possible issue that plugin will also change the list and items when updating view model
-                        resultsCopy = DeepCloneResults(e.Results, false, token);
-                    }
+                if (token.IsCancellationRequested) return;
 
-                    foreach (var result in resultsCopy)
-                    {
-                        if (string.IsNullOrEmpty(result.BadgeIcoPath))
-                        {
-                            result.BadgeIcoPath = pair.Metadata.IcoPath;
-                        }
-                    }
+                App.API.LogDebug(ClassName, $"Update results for plugin <{pair.Metadata.Name}>");
 
-                    PluginManager.UpdatePluginMetadata(resultsCopy, pair.Metadata, e.Query);
-
-                    if (token.IsCancellationRequested) return;
-
-                    App.API.LogDebug(ClassName, $"Update results for plugin <{pair.Metadata.Name}>");
-
-                    if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, pair.Metadata, e.Query,
-                        token)))
-                    {
-                        App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
-                    }
-                };
-            }
+                if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, pair.Metadata, e.Query,
+                    token)))
+                {
+                    App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
+                }
+            };
         }
 
         private async Task RegisterClockAndDateUpdateAsync()
@@ -445,7 +443,7 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void Backspace(object index)
         {
-            var query = QueryBuilder.Build(QueryText, QueryText.Trim(), PluginManager.NonGlobalPlugins);
+            var query = QueryBuilder.Build(QueryText, QueryText.Trim(), PluginManager.GetNonGlobalPlugins());
 
             // GetPreviousExistingDirectory does not require trailing '\', otherwise will return empty string
             var path = FilesFolders.GetPreviousExistingDirectory((_) => true, query.Search.TrimEnd('\\'));
@@ -1639,7 +1637,7 @@ namespace Flow.Launcher.ViewModel
         {
             if (string.IsNullOrWhiteSpace(queryText))
             {
-                return QueryBuilder.Build(string.Empty, string.Empty, PluginManager.NonGlobalPlugins);
+                return QueryBuilder.Build(string.Empty, string.Empty, PluginManager.GetNonGlobalPlugins());
             }
 
             var queryBuilder = new StringBuilder(queryText);
@@ -1659,7 +1657,7 @@ namespace Flow.Launcher.ViewModel
             // Applying builtin shortcuts
             await BuildQueryAsync(builtInShortcuts, queryBuilder, queryBuilderTmp);
 
-            return QueryBuilder.Build(queryText, queryBuilder.ToString().Trim(), PluginManager.NonGlobalPlugins);
+            return QueryBuilder.Build(queryText, queryBuilder.ToString().Trim(), PluginManager.GetNonGlobalPlugins());
         }
 
         private async Task BuildQueryAsync(IEnumerable<BaseBuiltinShortcutModel> builtInShortcuts,

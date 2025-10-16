@@ -187,12 +187,14 @@ namespace Flow.Launcher
                 // So set to OnExplicitShutdown to prevent the application from shutting down before main window is created
                 Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
 
+                // Setup log level before any logging is done
                 Log.SetLogLevel(_settings.LogLevel);
 
                 // Update dynamic resources base on settings
                 Current.Resources["SettingWindowFont"] = new FontFamily(_settings.SettingWindowFont);
                 Current.Resources["ContentControlThemeFontFamily"] = new FontFamily(_settings.SettingWindowFont);
 
+                // Initialize notification system before any notification api is called
                 Notification.Install();
 
                 // Enable Win32 dark mode if the system is in dark mode before creating all windows
@@ -201,6 +203,7 @@ namespace Flow.Launcher
                 // Initialize language before portable clean up since it needs translations
                 await _internationalization.InitializeLanguageAsync();
 
+                // Clean up after portability update
                 Ioc.Default.GetRequiredService<Portable>().PreStartCleanUpAfterPortabilityUpdate();
 
                 API.LogInfo(ClassName, "Begin Flow Launcher startup ----------------------------------------------------");
@@ -210,31 +213,24 @@ namespace Flow.Launcher
                 RegisterDispatcherUnhandledException();
                 RegisterTaskSchedulerUnhandledException();
 
-                var imageLoadertask = ImageLoader.InitializeAsync();
-
-                AbstractPluginEnvironment.PreStartPluginExecutablePathUpdate(_settings);
-
-                PluginManager.LoadPlugins(_settings.PluginSettings);
-
-                // Register ResultsUpdated event after all plugins are loaded
-                Ioc.Default.GetRequiredService<MainViewModel>().RegisterResultsUpdatedEvent();
+                var imageLoaderTask = ImageLoader.InitializeAsync();
 
                 Http.Proxy = _settings.Proxy;
 
                 // Initialize plugin manifest before initializing plugins so that they can use the manifest instantly
                 await API.UpdatePluginManifestAsync();
 
-                await PluginManager.InitializePluginsAsync();
-
-                // Update plugin titles after plugins are initialized with their api instances
-                Internationalization.UpdatePluginMetadataTranslations();
-
-                await imageLoadertask;
+                await imageLoaderTask;
 
                 _mainWindow = new MainWindow();
 
                 Current.MainWindow = _mainWindow;
                 Current.MainWindow.Title = Constant.FlowLauncher;
+
+                // Initialize Dialog Jump before hotkey mapper since hotkey mapper will register its hotkey
+                // Initialize Dialog Jump after main window is created so that it can access main window handle
+                DialogJump.InitializeDialogJump();
+                DialogJump.SetupDialogJump(_settings.EnableDialogJump);
 
                 // Initialize hotkey mapper instantly after main window is created because
                 // it will steal focus from main window which causes window hide
@@ -243,19 +239,40 @@ namespace Flow.Launcher
                 // Initialize theme for main window
                 Ioc.Default.GetRequiredService<Theme>().ChangeTheme();
 
-                DialogJump.InitializeDialogJump(PluginManager.GetDialogJumpExplorers(), PluginManager.GetDialogJumpDialogs());
-                DialogJump.SetupDialogJump(_settings.EnableDialogJump);
-
                 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
                 RegisterExitEvents();
 
                 AutoStartup();
                 AutoUpdates();
-                AutoPluginUpdates();
 
                 API.SaveAppAllSettings();
-                API.LogInfo(ClassName, "End Flow Launcher startup ----------------------------------------------------");
+                API.LogInfo(ClassName, "End Flow Launcher startup ------------------------------------------------------");
+
+                _ = API.StopwatchLogInfoAsync(ClassName, "Startup cost", async () =>
+                {
+                    API.LogInfo(ClassName, "Begin plugin initialization ----------------------------------------------------");
+
+                    AbstractPluginEnvironment.PreStartPluginExecutablePathUpdate(_settings);
+
+                    PluginManager.LoadPlugins(_settings.PluginSettings);
+
+                    await PluginManager.InitializePluginsAsync(_mainVM);
+
+                    // Refresh home page after plugins are initialized because users may open main window during plugin initialization
+                    // And home page is created without full plugin list
+                    if (_settings.ShowHomePage && _mainVM.QueryResultsSelected() && string.IsNullOrEmpty(_mainVM.QueryText))
+                    {
+                        _mainVM.QueryResults();
+                    }
+
+                    AutoPluginUpdates();
+
+                    // Save all settings since we possibly update the plugin environment paths
+                    API.SaveAppAllSettings();
+
+                    API.LogInfo(ClassName, "End plugin initialization ------------------------------------------------------");
+                });
             });
         }
 
