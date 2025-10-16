@@ -64,6 +64,10 @@
     <system:String x:Key="PositionReset">Đặt lại vị trí</system:String>
     <system:String x:Key="PositionResetToolTip">Cài lại vị trí cửa sổ tìm kiếm</system:String>
     <system:String x:Key="queryTextBoxPlaceholder">Type here to search</system:String>
+    <system:String x:Key="pluginStillInitializing">{0}: This plugin is still initializing...</system:String>
+    <system:String x:Key="pluginStillInitializingSubtitle">Select this result to requery</system:String>
+    <system:String x:Key="pluginFailedToRespond">{0}: Failed to respond!</system:String>
+    <system:String x:Key="pluginFailedToRespondSubtitle">Select this result for more info</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Cài đặt</system:String>
