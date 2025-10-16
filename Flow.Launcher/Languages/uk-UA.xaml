@@ -64,6 +64,10 @@
     <system:String x:Key="PositionReset">Скидання позиції</system:String>
     <system:String x:Key="PositionResetToolTip">Скинути положення вікна пошуку</system:String>
     <system:String x:Key="queryTextBoxPlaceholder">Напишіть тут, аби знайти</system:String>
+    <system:String x:Key="pluginStillInitializing">{0}: This plugin is still initializing...</system:String>
+    <system:String x:Key="pluginStillInitializingSubtitle">Select this result to requery</system:String>
+    <system:String x:Key="pluginFailedToRespond">{0}: Failed to respond!</system:String>
+    <system:String x:Key="pluginFailedToRespondSubtitle">Select this result for more info</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Налаштування</system:String>
