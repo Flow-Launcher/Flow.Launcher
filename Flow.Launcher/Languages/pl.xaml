@@ -64,6 +64,10 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="PositionReset">Resetowanie pozycji</system:String>
     <system:String x:Key="PositionResetToolTip">Zresetuj pozycję okna wyszukiwania</system:String>
     <system:String x:Key="queryTextBoxPlaceholder">Wpisz tutaj, aby wyszukać</system:String>
+    <system:String x:Key="pluginStillInitializing">{0}: This plugin is still initializing...</system:String>
+    <system:String x:Key="pluginStillInitializingSubtitle">Select this result to requery</system:String>
+    <system:String x:Key="pluginFailedToRespond">{0}: Failed to respond!</system:String>
+    <system:String x:Key="pluginFailedToRespondSubtitle">Select this result for more info</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Ustawienia</system:String>
