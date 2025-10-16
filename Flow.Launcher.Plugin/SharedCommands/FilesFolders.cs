@@ -380,8 +380,9 @@ namespace Flow.Launcher.Plugin.SharedCommands
         /// </summary>
         public static bool IsValidFileName(string name)
         {
+            if (string.IsNullOrWhiteSpace(name)) return false;
             if (IsReservedName(name)) return false;
-            if (name.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0 || string.IsNullOrWhiteSpace(name))
+            if (name.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
             {
                 return false;
             }
