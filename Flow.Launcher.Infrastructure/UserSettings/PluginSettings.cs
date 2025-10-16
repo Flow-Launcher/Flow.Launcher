@@ -100,12 +100,14 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 var pluginPair = info.Key;
                 var hotkeyInfo = info.Value;
                 var metadata = pluginPair.Metadata;
+                metadata.PluginHotkeys ??= [];
+                metadata.PluginHotkeys.Clear();
                 if (Plugins.TryGetValue(pluginPair.Metadata.ID, out var plugin))
                 {
                     if (plugin.pluginHotkeys == null || plugin.pluginHotkeys.Count == 0)
                     {
                         // If plugin hotkeys does not exist, create a new one and initialize with default values
-                        plugin.pluginHotkeys = new List<PluginHotkey>();
+                        plugin.pluginHotkeys = [];
                         foreach (var hotkey in hotkeyInfo)
                         {
                             plugin.pluginHotkeys.Add(new PluginHotkey
