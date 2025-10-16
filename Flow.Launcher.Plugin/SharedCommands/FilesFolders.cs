@@ -389,7 +389,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
         }
 
         /// <summary>
-        /// Returns true is the given name is a valid name for a directory, not a path
+        /// Returns true if the given name is a valid name for a directory, not a path
         /// </summary>
         public static bool IsValidDirectoryName(string name)
         {
