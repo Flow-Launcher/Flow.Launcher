@@ -108,7 +108,7 @@ namespace Flow.Launcher.Core.Plugin
                 });
 
                 metadata.InitTime += milliseconds;
-                PublicApi.Instance.LogInfo(ClassName, $"Constructor cost for <{metadata.Name}> is <{metadata.InitTime}ms>");
+                PublicApi.Instance.LogDebug(ClassName, $"Constructor cost for <{metadata.Name}> is <{metadata.InitTime}ms>");
             }
 
             if (erroredPlugins.Count > 0)
