@@ -261,6 +261,22 @@
 
             <ui:SettingsCard
                 Margin="0 14 0 0"
+                Description="{DynamicResource historyStyleTooltip}"
+                Header="{DynamicResource historyStyle}">
+                <ui:SettingsCard.HeaderIcon>
+                    <ui:FontIcon Glyph="&#xE81C;" />
+                </ui:SettingsCard.HeaderIcon>
+
+                <ComboBox
+                    MaxWidth="200"
+                    DisplayMemberPath="Display"
+                    ItemsSource="{Binding HistoryStyles}"
+                    SelectedValue="{Binding Settings.HistoryStyle}"
+                    SelectedValuePath="Value" />
+            </ui:SettingsCard>
+
+            <ui:SettingsCard
+                Margin="0 14 0 0"
                 Description="{DynamicResource autoRestartAfterChangingToolTip}"
                 Header="{DynamicResource autoRestartAfterChanging}">
                 <ui:SettingsCard.HeaderIcon>
