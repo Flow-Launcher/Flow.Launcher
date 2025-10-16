@@ -34,6 +34,7 @@ namespace Flow.Launcher.Core.Plugin
         private static readonly ConcurrentDictionary<string, PluginPair> _nonGlobalPlugins = [];
 
         public static event Action<PluginHotkeyChangedEvent> PluginHotkeyChanged;
+        public static event Action<PluginPair> PluginHotkeyInitialized;
 
         private static PluginsSettings Settings;
         private static readonly ConcurrentBag<string> ModifiedPlugins = [];
@@ -46,7 +47,7 @@ namespace Flow.Launcher.Core.Plugin
 
         private static readonly Lock _pluginHotkeyInfoUpdateLock = new();
         private static readonly ConcurrentDictionary<PluginPair, List<BasePluginHotkey>> _pluginHotkeyInfo = [];
-        private static readonly ConcurrentDictionary<HotkeyModel, List<(PluginMetadata, SearchWindowPluginHotkey)>> _windowPluginHotkeys = [];
+        private static readonly ConcurrentDictionary<HotkeyModel, ConcurrentBag<(PluginMetadata, SearchWindowPluginHotkey)>> _windowPluginHotkeys = [];
 
         /// <summary>
         /// Directories that will hold Flow Launcher plugin directory
@@ -383,6 +384,7 @@ namespace Flow.Launcher.Core.Plugin
                 }
                 InitializeWindowPluginHotkey(pair);
                 _hotkeyPlugins.Add(pair);
+                PluginHotkeyInitialized?.Invoke(pair);
             }
         }
 
@@ -872,10 +874,30 @@ namespace Flow.Launcher.Core.Plugin
             }
         }
 
-        public static Dictionary<HotkeyModel, List<(PluginMetadata Metadata, SearchWindowPluginHotkey SearchWindowPluginHotkey)>> GetWindowPluginHotkeys()
+        public static Dictionary<HotkeyModel, ConcurrentBag<(PluginMetadata Metadata, SearchWindowPluginHotkey SearchWindowPluginHotkey)>> GetWindowPluginHotkeys(string id = null)
         {
             // Here we do not need to check PluginModified since we will check it in hotkey events
-            return _windowPluginHotkeys.ToDictionary(p => p.Key, p => p.Value);
+            if (id == null)
+            {
+                // Return all window plugin hotkeys
+                return _windowPluginHotkeys.ToDictionary(p => p.Key, p => p.Value);
+            }
+            else
+            {
+                // Return window plugin hotkeys for specified plugin id
+                // If one HotkeyModel is already included by other plugins, it will be removed so that HotkeyMapper will not register this Window hotkey duplicately
+                var windowPluginHotkeys = new Dictionary<HotkeyModel, ConcurrentBag<(PluginMetadata Metadata, SearchWindowPluginHotkey SearchWindowPluginHotkey)>>();
+                foreach (var key in _windowPluginHotkeys)
+                {
+                    // Check if all items in the list are from the specified plugin
+                    if (key.Value.All(x => x.Item1.ID == id))
+                    {
+                        // We must use the reference of this ConcurrentBag so that it can be updated in the next
+                        windowPluginHotkeys[key.Key] = key.Value;
+                    }
+                }
+                return windowPluginHotkeys;
+            }
         }
 
         public static void UpdatePluginHotkeyInfoTranslations(PluginPair pair)
@@ -932,8 +954,8 @@ namespace Flow.Launcher.Core.Plugin
 
             // Update window plugin hotkey dictionary
             var oldHotkeyModels = _windowPluginHotkeys[oldHotkey];
-            _windowPluginHotkeys[oldHotkey] = oldHotkeyModels.Where(x => x.Item1.ID != plugin.ID || x.Item2.Id != pluginHotkey.Id).ToList();
-            if (_windowPluginHotkeys[oldHotkey].Count == 0)
+            _windowPluginHotkeys[oldHotkey] = [.. oldHotkeyModels.Where(x => x.Item1.ID != plugin.ID || x.Item2.Id != pluginHotkey.Id)];
+            if (_windowPluginHotkeys[oldHotkey].IsEmpty)
             {
                 _windowPluginHotkeys.TryRemove(oldHotkey, out var _);
             }
@@ -942,7 +964,7 @@ namespace Flow.Launcher.Core.Plugin
             {
                 var newList = newHotkeyModels.ToList();
                 newList.Add((plugin, pluginHotkey));
-                _windowPluginHotkeys[newHotkey] = newList;
+                _windowPluginHotkeys[newHotkey] = [.. newList];
             }
             else
             {

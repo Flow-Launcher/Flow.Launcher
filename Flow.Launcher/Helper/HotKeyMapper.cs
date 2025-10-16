@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -41,6 +42,7 @@ internal static class HotKeyMapper
         _settings.PropertyChanged += Settings_PropertyChanged;
         _settings.CustomPluginHotkeys.CollectionChanged += CustomPluginHotkeys_CollectionChanged;
         PluginManager.PluginHotkeyChanged += PluginManager_PluginHotkeyChanged;
+        PluginManager.PluginHotkeyInitialized += PluginManager_PluginHotkeyInitialized;
     }
 
     private static void InitializeRegisteredHotkeys()
@@ -109,9 +111,27 @@ internal static class HotKeyMapper
             list.Add(GetRegisteredHotkeyData(customPluginHotkey));
         }
 
-        // Plugin hotkeys
+        // Add registered hotkeys & Set them
+        foreach (var hotkey in list)
+        {
+            _settings.RegisteredHotkeys.Add(hotkey);
+            if (hotkey.RegisteredType == RegisteredHotkeyType.DialogJump && !_settings.EnableDialogJump)
+            {
+                // If dialog jump is disabled, do not register the hotkey
+                continue;
+            }
+            SetHotkey(hotkey);
+        }
+
+        App.API.LogDebug(ClassName, $"Initialize {_settings.RegisteredHotkeys.Count} hotkeys:\n[\n\t{string.Join(",\n\t", _settings.RegisteredHotkeys)}\n]");
+    }
+
+    private static void PluginManager_PluginHotkeyInitialized(PluginPair pair)
+    {
+        var list = new List<RegisteredHotkeyData>();
+
         // Global plugin hotkeys
-        var pluginHotkeyInfos = PluginManager.GetPluginHotkeyInfo();
+        var pluginHotkeyInfos = PluginManager.GetPluginHotkeyInfo(pair.Metadata.ID);
         foreach (var info in pluginHotkeyInfos)
         {
             var pluginPair = info.Key;
@@ -128,7 +148,7 @@ internal static class HotKeyMapper
         }
 
         // Window plugin hotkeys
-        var windowPluginHotkeys = PluginManager.GetWindowPluginHotkeys();
+        var windowPluginHotkeys = PluginManager.GetWindowPluginHotkeys(pair.Metadata.ID);
         foreach (var hotkey in windowPluginHotkeys)
         {
             var hotkeyModel = hotkey.Key;
@@ -140,15 +160,10 @@ internal static class HotKeyMapper
         foreach (var hotkey in list)
         {
             _settings.RegisteredHotkeys.Add(hotkey);
-            if (hotkey.RegisteredType == RegisteredHotkeyType.DialogJump && !_settings.EnableDialogJump)
-            {
-                // If dialog jump is disabled, do not register the hotkey
-                continue;
-            }
             SetHotkey(hotkey);
         }
 
-        App.API.LogDebug(ClassName, $"Initialize {_settings.RegisteredHotkeys.Count} hotkeys:\n[\n\t{string.Join(",\n\t", _settings.RegisteredHotkeys)}\n]");
+        App.API.LogDebug(ClassName, $"Initialize {list.Count} hotkeys for {pair.Metadata.Name}:\n[\n\t{string.Join(",\n\t", list)}\n]");
     }
 
     #endregion
@@ -359,7 +374,7 @@ internal static class HotKeyMapper
         return new(RegisteredHotkeyType.PluginGlobalHotkey, HotkeyType.Global, hotkey, "pluginHotkey", GlobalPluginHotkeyCommand, new GlobalPluginHotkeyPair(metadata, pluginHotkey), removeHotkeyAction);
     }
 
-    private static RegisteredHotkeyData GetRegisteredHotkeyData(HotkeyModel hotkey, List<(PluginMetadata Metadata, SearchWindowPluginHotkey PluginHotkey)> windowHotkeys)
+    private static RegisteredHotkeyData GetRegisteredHotkeyData(HotkeyModel hotkey, ConcurrentBag<(PluginMetadata Metadata, SearchWindowPluginHotkey PluginHotkey)> windowHotkeys)
     {
         Action removeHotkeysAction = windowHotkeys.All(h => h.PluginHotkey.Editable) ?
             () =>
@@ -747,12 +762,12 @@ internal static class HotKeyMapper
     private static void InitializeActionContextHotkeys()
     {
         // Fixed hotkeys for ActionContext
-        _actionContextRegisteredHotkeys = new List<RegisteredHotkeyData>
-        {
+        _actionContextRegisteredHotkeys =
+        [
             new(RegisteredHotkeyType.CtrlShiftEnter, HotkeyType.SearchWindow, "Ctrl+Shift+Enter", nameof(Localize.HotkeyCtrlShiftEnterDesc), _mainViewModel.OpenResultCommand),
             new(RegisteredHotkeyType.CtrlEnter, HotkeyType.SearchWindow, "Ctrl+Enter", nameof(Localize.OpenContainFolderHotkey), _mainViewModel.OpenResultCommand),
             new(RegisteredHotkeyType.AltEnter, HotkeyType.SearchWindow, "Alt+Enter", nameof(Localize.HotkeyOpenResult), _mainViewModel.OpenResultCommand),
-        };
+        ];
 
         // Register ActionContext hotkeys and they will be cached and restored in _actionContextHotkeyEvents
         foreach (var hotkey in _actionContextRegisteredHotkeys)
@@ -822,18 +837,12 @@ internal static class HotKeyMapper
         }
     }
 
-    private class WindowPluginHotkeyPair
+    private class WindowPluginHotkeyPair(HotkeyModel hotkey, ConcurrentBag<(PluginMetadata Metadata, SearchWindowPluginHotkey PluginHotkey)> hotkeys)
     {
         [Obsolete("ActionContext support is deprecated and will be removed in a future release. Please use IPluginHotkey instead.")]
-        public HotkeyModel Hotkey { get; }
+        public HotkeyModel Hotkey { get; } = hotkey;
 
-        public List<(PluginMetadata Metadata, SearchWindowPluginHotkey PluginHotkey)> HotkeyModels { get; }
-
-        public WindowPluginHotkeyPair(HotkeyModel hotkey, List<(PluginMetadata Metadata, SearchWindowPluginHotkey PluginHotkey)> hotkeys)
-        {
-            Hotkey = hotkey;
-            HotkeyModels = hotkeys;
-        }
+        public ConcurrentBag<(PluginMetadata Metadata, SearchWindowPluginHotkey PluginHotkey)> HotkeyModels { get; } = hotkeys;
     }
 
     #endregion
