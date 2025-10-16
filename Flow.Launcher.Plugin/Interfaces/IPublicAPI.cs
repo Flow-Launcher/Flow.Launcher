@@ -174,7 +174,7 @@ namespace Flow.Launcher.Plugin
         /// Get all loaded plugins
         /// </summary>
         /// <remarks>
-        /// Part of plugins may not be initialized yet
+        /// Will also return any plugins not fully initialized yet
         /// </remarks>
         /// <returns></returns>
         List<PluginPair> GetAllPlugins();
