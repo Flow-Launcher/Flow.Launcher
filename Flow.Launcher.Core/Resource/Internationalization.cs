@@ -384,7 +384,7 @@ namespace Flow.Launcher.Core.Resource
 
         public static void UpdatePluginMetadataTranslation(PluginPair p)
         {
-            // Update plugin metadata name & description & plugin hotkey name & description
+            // Update plugin metadata name & description
             if (p.Plugin is not IPluginI18n pluginI18N) return;
             try
             {
