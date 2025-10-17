@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
@@ -1349,7 +1349,9 @@ namespace Flow.Launcher.ViewModel
                             Localize.executeQuery(h.Query) :
                             h.Title,
                         SubTitle = Localize.lastExecuteTime(h.ExecutedDateTime),
-                        IcoPath = Constant.HistoryIcon,
+                        IcoPath = Settings.ShowBadges ? h.IcoPath : Constant.HistoryIcon,
+                        BadgeIcoPath = Settings.ShowBadges ? Constant.HistoryIcon : h.IcoPath,
+                        ShowBadge = Settings.ShowBadges,
                         OriginQuery = new Query { RawQuery = h.Query },
                         AsyncAction = async c =>
                         {
@@ -1369,7 +1371,9 @@ namespace Flow.Launcher.ViewModel
                             App.API.ChangeQuery(h.Query);
                             return false;
                         },
-                        Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE81C")
+                        Glyph = Settings.ShowBadges ?
+                                    h.Glyph is not null ? h.Glyph : null
+                                    : new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE81C")
                     };
                     results.Add(result);
                 }

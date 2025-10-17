@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
@@ -59,6 +59,8 @@ namespace Flow.Launcher.Storage
                     PluginID = result.PluginID,
                     Query = result.OriginQuery.RawQuery,
                     RecordKey = result.RecordKey,
+                    IcoPath = result.IcoPath,
+                    Glyph = result.Glyph,
                     ExecutedDateTime = DateTime.Now
                 });
             }
