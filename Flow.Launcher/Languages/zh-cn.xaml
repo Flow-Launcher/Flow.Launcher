@@ -64,10 +64,10 @@
     <system:String x:Key="PositionReset">重置位置</system:String>
     <system:String x:Key="PositionResetToolTip">重置搜索窗口位置</system:String>
     <system:String x:Key="queryTextBoxPlaceholder">在此处输入以搜索</system:String>
-    <system:String x:Key="pluginStillInitializing">{0}: This plugin is still initializing...</system:String>
-    <system:String x:Key="pluginStillInitializingSubtitle">Select this result to requery</system:String>
-    <system:String x:Key="pluginFailedToRespond">{0}: Failed to respond!</system:String>
-    <system:String x:Key="pluginFailedToRespondSubtitle">Select this result for more info</system:String>
+    <system:String x:Key="pluginStillInitializing">{0}：此插件仍在初始化...</system:String>
+    <system:String x:Key="pluginStillInitializingSubtitle">选择此结果以重试</system:String>
+    <system:String x:Key="pluginFailedToRespond">{0}：响应失败！</system:String>
+    <system:String x:Key="pluginFailedToRespondSubtitle">选择此结果以获取更多信息</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">设置</system:String>
@@ -175,10 +175,10 @@
     <system:String x:Key="homePageToolTip">当查询文本为空时显示主页结果。</system:String>
     <system:String x:Key="historyResultsForHomePage">在主页中显示历史记录</system:String>
     <system:String x:Key="historyResultsCountForHomePage">在主页显示的最大历史结果数</system:String>
-    <system:String x:Key="historyStyle">History Style</system:String>
-    <system:String x:Key="historyStyleTooltip">Choose the type of history to show in the History and Home Page</system:String>
-    <system:String x:Key="queryHistory">Query history</system:String>
-    <system:String x:Key="executedHistory">Last opened history</system:String>
+    <system:String x:Key="historyStyle">历史样式</system:String>
+    <system:String x:Key="historyStyleTooltip">选择要在历史和主页中显示的历史类型</system:String>
+    <system:String x:Key="queryHistory">查询历史</system:String>
+    <system:String x:Key="executedHistory">最近打开历史</system:String>
     <system:String x:Key="homeToggleBoxToolTip">这只能在插件支持主页功能和主页启用时进行编辑。</system:String>
     <system:String x:Key="showAtTopmost">将搜索窗口置于顶层</system:String>
     <system:String x:Key="showAtTopmostToolTip">覆盖其他“总是在顶部”的程序窗口并在最顶层的位置显示 Flow Launcher 搜索窗口。</system:String>
@@ -297,7 +297,7 @@
     <system:String x:Key="ItemHeight">项目高度</system:String>
     <system:String x:Key="queryBoxFont">查询框字体</system:String>
     <system:String x:Key="resultItemFont">结果标题字体</system:String>
-    <system:String x:Key="resultSubItemFont">结果字幕字体</system:String>
+    <system:String x:Key="resultSubItemFont">结果副标题字体</system:String>
     <system:String x:Key="resetCustomize">重置</system:String>
     <system:String x:Key="resetCustomizeToolTip">重置为推荐字体和大小设置。</system:String>
     <system:String x:Key="ImportThemeSize">导入主题尺寸</system:String>
