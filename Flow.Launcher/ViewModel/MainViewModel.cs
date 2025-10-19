@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
@@ -1318,15 +1318,24 @@ namespace Flow.Launcher.ViewModel
         private List<Result> GetHistoryItems(IEnumerable<LastOpenedHistoryItem> historyItems)
         {
             var results = new List<Result>();
-            if (Settings.HistoryStyle == HistoryStyle.Query)
+            foreach (var h in historyItems)
             {
-                foreach (var h in historyItems)
+                Result result = null;
+                var glyph = h.Glyph is null && !string.IsNullOrEmpty(h.IcoPath) // Some plugins won't have Glyph, then prefer IcoPath
+                              ? null
+                              : h.Glyph is not null
+                                  ? h.Glyph
+                                  : new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE81C"); // Default fallback
+
+                var icoPath = !string.IsNullOrEmpty(h.IcoPath) ? h.IcoPath : Constant.HistoryIcon;
+
+                if (Settings.HistoryStyle == HistoryStyle.Query)
                 {
-                    var result = new Result
+                    result = new Result
                     {
                         Title = Localize.executeQuery(h.Query),
                         SubTitle = Localize.lastExecuteTime(h.ExecutedDateTime),
-                        IcoPath = Constant.HistoryIcon,
+                        IcoPath = icoPath,
                         OriginQuery = new Query { RawQuery = h.Query },
                         Action = _ =>
                         {
@@ -1334,24 +1343,19 @@ namespace Flow.Launcher.ViewModel
                             App.API.ChangeQuery(h.Query);
                             return false;
                         },
-                        Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE81C")
+                        Glyph = glyph
                     };
-                    results.Add(result);
                 }
-            }
-            else
-            {
-                foreach (var h in historyItems)
+                else
                 {
-                    var result = new Result
+
+                    result = new Result
                     {
                         Title = string.IsNullOrEmpty(h.Title) ?  // Old migrated history items have no title
-                            Localize.executeQuery(h.Query) :
-                            h.Title,
+                                Localize.executeQuery(h.Query) :
+                                h.Title,
                         SubTitle = Localize.lastExecuteTime(h.ExecutedDateTime),
-                        IcoPath = Settings.ShowBadges ? h.IcoPath : Constant.HistoryIcon,
-                        BadgeIcoPath = Settings.ShowBadges ? Constant.HistoryIcon : h.IcoPath,
-                        ShowBadge = Settings.ShowBadges,
+                        IcoPath = icoPath,
                         OriginQuery = new Query { RawQuery = h.Query },
                         AsyncAction = async c =>
                         {
@@ -1371,13 +1375,13 @@ namespace Flow.Launcher.ViewModel
                             App.API.ChangeQuery(h.Query);
                             return false;
                         },
-                        Glyph = Settings.ShowBadges ?
-                                    h.Glyph is not null ? h.Glyph : null
-                                    : new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE81C")
+                        Glyph = glyph
                     };
-                    results.Add(result);
                 }
+
+                results.Add(result);
             }
+
             return results;
         }
 
