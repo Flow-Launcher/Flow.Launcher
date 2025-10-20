@@ -60,7 +60,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             }
             else
             {
-                // Handle scenario where all search options have action keyword set, return to avoid running further search logic.
+                // No action keyword matched- plugin should not handle this query, return empty results.
                 return new List<Result>();
             }
 
@@ -109,6 +109,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     return results.ToList();
             }
 
+            // Merge Quick Access Link results for non-path searches.
             results.UnionWith(QuickAccess.AccessLinkListMatched(query, Settings.QuickAccessLinks));
 
             try
