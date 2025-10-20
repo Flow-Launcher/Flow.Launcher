@@ -57,10 +57,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             {
                 if (string.IsNullOrEmpty(query.Search) && ActionKeywordMatch(query, Settings.ActionKeyword.QuickAccessActionKeyword))
                     return QuickAccess.AccessLinkListAll(query, Settings.QuickAccessLinks);
-
             }
             else
             {
+                // Handle scenario where all search options have action keyword set, return to avoid running further search logic.
                 return new List<Result>();
             }
 
@@ -100,6 +100,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     searchResults = Settings.IndexProvider.SearchAsync(query.Search, token);
                     engineName = Enum.GetName(Settings.IndexSearchEngine);
                     break;
+
+                case true or false
+                    when ActionKeywordMatch(query, Settings.ActionKeyword.QuickAccessActionKeyword):
+                    return QuickAccess.AccessLinkListMatched(query, Settings.QuickAccessLinks);
+
                 default:
                     return results.ToList();
             }
