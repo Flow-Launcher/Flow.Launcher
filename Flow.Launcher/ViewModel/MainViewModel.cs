@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
@@ -1319,6 +1319,13 @@ namespace Flow.Launcher.ViewModel
         {
             var results = new List<Result>();
             foreach (var h in historyItems)
+            if (Settings.HistoryStyle == HistoryStyle.LastOpened)
+            {
+                historyItems = historyItems
+                                 .GroupBy(r => new { r.Title, r.SubTitle, r.PluginID, r.RecordKey })
+                                 .Select(g => g.First());
+            }
+
             {
                 Result result = null;
                 var glyph = h.Glyph is null && !string.IsNullOrEmpty(h.IcoPath) // Some plugins won't have Glyph, then prefer IcoPath
