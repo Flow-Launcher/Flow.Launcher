@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
@@ -1318,7 +1318,7 @@ namespace Flow.Launcher.ViewModel
         private List<Result> GetHistoryItems(IEnumerable<LastOpenedHistoryItem> historyItems)
         {
             var results = new List<Result>();
-            foreach (var h in historyItems)
+
             if (Settings.HistoryStyle == HistoryStyle.LastOpened)
             {
                 historyItems = historyItems
@@ -1326,28 +1326,29 @@ namespace Flow.Launcher.ViewModel
                                  .Select(g => g.First());
             }
 
+            foreach (var item in historyItems.OrderByDescending(h => h.ExecutedDateTime))
             {
                 Result result = null;
-                var glyph = h.Glyph is null && !string.IsNullOrEmpty(h.IcoPath) // Some plugins won't have Glyph, then prefer IcoPath
+                var glyph = item.Glyph is null && !string.IsNullOrEmpty(item.IcoPath) // Some plugins won't have Glyph, then prefer IcoPath
                               ? null
-                              : h.Glyph is not null
-                                  ? h.Glyph
+                              : item.Glyph is not null
+                                  ? item.Glyph
                                   : new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE81C"); // Default fallback
 
-                var icoPath = !string.IsNullOrEmpty(h.IcoPath) ? h.IcoPath : Constant.HistoryIcon;
+                var icoPath = !string.IsNullOrEmpty(item.IcoPath) ? item.IcoPath : Constant.HistoryIcon;
 
                 if (Settings.HistoryStyle == HistoryStyle.Query)
                 {
                     result = new Result
                     {
-                        Title = Localize.executeQuery(h.Query),
-                        SubTitle = Localize.lastExecuteTime(h.ExecutedDateTime),
+                        Title = Localize.executeQuery(item.Query),
+                        SubTitle = Localize.lastExecuteTime(item.ExecutedDateTime),
                         IcoPath = icoPath,
-                        OriginQuery = new Query { RawQuery = h.Query },
+                        OriginQuery = new Query { RawQuery = item.Query },
                         Action = _ =>
                         {
                             App.API.BackToQueryResults();
-                            App.API.ChangeQuery(h.Query);
+                            App.API.ChangeQuery(item.Query);
                             return false;
                         },
                         Glyph = glyph
@@ -1358,15 +1359,15 @@ namespace Flow.Launcher.ViewModel
 
                     result = new Result
                     {
-                        Title = string.IsNullOrEmpty(h.Title) ?  // Old migrated history items have no title
-                                Localize.executeQuery(h.Query) :
-                                h.Title,
-                        SubTitle = Localize.lastExecuteTime(h.ExecutedDateTime),
+                        Title = string.IsNullOrEmpty(item.Title) ?  // Old migrated history items have no title
+                                Localize.executeQuery(item.Query) :
+                                item.Title,
+                        SubTitle = Localize.lastExecuteTime(item.ExecutedDateTime),
                         IcoPath = icoPath,
-                        OriginQuery = new Query { RawQuery = h.Query },
+                        OriginQuery = new Query { RawQuery = item.Query },
                         AsyncAction = async c =>
                         {
-                            var reflectResult = await ResultHelper.PopulateResultsAsync(h);
+                            var reflectResult = await ResultHelper.PopulateResultsAsync(item);
                             if (reflectResult != null)
                             {
                                 // Record the user selected record for result ranking
@@ -1379,7 +1380,7 @@ namespace Flow.Launcher.ViewModel
 
                             // If we cannot get the result, fallback to re-query
                             App.API.BackToQueryResults();
-                            App.API.ChangeQuery(h.Query);
+                            App.API.ChangeQuery(item.Query);
                             return false;
                         },
                         Glyph = glyph
@@ -1388,7 +1389,7 @@ namespace Flow.Launcher.ViewModel
 
                 results.Add(result);
             }
-
+                                 
             return results;
         }
 
