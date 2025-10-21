@@ -1326,7 +1326,7 @@ namespace Flow.Launcher.ViewModel
                                  .Select(g => g.First());
             }
 
-            foreach (var item in historyItems.OrderByDescending(h => h.ExecutedDateTime))
+            foreach (var item in historyItems)
             {
                 Result result = null;
                 var glyph = item.Glyph is null && !string.IsNullOrEmpty(item.IcoPath) // Some plugins won't have Glyph, then prefer IcoPath
