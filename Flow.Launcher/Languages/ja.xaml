@@ -175,9 +175,9 @@
     <system:String x:Key="homePageToolTip">検索文字列が空の場合、ホームページの結果を表示します。</system:String>
     <system:String x:Key="historyResultsForHomePage">クエリの履歴をホームページに表示</system:String>
     <system:String x:Key="historyResultsCountForHomePage">ホームページに表示される最大の履歴の数</system:String>
-    <system:String x:Key="historyStyle">History Style</system:String>
-    <system:String x:Key="historyStyleTooltip">Choose the type of history to show in the History and Home Page</system:String>
-    <system:String x:Key="queryHistory">Query history</system:String>
+    <system:String x:Key="historyStyle">履歴のスタイル</system:String>
+    <system:String x:Key="historyStyleTooltip">履歴とホームページに表示する履歴の種類を選択します</system:String>
+    <system:String x:Key="queryHistory">クエリの履歴</system:String>
     <system:String x:Key="executedHistory">Last opened history</system:String>
     <system:String x:Key="homeToggleBoxToolTip">これは、プラグインがホーム機能をサポートし、ホームページが有効な場合にのみ編集することができます。</system:String>
     <system:String x:Key="showAtTopmost">検索ウィンドウを最前面に表示</system:String>
