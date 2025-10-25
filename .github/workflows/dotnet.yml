@@ -54,28 +54,28 @@ jobs:
         shell: powershell
         run: .\Scripts\post_build.ps1
       - name: Upload Plugin Nupkg
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: Plugin nupkg
           path: |
             Output\Release\Flow.Launcher.Plugin.*.nupkg
           compression-level: 0
       - name: Upload Setup
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: Flow Installer
           path: |
             Output\Packages\Flow-Launcher-*.exe
           compression-level: 0
       - name: Upload Portable Version
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: Portable Version
           path: |
             Output\Packages\Flow-Launcher-Portable.zip
           compression-level: 0
       - name: Upload Full Nupkg
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: Full nupkg
           path: |
@@ -83,7 +83,7 @@ jobs:
 
           compression-level: 0
       - name: Upload Release Information
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: RELEASES
           path: |
