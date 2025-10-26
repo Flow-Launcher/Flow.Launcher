@@ -33,9 +33,6 @@ namespace Flow.Launcher.Plugin.Program
 
         private static readonly List<Result> emptyResults = [];
 
-        private static readonly MemoryCacheOptions cacheOptions = new() { SizeLimit = 1560 };
-        private static MemoryCache cache = new(cacheOptions);
-
         private static readonly string[] commonUninstallerNames =
         {
             "uninst.exe",
