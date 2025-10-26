@@ -32,6 +32,7 @@ namespace Flow.Launcher.Plugin.Program.Views
             get => _settings.EnableDescription;
             set
             {
+                Main.ResetCache();
                 _settings.EnableDescription = value;
             }
         }
@@ -41,6 +42,7 @@ namespace Flow.Launcher.Plugin.Program.Views
             get => _settings.HideAppsPath;
             set
             {
+                Main.ResetCache();
                 _settings.HideAppsPath = value;
             }
         }
@@ -50,6 +52,7 @@ namespace Flow.Launcher.Plugin.Program.Views
             get => _settings.HideUninstallers;
             set
             {
+                Main.ResetCache();
                 _settings.HideUninstallers = value;
             }
         }
@@ -59,6 +62,7 @@ namespace Flow.Launcher.Plugin.Program.Views
             get => _settings.HideDuplicatedWindowsApp;
             set
             {
+                Main.ResetCache();
                 _settings.HideDuplicatedWindowsApp = value;
             }
         }
