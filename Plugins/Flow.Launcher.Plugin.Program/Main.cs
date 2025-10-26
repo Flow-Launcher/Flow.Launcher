@@ -90,7 +90,7 @@ namespace Flow.Launcher.Plugin.Program
                         .Select(uwp => uwp.Location.TrimEnd('\\')) // Remove trailing slash
                         .Distinct(StringComparer.OrdinalIgnoreCase)
                         .ToArray() : null;
-
+                    
                     return _win32s.Cast<IProgram>()
                         .Concat(_uwps)
                         .AsParallel()
@@ -293,20 +293,24 @@ namespace Flow.Launcher.Plugin.Program
 
         public static async Task IndexWin32ProgramsAsync()
         {
+            Context.API.LogDebug(ClassName, "Prepare indexing Win32 programs");
             await _win32sLock.WaitAsync();
+            Context.API.LogDebug(ClassName, "Start indexing Win32 programs");
             try
             {
                 var win32S = Win32.All(_settings);
+                Context.API.LogDebug(ClassName, "Get all Win32 programs");
                 _win32s.Clear();
                 foreach (var win32 in win32S)
                 {
                     _win32s.Add(win32);
                 }
+                Context.API.LogDebug(ClassName, "Cache all Win32 programs");
                 await Context.API.SaveCacheBinaryStorageAsync<List<Win32>>(Win32CacheName, Context.CurrentPluginMetadata.PluginCacheDirectoryPath);
                 lock (_lastIndexTimeLock)
                 {
-                _settings.LastIndexTime = DateTime.Now;
-            }
+                    _settings.LastIndexTime = DateTime.Now;
+                }
             }
             catch (Exception e)
             {
@@ -316,24 +320,29 @@ namespace Flow.Launcher.Plugin.Program
             {
                 _win32sLock.Release();
             }
+            Context.API.LogDebug(ClassName, "End indexing Win32 programs");
         }
 
         public static async Task IndexUwpProgramsAsync()
         {
+            Context.API.LogDebug(ClassName, "Prepare indexing Uwp programs");
             await _uwpsLock.WaitAsync();
+            Context.API.LogDebug(ClassName, "Start indexing Uwp programs");
             try
             {
                 var uwps = UWPPackage.All(_settings);
+                Context.API.LogDebug(ClassName, "Get all Uwp programs");
                 _uwps.Clear();
                 foreach (var uwp in uwps)
                 {
                     _uwps.Add(uwp);
                 }
+                Context.API.LogDebug(ClassName, "Cache all Uwp programs");
                 await Context.API.SaveCacheBinaryStorageAsync<List<UWPApp>>(UwpCacheName, Context.CurrentPluginMetadata.PluginCacheDirectoryPath);
                 lock (_lastIndexTimeLock)
                 {
-                _settings.LastIndexTime = DateTime.Now;
-            }
+                    _settings.LastIndexTime = DateTime.Now;
+                }
             }
             catch (Exception e)
             {
@@ -343,6 +352,7 @@ namespace Flow.Launcher.Plugin.Program
             {
                 _uwpsLock.Release();
             }
+            Context.API.LogDebug(ClassName, "End indexing Uwp programs");
         }
 
         public static async Task IndexProgramsAsync()
@@ -356,6 +366,8 @@ namespace Flow.Launcher.Plugin.Program
             {
                 await Context.API.StopwatchLogInfoAsync(ClassName, "UWPProgram index cost", IndexUwpProgramsAsync);
             });
+
+            Context.API.LogDebug(ClassName, "Start indexing");
 
             await Task.WhenAll(win32Task, uwpTask).ConfigureAwait(false);
         }
