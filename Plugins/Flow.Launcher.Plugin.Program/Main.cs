@@ -31,6 +31,8 @@ namespace Flow.Launcher.Plugin.Program
 
         internal static PluginInitContext Context { get; private set; }
 
+        private static readonly Lock _lastIndexTimeLock = new();
+
         private static readonly List<Result> emptyResults = [];
 
         private static readonly string[] commonUninstallerNames =
@@ -264,7 +266,12 @@ namespace Flow.Launcher.Plugin.Program
 
             var cacheEmpty = _win32sCount == 0 || _uwpsCount == 0;
 
-            if (cacheEmpty || _settings.LastIndexTime.AddHours(30) < DateTime.Now)
+            bool needReindex;
+            lock (_lastIndexTimeLock)
+            {
+                needReindex = _settings.LastIndexTime.AddHours(30) < DateTime.Now;
+            }
+            if (cacheEmpty || needReindex)
             {
                 _ = Task.Run(async () =>
                 {
@@ -296,7 +303,10 @@ namespace Flow.Launcher.Plugin.Program
                     _win32s.Add(win32);
                 }
                 await Context.API.SaveCacheBinaryStorageAsync<List<Win32>>(Win32CacheName, Context.CurrentPluginMetadata.PluginCacheDirectoryPath);
+                lock (_lastIndexTimeLock)
+                {
                 _settings.LastIndexTime = DateTime.Now;
+            }
             }
             catch (Exception e)
             {
@@ -320,7 +330,10 @@ namespace Flow.Launcher.Plugin.Program
                     _uwps.Add(uwp);
                 }
                 await Context.API.SaveCacheBinaryStorageAsync<List<UWPApp>>(UwpCacheName, Context.CurrentPluginMetadata.PluginCacheDirectoryPath);
+                lock (_lastIndexTimeLock)
+                {
                 _settings.LastIndexTime = DateTime.Now;
+            }
             }
             catch (Exception e)
             {
