@@ -80,12 +80,16 @@ namespace Flow.Launcher.Plugin.Program
 
         public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
         {
+            Context.API.LogDebug(ClassName, $"Query received: {query.Search}");
             var result = await cache.GetOrCreateAsync(query.Search, async entry =>
             {
+                Context.API.LogDebug(ClassName, $"Cache miss for query: {query.Search}");
                 var resultList = await Task.Run(async () =>
                 {
+                    Context.API.LogDebug(ClassName, "Acquiring locks for querying programs");
                     await _win32sLock.WaitAsync(token);
                     await _uwpsLock.WaitAsync(token);
+                    Context.API.LogDebug(ClassName, "Locks acquired for querying programs");
                     try
                     {
                         // Collect all UWP Windows app directories
@@ -95,6 +99,7 @@ namespace Flow.Launcher.Plugin.Program
                             .Select(uwp => uwp.Location.TrimEnd('\\')) // Remove trailing slash
                             .Distinct(StringComparer.OrdinalIgnoreCase)
                             .ToArray() : null;
+                        Context.API.LogDebug(ClassName, "Start filtering and selecting programs");
 
                         return _win32s.Cast<IProgram>()
                             .Concat(_uwps)
@@ -109,6 +114,7 @@ namespace Flow.Launcher.Plugin.Program
                     }
                     catch (OperationCanceledException)
                     {
+                        Context.API.LogDebug(ClassName, "Query operation was canceled");
                         return emptyResults;
                     }
                     finally
@@ -120,9 +126,11 @@ namespace Flow.Launcher.Plugin.Program
 
                 resultList = resultList.Count != 0 ? resultList : emptyResults;
 
+                Context.API.LogDebug(ClassName, $"Query completed with {resultList.Count} results");
                 entry.SetSize(resultList.Count);
                 entry.SetSlidingExpiration(TimeSpan.FromHours(8));
-
+                Context.API.LogDebug(ClassName, $"Caching results for query: {query.Search} with {resultList.Count} items");
+                
                 return resultList;
             });
 
