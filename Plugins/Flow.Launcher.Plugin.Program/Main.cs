@@ -78,53 +78,45 @@ namespace Flow.Launcher.Plugin.Program
 
         public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
         {
-            var result = await cache.GetOrCreateAsync(query.Search, async entry =>
+            var resultList = await Task.Run(async () =>
             {
-                var resultList = await Task.Run(async () =>
+                await _win32sLock.WaitAsync(token);
+                await _uwpsLock.WaitAsync(token);
+                try
                 {
-                    await _win32sLock.WaitAsync(token);
-                    await _uwpsLock.WaitAsync(token);
-                    try
-                    {
-                        // Collect all UWP Windows app directories
-                        var uwpsDirectories = _settings.HideDuplicatedWindowsApp ? _uwps
-                            .Where(uwp => !string.IsNullOrEmpty(uwp.Location)) // Exclude invalid paths
-                            .Where(uwp => uwp.Location.StartsWith(WindowsAppPath, StringComparison.OrdinalIgnoreCase)) // Keep system apps
-                            .Select(uwp => uwp.Location.TrimEnd('\\')) // Remove trailing slash
-                            .Distinct(StringComparer.OrdinalIgnoreCase)
-                            .ToArray() : null;
+                    // Collect all UWP Windows app directories
+                    var uwpsDirectories = _settings.HideDuplicatedWindowsApp ? _uwps
+                        .Where(uwp => !string.IsNullOrEmpty(uwp.Location)) // Exclude invalid paths
+                        .Where(uwp => uwp.Location.StartsWith(WindowsAppPath, StringComparison.OrdinalIgnoreCase)) // Keep system apps
+                        .Select(uwp => uwp.Location.TrimEnd('\\')) // Remove trailing slash
+                        .Distinct(StringComparer.OrdinalIgnoreCase)
+                        .ToArray() : null;
 
-                        return _win32s.Cast<IProgram>()
-                            .Concat(_uwps)
-                            .AsParallel()
-                            .WithCancellation(token)
-                            .Where(HideUninstallersFilter)
-                            .Where(p => HideDuplicatedWindowsAppFilter(p, uwpsDirectories))
-                            .Where(p => p.Enabled)
-                            .Select(p => p.Result(query.Search, Context.API))
-                            .Where(r => string.IsNullOrEmpty(query.Search) || r?.Score > 0)
-                            .ToList();
-                    }
-                    catch (OperationCanceledException)
-                    {
-                        return emptyResults;
-                    }
-                    finally
-                    {
-                        _uwpsLock.Release();
-                        _win32sLock.Release();
-                    }
-                }, token);
+                    return _win32s.Cast<IProgram>()
+                        .Concat(_uwps)
+                        .AsParallel()
+                        .WithCancellation(token)
+                        .Where(HideUninstallersFilter)
+                        .Where(p => HideDuplicatedWindowsAppFilter(p, uwpsDirectories))
+                        .Where(p => p.Enabled)
+                        .Select(p => p.Result(query.Search, Context.API))
+                        .Where(r => string.IsNullOrEmpty(query.Search) || r?.Score > 0)
+                        .ToList();
+                }
+                catch (OperationCanceledException)
+                {
+                    return emptyResults;
+                }
+                finally
+                {
+                    _uwpsLock.Release();
+                    _win32sLock.Release();
+                }
+            }, token);
 
-                resultList = resultList.Count != 0 ? resultList : emptyResults;
+            resultList = resultList.Count != 0 ? resultList : emptyResults;
 
-                entry.SetSize(resultList.Count);
-                entry.SetSlidingExpiration(TimeSpan.FromHours(8));
-
-                return resultList;
-            });
-
-            return result;
+            return resultList;
         }
 
         private bool HideUninstallersFilter(IProgram program)
@@ -306,7 +298,6 @@ namespace Flow.Launcher.Plugin.Program
                 {
                     _win32s.Add(win32);
                 }
-                ResetCache();
                 await Context.API.SaveCacheBinaryStorageAsync<List<Win32>>(Win32CacheName, Context.CurrentPluginMetadata.PluginCacheDirectoryPath);
                 _settings.LastIndexTime = DateTime.Now;
             }
@@ -331,7 +322,6 @@ namespace Flow.Launcher.Plugin.Program
                 {
                     _uwps.Add(uwp);
                 }
-                ResetCache();
                 await Context.API.SaveCacheBinaryStorageAsync<List<UWPApp>>(UwpCacheName, Context.CurrentPluginMetadata.PluginCacheDirectoryPath);
                 _settings.LastIndexTime = DateTime.Now;
             }
@@ -358,13 +348,6 @@ namespace Flow.Launcher.Plugin.Program
             });
 
             await Task.WhenAll(win32Task, uwpTask).ConfigureAwait(false);
-        }
-
-        internal static void ResetCache()
-        {
-            var oldCache = cache;
-            cache = new MemoryCache(cacheOptions);
-            oldCache.Dispose();
         }
 
         public Control CreateSettingPanel()
