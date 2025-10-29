@@ -58,6 +58,15 @@ namespace Flow.Launcher.Plugin.Explorer
 
         public bool QuickAccessKeywordEnabled { get; set; }
 
+
+        public string FolderSearchActionKeyword { get; set; } = Query.GlobalPluginWildcardSign;
+
+        public bool FolderSearchKeywordEnabled { get; set; }
+
+        public string FileSearchActionKeyword { get; set; } = Query.GlobalPluginWildcardSign;
+
+        public bool FileSearchKeywordEnabled { get; set; }
+
         public bool WarnWindowsSearchServiceOff { get; set; } = true;
 
         public bool ShowFileSizeInPreviewPanel { get; set; } = true;
@@ -160,7 +169,10 @@ namespace Flow.Launcher.Plugin.Explorer
             PathSearchActionKeyword,
             FileContentSearchActionKeyword,
             IndexSearchActionKeyword,
-            QuickAccessActionKeyword
+            QuickAccessActionKeyword,
+            FolderSearchActionKeyword,
+            FileSearchActionKeyword,
+
         }
 
         internal string GetActionKeyword(ActionKeyword actionKeyword) => actionKeyword switch
