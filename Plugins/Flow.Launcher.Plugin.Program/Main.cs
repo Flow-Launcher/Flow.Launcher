@@ -31,6 +31,9 @@ namespace Flow.Launcher.Plugin.Program
 
         internal static PluginInitContext Context { get; private set; }
 
+        private static Task _indexingTask;
+        private static readonly object _indexingTaskLock = new();
+
         private static readonly List<Result> emptyResults = [];
 
         private static readonly MemoryCacheOptions cacheOptions = new() { SizeLimit = 1560 };
@@ -78,6 +81,31 @@ namespace Flow.Launcher.Plugin.Program
 
         public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
         {
+            // Wait for initial indexing to complete if it's still running
+            Task indexingTask;
+            lock (_indexingTaskLock)
+            {
+                indexingTask = _indexingTask;
+            }
+
+            if (indexingTask != null && !indexingTask.IsCompleted)
+            {
+                try
+                {
+                    // Wait for indexing with a reasonable timeout to avoid blocking queries indefinitely
+                    await Task.WhenAny(indexingTask, Task.Delay(TimeSpan.FromSeconds(30), token)).ConfigureAwait(false);
+                }
+                catch (OperationCanceledException)
+                {
+                    // Query was cancelled, return empty results
+                    return emptyResults.ToList();
+                }
+                catch (Exception e)
+                {
+                    Context.API.LogException(ClassName, "Error waiting for indexing to complete", e);
+                }
+            }
+
             var result = await cache.GetOrCreateAsync(query.Search, async entry =>
             {
                 var resultList = await Task.Run(async () =>
@@ -277,11 +305,21 @@ namespace Flow.Launcher.Plugin.Program
 
             if (cacheEmpty || _settings.LastIndexTime.AddHours(30) < DateTime.Now)
             {
-                _ = Task.Run(async () =>
+                lock (_indexingTaskLock)
                 {
-                    await IndexProgramsAsync().ConfigureAwait(false);
-                    WatchProgramUpdate();
-                });
+                    _indexingTask = Task.Run(async () =>
+                    {
+                        try
+                        {
+                            await IndexProgramsAsync().ConfigureAwait(false);
+                            WatchProgramUpdate();
+                        }
+                        catch (Exception e)
+                        {
+                            Context.API.LogException(ClassName, "Failed to complete program indexing", e);
+                        }
+                    });
+                }
             }
             else
             {
@@ -483,6 +521,26 @@ namespace Flow.Launcher.Plugin.Program
 
         public void Dispose()
         {
+            // Wait for indexing to complete before disposing
+            Task indexingTask;
+            lock (_indexingTaskLock)
+            {
+                indexingTask = _indexingTask;
+            }
+
+            if (indexingTask != null && !indexingTask.IsCompleted)
+            {
+                try
+                {
+                    // Wait for indexing to complete with a reasonable timeout
+                    indexingTask.Wait(TimeSpan.FromSeconds(10));
+                }
+                catch (Exception e)
+                {
+                    Context?.API?.LogException(ClassName, "Error waiting for indexing during dispose", e);
+                }
+            }
+
             Win32.Dispose();
         }
     }
