@@ -182,6 +182,8 @@ namespace Flow.Launcher.Plugin.Explorer
             ActionKeyword.FileContentSearchActionKeyword => FileContentSearchActionKeyword,
             ActionKeyword.IndexSearchActionKeyword => IndexSearchActionKeyword,
             ActionKeyword.QuickAccessActionKeyword => QuickAccessActionKeyword,
+            ActionKeyword.FolderSearchActionKeyword => FolderSearchActionKeyword,
+            ActionKeyword.FileSearchActionKeyword => FileSearchActionKeyword,
             _ => throw new ArgumentOutOfRangeException(nameof(actionKeyword), actionKeyword, "ActionKeyWord property not found")
         };
 
@@ -192,6 +194,8 @@ namespace Flow.Launcher.Plugin.Explorer
             ActionKeyword.FileContentSearchActionKeyword => FileContentSearchActionKeyword = keyword,
             ActionKeyword.IndexSearchActionKeyword => IndexSearchActionKeyword = keyword,
             ActionKeyword.QuickAccessActionKeyword => QuickAccessActionKeyword = keyword,
+            ActionKeyword.FolderSearchActionKeyword => FolderSearchActionKeyword = keyword,
+            ActionKeyword.FileSearchActionKeyword => FileSearchActionKeyword = keyword,
             _ => throw new ArgumentOutOfRangeException(nameof(actionKeyword), actionKeyword, "ActionKeyWord property not found")
         };
 
@@ -202,6 +206,8 @@ namespace Flow.Launcher.Plugin.Explorer
             ActionKeyword.IndexSearchActionKeyword => IndexSearchKeywordEnabled,
             ActionKeyword.FileContentSearchActionKeyword => FileContentSearchKeywordEnabled,
             ActionKeyword.QuickAccessActionKeyword => QuickAccessKeywordEnabled,
+            ActionKeyword.FolderSearchActionKeyword => FolderSearchKeywordEnabled,
+            ActionKeyword.FileSearchActionKeyword => FileSearchKeywordEnabled,
             _ => throw new ArgumentOutOfRangeException(nameof(actionKeyword), actionKeyword, "ActionKeyword enabled status not defined")
         };
 
@@ -212,6 +218,8 @@ namespace Flow.Launcher.Plugin.Explorer
             ActionKeyword.IndexSearchActionKeyword => IndexSearchKeywordEnabled = enable,
             ActionKeyword.FileContentSearchActionKeyword => FileContentSearchKeywordEnabled = enable,
             ActionKeyword.QuickAccessActionKeyword => QuickAccessKeywordEnabled = enable,
+            ActionKeyword.FolderSearchActionKeyword => FolderSearchKeywordEnabled = enable,
+            ActionKeyword.FileSearchActionKeyword => FileSearchKeywordEnabled = enable,
             _ => throw new ArgumentOutOfRangeException(nameof(actionKeyword), actionKeyword, "ActionKeyword enabled status not defined")
         };
     }
