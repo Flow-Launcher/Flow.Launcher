@@ -163,7 +163,7 @@ namespace Flow.Launcher.Plugin.Explorer
 
         #endregion
 
-        internal enum ActionKeyword
+        public enum ActionKeyword
         {
             SearchActionKeyword,
             PathSearchActionKeyword,
