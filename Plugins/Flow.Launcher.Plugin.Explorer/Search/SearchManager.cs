@@ -51,7 +51,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         internal async Task<List<Result>> SearchAsync(Query query, CancellationToken token)
         {
             var results = new HashSet<Result>(PathEqualityComparator.Instance);
-            var actionKeywordConfigurations = GetActionKeywordConfigurations();
             var keywordStr = query.ActionKeyword.Length == 0 ? Query.GlobalPluginWildcardSign : query.ActionKeyword;
             if (string.IsNullOrEmpty(keywordStr))
             {
@@ -60,8 +59,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             bool isPathSearch = query.Search.IsLocationPathString()
                                 || EnvironmentVariables.IsEnvironmentVariableSearch(query.Search)
                                 || EnvironmentVariables.HasEnvironmentVar(query.Search);
+            var actionKeywordConfiguration = Settings.GetActionKeywordConfiguration(keywordStr);
 
-            var actionKeywordConfiguration = actionKeywordConfigurations.FirstOrDefault(x => x.Keyword == keywordStr && x.Enable);
             if (actionKeywordConfiguration == null && !isPathSearch)
             {
                 return new List<Result>();
@@ -72,6 +71,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 actionKeywordConfiguration =
                     new ActionKeywordConfiguration(keywordStr, ActionKeyword.PathSearchActionKeyword, true);
             }
+            // This allows the user to type the below action keywords and see/search the list of quick folder links
 
             if (string.IsNullOrEmpty(query.Search)
                 && actionKeywordConfiguration!.IsActive(ActionKeyword.QuickAccessActionKeyword))
@@ -90,6 +90,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     results.UnionWith(await PathSearchAsync(query, token).ConfigureAwait(false));
                     return results.ToList();
                 case false
+                    // Intentionally require enabling of Everything's content search due to its slowness
                     when actionKeywordConfiguration.IsActive(ActionKeyword.FileContentSearchActionKeyword):
                     if (Settings.ContentIndexProvider is EverythingSearchManager && !Settings.EnableEverythingContentSearch)
                         return EverythingContentSearchResult(query);
@@ -109,7 +110,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     engineName = Enum.GetName(Settings.IndexSearchEngine);
                     break;
 
-                case false
+                case  false
                     when actionKeywordConfiguration.IsActive(ActionKeyword.QuickAccessActionKeyword):
                     return QuickAccess.AccessLinkListMatched(query, Settings.QuickAccessLinks);
 
@@ -292,49 +293,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             }
 
             return false;
-        }
-
-
-        private List<ActionKeywordConfiguration> GetActionKeywordConfigurations()
-        {
-            return new List<ActionKeywordConfiguration>()
-            {
-                new(
-                    Settings.FolderSearchActionKeyword,
-                    ActionKeyword.FolderSearchActionKeyword,
-                    Settings.FolderSearchKeywordEnabled
-                ),
-                new(
-                    Settings.FileSearchActionKeyword,
-                    ActionKeyword.FileSearchActionKeyword,
-                    Settings.FileSearchKeywordEnabled
-                ),
-                new(
-                    Settings.PathSearchActionKeyword,
-                    ActionKeyword.PathSearchActionKeyword,
-                    Settings.PathSearchKeywordEnabled
-                ),
-                new(
-                    Settings.SearchActionKeyword,
-                    ActionKeyword.SearchActionKeyword,
-                    Settings.SearchActionKeywordEnabled
-                ),
-                new(
-                    Settings.QuickAccessActionKeyword,
-                    ActionKeyword.QuickAccessActionKeyword,
-                    Settings.QuickAccessKeywordEnabled
-                ),
-                new(
-                    Settings.IndexSearchActionKeyword,
-                    ActionKeyword.IndexSearchActionKeyword,
-                    Settings.IndexSearchKeywordEnabled
-                ),
-                new(
-                    Settings.FileContentSearchActionKeyword,
-                    ActionKeyword.FileContentSearchActionKeyword,
-                    Settings.FileContentSearchKeywordEnabled
-                ),
-            };
         }
 
     }

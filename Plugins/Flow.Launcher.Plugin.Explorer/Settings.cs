@@ -1,12 +1,13 @@
-﻿using Flow.Launcher.Plugin.Explorer.Search;
-using Flow.Launcher.Plugin.Explorer.Search.Everything;
-using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
-using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text.Json.Serialization;
+using Flow.Launcher.Plugin.Explorer.Search;
+using Flow.Launcher.Plugin.Explorer.Search.Everything;
 using Flow.Launcher.Plugin.Explorer.Search.IProvider;
+using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
+using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
 
 namespace Flow.Launcher.Plugin.Explorer
 {
@@ -222,5 +223,21 @@ namespace Flow.Launcher.Plugin.Explorer
             ActionKeyword.FileSearchActionKeyword => FileSearchKeywordEnabled = enable,
             _ => throw new ArgumentOutOfRangeException(nameof(actionKeyword), actionKeyword, "ActionKeyword enabled status not defined")
         };
+
+        public ActionKeywordConfiguration GetActionKeywordConfiguration(string actionKeywordStr)
+        {
+            if (string.IsNullOrEmpty(actionKeywordStr)) return null;
+            foreach (ActionKeyword action in Enum.GetValues(typeof(ActionKeyword)))
+            {
+                var keywordStr = GetActionKeyword(action);
+                if (string.IsNullOrEmpty(keywordStr)) continue;
+                if (keywordStr == actionKeywordStr)
+                {
+                    return new ActionKeywordConfiguration(keywordStr, action, GetActionKeywordEnabled(action));
+                }
+            }
+            return null;
+        }
+
     }
 }
