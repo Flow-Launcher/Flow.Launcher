@@ -56,7 +56,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                                 || EnvironmentVariables.IsEnvironmentVariableSearch(query.Search)
                                 || EnvironmentVariables.HasEnvironmentVar(query.Search);
 
-
             var actionKeywordConfiguration = Settings.GetActionKeywordConfiguration(keywordStr);
 
             if (actionKeywordConfiguration == null && !isPathSearch)
@@ -97,31 +96,21 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     engineName = Enum.GetName(Settings.ContentSearchEngine);
                     break;
 
-
-                case false
-                    when actionKeywordConfiguration.IsActive(ActionKeyword.IndexSearchActionKeyword)
-                         || actionKeywordConfiguration.IsActive(ActionKeyword.SearchActionKeyword)
-                         || actionKeywordConfiguration.IsActive(ActionKeyword.FolderSearchActionKeyword)
-                         || actionKeywordConfiguration.IsActive(ActionKeyword.FileSearchActionKeyword):
-
-                    searchResults = Settings.IndexProvider.SearchAsync(query.Search, token);
-                    engineName = Enum.GetName(Settings.IndexSearchEngine);
-                    break;
-
-                case  false
+                case  false 
                     when actionKeywordConfiguration.IsActive(ActionKeyword.QuickAccessActionKeyword):
                     return QuickAccess.AccessLinkListMatched(query, Settings.QuickAccessLinks);
 
 
                 default:
-                    return results.ToList();
+                    searchResults = Settings.IndexProvider.SearchAsync(query.Search, token);
+                    engineName = Enum.GetName(Settings.IndexSearchEngine);
+                    break;
             }
-
-            // Merge Quick Access Link results for non-path searches.
-            results.UnionWith(QuickAccess.AccessLinkListMatched(query, Settings.QuickAccessLinks));
 
             try
             {
+                results.UnionWith(QuickAccess.AccessLinkListMatched(query, Settings.QuickAccessLinks));
+
                 await foreach (var search in searchResults.WithCancellation(token).ConfigureAwait(false))
                 {
                     if (ShouldSkip(actionKeywordConfiguration, search))
