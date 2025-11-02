@@ -453,7 +453,7 @@
     <system:String x:Key="icons">סמלים</system:String>
     <system:String x:Key="about_activate_times">הפעלת את Flow Launcher {0} פעמים</system:String>
     <system:String x:Key="checkUpdates">בדוק עדכונים</system:String>
-    <system:String x:Key="BecomeASponsor">תן חסות</system:String>
+    <system:String x:Key="BecomeASponsor">Become a Sponsor</system:String>
     <system:String x:Key="newVersionTips">גרסה חדשה {0} זמינה, האם ברצונך להפעיל מחדש את Flow Launcher כדי להשתמש בעדכון?</system:String>
     <system:String x:Key="checkUpdatesFailed">בדיקת העדכונים נכשלה, אנא בדוק את הגדרות החיבור ואת הגדרות ה-Proxy שלך לכתובת api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
