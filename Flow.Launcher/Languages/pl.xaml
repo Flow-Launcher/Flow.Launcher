@@ -453,7 +453,7 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="icons">Ikony</system:String>
     <system:String x:Key="about_activate_times">Uaktywniłeś Flow Launcher {0} razy</system:String>
     <system:String x:Key="checkUpdates">Szukaj aktualizacji</system:String>
-    <system:String x:Key="BecomeASponsor">Zostań sponsorem</system:String>
+    <system:String x:Key="BecomeASponsor">Become a Sponsor</system:String>
     <system:String x:Key="newVersionTips">Nowa wersja {0} jest dostępna, uruchom ponownie Flow Launcher</system:String>
     <system:String x:Key="checkUpdatesFailed">Sprawdzenie aktualizacji nie powiodło się. Sprawdź swoje połączenie i ustawienia proxy dla api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
