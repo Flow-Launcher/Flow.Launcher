@@ -454,7 +454,7 @@
     <system:String x:Key="icons">Ikony</system:String>
     <system:String x:Key="about_activate_times">Flow Launcher byl aktivován {0} krát</system:String>
     <system:String x:Key="checkUpdates">Zkontrolovat Aktualizace</system:String>
-    <system:String x:Key="BecomeASponsor">Staňte se sponzorem</system:String>
+    <system:String x:Key="BecomeASponsor">Become a Sponsor</system:String>
     <system:String x:Key="newVersionTips">Je k dispozici nová verze {0}, chcete Flow Launcher restartovat, aby se mohl aktualizovat?</system:String>
     <system:String x:Key="checkUpdatesFailed">Hledání aktualizací se nezdařilo, zkontrolujte prosím své internetové připojení a nastavení proxy serveru k api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
