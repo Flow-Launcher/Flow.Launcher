@@ -455,7 +455,7 @@ Nevykonali sa žiadne zmeny.</system:String>
     <system:String x:Key="icons">Ikony</system:String>
     <system:String x:Key="about_activate_times">Flow Launcher bol aktivovaný {0}-krát</system:String>
     <system:String x:Key="checkUpdates">Vyhľadať aktualizácie</system:String>
-    <system:String x:Key="BecomeASponsor">Become a Sponsor</system:String>
+    <system:String x:Key="BecomeASponsor">Stať sa sponzorom</system:String>
     <system:String x:Key="newVersionTips">Je dostupná nová verzia {0}, chcete reštartovať Flow Launcher, aby sa mohol aktualizovať?</system:String>
     <system:String x:Key="checkUpdatesFailed">Vyhľadávanie aktualizácií zlyhalo, prosím, skontrolujte pripojenie na internet a nastavenie proxy server k api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
