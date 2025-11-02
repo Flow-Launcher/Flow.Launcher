@@ -454,7 +454,7 @@
     <system:String x:Key="icons">圖示</system:String>
     <system:String x:Key="about_activate_times">您已經啟動了 Flow Launcher {0} 次</system:String>
     <system:String x:Key="checkUpdates">檢查更新</system:String>
-    <system:String x:Key="BecomeASponsor">成為贊助者</system:String>
+    <system:String x:Key="BecomeASponsor">Become a Sponsor</system:String>
     <system:String x:Key="newVersionTips">發現有新版本 {0}， 請重新啟動 Flow Launcher。</system:String>
     <system:String x:Key="checkUpdatesFailed">檢查更新失敗，請檢查你對 api.github.com 的連線和代理設定。</system:String>
     <system:String x:Key="downloadUpdatesFailed">
