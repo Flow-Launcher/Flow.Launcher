@@ -469,7 +469,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
 
         private static string? PromptUserSelectPath(ResultType type, string? initialDirectory = null)
         {
-            string? path = null;
+            string? path = null; 
 
             if (type is ResultType.Folder)
             {

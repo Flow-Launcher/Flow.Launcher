@@ -56,22 +56,23 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                                 || EnvironmentVariables.IsEnvironmentVariableSearch(query.Search)
                                 || EnvironmentVariables.HasEnvironmentVar(query.Search);
 
-            var actionKeywordConfiguration = Settings.GetActionKeywordConfiguration(keywordStr);
+            var activeActionKeyword = Settings.GetActiveActionKeyword(keywordStr);
 
-            if (actionKeywordConfiguration == null && !isPathSearch)
+            if (activeActionKeyword == null && !isPathSearch)
             {
-                return new List<Result>();
+                MergeQuickAccessInResultsIfQueryMatch(results, query);
+                return results.ToList();
             }
 
-            if (actionKeywordConfiguration == null && isPathSearch)
+            if (activeActionKeyword == null && isPathSearch)
             {
-                actionKeywordConfiguration =
-                    new ActionKeywordConfiguration(keywordStr, ActionKeyword.PathSearchActionKeyword, true);
+                activeActionKeyword =
+                    new ActionKeywordActive(keywordStr, ActionKeyword.PathSearchActionKeyword);
             }
             // This allows the user to type the below action keywords and see/search the list of quick folder links
 
             if (string.IsNullOrEmpty(query.Search)
-                && actionKeywordConfiguration!.IsActive(ActionKeyword.QuickAccessActionKeyword))
+                && activeActionKeyword!.Equals(ActionKeyword.QuickAccessActionKeyword))
             {
                 return QuickAccess.AccessLinkListAll(query, Settings.QuickAccessLinks);
             }
@@ -80,14 +81,14 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             string engineName;
 
-            switch (actionKeywordConfiguration!.IsActive(ActionKeyword.PathSearchActionKeyword))
+            switch (activeActionKeyword!.Equals(ActionKeyword.PathSearchActionKeyword))
             {
                 case true:
                     results.UnionWith(await PathSearchAsync(query, token).ConfigureAwait(false));
                     return results.ToList();
                 case false
                     // Intentionally require enabling of Everything's content search due to its slowness
-                    when actionKeywordConfiguration.IsActive(ActionKeyword.FileContentSearchActionKeyword):
+                    when activeActionKeyword.Equals(ActionKeyword.FileContentSearchActionKeyword):
                     if (Settings.ContentIndexProvider is EverythingSearchManager && !Settings.EnableEverythingContentSearch)
                         return EverythingContentSearchResult(query);
 
@@ -96,7 +97,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     break;
 
                 case  false 
-                    when actionKeywordConfiguration.IsActive(ActionKeyword.QuickAccessActionKeyword):
+                    when activeActionKeyword.Equals(ActionKeyword.QuickAccessActionKeyword):
                     return QuickAccess.AccessLinkListMatched(query, Settings.QuickAccessLinks);
 
 
@@ -106,13 +107,13 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     break;
             }
 
+            // Merge Quick Access Link results for non-path searches.
+            MergeQuickAccessInResultsIfQueryMatch(results, query);
             try
             {
-                results.UnionWith(QuickAccess.AccessLinkListMatched(query, Settings.QuickAccessLinks));
-
                 await foreach (var search in searchResults.WithCancellation(token).ConfigureAwait(false))
                 {
-                    if (ShouldSkip(actionKeywordConfiguration, search))
+                    if (ShouldSkip(activeActionKeyword, search))
                     {
                         continue;
                     }
@@ -261,24 +262,34 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             return excludedFileTypes.Contains(fileExtension, StringComparer.OrdinalIgnoreCase);
         }
 
-        private bool ShouldSkip(ActionKeywordConfiguration actionKeywordConfiguration, SearchResult search)
+        private bool ShouldSkip(ActionKeywordActive actionKeywordActive, SearchResult search)
         {
             if (search.Type == ResultType.File && IsExcludedFile(search))
                 return true;
 
-            if (actionKeywordConfiguration.IsActive(ActionKeyword.FolderSearchActionKeyword)
+            if (actionKeywordActive.Equals(ActionKeyword.FolderSearchActionKeyword)
                 && search.Type != ResultType.Folder)
             {
                 return true;
             }
 
-            if (actionKeywordConfiguration.IsActive(ActionKeyword.FileSearchActionKeyword)
+            if (actionKeywordActive.Equals(ActionKeyword.FileSearchActionKeyword)
                 && search.Type != ResultType.File)
             {
                 return true;
             }
 
             return false;
+        }
+
+        private void MergeQuickAccessInResultsIfQueryMatch(HashSet<Result> results, Query query)
+        {
+            var quickAccessMatched = QuickAccess.AccessLinkListMatched(query, Settings.QuickAccessLinks);
+            if (quickAccessMatched != null && quickAccessMatched.Any())
+            {
+                results.UnionWith(quickAccessMatched);
+            }
+
         }
 
     }

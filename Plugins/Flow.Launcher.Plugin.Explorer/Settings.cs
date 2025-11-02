@@ -224,16 +224,17 @@ namespace Flow.Launcher.Plugin.Explorer
             _ => throw new ArgumentOutOfRangeException(nameof(actionKeyword), actionKeyword, "ActionKeyword enabled status not defined")
         };
 
-        public ActionKeywordConfiguration GetActionKeywordConfiguration(string actionKeywordStr)
+        public ActionKeywordActive GetActiveActionKeyword(string actionKeywordStr)
         {
             if (string.IsNullOrEmpty(actionKeywordStr)) return null;
             foreach (ActionKeyword action in Enum.GetValues(typeof(ActionKeyword)))
             {
                 var keywordStr = GetActionKeyword(action);
                 if (string.IsNullOrEmpty(keywordStr)) continue;
-                if (keywordStr == actionKeywordStr)
+                var isEnabled = GetActionKeywordEnabled(action);
+                if (keywordStr == actionKeywordStr && isEnabled)
                 {
-                    return new ActionKeywordConfiguration(keywordStr, action, GetActionKeywordEnabled(action));
+                    return new ActionKeywordActive(keywordStr, action);
                 }
             }
             return null;
