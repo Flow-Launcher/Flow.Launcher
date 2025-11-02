@@ -80,8 +80,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             string engineName;
 
-            switch (actionKeywordConfiguration!.IsActive(ActionKeyword.PathSearchActionKeyword)
-                    || actionKeywordConfiguration.IsActive(ActionKeyword.SearchActionKeyword))
+            switch (actionKeywordConfiguration!.IsActive(ActionKeyword.PathSearchActionKeyword))
             {
                 case true:
                     results.UnionWith(await PathSearchAsync(query, token).ConfigureAwait(false));
