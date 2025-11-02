@@ -52,13 +52,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         {
             var results = new HashSet<Result>(PathEqualityComparator.Instance);
             var keywordStr = query.ActionKeyword.Length == 0 ? Query.GlobalPluginWildcardSign : query.ActionKeyword;
-            if (string.IsNullOrEmpty(keywordStr))
-            {
-                return new List<Result>();
-            }
             bool isPathSearch = query.Search.IsLocationPathString()
                                 || EnvironmentVariables.IsEnvironmentVariableSearch(query.Search)
                                 || EnvironmentVariables.HasEnvironmentVar(query.Search);
+
+
             var actionKeywordConfiguration = Settings.GetActionKeywordConfiguration(keywordStr);
 
             if (actionKeywordConfiguration == null && !isPathSearch)
