@@ -454,7 +454,7 @@
     <system:String x:Key="icons">Іконки</system:String>
     <system:String x:Key="about_activate_times">Ви скористалися Flow Launcher вже {0} разів</system:String>
     <system:String x:Key="checkUpdates">Перевірити наявність оновлень</system:String>
-    <system:String x:Key="BecomeASponsor">Стати спонсором</system:String>
+    <system:String x:Key="BecomeASponsor">Become a Sponsor</system:String>
     <system:String x:Key="newVersionTips">Доступна нова версія {0}, будь ласка, перезавантажте Flow Launcher</system:String>
     <system:String x:Key="checkUpdatesFailed">Перевірити оновлення не вдалося, будь ласка, перевірте ваше з'єднання та налаштування проксі-сервера до api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
