@@ -454,7 +454,7 @@
     <system:String x:Key="icons">الأيقونات</system:String>
     <system:String x:Key="about_activate_times">لقد قمت بتفعيل Flow Launcher {0} مرات</system:String>
     <system:String x:Key="checkUpdates">التحقق من التحديثات</system:String>
-    <system:String x:Key="BecomeASponsor">كن راعيا</system:String>
+    <system:String x:Key="BecomeASponsor">Become a Sponsor</system:String>
     <system:String x:Key="newVersionTips">الإصدار الجديد {0} متاح، هل ترغب في إعادة تشغيل Flow Launcher لاستخدام التحديث</system:String>
     <system:String x:Key="checkUpdatesFailed">فشل التحقق من التحديثات، يرجى التحقق من الاتصال وإعدادات البروكسي لـ api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
