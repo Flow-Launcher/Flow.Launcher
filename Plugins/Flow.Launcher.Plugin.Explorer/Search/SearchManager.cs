@@ -285,13 +285,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         private void MergeQuickAccessInResultsIfQueryMatch(HashSet<Result> results, Query query)
         {
             var quickAccessMatched = QuickAccess.AccessLinkListMatched(query, Settings.QuickAccessLinks);
-            if (quickAccessMatched != null && quickAccessMatched.Any())
-            {
-                results.UnionWith(quickAccessMatched);
-            }
-
+            if (quickAccessMatched != null && quickAccessMatched.Any()) results.UnionWith(quickAccessMatched);
         }
-
     }
 
 }
