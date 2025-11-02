@@ -454,7 +454,7 @@
     <system:String x:Key="icons">Значки</system:String>
     <system:String x:Key="about_activate_times">Вы воспользовались Flow Launcher уже {0} раз</system:String>
     <system:String x:Key="checkUpdates">Проверить наличие обновлений</system:String>
-    <system:String x:Key="BecomeASponsor">Стать спонсором</system:String>
+    <system:String x:Key="BecomeASponsor">Become a Sponsor</system:String>
     <system:String x:Key="newVersionTips">Доступна новая версия {0}. Вы хотите перезапустить Flow Launcher, чтобы использовать обновление?</system:String>
     <system:String x:Key="checkUpdatesFailed">Проверка обновлений не удалась, пожалуйста, проверьте настройки подключения и прокси-сервера к api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
