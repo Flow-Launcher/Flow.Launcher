@@ -454,7 +454,7 @@
     <system:String x:Key="icons">Biểu tượng</system:String>
     <system:String x:Key="about_activate_times">Bạn đã kích hoạt Flow Launcher {0} lần</system:String>
     <system:String x:Key="checkUpdates">Kiểm tra các bản cập nhật</system:String>
-    <system:String x:Key="BecomeASponsor">Trở thành nhà tài trợ</system:String>
+    <system:String x:Key="BecomeASponsor">Become a Sponsor</system:String>
     <system:String x:Key="newVersionTips">Đã có phiên bản mới {0}, bạn có muốn khởi động lại Flow Launcher để sử dụng bản cập nhật không?</system:String>
     <system:String x:Key="checkUpdatesFailed">Kiểm tra cập nhật không thành công. Vui lòng kiểm tra kết nối và cài đặt proxy của bạn tới api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
