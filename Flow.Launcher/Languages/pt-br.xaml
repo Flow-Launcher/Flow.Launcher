@@ -454,7 +454,7 @@
     <system:String x:Key="icons">Ícones</system:String>
     <system:String x:Key="about_activate_times">Você ativou o Flow Launcher {0} vezes</system:String>
     <system:String x:Key="checkUpdates">Procurar atualizações</system:String>
-    <system:String x:Key="BecomeASponsor">Torne-se um Sponsor</system:String>
+    <system:String x:Key="BecomeASponsor">Become a Sponsor</system:String>
     <system:String x:Key="newVersionTips">A nova versão {0} está disponível, por favor reinicie o Flow Launcher.</system:String>
     <system:String x:Key="checkUpdatesFailed">Falha ao procurar atualizações, confira sua conexão e configuração de proxy para api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
