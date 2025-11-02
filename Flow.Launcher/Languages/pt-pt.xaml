@@ -453,7 +453,7 @@
     <system:String x:Key="icons">Ícones</system:String>
     <system:String x:Key="about_activate_times">Ativou o Flow Launcher {0} vezes</system:String>
     <system:String x:Key="checkUpdates">Procurar atualizações</system:String>
-    <system:String x:Key="BecomeASponsor">Tornar-se patrocinador</system:String>
+    <system:String x:Key="BecomeASponsor">Become a Sponsor</system:String>
     <system:String x:Key="newVersionTips">Está disponível a versão {0}. Gostaria de reiniciar Flow Launcher para atualizar a sua versão?</system:String>
     <system:String x:Key="checkUpdatesFailed">Erro ao procurar atualizações. Verifique a sua ligação e as definições do proxy estabelecidas para api.github.com</system:String>
     <system:String x:Key="downloadUpdatesFailed">
