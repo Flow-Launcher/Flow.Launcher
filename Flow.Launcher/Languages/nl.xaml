@@ -454,7 +454,7 @@
     <system:String x:Key="icons">Pictogrammen</system:String>
     <system:String x:Key="about_activate_times">U heeft Flow Launcher {0} keer opgestart</system:String>
     <system:String x:Key="checkUpdates">Zoek naar Updates</system:String>
-    <system:String x:Key="BecomeASponsor">Sponsor worden</system:String>
+    <system:String x:Key="BecomeASponsor">Become a Sponsor</system:String>
     <system:String x:Key="newVersionTips">Nieuwe versie {0} beschikbaar, start Flow Launcher opnieuw op</system:String>
     <system:String x:Key="checkUpdatesFailed">Controleren op updates mislukt, controleer uw verbinding en proxy-instellingen voor api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
