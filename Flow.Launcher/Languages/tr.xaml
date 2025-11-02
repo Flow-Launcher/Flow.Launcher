@@ -454,7 +454,7 @@
     <system:String x:Key="icons">Kullanılan Simgeler</system:String>
     <system:String x:Key="about_activate_times">Şu ana kadar Flow Launcher'ı {0} kez aktifleştirdiniz.</system:String>
     <system:String x:Key="checkUpdates">Güncellemeleri Kontrol Et</system:String>
-    <system:String x:Key="BecomeASponsor">Sponsor Olun</system:String>
+    <system:String x:Key="BecomeASponsor">Become a Sponsor</system:String>
     <system:String x:Key="newVersionTips">Uygulamanın yeni sürümü ({0}) mevcut, Lütfen Flow Launcher'ı yeniden başlatın.</system:String>
     <system:String x:Key="checkUpdatesFailed">Güncelleme kontrolü başarısız oldu. Lütfen bağlantınız ve vekil sunucu ayarlarınızın api.github.com adresine ulaşabilir olduğunu kontrol edin.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
