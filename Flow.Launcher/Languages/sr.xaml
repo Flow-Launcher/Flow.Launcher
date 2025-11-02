@@ -454,7 +454,7 @@
     <system:String x:Key="icons">Icons</system:String>
     <system:String x:Key="about_activate_times">Aktivirali ste Flow Launcher {0} puta</system:String>
     <system:String x:Key="checkUpdates">Proveri ažuriranja</system:String>
-    <system:String x:Key="BecomeASponsor">Become A Sponsor</system:String>
+    <system:String x:Key="BecomeASponsor">Become a Sponsor</system:String>
     <system:String x:Key="newVersionTips">Nove verzija {0} je dostupna, molim Vas ponovo pokrenite Flow Launcher.</system:String>
     <system:String x:Key="checkUpdatesFailed">Neuspešna provera ažuriranja, molim Vas proverite vašu vezu i podešavanja za proksi prema api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
