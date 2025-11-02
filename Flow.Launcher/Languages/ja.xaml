@@ -454,7 +454,7 @@
     <system:String x:Key="icons">アイコン</system:String>
     <system:String x:Key="about_activate_times">あなたはFlow Launcherを {0} 回利用しました</system:String>
     <system:String x:Key="checkUpdates">アップデートを確認する</system:String>
-    <system:String x:Key="BecomeASponsor">スポンサーになる</system:String>
+    <system:String x:Key="BecomeASponsor">Become a Sponsor</system:String>
     <system:String x:Key="newVersionTips">新しいバージョン {0} が利用可能です。Flow Launcherを再起動してください。</system:String>
     <system:String x:Key="checkUpdatesFailed">アップデートの確認に失敗しました、api.github.com への接続とプロキシ設定を確認してください。</system:String>
     <system:String x:Key="downloadUpdatesFailed">
