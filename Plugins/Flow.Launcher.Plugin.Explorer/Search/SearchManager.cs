@@ -64,11 +64,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 return results.ToList();
             }
 
-            if (activeActionKeyword == null && isPathSearch)
-            {
-                activeActionKeyword =
-                    new ActionKeywordActive(keywordStr, ActionKeyword.PathSearchActionKeyword);
-            }
+            if (activeActionKeyword == null && isPathSearch) activeActionKeyword = ActionKeyword.PathSearchActionKeyword;
+
             // This allows the user to type the below action keywords and see/search the list of quick folder links
 
             if (string.IsNullOrEmpty(query.Search)
@@ -113,7 +110,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             {
                 await foreach (var search in searchResults.WithCancellation(token).ConfigureAwait(false))
                 {
-                    if (ShouldSkip(activeActionKeyword, search))
+                    if (ShouldSkip(activeActionKeyword!.Value, search))
                     {
                         continue;
                     }
@@ -262,7 +259,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             return excludedFileTypes.Contains(fileExtension, StringComparer.OrdinalIgnoreCase);
         }
 
-        private bool ShouldSkip(ActionKeywordActive actionKeywordActive, SearchResult search)
+        private bool ShouldSkip(ActionKeyword actionKeywordActive, SearchResult search)
         {
             if (search.Type == ResultType.File && IsExcludedFile(search))
                 return true;
