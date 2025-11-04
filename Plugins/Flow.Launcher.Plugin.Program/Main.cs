@@ -88,6 +88,7 @@ namespace Flow.Launcher.Plugin.Program
                 {
                     Context.API.LogDebug(ClassName, "Acquiring locks for querying programs");
                     await _win32sLock.WaitAsync(token);
+                    Context.API.LogDebug(ClassName, "Acquiring locks for querying win32 programs");
                     await _uwpsLock.WaitAsync(token);
                     Context.API.LogDebug(ClassName, "Locks acquired for querying programs");
                     try
