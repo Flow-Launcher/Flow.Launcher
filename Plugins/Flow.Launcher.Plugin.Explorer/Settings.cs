@@ -68,6 +68,8 @@ namespace Flow.Launcher.Plugin.Explorer
 
         public bool FileSearchKeywordEnabled { get; set; }
 
+        public bool ExcludeQuickAccessFromActionKeywords { get; set; } = false;
+
         public bool WarnWindowsSearchServiceOff { get; set; } = true;
 
         public bool ShowFileSizeInPreviewPanel { get; set; } = true;

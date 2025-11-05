@@ -60,7 +60,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             if (activeActionKeyword == null && !isPathSearch)
             {
-                MergeQuickAccessInResultsIfQueryMatch(results, query);
+                MergeQuickAccessInResultsIfQueryMatch(results, query, activeActionKeyword);
                 return results.ToList();
             }
 
@@ -105,7 +105,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             }
 
             // Merge Quick Access Link results for non-path searches.
-            MergeQuickAccessInResultsIfQueryMatch(results, query);
+            MergeQuickAccessInResultsIfQueryMatch(results, query, activeActionKeyword);
             try
             {
                 await foreach (var search in searchResults.WithCancellation(token).ConfigureAwait(false))
@@ -279,8 +279,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             return false;
         }
 
-        private void MergeQuickAccessInResultsIfQueryMatch(HashSet<Result> results, Query query)
+        private void MergeQuickAccessInResultsIfQueryMatch(HashSet<Result> results, Query query, ActionKeyword? activeActionKeyword)
         {
+            if (activeActionKeyword != null && activeActionKeyword != ActionKeyword.QuickAccessActionKeyword)
+            {
+                if (Settings.ExcludeQuickAccessFromActionKeywords) return;
+            }
             var quickAccessMatched = QuickAccess.AccessLinkListMatched(query, Settings.QuickAccessLinks);
             if (quickAccessMatched != null && quickAccessMatched.Any()) results.UnionWith(quickAccessMatched);
         }
