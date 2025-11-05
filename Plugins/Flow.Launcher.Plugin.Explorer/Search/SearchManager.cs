@@ -60,8 +60,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             if (activeActionKeyword == null && !isPathSearch)
             {
-                MergeQuickAccessInResultsIfQueryMatch(results, query, activeActionKeyword);
-                return results.ToList();
+                return new List<Result>();
             }
 
             if (activeActionKeyword == null && isPathSearch) activeActionKeyword = ActionKeyword.PathSearchActionKeyword;
