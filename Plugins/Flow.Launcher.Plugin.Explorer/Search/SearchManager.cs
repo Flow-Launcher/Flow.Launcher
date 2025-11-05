@@ -285,7 +285,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 if (Settings.ExcludeQuickAccessFromActionKeywords) return;
             }
             var quickAccessMatched = QuickAccess.AccessLinkListMatched(query, Settings.QuickAccessLinks);
-            if (quickAccessMatched != null && quickAccessMatched.Any()) results.UnionWith(quickAccessMatched);
+            if (quickAccessMatched != null && quickAccessMatched.Count > 0) results.UnionWith(quickAccessMatched);
         }
     }
 
