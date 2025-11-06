@@ -84,7 +84,7 @@ namespace Flow.Launcher.Plugin.Program
             {
                 var resultList = await Task.Run(async () =>
                 {
-                    Context.API.LogDebug(ClassName, "Preparing win32 programs");
+                    // Preparing win32 programs
                     List<Win32> win32s;
                     try
                     {
@@ -97,7 +97,7 @@ namespace Flow.Launcher.Plugin.Program
                     }
                     _win32sLock.Release();
 
-                    Context.API.LogDebug(ClassName, "Preparing UWP programs");
+                    // Preparing UWP programs
                     List<UWPApp> uwps;
                     try
                     {
@@ -110,7 +110,7 @@ namespace Flow.Launcher.Plugin.Program
                     }
                     _uwpsLock.Release();
 
-                    Context.API.LogDebug(ClassName, "Start querying programs");
+                    // Start querying programs
                     try
                     {
                         // Collect all UWP Windows app directories
@@ -325,7 +325,6 @@ namespace Flow.Launcher.Plugin.Program
         public static async Task IndexWin32ProgramsAsync()
         {
             await _win32sLock.WaitAsync();
-            Context.API.LogDebug(ClassName, "Start indexing Win32 programs");
             try
             {
                 var win32S = Win32.All(_settings);
@@ -354,7 +353,6 @@ namespace Flow.Launcher.Plugin.Program
         public static async Task IndexUwpProgramsAsync()
         {
             await _uwpsLock.WaitAsync();
-            Context.API.LogDebug(ClassName, "Start indexing Uwp programs");
             try
             {
                 var uwps = UWPPackage.All(_settings);
@@ -392,7 +390,6 @@ namespace Flow.Launcher.Plugin.Program
                 await Context.API.StopwatchLogInfoAsync(ClassName, "UWPProgram index cost", IndexUwpProgramsAsync);
             });
 
-            Context.API.LogDebug(ClassName, "Start indexing");
             await Task.WhenAll(win32Task, uwpTask).ConfigureAwait(false);
         }
 
