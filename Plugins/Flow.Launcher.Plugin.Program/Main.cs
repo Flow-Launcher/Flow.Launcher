@@ -142,7 +142,7 @@ namespace Flow.Launcher.Plugin.Program
 
                 entry.SetSize(resultList.Count);
                 entry.SetSlidingExpiration(TimeSpan.FromHours(8));
-                
+
                 return resultList;
             });
 
@@ -335,6 +335,7 @@ namespace Flow.Launcher.Plugin.Program
                 {
                     _win32s.Add(win32);
                 }
+                ResetCache();
                 await Context.API.SaveCacheBinaryStorageAsync<List<Win32>>(Win32CacheName, Context.CurrentPluginMetadata.PluginCacheDirectoryPath);
                 lock (_lastIndexTimeLock)
                 {
@@ -364,6 +365,7 @@ namespace Flow.Launcher.Plugin.Program
                 {
                     _uwps.Add(uwp);
                 }
+                ResetCache();
                 await Context.API.SaveCacheBinaryStorageAsync<List<UWPApp>>(UwpCacheName, Context.CurrentPluginMetadata.PluginCacheDirectoryPath);
                 lock (_lastIndexTimeLock)
                 {
@@ -393,7 +395,6 @@ namespace Flow.Launcher.Plugin.Program
             });
 
             Context.API.LogDebug(ClassName, "Start indexing");
-
             await Task.WhenAll(win32Task, uwpTask).ConfigureAwait(false);
         }
 
