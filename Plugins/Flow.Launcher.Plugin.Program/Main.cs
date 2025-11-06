@@ -80,17 +80,37 @@ namespace Flow.Launcher.Plugin.Program
 
         public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
         {
-            Context.API.LogDebug(ClassName, $"Query received: {query.Search}");
             var result = await cache.GetOrCreateAsync(query.Search, async entry =>
             {
-                Context.API.LogDebug(ClassName, $"Cache miss for query: {query.Search}");
                 var resultList = await Task.Run(async () =>
                 {
-                    Context.API.LogDebug(ClassName, "Acquiring locks for querying win32 programs");
+                    Context.API.LogDebug(ClassName, "Preparing win32 programs");
+                    List<Win32> win32s;
                     await _win32sLock.WaitAsync();
-                    Context.API.LogDebug(ClassName, "Acquiring locks for querying uwp programs");
+                    try
+                    {
+                        win32s = [.. _win32s];
+                        if (token.IsCancellationRequested) return emptyResults;
+                    }
+                    finally
+                    {
+                        _win32sLock.Release();
+                    }
+
+                    Context.API.LogDebug(ClassName, "Preparing UWP programs");
+                    List<UWPApp> uwps;
                     await _uwpsLock.WaitAsync();
-                    Context.API.LogDebug(ClassName, "Locks acquired for querying programs");
+                    try
+                    {
+                        uwps = [.. _uwps];
+                        if (token.IsCancellationRequested) return emptyResults;
+                    }
+                    finally
+                    {
+                        _uwpsLock.Release();
+                    }
+
+                    Context.API.LogDebug(ClassName, "Start hanlding programs");
                     try
                     {
                         // Collect all UWP Windows app directories
@@ -100,10 +120,9 @@ namespace Flow.Launcher.Plugin.Program
                             .Select(uwp => uwp.Location.TrimEnd('\\')) // Remove trailing slash
                             .Distinct(StringComparer.OrdinalIgnoreCase)
                             .ToArray() : null;
-                        Context.API.LogDebug(ClassName, "Start filtering and selecting programs");
 
-                        return _win32s.Cast<IProgram>()
-                            .Concat(_uwps)
+                        return win32s.Cast<IProgram>()
+                            .Concat(uwps)
                             .AsParallel()
                             .WithCancellation(token)
                             .Where(HideUninstallersFilter)
@@ -115,22 +134,14 @@ namespace Flow.Launcher.Plugin.Program
                     }
                     catch (OperationCanceledException)
                     {
-                        Context.API.LogDebug(ClassName, "Query operation was canceled");
                         return emptyResults;
-                    }
-                    finally
-                    {
-                        _uwpsLock.Release();
-                        _win32sLock.Release();
                     }
                 }, token);
 
                 resultList = resultList.Count != 0 ? resultList : emptyResults;
 
-                Context.API.LogDebug(ClassName, $"Query completed with {resultList.Count} results");
                 entry.SetSize(resultList.Count);
                 entry.SetSlidingExpiration(TimeSpan.FromHours(8));
-                Context.API.LogDebug(ClassName, $"Caching results for query: {query.Search} with {resultList.Count} items");
                 
                 return resultList;
             });
@@ -319,7 +330,6 @@ namespace Flow.Launcher.Plugin.Program
             try
             {
                 var win32S = Win32.All(_settings);
-                Context.API.LogDebug(ClassName, "Get all Win32 programs");
                 _win32s.Clear();
                 foreach (var win32 in win32S)
                 {
@@ -339,7 +349,6 @@ namespace Flow.Launcher.Plugin.Program
             {
                 _win32sLock.Release();
             }
-            Context.API.LogDebug(ClassName, "End indexing Win32 programs");
         }
 
         public static async Task IndexUwpProgramsAsync()
@@ -350,7 +359,6 @@ namespace Flow.Launcher.Plugin.Program
             try
             {
                 var uwps = UWPPackage.All(_settings);
-                Context.API.LogDebug(ClassName, "Get all Uwp programs");
                 _uwps.Clear();
                 foreach (var uwp in uwps)
                 {
@@ -370,7 +378,6 @@ namespace Flow.Launcher.Plugin.Program
             {
                 _uwpsLock.Release();
             }
-            Context.API.LogDebug(ClassName, "End indexing Uwp programs");
         }
 
         public static async Task IndexProgramsAsync()
