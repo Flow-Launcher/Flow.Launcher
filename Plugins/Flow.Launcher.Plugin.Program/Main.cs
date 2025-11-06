@@ -85,7 +85,7 @@ namespace Flow.Launcher.Plugin.Program
                 var resultList = await Task.Run(async () =>
                 {
                     // We do not directly pass token here, but we check IsCancellationRequested inside the lock
-                    // So that it will not raise OperationCanceledException, which is not expected by the caller.`
+                    // So that it will not raise OperationCanceledException, which is not expected by the caller.
                     Context.API.LogDebug(ClassName, "Preparing win32 programs");
                     List<Win32> win32s;
                     await _win32sLock.WaitAsync();
@@ -100,7 +100,7 @@ namespace Flow.Launcher.Plugin.Program
                     }
 
                     // We do not directly pass token here, but we check IsCancellationRequested inside the lock
-                    // So that it will not raise OperationCanceledException, which is not expected by the caller.`
+                    // So that it will not raise OperationCanceledException, which is not expected by the caller.
                     Context.API.LogDebug(ClassName, "Preparing UWP programs");
                     List<UWPApp> uwps;
                     await _uwpsLock.WaitAsync();

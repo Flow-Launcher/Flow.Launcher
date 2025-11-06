@@ -49,7 +49,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         public static async ValueTask<bool> IsEverythingRunningAsync(CancellationToken token = default)
         {
             // We do not directly pass token here, but we check IsCancellationRequested inside the lock
-            // So that it will not raise OperationCanceledException, which is not expected by the caller.`
+            // So that it will not raise OperationCanceledException, which is not expected by the caller.
             await _semaphore.WaitAsync();
 
             try
