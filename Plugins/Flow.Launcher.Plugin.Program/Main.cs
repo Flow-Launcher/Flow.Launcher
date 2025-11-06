@@ -84,6 +84,8 @@ namespace Flow.Launcher.Plugin.Program
             {
                 var resultList = await Task.Run(async () =>
                 {
+                    // We do not directly pass token here, but we check IsCancellationRequested inside the lock
+                    // So that it will not raise OperationCanceledException, which is not expected by the caller.`
                     Context.API.LogDebug(ClassName, "Preparing win32 programs");
                     List<Win32> win32s;
                     await _win32sLock.WaitAsync();
@@ -97,6 +99,8 @@ namespace Flow.Launcher.Plugin.Program
                         _win32sLock.Release();
                     }
 
+                    // We do not directly pass token here, but we check IsCancellationRequested inside the lock
+                    // So that it will not raise OperationCanceledException, which is not expected by the caller.`
                     Context.API.LogDebug(ClassName, "Preparing UWP programs");
                     List<UWPApp> uwps;
                     await _uwpsLock.WaitAsync();
@@ -110,7 +114,7 @@ namespace Flow.Launcher.Plugin.Program
                         _uwpsLock.Release();
                     }
 
-                    Context.API.LogDebug(ClassName, "Start hanlding programs");
+                    Context.API.LogDebug(ClassName, "Start querying programs");
                     try
                     {
                         // Collect all UWP Windows app directories
@@ -324,7 +328,6 @@ namespace Flow.Launcher.Plugin.Program
 
         public static async Task IndexWin32ProgramsAsync()
         {
-            Context.API.LogDebug(ClassName, "Prepare indexing Win32 programs");
             await _win32sLock.WaitAsync();
             Context.API.LogDebug(ClassName, "Start indexing Win32 programs");
             try
@@ -354,7 +357,6 @@ namespace Flow.Launcher.Plugin.Program
 
         public static async Task IndexUwpProgramsAsync()
         {
-            Context.API.LogDebug(ClassName, "Prepare indexing Uwp programs");
             await _uwpsLock.WaitAsync();
             Context.API.LogDebug(ClassName, "Start indexing Uwp programs");
             try
