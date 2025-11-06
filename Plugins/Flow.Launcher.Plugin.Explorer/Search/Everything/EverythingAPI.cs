@@ -84,7 +84,14 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             if (option.MaxCount < 0)
                 throw new ArgumentOutOfRangeException(nameof(option.MaxCount), option.MaxCount, "MaxCount must be greater than or equal to 0");
 
-            await _semaphore.WaitAsync();
+            try
+            {
+                await _semaphore.WaitAsync(token);
+            }
+            catch (OperationCanceledException)
+            {
+                yield break;
+            }
 
             try
             {

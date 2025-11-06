@@ -54,6 +54,10 @@ namespace Flow.Launcher.Core.ExternalPlugins
                     return true;
                 }
             }
+            catch (OperationCanceledException)
+            {
+                // Ignored
+            }
             catch (Exception e)
             {
                 PublicApi.Instance.LogException(ClassName, "Http request failed", e);
