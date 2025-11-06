@@ -48,13 +48,17 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
         public static async ValueTask<bool> IsEverythingRunningAsync(CancellationToken token = default)
         {
-            // We do not directly pass token here, but we check IsCancellationRequested inside the lock
-            // So that it will not raise OperationCanceledException, which is not expected by the caller.
-            await _semaphore.WaitAsync();
+            try
+            {
+                await _semaphore.WaitAsync(token);
+            }
+            catch (OperationCanceledException)
+            {
+                return false;
+            }
 
             try
             {
-                if (token.IsCancellationRequested) return false;
                 _ = EverythingApiDllImport.Everything_GetMajorVersion();
                 var result = EverythingApiDllImport.Everything_GetLastError() != StateCode.IPCError;
                 return result;
