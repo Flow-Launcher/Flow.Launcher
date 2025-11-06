@@ -52,9 +52,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
             try
             {
-                if (token.IsCancellationRequested)
-                    return false;
-
+                if (token.IsCancellationRequested) return false;
                 _ = EverythingApiDllImport.Everything_GetMajorVersion();
                 var result = EverythingApiDllImport.Everything_GetLastError() != StateCode.IPCError;
                 return result;
