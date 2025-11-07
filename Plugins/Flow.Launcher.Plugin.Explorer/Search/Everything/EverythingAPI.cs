@@ -133,8 +133,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                     EverythingApiDllImport.Everything_SetRequestFlags(EVERYTHING_REQUEST_FULL_PATH_AND_FILE_NAME);
                 }
 
-
-
                 if (token.IsCancellationRequested) yield break;
 
                 if (!EverythingApiDllImport.Everything_QueryW(true))

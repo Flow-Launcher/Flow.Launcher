@@ -26,9 +26,11 @@ namespace Flow.Launcher.Core.ExternalPlugins
 
         public static async Task<bool> UpdateManifestAsync(bool usePrimaryUrlOnly = false, CancellationToken token = default)
         {
+            bool lockAcquired = false;
             try
             {
                 await manifestUpdateLock.WaitAsync(token).ConfigureAwait(false);
+                lockAcquired = true;
 
                 if (UserPlugins == null || usePrimaryUrlOnly || DateTime.Now.Subtract(lastFetchedAt) >= fetchTimeout)
                 {
@@ -64,7 +66,8 @@ namespace Flow.Launcher.Core.ExternalPlugins
             }
             finally
             {
-                manifestUpdateLock.Release();
+                // Only release the lock if it was acquired
+                if (lockAcquired) manifestUpdateLock.Release();
             }
 
             return false;

@@ -86,29 +86,41 @@ namespace Flow.Launcher.Plugin.Program
                 {
                     // Preparing win32 programs
                     List<Win32> win32s;
+                    bool win32LockAcquired = false;
                     try
                     {
                         await _win32sLock.WaitAsync(token);
+                        win32LockAcquired = true;
                         win32s = [.. _win32s];
                     }
                     catch (OperationCanceledException)
                     {
                         return emptyResults;
                     }
-                    _win32sLock.Release();
+                    finally
+                    {
+                        // Only release the lock if it was acquired
+                        if (win32LockAcquired) _win32sLock.Release();
+                    }
 
                     // Preparing UWP programs
                     List<UWPApp> uwps;
+                    bool uwpsLockAcquired = false;
                     try
                     {
                         await _uwpsLock.WaitAsync(token);
+                        uwpsLockAcquired = true;
                         uwps = [.. _uwps];
                     }
                     catch (OperationCanceledException)
                     {
                         return emptyResults;
                     }
-                    _uwpsLock.Release();
+                    finally
+                    {
+                        // Only release the lock if it was acquired
+                        if (uwpsLockAcquired) _uwpsLock.Release();
+                    }
 
                     // Start querying programs
                     try
