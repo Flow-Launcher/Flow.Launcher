@@ -1206,7 +1206,7 @@
     <value>Windows の設定を検索するためのプラグイン</value>
   </data>
   <data name="PluginTitle" xml:space="preserve">
-    <value>Windows Settings</value>
+    <value>Windows の設定</value>
   </data>
   <data name="PowerAndSleep" xml:space="preserve">
     <value>電源とスリープ</value>
@@ -1836,19 +1836,19 @@
     <value>Check firewall status</value>
   </data>
   <data name="SendOrReceiveAFile" xml:space="preserve">
-    <value>Send or receive a file</value>
+    <value>ファイルを送受信する</value>
   </data>
   <data name="AddOrRemoveUserAccounts" xml:space="preserve">
-    <value>Add or remove user accounts</value>
+    <value>ユーザーアカウントの追加または削除</value>
   </data>
   <data name="EditTheSystemEnvironmentVariables" xml:space="preserve">
     <value>Edit the system environment variables</value>
   </data>
   <data name="ManageBitlocker" xml:space="preserve">
-    <value>Manage BitLocker</value>
+    <value>BitLocker の管理</value>
   </data>
   <data name="AutoHideTheTaskbar" xml:space="preserve">
-    <value>Auto-hide the taskbar</value>
+    <value>タスクバーを自動的に隠す</value>
   </data>
   <data name="ChangeSoundCardSettings" xml:space="preserve">
     <value>Change sound card settings</value>
@@ -1947,10 +1947,10 @@
     <value>View recommended actions to keep Windows running smoothly</value>
   </data>
   <data name="ChangeCursorBlinkRate" xml:space="preserve">
-    <value>Change cursor blink rate</value>
+    <value>カーソルの点滅速度を変更する</value>
   </data>
   <data name="AddOrRemovePrograms" xml:space="preserve">
-    <value>Add or remove programs</value>
+    <value>プログラムの追加と削除</value>
   </data>
   <data name="CreateAPasswordResetDisk" xml:space="preserve">
     <value>Create a password reset disk</value>
@@ -2070,7 +2070,7 @@
     <value>Change temporary Internet file settings</value>
   </data>
   <data name="ConnectToTheInternet" xml:space="preserve">
-    <value>Connect to the Internet</value>
+    <value>インターネットに接続</value>
   </data>
   <data name="FindAndFixAudioPlaybackProblems" xml:space="preserve">
     <value>Find and fix audio playback problems</value>
@@ -2079,7 +2079,7 @@
     <value>Change the mouse pointer display or speed</value>
   </data>
   <data name="BackUpYourRecoveryKey" xml:space="preserve">
-    <value>Back up your recovery key</value>
+    <value>リカバリーキーのバックアップ</value>
   </data>
   <data name="SaveBackupCopiesOfYourFilesWithFileHistory" xml:space="preserve">
     <value>Save backup copies of your files with File History</value>
@@ -2094,31 +2094,31 @@
     <value>Change how your mouse works</value>
   </data>
   <data name="ShowHowMuchRAMIsOnThisComputer" xml:space="preserve">
-    <value>Show how much RAM is on this computer</value>
+    <value>このコンピュータにあるRAMの量を表示する</value>
   </data>
   <data name="EditPowerPlan" xml:space="preserve">
-    <value>Edit power plan</value>
+    <value>電源プランを編集</value>
   </data>
   <data name="AdjustSystemVolume" xml:space="preserve">
-    <value>Adjust system volume</value>
+    <value>システム音量の調整</value>
   </data>
   <data name="DefragmentAndOptimiseYourDrives" xml:space="preserve">
-    <value>Defragment and optimise your drives</value>
+    <value>ドライブのデフラグと最適化</value>
   </data>
   <data name="SetUpODBCDataSources32Bit" xml:space="preserve">
     <value>Set up ODBC data sources (32-bit)</value>
   </data>
   <data name="ChangeFontSettings" xml:space="preserve">
-    <value>Change Font Settings</value>
+    <value>フォント設定を変更</value>
   </data>
   <data name="MagnifyPortionsOfTheScreenUsingMagnifier" xml:space="preserve">
-    <value>Magnify portions of the screen using Magnifier</value>
+    <value>拡大鏡を使って画面の一部を拡大する</value>
   </data>
   <data name="ChangeTheFileTypeAssociatedWithAFileExtension" xml:space="preserve">
     <value>Change the file type associated with a file extension</value>
   </data>
   <data name="ViewEventLogs" xml:space="preserve">
-    <value>View event logs</value>
+    <value>イベントログを表示</value>
   </data>
   <data name="ManageWindowsCredentials" xml:space="preserve">
     <value>Manage Windows Credentials</value>
@@ -2127,7 +2127,7 @@
     <value>Set up a microphone</value>
   </data>
   <data name="ChangeHowTheMousePointerLooks" xml:space="preserve">
-    <value>Change how the mouse pointer looks</value>
+    <value>マウスポインタの見た目を変更する</value>
   </data>
   <data name="ChangePowerSavingSettings" xml:space="preserve">
     <value>Change power-saving settings</value>
@@ -2152,7 +2152,7 @@
     <value>Manage Work Folders</value>
   </data>
   <data name="EncryptYourOfflineFiles" xml:space="preserve">
-    <value>Encrypt your offline files</value>
+    <value>オフラインファイルを暗号化</value>
   </data>
   <data name="TrainTheComputerToRecogniseYourVoice" xml:space="preserve">
     <value>Train the computer to recognise your voice</value>
@@ -2161,7 +2161,7 @@
     <value>Advanced printer setup</value>
   </data>
   <data name="ChangeDefaultPrinter" xml:space="preserve">
-    <value>Change default printer</value>
+    <value>既定のプリンタを変更する</value>
   </data>
   <data name="EditEnvironmentVariablesForYourAccount" xml:space="preserve">
     <value>Edit environment variables for your account</value>
@@ -2188,19 +2188,19 @@
     <value>Private Character Editor</value>
   </data>
   <data name="RecordStepsToReproduceAProblem" xml:space="preserve">
-    <value>Record steps to reproduce a problem</value>
+    <value>問題を再現するためのステップを記録</value>
   </data>
   <data name="AdjustTheAppearanceAndPerformanceOfWindows" xml:space="preserve">
-    <value>Adjust the appearance and performance of Windows</value>
+    <value>Windowsの外観とパフォーマンスを調整する</value>
   </data>
   <data name="SettingsForMicrosoftIMEJapanese" xml:space="preserve">
-    <value>Settings for Microsoft IME (Japanese)</value>
+    <value>日本語用 Microsoft IME の設定</value>
   </data>
   <data name="InviteSomeoneToConnectToYourPCAndHelpYouOrOfferToHelpSomeoneElse" xml:space="preserve">
     <value>Invite someone to connect to your PC and help you, or offer to help someone else</value>
   </data>
   <data name="RunProgramsMadeForPreviousVersionsOfWindows" xml:space="preserve">
-    <value>Run programs made for previous versions of Windows</value>
+    <value>以前のバージョンの Windows 用に作られたプログラムを実行</value>
   </data>
   <data name="ChooseTheOrderOfHowYourScreenRotates" xml:space="preserve">
     <value>Choose the order of how your screen rotates</value>
@@ -2212,10 +2212,10 @@
     <value>Set flicks to perform certain tasks</value>
   </data>
   <data name="ChangeAccountType" xml:space="preserve">
-    <value>Change account type</value>
+    <value>アカウントタイプの変更</value>
   </data>
   <data name="ChangeScreenSaver" xml:space="preserve">
-    <value>Change screen saver</value>
+    <value>スクリーンセーバーを変更</value>
   </data>
   <data name="ChangeUserAccountControlSettings" xml:space="preserve">
     <value>Change User Account Control settings</value>
@@ -2224,37 +2224,37 @@
     <value>Turn on easy access keys</value>
   </data>
   <data name="IdentifyAndRepairNetworkProblems" xml:space="preserve">
-    <value>Identify and repair network problems</value>
+    <value>ネットワークの問題を特定して修復する</value>
   </data>
   <data name="FindAndFixNetworkingAndConnectionProblems" xml:space="preserve">
     <value>Find and fix networking and connection problems</value>
   </data>
   <data name="PlayCdsOrOtherMediaAutomatically" xml:space="preserve">
-    <value>Play CDs or other media automatically</value>
+    <value>CD やその他のメディアを自動的に再生</value>
   </data>
   <data name="ViewBasicInformationAboutYourComputer" xml:space="preserve">
     <value>View basic information about your computer</value>
   </data>
   <data name="ChooseHowYouOpenLinks" xml:space="preserve">
-    <value>Choose how you open links</value>
+    <value>リンクを開く方法の選択</value>
   </data>
   <data name="AllowRemoteAssistanceInvitationsToBeSentFromThisComputer" xml:space="preserve">
     <value>Allow Remote Assistance invitations to be sent from this computer</value>
   </data>
   <data name="TaskManager" xml:space="preserve">
-    <value>Task Manager</value>
+    <value>タスクマネージャー</value>
   </data>
   <data name="TurnFlicksOnOrOff" xml:space="preserve">
     <value>Turn flicks on or off</value>
   </data>
   <data name="AddALanguage" xml:space="preserve">
-    <value>Add a language</value>
+    <value>言語を追加</value>
   </data>
   <data name="ViewNetworkStatusAndTasks" xml:space="preserve">
     <value>View network status and tasks</value>
   </data>
   <data name="TurnMagnifierOnOrOff" xml:space="preserve">
-    <value>Turn Magnifier on or off</value>
+    <value>拡大鏡のオン/オフ</value>
   </data>
   <data name="SeeTheNameOfThisComputer" xml:space="preserve">
     <value>See the name of this computer</value>
@@ -2269,10 +2269,10 @@
     <value>Manage disk space used by your offline files</value>
   </data>
   <data name="TurnHighContrastOnOrOff" xml:space="preserve">
-    <value>Turn High Contrast on or off</value>
+    <value>ハイコントラストのオン/オフ</value>
   </data>
   <data name="ChangeTheWayTimeIsDisplayed" xml:space="preserve">
-    <value>Change the way time is displayed</value>
+    <value>時間の表示方法を変更する</value>
   </data>
   <data name="ChangeHowWebPagesAreDisplayedInTabs" xml:space="preserve">
     <value>Change how web pages are displayed in tabs</value>
@@ -2284,22 +2284,22 @@
     <value>Manage audio devices</value>
   </data>
   <data name="ChangeSecuritySettings" xml:space="preserve">
-    <value>Change security settings</value>
+    <value>セキュリティ設定を変更</value>
   </data>
   <data name="CheckSecurityStatus" xml:space="preserve">
     <value>Check security status</value>
   </data>
   <data name="DeleteCookiesOrTemporaryFiles" xml:space="preserve">
-    <value>Delete cookies or temporary files</value>
+    <value>Cookie や一時ファイルを削除</value>
   </data>
   <data name="SpecifyWhichHandYouWriteWith" xml:space="preserve">
-    <value>Specify which hand you write with</value>
+    <value>どの手で書くかを指定する</value>
   </data>
   <data name="ChangeTouchInputSettings" xml:space="preserve">
     <value>Change touch input settings</value>
   </data>
   <data name="HowToChangeTheSizeOfVirtualMemory" xml:space="preserve">
-    <value>How to change the size of virtual memory</value>
+    <value>仮想メモリのサイズを変更する方法</value>
   </data>
   <data name="HearTextReadAloudWithNarrator" xml:space="preserve">
     <value>Hear text read aloud with Narrator</value>
@@ -2353,13 +2353,13 @@
     <value>Manage Storage Spaces</value>
   </data>
   <data name="ShowOrHideFileExtensions" xml:space="preserve">
-    <value>Show or hide file extensions</value>
+    <value>拡張子の表示/非表示</value>
   </data>
   <data name="AllowAnAppThroughWindowsFirewall" xml:space="preserve">
-    <value>Allow an app through Windows Firewall</value>
+    <value>Windowsファイアウォールでアプリを許可する</value>
   </data>
   <data name="ChangeSystemSounds" xml:space="preserve">
-    <value>Change system sounds</value>
+    <value>システムのサウンドを変更</value>
   </data>
   <data name="AdjustCleartypeText" xml:space="preserve">
     <value>ClearTypeテキストを調整</value>
@@ -2398,7 +2398,7 @@
     <value>プログラムのアンインストール</value>
   </data>
   <data name="CreateAndFormatHardDiskPartitions" xml:space="preserve">
-    <value>Create and format hard disk partitions</value>
+    <value>ハードディスクのパーティション作成とフォーマット</value>
   </data>
   <data name="ChangeDateTimeOrNumberFormats" xml:space="preserve">
     <value>日付、時刻、数の書式を変更</value>
@@ -2452,7 +2452,7 @@
     <value>Change the way measurements are displayed</value>
   </data>
   <data name="PressKeyCombinationsOneAtATime" xml:space="preserve">
-    <value>Press key combinations one at a time</value>
+    <value>キーの組み合わせを同時に押してください</value>
   </data>
   <data name="RestoreDataFilesOrComputerFromBackupWindows7" xml:space="preserve">
     <value>Restore data, files or computer from backup (Windows 7)</value>
