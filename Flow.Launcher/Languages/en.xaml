@@ -187,7 +187,7 @@
     <system:String x:Key="alwaysRunAsAdministrator">Always run as administrator</system:String>
     <system:String x:Key="alwaysRunAsAdministratorToolTip">Run Flow Launcher as administrator on startup</system:String>
     <system:String x:Key="runAsAdministratorChange">Administrator Mode Change</system:String>
-    <system:String x:Key="runAsAdministratorChangeAndRestart">Do you want to restart as administrator to apply this change? Or you need to run as administrator during next start manually.</system:String>
+    <system:String x:Key="runAsAdministratorChangeAndRestart">Do you want to restart as administrator to apply this change? Otherwise, you will need to run as administrator manually on the next start.</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Search Plugin</system:String>
