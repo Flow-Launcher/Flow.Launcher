@@ -150,7 +150,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Activation" xml:space="preserve">
-    <value>アクティブ化</value>
+    <value>アクティベーション</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="ActivityHistory" xml:space="preserve">
@@ -2380,7 +2380,7 @@
     <value>Internet Explorer の検索プロバイダを変更する</value>
   </data>
   <data name="JoinADomain" xml:space="preserve">
-    <value>Join a domain</value>
+    <value>ドメインに参加</value>
   </data>
   <data name="AddADevice" xml:space="preserve">
     <value>端末を追加</value>
@@ -2410,7 +2410,7 @@
     <value>Manage network passwords</value>
   </data>
   <data name="ChangeInputMethods" xml:space="preserve">
-    <value>Change input methods</value>
+    <value>入力方法を変更</value>
   </data>
   <data name="ManageAdvancedSharingSettings" xml:space="preserve">
     <value>Manage advanced sharing settings</value>
@@ -2428,13 +2428,13 @@
     <value>Manage Web Credentials</value>
   </data>
   <data name="ChangeTheTimeZone" xml:space="preserve">
-    <value>Change the time zone</value>
+    <value>タイムゾーンの変更</value>
   </data>
   <data name="StartSpeechRecognition" xml:space="preserve">
     <value>音声認識を開始</value>
   </data>
   <data name="ViewInstalledUpdates" xml:space="preserve">
-    <value>View installed updates</value>
+    <value>インストール済みのアップデートを表示</value>
   </data>
   <data name="WhatsHappenedToTheQuickLaunchToolbar" xml:space="preserve">
     <value>What's happened to the Quick Launch toolbar?</value>
@@ -2467,7 +2467,7 @@
     <value>ペンまたはタッチ入力の画面をキャリブレーション</value>
   </data>
   <data name="ManageUserCertificates" xml:space="preserve">
-    <value>Manage user certificates</value>
+    <value>ユーザー証明書の管理</value>
   </data>
   <data name="ScheduleTasks" xml:space="preserve">
     <value>タスクのスケジュール</value>
