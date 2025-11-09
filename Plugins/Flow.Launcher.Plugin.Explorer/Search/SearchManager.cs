@@ -280,10 +280,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         private void MergeQuickAccessInResultsIfQueryMatch(HashSet<Result> results, Query query, ActionKeyword? activeActionKeyword)
         {
-            if (activeActionKeyword != null && activeActionKeyword != ActionKeyword.QuickAccessActionKeyword)
-            {
-                if (Settings.ExcludeQuickAccessFromActionKeywords) return;
-            }
+            if (activeActionKeyword != null 
+                && activeActionKeyword != ActionKeyword.QuickAccessActionKeyword
+                && Settings.ExcludeQuickAccessFromActionKeywords)
+                return;
             var quickAccessMatched = QuickAccess.AccessLinkListMatched(query, Settings.QuickAccessLinks);
             if (quickAccessMatched != null && quickAccessMatched.Count > 0) results.UnionWith(quickAccessMatched);
         }
