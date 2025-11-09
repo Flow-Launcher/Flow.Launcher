@@ -228,7 +228,7 @@ namespace Flow.Launcher.Plugin.Explorer
         public ActionKeyword? GetActiveActionKeyword(string actionKeywordStr)
         {
             if (string.IsNullOrEmpty(actionKeywordStr)) return null;
-            foreach (ActionKeyword action in Enum.GetValues(typeof(ActionKeyword)))
+            foreach (var action in Enum.GetValues<ActionKeyword>())
             {
                 var keywordStr = GetActionKeyword(action);
                 if (string.IsNullOrEmpty(keywordStr)) continue;
@@ -237,6 +237,5 @@ namespace Flow.Launcher.Plugin.Explorer
             }
             return null;
         }
-
     }
 }

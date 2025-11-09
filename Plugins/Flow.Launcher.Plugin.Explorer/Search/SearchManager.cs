@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
 using Flow.Launcher.Plugin.Explorer.Exceptions;
 using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
 using Flow.Launcher.Plugin.Explorer.Search.Everything;
@@ -26,7 +24,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             Context = context;
             Settings = settings;
         }
-
 
         /// <summary>
         /// Note: A path that ends with "\" and one that doesn't will not be regarded as equal.
@@ -136,7 +133,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             return results.ToList();
         }
 
-
         private List<Result> EverythingContentSearchResult(Query query)
         {
             return new List<Result>()
@@ -230,7 +226,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         public static bool UseIndexSearch(string path)
         {
-            if (Main.Settings.IndexSearchEngine is not Settings.IndexSearchEngineOption.WindowsIndex)
+            if (Main.Settings.IndexSearchEngine is not IndexSearchEngineOption.WindowsIndex)
                 return false;
 
             // Check if the path is using windows index search
@@ -252,7 +248,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         private bool IsExcludedFile(SearchResult result)
         {
-            string[] excludedFileTypes = Settings.ExcludedFileTypes.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] excludedFileTypes = Settings.ExcludedFileTypes.Split([','], StringSplitOptions.RemoveEmptyEntries);
             string fileExtension = Path.GetExtension(result.FullPath).TrimStart('.');
 
             return excludedFileTypes.Contains(fileExtension, StringComparer.OrdinalIgnoreCase);
@@ -288,5 +284,4 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             if (quickAccessMatched != null && quickAccessMatched.Count > 0) results.UnionWith(quickAccessMatched);
         }
     }
-
 }
