@@ -48,24 +48,26 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         internal async Task<List<Result>> SearchAsync(Query query, CancellationToken token)
         {
             var results = new HashSet<Result>(PathEqualityComparator.Instance);
-            var keywordStr = query.ActionKeyword.Length == 0 ? Query.GlobalPluginWildcardSign : query.ActionKeyword;
-            bool isPathSearch = query.Search.IsLocationPathString()
-                                || EnvironmentVariables.IsEnvironmentVariableSearch(query.Search)
-                                || EnvironmentVariables.HasEnvironmentVar(query.Search);
+            var keyword = query.ActionKeyword.Length == 0 ? Query.GlobalPluginWildcardSign : query.ActionKeyword;
+            var isPathSearch = query.Search.IsLocationPathString()
+                || EnvironmentVariables.IsEnvironmentVariableSearch(query.Search)
+                || EnvironmentVariables.HasEnvironmentVar(query.Search);
 
-            var activeActionKeyword = Settings.GetActiveActionKeyword(keywordStr);
+            // If action keyword is enabled and matched, get the active action keyword.
+            var activeActionKeyword = Settings.GetActiveActionKeyword(keyword);
 
+            // No action keyword matched - plugin should not handle this query, return empty results.
             if (activeActionKeyword == null && !isPathSearch)
             {
                 return [];
             }
 
+            // If no action keyword matched but the query is a path search, set active action keyword to path search.
             if (activeActionKeyword == null && isPathSearch) activeActionKeyword = ActionKeyword.PathSearchActionKeyword;
 
             // This allows the user to type the below action keywords and see/search the list of quick folder links
-
             if (string.IsNullOrEmpty(query.Search)
-                && activeActionKeyword!.Equals(ActionKeyword.QuickAccessActionKeyword))
+                && activeActionKeyword.Equals(ActionKeyword.QuickAccessActionKeyword))
             {
                 return QuickAccess.AccessLinkListAll(query, Settings.QuickAccessLinks);
             }
@@ -74,11 +76,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             string engineName;
 
-            switch (activeActionKeyword!.Equals(ActionKeyword.PathSearchActionKeyword))
+            switch (activeActionKeyword.Equals(ActionKeyword.PathSearchActionKeyword))
             {
                 case true:
                     results.UnionWith(await PathSearchAsync(query, token).ConfigureAwait(false));
                     return [.. results];
+
                 case false
                     // Intentionally require enabling of Everything's content search due to its slowness
                     when activeActionKeyword.Equals(ActionKeyword.FileContentSearchActionKeyword):
@@ -92,7 +95,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 case false
                     when activeActionKeyword.Equals(ActionKeyword.QuickAccessActionKeyword):
                     return QuickAccess.AccessLinkListMatched(query, Settings.QuickAccessLinks);
-
 
                 default:
                     searchResults = Settings.IndexProvider.SearchAsync(query.Search, token);
@@ -255,15 +257,20 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         private bool ShouldSkip(ActionKeyword actionKeywordActive, SearchResult search)
         {
+            // Is excluded file type
             if (search.Type == ResultType.File && IsExcludedFile(search))
+            {
                 return true;
+            }
 
+            // Action keyword specific filtering for folders
             if (actionKeywordActive.Equals(ActionKeyword.FolderSearchActionKeyword)
                 && search.Type != ResultType.Folder)
             {
                 return true;
             }
 
+            // Action keyword specific filtering for files
             if (actionKeywordActive.Equals(ActionKeyword.FileSearchActionKeyword)
                 && search.Type != ResultType.File)
             {
@@ -278,7 +285,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             if (activeActionKeyword != null 
                 && activeActionKeyword != ActionKeyword.QuickAccessActionKeyword
                 && Settings.ExcludeQuickAccessFromActionKeywords)
+            {
                 return;
+            }
+
             var quickAccessMatched = QuickAccess.AccessLinkListMatched(query, Settings.QuickAccessLinks);
             if (quickAccessMatched != null && quickAccessMatched.Count > 0) results.UnionWith(quickAccessMatched);
         }
