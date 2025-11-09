@@ -175,7 +175,6 @@ namespace Flow.Launcher.Plugin.Explorer
             QuickAccessActionKeyword,
             FolderSearchActionKeyword,
             FileSearchActionKeyword,
-
         }
 
         internal string GetActionKeyword(ActionKeyword actionKeyword) => actionKeyword switch
