@@ -57,7 +57,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             if (activeActionKeyword == null && !isPathSearch)
             {
-                return new List<Result>();
+                return [];
             }
 
             if (activeActionKeyword == null && isPathSearch) activeActionKeyword = ActionKeyword.PathSearchActionKeyword;
@@ -78,7 +78,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             {
                 case true:
                     results.UnionWith(await PathSearchAsync(query, token).ConfigureAwait(false));
-                    return results.ToList();
+                    return [.. results];
                 case false
                     // Intentionally require enabling of Everything's content search due to its slowness
                     when activeActionKeyword.Equals(ActionKeyword.FileContentSearchActionKeyword):
@@ -111,12 +111,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                         continue;
                     }
                     results.Add(ResultManager.CreateResult(query, search));
-
                 }
             }
             catch (OperationCanceledException)
             {
-                return new List<Result>();
+                return [];
             }
             catch (EngineNotAvailableException)
             {
@@ -130,13 +129,13 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             results.RemoveWhere(r => Settings.IndexSearchExcludedSubdirectoryPaths.Any(
                 excludedPath => FilesFolders.PathContains(excludedPath.Path, r.SubTitle, allowEqual: true)));
 
-            return results.ToList();
+            return [.. results];
         }
 
         private List<Result> EverythingContentSearchResult(Query query)
         {
-            return new List<Result>()
-            {
+            return
+            [
                 new()
                 {
                     Title = Localize.flowlauncher_plugin_everything_enable_content_search(),
@@ -149,7 +148,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                         return false;
                     }
                 }
-            };
+            ];
         }
 
         private async Task<List<Result>> PathSearchAsync(Query query, CancellationToken token = default)
@@ -170,7 +169,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             // Check that actual location exists, otherwise directory search will throw directory not found exception
             if (!FilesFolders.ReturnPreviousDirectoryIfIncompleteString(path).LocationExists())
-                return results.ToList();
+                return [.. results];
 
             var useIndexSearch = Settings.IndexSearchEngine is Settings.IndexSearchEngineOption.WindowsIndex
                                  && UseWindowsIndexForDirectorySearch(path);
@@ -182,7 +181,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 : ResultManager.CreateOpenCurrentFolderResult(retrievedDirectoryPath, query.ActionKeyword, useIndexSearch));
 
             if (token.IsCancellationRequested)
-                return new List<Result>();
+                return [];
 
             IAsyncEnumerable<SearchResult> directoryResult;
 
@@ -204,7 +203,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             }
 
             if (token.IsCancellationRequested)
-                return new List<Result>();
+                return [];
 
             try
             {
@@ -219,7 +218,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             }
 
 
-            return results.ToList();
+            return [.. results];
         }
 
         public bool IsFileContentSearch(string actionKeyword) => actionKeyword == Settings.FileContentSearchActionKeyword;
