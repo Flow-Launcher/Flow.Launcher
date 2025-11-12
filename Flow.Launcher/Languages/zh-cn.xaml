@@ -614,7 +614,7 @@
 
     <!--  Update  -->
     <system:String x:Key="update_flowlauncher_update_check">检查新的更新</system:String>
-    <system:String x:Key="update_flowlauncher_already_on_latest">您已经拥有最新的 Flow Launcher 版本</system:String>
+    <system:String x:Key="update_flowlauncher_already_on_latest">您当前使用的 Flow Launcher 已是最新版本</system:String>
     <system:String x:Key="update_flowlauncher_update_found">检查到更新</system:String>
     <system:String x:Key="update_flowlauncher_updating">更新中...</system:String>
     <system:String x:Key="update_flowlauncher_fail_moving_portable_user_profile_data">
