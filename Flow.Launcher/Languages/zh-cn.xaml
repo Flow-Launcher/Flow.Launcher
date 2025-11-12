@@ -127,7 +127,7 @@
     <system:String x:Key="SearchPrecisionLow">低</system:String>
     <system:String x:Key="SearchPrecisionRegular">常规</system:String>
     <system:String x:Key="ShouldUsePinyin">使用拼音搜索</system:String>
-    <system:String x:Key="ShouldUsePinyinToolTip">拼音是翻译中文的罗马化拼写的标准系统。请注意，启用此功能可以大大增加搜索时的内存使用量。</system:String>
+    <system:String x:Key="ShouldUsePinyinToolTip">拼音是翻译中文的罗马化拼写的标准系统。请注意，启用此功能会大幅增加搜索时的内存使用量。</system:String>
     <system:String x:Key="ShouldUseDoublePinyin">使用双拼</system:String>
     <system:String x:Key="ShouldUseDoublePinyinToolTip">使用双拼而不是全拼进行搜索。</system:String>
     <system:String x:Key="DoublePinyinSchema">双拼方案</system:String>
@@ -145,7 +145,7 @@
     <system:String x:Key="AlwaysPreviewToolTip">Flow 启动时总是打开预览面板。按 {0} 以切换预览。</system:String>
     <system:String x:Key="shadowEffectNotAllowed">当前主题已启用模糊效果，不允许启用阴影效果</system:String>
     <system:String x:Key="searchDelay">延迟搜索</system:String>
-    <system:String x:Key="searchDelayToolTip">在输入时添加一个短时间延迟以减少UI闪烁和加载结果的负载。建议您的输入速度是平均的。</system:String>
+    <system:String x:Key="searchDelayToolTip">在输入时添加一个短时间延迟以减少UI闪烁和加载结果的负载。如果您的打字速度处于中等水平，建议启用此功能。</system:String>
     <system:String x:Key="searchDelayNumberBoxToolTip">输入等待时间（毫秒），直到输入被认为完成。这只能在启用搜索延迟时进行编辑。</system:String>
     <system:String x:Key="searchDelayTime">默认搜索延迟时间</system:String>
     <system:String x:Key="searchDelayTimeToolTip">在输入停止后显示结果之前等待时间。更高的数值等待更长时间（毫秒）</system:String>
