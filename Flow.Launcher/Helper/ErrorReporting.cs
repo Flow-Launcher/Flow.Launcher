@@ -22,7 +22,7 @@ public static class ErrorReporting
         // Many bug reports because users see the "Report problem UI" after "the" crash with System.Runtime.InteropServices.COMException 0xD0000701 or 0x80263001.
         // However, displaying this "Report problem UI" during WPF crashes, especially when DWM composition is changing, is not ideal; some users reported it hangs for up to a minute before the "Report problem UI" appears.
         // This change modifies the behavior to log the exception instead of showing the "Report problem UI".
-        if (ExceptionHelper.IsRecoverableDwmCompositionException(e as System.Runtime.InteropServices.COMException)) return;
+        if (ExceptionHelper.IsRecoverableDwmCompositionException(e)) return;
 
         var reportWindow = new ReportWindow(e);
         reportWindow.Show();
