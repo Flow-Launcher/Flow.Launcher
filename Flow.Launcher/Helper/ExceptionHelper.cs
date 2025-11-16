@@ -39,6 +39,6 @@ internal static class ExceptionHelper
         // Check for common DWM composition changed patterns in the stack trace
         var stackTrace = comException.StackTrace;
         return !string.IsNullOrEmpty(stackTrace) &&
-               stackTrace.Contains("DwmCompositionChanged");
+               stackTrace.Contains("DwmCompositionChanged", StringComparison.OrdinalIgnoreCase);
     }
 }
