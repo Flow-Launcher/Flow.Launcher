@@ -28,9 +28,9 @@
       },
       "iNKORE.UI.WPF.Modern": {
         "type": "Direct",
-        "requested": "[0.10.1, )",
-        "resolved": "0.10.1",
-        "contentHash": "nRYmBosiL+42eUpLbHeqP7qJqtp5EpzuIMZTpvq4mFV33VB/JjkFg1y82gk50pjkXlAQWDvRyrfSAmPR5AM+3g==",
+        "requested": "[0.10.2.1, )",
+        "resolved": "0.10.2.1",
+        "contentHash": "nGwuuVul+TcLCTgPmaAZCc0fYFqUpCNZ8PiulVT3gZnsWt/AvxMZ0DSPpuyI/iRPc/NhFIg9lSIR7uaHWV0I/Q==",
         "dependencies": {
           "iNKORE.UI.WPF": "1.2.8"
         }
@@ -1619,7 +1619,7 @@
           "FSharp.Core": "[9.0.303, )",
           "Flow.Launcher.Infrastructure": "[1.0.0, )",
           "Flow.Launcher.Localization": "[0.0.6, )",
-          "Flow.Launcher.Plugin": "[5.0.0, )",
+          "Flow.Launcher.Plugin": "[5.1.0, )",
           "Meziantou.Framework.Win32.Jobs": "[3.4.5, )",
           "Microsoft.IO.RecyclableMemoryStream": "[3.0.1, )",
           "SemanticVersioning": "[3.0.0, )",
@@ -1634,7 +1634,7 @@
           "BitFaster.Caching": "[2.5.4, )",
           "CommunityToolkit.Mvvm": "[8.4.0, )",
           "Flow.Launcher.Localization": "[0.0.6, )",
-          "Flow.Launcher.Plugin": "[5.0.0, )",
+          "Flow.Launcher.Plugin": "[5.1.0, )",
           "InputSimulator": "[1.0.4, )",
           "MemoryPack": "[1.21.4, )",
           "Microsoft.VisualStudio.Threading": "[17.14.15, )",
