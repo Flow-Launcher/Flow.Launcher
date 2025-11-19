@@ -1,6 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation
-// The Microsoft Corporation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
+﻿// This is a direct copy of the file at https://github.com/microsoft/PowerToys/blob/main/src/modules/launcher/PowerLauncher/Helper/ExceptionHelper.cs and adapted for flow. 
 
 using System;
 using System.Runtime.InteropServices;
