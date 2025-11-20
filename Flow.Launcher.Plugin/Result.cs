@@ -91,6 +91,34 @@ namespace Flow.Launcher.Plugin
         }
 
         /// <summary>
+        /// Returns the plugin directory relative IcoPath or URL. This path is useful for storage where the it needs
+        /// to be resistant to changes in plugin location from update or portable mode change.
+        /// </summary>
+        /// <value>Must be a local file path.</value>
+        /// <remarks>This will be empty string if IcoPath is a URL, so must check for empty string during usage</remarks>
+        public string IcoPathRelative
+        {
+            get => _icoPath;
+            set
+            {
+                // As a standard this property will handle prepping and converting to absolute local path for icon image processing
+                if (!string.IsNullOrEmpty(value)
+                    && !string.IsNullOrEmpty(PluginDirectory)
+                    && !Path.IsPathRooted(value)
+                    && !value.StartsWith("http://", StringComparison.OrdinalIgnoreCase)
+                    && !value.StartsWith("https://", StringComparison.OrdinalIgnoreCase)
+                    && !value.StartsWith("data:image", StringComparison.OrdinalIgnoreCase))
+                {
+                    _icoPath = Path.Combine(PluginDirectory, value);
+                }
+                else
+                {
+                    _icoPath = value;
+                }
+            }
+        }
+
+        /// <summary>
         /// The image to be displayed for the badge of the result.
         /// </summary>
         /// <value>Can be a local file path or a URL.</value>
