@@ -175,6 +175,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public double? SettingWindowLeft { get; set; } = null;
         public WindowState SettingWindowState { get; set; } = WindowState.Normal;
 
+        public bool PrereleaseUpdateSource { get; set; }
+
         private bool _showPlaceholder { get; set; } = true;
         public bool ShowPlaceholder
         {

@@ -70,7 +70,11 @@ namespace Flow.Launcher
                     .UseContentRoot(AppContext.BaseDirectory)
                     .ConfigureServices(services => services
                         .AddSingleton(_ => _settings)
-                        .AddSingleton(sp => new Updater(sp.GetRequiredService<IPublicAPI>(), Launcher.Properties.Settings.Default.GithubRepo))
+                        .AddSingleton(sp => new Updater(
+                            _settings,
+                            sp.GetRequiredService<IPublicAPI>(),
+                            Launcher.Properties.Settings.Default.GithubRepo,
+                            Launcher.Properties.Settings.Default.PrereleaseRepo))
                         .AddSingleton<Portable>()
                         .AddSingleton<IAlphabet, PinyinAlphabet>()
                         .AddSingleton<StringMatcher>()

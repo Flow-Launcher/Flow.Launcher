@@ -37,16 +37,26 @@
 
                 <ikw:SimpleStackPanel Orientation="Horizontal" Spacing="12">
                     <Button
-                        x:Name="UpdateAppButton"
-                        Command="{Binding UpdateAppCommand}"
-                        Content="{DynamicResource checkUpdates}" />
-                    <Button
                         Height="{Binding ElementName=UpdateAppButton, Path=ActualHeight}"
                         Command="{Binding OpenSponsorPageCommand}"
                         Content="{DynamicResource BecomeASponsor}"
                         Cursor="Hand"
                         Style="{StaticResource AccentButtonStyle}" />
                 </ikw:SimpleStackPanel>
+            </ui:SettingsCard>
+
+            <ui:SettingsCard Margin="0 4 0 0" Header="{DynamicResource updateSource}">
+                <ui:SettingsCard.HeaderIcon>
+                    <ui:FontIcon Glyph="&#xE777;" />
+                </ui:SettingsCard.HeaderIcon>
+
+                <StackPanel Orientation="Horizontal">
+                    <ComboBox Margin="0 0 10 0" SelectedIndex="{Binding PrereleaseSelectedIndex}">
+                        <ComboBoxItem Content="{DynamicResource release}" />
+                        <ComboBoxItem Content="{DynamicResource prerelease}" />
+                    </ComboBox>
+                    <Button Command="{Binding UpdateAppCommand}" Content="{DynamicResource checkUpdates}" />
+                </StackPanel>
             </ui:SettingsCard>
 
             <ui:SettingsCard Margin="0 4 0 0" Header="{DynamicResource releaseNotes}">
