@@ -45,7 +45,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_input_url">Lütfen bir URL giriniz</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword_exist">Anahtar kelime zaten mevcut. Lütfen yeni bir tane seçiniz.</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_succeed">Başarılı</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_edit_failed">Failed to update search source. The item may have been removed.</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_edit_failed">Arama kaynağı güncellenemedi. Öge kaldırılmış olabilir.</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_iconpath_hint">İpucu: Bu dizine özel resimler yerleştirmenize gerek yoktur, Flow'un sürümü güncellenirse bunlar kaybolacaktır. Flow, bu dizinin dışındaki tüm görüntüleri otomatik olarak WebSearch'ün özel görüntü konumuna kopyalayacaktır.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_websearch_plugin_name">Web Araması</system:String>
