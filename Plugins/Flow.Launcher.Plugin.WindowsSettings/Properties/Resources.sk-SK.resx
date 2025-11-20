@@ -1377,7 +1377,7 @@
     <comment>Area SurfaceHub</comment>
   </data>
   <data name="SettingsHomePage" xml:space="preserve">
-    <value>Domov</value>
+    <value>Nastavenia dovmoskej stránky</value>
     <comment>Area Home, Overview-page for all areas of settings </comment>
   </data>
   <data name="SetUpKiosk" xml:space="preserve">
