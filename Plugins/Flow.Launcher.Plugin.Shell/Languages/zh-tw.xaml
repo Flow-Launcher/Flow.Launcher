@@ -13,7 +13,7 @@
     <system:String x:Key="flowlauncher_plugin_cmd_cmd_has_been_executed_times">此指令已執行了 {0} 次</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_execute_through_shell">執行指令</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_administrator">以系統管理員身分執行</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_copy">Copy the command</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_copy">複製命令</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_history">Only show number of most used commands:</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_command_not_found">Command not found: {0}</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_error_running_command">Error running the command: {0}</system:String>

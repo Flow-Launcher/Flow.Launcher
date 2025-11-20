@@ -64,6 +64,10 @@
     <system:String x:Key="PositionReset">창 위치 초기화</system:String>
     <system:String x:Key="PositionResetToolTip">검색창 위치 초기화</system:String>
     <system:String x:Key="queryTextBoxPlaceholder">검색어 입력</system:String>
+    <system:String x:Key="pluginStillInitializing">{0}: This plugin is still initializing...</system:String>
+    <system:String x:Key="pluginStillInitializingSubtitle">Select this result to requery</system:String>
+    <system:String x:Key="pluginFailedToRespond">{0}: Failed to respond!</system:String>
+    <system:String x:Key="pluginFailedToRespondSubtitle">Select this result for more info</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">설정</system:String>
@@ -162,6 +166,10 @@
     <system:String x:Key="homePageToolTip">쿼리 입력창이 비어있을때, 홈페이지의 결과를 표시합니다.</system:String>
     <system:String x:Key="historyResultsForHomePage">히스토리를 홈페이지에 표시</system:String>
     <system:String x:Key="historyResultsCountForHomePage">홈페이지에 표시할 최대 히스토리 수</system:String>
+    <system:String x:Key="historyStyle">History Style</system:String>
+    <system:String x:Key="historyStyleTooltip">Choose the type of history to show in the History and Home Page</system:String>
+    <system:String x:Key="queryHistory">Query history</system:String>
+    <system:String x:Key="executedHistory">Last opened history</system:String>
     <system:String x:Key="homeToggleBoxToolTip">This can only be edited if plugin supports Home feature and Home Page is enabled.</system:String>
     <system:String x:Key="showAtTopmost">Show Search Window at Foremost</system:String>
     <system:String x:Key="showAtTopmostToolTip">Overrides other programs' 'Always on Top' setting and displays Flow in the foremost position.</system:String>
@@ -437,7 +445,7 @@
     <system:String x:Key="icons">아이콘</system:String>
     <system:String x:Key="about_activate_times">Flow Launcher를 {0}번 실행했습니다.</system:String>
     <system:String x:Key="checkUpdates">업데이트 확인</system:String>
-    <system:String x:Key="BecomeASponsor">후원하기</system:String>
+    <system:String x:Key="BecomeASponsor">Become a Sponsor</system:String>
     <system:String x:Key="newVersionTips">새 버전({0})이 있습니다. Flow Launcher를 재시작하세요.</system:String>
     <system:String x:Key="checkUpdatesFailed">업데이트 확인을 실패했습니다. api.github.com로의 연결 또는 프록시 설정을 확인해주세요.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
