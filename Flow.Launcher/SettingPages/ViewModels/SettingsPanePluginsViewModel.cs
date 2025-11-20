@@ -114,8 +114,11 @@ public partial class SettingsPanePluginsViewModel : BaseModel
         }
     }
 
-    private IList<PluginViewModel>? _pluginViewModels;
-    public IList<PluginViewModel> PluginViewModels => _pluginViewModels ??= PluginManager.AllPlugins
+    private List<PluginViewModel>? _pluginViewModels;
+    // Get all plugins: Initializing & Initialized & Init failed plugins
+    // Include init failed ones so that we can uninstall them
+    // Include initializing ones so that we can change related settings like action keywords, etc.
+    public List<PluginViewModel> PluginViewModels => _pluginViewModels ??= App.API.GetAllPlugins()
         .OrderBy(plugin => plugin.Metadata.Disabled)
         .ThenBy(plugin => plugin.Metadata.Name)
         .Select(plugin => new PluginViewModel
