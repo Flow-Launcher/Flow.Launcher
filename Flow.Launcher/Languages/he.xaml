@@ -64,6 +64,10 @@
     <system:String x:Key="PositionReset">איפוס מיקום</system:String>
     <system:String x:Key="PositionResetToolTip">אפס את מיקום חלון החיפוש</system:String>
     <system:String x:Key="queryTextBoxPlaceholder">הקלד כאן כדי לחפש</system:String>
+    <system:String x:Key="pluginStillInitializing">{0}: This plugin is still initializing...</system:String>
+    <system:String x:Key="pluginStillInitializingSubtitle">Select this result to requery</system:String>
+    <system:String x:Key="pluginFailedToRespond">{0}: Failed to respond!</system:String>
+    <system:String x:Key="pluginFailedToRespondSubtitle">Select this result for more info</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">הגדרות</system:String>
@@ -170,6 +174,10 @@
     <system:String x:Key="homePageToolTip">Show home page results when query text is empty.</system:String>
     <system:String x:Key="historyResultsForHomePage">Show History Results in Home Page</system:String>
     <system:String x:Key="historyResultsCountForHomePage">Maximum History Results Shown in Home Page</system:String>
+    <system:String x:Key="historyStyle">History Style</system:String>
+    <system:String x:Key="historyStyleTooltip">Choose the type of history to show in the History and Home Page</system:String>
+    <system:String x:Key="queryHistory">Query history</system:String>
+    <system:String x:Key="executedHistory">Last opened history</system:String>
     <system:String x:Key="homeToggleBoxToolTip">ניתן לערוך זאת רק אם התוסף תומך בתכונת הבית ודף הבית מופעל.</system:String>
     <system:String x:Key="showAtTopmost">Show Search Window at Foremost</system:String>
     <system:String x:Key="showAtTopmostToolTip">עוקף את הגדרת תמיד עליון של תוכנות אחרות, ומציג את Flow במיקום הגבוה ביותר.</system:String>
@@ -445,7 +453,7 @@
     <system:String x:Key="icons">סמלים</system:String>
     <system:String x:Key="about_activate_times">הפעלת את Flow Launcher {0} פעמים</system:String>
     <system:String x:Key="checkUpdates">בדוק עדכונים</system:String>
-    <system:String x:Key="BecomeASponsor">תן חסות</system:String>
+    <system:String x:Key="BecomeASponsor">Become a Sponsor</system:String>
     <system:String x:Key="newVersionTips">גרסה חדשה {0} זמינה, האם ברצונך להפעיל מחדש את Flow Launcher כדי להשתמש בעדכון?</system:String>
     <system:String x:Key="checkUpdatesFailed">בדיקת העדכונים נכשלה, אנא בדוק את הגדרות החיבור ואת הגדרות ה-Proxy שלך לכתובת api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
