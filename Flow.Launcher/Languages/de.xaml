@@ -64,6 +64,10 @@
     <system:String x:Key="PositionReset">Zurücksetzen der Position</system:String>
     <system:String x:Key="PositionResetToolTip">Position des Suchfensters zurücksetzen</system:String>
     <system:String x:Key="queryTextBoxPlaceholder">Zum Suchen hier tippen</system:String>
+    <system:String x:Key="pluginStillInitializing">{0}: This plugin is still initializing...</system:String>
+    <system:String x:Key="pluginStillInitializingSubtitle">Select this result to requery</system:String>
+    <system:String x:Key="pluginFailedToRespond">{0}: Failed to respond!</system:String>
+    <system:String x:Key="pluginFailedToRespondSubtitle">Select this result for more info</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Einstellungen</system:String>
@@ -171,6 +175,10 @@
     <system:String x:Key="homePageToolTip">Ergebnisse der Homepage zeigen, wenn Abfragetext leer ist.</system:String>
     <system:String x:Key="historyResultsForHomePage">Historie-Ergebnisse auf Homepage zeigen</system:String>
     <system:String x:Key="historyResultsCountForHomePage">Maximal gezeigte Historie-Ergebnisse auf Homepage</system:String>
+    <system:String x:Key="historyStyle">History Style</system:String>
+    <system:String x:Key="historyStyleTooltip">Choose the type of history to show in the History and Home Page</system:String>
+    <system:String x:Key="queryHistory">Query history</system:String>
+    <system:String x:Key="executedHistory">Last opened history</system:String>
     <system:String x:Key="homeToggleBoxToolTip">Dies kann nur bearbeitet werden, wenn das Plug-in das Home-Feature unterstützt und die Homepage aktiviert ist.</system:String>
     <system:String x:Key="showAtTopmost">Suchfenster an vorderster zeigen</system:String>
     <system:String x:Key="showAtTopmostToolTip">Setzt die Einstellung 'Immer im Vordergrund' anderer Programme außer Kraft und zeigt Flow in der vordersten Position an.</system:String>
@@ -446,7 +454,7 @@
     <system:String x:Key="icons">Icons</system:String>
     <system:String x:Key="about_activate_times">Sie haben Flow Launcher {0} mal aktiviert</system:String>
     <system:String x:Key="checkUpdates">Nach Updates suchen</system:String>
-    <system:String x:Key="BecomeASponsor">Ein Sponsor werden</system:String>
+    <system:String x:Key="BecomeASponsor">Become a Sponsor</system:String>
     <system:String x:Key="newVersionTips">Neue Version {0} ist verfügbar. Möchten Sie Flow Launcher neu starten, um das Update zu verwenden?</system:String>
     <system:String x:Key="checkUpdatesFailed">Überprüfung der Updates fehlgeschlagen. Bitte überprüfen Sie Ihre Verbindungs- und Proxy-Einstellungen zu api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">

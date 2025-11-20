@@ -64,6 +64,10 @@
     <system:String x:Key="PositionReset">Repor posição</system:String>
     <system:String x:Key="PositionResetToolTip">Repor posição da janela de pesquisa</system:String>
     <system:String x:Key="queryTextBoxPlaceholder">Escreva aqui para pesquisar</system:String>
+    <system:String x:Key="pluginStillInitializing">{0}: Este plugin está a ser iniciado...</system:String>
+    <system:String x:Key="pluginStillInitializingSubtitle">Selecione este resultado para pesquisar novamente</system:String>
+    <system:String x:Key="pluginFailedToRespond">{0}: Falha na resposta!</system:String>
+    <system:String x:Key="pluginFailedToRespondSubtitle">Selecione este resultado para mais informação</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Definições</system:String>
@@ -170,6 +174,10 @@
     <system:String x:Key="homePageToolTip">Mostrar resultados da página inicial se o termo de pesquisa estiver vazio.</system:String>
     <system:String x:Key="historyResultsForHomePage">Mostrar histórico na página inicial</system:String>
     <system:String x:Key="historyResultsCountForHomePage">Máximo de resultados a mostrar na Página inicial</system:String>
+    <system:String x:Key="historyStyle">Estilo do histórico</system:String>
+    <system:String x:Key="historyStyleTooltip">Escolha o tipo de histórico a ser mostrado no Histórico e na Página inicial</system:String>
+    <system:String x:Key="queryHistory">Histórico de pesquisas</system:String>
+    <system:String x:Key="executedHistory">Último histórico aberto</system:String>
     <system:String x:Key="homeToggleBoxToolTip">Esta opção apenas pode ser editada se o plugin tiver suporte a Página inicial e se estiver ativo.</system:String>
     <system:String x:Key="showAtTopmost">Janela de pesquisa à frente</system:String>
     <system:String x:Key="showAtTopmostToolTip">Sobrepõe a definição 'Sempre na frente' das outras aplicações e mostra Flow Launcher à frente de qualquer janela.</system:String>
@@ -445,7 +453,7 @@
     <system:String x:Key="icons">Ícones</system:String>
     <system:String x:Key="about_activate_times">Ativou o Flow Launcher {0} vezes</system:String>
     <system:String x:Key="checkUpdates">Procurar atualizações</system:String>
-    <system:String x:Key="BecomeASponsor">Tornar-se patrocinador</system:String>
+    <system:String x:Key="BecomeASponsor">Torne-se um Patrocinador</system:String>
     <system:String x:Key="newVersionTips">Está disponível a versão {0}. Gostaria de reiniciar Flow Launcher para atualizar a sua versão?</system:String>
     <system:String x:Key="checkUpdatesFailed">Erro ao procurar atualizações. Verifique a sua ligação e as definições do proxy estabelecidas para api.github.com</system:String>
     <system:String x:Key="downloadUpdatesFailed">
