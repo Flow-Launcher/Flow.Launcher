@@ -91,10 +91,24 @@ namespace Flow.Launcher.Plugin.Program.Programs
             if (candidates.Count == 0)
                 return null;
 
-            var match = candidates.Select(candidate => Main.Context.API.FuzzySearch(query, candidate))
+            var match = candidates.Select(candidate =>
+                {
+                    var matchResult = Main.Context.API.FuzzySearch(query, candidate);
+                    matchResult.Score = FuzzySearch(query, candidate);
+                    return matchResult;
+                })
                 .MaxBy(match => match.Score);
 
             return match?.IsSearchPrecisionScoreMet() ?? false ? match : null;
+        }
+
+        private static int FuzzySearch(string query, string stringToCompare)
+        {
+            var newScore = FuzzySharp.Fuzz.PartialTokenSetRatio(query.ToLower(), stringToCompare.ToLower());
+            if (stringToCompare.Length < query.Length)
+                newScore = 0;
+
+            return newScore;
         }
 
         public Result Result(string query, IPublicAPI api)
@@ -112,13 +126,16 @@ namespace Flow.Launcher.Plugin.Program.Programs
             {
                 title = resultName;
                 matchResult = Main.Context.API.FuzzySearch(query, resultName);
+                matchResult.Score = FuzzySearch(query, resultName);
             }
             else
             {
                 // Search in both
                 title = $"{resultName}: {Description}";
                 var nameMatch = Main.Context.API.FuzzySearch(query, resultName);
+                nameMatch.Score = FuzzySearch(query, resultName);
                 var descriptionMatch = Main.Context.API.FuzzySearch(query, Description);
+                descriptionMatch.Score = FuzzySearch(query, Description);
                 if (descriptionMatch.Score > nameMatch.Score)
                 {
                     for (int i = 0; i < descriptionMatch.MatchData.Count; i++)
@@ -133,6 +150,31 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     matchResult = nameMatch;
                 }
             }
+
+            // if (!matchResult.IsSearchPrecisionScoreMet())
+            // {
+            //     if (ExecutableName != null) // only lnk program will need this one
+            //         matchResult = StringMatcher.FuzzySearch(query, ExecutableName);
+            //
+            //     if (!matchResult.IsSearchPrecisionScoreMet())
+            //         return null;
+            //
+            //     matchResult.MatchData = new List<int>();
+            // }
+
+            /*var newScore = FuzzySharp.Fuzz.PartialTokenSetRatio(query.ToLower(), Name.ToLower());
+            if (Name.Length < query.Length)
+                newScore = 0;
+
+            var oldScore = matchResult.RawScore;
+            matchResult.RawScore = Math.Max(newScore, oldScore);
+            matchResult.RawScore *= 10; // Bypass the SearchPrecisionScore and related tests
+            matchResult.MatchData = new List<int>();
+
+            var result = new Result
+            {
+                Title = title + $"<{matchResult.Score}> <{newScore}> <{oldScore}>",
+                SubTitle = LnkResolvedPath ?? FullPath,*/
 
             List<string> candidates = new List<string>();
 
