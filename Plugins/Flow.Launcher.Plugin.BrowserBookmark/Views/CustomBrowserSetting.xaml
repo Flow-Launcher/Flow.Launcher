@@ -1,12 +1,14 @@
-﻿<Window
-    x:Class="Flow.Launcher.Plugin.BrowserBookmark.Views.CustomBrowserSettingWindow"
+<Window
+    x:Class="Flow.Launcher.Plugin.BrowserBookmark.Views.CustomBrowserSetting"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Flow.Launcher.Plugin.BrowserBookmark.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:Flow.Launcher.Plugin.BrowserBookmark.ViewModels"
     Title="{DynamicResource flowlauncher_plugin_browserbookmark_bookmarkDataSetting}"
     Width="550"
+    d:DataContext="{d:DesignInstance viewModels:CustomBrowserSettingViewModel}"
     Background="{DynamicResource PopuBGColor}"
     Foreground="{DynamicResource PopupTextColor}"
     KeyDown="WindowKeyDown"
@@ -15,11 +17,9 @@
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <WindowChrome.WindowChrome>
-        <WindowChrome CaptionHeight="32" ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
+        <WindowChrome CaptionHeight="32"
+            ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
     </WindowChrome.WindowChrome>
-    <Window.DataContext>
-        <local:CustomBrowser />
-    </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -38,7 +38,7 @@
                     </Grid.ColumnDefinitions>
                     <Button
                         Grid.Column="4"
-                        Click="CancelEditCustomBrowser"
+                        Command="{Binding CancelCommand}"
                         Style="{StaticResource TitleBarCloseButtonStyle}">
                         <Path
                             Width="46"
@@ -49,7 +49,9 @@
                             <Path.Style>
                                 <Style TargetType="Path">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Path=IsActive, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Value="False">
+                                        <DataTrigger
+                                            Binding="{Binding Path=IsActive, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                                            Value="False">
                                             <Setter Property="Opacity" Value="0.5" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -76,10 +78,10 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <StackPanel
                             Grid.Row="0"
@@ -124,29 +126,9 @@
                             Margin="5 0 10 0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
-                            Text="{Binding Name}" />
+                            Text="{Binding EditableBrowser.Name}" />
                         <TextBlock
                             Grid.Row="2"
-                            Grid.Column="0"
-                            Margin="5 10 20 0"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            FontSize="14"
-                            Text="{DynamicResource flowlauncher_plugin_browserbookmark_browserEngine}" />
-                        <ComboBox
-                            Grid.Row="2"
-                            Grid.Column="1"
-                            Width="120"
-                            Height="34"
-                            Margin="5 10 10 0"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            DisplayMemberPath="Display"
-                            ItemsSource="{Binding AllBrowserTypes}"
-                            SelectedValue="{Binding BrowserType}"
-                            SelectedValuePath="Value" />
-                        <TextBlock
-                            Grid.Row="3"
                             Grid.Column="0"
                             Margin="5 10 20 0"
                             HorizontalAlignment="Left"
@@ -154,7 +136,7 @@
                             FontSize="14"
                             Text="{DynamicResource flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory}" />
                         <DockPanel
-                            Grid.Row="3"
+                            Grid.Row="2"
                             Grid.Column="1"
                             LastChildFill="True">
                             <Button
@@ -162,7 +144,7 @@
                                 MinWidth="100"
                                 Margin="5 10 0 0"
                                 VerticalContentAlignment="Stretch"
-                                Click="OnSelectPathClick"
+                                Command="{Binding BrowseDataDirectoryCommand}"
                                 Content="{DynamicResource flowlauncher_plugin_browserbookmark_browseBrowserBookmark}"
                                 DockPanel.Dock="Right" />
                             <TextBox
@@ -171,8 +153,17 @@
                                 Margin="5 10 0 0"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Center"
-                                Text="{Binding DataDirectoryPath}" />
+                                Text="{Binding EditableBrowser.DataDirectoryPath}" />
                         </DockPanel>
+                        <TextBlock
+                            Grid.Row="3"
+                            Grid.Column="1"
+                            Margin="5 5 0 0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            FontSize="12"
+                            FontStyle="Italic"
+                            Text="{Binding DetectedEngineText}" />
                     </Grid>
                 </StackPanel>
             </StackPanel>
@@ -187,13 +178,13 @@
                     x:Name="btnCancel"
                     MinWidth="145"
                     Margin="0 0 5 0"
-                    Click="CancelEditCustomBrowser"
+                    Command="{Binding CancelCommand}"
                     Content="{DynamicResource cancel}" />
                 <Button
                     Name="btnConfirm"
                     MinWidth="145"
                     Margin="5 0 0 0"
-                    Click="ConfirmEditCustomBrowser"
+                    Command="{Binding SaveCommand}"
                     Style="{StaticResource AccentButtonStyle}">
                     <TextBlock x:Name="lblAdd" Text="{DynamicResource done}" />
                 </Button>

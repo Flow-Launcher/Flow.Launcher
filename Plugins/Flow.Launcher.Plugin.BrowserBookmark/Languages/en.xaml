@@ -5,31 +5,35 @@
 
     <!--  Plugin Info  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">Browser Bookmarks</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">Search your browser bookmarks</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">Search your browser bookmarks, retrieve favicons from the web.</system:String>
 
     <!--  Main  -->
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_copy_failed">Failed to set url in clipboard</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copy_failed">Failed to copy URL to clipboard</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_title">Copy URL</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_subtitle">Copy the bookmark's URL to clipboard</system:String>
 
     <!--  Settings  -->
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Bookmark Data</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">Open bookmarks in:</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newWindow">New window</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newTab">New tab</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_setBrowserFromPath">Set browser from path:</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_choose">Choose</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_title">Copy url</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_subtitle">Copy the bookmark's url to clipboard</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_loadBrowserFrom">Load Browser From:</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserName">Browser Name</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory">Data Directory Path</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_loadBrowserFrom">Load bookmarks from:</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_others">Others...</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_addBrowserBookmark">Add</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_editBrowserBookmark">Edit</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_removeBrowserBookmark">Delete</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_enable_favicons">Enable favicons</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_fetch_missing_favicons">Fetch missing favicons from the web</system:String>
+
+    <!--  Custom Browser Window  -->
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Custom Browser Setting</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserName">Browser Name</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory">Data / Profile Path</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browseBrowserBookmark">Browse</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_others">Others</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserEngine">Browser Engine</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">If you are not using Chrome, Firefox or Edge, or you are using their portable version, you need to add bookmarks data directory and select correct browser engine to make this plugin work.</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">For example: Brave's engine is Chromium; and its default bookmarks data location is: "%LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData". For Firefox engine, the bookmarks directory is the userdata folder contains the places.sqlite file.</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_enable_favicons">Load favicons (can be time consuming during startup)</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">Enter your custom browser information here.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">Chromium-based browsers: enter the path to your 'Bookmarks' file.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage03">Firefox-based browsers: enter the path to your 'places.sqlite' file.</system:String>
+
+    <!--  Engine Detection  -->
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_engine_detection_invalid">Invalid or unsupported profile directory.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_engine_detection_chromium">Detected: Chromium-based browser</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_engine_detection_firefox">Detected: Firefox-based browser</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_engine_detection_select_directory">Please select a data directory.</system:String>
 
 </ResourceDictionary>

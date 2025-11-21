@@ -1,22 +1,19 @@
-﻿using System.Collections.Generic;
+#nullable enable
+using System;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark.Models;
 
-// Source may be important in the future
-public record Bookmark(string Name, string Url, string Source = "")
+public record Bookmark(string Name, string Url, string Source, string ProfilePath)
 {
     public override int GetHashCode()
     {
-        var hashName = Name?.GetHashCode() ?? 0;
-        var hashUrl = Url?.GetHashCode() ?? 0;
-        return hashName ^ hashUrl;
+        return HashCode.Combine(Name, Url);
     }
 
-    public virtual bool Equals(Bookmark other)
+    public virtual bool Equals(Bookmark? other)
     {
-        return other != null && Name == other.Name && Url == other.Url;
+        return other is not null && Name == other.Name && Url == other.Url;
     }
 
-    public List<CustomBrowser> CustomBrowsers { get; set; } = new();
     public string FaviconPath { get; set; } = string.Empty;
 }

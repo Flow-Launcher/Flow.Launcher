@@ -1,213 +1,245 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Threading.Channels;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Controls;
-using Flow.Launcher.Plugin.BrowserBookmark.Commands;
 using Flow.Launcher.Plugin.BrowserBookmark.Models;
-using Flow.Launcher.Plugin.BrowserBookmark.Views;
-using Flow.Launcher.Plugin.SharedCommands;
+using Flow.Launcher.Plugin.BrowserBookmark.Services;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark;
 
-public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContextMenu, IDisposable
+public class Main : ISettingProvider, IPlugin, IAsyncReloadable, IPluginI18n, IContextMenu, IDisposable
 {
-    private static readonly string ClassName = nameof(Main);
+    internal static PluginInitContext Context { get; set; } = null!;
+    private static Settings _settings = null!;
 
-    internal static string _faviconCacheDir;
+    private BookmarkLoaderService _bookmarkLoader = null!;
+    private FaviconService _faviconService = null!;
+    private BookmarkWatcherService _bookmarkWatcher = null!;
 
-    internal static PluginInitContext Context { get; set; }
+    private List<Bookmark> _bookmarks = [];
+    private readonly CancellationTokenSource _cancellationTokenSource = new();
+    private PeriodicTimer? _firefoxBookmarkTimer;
+    private static readonly TimeSpan FirefoxPollingInterval = TimeSpan.FromHours(3);
+    private readonly SemaphoreSlim _reloadGate = new(1, 1);
 
-    internal static Settings _settings;
-
-    private static List<Bookmark> _cachedBookmarks = new();
-
-    private static bool _initialized = false;
-    
     public void Init(PluginInitContext context)
     {
         Context = context;
-
         _settings = context.API.LoadSettingJsonStorage<Settings>();
+        _settings.PropertyChanged += OnSettingsPropertyChanged;
+        _settings.CustomBrowsers.CollectionChanged += OnCustomBrowsersChanged;
 
-        _faviconCacheDir = Path.Combine(
-            context.CurrentPluginMetadata.PluginCacheDirectoryPath,
-            "FaviconCache");
-        
+        var tempPath = SetupTempDirectory();
+
+        _bookmarkLoader = new BookmarkLoaderService(_settings, tempPath);
+        _faviconService = new FaviconService(_settings, tempPath);
+        _bookmarkWatcher = new BookmarkWatcherService();
+        _bookmarkWatcher.OnBookmarkFileChanged += OnBookmarkFileChanged;
+
+        // Fire and forget the initial load to make Flow's UI responsive immediately.
+        _ = ReloadDataAsync();
+        StartFirefoxBookmarkTimer();
+    }
+
+    private string SetupTempDirectory()
+    {
+        var tempPath = Path.Combine(Context.CurrentPluginMetadata.PluginCacheDirectoryPath, "Temp");
         try
         {
-            if (Directory.Exists(_faviconCacheDir))
+            if (Directory.Exists(tempPath))
             {
-                var files = Directory.GetFiles(_faviconCacheDir);
-                foreach (var file in files)
-                {
-                    var extension = Path.GetExtension(file);
-                    if (extension is ".db-shm" or ".db-wal" or ".sqlite-shm" or ".sqlite-wal")
-                    {
-                        File.Delete(file);
-                    }
-                }
+                Directory.Delete(tempPath, true);
             }
+            Directory.CreateDirectory(tempPath);
         }
         catch (Exception e)
         {
-            Context.API.LogException(ClassName, "Failed to clean up orphaned cache files.", e);
+            Context.API.LogException(nameof(Main), "Failed to set up temporary directory.", e);
         }
-
-        LoadBookmarksIfEnabled();
-    }
-
-    private static void LoadBookmarksIfEnabled()
-    {
-        if (Context.CurrentPluginMetadata.Disabled)
-        {
-            // Don't load or monitor files if disabled
-            return;
-        }
-
-        // Validate the cache directory before loading all bookmarks because Flow needs this directory to storage favicons
-        FilesFolders.ValidateDirectory(_faviconCacheDir);
-
-        _cachedBookmarks = BookmarkLoader.LoadAllBookmarks(_settings);
-        _ = MonitorRefreshQueueAsync();
-        _initialized = true;
+        return tempPath;
     }
 
     public List<Result> Query(Query query)
     {
-        // For when the plugin being previously disabled and is now re-enabled
-        if (!_initialized)
+        var search = query.Search.Trim();
+        var bookmarks = Volatile.Read(ref _bookmarks); // use a local copy with proper memory barrier
+
+        if (!string.IsNullOrEmpty(search))
         {
-            LoadBookmarksIfEnabled();
-        }
-
-        string param = query.Search.TrimStart();
-
-        // Should top results be returned? (true if no search parameters have been passed)
-        var topResults = string.IsNullOrEmpty(param);
-
-        if (!topResults)
-        {
-            // Since we mixed chrome and firefox bookmarks, we should order them again
-            return _cachedBookmarks
-                .Select(
-                    c => new Result
-                    {
-                        Title = c.Name,
-                        SubTitle = c.Url,
-                        IcoPath = !string.IsNullOrEmpty(c.FaviconPath) && File.Exists(c.FaviconPath)
-                            ? c.FaviconPath
-                            : @"Images\bookmark.png",
-                        Score = BookmarkLoader.MatchProgram(c, param).Score,
-                        Action = _ =>
-                        {
-                            Context.API.OpenUrl(c.Url);
-
-                            return true;
-                        },
-                        ContextData = new BookmarkAttributes { Url = c.Url }
-                    }
-                )
-                .Where(r => r.Score > 0)
+            return bookmarks
+                .Select(b =>
+                {
+                    var match = Context.API.FuzzySearch(search, b.Name);
+                    if (!match.IsSearchPrecisionScoreMet())
+                        match = Context.API.FuzzySearch(search, b.Url);
+                    return (b, match);
+                })
+                .Where(t => t.match.IsSearchPrecisionScoreMet())
+                .OrderByDescending(t => t.match.Score)
+                .Select(t => CreateResult(t.b, t.match.Score))
                 .ToList();
         }
-        else
+
+        return bookmarks.Select(b => CreateResult(b, 0)).ToList();
+    }
+
+    private static Result CreateResult(Bookmark bookmark, int score) => new()
+    {
+        Title = bookmark.Name,
+        SubTitle = bookmark.Url,
+        IcoPath = !string.IsNullOrEmpty(bookmark.FaviconPath)
+            ? bookmark.FaviconPath
+            : @"Images\bookmark.png",
+        Score = score,
+        Action = _ =>
         {
-            return _cachedBookmarks
-                .Select(
-                    c => new Result
-                    {
-                        Title = c.Name,
-                        SubTitle = c.Url,
-                        IcoPath = !string.IsNullOrEmpty(c.FaviconPath) && File.Exists(c.FaviconPath)
-                            ? c.FaviconPath
-                            : @"Images\bookmark.png",
-                        Score = 5,
-                        Action = _ =>
-                        {
-                            Context.API.OpenUrl(c.Url);
-                            return true;
-                        },
-                        ContextData = new BookmarkAttributes { Url = c.Url }
-                    }
-                )
-                .ToList();
+            Context.API.OpenUrl(bookmark.Url);
+            return true;
+        },
+        ContextData = bookmark.Url
+    };
+
+    public async Task ReloadDataAsync()
+    {
+        await _reloadGate.WaitAsync(_cancellationTokenSource.Token);
+        try
+        {
+            var (bookmarks, discoveredFiles) = await _bookmarkLoader.LoadBookmarksAsync(_cancellationTokenSource.Token);
+
+            // Atomically swap the list. This prevents the Query method from seeing a partially loaded list.
+            Volatile.Write(ref _bookmarks, bookmarks);
+
+            _bookmarkWatcher.UpdateWatchers(discoveredFiles);
+
+            // Fire and forget favicon processing to not block the UI
+            _ = _faviconService.ProcessBookmarkFavicons(_bookmarks, _cancellationTokenSource.Token);
+        }
+        finally
+        {
+            _reloadGate.Release();
         }
     }
 
-    private static readonly Channel<byte> _refreshQueue = Channel.CreateBounded<byte>(1);
-
-    private static readonly SemaphoreSlim _fileMonitorSemaphore = new(1, 1);
-
-    private static async Task MonitorRefreshQueueAsync()
+    private void OnSettingsPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
-        if (_fileMonitorSemaphore.CurrentCount < 1)
+        if (e.PropertyName is nameof(Settings.LoadFirefoxBookmark))
         {
-            return;
+            StartFirefoxBookmarkTimer();
         }
-        await _fileMonitorSemaphore.WaitAsync();
-        var reader = _refreshQueue.Reader;
-        while (await reader.WaitToReadAsync())
+        _ = ReloadDataAsync();
+    }
+
+    private void OnCustomBrowsersChanged(object? sender, NotifyCollectionChangedEventArgs e)
+    {
+        StartFirefoxBookmarkTimer();
+        _ = ReloadDataAsync();
+    }
+
+    private void OnBookmarkFileChanged()
+    {
+        _ = ReloadDataAsync();
+    }
+
+    private void StartFirefoxBookmarkTimer()
+    {
+        _firefoxBookmarkTimer?.Dispose();
+
+        if (!_settings.LoadFirefoxBookmark && !_settings.CustomBrowsers.Any(x => x.BrowserType == BrowserType.Firefox))
+            return;
+
+        _firefoxBookmarkTimer = new PeriodicTimer(FirefoxPollingInterval);
+
+        var timer = _firefoxBookmarkTimer!;
+        _ = Task.Run(async () =>
         {
-            if (reader.TryRead(out _))
+            try
             {
-                ReloadAllBookmarks(false);
+                while (await timer.WaitForNextTickAsync(_cancellationTokenSource.Token))
+                {
+                    await ReloadFirefoxBookmarksAsync();
+                }
             }
-        }
-        _fileMonitorSemaphore.Release();
+            catch (OperationCanceledException) { }
+            catch (ObjectDisposedException) { }
+        }, _cancellationTokenSource.Token);
     }
 
-    private static readonly List<FileSystemWatcher> Watchers = new();
-
-    internal static void RegisterBookmarkFile(string path)
+    private async Task ReloadFirefoxBookmarksAsync()
     {
-        var directory = Path.GetDirectoryName(path);
-        if (!Directory.Exists(directory) || !File.Exists(path))
+        // Share the same gate to avoid conflicting with full reloads
+        await _reloadGate.WaitAsync(_cancellationTokenSource.Token);
+        try
         {
-            return;
+            Context.API.LogInfo(nameof(Main), "Starting periodic reload of Firefox bookmarks.");
+
+            var firefoxLoaders = _bookmarkLoader.GetFirefoxBookmarkLoaders().ToList();
+            if (firefoxLoaders.Count == 0)
+            {
+                Context.API.LogInfo(nameof(Main), "No Firefox bookmark loaders enabled, skipping reload.");
+                return;
+            }
+
+            var tasks = firefoxLoaders.Select(async loader =>
+            {
+                var loadedBookmarks = new List<Bookmark>();
+                try
+                {
+                    await foreach (var bookmark in loader.GetBookmarksAsync(_cancellationTokenSource.Token))
+                    {
+                        loadedBookmarks.Add(bookmark);
+                    }
+                    return (Loader: loader, Bookmarks: loadedBookmarks, Success: true);
+                }
+                catch (OperationCanceledException)
+                {
+                    return (Loader: loader, Bookmarks: new List<Bookmark>(), Success: false);
+                }
+                catch (Exception e)
+                {
+                    Context.API.LogException(nameof(Main), $"Failed to load bookmarks from {loader.Name}.", e);
+                    return (Loader: loader, Bookmarks: new List<Bookmark>(), Success: false);
+                }
+            });
+
+            var results = await Task.WhenAll(tasks);
+            var successfulResults = results.Where(r => r.Success).ToList();
+
+            if (successfulResults.Count == 0)
+            {
+                Context.API.LogInfo(nameof(Main), "No Firefox bookmarks successfully reloaded.");
+                return;
+            }
+
+            var newFirefoxBookmarks = successfulResults.SelectMany(r => r.Bookmarks).ToList();
+            var successfulLoaderNames = successfulResults.Select(r => r.Loader.Name).ToHashSet();
+
+            var currentBookmarks = Volatile.Read(ref _bookmarks);
+
+            var otherBookmarks = currentBookmarks.Where(b => !successfulLoaderNames.Any(name => b.Source.StartsWith(name, StringComparison.OrdinalIgnoreCase)));
+
+            var newBookmarkList = otherBookmarks.Concat(newFirefoxBookmarks).Distinct().ToList();
+
+            Volatile.Write(ref _bookmarks, newBookmarkList);
+
+            Context.API.LogInfo(nameof(Main), $"Periodic reload complete. Loaded {newFirefoxBookmarks.Count} Firefox bookmarks from {successfulLoaderNames.Count} sources.");
+
+            _ = _faviconService.ProcessBookmarkFavicons(newFirefoxBookmarks, _cancellationTokenSource.Token);
         }
-        if (Watchers.Any(x => x.Path.Equals(directory, StringComparison.OrdinalIgnoreCase)))
+        finally
         {
-            return;
+            _reloadGate.Release();
         }
-
-        var watcher = new FileSystemWatcher(directory!)
-        {
-            Filter = Path.GetFileName(path),
-            NotifyFilter = NotifyFilters.FileName |
-                                   NotifyFilters.LastWrite |
-                                   NotifyFilters.Size
-        };
-
-        watcher.Changed += static (_, _) =>
-        {
-            _refreshQueue.Writer.TryWrite(default);
-        };
-
-        watcher.Renamed += static (_, _) =>
-        {
-            _refreshQueue.Writer.TryWrite(default);
-        };
-
-        watcher.EnableRaisingEvents = true;
-
-        Watchers.Add(watcher);
     }
 
-    public void ReloadData()
+    public Control CreateSettingPanel()
     {
-        ReloadAllBookmarks();
-    }
-
-    public static void ReloadAllBookmarks(bool disposeFileWatchers = true)
-    {
-        _cachedBookmarks.Clear();
-        if (disposeFileWatchers)
-            DisposeFileWatchers();
-        LoadBookmarksIfEnabled();
+        return new Views.SettingsControl(_settings);
     }
 
     public string GetTranslatedPluginTitle()
@@ -220,56 +252,45 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
         return Localize.flowlauncher_plugin_browserbookmark_plugin_description();
     }
 
-    public Control CreateSettingPanel()
-    {
-        return new SettingsControl(_settings);
-    }
-
     public List<Result> LoadContextMenus(Result selectedResult)
     {
-        return new List<Result>()
-        {
+        if (selectedResult.ContextData is not string url)
+            return [];
+
+        return
+        [
             new()
             {
                 Title = Localize.flowlauncher_plugin_browserbookmark_copyurl_title(),
                 SubTitle = Localize.flowlauncher_plugin_browserbookmark_copyurl_subtitle(),
+                Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\ue8c8"),
+                IcoPath = @"Images\copylink.png",
                 Action = _ =>
                 {
                     try
                     {
-                        Context.API.CopyToClipboard(((BookmarkAttributes)selectedResult.ContextData).Url);
-
+                        Context.API.CopyToClipboard(url);
                         return true;
                     }
-                    catch (Exception e)
+                    catch (Exception ex)
                     {
-                        Context.API.LogException(ClassName, "Failed to set url in clipboard", e);
+                        Context.API.LogException(nameof(Main), "Failed to copy URL to clipboard", ex);
                         Context.API.ShowMsgError(Localize.flowlauncher_plugin_browserbookmark_copy_failed());
                         return false;
                     }
-                },
-                IcoPath = @"Images\copylink.png",
-                Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\ue8c8")
+                }
             }
-        };
-    }
-
-    internal class BookmarkAttributes
-    {
-        internal string Url { get; set; }
+        ];
     }
 
     public void Dispose()
     {
-        DisposeFileWatchers();
-    }
-
-    private static void DisposeFileWatchers()
-    {
-        foreach (var watcher in Watchers)
-        {
-            watcher.Dispose();
-        }
-        Watchers.Clear();
+        _settings.PropertyChanged -= OnSettingsPropertyChanged;
+        _settings.CustomBrowsers.CollectionChanged -= OnCustomBrowsersChanged;
+        _firefoxBookmarkTimer?.Dispose();
+        _cancellationTokenSource.Cancel();
+        _cancellationTokenSource.Dispose();
+        _faviconService.Dispose();
+        _bookmarkWatcher.Dispose();
     }
 }
