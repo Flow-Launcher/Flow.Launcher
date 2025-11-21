@@ -10,6 +10,8 @@ using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using Flow.Launcher.Plugin.Explorer.Helper;
 using Flow.Launcher.Plugin.Explorer.ViewModels;
+using Flow.Launcher.Plugin.Explorer.Views;
+using System.Windows.Controls;
 
 namespace Flow.Launcher.Plugin.Explorer
 {
@@ -176,6 +178,35 @@ namespace Flow.Launcher.Plugin.Explorer
                     },
                     IcoPath = icoPath,
                     Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uf12b")
+                });
+                contextMenus.Add(new Result
+                {
+                    Title = Localize.plugin_explorer_rename_a_file(),
+                    SubTitle = Localize.plugin_explorer_rename_subtitle(),
+                    Action = _ =>
+                    {
+                        RenameFile window;
+                        switch (record.Type)
+                        {
+                            case ResultType.Folder:
+                                window = new RenameFile(new DirectoryInfo(record.FullPath));
+                                break;
+                            case ResultType.File:
+                                window = new RenameFile(new FileInfo(record.FullPath));
+                                break;
+                            default:
+                                Context.API.ShowMsgError(Localize.plugin_explorer_cannot_rename());
+                                return false;
+                        }
+                        window.ShowDialog();
+
+                        return false;
+
+                    },
+                    // placeholder until real image is found
+                    IcoPath = Constants.RenameImagePath,
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\ue8ac")
+
                 });
 
                 if (record.Type is ResultType.File or ResultType.Folder)

@@ -574,6 +574,13 @@ namespace Flow.Launcher.ViewModel
         #region BasicCommands
 
         [RelayCommand]
+        private void CheckAndToggleFlowLauncher()
+        {
+            if (!ShouldIgnoreHotkeys())
+                ToggleFlowLauncher();
+        }
+
+        [RelayCommand]
         private void OpenSetting()
         {
             App.API.OpenSettingDialog();
@@ -1846,6 +1853,11 @@ namespace Flow.Launcher.ViewModel
         {
             var selected = SelectedResults == results;
             return selected;
+        }
+
+        internal ResultsViewModel GetSelectedResults()
+        {
+            return SelectedResults;
         }
 
         #endregion

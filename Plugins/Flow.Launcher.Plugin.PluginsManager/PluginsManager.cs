@@ -421,12 +421,15 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
                             return true;
                         },
-                        ContextData =
-                            new UserPlugin
-                            {
-                                Website = x.PluginNewUserPlugin.Website,
-                                UrlSourceCode = x.PluginNewUserPlugin.UrlSourceCode
-                            }
+                        ContextData = new UserPlugin
+                        {
+                            Website = x.PluginNewUserPlugin.Website,
+                            UrlSourceCode = x.PluginNewUserPlugin.UrlSourceCode
+                        },
+                        HotkeyIds = new List<int>
+                        {
+                            0
+                        },
                     });
 
             // Update all result
@@ -574,12 +577,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 IcoPath = icoPath,
                 Action = e =>
                 {
-                    if (e.SpecialKeyState.CtrlPressed)
-                    {
-                        SearchWeb.OpenInBrowserTab(plugin.UrlDownload);
-                        return ShouldHideWindow;
-                    }
-
                     if (Settings.WarnFromUnknownSource)
                     {
                         if (!InstallSourceKnown(plugin.UrlDownload)
@@ -697,17 +694,15 @@ namespace Flow.Launcher.Plugin.PluginsManager
                             IcoPath = x.IcoPath,
                             Action = e =>
                             {
-                                if (e.SpecialKeyState.CtrlPressed)
-                                {
-                                    SearchWeb.OpenInBrowserTab(x.Website);
-                                    return ShouldHideWindow;
-                                }
-
                                 Context.API.HideMainWindow();
                                 _ = InstallOrUpdateAsync(x); // No need to wait
                                 return ShouldHideWindow;
                             },
-                            ContextData = x
+                            ContextData = x,
+                            HotkeyIds = new List<int>
+                            {
+                                0
+                            },
                         });
 
             return Search(results, search);
@@ -816,7 +811,15 @@ namespace Flow.Launcher.Plugin.PluginsManager
                             }
 
                             return false;
-                        }
+                        },
+                        ContextData = new UserPlugin
+                        {
+                            Website = x.Metadata.Website
+                        },
+                        HotkeyIds = new List<int>
+                        {
+                            0
+                        },
                     });
 
             return Search(results, search);

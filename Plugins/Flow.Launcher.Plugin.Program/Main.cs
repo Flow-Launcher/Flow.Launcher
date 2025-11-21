@@ -15,7 +15,7 @@ using Path = System.IO.Path;
 
 namespace Flow.Launcher.Plugin.Program
 {
-    public class Main : ISettingProvider, IAsyncPlugin, IPluginI18n, IContextMenu, IAsyncReloadable, IDisposable
+    public class Main : ISettingProvider, IAsyncPlugin, IPluginI18n, IContextMenu, IAsyncReloadable, IDisposable, IPluginHotkey
     {
         private static readonly string ClassName = nameof(Main);
 
@@ -529,6 +529,60 @@ namespace Flow.Launcher.Plugin.Program
         public void Dispose()
         {
             Win32.Dispose();
+        }
+
+        public List<BasePluginHotkey> GetPluginHotkeys()
+        {
+            return new List<BasePluginHotkey>
+            {
+                new SearchWindowPluginHotkey()
+                {
+                    Id = 0,
+                    Name = Context.API.GetTranslation("flowlauncher_plugin_program_open_containing_folder"),
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\ue838"),
+                    DefaultHotkey = "Ctrl+Enter",
+                    Editable = false,
+                    Visible = true,
+                    Action = (r) =>
+                    {
+                        if (r?.ContextData is UWPApp uwp)
+                        {
+                            Context.API.OpenDirectory(uwp.Location);
+                            return true;
+                        }
+                        else if (r?.ContextData is Win32 win32)
+                        {
+                            Context.API.OpenDirectory(win32.ParentDirectory, win32.FullPath);
+                            return true;
+                        }
+
+                        return false;
+                    }
+                },
+                // TODO: Do it after administrator mode PR
+                /*new SearchWindowPluginHotkey()
+                {
+                    Id = 1,
+                    Name = Context.API.GetTranslation("flowlauncher_plugin_program_run_as_administrator"),
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE7EF"),
+                    DefaultHotkey = "Ctrl+Shift+Enter",
+                    Editable = false,
+                    Visible = true,
+                    Action = (r) =>
+                    {
+                        if (r.ContextData is UWPApp uwp)
+                        {
+                            return true;
+                        }
+                        else if (r.ContextData is Win32 win32)
+                        {
+                            return true;
+                        }
+
+                        return false;
+                    }
+                },*/
+            };
         }
     }
 }

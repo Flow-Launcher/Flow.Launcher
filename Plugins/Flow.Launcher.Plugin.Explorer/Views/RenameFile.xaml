@@ -1,0 +1,114 @@
+<Window
+    x:Class="Flow.Launcher.Plugin.Explorer.Views.RenameFile"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Flow.Launcher.Plugin.Explorer.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title=""
+    Height="180"
+    MaxWidth="600"
+    Background="{DynamicResource PopuBGColor}"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
+    Foreground="{DynamicResource PopupTextColor}"
+    ResizeMode="NoResize"
+    SizeToContent="Width"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="32" ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
+    </WindowChrome.WindowChrome>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="60" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0">
+            <StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Button
+                        Grid.Column="4"
+                        Click="BtnCancel"
+                        Style="{StaticResource TitleBarCloseButtonStyle}">
+                        <Path
+                            Width="46"
+                            Height="32"
+                            Data="M 18,11 27,20 M 18,20 27,11"
+                            Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                            StrokeThickness="1">
+                            <Path.Style>
+                                <Style TargetType="Path">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path=IsActive, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Value="False">
+                                            <Setter Property="Opacity" Value="0.5" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Path.Style>
+                        </Path>
+                    </Button>
+                </Grid>
+            </StackPanel>
+            <StackPanel Margin="26 0 26 0">
+                <StackPanel Margin="0 0 0 0">
+                    <TextBlock
+                        Margin="0 0 0 0"
+                        FontSize="20"
+                        FontWeight="SemiBold"
+                        Text="{DynamicResource plugin_explorer_rename_a_file}"
+                        TextAlignment="Left" />
+                </StackPanel>
+
+                <StackPanel Margin="0 10 0 0" Orientation="Horizontal">
+                    <TextBlock
+                        MinWidth="150"
+                        Margin="0 10 5 10"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        FontSize="14"
+                        Text="{DynamicResource plugin_explorer_new_file_name}" />
+                    <TextBox
+                        Name="RenameTb"
+                        Width="300"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        GotFocus="SelectAll_OnTextBoxGotFocus"
+                        PreviewKeyDown="RenameTb_OnKeyDown"
+                        Text="{Binding NewFileName}" />
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+        <Border
+            Grid.Row="1"
+            Background="{DynamicResource PopupButtonAreaBGColor}"
+            BorderBrush="{DynamicResource PopupButtonAreaBorderColor}"
+            BorderThickness="0 1 0 0">
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                <Button
+                    x:Name="btnCancel"
+                    Width="145"
+                    Height="34"
+                    Margin="5 0 5 0"
+                    Click="BtnCancel"
+                    Content="{DynamicResource cancel}" />
+                <Button
+                    Name="btnDone"
+                    Width="145"
+                    Height="34"
+                    Margin="5 0 5 0"
+                    Click="OnDoneButtonClick"
+                    Style="{StaticResource AccentButtonStyle}">
+                    <TextBlock x:Name="lblAdd" Text="{DynamicResource plugin_explorer_rename_file_done}" />
+                </Button>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

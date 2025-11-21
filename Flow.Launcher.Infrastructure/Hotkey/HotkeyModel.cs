@@ -49,6 +49,10 @@ namespace Flow.Launcher.Infrastructure.Hotkey
             }
         }
 
+        public readonly bool IsEmpty => CharKey == Key.None && !Alt && !Shift && !Win && !Ctrl;
+
+        public static HotkeyModel Empty => new();
+
         public HotkeyModel(string hotkeyString)
         {
             Parse(hotkeyString);
@@ -117,12 +121,22 @@ namespace Flow.Launcher.Infrastructure.Hotkey
             }
         }
 
-        public override string ToString()
+        public bool Equals(HotkeyModel other)
+        {
+            return CharKey == other.CharKey && ModifierKeys == other.ModifierKeys;
+        }
+
+        public KeyGesture ToKeyGesture()
+        {
+            return new KeyGesture(CharKey, ModifierKeys);
+        }
+
+        public override readonly string ToString()
         {
             return string.Join(" + ", EnumerateDisplayKeys());
         }
 
-        public IEnumerable<string> EnumerateDisplayKeys()
+        public readonly IEnumerable<string> EnumerateDisplayKeys()
         {
             if (Ctrl && CharKey is not (Key.LeftCtrl or Key.RightCtrl))
             {
@@ -155,9 +169,9 @@ namespace Flow.Launcher.Infrastructure.Hotkey
         /// <summary>
         /// Validate hotkey
         /// </summary>
-        /// <param name="validateKeyGestrue">Try to validate hotkey as a KeyGesture.</param>
+        /// <param name="validateKeyGesture">Try to validate hotkey as a KeyGesture.</param>
         /// <returns></returns>
-        public bool Validate(bool validateKeyGestrue = false)
+        public bool Validate(bool validateKeyGesture = false)
         {
             switch (CharKey)
             {
@@ -172,7 +186,7 @@ namespace Flow.Launcher.Infrastructure.Hotkey
                 case Key.None:
                     return false;
                 default:
-                    if (validateKeyGestrue)
+                    if (validateKeyGesture)
                     {
                         try
                         {

@@ -423,6 +423,7 @@
     <system:String x:Key="DialogJumpFileResultBehaviourFullPath">Fill full path in file name box</system:String>
     <system:String x:Key="DialogJumpFileResultBehaviourFullPathOpen">Fill full path in file name box and open</system:String>
     <system:String x:Key="DialogJumpFileResultBehaviourDirectory">Fill directory in path box</system:String>
+    <system:String x:Key="pluginHotkey">Plugin hotkey</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">HTTP Proxy</system:String>

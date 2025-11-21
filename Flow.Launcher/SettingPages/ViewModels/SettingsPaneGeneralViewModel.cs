@@ -158,14 +158,6 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
             {
                 Settings.EnableDialogJump = value;
                 DialogJump.SetupDialogJump(value);
-                if (Settings.EnableDialogJump)
-                {
-                    HotKeyMapper.SetHotkey(new(Settings.DialogJumpHotkey), DialogJump.OnToggleHotkey);
-                }
-                else
-                {
-                    HotKeyMapper.RemoveHotkey(Settings.DialogJumpHotkey);
-                }
             }
         }
     }

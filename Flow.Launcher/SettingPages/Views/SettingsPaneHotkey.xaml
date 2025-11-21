@@ -37,7 +37,6 @@
                 </ui:SettingsCard.HeaderIcon>
 
                 <flowlauncher:HotkeyControl
-                    ChangeHotkey="{Binding SetTogglingHotkeyCommand}"
                     DefaultHotkey="Alt+Space"
                     Type="Hotkey"
                     ValidateKeyGesture="True"
@@ -89,7 +88,6 @@
                 </ui:SettingsCard.HeaderIcon>
 
                 <flowlauncher:HotkeyControl
-                    ChangeHotkey="{Binding SetDialogJumpHotkeyCommand}"
                     DefaultHotkey="Alt+G"
                     Type="DialogJumpHotkey"
                     ValidateKeyGesture="False"
@@ -105,36 +103,40 @@
                 </ui:SettingsExpander.HeaderIcon>
 
                 <ui:SettingsExpander.Items>
-                    <ui:SettingsCard Header="{DynamicResource OpenContainFolderHotkey}">
+                    <ui:SettingsCard Header="{DynamicResource HotkeyUpDownDesc}">
                         <ui:SettingsCard.HeaderIcon>
-                            <ui:FontIcon Glyph="&#xe8b7;" />
+                            <ui:FontIcon Glyph="&#xede3;" />
                         </ui:SettingsCard.HeaderIcon>
 
-                        <cc:HotkeyDisplay Keys="Ctrl+Enter" />
+                        <cc:HotkeyDisplay Keys="←+→" />
                     </ui:SettingsCard>
-                    <ui:SettingsCard Header="{DynamicResource RunAsAdminHotkey}">
+                    <ui:SettingsCard Header="{DynamicResource HotkeyLeftRightDesc}">
                         <ui:SettingsCard.HeaderIcon>
-                            <ui:FontIcon Glyph="&#xe7ef;" />
+                            <ui:FontIcon Glyph="&#xEC8F;" />
                         </ui:SettingsCard.HeaderIcon>
 
-                        <cc:HotkeyDisplay Keys="Ctrl+Shift+Enter" />
+                        <cc:HotkeyDisplay Keys="↑+↓" />
                     </ui:SettingsCard>
-                    <ui:SettingsCard Header="{DynamicResource ToggleHistoryHotkey}">
+                    <ui:SettingsCard Header="{DynamicResource HotkeyESCDesc}">
                         <ui:SettingsCard.HeaderIcon>
-                            <ui:FontIcon Glyph="&#xf738;" />
+                            <ui:FontIcon Glyph="&#xE72B;" />
                         </ui:SettingsCard.HeaderIcon>
 
-                        <flowlauncher:HotkeyControl
-                            DefaultHotkey="Ctrl+H"
-                            Type="OpenHistoryHotkey"
-                            ValidateKeyGesture="False" />
+                        <cc:HotkeyDisplay Keys="ESC" />
                     </ui:SettingsCard>
-                    <ui:SettingsCard Header="{DynamicResource CopyFilePathHotkey}">
+                    <ui:SettingsCard Header="{DynamicResource HotkeyRunDesc}">
                         <ui:SettingsCard.HeaderIcon>
-                            <ui:FontIcon Glyph="&#xe8c8;" />
+                            <ui:FontIcon Glyph="&#xE8A7;" />
                         </ui:SettingsCard.HeaderIcon>
 
-                        <cc:HotkeyDisplay Keys="Ctrl+Shift+C" />
+                        <cc:HotkeyDisplay Keys="ENTER" />
+                    </ui:SettingsCard>
+                    <ui:SettingsCard Header="{DynamicResource OpenContextMenuHotkey}">
+                        <ui:SettingsCard.HeaderIcon>
+                            <ui:FontIcon Glyph="&#xede3;" />
+                        </ui:SettingsCard.HeaderIcon>
+
+                        <cc:HotkeyDisplay Keys="Shift+Enter" />
                     </ui:SettingsCard>
                     <ui:SettingsCard Header="{DynamicResource OpenContextMenuHotkey}">
                         <ui:SettingsCard.HeaderIcon>
@@ -146,19 +148,15 @@
                             Type="OpenContextMenuHotkey"
                             ValidateKeyGesture="False" />
                     </ui:SettingsCard>
-                    <ui:SettingsCard Header="{DynamicResource OpenContextMenuHotkey}">
+                    <ui:SettingsCard Header="{DynamicResource ToggleHistoryHotkey}">
                         <ui:SettingsCard.HeaderIcon>
-                            <ui:FontIcon Glyph="&#xede3;" />
+                            <ui:FontIcon Glyph="&#xf738;" />
                         </ui:SettingsCard.HeaderIcon>
 
-                        <cc:HotkeyDisplay Keys="Shift+Enter" />
-                    </ui:SettingsCard>
-                    <ui:SettingsCard Header="{DynamicResource OpenNativeContextMenuHotkey}">
-                        <ui:SettingsCard.HeaderIcon>
-                            <ui:FontIcon Glyph="&#xede3;" />
-                        </ui:SettingsCard.HeaderIcon>
-
-                        <cc:HotkeyDisplay Keys="Alt+Enter" />
+                        <flowlauncher:HotkeyControl
+                            DefaultHotkey="Ctrl+H"
+                            Type="OpenHistoryHotkey"
+                            ValidateKeyGesture="False" />
                     </ui:SettingsCard>
                     <ui:SettingsCard Header="{DynamicResource SettingWindowHotkey}">
                         <ui:SettingsCard.HeaderIcon>
@@ -170,19 +168,26 @@
                             Type="SettingWindowHotkey"
                             ValidateKeyGesture="False" />
                     </ui:SettingsCard>
-                    <ui:SettingsCard Header="{DynamicResource ToggleGameModeHotkey}">
-                        <ui:SettingsCard.HeaderIcon>
-                            <ui:FontIcon Glyph="&#xe7fc;" />
-                        </ui:SettingsCard.HeaderIcon>
-
-                        <cc:HotkeyDisplay Keys="Ctrl+F12" />
-                    </ui:SettingsCard>
-                    <ui:SettingsCard Header="{DynamicResource RequeryHotkey}">
+                    <ui:SettingsCard Description="{DynamicResource ReloadPluginHotkeyToolTip}" Header="{DynamicResource ReloadPluginHotkey}">
                         <ui:SettingsCard.HeaderIcon>
                             <ui:FontIcon Glyph="&#xe72c;" />
                         </ui:SettingsCard.HeaderIcon>
 
-                        <cc:HotkeyDisplay Keys="Ctrl+R" />
+                        <cc:HotkeyDisplay Keys="F5" />
+                    </ui:SettingsCard>
+                    <ui:SettingsCard Header="{DynamicResource HotkeySelectFirstResult}">
+                        <ui:SettingsCard.HeaderIcon>
+                            <ui:FontIcon Glyph="&#xE898;" />
+                        </ui:SettingsCard.HeaderIcon>
+
+                        <cc:HotkeyDisplay Keys="Alt+Home" />
+                    </ui:SettingsCard>
+                    <ui:SettingsCard Header="{DynamicResource HotkeySelectLastResult}">
+                        <ui:SettingsCard.HeaderIcon>
+                            <ui:FontIcon Glyph="&#xE896;" />
+                        </ui:SettingsCard.HeaderIcon>
+
+                        <cc:HotkeyDisplay Keys="Alt+End" />
                     </ui:SettingsCard>
                     <ui:SettingsCard Header="{DynamicResource CycleHistoryUpHotkey}">
                         <ui:SettingsCard.HeaderIcon>
@@ -204,13 +209,6 @@
                             Type="CycleHistoryDownHotkey"
                             ValidateKeyGesture="False" />
                     </ui:SettingsCard>
-                    <ui:SettingsCard Description="{DynamicResource ReloadPluginHotkeyToolTip}" Header="{DynamicResource ReloadPluginHotkey}">
-                        <ui:SettingsCard.HeaderIcon>
-                            <ui:FontIcon Glyph="&#xe72c;" />
-                        </ui:SettingsCard.HeaderIcon>
-
-                        <cc:HotkeyDisplay Keys="F5" />
-                    </ui:SettingsCard>
                     <ui:SettingsCard Header="{DynamicResource SelectPrevPageHotkey}">
                         <ui:SettingsCard.HeaderIcon>
                             <ui:FontIcon Glyph="&#xf0ad;" />
@@ -231,7 +229,27 @@
                             Type="SelectNextPageHotkey"
                             ValidateKeyGesture="False" />
                     </ui:SettingsCard>
+                    <ui:SettingsCard Header="{DynamicResource RequeryHotkey}">
+                        <ui:SettingsCard.HeaderIcon>
+                            <ui:FontIcon Glyph="&#xe72c;" />
+                        </ui:SettingsCard.HeaderIcon>
 
+                        <cc:HotkeyDisplay Keys="Ctrl+R" />
+                    </ui:SettingsCard>
+                    <ui:SettingsCard Header="{DynamicResource ToggleGameModeHotkey}">
+                        <ui:SettingsCard.HeaderIcon>
+                            <ui:FontIcon Glyph="&#xe7fc;" />
+                        </ui:SettingsCard.HeaderIcon>
+
+                        <cc:HotkeyDisplay Keys="Ctrl+F12" />
+                    </ui:SettingsCard>
+                    <ui:SettingsCard Header="{DynamicResource CopyFilePathHotkey}">
+                        <ui:SettingsCard.HeaderIcon>
+                            <ui:FontIcon Glyph="&#xe8c8;" />
+                        </ui:SettingsCard.HeaderIcon>
+
+                        <cc:HotkeyDisplay Keys="Ctrl+Shift+C" />
+                    </ui:SettingsCard>
                     <ui:SettingsCard Header="{DynamicResource QuickWidthHotkey}">
                         <ui:SettingsCard.HeaderIcon>
                             <ui:FontIcon Glyph="&#xe7ea;" />
@@ -248,8 +266,8 @@
                         </ui:SettingsCard.HeaderIcon>
 
                         <StackPanel Orientation="Horizontal">
-                            <cc:HotkeyDisplay Keys="Ctrl+Plus" />
-                            <cc:HotkeyDisplay Margin="4 0 0 0" Keys="Ctrl+Minus" />
+                            <cc:HotkeyDisplay Keys="Ctrl+Minus" />
+                            <cc:HotkeyDisplay Margin="4 0 0 0" Keys="Ctrl+Plus" />
                         </StackPanel>
                     </ui:SettingsCard>
                 </ui:SettingsExpander.Items>
@@ -317,6 +335,12 @@
                     </ui:SettingsCard>
                 </ui:SettingsExpander.Items>
             </ui:SettingsExpander>
+
+            <StackPanel
+                x:Name="PluginHotkeySettings"
+                Margin="0 10 0 0"
+                Loaded="PluginHotkeySettings_Loaded"
+                Orientation="Vertical" />
 
             <ui:SettingsExpander Margin="0 20 0 0" Header="{DynamicResource customQueryHotkey}">
                 <ui:SettingsExpander.HeaderIcon>

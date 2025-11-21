@@ -374,5 +374,46 @@ namespace Flow.Launcher.Plugin.SharedCommands
                 }
             }
         }
+
+        /// <summary>
+        /// Returns true if the given name is a valid file name
+        /// </summary>
+        public static bool IsValidFileName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name)) return false;
+            if (IsReservedName(name)) return false;
+            if (name.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Returns true if the given name is a valid name for a directory, not a path
+        /// </summary>
+        public static bool IsValidDirectoryName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name)) return false;
+            if (IsReservedName(name)) return false;
+            var invalidChars = Path.GetInvalidPathChars().Concat(new[] { '/', '\\' }).ToArray();
+            if (name.IndexOfAny(invalidChars) >= 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private static readonly string[] ReservedNames = new[] { "CON", "PRN", "AUX", "NUL", "COM1", "COM2", "COM3", "COM4", "COM5", "COM6", "COM7", "COM8", "COM9", "LPT1", "LPT2", "LPT3", "LPT4", "LPT5", "LPT6", "LPT7", "LPT8", "LPT9" };
+
+        private static bool IsReservedName(string name)
+        {
+            var nameWithoutExtension = Path.GetFileNameWithoutExtension(name).ToUpperInvariant();
+            if (ReservedNames.Contains(nameWithoutExtension))
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

@@ -138,6 +138,7 @@
     <system:String x:Key="plugin_explorer_fail_to_open">Fail to open {0}</system:String>
     <system:String x:Key="plugin_explorer_fail_to_set_text">Fail to set text in clipboard</system:String>
     <system:String x:Key="plugin_explorer_fail_to_set_files">Fail to set files/folders in clipboard</system:String>
+    <system:String x:Key="plugin_explorer_run_as_administrator">Run As Administrator</system:String>
 
     <!--  Special Results  -->
     <system:String x:Key="plugin_explorer_diskfreespace">{0} free of {1}</system:String>
@@ -210,4 +211,20 @@
     <system:String x:Key="MonthsAgo">{0} months ago</system:String>
     <system:String x:Key="OneYearAgo">1 year ago</system:String>
     <system:String x:Key="YearsAgo">{0} years ago</system:String>
+
+    <!--  Rename File Dialog  -->
+    <system:String x:Key="plugin_explorer_new_file_name">New name</system:String>
+    <system:String x:Key="plugin_explorer_rename_file_done">Rename</system:String>
+    <system:String x:Key="plugin_explorer_rename_a_file">Rename</system:String>
+    <system:String x:Key="plugin_explorer_not_a_new_name">The given name: {0} was not new.</system:String>
+    <system:String x:Key="plugin_explorer_field_may_not_be_empty">New file name should not be empty.</system:String>
+    <system:String x:Key="plugin_explorer_invalid_name">{0} is an invalid name.</system:String>
+    <system:String x:Key="plugin_explorer_item_not_found">The specified item: {0} was not found</system:String>
+    <system:String x:Key="plugin_explorer_rename_subtitle">Open a dialog to rename file or folder</system:String>
+    <system:String x:Key="plugin_explorer_cannot_rename">This cannot be renamed.</system:String>
+    <system:String x:Key="plugin_explorer_successful_rename">Successfully renamed it to: {0}</system:String>
+    <system:String x:Key="plugin_explorer_element_already_exists">There is already a file with the name: {0} in this location</system:String>
+    <system:String x:Key="plugin_explorer_failed_to_open_rename_dialog">Failed to open rename dialog.</system:String>
+    <system:String x:Key="plugin_explorer_exception">An error occurred: {0}.</system:String>
+    <system:String x:Key="plugin_explorer_no_reason_given_exception">An error occurred and no reason was given.</system:String>
 </ResourceDictionary>

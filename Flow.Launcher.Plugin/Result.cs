@@ -272,6 +272,12 @@ namespace Flow.Launcher.Plugin
         public string QuerySuggestionText { get; set; }
 
         /// <summary>
+        /// List of hotkey IDs that are supported for this result.
+        /// Those hotkeys should be registered by IPluginHotkey interface.
+        /// </summary>
+        public IList<int> HotkeyIds { get; set; } = new List<int>();
+
+        /// <summary>
         /// Run this result, asynchronously
         /// </summary>
         /// <param name="context"></param>
@@ -322,7 +328,8 @@ namespace Flow.Launcher.Plugin
                 AddSelectedCount = AddSelectedCount,
                 RecordKey = RecordKey,
                 ShowBadge = ShowBadge,
-                QuerySuggestionText = QuerySuggestionText
+                QuerySuggestionText = QuerySuggestionText,
+                HotkeyIds = HotkeyIds,
             };
         }
 
