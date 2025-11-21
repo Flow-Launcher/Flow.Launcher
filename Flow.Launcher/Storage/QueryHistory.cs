@@ -44,11 +44,11 @@ namespace Flow.Launcher.Storage
                 LastOpenedHistoryItems.RemoveAt(0);
             }
 
-            // If the last item is the same as the current result, just update the timestamp
-            if (LastOpenedHistoryItems.Count > 0 && 
-                LastOpenedHistoryItems.Last().Equals(result))
+            if (LastOpenedHistoryItems.Count > 0 &&
+                TryGetLastOpenedHistoryResult(result, out var existingHistoryItem))
             {
-                LastOpenedHistoryItems.Last().ExecutedDateTime = DateTime.Now;
+                existingHistoryItem.IcoPath = result.IcoPath;
+                existingHistoryItem.ExecutedDateTime = DateTime.Now;
             }
             else
             {
@@ -59,9 +59,17 @@ namespace Flow.Launcher.Storage
                     PluginID = result.PluginID,
                     Query = result.OriginQuery.RawQuery,
                     RecordKey = result.RecordKey,
+                    IcoPath = result.IcoPath,
+                    Glyph = result.Glyph,
                     ExecutedDateTime = DateTime.Now
                 });
             }
+        }
+
+        private bool TryGetLastOpenedHistoryResult(Result result, out LastOpenedHistoryItem historyItem)
+        {
+            historyItem = LastOpenedHistoryItems.FirstOrDefault(x => x.Equals(result));
+            return historyItem is not null;
         }
     }
 }

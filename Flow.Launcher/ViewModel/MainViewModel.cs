@@ -1318,42 +1318,56 @@ namespace Flow.Launcher.ViewModel
         private List<Result> GetHistoryItems(IEnumerable<LastOpenedHistoryItem> historyItems)
         {
             var results = new List<Result>();
-            if (Settings.HistoryStyle == HistoryStyle.Query)
+
+            if (Settings.HistoryStyle == HistoryStyle.LastOpened)
             {
-                foreach (var h in historyItems)
+                historyItems = historyItems
+                                 .GroupBy(r => new { r.Title, r.SubTitle, r.PluginID, r.RecordKey })
+                                 .Select(g => g.First());
+            }
+
+            foreach (var item in historyItems)
+            {
+                Result result = null;
+                var glyph = item.Glyph is null && !string.IsNullOrEmpty(item.IcoPath) // Some plugins won't have Glyph, then prefer IcoPath
+                              ? null
+                              : item.Glyph is not null
+                                  ? item.Glyph
+                                  : new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE81C"); // Default fallback
+
+                var icoPath = !string.IsNullOrEmpty(item.IcoPath) ? item.IcoPath : Constant.HistoryIcon;
+
+                if (Settings.HistoryStyle == HistoryStyle.Query)
                 {
-                    var result = new Result
+                    result = new Result
                     {
-                        Title = Localize.executeQuery(h.Query),
-                        SubTitle = Localize.lastExecuteTime(h.ExecutedDateTime),
-                        IcoPath = Constant.HistoryIcon,
-                        OriginQuery = new Query { RawQuery = h.Query },
+                        Title = Localize.executeQuery(item.Query),
+                        SubTitle = Localize.lastExecuteTime(item.ExecutedDateTime),
+                        IcoPath = icoPath,
+                        OriginQuery = new Query { RawQuery = item.Query },
                         Action = _ =>
                         {
                             App.API.BackToQueryResults();
-                            App.API.ChangeQuery(h.Query);
+                            App.API.ChangeQuery(item.Query);
                             return false;
                         },
-                        Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE81C")
+                        Glyph = glyph
                     };
-                    results.Add(result);
                 }
-            }
-            else
-            {
-                foreach (var h in historyItems)
+                else
                 {
-                    var result = new Result
+
+                    result = new Result
                     {
-                        Title = string.IsNullOrEmpty(h.Title) ?  // Old migrated history items have no title
-                            Localize.executeQuery(h.Query) :
-                            h.Title,
-                        SubTitle = Localize.lastExecuteTime(h.ExecutedDateTime),
-                        IcoPath = Constant.HistoryIcon,
-                        OriginQuery = new Query { RawQuery = h.Query },
+                        Title = string.IsNullOrEmpty(item.Title) ?  // Old migrated history items have no title
+                                Localize.executeQuery(item.Query) :
+                                item.Title,
+                        SubTitle = Localize.lastExecuteTime(item.ExecutedDateTime),
+                        IcoPath = icoPath,
+                        OriginQuery = new Query { RawQuery = item.Query },
                         AsyncAction = async c =>
                         {
-                            var reflectResult = await ResultHelper.PopulateResultsAsync(h);
+                            var reflectResult = await ResultHelper.PopulateResultsAsync(item);
                             if (reflectResult != null)
                             {
                                 // Record the user selected record for result ranking
@@ -1366,14 +1380,16 @@ namespace Flow.Launcher.ViewModel
 
                             // If we cannot get the result, fallback to re-query
                             App.API.BackToQueryResults();
-                            App.API.ChangeQuery(h.Query);
+                            App.API.ChangeQuery(item.Query);
                             return false;
                         },
-                        Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE81C")
+                        Glyph = glyph
                     };
-                    results.Add(result);
                 }
+
+                results.Add(result);
             }
+                                 
             return results;
         }
 

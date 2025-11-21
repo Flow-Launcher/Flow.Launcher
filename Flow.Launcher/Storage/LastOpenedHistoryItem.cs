@@ -10,6 +10,8 @@ public class LastOpenedHistoryItem
     public string PluginID { get; set; } = string.Empty;
     public string Query { get; set; } = string.Empty;
     public string RecordKey { get; set; } = string.Empty;
+    public string IcoPath { get; set; } = string.Empty;
+    public GlyphInfo Glyph { get; init; } = null;
     public DateTime ExecutedDateTime { get; set; }
 
     public bool Equals(Result r)
