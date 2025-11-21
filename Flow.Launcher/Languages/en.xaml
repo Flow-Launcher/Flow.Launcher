@@ -70,6 +70,7 @@
     <system:String x:Key="pluginStillInitializingSubtitle">Select this result to requery</system:String>
     <system:String x:Key="pluginFailedToRespond">{0}: Failed to respond!</system:String>
     <system:String x:Key="pluginFailedToRespondSubtitle">Select this result for more info</system:String>
+    <system:String x:Key="admin">(Admin)</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Settings</system:String>
@@ -183,6 +184,10 @@
     <system:String x:Key="showUnknownSourceWarningToolTip">Show warning when installing plugins from unknown sources</system:String>
     <system:String x:Key="autoUpdatePlugins">Auto update plugins</system:String>
     <system:String x:Key="autoUpdatePluginsToolTip">Automatically check plugin updates and notify if there are any updates available</system:String>
+    <system:String x:Key="alwaysRunAsAdministrator">Always run as administrator</system:String>
+    <system:String x:Key="alwaysRunAsAdministratorToolTip">Run Flow Launcher as administrator on startup</system:String>
+    <system:String x:Key="runAsAdministratorChange">Administrator Mode Change</system:String>
+    <system:String x:Key="runAsAdministratorChangeAndRestart">Do you want to restart as administrator to apply this change? Otherwise, you will need to run as administrator manually on the next start.</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Search Plugin</system:String>

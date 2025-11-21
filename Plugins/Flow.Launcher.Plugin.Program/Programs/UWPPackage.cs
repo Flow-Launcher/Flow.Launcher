@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Security.Principal;
+using System.Threading.Channels;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using Windows.ApplicationModel;
-using Windows.Management.Deployment;
+using System.Xml;
 using Flow.Launcher.Plugin.Program.Logger;
 using Flow.Launcher.Plugin.SharedModels;
-using System.Threading.Channels;
-using System.Xml;
-using Windows.ApplicationModel.Core;
-using System.Windows.Input;
 using MemoryPack;
+using Windows.ApplicationModel;
+using Windows.ApplicationModel.Core;
+using Windows.Management.Deployment;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
@@ -455,7 +454,9 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     bool elevated = e.SpecialKeyState.ToModifierKeys() == (ModifierKeys.Control | ModifierKeys.Shift);
 
                     bool shouldRunElevated = elevated && CanRunElevated;
-                    _ = Task.Run(() => Launch(shouldRunElevated)).ConfigureAwait(false);
+
+                    Launch(shouldRunElevated);
+
                     if (elevated && !shouldRunElevated)
                     {
                         var title = api.GetTranslation("flowlauncher_plugin_program_disable_dlgtitle_error");
@@ -497,7 +498,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     Title = api.GetTranslation("flowlauncher_plugin_program_run_as_administrator"),
                     Action = c =>
                     {
-                        _ = Task.Run(() => Launch(true)).ConfigureAwait(false);
+                        Launch(true);
+
                         return true;
                     },
                     IcoPath = "Images/cmd.png",
@@ -510,12 +512,14 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
         private void Launch(bool elevated = false)
         {
-            string command = "shell:AppsFolder\\" + UserModelId;
+            var command = "shell:AppsFolder\\" + UserModelId;
             command = Environment.ExpandEnvironmentVariables(command.Trim());
 
-            var info = new ProcessStartInfo(command) { UseShellExecute = true, Verb = elevated ? "runas" : "" };
-
-            Main.StartProcess(Process.Start, info);
+            _ = Task.Run(() => Main.Context.API.StartProcess(
+                command,
+                arguments: string.Empty,
+                useShellExecute: true,
+                verb: elevated ? "runas" : ""));
         }
 
         internal static bool IfAppCanRunElevated(XmlNode appNode)

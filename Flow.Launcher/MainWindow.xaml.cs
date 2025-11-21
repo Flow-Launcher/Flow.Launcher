@@ -763,9 +763,13 @@ namespace Flow.Launcher
 
         private void InitializeNotifyIcon()
         {
+            var text = Win32Helper.IsAdministrator() ?
+                Constant.FlowLauncherFullName + " " + App.API.GetTranslation("admin") :
+                Constant.FlowLauncherFullName;
+
             _notifyIcon = new NotifyIcon
             {
-                Text = Constant.FlowLauncherFullName,
+                Text = text,
                 Icon = Constant.Version == "1.0.0" ? Properties.Resources.dev : Properties.Resources.app,
                 Visible = !_settings.HideNotifyIcon
             };

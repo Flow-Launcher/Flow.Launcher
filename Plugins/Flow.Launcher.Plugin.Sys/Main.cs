@@ -218,6 +218,7 @@ namespace Flow.Launcher.Plugin.Sys
                             if (EnableShutdownPrivilege())
                                 PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_SHUTDOWN | EXIT_WINDOWS_FLAGS.EWX_POWEROFF, REASON);
                             else
+                                // No need to de-elevate since we already have message box asking for confirmation
                                 Process.Start("shutdown", "/s /t 0");
                         }
                         return true;
@@ -242,6 +243,7 @@ namespace Flow.Launcher.Plugin.Sys
                             if (EnableShutdownPrivilege())
                                 PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_REBOOT, REASON);
                             else
+                                // No need to de-elevate since we already have message box asking for confirmation
                                 Process.Start("shutdown", "/r /t 0");
                         }
                         return true;
@@ -266,6 +268,7 @@ namespace Flow.Launcher.Plugin.Sys
                             if (EnableShutdownPrivilege())
                                 PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_REBOOT | EXIT_WINDOWS_FLAGS.EWX_BOOTOPTIONS, REASON);
                             else
+                                // No need to de-elevate since we already have message box asking for confirmation
                                 Process.Start("shutdown", "/r /o /t 0");
                         }
                         return true;
@@ -327,6 +330,7 @@ namespace Flow.Launcher.Plugin.Sys
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe773"),
                     Action = c =>
                     {
+                        // No need to de-elevate since we are opening windows settings which cannot bring security risks
                         Process.Start("control.exe", "srchadmin.dll");
                         return true;
                     }
@@ -360,6 +364,7 @@ namespace Flow.Launcher.Plugin.Sys
                     CopyText = recycleBinFolder,
                     Action = c =>
                     {
+                        // No need to de-elevate since we are opening windows settings which cannot bring security risks
                         Process.Start("explorer", recycleBinFolder);
                         return true;
                     }
