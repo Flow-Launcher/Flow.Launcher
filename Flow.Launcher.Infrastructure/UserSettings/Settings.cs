@@ -536,6 +536,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         [JsonIgnore]
         public bool WMPInstalled { get; set; } = true;
 
+        public bool SelectAllQueryOnReopen { get; set; } = true;
+
         // This needs to be loaded last by staying at the bottom
         public PluginsSettings PluginSettings { get; set; } = new PluginsSettings();
 
