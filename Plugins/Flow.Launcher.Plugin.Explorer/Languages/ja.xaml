@@ -70,9 +70,9 @@
 
     <system:String x:Key="plugin_explorer_Content_Search_Engine">Content Search Engine</system:String>
     <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">Directory Recursive Search Engine</system:String>
-    <system:String x:Key="plugin_explorer_Index_Search_Engine">Index Search Engine</system:String>
+    <system:String x:Key="plugin_explorer_Index_Search_Engine">インデックス検索エンジン</system:String>
     <system:String x:Key="plugin_explorer_Open_Window_Index_Option">Windowsのインデックスオプションを開く</system:String>
-    <system:String x:Key="plugin_explorer_Excluded_File_Types">Excluded File Types (comma seperated)</system:String>
+    <system:String x:Key="plugin_explorer_Excluded_File_Types">除外されたファイルタイプ（カンマ区切りで入力）</system:String>
     <system:String x:Key="plugin_explorer_Excluded_File_Types_Tooltip">例: exe,jpg,png</system:String>
     <system:String x:Key="plugin_explorer_Maximum_Results">結果の最大表示件数</system:String>
     <system:String x:Key="plugin_explorer_Maximum_Results_Tooltip">The maximum number of results requested from active search engine</system:String>
@@ -163,8 +163,8 @@
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_created_descending">作成日時 ↓</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_modified_ascending">更新日時 ↑</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_modified_descending">更新日時 ↓</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_attributes_ascending">Attributes ↑</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_attributes_descending">Attributes ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_attributes_ascending">属性 ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_attributes_descending">属性 ↓</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_file_list_filename_ascending">File List FileName ↑</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_file_list_filename_descending">File List FileName ↓</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_run_count_ascending">実行回数 ↑</system:String>
@@ -187,7 +187,7 @@
     <system:String x:Key="flowlauncher_plugin_everything_installing_subtitle">Everything サービスをインストールしています。お待ちください…</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installationsuccess_subtitle">Everything サービスを正常にインストールしました</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installationfailed_subtitle">Everything サービスを自動的にインストールできませんでした。https://www.voidtools.com から手動でインストールしてください</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_run_service">Click here to start it</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_run_service">ここをクリックして開始</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_select">Everythingのインストールが見つかりませんでした。手動で場所を指定しますか？{0}{0}「いいえ」をクリックすると、Everythingが自動的にインストールされます。</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">Everything でのコンテンツ検索を有効にしますか？</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">インデックスなしでは非常に遅くなることがあります(Everything v1.5以降でのみサポートされています)</system:String>
