@@ -31,6 +31,8 @@ namespace Flow.Launcher.Plugin.Program
 
         internal static PluginInitContext Context { get; private set; }
 
+        private static readonly Lock _lastIndexTimeLock = new();
+
         private static readonly List<Result> emptyResults = [];
 
         private static readonly MemoryCacheOptions cacheOptions = new() { SizeLimit = 1560 };
@@ -82,8 +84,45 @@ namespace Flow.Launcher.Plugin.Program
             {
                 var resultList = await Task.Run(async () =>
                 {
-                    await _win32sLock.WaitAsync(token);
-                    await _uwpsLock.WaitAsync(token);
+                    // Preparing win32 programs
+                    List<Win32> win32s;
+                    bool win32LockAcquired = false;
+                    try
+                    {
+                        await _win32sLock.WaitAsync(token);
+                        win32LockAcquired = true;
+                        win32s = [.. _win32s];
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        return emptyResults;
+                    }
+                    finally
+                    {
+                        // Only release the lock if it was acquired
+                        if (win32LockAcquired) _win32sLock.Release();
+                    }
+
+                    // Preparing UWP programs
+                    List<UWPApp> uwps;
+                    bool uwpsLockAcquired = false;
+                    try
+                    {
+                        await _uwpsLock.WaitAsync(token);
+                        uwpsLockAcquired = true;
+                        uwps = [.. _uwps];
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        return emptyResults;
+                    }
+                    finally
+                    {
+                        // Only release the lock if it was acquired
+                        if (uwpsLockAcquired) _uwpsLock.Release();
+                    }
+
+                    // Start querying programs
                     try
                     {
                         // Collect all UWP Windows app directories
@@ -94,8 +133,8 @@ namespace Flow.Launcher.Plugin.Program
                             .Distinct(StringComparer.OrdinalIgnoreCase)
                             .ToArray() : null;
 
-                        return _win32s.Cast<IProgram>()
-                            .Concat(_uwps)
+                        return win32s.Cast<IProgram>()
+                            .Concat(uwps)
                             .AsParallel()
                             .WithCancellation(token)
                             .Where(HideUninstallersFilter)
@@ -108,11 +147,6 @@ namespace Flow.Launcher.Plugin.Program
                     catch (OperationCanceledException)
                     {
                         return emptyResults;
-                    }
-                    finally
-                    {
-                        _uwpsLock.Release();
-                        _win32sLock.Release();
                     }
                 }, token);
 
@@ -275,7 +309,12 @@ namespace Flow.Launcher.Plugin.Program
 
             var cacheEmpty = _win32sCount == 0 || _uwpsCount == 0;
 
-            if (cacheEmpty || _settings.LastIndexTime.AddHours(30) < DateTime.Now)
+            bool needReindex;
+            lock (_lastIndexTimeLock)
+            {
+                needReindex = _settings.LastIndexTime.AddHours(30) < DateTime.Now;
+            }
+            if (cacheEmpty || needReindex)
             {
                 _ = Task.Run(async () =>
                 {
@@ -308,7 +347,10 @@ namespace Flow.Launcher.Plugin.Program
                 }
                 ResetCache();
                 await Context.API.SaveCacheBinaryStorageAsync<List<Win32>>(Win32CacheName, Context.CurrentPluginMetadata.PluginCacheDirectoryPath);
-                _settings.LastIndexTime = DateTime.Now;
+                lock (_lastIndexTimeLock)
+                {
+                    _settings.LastIndexTime = DateTime.Now;
+                }
             }
             catch (Exception e)
             {
@@ -333,7 +375,10 @@ namespace Flow.Launcher.Plugin.Program
                 }
                 ResetCache();
                 await Context.API.SaveCacheBinaryStorageAsync<List<UWPApp>>(UwpCacheName, Context.CurrentPluginMetadata.PluginCacheDirectoryPath);
-                _settings.LastIndexTime = DateTime.Now;
+                lock (_lastIndexTimeLock)
+                {
+                    _settings.LastIndexTime = DateTime.Now;
+                }
             }
             catch (Exception e)
             {

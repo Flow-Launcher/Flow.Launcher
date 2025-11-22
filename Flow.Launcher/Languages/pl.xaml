@@ -64,6 +64,10 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="PositionReset">Resetowanie pozycji</system:String>
     <system:String x:Key="PositionResetToolTip">Zresetuj pozycję okna wyszukiwania</system:String>
     <system:String x:Key="queryTextBoxPlaceholder">Wpisz tutaj, aby wyszukać</system:String>
+    <system:String x:Key="pluginStillInitializing">{0}: This plugin is still initializing...</system:String>
+    <system:String x:Key="pluginStillInitializingSubtitle">Select this result to requery</system:String>
+    <system:String x:Key="pluginFailedToRespond">{0}: Failed to respond!</system:String>
+    <system:String x:Key="pluginFailedToRespondSubtitle">Select this result for more info</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Ustawienia</system:String>
@@ -170,6 +174,10 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="homePageToolTip">Wyświetl wyniki strony głównej, gdy pole wyszukiwania jest puste.</system:String>
     <system:String x:Key="historyResultsForHomePage">Pokaż wyniki historii na stronie głównej</system:String>
     <system:String x:Key="historyResultsCountForHomePage">Maksymalna liczba wyników historii wyświetlanych na stronie głównej</system:String>
+    <system:String x:Key="historyStyle">History Style</system:String>
+    <system:String x:Key="historyStyleTooltip">Choose the type of history to show in the History and Home Page</system:String>
+    <system:String x:Key="queryHistory">Query history</system:String>
+    <system:String x:Key="executedHistory">Last opened history</system:String>
     <system:String x:Key="homeToggleBoxToolTip">Można edytować tylko wtedy, gdy wtyczka obsługuje funkcję Strona główna i jest ona włączona.</system:String>
     <system:String x:Key="showAtTopmost">Wyświetl okno wyszukiwania na wierzchu</system:String>
     <system:String x:Key="showAtTopmostToolTip">Wyświetl okno wyszukiwania ponad innymi oknami</system:String>
@@ -445,7 +453,7 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="icons">Ikony</system:String>
     <system:String x:Key="about_activate_times">Uaktywniłeś Flow Launcher {0} razy</system:String>
     <system:String x:Key="checkUpdates">Szukaj aktualizacji</system:String>
-    <system:String x:Key="BecomeASponsor">Zostań sponsorem</system:String>
+    <system:String x:Key="BecomeASponsor">Become a Sponsor</system:String>
     <system:String x:Key="newVersionTips">Nowa wersja {0} jest dostępna, uruchom ponownie Flow Launcher</system:String>
     <system:String x:Key="checkUpdatesFailed">Sprawdzenie aktualizacji nie powiodło się. Sprawdź swoje połączenie i ustawienia proxy dla api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
