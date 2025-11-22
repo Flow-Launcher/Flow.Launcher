@@ -138,7 +138,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="iNKORE.UI.WPF.Modern" Version="0.10.1" />
+    <PackageReference Include="iNKORE.UI.WPF.Modern" Version="0.10.2.1" />
     <PackageReference Include="MdXaml" Version="1.27.0" />
     <PackageReference Include="MdXaml.AnimatedGif" Version="1.27.0" />
     <PackageReference Include="MdXaml.Html" Version="1.27.0" />
