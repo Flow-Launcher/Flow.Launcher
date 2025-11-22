@@ -53,17 +53,24 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 || EnvironmentVariables.IsEnvironmentVariableSearch(query.Search)
                 || EnvironmentVariables.HasEnvironmentVar(query.Search);
 
-            // If action keyword is enabled and matched, get the active action keyword.
-            var activeActionKeyword = Settings.GetActiveActionKeyword(keyword);
+            ActionKeyword? activeActionKeyword;
+
+            if (!isPathSearch)
+            {
+                //If action keyword is enabled and matched, get the active action keyword.
+                activeActionKeyword = Settings.GetActiveActionKeyword(keyword);
+            }
+            else
+            {
+                // If no action keyword matched but the query is a path search, set active action keyword to path search.
+                activeActionKeyword = ActionKeyword.PathSearchActionKeyword;
+            }
 
             // No action keyword matched - plugin should not handle this query, return empty results.
-            if (activeActionKeyword == null && !isPathSearch)
+            if (activeActionKeyword == null)
             {
                 return [];
             }
-
-            // If no action keyword matched but the query is a path search, set active action keyword to path search.
-            if (activeActionKeyword == null && isPathSearch) activeActionKeyword = ActionKeyword.PathSearchActionKeyword;
 
             // This allows the user to type the below action keywords and see/search the list of quick folder links
             if (string.IsNullOrEmpty(query.Search)
