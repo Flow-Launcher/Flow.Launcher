@@ -1,13 +1,14 @@
-﻿using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
-using Flow.Launcher.Plugin.Explorer.Search.Everything;
-using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
-using Flow.Launcher.Plugin.SharedCommands;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Flow.Launcher.Plugin.Explorer.Exceptions;
+using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
+using Flow.Launcher.Plugin.Explorer.Search.Everything;
+using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
+using Flow.Launcher.Plugin.SharedCommands;
+using static Flow.Launcher.Plugin.Explorer.Settings;
 using Path = System.IO.Path;
 
 namespace Flow.Launcher.Plugin.Explorer.Search
@@ -47,45 +48,50 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         internal async Task<List<Result>> SearchAsync(Query query, CancellationToken token)
         {
             var results = new HashSet<Result>(PathEqualityComparator.Instance);
+            var keyword = query.ActionKeyword.Length == 0 ? Query.GlobalPluginWildcardSign : query.ActionKeyword;
+            var isPathSearch = query.Search.IsLocationPathString()
+                || EnvironmentVariables.IsEnvironmentVariableSearch(query.Search)
+                || EnvironmentVariables.HasEnvironmentVar(query.Search);
 
-            // This allows the user to type the below action keywords and see/search the list of quick folder links
-            if (ActionKeywordMatch(query, Settings.ActionKeyword.SearchActionKeyword)
-                || ActionKeywordMatch(query, Settings.ActionKeyword.QuickAccessActionKeyword)
-                || ActionKeywordMatch(query, Settings.ActionKeyword.PathSearchActionKeyword)
-                || ActionKeywordMatch(query, Settings.ActionKeyword.IndexSearchActionKeyword)
-                || ActionKeywordMatch(query, Settings.ActionKeyword.FileContentSearchActionKeyword))
+            ActionKeyword? activeActionKeyword;
+
+            if (!isPathSearch)
             {
-                if (string.IsNullOrEmpty(query.Search) && ActionKeywordMatch(query, Settings.ActionKeyword.QuickAccessActionKeyword))
-                    return QuickAccess.AccessLinkListAll(query, Settings.QuickAccessLinks);
+                //If action keyword is enabled and matched, get the active action keyword.
+                activeActionKeyword = Settings.GetActiveActionKeyword(keyword);
             }
             else
             {
-                // No action keyword matched- plugin should not handle this query, return empty results.
-                return new List<Result>();
+                // If no action keyword matched but the query is a path search, set active action keyword to path search.
+                activeActionKeyword = ActionKeyword.PathSearchActionKeyword;
+            }
+
+            // No action keyword matched - plugin should not handle this query, return empty results.
+            if (activeActionKeyword == null)
+            {
+                return [];
+            }
+
+            // This allows the user to type the below action keywords and see/search the list of quick folder links
+            if (string.IsNullOrEmpty(query.Search)
+                && activeActionKeyword.Equals(ActionKeyword.QuickAccessActionKeyword))
+            {
+                return QuickAccess.AccessLinkListAll(query, Settings.QuickAccessLinks);
             }
 
             IAsyncEnumerable<SearchResult> searchResults;
 
-            bool isPathSearch = query.Search.IsLocationPathString()
-                || EnvironmentVariables.IsEnvironmentVariableSearch(query.Search)
-                || EnvironmentVariables.HasEnvironmentVar(query.Search);
-
             string engineName;
 
-            switch (isPathSearch)
+            switch (activeActionKeyword.Equals(ActionKeyword.PathSearchActionKeyword))
             {
-                case true
-                    when ActionKeywordMatch(query, Settings.ActionKeyword.PathSearchActionKeyword)
-                         || ActionKeywordMatch(query, Settings.ActionKeyword.SearchActionKeyword):
-
+                case true:
                     results.UnionWith(await PathSearchAsync(query, token).ConfigureAwait(false));
-
-                    return results.ToList();
+                    return [.. results];
 
                 case false
-                    when ActionKeywordMatch(query, Settings.ActionKeyword.FileContentSearchActionKeyword):
-
                     // Intentionally require enabling of Everything's content search due to its slowness
+                    when activeActionKeyword.Equals(ActionKeyword.FileContentSearchActionKeyword):
                     if (Settings.ContentIndexProvider is EverythingSearchManager && !Settings.EnableEverythingContentSearch)
                         return EverythingContentSearchResult(query);
 
@@ -94,36 +100,31 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     break;
 
                 case false
-                    when ActionKeywordMatch(query, Settings.ActionKeyword.IndexSearchActionKeyword)
-                         || ActionKeywordMatch(query, Settings.ActionKeyword.SearchActionKeyword):
-
-                    searchResults = Settings.IndexProvider.SearchAsync(query.Search, token);
-                    engineName = Enum.GetName(Settings.IndexSearchEngine);
-                    break;
-
-                case true or false
-                    when ActionKeywordMatch(query, Settings.ActionKeyword.QuickAccessActionKeyword):
+                    when activeActionKeyword.Equals(ActionKeyword.QuickAccessActionKeyword):
                     return QuickAccess.AccessLinkListMatched(query, Settings.QuickAccessLinks);
 
                 default:
-                    return results.ToList();
+                    searchResults = Settings.IndexProvider.SearchAsync(query.Search, token);
+                    engineName = Enum.GetName(Settings.IndexSearchEngine);
+                    break;
             }
 
             // Merge Quick Access Link results for non-path searches.
-            results.UnionWith(QuickAccess.AccessLinkListMatched(query, Settings.QuickAccessLinks));
-
+            MergeQuickAccessInResultsIfQueryMatch(results, query, activeActionKeyword);
             try
             {
                 await foreach (var search in searchResults.WithCancellation(token).ConfigureAwait(false))
-                    if (search.Type == ResultType.File && IsExcludedFile(search)) {
+                {
+                    if (ShouldSkip(activeActionKeyword!.Value, search))
+                    {
                         continue;
-                    } else {
-                        results.Add(ResultManager.CreateResult(query, search));
                     }
+                    results.Add(ResultManager.CreateResult(query, search));
+                }
             }
             catch (OperationCanceledException)
             {
-                return new List<Result>();
+                return [];
             }
             catch (EngineNotAvailableException)
             {
@@ -137,33 +138,13 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             results.RemoveWhere(r => Settings.IndexSearchExcludedSubdirectoryPaths.Any(
                 excludedPath => FilesFolders.PathContains(excludedPath.Path, r.SubTitle, allowEqual: true)));
 
-            return results.ToList();
-        }
-
-        private bool ActionKeywordMatch(Query query, Settings.ActionKeyword allowedActionKeyword)
-        {
-            var keyword = query.ActionKeyword.Length == 0 ? Query.GlobalPluginWildcardSign : query.ActionKeyword;
-
-            return allowedActionKeyword switch
-            {
-                Settings.ActionKeyword.SearchActionKeyword => Settings.SearchActionKeywordEnabled &&
-                                                              keyword == Settings.SearchActionKeyword,
-                Settings.ActionKeyword.PathSearchActionKeyword => Settings.PathSearchKeywordEnabled &&
-                                                                  keyword == Settings.PathSearchActionKeyword,
-                Settings.ActionKeyword.FileContentSearchActionKeyword => Settings.FileContentSearchKeywordEnabled &&
-                                                                         keyword == Settings.FileContentSearchActionKeyword,
-                Settings.ActionKeyword.IndexSearchActionKeyword => Settings.IndexSearchKeywordEnabled &&
-                                                                   keyword == Settings.IndexSearchActionKeyword,
-                Settings.ActionKeyword.QuickAccessActionKeyword => Settings.QuickAccessKeywordEnabled &&
-                                                                   keyword == Settings.QuickAccessActionKeyword,
-                _ => throw new ArgumentOutOfRangeException(nameof(allowedActionKeyword), allowedActionKeyword, "actionKeyword out of range")
-            };
+            return [.. results];
         }
 
         private List<Result> EverythingContentSearchResult(Query query)
         {
-            return new List<Result>()
-            {
+            return
+            [
                 new()
                 {
                     Title = Localize.flowlauncher_plugin_everything_enable_content_search(),
@@ -176,7 +157,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                         return false;
                     }
                 }
-            };
+            ];
         }
 
         private async Task<List<Result>> PathSearchAsync(Query query, CancellationToken token = default)
@@ -197,7 +178,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             // Check that actual location exists, otherwise directory search will throw directory not found exception
             if (!FilesFolders.ReturnPreviousDirectoryIfIncompleteString(path).LocationExists())
-                return results.ToList();
+                return [.. results];
 
             var useIndexSearch = Settings.IndexSearchEngine is Settings.IndexSearchEngineOption.WindowsIndex
                                  && UseWindowsIndexForDirectorySearch(path);
@@ -209,7 +190,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 : ResultManager.CreateOpenCurrentFolderResult(retrievedDirectoryPath, query.ActionKeyword, useIndexSearch));
 
             if (token.IsCancellationRequested)
-                return new List<Result>();
+                return [];
 
             IAsyncEnumerable<SearchResult> directoryResult;
 
@@ -231,7 +212,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             }
 
             if (token.IsCancellationRequested)
-                return new List<Result>();
+                return [];
 
             try
             {
@@ -246,14 +227,14 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             }
 
 
-            return results.ToList();
+            return [.. results];
         }
 
         public bool IsFileContentSearch(string actionKeyword) => actionKeyword == Settings.FileContentSearchActionKeyword;
 
         public static bool UseIndexSearch(string path)
         {
-            if (Main.Settings.IndexSearchEngine is not Settings.IndexSearchEngineOption.WindowsIndex)
+            if (Main.Settings.IndexSearchEngine is not IndexSearchEngineOption.WindowsIndex)
                 return false;
 
             // Check if the path is using windows index search
@@ -275,10 +256,48 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         private bool IsExcludedFile(SearchResult result)
         {
-            string[] excludedFileTypes = Settings.ExcludedFileTypes.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] excludedFileTypes = Settings.ExcludedFileTypes.Split([','], StringSplitOptions.RemoveEmptyEntries);
             string fileExtension = Path.GetExtension(result.FullPath).TrimStart('.');
 
             return excludedFileTypes.Contains(fileExtension, StringComparer.OrdinalIgnoreCase);
+        }
+
+        private bool ShouldSkip(ActionKeyword actionKeywordActive, SearchResult search)
+        {
+            // Is excluded file type
+            if (search.Type == ResultType.File && IsExcludedFile(search))
+            {
+                return true;
+            }
+
+            // Action keyword specific filtering for folders
+            if (actionKeywordActive.Equals(ActionKeyword.FolderSearchActionKeyword)
+                && search.Type != ResultType.Folder)
+            {
+                return true;
+            }
+
+            // Action keyword specific filtering for files
+            if (actionKeywordActive.Equals(ActionKeyword.FileSearchActionKeyword)
+                && search.Type != ResultType.File)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private void MergeQuickAccessInResultsIfQueryMatch(HashSet<Result> results, Query query, ActionKeyword? activeActionKeyword)
+        {
+            if (activeActionKeyword != null 
+                && activeActionKeyword != ActionKeyword.QuickAccessActionKeyword
+                && Settings.ExcludeQuickAccessFromActionKeywords)
+            {
+                return;
+            }
+
+            var quickAccessMatched = QuickAccess.AccessLinkListMatched(query, Settings.QuickAccessLinks);
+            if (quickAccessMatched != null && quickAccessMatched.Count > 0) results.UnionWith(quickAccessMatched);
         }
     }
 }

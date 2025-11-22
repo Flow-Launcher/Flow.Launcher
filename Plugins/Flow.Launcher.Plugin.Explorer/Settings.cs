@@ -1,12 +1,13 @@
-﻿using Flow.Launcher.Plugin.Explorer.Search;
-using Flow.Launcher.Plugin.Explorer.Search.Everything;
-using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
-using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text.Json.Serialization;
+using Flow.Launcher.Plugin.Explorer.Search;
+using Flow.Launcher.Plugin.Explorer.Search.Everything;
 using Flow.Launcher.Plugin.Explorer.Search.IProvider;
+using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
+using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
 
 namespace Flow.Launcher.Plugin.Explorer
 {
@@ -57,6 +58,17 @@ namespace Flow.Launcher.Plugin.Explorer
         public string QuickAccessActionKeyword { get; set; } = Query.GlobalPluginWildcardSign;
 
         public bool QuickAccessKeywordEnabled { get; set; }
+
+
+        public string FolderSearchActionKeyword { get; set; } = Query.GlobalPluginWildcardSign;
+
+        public bool FolderSearchKeywordEnabled { get; set; }
+
+        public string FileSearchActionKeyword { get; set; } = Query.GlobalPluginWildcardSign;
+
+        public bool FileSearchKeywordEnabled { get; set; }
+
+        public bool ExcludeQuickAccessFromActionKeywords { get; set; } = false;
 
         public bool WarnWindowsSearchServiceOff { get; set; } = true;
 
@@ -154,13 +166,15 @@ namespace Flow.Launcher.Plugin.Explorer
 
         #endregion
 
-        internal enum ActionKeyword
+        public enum ActionKeyword
         {
             SearchActionKeyword,
             PathSearchActionKeyword,
             FileContentSearchActionKeyword,
             IndexSearchActionKeyword,
-            QuickAccessActionKeyword
+            QuickAccessActionKeyword,
+            FolderSearchActionKeyword,
+            FileSearchActionKeyword,
         }
 
         internal string GetActionKeyword(ActionKeyword actionKeyword) => actionKeyword switch
@@ -170,6 +184,8 @@ namespace Flow.Launcher.Plugin.Explorer
             ActionKeyword.FileContentSearchActionKeyword => FileContentSearchActionKeyword,
             ActionKeyword.IndexSearchActionKeyword => IndexSearchActionKeyword,
             ActionKeyword.QuickAccessActionKeyword => QuickAccessActionKeyword,
+            ActionKeyword.FolderSearchActionKeyword => FolderSearchActionKeyword,
+            ActionKeyword.FileSearchActionKeyword => FileSearchActionKeyword,
             _ => throw new ArgumentOutOfRangeException(nameof(actionKeyword), actionKeyword, "ActionKeyWord property not found")
         };
 
@@ -180,6 +196,8 @@ namespace Flow.Launcher.Plugin.Explorer
             ActionKeyword.FileContentSearchActionKeyword => FileContentSearchActionKeyword = keyword,
             ActionKeyword.IndexSearchActionKeyword => IndexSearchActionKeyword = keyword,
             ActionKeyword.QuickAccessActionKeyword => QuickAccessActionKeyword = keyword,
+            ActionKeyword.FolderSearchActionKeyword => FolderSearchActionKeyword = keyword,
+            ActionKeyword.FileSearchActionKeyword => FileSearchActionKeyword = keyword,
             _ => throw new ArgumentOutOfRangeException(nameof(actionKeyword), actionKeyword, "ActionKeyWord property not found")
         };
 
@@ -190,6 +208,8 @@ namespace Flow.Launcher.Plugin.Explorer
             ActionKeyword.IndexSearchActionKeyword => IndexSearchKeywordEnabled,
             ActionKeyword.FileContentSearchActionKeyword => FileContentSearchKeywordEnabled,
             ActionKeyword.QuickAccessActionKeyword => QuickAccessKeywordEnabled,
+            ActionKeyword.FolderSearchActionKeyword => FolderSearchKeywordEnabled,
+            ActionKeyword.FileSearchActionKeyword => FileSearchKeywordEnabled,
             _ => throw new ArgumentOutOfRangeException(nameof(actionKeyword), actionKeyword, "ActionKeyword enabled status not defined")
         };
 
@@ -200,7 +220,22 @@ namespace Flow.Launcher.Plugin.Explorer
             ActionKeyword.IndexSearchActionKeyword => IndexSearchKeywordEnabled = enable,
             ActionKeyword.FileContentSearchActionKeyword => FileContentSearchKeywordEnabled = enable,
             ActionKeyword.QuickAccessActionKeyword => QuickAccessKeywordEnabled = enable,
+            ActionKeyword.FolderSearchActionKeyword => FolderSearchKeywordEnabled = enable,
+            ActionKeyword.FileSearchActionKeyword => FileSearchKeywordEnabled = enable,
             _ => throw new ArgumentOutOfRangeException(nameof(actionKeyword), actionKeyword, "ActionKeyword enabled status not defined")
         };
+
+        public ActionKeyword? GetActiveActionKeyword(string actionKeywordStr)
+        {
+            if (string.IsNullOrEmpty(actionKeywordStr)) return null;
+            foreach (var action in Enum.GetValues<ActionKeyword>())
+            {
+                var keywordStr = GetActionKeyword(action);
+                if (string.IsNullOrEmpty(keywordStr)) continue;
+                var isEnabled = GetActionKeywordEnabled(action);
+                if (keywordStr == actionKeywordStr && isEnabled) return action;
+            }
+            return null;
+        }
     }
 }
