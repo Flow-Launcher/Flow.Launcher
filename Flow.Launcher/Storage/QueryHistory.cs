@@ -35,7 +35,7 @@ namespace Flow.Launcher.Storage
 
         public void Add(Result result)
         {
-            if (string.IsNullOrEmpty(result.OriginQuery.RawQuery)) return;
+            if (string.IsNullOrEmpty(result.OriginQuery.TrimmedQuery)) return;
             if (string.IsNullOrEmpty(result.PluginID)) return;
 
             // Maintain the max history limit
@@ -57,7 +57,7 @@ namespace Flow.Launcher.Storage
                     Title = result.Title,
                     SubTitle = result.SubTitle,
                     PluginID = result.PluginID,
-                    Query = result.OriginQuery.RawQuery,
+                    Query = result.OriginQuery.TrimmedQuery,
                     RecordKey = result.RecordKey,
                     ExecutedDateTime = DateTime.Now
                 });

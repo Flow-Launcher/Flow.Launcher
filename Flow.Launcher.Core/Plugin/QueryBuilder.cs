@@ -15,7 +15,7 @@ namespace Flow.Launcher.Core.Plugin
                 {
                     Search = string.Empty,
                     OriginalQuery = string.Empty,
-                    RawQuery = string.Empty,
+                    TrimmedQuery = string.Empty,
                     SearchTerms = Array.Empty<string>(),
                     ActionKeyword = string.Empty,
                     IsHomeQuery = true
@@ -30,7 +30,6 @@ namespace Flow.Launcher.Core.Plugin
                 return null;
             }
 
-            var rawQuery = trimmedQuery;
             string actionKeyword, search;
             string possibleActionKeyword = terms[0];
             string[] searchTerms;
@@ -39,14 +38,14 @@ namespace Flow.Launcher.Core.Plugin
             {
                 // use non global plugin for query
                 actionKeyword = possibleActionKeyword;
-                search = terms.Length > 1 ? rawQuery[(actionKeyword.Length + 1)..].TrimStart() : string.Empty;
+                search = terms.Length > 1 ? trimmedQuery[(actionKeyword.Length + 1)..].TrimStart() : string.Empty;
                 searchTerms = terms[1..];
             }
             else
             {
                 // non action keyword
                 actionKeyword = string.Empty;
-                search = rawQuery.TrimStart();
+                search = trimmedQuery.TrimStart();
                 searchTerms = terms;
             }
 
@@ -54,7 +53,7 @@ namespace Flow.Launcher.Core.Plugin
             {
                 Search = search,
                 OriginalQuery = originalQuery,
-                RawQuery = rawQuery,
+                TrimmedQuery = trimmedQuery,
                 SearchTerms = searchTerms,
                 ActionKeyword = actionKeyword,
                 IsHomeQuery = false

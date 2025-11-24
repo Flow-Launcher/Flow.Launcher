@@ -47,7 +47,7 @@ namespace Flow.Launcher.Plugin
 
         /// <summary>
         /// Search part of a query.
-        /// This will not include action keyword if exclusive plugin gets it, otherwise it should be same as RawQuery.
+        /// This will not include action keyword if exclusive plugin gets it, otherwise it should be same as TrimmedQuery.
         /// Since we allow user to switch a exclusive plugin to generic plugin,
         /// so this property will always give you the "real" query part of the query
         /// </summary>

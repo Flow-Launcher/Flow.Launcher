@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
@@ -1328,7 +1328,7 @@ namespace Flow.Launcher.ViewModel
                         Title = Localize.executeQuery(h.Query),
                         SubTitle = Localize.lastExecuteTime(h.ExecutedDateTime),
                         IcoPath = Constant.HistoryIcon,
-                        OriginQuery = new Query { RawQuery = h.Query },
+                        OriginQuery = new Query { TrimmedQuery = h.Query },
                         Action = _ =>
                         {
                             App.API.BackToQueryResults();
@@ -1351,7 +1351,7 @@ namespace Flow.Launcher.ViewModel
                             h.Title,
                         SubTitle = Localize.lastExecuteTime(h.ExecutedDateTime),
                         IcoPath = Constant.HistoryIcon,
-                        OriginQuery = new Query { RawQuery = h.Query },
+                        OriginQuery = new Query { TrimmedQuery = h.Query },
                         AsyncAction = async c =>
                         {
                             var reflectResult = await ResultHelper.PopulateResultsAsync(h);
@@ -1392,7 +1392,7 @@ namespace Flow.Launcher.ViewModel
                 return;
             }
 
-            App.API.LogDebug(ClassName, $"Start query with ActionKeyword <{query.ActionKeyword}> and RawQuery <{query.RawQuery}>");
+            App.API.LogDebug(ClassName, $"Start query with ActionKeyword <{query.ActionKeyword}> and TrimmedQuery <{query.TrimmedQuery}>");
 
             var currentIsHomeQuery = query.IsHomeQuery;
             var currentIsDialogJump = _isDialogJump;
