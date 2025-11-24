@@ -18,7 +18,7 @@ namespace Flow.Launcher.Test
 
             Query q = QueryBuilder.Build(">   ping    google.com   -n 20  -6", ">   ping    google.com   -n 20  -6", nonGlobalPlugins);
 
-            ClassicAssert.AreEqual(">   ping    google.com   -n 20  -6", q.RawQuery);
+            ClassicAssert.AreEqual(">   ping    google.com   -n 20  -6", q.TrimmedQuery);
             ClassicAssert.AreEqual("ping    google.com   -n 20  -6", q.Search, "Search should not start with the ActionKeyword.");
             ClassicAssert.AreEqual(">", q.ActionKeyword);
 
@@ -42,7 +42,7 @@ namespace Flow.Launcher.Test
             Query q = QueryBuilder.Build(">   ping    google.com   -n 20  -6", ">   ping    google.com   -n 20  -6", nonGlobalPlugins);
 
             ClassicAssert.AreEqual(">   ping    google.com   -n 20  -6", q.Search);
-            ClassicAssert.AreEqual(q.Search, q.RawQuery, "RawQuery should be equal to Search.");
+            ClassicAssert.AreEqual(q.Search, q.TrimmedQuery, "RawQuery should be equal to Search.");
             ClassicAssert.AreEqual(6, q.SearchTerms.Length, "The length of SearchTerms should match.");
             ClassicAssert.AreNotEqual(">", q.ActionKeyword, "ActionKeyword should not match that of a disabled plugin.");
             ClassicAssert.AreEqual("ping google.com -n 20 -6", q.SecondToEndSearch, "SecondToEndSearch should be trimmed of multiple whitespace characters");

@@ -122,6 +122,6 @@ namespace Flow.Launcher.Plugin
         }
 
         /// <inheritdoc />
-        public override string ToString() => RawQuery;
+        public override string ToString() => TrimmedQuery;
     }
 }

@@ -172,7 +172,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     Action = c =>
                     {
                         Settings.EnableEverythingContentSearch = true;
-                        Context.API.ChangeQuery(query.RawQuery, true);
+                        Context.API.ChangeQuery(query.TrimmedQuery, true);
                         return false;
                     }
                 }
