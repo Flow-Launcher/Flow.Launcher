@@ -21,7 +21,7 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         [Obsolete("RawQuery is renamed to TrimmedQuery. This property will be removed. Update the code to use TrimmedQuery instead.")]
         public string RawQuery {
-            get { return TrimmedQuery; }
+            get => TrimmedQuery;
             internal init { TrimmedQuery = value; }
         }
 

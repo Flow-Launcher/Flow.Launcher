@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Flow.Launcher.Plugin;
 
@@ -6,10 +6,10 @@ namespace Flow.Launcher.Core.Plugin
 {
     public static class QueryBuilder
     {
-        public static Query Build(string input, string text, Dictionary<string, PluginPair> nonGlobalPlugins)
+        public static Query Build(string originalQuery, string trimmedQuery, Dictionary<string, PluginPair> nonGlobalPlugins)
         {
             // home query
-            if (string.IsNullOrEmpty(text))
+            if (string.IsNullOrEmpty(trimmedQuery))
             {
                 return new Query()
                 {
@@ -23,14 +23,14 @@ namespace Flow.Launcher.Core.Plugin
             }
 
             // replace multiple white spaces with one white space
-            var terms = text.Split(Query.TermSeparator, StringSplitOptions.RemoveEmptyEntries);
+            var terms = trimmedQuery.Split(Query.TermSeparator, StringSplitOptions.RemoveEmptyEntries);
             if (terms.Length == 0)
             {
                 // nothing was typed
                 return null;
             }
 
-            var rawQuery = text;
+            var rawQuery = trimmedQuery;
             string actionKeyword, search;
             string possibleActionKeyword = terms[0];
             string[] searchTerms;
@@ -53,7 +53,7 @@ namespace Flow.Launcher.Core.Plugin
             return new Query()
             {
                 Search = search,
-                OriginalQuery = input,
+                OriginalQuery = originalQuery,
                 RawQuery = rawQuery,
                 SearchTerms = searchTerms,
                 ActionKeyword = actionKeyword,
