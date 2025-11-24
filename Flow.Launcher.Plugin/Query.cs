@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+using System;
+using System.Text.Json.Serialization;
 
 namespace Flow.Launcher.Plugin
 {
@@ -8,17 +9,29 @@ namespace Flow.Launcher.Plugin
     public class Query
     {
         /// <summary>
-        /// Input text in query box.
+        /// Original query, exactly how the user has typed into the search box.
         /// We don't recommend using this property directly. You should always use Search property.
         /// </summary>
-        public string Input { get; internal init; }
+        public string OriginalQuery { get; internal init; }
 
         /// <summary>
         /// Raw query, this includes action keyword if it has.
         /// It has handled buildin custom query shortkeys and build-in shortcuts, and it trims the whitespace.
         /// We don't recommend using this property directly. You should always use Search property.
         /// </summary>
-        public string RawQuery { get; internal init; }
+        [Obsolete("RawQuery is renamed to TrimmedQUery. This property will be removed. Update the code to use TrimmedQuery instead.")]
+        public string RawQuery {
+            get { return TrimmedQuery; }
+            internal init { TrimmedQuery = value; }
+        }
+
+        /// <summary>
+        /// Original query but with trimmed whitespace. Includes action keyword.
+        /// It has handled buildin custom query shortkeys and build-in shortcuts.
+        /// If after exact original query from the search box, should use OriginalQuery property instead.
+        /// We don't recommend using this property directly. You should always use Search property.
+        /// </summary>
+        public string TrimmedQuery { get; internal init; }
 
         /// <summary>
         /// Determines whether the query was forced to execute again.
