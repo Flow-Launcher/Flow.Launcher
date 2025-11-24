@@ -19,7 +19,7 @@ namespace Flow.Launcher.Plugin
         /// It has handled buildin custom query shortkeys and build-in shortcuts, and it trims the whitespace.
         /// We don't recommend using this property directly. You should always use Search property.
         /// </summary>
-        [Obsolete("RawQuery is renamed to TrimmedQUery. This property will be removed. Update the code to use TrimmedQuery instead.")]
+        [Obsolete("RawQuery is renamed to TrimmedQuery. This property will be removed. Update the code to use TrimmedQuery instead.")]
         public string RawQuery {
             get { return TrimmedQuery; }
             internal init { TrimmedQuery = value; }
