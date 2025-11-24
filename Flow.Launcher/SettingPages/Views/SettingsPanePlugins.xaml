@@ -4,9 +4,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:cc="clr-namespace:Flow.Launcher.Resources.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ikw="http://schemas.inkore.net/lib/ui/wpf"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
-    xmlns:ui="http://schemas.modernwpf.com/2019"
+    xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
     xmlns:viewModels="clr-namespace:Flow.Launcher.SettingPages.ViewModels"
     Title="Plugins"
     d:DataContext="{d:DesignInstance viewModels:SettingsPanePluginsViewModel}"
@@ -34,13 +35,13 @@
                 Style="{StaticResource PageTitle}"
                 Text="{DynamicResource plugins}"
                 TextAlignment="Left" />
-            <StackPanel
+            <ikw:SimpleStackPanel
                 HorizontalAlignment="Right"
                 VerticalAlignment="Center"
                 DockPanel.Dock="Right"
-                Orientation="Horizontal">
+                Orientation="Horizontal"
+                Spacing="8">
                 <TextBlock
-                    Margin="0 0 6 0"
                     VerticalAlignment="Center"
                     FontSize="14"
                     Foreground="{DynamicResource Color15B}"
@@ -51,7 +52,6 @@
                     Height="34"
                     MinWidth="150"
                     MaxWidth="150"
-                    Margin="0 0 4 0"
                     HorizontalContentAlignment="Left"
                     Background="{DynamicResource Color00B}"
                     DisplayMemberPath="Display"
@@ -61,7 +61,7 @@
                 <Button
                     Width="34"
                     Height="34"
-                    Margin="0 0 20 0"
+                    Padding="0"
                     Command="{Binding OpenHelperCommand}"
                     CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
                     FontSize="14">
@@ -72,44 +72,15 @@
                     Width="150"
                     Height="34"
                     Margin="0 0 26 0"
+                    VerticalContentAlignment="Center"
+                    ui:ControlHelper.PlaceholderText="{DynamicResource searchplugin}"
                     ContextMenu="{StaticResource TextBoxContextMenu}"
                     FontSize="14"
                     Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}"
-                    TextAlignment="Left"
                     ToolTip="{DynamicResource searchpluginToolTip}"
                     ToolTipService.InitialShowDelay="200"
-                    ToolTipService.Placement="Top">
-                    <TextBox.Style>
-                        <Style BasedOn="{StaticResource DefaultTextBoxStyle}" TargetType="TextBox">
-                            <Style.Resources>
-                                <VisualBrush
-                                    x:Key="CueBannerBrush"
-                                    AlignmentX="Left"
-                                    AlignmentY="Center"
-                                    Stretch="None">
-                                    <VisualBrush.Visual>
-                                        <Label
-                                            Padding="10 0 0 0"
-                                            Content="{DynamicResource searchplugin}"
-                                            Foreground="{DynamicResource CustomContextDisabled}" />
-                                    </VisualBrush.Visual>
-                                </VisualBrush>
-                            </Style.Resources>
-                            <Style.Triggers>
-                                <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
-                                    <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
-                                </Trigger>
-                                <Trigger Property="Text" Value="{x:Null}">
-                                    <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
-                                </Trigger>
-                                <Trigger Property="IsKeyboardFocused" Value="True">
-                                    <Setter Property="Background" Value="{DynamicResource Color02B}" />
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TextBox.Style>
-                </TextBox>
-            </StackPanel>
+                    ToolTipService.Placement="Top" />
+            </ikw:SimpleStackPanel>
         </DockPanel>
 
         <Border
@@ -117,13 +88,13 @@
             Grid.Column="0"
             Background="{DynamicResource Color01B}">
             <ListBox
-                Margin="5 0 7 10"
+                Margin="5 0 0 10"
+                Padding="0 0 7 0"
                 Background="{DynamicResource Color01B}"
                 FontSize="14"
-                ItemContainerStyle="{StaticResource PluginList}"
+                ItemContainerStyle="{DynamicResource PluginList}"
                 ItemsSource="{Binding Source={StaticResource PluginCollectionView}}"
                 Loaded="PluginListBox_Loaded"
-                ScrollViewer.CanContentScroll="False"
                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                 SnapsToDevicePixels="True"
                 Style="{DynamicResource PluginListStyle}"

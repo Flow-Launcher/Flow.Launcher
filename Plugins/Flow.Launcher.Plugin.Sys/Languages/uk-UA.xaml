@@ -76,4 +76,9 @@
     <system:String x:Key="flowlauncher_plugin_sys_plugin_name">Системні команди</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_plugin_description">Надає команди, пов'язані з системою, наприклад, вимкнення, блокування, налаштування тощо.</system:String>
 
+    <!--  Theme Selector  -->
+    <system:String x:Key="flowlauncher_plugin_sys_type_isdark_hasblur">Ця тема підтримує два режими (світлий / темний) та розмитий прозорий фон</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_type_isdark">Ця тема підтримує два (світлий / темний) режими</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_type_hasblur">Ця тема підтримує розмитий прозорий фон</system:String>
+
 </ResourceDictionary>

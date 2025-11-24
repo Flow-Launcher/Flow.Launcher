@@ -57,19 +57,16 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             {
                 if (string.IsNullOrEmpty(query.Search) && ActionKeywordMatch(query, Settings.ActionKeyword.QuickAccessActionKeyword))
                     return QuickAccess.AccessLinkListAll(query, Settings.QuickAccessLinks);
-
-                var quickAccessLinks = QuickAccess.AccessLinkListMatched(query, Settings.QuickAccessLinks);
-
-                results.UnionWith(quickAccessLinks);
             }
             else
             {
+                // No action keyword matched- plugin should not handle this query, return empty results.
                 return new List<Result>();
             }
 
             IAsyncEnumerable<SearchResult> searchResults;
 
-            bool isPathSearch = query.Search.IsLocationPathString() 
+            bool isPathSearch = query.Search.IsLocationPathString()
                 || EnvironmentVariables.IsEnvironmentVariableSearch(query.Search)
                 || EnvironmentVariables.HasEnvironmentVar(query.Search);
 
@@ -103,9 +100,17 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     searchResults = Settings.IndexProvider.SearchAsync(query.Search, token);
                     engineName = Enum.GetName(Settings.IndexSearchEngine);
                     break;
+
+                case true or false
+                    when ActionKeywordMatch(query, Settings.ActionKeyword.QuickAccessActionKeyword):
+                    return QuickAccess.AccessLinkListMatched(query, Settings.QuickAccessLinks);
+
                 default:
                     return results.ToList();
             }
+
+            // Merge Quick Access Link results for non-path searches.
+            results.UnionWith(QuickAccess.AccessLinkListMatched(query, Settings.QuickAccessLinks));
 
             try
             {

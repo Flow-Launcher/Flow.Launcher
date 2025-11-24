@@ -108,9 +108,19 @@ namespace Flow.Launcher.Plugin.WebSearch
                 _context.API.AddActionKeyword(id, newKeyword);
 
                 var index = _searchSources.IndexOf(_oldSearchSource);
-                _searchSources[index] = _searchSource;
-
-                Close();
+                
+                // Only update if we found the item in the collection
+                if (index >= 0 && index < _searchSources.Count)
+                {
+                    _searchSources[index] = _searchSource;
+                    Close();
+                }
+                else
+                {
+                    var warning = _api.GetTranslation("flowlauncher_plugin_websearch_edit_failed");
+                    _context.API.ShowMsgBox(warning);
+                    Close();
+                }
             }
             else
             {

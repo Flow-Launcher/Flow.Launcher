@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
-using System.Windows;
-using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core.ExternalPlugins.Environments;
 #pragma warning disable IDE0005
 using Flow.Launcher.Infrastructure.Logger;
@@ -17,10 +14,6 @@ namespace Flow.Launcher.Core.Plugin
     public static class PluginsLoader
     {
         private static readonly string ClassName = nameof(PluginsLoader);
-
-        // We should not initialize API in static constructor because it will create another API instance
-        private static IPublicAPI api = null;
-        private static IPublicAPI API => api ??= Ioc.Default.GetRequiredService<IPublicAPI>();
 
         public static List<PluginPair> Plugins(List<PluginMetadata> metadatas, PluginsSettings settings)
         {
@@ -55,7 +48,7 @@ namespace Flow.Launcher.Core.Plugin
             return plugins;
         }
 
-        private static IEnumerable<PluginPair> DotNetPlugins(List<PluginMetadata> source)
+        private static List<PluginPair> DotNetPlugins(List<PluginMetadata> source)
         {
             var erroredPlugins = new List<string>();
 
@@ -64,56 +57,58 @@ namespace Flow.Launcher.Core.Plugin
 
             foreach (var metadata in metadatas)
             {
-                var milliseconds = API.StopwatchLogDebug(ClassName, $"Constructor init cost for {metadata.Name}", () =>
+                var milliseconds = PublicApi.Instance.StopwatchLogDebug(ClassName, $"Constructor init cost for {metadata.Name}", () =>
+                {
+                    Assembly assembly = null;
+                    IAsyncPlugin plugin = null;
+
+                    try
                     {
-                        Assembly assembly = null;
-                        IAsyncPlugin plugin = null;
+                        var assemblyLoader = new PluginAssemblyLoader(metadata.ExecuteFilePath);
+                        assembly = assemblyLoader.LoadAssemblyAndDependencies();
 
-                        try
-                        {
-                            var assemblyLoader = new PluginAssemblyLoader(metadata.ExecuteFilePath);
-                            assembly = assemblyLoader.LoadAssemblyAndDependencies();
+                        var type = assemblyLoader.FromAssemblyGetTypeOfInterface(assembly,
+                            typeof(IAsyncPlugin));
 
-                            var type = assemblyLoader.FromAssemblyGetTypeOfInterface(assembly,
-                                typeof(IAsyncPlugin));
+                        plugin = Activator.CreateInstance(type) as IAsyncPlugin;
 
-                            plugin = Activator.CreateInstance(type) as IAsyncPlugin;
-
-                            metadata.AssemblyName = assembly.GetName().Name;
-                        }
+                        metadata.AssemblyName = assembly.GetName().Name;
+                    }
 #if DEBUG
-                        catch (Exception)
-                        {
-                            throw;
-                        }
+                    catch (Exception)
+                    {
+                        throw;
+                    }
 #else
-                        catch (Exception e) when (assembly == null)
-                        {
-                            Log.Exception(ClassName, $"Couldn't load assembly for the plugin: {metadata.Name}", e);
-                        }
-                        catch (InvalidOperationException e)
-                        {
-                            Log.Exception(ClassName, $"Can't find the required IPlugin interface for the plugin: <{metadata.Name}>", e);
-                        }
-                        catch (ReflectionTypeLoadException e)
-                        {
-                            Log.Exception(ClassName, $"The GetTypes method was unable to load assembly types for the plugin: <{metadata.Name}>", e);
-                        }
-                        catch (Exception e)
-                        {
-                            Log.Exception(ClassName, $"The following plugin has errored and can not be loaded: <{metadata.Name}>", e);
-                        }
+                    catch (Exception e) when (assembly == null)
+                    {
+                        PublicApi.Instance.LogException(ClassName, $"Couldn't load assembly for the plugin: {metadata.Name}", e);
+                    }
+                    catch (InvalidOperationException e)
+                    {
+                        PublicApi.Instance.LogException(ClassName, $"Can't find the required IPlugin interface for the plugin: <{metadata.Name}>", e);
+                    }
+                    catch (ReflectionTypeLoadException e)
+                    {
+                        PublicApi.Instance.LogException(ClassName, $"The GetTypes method was unable to load assembly types for the plugin: <{metadata.Name}>", e);
+                    }
+                    catch (Exception e)
+                    {
+                        PublicApi.Instance.LogException(ClassName, $"The following plugin has errored and can not be loaded: <{metadata.Name}>", e);
+                    }
 #endif
 
-                        if (plugin == null)
-                        {
-                            erroredPlugins.Add(metadata.Name);
-                            return;
-                        }
+                    if (plugin == null)
+                    {
+                        erroredPlugins.Add(metadata.Name);
+                        return;
+                    }
 
-                        plugins.Add(new PluginPair { Plugin = plugin, Metadata = metadata });
-                    });
+                    plugins.Add(new PluginPair { Plugin = plugin, Metadata = metadata });
+                });
+
                 metadata.InitTime += milliseconds;
+                PublicApi.Instance.LogDebug(ClassName, $"Constructor cost for <{metadata.Name}> is <{metadata.InitTime}ms>");
             }
 
             if (erroredPlugins.Count > 0)
@@ -121,12 +116,12 @@ namespace Flow.Launcher.Core.Plugin
                 var errorPluginString = string.Join(Environment.NewLine, erroredPlugins);
 
                 var errorMessage = erroredPlugins.Count > 1 ?
-                    API.GetTranslation("pluginsHaveErrored") :
-                    API.GetTranslation("pluginHasErrored");
+                    Localize.pluginsHaveErrored():
+                    Localize.pluginHasErrored();
 
-                API.ShowMsgError($"{errorMessage}{Environment.NewLine}{Environment.NewLine}" +
+                PublicApi.Instance.ShowMsgError($"{errorMessage}{Environment.NewLine}{Environment.NewLine}" +
                     $"{errorPluginString}{Environment.NewLine}{Environment.NewLine}" +
-                    API.GetTranslation("referToLogs"));
+                    Localize.referToLogs());
             }
 
             return plugins;

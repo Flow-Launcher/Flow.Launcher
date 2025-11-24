@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -103,8 +103,8 @@ public partial class SettingsPanePluginStoreViewModel : BaseModel
     private async Task InstallPluginAsync()
     {
         var file = GetFileFromDialog(
-            App.API.GetTranslation("SelectZipFile"),
-            $"{App.API.GetTranslation("ZipFiles")} (*.zip)|*.zip");
+            Localize.SelectZipFile(),
+            $"{Localize.ZipFiles()} (*.zip)|*.zip");
 
         if (!string.IsNullOrEmpty(file))
             await PluginInstaller.InstallPluginAndCheckRestartAsync(file);

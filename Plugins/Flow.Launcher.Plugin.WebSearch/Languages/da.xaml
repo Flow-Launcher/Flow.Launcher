@@ -45,6 +45,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_input_url">Please enter a URL</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword_exist">Action keyword already exists, please enter a different one</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_succeed">Fortsæt</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_edit_failed">Failed to update search source. The item may have been removed.</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_iconpath_hint">Hint: You do not need to place custom images in this directory, if Flow's version is updated they will be lost. Flow will automatically copy any images outside of this directory across to WebSearch's custom image location.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_websearch_plugin_name">Web Searches</system:String>

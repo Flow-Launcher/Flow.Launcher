@@ -22,7 +22,7 @@
     <system:String x:Key="plugin_explorer_directoryinfosearch_error">Виникла помилка під час пошуку: {0}</system:String>
     <system:String x:Key="plugin_explorer_opendir_error">Не вдалося відкрити папку</system:String>
     <system:String x:Key="plugin_explorer_openfile_error">Не вдалося відкрити файл</system:String>
-    <system:String x:Key="plugin_explorer_new_action_keyword_assigned">This new action keyword is already assigned to another plugin, please choose a different one</system:String>
+    <system:String x:Key="plugin_explorer_new_action_keyword_assigned">Нова команда активації вже призначена іншому плагіну, виберіть іншу</system:String>
 
     <!--  Controls  -->
     <system:String x:Key="plugin_explorer_delete">Видалити</system:String>

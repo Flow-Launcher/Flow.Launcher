@@ -444,17 +444,27 @@ namespace Flow.Launcher.Core.Resource
                 _api.LogError(ClassName, $"Theme <{theme}> path can't be found");
                 if (theme != Constant.DefaultTheme)
                 {
-                    _api.ShowMsgBox(string.Format(_api.GetTranslation("theme_load_failure_path_not_exists"), theme));
+                    _api.ShowMsgBox(Localize.theme_load_failure_path_not_exists(theme));
                     ChangeTheme(Constant.DefaultTheme);
                 }
                 return false;
             }
-            catch (XamlParseException)
+            catch (XamlParseException e)
             {
-                _api.LogError(ClassName, $"Theme <{theme}> fail to parse");
+                _api.LogException(ClassName, $"Theme <{theme}> fail to parse xaml", e);
                 if (theme != Constant.DefaultTheme)
                 {
-                    _api.ShowMsgBox(string.Format(_api.GetTranslation("theme_load_failure_parse_error"), theme));
+                    _api.ShowMsgBox(Localize.theme_load_failure_parse_error(theme));
+                    ChangeTheme(Constant.DefaultTheme);
+                }
+                return false;
+            }
+            catch (Exception e)
+            {
+                _api.LogException(ClassName, $"Theme <{theme}> fail to load", e);
+                if (theme != Constant.DefaultTheme)
+                {
+                    _api.ShowMsgBox(Localize.theme_load_failure_parse_error(theme));
                     ChangeTheme(Constant.DefaultTheme);
                 }
                 return false;

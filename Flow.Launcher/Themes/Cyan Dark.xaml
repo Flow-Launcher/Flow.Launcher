@@ -33,7 +33,7 @@
         x:Key="QueryBoxStyle"
         BasedOn="{StaticResource BaseQueryBoxStyle}"
         TargetType="{x:Type TextBox}">
-        <Setter Property="Padding" Value="0,0,50,0" />
+        <Setter Property="Padding" Value="0 0 50 0" />
         <Setter Property="CaretBrush" Value="#336766" />
         <Setter Property="Foreground" Value="#e7e9eb" />
         <Setter Property="FontSize" Value="18" />
@@ -44,7 +44,7 @@
         x:Key="QuerySuggestionBoxStyle"
         BasedOn="{StaticResource BaseQuerySuggestionBoxStyle}"
         TargetType="{x:Type TextBox}">
-        <Setter Property="Padding" Value="0,0,50,0" />
+        <Setter Property="Padding" Value="0 0 50 0" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Height" Value="38" />
         <Setter Property="FontSize" Value="18" />
@@ -90,7 +90,7 @@
         TargetType="{x:Type Rectangle}">
         <Setter Property="Fill" Value="#1e292f" />
         <Setter Property="Height" Value="1" />
-        <Setter Property="Margin" Value="0,0,0,4" />
+        <Setter Property="Margin" Value="0 0 0 4" />
     </Style>
     <Style x:Key="HighlightStyle" />
     <Style
@@ -142,7 +142,7 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Width" Value="32" />
         <Setter Property="Height" Value="32" />
-        <Setter Property="Margin" Value="0,8,8,0" />
+        <Setter Property="Margin" Value="0 8 8 0" />
         <Setter Property="HorizontalAlignment" Value="Right" />
     </Style>
 
@@ -169,7 +169,7 @@
         x:Key="ClockPanel"
         BasedOn="{StaticResource ClockPanel}"
         TargetType="{x:Type StackPanel}">
-        <Setter Property="Margin" Value="0,0,54,0" />
+        <Setter Property="Margin" Value="0 0 54 0" />
     </Style>
     <Style
         x:Key="ClockBox"
@@ -188,7 +188,7 @@
         BasedOn="{StaticResource BasePreviewBorderStyle}"
         TargetType="{x:Type Border}">
         <Setter Property="BorderBrush" Value="#1e292f" />
-        <Setter Property="Margin" Value="0,0,10,4" />
+        <Setter Property="Margin" Value="0 0 10 4" />
     </Style>
     <Style
         x:Key="PreviewItemTitleStyle"

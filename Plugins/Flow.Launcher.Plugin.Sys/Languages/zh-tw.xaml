@@ -44,7 +44,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_openrecyclebin">Open recycle bin</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_indexoption">索引選項</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_hibernate">Hibernate computer</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_save_all_settings">Save all Flow Launcher settings</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_save_all_settings">儲存所有Flow Lanuncher設定</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_reload_plugin_data">Refreshes plugin data with new content</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_log_location">Open Flow Launcher's log location</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_check_for_update">Check for new Flow Launcher update</system:String>
@@ -75,5 +75,10 @@
 
     <system:String x:Key="flowlauncher_plugin_sys_plugin_name">系統命令</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_plugin_description">系統相關的命令。例如，關機，鎖定，設定等</system:String>
+
+    <!--  Theme Selector  -->
+    <system:String x:Key="flowlauncher_plugin_sys_type_isdark_hasblur">This theme supports two (light/dark) modes and Blur Transparent Background</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_type_isdark">This theme supports two (light/dark) modes</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_type_hasblur">This theme supports Blur Transparent Background</system:String>
 
 </ResourceDictionary>

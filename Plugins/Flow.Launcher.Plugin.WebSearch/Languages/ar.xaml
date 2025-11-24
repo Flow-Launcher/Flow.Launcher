@@ -45,6 +45,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_input_url">يرجى إدخال رابط</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword_exist">كلمة المفتاح للعمل موجودة بالفعل، يرجى إدخال أخرى مختلفة</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_succeed">نجاح</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_edit_failed">Failed to update search source. The item may have been removed.</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_iconpath_hint">تلميح: لا تحتاج لوضع صور مخصصة في هذا الدليل، إذا تم تحديث نسخة Flow سيتم فقدانها. سيقوم Flow تلقائيًا بنسخ أي صور خارج هذا الدليل إلى موقع الصور المخصص لـ WebSearch.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_websearch_plugin_name">عمليات البحث على الويب</system:String>

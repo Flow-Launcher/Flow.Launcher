@@ -18,7 +18,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_openrecyclebin_cmd">ごみ箱を開く</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_exit_cmd">終了</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_save_all_settings_cmd">設定を保存</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_restart_cmd">Flow Launcherを再起動する</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_restart_cmd">Flow Launcherを再起動</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_setting_cmd">設定</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_reload_plugin_data_cmd">プラグインデータのリロード</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_check_for_update_cmd">更新を確認</system:String>
@@ -75,5 +75,10 @@
 
     <system:String x:Key="flowlauncher_plugin_sys_plugin_name">システムコマンド</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_plugin_description">システム関連のコマンドを提供します。例:シャットダウン、ロック、設定など</system:String>
+
+    <!--  Theme Selector  -->
+    <system:String x:Key="flowlauncher_plugin_sys_type_isdark_hasblur">このテーマは2つのモード（明るい/暗い）と透明な背景をぼかし効果が使用できます</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_type_isdark">このテーマはライト／ダークの2モードに対応しています</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_type_hasblur">このテーマは背景のぼかした透明効果をサポートしています</system:String>
 
 </ResourceDictionary>

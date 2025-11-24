@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Infrastructure;
 
@@ -23,17 +22,15 @@ namespace Flow.Launcher.Core.ExternalPlugins
         private static DateTime lastFetchedAt = DateTime.MinValue;
         private static readonly TimeSpan fetchTimeout = TimeSpan.FromMinutes(2);
 
-        // We should not initialize API in static constructor because it will create another API instance
-        private static IPublicAPI api = null;
-        private static IPublicAPI API => api ??= Ioc.Default.GetRequiredService<IPublicAPI>();
-
         public static List<UserPlugin> UserPlugins { get; private set; }
 
         public static async Task<bool> UpdateManifestAsync(bool usePrimaryUrlOnly = false, CancellationToken token = default)
         {
+            bool lockAcquired = false;
             try
             {
                 await manifestUpdateLock.WaitAsync(token).ConfigureAwait(false);
+                lockAcquired = true;
 
                 if (UserPlugins == null || usePrimaryUrlOnly || DateTime.Now.Subtract(lastFetchedAt) >= fetchTimeout)
                 {
@@ -59,13 +56,18 @@ namespace Flow.Launcher.Core.ExternalPlugins
                     return true;
                 }
             }
+            catch (OperationCanceledException)
+            {
+                // Ignored
+            }
             catch (Exception e)
             {
-                API.LogException(ClassName, "Http request failed", e);
+                PublicApi.Instance.LogException(ClassName, "Http request failed", e);
             }
             finally
             {
-                manifestUpdateLock.Release();
+                // Only release the lock if it was acquired
+                if (lockAcquired) manifestUpdateLock.Release();
             }
 
             return false;
@@ -83,12 +85,12 @@ namespace Flow.Launcher.Core.ExternalPlugins
             }
             catch (Exception e)
             {
-                API.LogException(ClassName, $"Failed to parse the minimum app version {plugin.MinimumAppVersion} for plugin {plugin.Name}. "
+                PublicApi.Instance.LogException(ClassName, $"Failed to parse the minimum app version {plugin.MinimumAppVersion} for plugin {plugin.Name}. "
                     + "Plugin excluded from manifest", e);
                 return false;
             }
 
-            API.LogInfo(ClassName, $"Plugin {plugin.Name} requires minimum Flow Launcher version {plugin.MinimumAppVersion}, "
+            PublicApi.Instance.LogInfo(ClassName, $"Plugin {plugin.Name} requires minimum Flow Launcher version {plugin.MinimumAppVersion}, "
                     + $"but current version is {Constant.Version}. Plugin excluded from manifest.");
 
             return false;

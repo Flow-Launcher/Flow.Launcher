@@ -5,9 +5,9 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
-using Mages.Core;
-using Flow.Launcher.Plugin.Calculator.Views;
 using Flow.Launcher.Plugin.Calculator.ViewModels;
+using Flow.Launcher.Plugin.Calculator.Views;
+using Mages.Core;
 
 namespace Flow.Launcher.Plugin.Calculator
 {
@@ -26,7 +26,7 @@ namespace Flow.Launcher.Plugin.Calculator
         private const string IcoPath = "Images/calculator.png";
         private static readonly List<Result> EmptyResults = [];
 
-        internal static PluginInitContext Context { get; set; } = null!;
+        internal static PluginInitContext Context { get; private set; } = null!;
 
         private Settings _settings;
         private SettingsViewModel _viewModel;
@@ -57,10 +57,10 @@ namespace Flow.Launcher.Plugin.Calculator
             {
                 var search = query.Search;
                 bool isFunctionPresent = FunctionRegex.IsMatch(search);
-                
+
                 // Mages is case sensitive, so we need to convert all function names to lower case.
                 search = FunctionRegex.Replace(search, m => m.Value.ToLowerInvariant());
-                
+
                 var decimalSep = GetDecimalSeparator();
                 var groupSep = GetGroupSeparator(decimalSep);
                 var expression = NumberRegex.Replace(search, m => NormalizeNumber(m.Value, isFunctionPresent, decimalSep, groupSep));
@@ -292,7 +292,7 @@ namespace Flow.Launcher.Plugin.Calculator
                 {
                     processedStr = processedStr.Replace(decimalSep, ".");
                 }
-                
+
                 return processedStr;
             }
             else
@@ -310,7 +310,7 @@ namespace Flow.Launcher.Plugin.Calculator
                 return processedStr;
             }
         }
-        
+
         private static bool IsValidGrouping(string[] parts, int[] groupSizes)
         {
             if (parts.Length <= 1) return true;
@@ -326,7 +326,7 @@ namespace Flow.Launcher.Plugin.Calculator
 
             var lastGroupSize = groupSizes.Last();
             var canRepeatLastGroup = lastGroupSize != 0;
-            
+
             int groupIndex = 0;
             for (int i = parts.Length - 1; i > 0; i--)
             {
@@ -335,7 +335,7 @@ namespace Flow.Launcher.Plugin.Calculator
                 {
                     expectedSize = groupSizes[groupIndex];
                 }
-                else if(canRepeatLastGroup)
+                else if (canRepeatLastGroup)
                 {
                     expectedSize = lastGroupSize;
                 }
@@ -345,7 +345,7 @@ namespace Flow.Launcher.Plugin.Calculator
                 }
 
                 if (parts[i].Length != expectedSize) return false;
-                
+
                 groupIndex++;
             }
 

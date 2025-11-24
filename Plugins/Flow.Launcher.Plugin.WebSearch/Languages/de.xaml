@@ -46,6 +46,7 @@ https://www.netflix.com/search?q={q}
     <system:String x:Key="flowlauncher_plugin_websearch_input_url">Bitte geben Sie eine URL ein</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword_exist">Aktions-Schlüsselwort ist bereits vorhanden. Bitte geben Sie ein anderes ein</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_succeed">Erfolg</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_edit_failed">Failed to update search source. The item may have been removed.</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_iconpath_hint">Hinweis: Sie müssen keine benutzerdefinierten Bilder in diesem Verzeichnis ablegen, wenn die Version von Flow aktualisiert wird, gehen diese verloren. Flow kopiert automatisch jegliche Bilder außerhalb dieses Verzeichnisses herüber in den benutzerdefinierten Bildspeicherort von WebSearch.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_websearch_plugin_name">Web-Suchen</system:String>

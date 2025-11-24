@@ -43,6 +43,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_input_url">URL을 입력하세요</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword_exist">액션 키워드가 이미 존재합니다. 다른 것을 입력해주세요.</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_succeed">성공</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_edit_failed">Failed to update search source. The item may have been removed.</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_iconpath_hint">Hint: You do not need to place custom images in this directory, if Flow's version is updated they will be lost. Flow will automatically copy any images outside of this directory across to WebSearch's custom image location.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_websearch_plugin_name">웹 검색</system:String>

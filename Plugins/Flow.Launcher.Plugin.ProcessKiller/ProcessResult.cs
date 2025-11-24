@@ -3,25 +3,16 @@ using Flow.Launcher.Plugin.SharedModels;
 
 namespace Flow.Launcher.Plugin.ProcessKiller
 {
-    internal class ProcessResult
+    internal class ProcessResult(Process process, int score, string title, MatchResult match, string tooltip)
     {
-        public ProcessResult(Process process, int score, string title, MatchResult match, string tooltip)
-        {
-            Process = process;
-            Score = score;
-            Title = title;
-            TitleMatch = match;
-            Tooltip = tooltip;
-        }
+        public Process Process { get; } = process;
 
-        public Process Process { get; }
+        public int Score { get; } = score;
 
-        public int Score { get; }
+        public string Title { get; } = title;
 
-        public string Title { get; }
+        public MatchResult TitleMatch { get; } = match;
 
-        public MatchResult TitleMatch { get; }
-
-        public string Tooltip { get; }
+        public string Tooltip { get; } = tooltip;
     }
 }

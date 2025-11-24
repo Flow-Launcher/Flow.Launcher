@@ -33,6 +33,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <NoWarn>$(NoWarn);FLSG0007</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -54,6 +55,10 @@
     <Content Include="Images\*.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Flow.Launcher.Localization" Version="0.0.6" />
   </ItemGroup>
 
 </Project>

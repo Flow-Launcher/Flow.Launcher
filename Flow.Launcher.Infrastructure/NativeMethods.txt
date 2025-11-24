@@ -85,5 +85,10 @@ QueryFullProcessImageName
 EVENT_OBJECT_HIDE
 EVENT_SYSTEM_DIALOGEND
 
+DEVICE_NOTIFY_SUBSCRIBE_PARAMETERS
 WM_POWERBROADCAST
 PBT_APMRESUMEAUTOMATIC
+PBT_APMRESUMESUSPEND
+PowerRegisterSuspendResumeNotification
+PowerUnregisterSuspendResumeNotification
+DeviceNotifyCallbackRoutine

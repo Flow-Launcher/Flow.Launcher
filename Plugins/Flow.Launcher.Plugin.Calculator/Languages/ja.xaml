@@ -2,7 +2,7 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <system:String x:Key="flowlauncher_plugin_calculator_plugin_name">電卓</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_plugin_description">Perform mathematical calculations, including hex values and advanced functions such as 'min(1,2,3)', 'sqrt(123)' and 'cos(123)'.</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_plugin_description">16進数の値や「min(1,2,3)」、「sqrt(123)」、「cos(123)」などの高度な関数を含む数学的な計算を実行します。</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_not_a_number">数値で表せません (NaN)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_expression_not_complete">式が間違っているか不完全です（括弧を忘れていませんか？）</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_copy_number_to_clipboard">この数字をクリップボードにコピーします</system:String>
@@ -13,5 +13,5 @@
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_dot">ドット (.)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_max_decimal_places">小数点以下の最大桁数</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_failed_to_copy">コピーに失敗しました。後でやり直してください</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_show_error_message">Show error message when calculation fails</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_show_error_message">計算に失敗したときにエラーメッセージを表示</system:String>
 </ResourceDictionary>

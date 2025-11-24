@@ -5,19 +5,19 @@ namespace Flow.Launcher.Plugin.PluginIndicator
 {
     public class Main : IPlugin, IPluginI18n, IHomeQuery
     {
-        internal PluginInitContext Context { get; private set; }
+        internal static PluginInitContext Context { get; private set; }
+
+        public void Init(PluginInitContext context)
+        {
+            Context = context;
+        }
 
         public List<Result> Query(Query query)
         {
             return QueryResults(query);
         }
 
-        public List<Result> HomeQuery()
-        {
-            return QueryResults();
-        }
-
-        private List<Result> QueryResults(Query query = null)
+        private static List<Result> QueryResults(Query query = null)
         {
             var nonGlobalPlugins = GetNonGlobalPlugins();
             var querySearch = query?.Search ?? string.Empty;
@@ -34,7 +34,7 @@ namespace Flow.Launcher.Plugin.PluginIndicator
                 select new Result
                 {
                     Title = keyword,
-                    SubTitle = string.Format(Context.API.GetTranslation("flowlauncher_plugin_pluginindicator_result_subtitle"), plugin.Name),
+                    SubTitle = Localize.flowlauncher_plugin_pluginindicator_result_subtitle(plugin.Name),
                     Score = score,
                     IcoPath = plugin.IcoPath,
                     AutoCompleteText = $"{keyword}{Plugin.Query.TermSeparator}",
@@ -44,10 +44,10 @@ namespace Flow.Launcher.Plugin.PluginIndicator
                         return false;
                     }
                 };
-            return results.ToList();
+            return [.. results];
         }
 
-        private Dictionary<string, PluginPair> GetNonGlobalPlugins()
+        private static Dictionary<string, PluginPair> GetNonGlobalPlugins()
         {
             var nonGlobalPlugins = new Dictionary<string, PluginPair>();
             foreach (var plugin in Context.API.GetAllPlugins())
@@ -66,19 +66,19 @@ namespace Flow.Launcher.Plugin.PluginIndicator
             return nonGlobalPlugins;
         }
 
-        public void Init(PluginInitContext context)
-        {
-            Context = context;
-        }
-
         public string GetTranslatedPluginTitle()
         {
-            return Context.API.GetTranslation("flowlauncher_plugin_pluginindicator_plugin_name");
+            return Localize.flowlauncher_plugin_pluginindicator_plugin_name();
         }
 
         public string GetTranslatedPluginDescription()
         {
-            return Context.API.GetTranslation("flowlauncher_plugin_pluginindicator_plugin_description");
+            return Localize.flowlauncher_plugin_pluginindicator_plugin_description();
+        }
+
+        public List<Result> HomeQuery()
+        {
+            return QueryResults();
         }
     }
 }

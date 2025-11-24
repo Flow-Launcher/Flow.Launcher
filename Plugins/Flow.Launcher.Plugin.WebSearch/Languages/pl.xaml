@@ -45,6 +45,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_input_url">Musisz wpisać adres URL</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword_exist">Ten wyzwalacz jest już używany, musisz wybrać inny</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_succeed">Sukces</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_edit_failed">Failed to update search source. The item may have been removed.</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_iconpath_hint">Wskazówka: Nie musisz umieszczać niestandardowych obrazów w tym katalogu, ponieważ zostaną one utracone w przypadku aktualizacji wersji Flow. Flow automatycznie skopiuje wszystkie obrazy spoza tego katalogu do lokalizacji niestandardowych obrazów WebSearch.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_websearch_plugin_name">Wyszukiwarka WWW</system:String>

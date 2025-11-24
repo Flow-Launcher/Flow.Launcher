@@ -45,6 +45,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_input_url">Zadajte URL</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword_exist">Zadaný aktivačný príkaz už existuje, zadajte iný aktivačný príkaz</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_succeed">Úspešné</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_edit_failed">Nepodarilo sa aktualizovať zdroj vyhľadávania. Položka mohla byť odstránená.</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_iconpath_hint">Poznámka: Do tohto priečinka nemusíte vkladať obrázky, ak sa Flow Launcher aktualizuje, zmiznú. Flow Launcher bude automaticky kopírovať obrázky mimo tohto priečinka naprieč vlastnému umiestneniu obrázkov pluginu.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_websearch_plugin_name">Webové vyhľadávanie</system:String>

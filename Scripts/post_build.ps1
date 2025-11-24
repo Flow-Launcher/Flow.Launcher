@@ -33,7 +33,7 @@ function Build-Path {
 
 function Copy-Resources ($path) {
     # making version static as multiple versions can exist in the nuget folder and in the case a breaking change is introduced.
-    Copy-Item -Force $env:USERPROFILE\.nuget\packages\squirrel.windows\1.5.2\tools\Squirrel.exe $path\Output\Update.exe
+    Copy-Item -Force $env:USERPROFILE\.nuget\packages\squirrel.windows\1.9.0\tools\Squirrel.exe $path\Output\Update.exe
 }
 
 function Delete-Unused ($path, $config) {
@@ -79,7 +79,7 @@ function Pack-Squirrel-Installer ($path, $version, $output) {
     $icon = "$path\Flow.Launcher\Resources\app.ico"
     Write-Host "icon: $icon"
     # Squirrel.com: https://github.com/Squirrel/Squirrel.Windows/issues/369
-    New-Alias Squirrel $env:USERPROFILE\.nuget\packages\squirrel.windows\1.5.2\tools\Squirrel.exe -Force
+    New-Alias Squirrel $env:USERPROFILE\.nuget\packages\squirrel.windows\1.9.0\tools\Squirrel.exe -Force
     # why we need Write-Output: https://github.com/Squirrel/Squirrel.Windows/issues/489#issuecomment-156039327
     # directory of releaseDir in squirrel can't be same as directory ($nupkg) in releasify
     $temp = "$output\Temp"

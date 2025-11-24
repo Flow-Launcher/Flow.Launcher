@@ -65,6 +65,10 @@ Nevykonali sa žiadne zmeny.</system:String>
     <system:String x:Key="PositionReset">Resetovať pozíciu</system:String>
     <system:String x:Key="PositionResetToolTip">Resetovať pozíciu vyhľadávacieho okna</system:String>
     <system:String x:Key="queryTextBoxPlaceholder">Zadajte text na vyhľadávanie</system:String>
+    <system:String x:Key="pluginStillInitializing">{0}: Tento plugin sa stále inicializuje…</system:String>
+    <system:String x:Key="pluginStillInitializingSubtitle">Vyberte tento výsledok na opätovné vyhľadávanie</system:String>
+    <system:String x:Key="pluginFailedToRespond">{0}: Nepodarilo sa odpovedať!</system:String>
+    <system:String x:Key="pluginFailedToRespondSubtitle">Vyberte tento výsledok pre viac informácií</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Nastavenia</system:String>
@@ -169,10 +173,14 @@ Nevykonali sa žiadne zmeny.</system:String>
     <system:String x:Key="KoreanImeSettingChangeFailTitle">Nepodarilo sa zmeniť nastavenie kórejského IME</system:String>
     <system:String x:Key="KoreanImeSettingChangeFailSubTitle">Skontrolujte prístup do systémového registra alebo kontaktujte podporu.</system:String>
     <system:String x:Key="homePage">Domovská stránka</system:String>
-    <system:String x:Key="homePageToolTip">Zobraziť výsledky Domovskej stránky, keď je text dopytu prázdny.</system:String>
-    <system:String x:Key="historyResultsForHomePage">Zobraziť výsledky histórie na Domovskej stránke</system:String>
-    <system:String x:Key="historyResultsCountForHomePage">Maximálny počet zobrazených výsledkov histórie na Domovskej stránke</system:String>
-    <system:String x:Key="homeToggleBoxToolTip">Úprava je možná len vtedy, ak plugin podporuje funkciu Domovská stránka a Domovská stránka je povolená.</system:String>
+    <system:String x:Key="homePageToolTip">Zobraziť výsledky domovskej stránky, keď je text dopytu prázdny.</system:String>
+    <system:String x:Key="historyResultsForHomePage">Zobraziť výsledky histórie na domovskej stránke</system:String>
+    <system:String x:Key="historyResultsCountForHomePage">Maximálny počet histórie výsledkov zobrazenej na domovskej stránke</system:String>
+    <system:String x:Key="historyStyle">Štýl histórie</system:String>
+    <system:String x:Key="historyStyleTooltip">Vyberte, ktorý typ histórie sa má zobraziť v histórii a na domovskej stránke</system:String>
+    <system:String x:Key="queryHistory">História dopytov</system:String>
+    <system:String x:Key="executedHistory">História naposledy otvorených</system:String>
+    <system:String x:Key="homeToggleBoxToolTip">Úprava je možná len vtedy, ak plugin podporuje funkciu domovská stránka a zároveň je povolená.</system:String>
     <system:String x:Key="showAtTopmost">Zobraziť vyhľadávacie okno v popredí</system:String>
     <system:String x:Key="showAtTopmostToolTip">Prepíše nastavenie &quot;Vždy na vrchu&quot; ostatných programov a zobrazí navrchu Flow.</system:String>
     <system:String x:Key="autoRestartAfterChanging">Reštartovať po úprave pluginu cez Repozitár pluginov</system:String>
@@ -215,6 +223,8 @@ Nevykonali sa žiadne zmeny.</system:String>
     <system:String x:Key="plugin_query_version">Verzia</system:String>
     <system:String x:Key="plugin_query_web">Webstránka</system:String>
     <system:String x:Key="plugin_uninstall">Odinštalovať</system:String>
+    <system:String x:Key="plugin_default_search_delay_time">Oneskorenie vyhľadávania: predvolené</system:String>
+    <system:String x:Key="plugin_search_delay_time">Oneskorenie vyhľadávania: {0} ms</system:String>
     <system:String x:Key="failedToRemovePluginSettingsTitle">Nepodarilo sa odstrániť nastavenia pluginu</system:String>
     <system:String x:Key="failedToRemovePluginSettingsMessage">Pluginy: {0} – Nepodarilo sa odstrániť súbory s nastaveniami pluginu, odstráňte ich manuálne</system:String>
     <system:String x:Key="failedToRemovePluginCacheTitle">Nepodarilo sa odstrániť vyrovnávaciu pamäť pluginu</system:String>
@@ -533,7 +543,7 @@ Nevykonali sa žiadne zmeny.</system:String>
 
     <!--  Search Delay Settings Dialog  -->
     <system:String x:Key="homeTitle">Domovská stránka</system:String>
-    <system:String x:Key="homeTips">Ak chcete zobrazovať výsledky pluginu, keď je dopyt prázdny, povoľte funkciu Domovská stránka.</system:String>
+    <system:String x:Key="homeTips">Ak chcete zobrazovať výsledky pluginu, keď je dopyt prázdny, povoľte funkciu domovská stránka.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Klávesová skratka vlastného vyhľadávania</system:String>
@@ -596,8 +606,9 @@ Ak pri zadávaní skratky pred ňu pridáte &quot;@&quot;, bude sa zhodovať s �
         Zadaný správca súborov sa nenašiel. Skontrolujte nastavenie vlastného správcu súborov v Nastavenia &gt; Všeobecné.
     </system:String>
     <system:String x:Key="errorTitle">Chyba</system:String>
-    <system:String x:Key="folderOpenError">Počas otvárania priečinka sa vyskytla chyba. {0}</system:String>
+    <system:String x:Key="folderOpenError">Pri otváraní priečinka došlo k chybe.</system:String>
     <system:String x:Key="browserOpenError">Pri otváraní adresy URL v prehliadači došlo k chybe. Skontrolujte konfiguráciu predvoleného webového prehliadača v nastaveniach Všeobecné</system:String>
+    <system:String x:Key="fileNotFoundError">Súbor alebo priečinok sa nenašiel: {0}</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Čakajte, prosím...</system:String>

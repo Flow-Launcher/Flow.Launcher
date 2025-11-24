@@ -45,6 +45,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_input_url">הזן כתובת URL</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword_exist">מילת המפתח כבר קיימת, הזן אחת אחרת</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_succeed">הצליח</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_edit_failed">Failed to update search source. The item may have been removed.</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_iconpath_hint">רמז: אין צורך להוסיף תמונות מותאמות אישית לתיקייה זו, כיוון שבעדכון הבא של Flow הן יאבדו. Flow יעתיק אוטומטית תמונות שנמצאות מחוץ לתיקייה זו למיקום התמונות המותאמות אישית של WebSearch.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_websearch_plugin_name">חיפושי אינטרנט</system:String>

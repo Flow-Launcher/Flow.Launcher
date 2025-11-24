@@ -64,6 +64,10 @@
     <system:String x:Key="PositionReset">位置のリセット</system:String>
     <system:String x:Key="PositionResetToolTip">検索ウィンドウの位置をリセット</system:String>
     <system:String x:Key="queryTextBoxPlaceholder">ここに入力して検索</system:String>
+    <system:String x:Key="pluginStillInitializing">{0}: This plugin is still initializing...</system:String>
+    <system:String x:Key="pluginStillInitializingSubtitle">Select this result to requery</system:String>
+    <system:String x:Key="pluginFailedToRespond">{0}: Failed to respond!</system:String>
+    <system:String x:Key="pluginFailedToRespondSubtitle">Select this result for more info</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">設定</system:String>
@@ -171,6 +175,10 @@
     <system:String x:Key="homePageToolTip">検索文字列が空の場合、ホームページの結果を表示します。</system:String>
     <system:String x:Key="historyResultsForHomePage">クエリの履歴をホームページに表示</system:String>
     <system:String x:Key="historyResultsCountForHomePage">ホームページに表示される最大の履歴の数</system:String>
+    <system:String x:Key="historyStyle">履歴のスタイル</system:String>
+    <system:String x:Key="historyStyleTooltip">履歴とホームページに表示する履歴の種類を選択します</system:String>
+    <system:String x:Key="queryHistory">クエリの履歴</system:String>
+    <system:String x:Key="executedHistory">Last opened history</system:String>
     <system:String x:Key="homeToggleBoxToolTip">これは、プラグインがホーム機能をサポートし、ホームページが有効な場合にのみ編集することができます。</system:String>
     <system:String x:Key="showAtTopmost">検索ウィンドウを最前面に表示</system:String>
     <system:String x:Key="showAtTopmostToolTip">他のプログラムの 'Always on Top' （最前面に表示）設定を上書きし、常に最前面のウィンドウで Flow を表示します。</system:String>
@@ -214,6 +222,8 @@
     <system:String x:Key="plugin_query_version">バージョン</system:String>
     <system:String x:Key="plugin_query_web">ウェブサイト</system:String>
     <system:String x:Key="plugin_uninstall">アンインストール</system:String>
+    <system:String x:Key="plugin_default_search_delay_time">検索の遅延時間: デフォルト</system:String>
+    <system:String x:Key="plugin_search_delay_time">検索の遅延時間: {0}ms</system:String>
     <system:String x:Key="failedToRemovePluginSettingsTitle">プラグイン設定の削除に失敗</system:String>
     <system:String x:Key="failedToRemovePluginSettingsMessage">プラグイン: {0} - プラグイン設定ファイルの削除に失敗しました。手動で削除してください</system:String>
     <system:String x:Key="failedToRemovePluginCacheTitle">プラグインキャッシュの削除に失敗</system:String>
@@ -224,7 +234,7 @@
     <system:String x:Key="failedToUninstallPluginTitle">{0} のアンインストールに失敗</system:String>
     <system:String x:Key="fileNotFoundMessage">展開されたzipファイルからplugin.jsonが見つからないか、このパス {0} が存在しません</system:String>
     <system:String x:Key="pluginExistAlreadyMessage">同じIDとバージョンのプラグインがすでに存在するか、またはこのダウンロードしたプラグインよりもバージョンが大きいです</system:String>
-    <system:String x:Key="errorCreatingSettingPanel">Error creating setting panel for plugin {0}:{1}{2}</system:String>
+    <system:String x:Key="errorCreatingSettingPanel">プラグイン {0}の設定パネル作成中にエラーが発生しました:{1}{2}</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">プラグインストア</system:String>
@@ -444,7 +454,7 @@
     <system:String x:Key="icons">アイコン</system:String>
     <system:String x:Key="about_activate_times">あなたはFlow Launcherを {0} 回利用しました</system:String>
     <system:String x:Key="checkUpdates">アップデートを確認する</system:String>
-    <system:String x:Key="BecomeASponsor">スポンサーになる</system:String>
+    <system:String x:Key="BecomeASponsor">Become a Sponsor</system:String>
     <system:String x:Key="newVersionTips">新しいバージョン {0} が利用可能です。Flow Launcherを再起動してください。</system:String>
     <system:String x:Key="checkUpdatesFailed">アップデートの確認に失敗しました、api.github.com への接続とプロキシ設定を確認してください。</system:String>
     <system:String x:Key="downloadUpdatesFailed">
@@ -468,7 +478,7 @@
     <system:String x:Key="userdatapathButton">フォルダーを開く</system:String>
     <system:String x:Key="advanced">上級者向け機能</system:String>
     <system:String x:Key="logLevel">ログレベル</system:String>
-    <system:String x:Key="LogLevelNONE">Silent</system:String>
+    <system:String x:Key="LogLevelNONE">サイレント</system:String>
     <system:String x:Key="LogLevelERROR">エラー</system:String>
     <system:String x:Key="LogLevelINFO">情報</system:String>
     <system:String x:Key="LogLevelDEBUG">デバッグ</system:String>
@@ -493,7 +503,7 @@
     <system:String x:Key="fileManager_file_arg">ファイル用の引数</system:String>
     <system:String x:Key="fileManagerPathNotFound">ファイルマネージャー '{0}' は、'{1}' に見つかりませんでした。続行しますか？</system:String>
     <system:String x:Key="fileManagerPathError">ファイルマネージャのパスエラー</system:String>
-    <system:String x:Key="fileManagerExplorer">File Explorer</system:String>
+    <system:String x:Key="fileManagerExplorer">ファイルエクスプローラー</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">デフォルトのウェブブラウザー</system:String>
@@ -504,8 +514,8 @@
     <system:String x:Key="defaultBrowser_newWindow">新しいウィンドウ</system:String>
     <system:String x:Key="defaultBrowser_newTab">新しいタブ</system:String>
     <system:String x:Key="defaultBrowser_parameter">プライベートモード</system:String>
-    <system:String x:Key="defaultBrowser_default">Default</system:String>
-    <system:String x:Key="defaultBrowser_new_profile">New Profile</system:String>
+    <system:String x:Key="defaultBrowser_default">デフォルト</system:String>
+    <system:String x:Key="defaultBrowser_new_profile">新しいプロファイル</system:String>
 
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">優先度の変更</system:String>
@@ -595,8 +605,9 @@
         指定されたファイルマネージャーが見つかりませんでした。設定 &gt; 一般でカスタムファイルマネージャの設定を確認してください。
     </system:String>
     <system:String x:Key="errorTitle">エラー</system:String>
-    <system:String x:Key="folderOpenError">フォルダを開く際にエラーが発生しました。 {0}</system:String>
+    <system:String x:Key="folderOpenError">フォルダを開く際にエラーが発生しました。</system:String>
     <system:String x:Key="browserOpenError">ブラウザでURLを開く際にエラーが発生しました。設定ウィンドウの一般セクションでデフォルトのウェブブラウザ設定を確認してください</system:String>
+    <system:String x:Key="fileNotFoundError">ファイルまたはフォルダーが見つかりません: {0}</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">しばらくお待ちください…</system:String>

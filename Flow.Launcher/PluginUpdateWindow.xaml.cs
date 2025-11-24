@@ -23,7 +23,7 @@ namespace Flow.Launcher
             {
                 var checkBox = new CheckBox
                 {
-                    Content = string.Format(App.API.GetTranslation("updatePluginCheckboxContent"), plugin.Name, plugin.CurrentVersion, plugin.NewVersion),
+                    Content = Localize.updatePluginCheckboxContent(plugin.Name, plugin.CurrentVersion, plugin.NewVersion),
                     IsChecked = true,
                     Margin = new Thickness(0, 5, 0, 5),
                     Tag = plugin,
@@ -50,10 +50,7 @@ namespace Flow.Launcher
         {
             if (sender is not CheckBox cb) return;
             if (cb.Tag is not PluginUpdateInfo plugin) return;
-            if (Plugins.Contains(plugin))
-            {
-                Plugins.Remove(plugin);
-            }
+            Plugins.Remove(plugin);
         }
 
         private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
@@ -66,7 +63,7 @@ namespace Flow.Launcher
         {
             if (Plugins.Count == 0)
             {
-                App.API.ShowMsgBox(App.API.GetTranslation("updatePluginNoSelected"));
+                App.API.ShowMsgBox(Localize.updatePluginNoSelected());
                 return;
             }
 

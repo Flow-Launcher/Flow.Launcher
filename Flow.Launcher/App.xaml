@@ -2,7 +2,8 @@
     x:Class="Flow.Launcher.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:ui="http://schemas.modernwpf.com/2019"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
     ShutdownMode="OnMainWindowClose"
     Startup="OnStartup">
     <Application.Resources>
@@ -10,17 +11,17 @@
             <ResourceDictionary.MergedDictionaries>
                 <ui:ThemeResources>
                     <ui:ThemeResources.ThemeDictionaries>
-                        <ResourceDictionary x:Key="Light">
+                        <ResourceDictionary x:Key="Light" ui:ThemeDictionary.Key="Light">
                             <ResourceDictionary.MergedDictionaries>
                                 <ResourceDictionary Source="pack://application:,,,/Resources/Light.xaml" />
                             </ResourceDictionary.MergedDictionaries>
                         </ResourceDictionary>
-                        <ResourceDictionary x:Key="Dark">
+                        <ResourceDictionary x:Key="Dark" ui:ThemeDictionary.Key="Dark">
                             <ResourceDictionary.MergedDictionaries>
                                 <ResourceDictionary Source="pack://application:,,,/Resources/Dark.xaml" />
                             </ResourceDictionary.MergedDictionaries>
                         </ResourceDictionary>
-                        <ResourceDictionary x:Key="HighContrast">
+                        <ResourceDictionary x:Key="HighContrast" ui:ThemeDictionary.Key="HighContrast">
                             <ResourceDictionary.MergedDictionaries>
                                 <ResourceDictionary Source="pack://application:,,,/Resources/Dark.xaml" />
                             </ResourceDictionary.MergedDictionaries>
@@ -33,6 +34,15 @@
                 <ResourceDictionary Source="pack://application:,,,/Themes/Win11Light.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Languages/en.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <!--  Override styles in UI.Modern.WPF  -->
+            <Thickness x:Key="ListViewItemCompactSelectedBorderThemeThickness">2</Thickness>
+            <sys:Double x:Key="CheckBoxMinWidth">0</sys:Double>
+            <sys:Double x:Key="GridViewItemMinWidth">0</sys:Double>
+            <sys:Double x:Key="GridViewItemMinHeight">40</sys:Double>
+            <sys:Double x:Key="ListViewItemMinWidth">0</sys:Double>
+            <sys:Double x:Key="ListViewItemMinHeight">36</sys:Double>
+            <SolidColorBrush x:Key="NavigationViewSelectionIndicatorForeground" Color="#FF0063B1" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -22,7 +22,7 @@
     <system:String x:Key="plugin_explorer_directoryinfosearch_error">Se ha producido un error durante la búsqueda: {0}</system:String>
     <system:String x:Key="plugin_explorer_opendir_error">No se ha podido abrir la carpeta</system:String>
     <system:String x:Key="plugin_explorer_openfile_error">No se ha podido abrir el archivo</system:String>
-    <system:String x:Key="plugin_explorer_new_action_keyword_assigned">This new action keyword is already assigned to another plugin, please choose a different one</system:String>
+    <system:String x:Key="plugin_explorer_new_action_keyword_assigned">Esta nueva palabra clave de acción ya está asignada a otro complemento, por favor elija otra diferente</system:String>
 
     <!--  Controls  -->
     <system:String x:Key="plugin_explorer_delete">Eliminar</system:String>

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -173,8 +173,20 @@ namespace Flow.Launcher.Plugin
         /// <summary>
         /// Get all loaded plugins
         /// </summary>
+        /// <remarks>
+        /// Will also return any plugins not fully initialized yet
+        /// </remarks>
         /// <returns></returns>
         List<PluginPair> GetAllPlugins();
+
+        /// <summary>
+        /// Get all initialized plugins
+        /// </summary>
+        /// <param name="includeFailed">
+        /// Whether to include plugins that failed to initialize
+        /// </param>
+        /// <returns></returns>
+        List<PluginPair> GetAllInitializedPlugins(bool includeFailed);
 
         /// <summary>
         /// Registers a callback function for global keyboard events.

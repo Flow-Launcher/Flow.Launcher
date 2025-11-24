@@ -13,8 +13,8 @@ public class Settings : BaseModel
         }
     }
 
-    public ObservableCollection<Command> Commands { get; set; } = new ObservableCollection<Command>
-    {
+    public ObservableCollection<Command> Commands { get; set; } =
+    [
         new()
         {
             Key = "Shutdown",
@@ -120,7 +120,7 @@ public class Settings : BaseModel
             Key = "Set Flow Launcher Theme",
             Keyword = "Set Flow Launcher Theme"
         }
-    };
+    ];
 
     [JsonIgnore]
     public Command SelectedCommand { get; set; }

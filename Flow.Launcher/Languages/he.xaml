@@ -64,6 +64,10 @@
     <system:String x:Key="PositionReset">איפוס מיקום</system:String>
     <system:String x:Key="PositionResetToolTip">אפס את מיקום חלון החיפוש</system:String>
     <system:String x:Key="queryTextBoxPlaceholder">הקלד כאן כדי לחפש</system:String>
+    <system:String x:Key="pluginStillInitializing">{0}: This plugin is still initializing...</system:String>
+    <system:String x:Key="pluginStillInitializingSubtitle">Select this result to requery</system:String>
+    <system:String x:Key="pluginFailedToRespond">{0}: Failed to respond!</system:String>
+    <system:String x:Key="pluginFailedToRespondSubtitle">Select this result for more info</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">הגדרות</system:String>
@@ -170,6 +174,10 @@
     <system:String x:Key="homePageToolTip">Show home page results when query text is empty.</system:String>
     <system:String x:Key="historyResultsForHomePage">Show History Results in Home Page</system:String>
     <system:String x:Key="historyResultsCountForHomePage">Maximum History Results Shown in Home Page</system:String>
+    <system:String x:Key="historyStyle">History Style</system:String>
+    <system:String x:Key="historyStyleTooltip">Choose the type of history to show in the History and Home Page</system:String>
+    <system:String x:Key="queryHistory">Query history</system:String>
+    <system:String x:Key="executedHistory">Last opened history</system:String>
     <system:String x:Key="homeToggleBoxToolTip">ניתן לערוך זאת רק אם התוסף תומך בתכונת הבית ודף הבית מופעל.</system:String>
     <system:String x:Key="showAtTopmost">Show Search Window at Foremost</system:String>
     <system:String x:Key="showAtTopmostToolTip">עוקף את הגדרת תמיד עליון של תוכנות אחרות, ומציג את Flow במיקום הגבוה ביותר.</system:String>
@@ -213,6 +221,8 @@
     <system:String x:Key="plugin_query_version">גרסה</system:String>
     <system:String x:Key="plugin_query_web">אתר</system:String>
     <system:String x:Key="plugin_uninstall">הסר התקנה</system:String>
+    <system:String x:Key="plugin_default_search_delay_time">Search delay time: default</system:String>
+    <system:String x:Key="plugin_search_delay_time">Search delay time: {0}ms</system:String>
     <system:String x:Key="failedToRemovePluginSettingsTitle">נכשל בהסרת הגדרות התוסף</system:String>
     <system:String x:Key="failedToRemovePluginSettingsMessage">תוספים: {0} - נכשל בהסרת קבצי הגדרות התוסף, יש להסירם ידנית</system:String>
     <system:String x:Key="failedToRemovePluginCacheTitle">נכשל בהסרת מטמון התוסף</system:String>
@@ -443,7 +453,7 @@
     <system:String x:Key="icons">סמלים</system:String>
     <system:String x:Key="about_activate_times">הפעלת את Flow Launcher {0} פעמים</system:String>
     <system:String x:Key="checkUpdates">בדוק עדכונים</system:String>
-    <system:String x:Key="BecomeASponsor">תן חסות</system:String>
+    <system:String x:Key="BecomeASponsor">Become a Sponsor</system:String>
     <system:String x:Key="newVersionTips">גרסה חדשה {0} זמינה, האם ברצונך להפעיל מחדש את Flow Launcher כדי להשתמש בעדכון?</system:String>
     <system:String x:Key="checkUpdatesFailed">בדיקת העדכונים נכשלה, אנא בדוק את הגדרות החיבור ואת הגדרות ה-Proxy שלך לכתובת api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
@@ -594,8 +604,9 @@
         לא ניתן היה למצוא את מנהל הקבצים שצוין. אנא בדוק את ההגדרה של מנהל קבצים מותאם אישית תחת הגדרות &gt; כללי.
     </system:String>
     <system:String x:Key="errorTitle">שגיאה</system:String>
-    <system:String x:Key="folderOpenError">אירעה שגיאה בעת פתיחת התיקייה. {0}</system:String>
+    <system:String x:Key="folderOpenError">An error occurred while opening the folder.</system:String>
     <system:String x:Key="browserOpenError">אירעה שגיאה בעת פתיחת כתובת ה-URL בדפדפן. אנא בדוק את תצורת דפדפן האינטרנט המוגדר כברירת מחדל שלך במקטע הכללי של חלון ההגדרות</system:String>
+    <system:String x:Key="fileNotFoundError">File or directory not found: {0}</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">אנא המתן...</system:String>
