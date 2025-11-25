@@ -16,7 +16,7 @@ namespace Flow.Launcher.Plugin
 
         /// <summary>
         /// Raw query, this includes action keyword if it has.
-        /// It has handled built-in custom query hotkeys and build-in shortcuts, and it trims the whitespace.
+        /// It has handled built-in custom query hotkeys and built-in shortcuts, and it trims the whitespace.
         /// We don't recommend using this property directly. You should always use Search property.
         /// </summary>
         [Obsolete("RawQuery is renamed to TrimmedQuery. This property will be removed. Update the code to use TrimmedQuery instead.")]
