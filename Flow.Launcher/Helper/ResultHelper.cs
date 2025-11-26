@@ -16,11 +16,11 @@ public static class ResultHelper
         return await PopulateResultsAsync(item.PluginID, item.Query, item.Title, item.SubTitle, item.RecordKey);
     }
 
-    public static async Task<Result?> PopulateResultsAsync(string pluginId, string rawQuery, string title, string subTitle, string recordKey)
+    public static async Task<Result?> PopulateResultsAsync(string pluginId, string trimmedQuery, string title, string subTitle, string recordKey)
     {
         var plugin = PluginManager.GetPluginForId(pluginId);
         if (plugin == null) return null;
-        var query = QueryBuilder.Build(rawQuery, PluginManager.GetNonGlobalPlugins());
+        var query = QueryBuilder.Build(trimmedQuery, trimmedQuery, PluginManager.GetNonGlobalPlugins());
         if (query == null) return null;
         try
         {
