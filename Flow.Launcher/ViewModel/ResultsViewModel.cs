@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 
@@ -253,7 +254,9 @@ namespace Flow.Launcher.ViewModel
                 return newResults.OrderByDescending(rv => rv.Result.Score).ToList();
             }
 
-            App.API.LogDebug(ClassName, $"Keeping existing results for {resultsForUpdates.Count} queries");
+            if (_settings.LogLevel == LOGLEVEL.DEBUG)
+                App.API.LogDebug(ClassName, $"Keeping existing results for {resultsForUpdates.Count} queries");
+
             return Results.Where(r => r?.Result != null && resultsForUpdates.All(u => u.ID != r.Result.PluginID))
                               .Concat(newResults)
                               .OrderByDescending(rv => rv.Result.Score)
