@@ -17,7 +17,8 @@ namespace Flow.Launcher.Infrastructure
             action();
             stopWatch.Stop();
             var milliseconds = stopWatch.ElapsedMilliseconds;
-            Log.Debug(className, $"{message} <{milliseconds}ms>", methodName);
+            if (Log.LogLevel == LOGLEVEL.DEBUG)
+                Log.Debug(className, $"{message} <{milliseconds}ms>", methodName);
             return milliseconds;
         }
         
@@ -31,7 +32,8 @@ namespace Flow.Launcher.Infrastructure
             await action();
             stopWatch.Stop();
             var milliseconds = stopWatch.ElapsedMilliseconds;
-            Log.Debug(className, $"{message} <{milliseconds}ms>", methodName);
+            if (Log.LogLevel == LOGLEVEL.DEBUG)
+                Log.Debug(className, $"{message} <{milliseconds}ms>", methodName);
             return milliseconds;
         }
         

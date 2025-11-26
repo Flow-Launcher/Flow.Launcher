@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Threading;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Plugin;
@@ -125,7 +125,8 @@ namespace Flow.Launcher.Infrastructure.DialogJump.Models
         {
             Handle = handle;
             _dialogType = dialogType;
-            Log.Debug(ClassName, $"File dialog type: {dialogType}");
+            if (Log.LogLevel == LOGLEVEL.DEBUG)
+                Log.Debug(ClassName, $"File dialog type: {dialogType}");
         }
 
         #endregion

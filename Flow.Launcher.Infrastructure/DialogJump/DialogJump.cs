@@ -536,7 +536,8 @@ namespace Flow.Launcher.Infrastructure.DialogJump
                 // Handle window based on its type
                 if (isDialogWindow)
                 {
-                    Log.Debug(ClassName, $"Dialog Window: {hwnd}");
+                    if (Log.LogLevel == LOGLEVEL.DEBUG)
+                        Log.Debug(ClassName, $"Dialog Window: {hwnd}");
                     // Navigate to path
                     if (_settings.AutoDialogJump)
                     {
@@ -580,12 +581,14 @@ namespace Flow.Launcher.Infrastructure.DialogJump
                 // Dialog jump window
                 else if (hwnd == _mainWindowHandle)
                 {
-                    Log.Debug(ClassName, $"Main Window: {hwnd}");
+                    if (Log.LogLevel == LOGLEVEL.DEBUG)
+                        Log.Debug(ClassName, $"Main Window: {hwnd}");
                 }
                 // Other window
                 else
                 {
-                    Log.Debug(ClassName, $"Other Window: {hwnd}");
+                    if (Log.LogLevel == LOGLEVEL.DEBUG)
+                        Log.Debug(ClassName, $"Other Window: {hwnd}");
                     var dialogWindowExist = false;
                     lock (_dialogWindowLock)
                     {
@@ -613,7 +616,8 @@ namespace Flow.Launcher.Infrastructure.DialogJump
                                 var explorerWindow = explorer.Plugin.CheckExplorerWindow(hwnd);
                                 if (explorerWindow != null)
                                 {
-                                    Log.Debug(ClassName, $"Explorer window: {hwnd}");
+                                    if (Log.LogLevel == LOGLEVEL.DEBUG)
+                                        Log.Debug(ClassName, $"Explorer window: {hwnd}");
                                     _dialogJumpExplorers[explorer] = explorerWindow;
                                     _lastExplorer = explorer;
                                     break;
@@ -703,7 +707,8 @@ namespace Flow.Launcher.Infrastructure.DialogJump
             {
                 if (_dialogWindow != null && _dialogWindow.Handle == hwnd)
                 {
-                    Log.Debug(ClassName, $"Destory dialog: {hwnd}");
+                    if (Log.LogLevel == LOGLEVEL.DEBUG)
+                        Log.Debug(ClassName, $"Destory dialog: {hwnd}");
                     _dialogWindow = null;
                     dialogWindowExist = true;
                 }
@@ -734,7 +739,8 @@ namespace Flow.Launcher.Infrastructure.DialogJump
             {
                 if (_dialogWindow != null && _dialogWindow.Handle == hwnd)
                 {
-                    Log.Debug(ClassName, $"Hide dialog: {hwnd}");
+                    if (Log.LogLevel == LOGLEVEL.DEBUG)
+                        Log.Debug(ClassName, $"Hide dialog: {hwnd}");
                     _dialogWindow = null;
                     dialogWindowExist = true;
                 }
@@ -765,7 +771,8 @@ namespace Flow.Launcher.Infrastructure.DialogJump
             {
                 if (_dialogWindow != null && _dialogWindow.Handle == hwnd)
                 {
-                    Log.Debug(ClassName, $"End dialog: {hwnd}");
+                    if (Log.LogLevel == LOGLEVEL.DEBUG)
+                        Log.Debug(ClassName, $"End dialog: {hwnd}");
                     _dialogWindow = null;
                     dialogWindowExist = true;
                 }
@@ -955,15 +962,18 @@ namespace Flow.Launcher.Infrastructure.DialogJump
                     switch (_settings.DialogJumpFileResultBehaviour)
                     {
                         case DialogJumpFileResultBehaviours.FullPath:
-                            Log.Debug(ClassName, $"File Jump FullPath: {path}");
+                            if (Log.LogLevel == LOGLEVEL.DEBUG)
+                                Log.Debug(ClassName, $"File Jump FullPath: {path}");
                             result = FileJump(path, dialog);
                             break;
                         case DialogJumpFileResultBehaviours.FullPathOpen:
-                            Log.Debug(ClassName, $"File Jump FullPathOpen: {path}");
+                            if (Log.LogLevel == LOGLEVEL.DEBUG)
+                                Log.Debug(ClassName, $"File Jump FullPathOpen: {path}");
                             result = FileJump(path, dialog, openFile: true);
                             break;
                         case DialogJumpFileResultBehaviours.Directory:
-                            Log.Debug(ClassName, $"File Jump Directory (Auto: {auto}): {path}");
+                            if (Log.LogLevel == LOGLEVEL.DEBUG)
+                                Log.Debug(ClassName, $"File Jump Directory (Auto: {auto}): {path}");
                             result = DirJump(Path.GetDirectoryName(path), dialog, auto);
                             break;
                         default:
@@ -972,7 +982,8 @@ namespace Flow.Launcher.Infrastructure.DialogJump
                 }
                 else
                 {
-                    Log.Debug(ClassName, $"Dir Jump: {path}");
+                    if (Log.LogLevel == LOGLEVEL.DEBUG)
+                        Log.Debug(ClassName, $"Dir Jump: {path}");
                     result = DirJump(path, dialog, auto);
                 }
 

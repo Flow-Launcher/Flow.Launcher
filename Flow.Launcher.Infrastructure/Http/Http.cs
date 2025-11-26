@@ -146,7 +146,8 @@ namespace Flow.Launcher.Infrastructure.Http
         /// <returns>The Http result as string. Null if cancellation requested</returns>
         public static Task<string> GetAsync([NotNull] string url, CancellationToken token = default)
         {
-            Log.Debug(ClassName, $"Url <{url}>");
+            if (Log.LogLevel == LOGLEVEL.DEBUG)
+                Log.Debug(ClassName, $"Url <{url}>");
             return GetAsync(new Uri(url), token);
         }
 
@@ -158,7 +159,8 @@ namespace Flow.Launcher.Infrastructure.Http
         /// <returns>The Http result as string. Null if cancellation requested</returns>
         public static async Task<string> GetAsync([NotNull] Uri url, CancellationToken token = default)
         {
-            Log.Debug(ClassName, $"Url <{url}>");
+            if (Log.LogLevel == LOGLEVEL.DEBUG)
+                Log.Debug(ClassName, $"Url <{url}>");
             using var response = await client.GetAsync(url, token);
             var content = await response.Content.ReadAsStringAsync(token);
             if (response.StatusCode != HttpStatusCode.OK)
@@ -189,7 +191,8 @@ namespace Flow.Launcher.Infrastructure.Http
         public static async Task<Stream> GetStreamAsync([NotNull] Uri url,
             CancellationToken token = default)
         {
-            Log.Debug(ClassName, $"Url <{url}>");
+            if (Log.LogLevel == LOGLEVEL.DEBUG)
+                Log.Debug(ClassName, $"Url <{url}>");
             return await client.GetStreamAsync(url, token);
         }
 
@@ -200,7 +203,8 @@ namespace Flow.Launcher.Infrastructure.Http
         public static async Task<HttpResponseMessage> GetResponseAsync([NotNull] Uri url, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead,
             CancellationToken token = default)
         {
-            Log.Debug(ClassName, $"Url <{url}>");
+            if (Log.LogLevel == LOGLEVEL.DEBUG)
+                Log.Debug(ClassName, $"Url <{url}>");
             return await client.GetAsync(url, completionOption, token);
         }
 
@@ -223,10 +227,11 @@ namespace Flow.Launcher.Infrastructure.Http
         {
             try
             {
-                Log.Debug(ClassName, $"Url <{url}>");
+                if (Log.LogLevel == LOGLEVEL.DEBUG)
+                    Log.Debug(ClassName, $"Url <{url}>");
                 return await client.GetStringAsync(url, token);
             }
-            catch (System.Exception e)
+            catch
             {
                 return string.Empty;
             }
