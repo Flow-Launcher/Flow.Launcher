@@ -637,5 +637,11 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         /// <returns></returns>
         string GetLogDirectory();
+
+        /// <summary>
+        /// Get the current log level of Flow Launcher.
+        /// </summary>
+        /// <returns></returns>
+        LOGLEVEL GetLogLevel();
     }
 }

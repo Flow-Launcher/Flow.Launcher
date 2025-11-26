@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core.ExternalPlugins.Environments;
 #pragma warning disable IDE0005
 using Flow.Launcher.Infrastructure.Logger;
@@ -15,7 +14,6 @@ namespace Flow.Launcher.Core.Plugin
     public static class PluginsLoader
     {
         private static readonly string ClassName = nameof(PluginsLoader);
-        private static readonly Settings FlowSettings = Ioc.Default.GetRequiredService<Settings>();
 
         public static List<PluginPair> Plugins(List<PluginMetadata> metadatas, PluginsSettings settings)
         {
@@ -110,7 +108,7 @@ namespace Flow.Launcher.Core.Plugin
                 });
 
                 metadata.InitTime += milliseconds;
-                if (FlowSettings.LogLevel == LOGLEVEL.DEBUG)
+                if (PublicApi.Instance.GetLogLevel() == LOGLEVEL.DEBUG)
                     PublicApi.Instance.LogDebug(ClassName, $"Constructor cost for <{metadata.Name}> is <{metadata.InitTime}ms>");
             }
 

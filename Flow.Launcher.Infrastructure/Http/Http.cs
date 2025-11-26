@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Plugin;
 using JetBrains.Annotations;
 
 namespace Flow.Launcher.Infrastructure.Http

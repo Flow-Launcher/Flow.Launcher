@@ -3,6 +3,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Runtime.ExceptionServices;
 using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Plugin;
 using NLog;
 using NLog.Config;
 using NLog.Targets;
@@ -166,13 +167,5 @@ namespace Flow.Launcher.Infrastructure.Logger
         {
             LogInternal(NLog.LogLevel.Warn, className, message, methodName);
         }
-    }
-
-    public enum LOGLEVEL
-    {
-        NONE,
-        ERROR,
-        INFO,
-        DEBUG
     }
 }

@@ -6,12 +6,10 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.DialogJump;
-using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
@@ -34,7 +32,6 @@ namespace Flow.Launcher.Core.Plugin
         private static readonly ConcurrentDictionary<string, PluginPair> _nonGlobalPlugins = [];
 
         private static PluginsSettings Settings;
-        private static readonly Settings FlowSettings = Ioc.Default.GetRequiredService<Settings>();
         private static readonly ConcurrentBag<string> ModifiedPlugins = [];
 
         private static readonly ConcurrentBag<PluginPair> _contextMenuPlugins = [];
@@ -280,14 +277,14 @@ namespace Flow.Launcher.Core.Plugin
                     {
                         // If this plugin is already disabled, do not show error message again
                         // Or else it will be shown every time
-                        if (FlowSettings.LogLevel == LOGLEVEL.DEBUG)
+                        if (PublicApi.Instance.GetLogLevel() == LOGLEVEL.DEBUG)
                             PublicApi.Instance.LogDebug(ClassName, $"Skipped init for <{pair.Metadata.Name}> due to error");
                     }
                     else
                     {
                         pair.Metadata.Disabled = true;
                         pair.Metadata.HomeDisabled = true;
-                        if (FlowSettings.LogLevel == LOGLEVEL.DEBUG)
+                        if (PublicApi.Instance.GetLogLevel() == LOGLEVEL.DEBUG)
                             PublicApi.Instance.LogDebug(ClassName, $"Disable plugin <{pair.Metadata.Name}> because init failed");
                     }
 

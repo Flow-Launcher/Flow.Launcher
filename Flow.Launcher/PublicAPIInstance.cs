@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -52,7 +52,7 @@ namespace Flow.Launcher
         private Updater _updater;
         private Updater Updater => _updater ??= Ioc.Default.GetRequiredService<Updater>();
 
-        private readonly object _saveSettingsLock = new();
+        private readonly Lock _saveSettingsLock = new();
 
         #region Constructor
 
@@ -622,6 +622,8 @@ namespace Flow.Launcher
         public string GetDataDirectory() => DataLocation.DataDirectory();
 
         public string GetLogDirectory() => DataLocation.VersionLogDirectory;
+
+        public LOGLEVEL GetLogLevel() => Log.LogLevel;
 
         #endregion
 
