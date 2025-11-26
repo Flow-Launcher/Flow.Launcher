@@ -19,7 +19,6 @@ using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.DialogJump;
 using Flow.Launcher.Infrastructure.Hotkey;
-using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
@@ -315,7 +314,7 @@ namespace Flow.Launcher.ViewModel
 
                 if (token.IsCancellationRequested) return;
 
-                if (Settings.LogLevel == LOGLEVEL.DEBUG)
+                if (App.API.GetLogLevel() == LOGLEVEL.DEBUG)
                     App.API.LogDebug(ClassName, $"Update results for plugin <{pair.Metadata.Name}>");
 
                 if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, pair.Metadata, e.Query,
@@ -1384,7 +1383,7 @@ namespace Flow.Launcher.ViewModel
         {
             _updateSource?.Cancel();
 
-            if (Settings.LogLevel == LOGLEVEL.DEBUG)
+            if (App.API.GetLogLevel() == LOGLEVEL.DEBUG)
                 App.API.LogDebug(ClassName, $"Start query with text: <{QueryText}>");
 
             var query = await ConstructQueryAsync(QueryText, Settings.CustomShortcuts, Settings.BuiltinShortcuts);
@@ -1395,7 +1394,7 @@ namespace Flow.Launcher.ViewModel
                 return;
             }
 
-            if (Settings.LogLevel == LOGLEVEL.DEBUG)
+            if (App.API.GetLogLevel() == LOGLEVEL.DEBUG)
                 App.API.LogDebug(ClassName, $"Start query with ActionKeyword <{query.ActionKeyword}> and TrimmedQuery <{query.TrimmedQuery}>");
 
             var currentIsHomeQuery = query.IsHomeQuery;
@@ -1460,7 +1459,7 @@ namespace Flow.Launcher.ViewModel
                     }
                 }
 
-                if (Settings.LogLevel == LOGLEVEL.DEBUG)
+                if (App.API.GetLogLevel() == LOGLEVEL.DEBUG)
                     App.API.LogDebug(ClassName, $"Valid <{plugins.Count}> plugins: {string.Join(" ", plugins.Select(x => $"<{x.Metadata.Name}>"))}");
 
                 // Do not wait for performance improvement
@@ -1565,7 +1564,7 @@ namespace Flow.Launcher.ViewModel
 
             async Task QueryTaskAsync(PluginPair plugin, CancellationToken token)
             {
-                if (Settings.LogLevel == LOGLEVEL.DEBUG)
+                if (App.API.GetLogLevel() == LOGLEVEL.DEBUG)
                     App.API.LogDebug(ClassName, $"Wait for querying plugin <{plugin.Metadata.Name}>");
 
                 if (searchDelay && !currentIsHomeQuery) // Do not delay for home query
@@ -1610,7 +1609,7 @@ namespace Flow.Launcher.ViewModel
 
                 if (token.IsCancellationRequested) return;
 
-                if (Settings.LogLevel == LOGLEVEL.DEBUG)
+                if (App.API.GetLogLevel() == LOGLEVEL.DEBUG)
                     App.API.LogDebug(ClassName, $"Update results for plugin <{plugin.Metadata.Name}>");
 
                 if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, plugin.Metadata, query,
