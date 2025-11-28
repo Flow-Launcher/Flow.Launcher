@@ -884,13 +884,8 @@ namespace Flow.Launcher.ViewModel
                     }
                     _queryTextBeforeLeaveResults = QueryText;
 
-                    // We use private field and manually set QueryTextBox instead of QueryText setter
-                    // so that QueryTextBox_TextChanged1 will not be invoked to avoid duplicated Query calls
-                    _queryText = string.Empty;
-                    if (Application.Current?.MainWindow is MainWindow mainWindow)
-                    {
-                        mainWindow.SetQueryTextBoxText(string.Empty);
-                    }
+                    // We can use QueryText setter because the Query as follows does not requery
+                    QueryText = string.Empty;
 
                     // Because of Fody's optimization
                     // setter won't be called when property value is not changed.
