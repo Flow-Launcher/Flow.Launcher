@@ -1557,7 +1557,7 @@ namespace Flow.Launcher.ViewModel
             }
             finally
             {
-                // this make sures progress query is null when this query is canceled
+                // this ensures the query is removed from the progress tracking dictionary when this query is canceled or completes
                 _progressQueryDict.Remove(updateGuid, out _);
             }
 
