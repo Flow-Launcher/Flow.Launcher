@@ -114,7 +114,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     engineName = Enum.GetName(Settings.ContentSearchEngine);
                     break;
 
-                case false
+                case true or false
                     when activeActionKeywords.ContainsKey(ActionKeyword.QuickAccessActionKeyword):
                     return QuickAccess.AccessLinkListMatched(query, Settings.QuickAccessLinks);
 
