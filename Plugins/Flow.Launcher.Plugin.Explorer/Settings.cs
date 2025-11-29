@@ -68,8 +68,6 @@ namespace Flow.Launcher.Plugin.Explorer
 
         public bool FileSearchKeywordEnabled { get; set; }
 
-        public bool ExcludeQuickAccessFromActionKeywords { get; set; } = false;
-
         public bool WarnWindowsSearchServiceOff { get; set; } = true;
 
         public bool ShowFileSizeInPreviewPanel { get; set; } = true;
@@ -225,17 +223,18 @@ namespace Flow.Launcher.Plugin.Explorer
             _ => throw new ArgumentOutOfRangeException(nameof(actionKeyword), actionKeyword, "ActionKeyword enabled status not defined")
         };
 
-        public ActionKeyword? GetActiveActionKeyword(string actionKeywordStr)
+        public Dictionary<ActionKeyword, string> GetActiveActionKeywords(string actionKeywordStr)
         {
+            var result = new Dictionary<ActionKeyword, string>();
             if (string.IsNullOrEmpty(actionKeywordStr)) return null;
             foreach (var action in Enum.GetValues<ActionKeyword>())
             {
                 var keywordStr = GetActionKeyword(action);
                 if (string.IsNullOrEmpty(keywordStr)) continue;
                 var isEnabled = GetActionKeywordEnabled(action);
-                if (keywordStr == actionKeywordStr && isEnabled) return action;
+                if (keywordStr == actionKeywordStr && isEnabled) result.Add(action, keywordStr);
             }
-            return null;
+            return result;
         }
     }
 }
