@@ -64,6 +64,10 @@
     <system:String x:Key="PositionReset">位置のリセット</system:String>
     <system:String x:Key="PositionResetToolTip">検索ウィンドウの位置をリセット</system:String>
     <system:String x:Key="queryTextBoxPlaceholder">ここに入力して検索</system:String>
+    <system:String x:Key="pluginStillInitializing">{0}: This plugin is still initializing...</system:String>
+    <system:String x:Key="pluginStillInitializingSubtitle">Select this result to requery</system:String>
+    <system:String x:Key="pluginFailedToRespond">{0}: Failed to respond!</system:String>
+    <system:String x:Key="pluginFailedToRespondSubtitle">Select this result for more info</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">設定</system:String>
@@ -171,6 +175,10 @@
     <system:String x:Key="homePageToolTip">検索文字列が空の場合、ホームページの結果を表示します。</system:String>
     <system:String x:Key="historyResultsForHomePage">クエリの履歴をホームページに表示</system:String>
     <system:String x:Key="historyResultsCountForHomePage">ホームページに表示される最大の履歴の数</system:String>
+    <system:String x:Key="historyStyle">履歴のスタイル</system:String>
+    <system:String x:Key="historyStyleTooltip">履歴とホームページに表示する履歴の種類を選択します</system:String>
+    <system:String x:Key="queryHistory">クエリの履歴</system:String>
+    <system:String x:Key="executedHistory">Last opened history</system:String>
     <system:String x:Key="homeToggleBoxToolTip">これは、プラグインがホーム機能をサポートし、ホームページが有効な場合にのみ編集することができます。</system:String>
     <system:String x:Key="showAtTopmost">検索ウィンドウを最前面に表示</system:String>
     <system:String x:Key="showAtTopmostToolTip">他のプログラムの 'Always on Top' （最前面に表示）設定を上書きし、常に最前面のウィンドウで Flow を表示します。</system:String>
@@ -446,7 +454,7 @@
     <system:String x:Key="icons">アイコン</system:String>
     <system:String x:Key="about_activate_times">あなたはFlow Launcherを {0} 回利用しました</system:String>
     <system:String x:Key="checkUpdates">アップデートを確認する</system:String>
-    <system:String x:Key="BecomeASponsor">スポンサーになる</system:String>
+    <system:String x:Key="BecomeASponsor">Become a Sponsor</system:String>
     <system:String x:Key="newVersionTips">新しいバージョン {0} が利用可能です。Flow Launcherを再起動してください。</system:String>
     <system:String x:Key="checkUpdatesFailed">アップデートの確認に失敗しました、api.github.com への接続とプロキシ設定を確認してください。</system:String>
     <system:String x:Key="downloadUpdatesFailed">

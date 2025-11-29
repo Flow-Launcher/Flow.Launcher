@@ -64,6 +64,10 @@
     <system:String x:Key="PositionReset">Restablecer posición</system:String>
     <system:String x:Key="PositionResetToolTip">Restablece la posición de la ventana de búsqueda</system:String>
     <system:String x:Key="queryTextBoxPlaceholder">Escribir aquí para buscar</system:String>
+    <system:String x:Key="pluginStillInitializing">{0}: Este complemento aún se está inicializando...</system:String>
+    <system:String x:Key="pluginStillInitializingSubtitle">Seleccione este resultado para volver a realizar la consulta</system:String>
+    <system:String x:Key="pluginFailedToRespond">{0}: ¡No se ha recibido respuesta!</system:String>
+    <system:String x:Key="pluginFailedToRespondSubtitle">Seleccione este resultado para más información</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Configuración</system:String>
@@ -171,6 +175,10 @@
     <system:String x:Key="homePageToolTip">Muestra los resultados de la página de inicio cuando el texto de la consulta está vacío.</system:String>
     <system:String x:Key="historyResultsForHomePage">Mostrar historial de resultados en la página de inicio</system:String>
     <system:String x:Key="historyResultsCountForHomePage">Número máximo de resultados del historial en la página de inicio</system:String>
+    <system:String x:Key="historyStyle">Estilo del historial</system:String>
+    <system:String x:Key="historyStyleTooltip">Elija el tipo de historial que desea mostrar en el historial y la página de inicio</system:String>
+    <system:String x:Key="queryHistory">Historial de consultas</system:String>
+    <system:String x:Key="executedHistory">Historial de últimas aperturas</system:String>
     <system:String x:Key="homeToggleBoxToolTip">Esto solo se puede editar si el complemento soporta la función de Inicio y la Página de Inicio está activada.</system:String>
     <system:String x:Key="showAtTopmost">Mostrar ventana de búsqueda en primer plano</system:String>
     <system:String x:Key="showAtTopmostToolTip">Anula el ajuste «Siempre arriba» de otros programas y muestra Flow en primer plano.</system:String>
@@ -446,7 +454,7 @@
     <system:String x:Key="icons">Iconos</system:String>
     <system:String x:Key="about_activate_times">Ha activado Flow Launcher {0} veces</system:String>
     <system:String x:Key="checkUpdates">Buscar actualizaciones</system:String>
-    <system:String x:Key="BecomeASponsor">Hágase Patrocinador</system:String>
+    <system:String x:Key="BecomeASponsor">Conviértase en Patrocinador</system:String>
     <system:String x:Key="newVersionTips">La nueva versión {0} está disponible, ¿desea reiniciar Flow Launcher para actualizar?</system:String>
     <system:String x:Key="checkUpdatesFailed">Ha fallado la comprobación de las actualizaciones, por favor, compruebe la configuración de su proxy y conexión a api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">

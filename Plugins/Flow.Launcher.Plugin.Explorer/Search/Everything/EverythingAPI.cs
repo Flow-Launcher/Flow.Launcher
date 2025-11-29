@@ -48,11 +48,18 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
         public static async ValueTask<bool> IsEverythingRunningAsync(CancellationToken token = default)
         {
-            await _semaphore.WaitAsync(token);
+            try
+            {
+                await _semaphore.WaitAsync(token);
+            }
+            catch (OperationCanceledException)
+            {
+                return false;
+            }
 
             try
             {
-                EverythingApiDllImport.Everything_GetMajorVersion();
+                _ = EverythingApiDllImport.Everything_GetMajorVersion();
                 var result = EverythingApiDllImport.Everything_GetLastError() != StateCode.IPCError;
                 return result;
             }
@@ -77,8 +84,14 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             if (option.MaxCount < 0)
                 throw new ArgumentOutOfRangeException(nameof(option.MaxCount), option.MaxCount, "MaxCount must be greater than or equal to 0");
 
-            await _semaphore.WaitAsync(token);
-
+            try
+            {
+                await _semaphore.WaitAsync(token);
+            }
+            catch (OperationCanceledException)
+            {
+                yield break;
+            }
 
             try
             {
@@ -119,8 +132,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 {
                     EverythingApiDllImport.Everything_SetRequestFlags(EVERYTHING_REQUEST_FULL_PATH_AND_FILE_NAME);
                 }
-
-
 
                 if (token.IsCancellationRequested) yield break;
 
