@@ -223,6 +223,10 @@ namespace Flow.Launcher.Plugin.Explorer
             _ => throw new ArgumentOutOfRangeException(nameof(actionKeyword), actionKeyword, "ActionKeyword enabled status not defined")
         };
 
+        // Returns a dictionary because some ActionKeywords may use wildcards (*),
+        // which means multiple ActionKeywords can be considered active at the same time.
+        // Using a dictionary ensures O(1) lookup time when checking which actions
+        // are enabled.
         public Dictionary<ActionKeyword, string> GetActiveActionKeywords(string actionKeywordStr)
         {
             var result = new Dictionary<ActionKeyword, string>();
