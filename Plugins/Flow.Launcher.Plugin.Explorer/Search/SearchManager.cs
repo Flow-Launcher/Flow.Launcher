@@ -120,7 +120,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
 
                 case false
-                    when ActionKeywordsActivesShouldUseSearch(activeActionKeywords):
+                    when CanUseIndexSearchByActionKeywords(activeActionKeywords):
                     searchResults = Settings.IndexProvider.SearchAsync(query.Search, token);
                     engineName = Enum.GetName(Settings.IndexSearchEngine);
                     break;
@@ -319,7 +319,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             return false;
         }
 
-        private bool ActionKeywordsActivesShouldUseSearch(Dictionary<ActionKeyword, string> actions)
+        private bool CanUseIndexSearchByActionKeywords(Dictionary<ActionKeyword, string> actions)
         {
             List<ActionKeyword> keysToUseSearch =
             [
