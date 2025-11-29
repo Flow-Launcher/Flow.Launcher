@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System;
+using System.Text.Json.Serialization;
 
 namespace Flow.Launcher.Plugin
 {
@@ -8,11 +9,29 @@ namespace Flow.Launcher.Plugin
     public class Query
     {
         /// <summary>
-        /// Raw query, this includes action keyword if it has.
-        /// It has handled buildin custom query shortkeys and build-in shortcuts, and it trims the whitespace.
-        /// We didn't recommend use this property directly. You should always use Search property.
+        /// Original query, exactly how the user has typed into the search box.
+        /// We don't recommend using this property directly. You should always use Search property.
         /// </summary>
-        public string RawQuery { get; internal init; }
+        public string OriginalQuery { get; internal init; }
+
+        /// <summary>
+        /// Raw query, this includes action keyword if it has.
+        /// It has handled built-in custom query hotkeys and built-in shortcuts, and it trims the whitespace.
+        /// We don't recommend using this property directly. You should always use Search property.
+        /// </summary>
+        [Obsolete("RawQuery is renamed to TrimmedQuery. This property will be removed. Update the code to use TrimmedQuery instead.")]
+        public string RawQuery {
+            get => TrimmedQuery;
+            internal init { TrimmedQuery = value; }
+        }
+
+        /// <summary>
+        /// Original query but with trimmed whitespace. Includes action keyword.
+        /// It has handled built-in custom query hotkeys and build-in shortcuts.
+        /// If you need the exact original query from the search box, use OriginalQuery property instead.
+        /// We don't recommend using this property directly. You should always use Search property.
+        /// </summary>
+        public string TrimmedQuery { get; internal init; }
 
         /// <summary>
         /// Determines whether the query was forced to execute again.
@@ -28,7 +47,7 @@ namespace Flow.Launcher.Plugin
 
         /// <summary>
         /// Search part of a query.
-        /// This will not include action keyword if exclusive plugin gets it, otherwise it should be same as RawQuery.
+        /// This will not include action keyword if exclusive plugin gets it, otherwise it should be same as TrimmedQuery.
         /// Since we allow user to switch a exclusive plugin to generic plugin,
         /// so this property will always give you the "real" query part of the query
         /// </summary>
@@ -103,6 +122,6 @@ namespace Flow.Launcher.Plugin
         }
 
         /// <inheritdoc />
-        public override string ToString() => RawQuery;
+        public override string ToString() => TrimmedQuery;
     }
 }
