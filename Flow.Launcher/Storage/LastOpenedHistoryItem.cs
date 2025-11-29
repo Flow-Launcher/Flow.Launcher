@@ -19,13 +19,13 @@ public class LastOpenedHistoryItem
             return Title == r.Title
                 && SubTitle == r.SubTitle
                 && PluginID == r.PluginID
-                && Query == r.OriginQuery.RawQuery;
+                && Query == r.OriginQuery.TrimmedQuery;
         }
         else
         {
             return RecordKey == r.RecordKey
                 && PluginID == r.PluginID
-                && Query == r.OriginQuery.RawQuery;
+                && Query == r.OriginQuery.TrimmedQuery;
         }
     }
 }
