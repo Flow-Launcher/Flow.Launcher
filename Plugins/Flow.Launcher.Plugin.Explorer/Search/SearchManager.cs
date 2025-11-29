@@ -118,9 +118,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     when activeActionKeywords.ContainsKey(ActionKeyword.QuickAccessActionKeyword):
                     return QuickAccess.AccessLinkListMatched(query, Settings.QuickAccessLinks);
 
-                case false 
-                    when activeActionKeywords.ContainsKey(ActionKeyword.IndexSearchActionKeyword)
-                    || activeActionKeywords.ContainsKey(ActionKeyword.SearchActionKeyword):
+
+                case false
+                    when ActionKeywordsActivesShouldUseSearch(activeActionKeywords):
                     searchResults = Settings.IndexProvider.SearchAsync(query.Search, token);
                     engineName = Enum.GetName(Settings.IndexSearchEngine);
                     break;
@@ -314,6 +314,25 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 {
                     return typesToFilter.Contains(type);
                 }
+            }
+
+            return false;
+        }
+
+        private bool ActionKeywordsActivesShouldUseSearch(Dictionary<ActionKeyword, string> actions)
+        {
+            List<ActionKeyword> keysToUseSearch =
+            [
+                ActionKeyword.FileSearchActionKeyword,
+                ActionKeyword.FolderSearchActionKeyword,
+                ActionKeyword.IndexSearchActionKeyword,
+                ActionKeyword.SearchActionKeyword
+            ];
+            foreach (var key in keysToUseSearch)
+            {
+                var contains = actions.ContainsKey(key);
+                if (!contains) continue;
+                return contains;
             }
 
             return false;
