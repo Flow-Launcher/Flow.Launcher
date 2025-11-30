@@ -334,7 +334,7 @@ namespace Flow.Launcher.Plugin.Program
             }
         }
 
-        public static async Task IndexWin32ProgramsAsync(bool resetCache = true)
+        public static async Task IndexWin32ProgramsAsync(bool resetCache)
         {
             await _win32sLock.WaitAsync();
             try
@@ -365,7 +365,7 @@ namespace Flow.Launcher.Plugin.Program
             }
         }
 
-        public static async Task IndexUwpProgramsAsync(bool resetCache = true)
+        public static async Task IndexUwpProgramsAsync(bool resetCache)
         {
             await _uwpsLock.WaitAsync();
             try
@@ -481,7 +481,9 @@ namespace Flow.Launcher.Plugin.Program
         private static async Task<bool> DisableProgramAsync(IProgram programToDelete)
         {
             if (_settings.DisabledProgramSources.Any(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier))
+            {
                 return false;
+            }
 
             await _uwpsLock.WaitAsync();
             try
