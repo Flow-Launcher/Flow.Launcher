@@ -334,7 +334,7 @@ namespace Flow.Launcher.Plugin.Program
             }
         }
 
-        public static async Task IndexWin32ProgramsAsync()
+        public static async Task IndexWin32ProgramsAsync(bool resetCache = true)
         {
             await _win32sLock.WaitAsync();
             try
@@ -345,7 +345,10 @@ namespace Flow.Launcher.Plugin.Program
                 {
                     _win32s.Add(win32);
                 }
-                ResetCache();
+                if (resetCache)
+                {
+                    ResetCache();
+                }
                 await Context.API.SaveCacheBinaryStorageAsync<List<Win32>>(Win32CacheName, Context.CurrentPluginMetadata.PluginCacheDirectoryPath);
                 lock (_lastIndexTimeLock)
                 {
@@ -362,7 +365,7 @@ namespace Flow.Launcher.Plugin.Program
             }
         }
 
-        public static async Task IndexUwpProgramsAsync()
+        public static async Task IndexUwpProgramsAsync(bool resetCache = true)
         {
             await _uwpsLock.WaitAsync();
             try
@@ -373,7 +376,10 @@ namespace Flow.Launcher.Plugin.Program
                 {
                     _uwps.Add(uwp);
                 }
-                ResetCache();
+                if (resetCache)
+                {
+                    ResetCache();
+                }
                 await Context.API.SaveCacheBinaryStorageAsync<List<UWPApp>>(UwpCacheName, Context.CurrentPluginMetadata.PluginCacheDirectoryPath);
                 lock (_lastIndexTimeLock)
                 {
@@ -394,12 +400,12 @@ namespace Flow.Launcher.Plugin.Program
         {
             var win32Task = Task.Run(async () =>
             {
-                await Context.API.StopwatchLogInfoAsync(ClassName, "Win32Program index cost", IndexWin32ProgramsAsync);
+                await Context.API.StopwatchLogInfoAsync(ClassName, "Win32Program index cost", () => IndexWin32ProgramsAsync(true));
             });
 
             var uwpTask = Task.Run(async () =>
             {
-                await Context.API.StopwatchLogInfoAsync(ClassName, "UWPProgram index cost", IndexUwpProgramsAsync);
+                await Context.API.StopwatchLogInfoAsync(ClassName, "UWPProgram index cost", () => IndexUwpProgramsAsync(true));
             });
 
             await Task.WhenAll(win32Task, uwpTask).ConfigureAwait(false);
@@ -446,8 +452,10 @@ namespace Flow.Launcher.Plugin.Program
                         {
                             try
                             {
-                                await DisableProgramAsync(program);
-                                ResetCache();
+                                if (await DisableProgramAsync(program))
+                                {
+                                    ResetCache();
+                                }
                                 Context.API.ShowMsg(
                                     Context.API.GetTranslation("flowlauncher_plugin_program_disable_dlgtitle_success"),
                                     Context.API.GetTranslation(
@@ -469,10 +477,10 @@ namespace Flow.Launcher.Plugin.Program
             return menuOptions;
         }
 
-        private static async Task DisableProgramAsync(IProgram programToDelete)
+        private static async Task<bool> DisableProgramAsync(IProgram programToDelete)
         {
             if (_settings.DisabledProgramSources.Any(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier))
-                return;
+                return false;
 
             await _uwpsLock.WaitAsync();
             try
@@ -483,8 +491,8 @@ namespace Flow.Launcher.Plugin.Program
                     program.Enabled = false;
                     _settings.DisabledProgramSources.Add(new ProgramSource(program));
                     // Reindex UWP programs
-                    _ = Task.Run(IndexUwpProgramsAsync);
-                    return;
+                    _ = Task.Run(() => IndexUwpProgramsAsync(false));
+                    return true;
                 }
             }
             finally
@@ -501,14 +509,16 @@ namespace Flow.Launcher.Plugin.Program
                     program.Enabled = false;
                     _settings.DisabledProgramSources.Add(new ProgramSource(program));
                     // Reindex Win32 programs
-                    _ = Task.Run(IndexWin32ProgramsAsync);
-                    return;
+                    _ = Task.Run(() => IndexWin32ProgramsAsync(false));
+                    return true;
                 }
             }
             finally
             {
                 _win32sLock.Release();
             }
+
+            return false;
         }
 
         public static void StartProcess(Func<ProcessStartInfo, Process> runProcess, ProcessStartInfo info)

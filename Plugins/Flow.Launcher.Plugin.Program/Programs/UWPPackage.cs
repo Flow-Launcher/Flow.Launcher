@@ -290,7 +290,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
         }
 
         private static readonly Channel<byte> PackageChangeChannel = Channel.CreateBounded<byte>(1);
-        private static PackageCatalog? catalog;
+        private static PackageCatalog catalog;
 
         public static async Task WatchPackageChangeAsync()
         {
@@ -317,7 +317,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 {
                     await Task.Delay(3000).ConfigureAwait(false);
                     PackageChangeChannel.Reader.TryRead(out _);
-                    await Task.Run(Main.IndexUwpProgramsAsync);
+                    await Task.Run(() => Main.IndexUwpProgramsAsync(true));
                 }
             }
         }
