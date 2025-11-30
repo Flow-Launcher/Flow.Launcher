@@ -444,14 +444,21 @@ namespace Flow.Launcher.Plugin.Program
                     {
                         _ = Task.Run(async () =>
                         {
-                            await DisableProgramAsync(program);
-                            ResetCache();
-                            Context.API.ReQuery();
+                            try
+                            {
+                                await DisableProgramAsync(program);
+                                ResetCache();
+                                Context.API.ShowMsg(
+                                    Context.API.GetTranslation("flowlauncher_plugin_program_disable_dlgtitle_success"),
+                                    Context.API.GetTranslation(
+                                        "flowlauncher_plugin_program_disable_dlgtitle_success_message"));
+                                Context.API.ReQuery();
+                            }
+                            catch (Exception e)
+                            {
+                                Context.API.LogException(ClassName, "Failed to disable program", e);
+                            }
                         });
-                        Context.API.ShowMsg(
-                            Context.API.GetTranslation("flowlauncher_plugin_program_disable_dlgtitle_success"),
-                            Context.API.GetTranslation(
-                                "flowlauncher_plugin_program_disable_dlgtitle_success_message"));
                         return false;
                     },
                     IcoPath = "Images/disable.png",
