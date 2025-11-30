@@ -452,14 +452,15 @@ namespace Flow.Launcher.Plugin.Program
                         {
                             try
                             {
-                                if (await DisableProgramAsync(program))
+                                var disabled = await DisableProgramAsync(program);
+                                if (disabled)
                                 {
                                     ResetCache();
+                                    Context.API.ShowMsg(
+                                        Context.API.GetTranslation("flowlauncher_plugin_program_disable_dlgtitle_success"),
+                                        Context.API.GetTranslation(
+                                            "flowlauncher_plugin_program_disable_dlgtitle_success_message"));
                                 }
-                                Context.API.ShowMsg(
-                                    Context.API.GetTranslation("flowlauncher_plugin_program_disable_dlgtitle_success"),
-                                    Context.API.GetTranslation(
-                                        "flowlauncher_plugin_program_disable_dlgtitle_success_message"));
                                 Context.API.ReQuery();
                             }
                             catch (Exception e)
