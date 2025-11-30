@@ -442,12 +442,16 @@ namespace Flow.Launcher.Plugin.Program
                     Title = Context.API.GetTranslation("flowlauncher_plugin_program_disable_program"),
                     Action = c =>
                     {
-                        _ = DisableProgramAsync(program);
+                        _ = Task.Run(async () =>
+                        {
+                            await DisableProgramAsync(program);
+                            ResetCache();
+                            Context.API.ReQuery();
+                        });
                         Context.API.ShowMsg(
                             Context.API.GetTranslation("flowlauncher_plugin_program_disable_dlgtitle_success"),
                             Context.API.GetTranslation(
                                 "flowlauncher_plugin_program_disable_dlgtitle_success_message"));
-                        Context.API.ReQuery();
                         return false;
                     },
                     IcoPath = "Images/disable.png",
@@ -464,45 +468,39 @@ namespace Flow.Launcher.Plugin.Program
                 return;
 
             await _uwpsLock.WaitAsync();
-            var reindexUwps = true;
             try
             {
-                reindexUwps = _uwps.Any(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier);
-                var program = _uwps.First(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier);
-                program.Enabled = false;
-                _settings.DisabledProgramSources.Add(new ProgramSource(program));
+                var program = _uwps.FirstOrDefault(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier);
+                if (program != null)
+                {
+                    program.Enabled = false;
+                    _settings.DisabledProgramSources.Add(new ProgramSource(program));
+                    // Reindex UWP programs
+                    _ = Task.Run(IndexUwpProgramsAsync);
+                    return;
+                }
             }
             finally
             {
                 _uwpsLock.Release();
             }
 
-            // Reindex UWP programs
-            if (reindexUwps)
-            {
-                _ = Task.Run(IndexUwpProgramsAsync);
-                return;
-            }
-
             await _win32sLock.WaitAsync();
-            var reindexWin32s = true;
             try
             {
-                reindexWin32s = _win32s.Any(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier);
-                var program = _win32s.First(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier);
-                program.Enabled = false;
-                _settings.DisabledProgramSources.Add(new ProgramSource(program));
+                var program = _win32s.FirstOrDefault(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier);
+                if (program != null)
+                {
+                    program.Enabled = false;
+                    _settings.DisabledProgramSources.Add(new ProgramSource(program));
+                    // Reindex Win32 programs
+                    _ = Task.Run(IndexWin32ProgramsAsync);
+                    return;
+                }
             }
             finally
             {
                 _win32sLock.Release();
-            }
-
-            // Reindex Win32 programs
-            if (reindexWin32s)
-            {
-                _ = Task.Run(IndexWin32ProgramsAsync);
-                return;
             }
         }
 
