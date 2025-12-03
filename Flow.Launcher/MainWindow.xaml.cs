@@ -1359,7 +1359,7 @@ namespace Flow.Launcher
             if (_viewModel.QueryText != QueryTextBox.Text)
             {
                 BindingExpression be = QueryTextBox.GetBindingExpression(TextBox.TextProperty);
-                be.UpdateSource();
+                be?.UpdateSource();
             }
         }
 
