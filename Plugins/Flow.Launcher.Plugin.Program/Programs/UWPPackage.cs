@@ -317,7 +317,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 {
                     await Task.Delay(3000).ConfigureAwait(false);
                     PackageChangeChannel.Reader.TryRead(out _);
-                    await Main.IndexUwpProgramsAsync(true).ConfigureAwait(false);
+                    await Main.IndexUwpProgramsAsync(resetCache: true).ConfigureAwait(false);
                 }
             }
         }

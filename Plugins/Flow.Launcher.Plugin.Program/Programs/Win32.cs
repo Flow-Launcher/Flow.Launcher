@@ -796,7 +796,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 {
                 }
 
-                await Main.IndexWin32ProgramsAsync(true).ConfigureAwait(false);
+                await Main.IndexWin32ProgramsAsync(resetCache: true).ConfigureAwait(false);
             }
         }
 
