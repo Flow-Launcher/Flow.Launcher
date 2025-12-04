@@ -494,7 +494,7 @@ namespace Flow.Launcher.Plugin.Program
                     program.Enabled = false;
                     _settings.DisabledProgramSources.Add(new ProgramSource(program));
                     // Reindex UWP programs
-                    _ = Task.Run(() => IndexUwpProgramsAsync(false));
+                    _ = Task.Run(() => IndexUwpProgramsAsync(resetCache: false));
                     return true;
                 }
             }
