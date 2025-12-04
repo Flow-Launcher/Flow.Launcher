@@ -155,6 +155,9 @@ namespace Flow.Launcher.Infrastructure.Logger
 
         public static void Debug(string className, string message, [CallerMemberName] string methodName = "")
         {
+            // We check log level for Debug to optimize performance as Debug is the most verbose level
+            if (LogLevel != LOGLEVEL.DEBUG) return;
+
             LogInternal(NLog.LogLevel.Debug, className, message, methodName);
         }
 
