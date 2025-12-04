@@ -405,7 +405,7 @@ namespace Flow.Launcher.Plugin.Program
 
             var uwpTask = Task.Run(async () =>
             {
-                await Context.API.StopwatchLogInfoAsync(ClassName, "UWPProgram index cost", () => IndexUwpProgramsAsync(true));
+                await Context.API.StopwatchLogInfoAsync(ClassName, "UWPProgram index cost", () => IndexUwpProgramsAsync(resetCache: true));
             });
 
             await Task.WhenAll(win32Task, uwpTask).ConfigureAwait(false);
