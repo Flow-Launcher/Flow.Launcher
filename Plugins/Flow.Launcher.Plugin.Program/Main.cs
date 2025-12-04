@@ -512,7 +512,7 @@ namespace Flow.Launcher.Plugin.Program
                     program.Enabled = false;
                     _settings.DisabledProgramSources.Add(new ProgramSource(program));
                     // Reindex Win32 programs
-                    _ = Task.Run(() => IndexWin32ProgramsAsync(false));
+                    _ = Task.Run(() => IndexWin32ProgramsAsync(resetCache: false));
                     return true;
                 }
             }
