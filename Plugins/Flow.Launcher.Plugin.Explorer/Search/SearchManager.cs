@@ -40,7 +40,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         {
             private static PathEqualityComparator instance;
             public static PathEqualityComparator Instance => instance ??= new PathEqualityComparator();
-
+             
             public bool Equals(Result x, Result y)
             {
                 return x.Title.Equals(y.Title, StringComparison.OrdinalIgnoreCase)
@@ -57,19 +57,18 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         {
             var results = new HashSet<Result>(PathEqualityComparator.Instance);
             var keyword = query.ActionKeyword.Length == 0 ? Query.GlobalPluginWildcardSign : query.ActionKeyword;
+            // No action keyword matched - plugin should not handle this query, return empty results.
+            var activeActionKeywords = Settings.GetActiveActionKeywords(keyword);
+            if (activeActionKeywords.Count == 0)
+            {
+                return [];
+            }
             var isPathSearch = query.Search.IsLocationPathString()
                 || EnvironmentVariables.IsEnvironmentVariableSearch(query.Search)
                 || EnvironmentVariables.HasEnvironmentVar(query.Search);
 
             var queryIsEmpty = string.IsNullOrEmpty(query.Search);
 
-            var activeActionKeywords = Settings.GetActiveActionKeywords(keyword);
-
-            // No action keyword matched - plugin should not handle this query, return empty results.
-            if (activeActionKeywords.Count == 0)
-            {
-                return [];
-            }
             if (queryIsEmpty && activeActionKeywords.ContainsKey(ActionKeyword.QuickAccessActionKeyword))
             {
                 return QuickAccess.AccessLinkListAll(query, Settings.QuickAccessLinks);
@@ -84,13 +83,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             // When file search is active, do not include path search in the active keywords.
             // This prevents unwanted PathSearch results (e.g., drives or raw volume paths).
-            if (isPathSearch &&
-                !activeActionKeywords.ContainsKey(ActionKeyword.PathSearchActionKeyword)
-                && !activeActionKeywords.ContainsKey(ActionKeyword.FileSearchActionKeyword))
+            if (isPathSearch && !activeActionKeywords.ContainsKey(ActionKeyword.PathSearchActionKeyword)
+                             && !activeActionKeywords.ContainsKey(ActionKeyword.FileSearchActionKeyword))
             {
                 activeActionKeywords.Add(ActionKeyword.PathSearchActionKeyword, keyword);
             }
-
 
             IAsyncEnumerable<SearchResult> searchResults;
 
@@ -144,7 +141,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             }
             catch (OperationCanceledException)
             {
-                return [];
+                return [.. results];
             }
             catch (EngineNotAvailableException)
             {
@@ -210,7 +207,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 : ResultManager.CreateOpenCurrentFolderResult(retrievedDirectoryPath, query.ActionKeyword, useIndexSearch));
 
             if (token.IsCancellationRequested)
-                return [];
+                return [.. results];
 
             IAsyncEnumerable<SearchResult> directoryResult;
 
@@ -232,7 +229,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             }
 
             if (token.IsCancellationRequested)
-                return [];
+                return [.. results];
 
             try
             {

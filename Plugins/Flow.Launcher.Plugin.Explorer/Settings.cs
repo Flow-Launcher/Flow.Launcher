@@ -164,7 +164,7 @@ namespace Flow.Launcher.Plugin.Explorer
 
         #endregion
 
-        public enum ActionKeyword
+        internal enum ActionKeyword
         {
             SearchActionKeyword,
             PathSearchActionKeyword,
@@ -227,7 +227,7 @@ namespace Flow.Launcher.Plugin.Explorer
         // which means multiple ActionKeywords can be considered active at the same time.
         // Using a dictionary ensures O(1) lookup time when checking which actions
         // are enabled.
-        public Dictionary<ActionKeyword, string> GetActiveActionKeywords(string actionKeywordStr)
+        internal Dictionary<ActionKeyword, string> GetActiveActionKeywords(string actionKeywordStr)
         {
             var result = new Dictionary<ActionKeyword, string>();
             if (string.IsNullOrEmpty(actionKeywordStr)) return null;
