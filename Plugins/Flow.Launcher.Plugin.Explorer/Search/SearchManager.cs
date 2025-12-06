@@ -64,6 +64,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             {
                 return [];
             }
+
             var isPathSearch = query.Search.IsLocationPathString()
                 || EnvironmentVariables.IsEnvironmentVariableSearch(query.Search)
                 || EnvironmentVariables.HasEnvironmentVar(query.Search);
