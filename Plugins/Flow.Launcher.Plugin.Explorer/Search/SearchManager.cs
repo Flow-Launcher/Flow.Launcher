@@ -58,6 +58,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             var results = new HashSet<Result>(PathEqualityComparator.Instance);
 
             var keyword = query.ActionKeyword.Length == 0 ? Query.GlobalPluginWildcardSign : query.ActionKeyword;
+
             // No action keyword matched - plugin should not handle this query, return empty results.
             var activeActionKeywords = Settings.GetActiveActionKeywords(keyword);
             if (activeActionKeywords.Count == 0)
