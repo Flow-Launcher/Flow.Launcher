@@ -39,8 +39,8 @@ namespace Flow.Launcher.Test
             // Test case :
             // 0123456
             // Flow 用户
-            // 0123456789012
-            // Flow Yong Hu"
+            // 012345678901
+            // Flow Yong Hu
             mapping.AddNewIndex(0, 1); // F
             mapping.AddNewIndex(1, 1); // l
             mapping.AddNewIndex(2, 1); // o
