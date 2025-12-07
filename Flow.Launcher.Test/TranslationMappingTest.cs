@@ -47,7 +47,7 @@ namespace Flow.Launcher.Test
             mapping.AddNewIndex(3, 1); // w
             mapping.AddNewIndex(4, 1); // ' '
             mapping.AddNewIndex(5, 4); // 用 -> Yong
-            mapping.AddNewIndex(11, 2); // 户 -> Hu
+            mapping.AddNewIndex(10, 2); // 户 -> Hu
 
             var result = mapping.MapToOriginalIndex(translatedIndex);
             ClassicAssert.AreEqual(expectedOriginalIndex, result);
