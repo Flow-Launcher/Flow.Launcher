@@ -32,7 +32,10 @@ namespace Flow.Launcher.Test
         [TestCase(6, 5)] // "o" (translated from "用") -> original index 5
         [TestCase(7, 5)] // "n" (translated from "用") -> original index 5
         [TestCase(8, 5)] // "g" (translated from "用") -> original index 5
+        [TestCase(9, 6)] // " " (space between "Yong" and "Hu") -> original index 6
         [TestCase(10, 6)] // "H" (translated from "户") -> original index 6
+        [TestCase(11, 6)] // "u" (translated from "户") -> original index 6
+        public void MapToOriginalIndex_ShouldReturnExpectedIndex(int translatedIndex, int expectedOriginalIndex)
         public void MapToOriginalIndex_ShouldReturnExpectedIndex(int translatedIndex, int expectedOriginalIndex)
         {
             var mapping = new TranslationMapping();
