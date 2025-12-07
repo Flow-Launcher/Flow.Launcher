@@ -27,7 +27,7 @@ namespace Flow.Launcher.Infrastructure
             {
                 switch (e.PropertyName)
                 {
-                    case nameof (Settings.ShouldUsePinyin):
+                    case nameof(Settings.ShouldUsePinyin):
                         if (_settings.ShouldUsePinyin)
                         {
                             Reload();
@@ -52,7 +52,7 @@ namespace Flow.Launcher.Infrastructure
 
         private void CreateDoublePinyinTableFromStream(Stream jsonStream)
         {
-            var table = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, string>>>(jsonStream) ?? 
+            var table = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, string>>>(jsonStream) ??
                 throw new InvalidOperationException("Failed to deserialize double pinyin table: result is null");
 
             var schemaKey = _settings.DoublePinyinSchema.ToString();
@@ -128,12 +128,12 @@ namespace Flow.Launcher.Infrastructure
                 if (IsChineseCharacter(content[i]))
                 {
                     var translated = _settings.UseDoublePinyin ? ToDoublePinyin(resultList[i]) : resultList[i];
-                    
-                    if (i > 0)
+
+                    if (i > 0 && content[i - 1] != ' ')
                     {
                         resultBuilder.Append(' ');
                     }
-                    
+
                     map.AddNewIndex(resultBuilder.Length, translated.Length);
                     resultBuilder.Append(translated);
                     previousIsChinese = true;
@@ -144,11 +144,14 @@ namespace Flow.Launcher.Infrastructure
                     if (previousIsChinese)
                     {
                         previousIsChinese = false;
-                        resultBuilder.Append(' ');
+                        if (content[i] != ' ')
+                        {
+                            resultBuilder.Append(' ');
+                        }
                     }
-                    
-                    map.AddNewIndex(resultBuilder.Length, resultList[i].Length);
-                    resultBuilder.Append(resultList[i]);
+
+                    map.AddNewIndex(resultBuilder.Length, 1);
+                    resultBuilder.Append(content[i]);
                 }
             }
 
@@ -156,7 +159,7 @@ namespace Flow.Launcher.Infrastructure
 
             var translation = resultBuilder.ToString();
             var result = (translation, map);
-            
+
             return _pinyinCache[content] = result;
         }
 
@@ -185,8 +188,8 @@ namespace Flow.Launcher.Infrastructure
 
         private string ToDoublePinyin(string fullPinyin)
         {
-            return currentDoublePinyinTable.TryGetValue(fullPinyin, out var doublePinyinValue) 
-                ? doublePinyinValue 
+            return currentDoublePinyinTable.TryGetValue(fullPinyin, out var doublePinyinValue)
+                ? doublePinyinValue
                 : fullPinyin;
         }
     }
