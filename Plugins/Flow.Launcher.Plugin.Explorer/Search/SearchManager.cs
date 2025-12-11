@@ -69,17 +69,18 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             var isPathSearch = query.Search.IsLocationPathString()
                 || EnvironmentVariables.IsEnvironmentVariableSearch(query.Search)
                 || EnvironmentVariables.HasEnvironmentVar(query.Search);
-
+             
             var queryIsEmpty = string.IsNullOrEmpty(query.Search);
 
-            if (queryIsEmpty && !isPathSearch)
-            {
-                return [];
-            }
 
             if (queryIsEmpty && activeActionKeywords.ContainsKey(ActionKeyword.QuickAccessActionKeyword))
             {
                 return QuickAccess.AccessLinkListAll(query, Settings.QuickAccessLinks);
+            }
+
+            if (queryIsEmpty && !isPathSearch)
+            {
+                return [];
             }
 
 
