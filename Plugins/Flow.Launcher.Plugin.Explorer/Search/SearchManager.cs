@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Documents;
 using Flow.Launcher.Plugin.Explorer.Exceptions;
 using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
 using Flow.Launcher.Plugin.Explorer.Search.Everything;
@@ -20,7 +19,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         internal Settings Settings;
 
-        private readonly Dictionary<ActionKeyword, List<ResultType>> _typesToFilterByActionKeyword = new()
+        private readonly Dictionary<ActionKeyword, ResultType[]> _typesToFilterByActionKeyword = new()
         {
             { ActionKeyword.FileSearchActionKeyword, [ResultType.Folder, ResultType.Volume] },
             { ActionKeyword.FolderSearchActionKeyword, [ResultType.File] },
@@ -40,7 +39,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         {
             private static PathEqualityComparator instance;
             public static PathEqualityComparator Instance => instance ??= new PathEqualityComparator();
-             
+
             public bool Equals(Result x, Result y)
             {
                 return x.Title.Equals(y.Title, StringComparison.OrdinalIgnoreCase)
@@ -63,31 +62,27 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             var activeActionKeywords = Settings.GetActiveActionKeywords(keyword);
             if (activeActionKeywords.Count == 0)
             {
-                return [];
+                return [.. results];
             }
 
-            var isPathSearch = query.Search.IsLocationPathString()
-                || EnvironmentVariables.IsEnvironmentVariableSearch(query.Search)
-                || EnvironmentVariables.HasEnvironmentVar(query.Search);
-             
             var queryIsEmpty = string.IsNullOrEmpty(query.Search);
-
-
             if (queryIsEmpty && activeActionKeywords.ContainsKey(ActionKeyword.QuickAccessActionKeyword))
             {
                 return QuickAccess.AccessLinkListAll(query, Settings.QuickAccessLinks);
             }
 
-            if (queryIsEmpty && !isPathSearch)
+            if (queryIsEmpty)
             {
-                return [];
+                return [.. results];
             }
 
+            var isPathSearch = query.Search.IsLocationPathString()
+                || EnvironmentVariables.IsEnvironmentVariableSearch(query.Search)
+                || EnvironmentVariables.HasEnvironmentVar(query.Search);
 
-            // When file search is active, do not include path search in the active keywords.
-            // This prevents unwanted PathSearch results (e.g., drives or raw volume paths).
-            if (isPathSearch && !activeActionKeywords.ContainsKey(ActionKeyword.PathSearchActionKeyword)
-                             && !activeActionKeywords.ContainsKey(ActionKeyword.FileSearchActionKeyword))
+
+            // If no action keyword for path search is specified but the query is a path search, add it.
+            if (!activeActionKeywords.ContainsKey(ActionKeyword.PathSearchActionKeyword) && isPathSearch)
             {
                 activeActionKeywords.Add(ActionKeyword.PathSearchActionKeyword, keyword);
             }
@@ -124,7 +119,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     engineName = Enum.GetName(Settings.IndexSearchEngine);
                     break;
                 default:
-                    return [..results];
+                    return [.. results];
 
             }
 
@@ -134,11 +129,19 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             {
                 await foreach (var search in searchResults.WithCancellation(token).ConfigureAwait(false))
                 {
-                    if (ShouldSkipResultByTypeAndActionKeyword(activeActionKeywords, search))
+                    if (search.Type == ResultType.File && IsExcludedFile(search))
                     {
                         continue;
                     }
+
+                    if (IsResultTypeFilteredByActionKeyword(search.Type, activeActionKeywords))
+                    {
+                        continue;
+                    }
+
                     results.Add(ResultManager.CreateResult(query, search));
+
+
                 }
             }
             catch (OperationCanceledException)
@@ -281,17 +284,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             return excludedFileTypes.Contains(fileExtension, StringComparer.OrdinalIgnoreCase);
         }
 
-        private bool ShouldSkipResultByTypeAndActionKeyword(Dictionary<ActionKeyword, string> actions, SearchResult search)
-        {
-            // Is excluded file type
-            if (search.Type == ResultType.File && IsExcludedFile(search))
-            {
-                return true;
-            }
-            return IsResultTypeFilteredByActionKeyword(search.Type, actions);
-
-        }
-
         private List<Result> GetQuickAccessResultsFilteredByActionKeyword(Query query, Dictionary<ActionKeyword, string> actions)
         {
             var results = QuickAccess.AccessLinkListMatched(query, Settings.QuickAccessLinks) ?? [];
@@ -320,38 +312,33 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         private bool CanUseIndexSearchByActionKeywords(Dictionary<ActionKeyword, string> actions)
         {
-            List<ActionKeyword> keysToUseIndexSearch =
-            [
-                ActionKeyword.FileSearchActionKeyword,
-                ActionKeyword.FolderSearchActionKeyword,
-                ActionKeyword.IndexSearchActionKeyword,
-                ActionKeyword.SearchActionKeyword
-            ];
+            var keysToUseIndexSearch = new[]
+            {
+                ActionKeyword.FileSearchActionKeyword, ActionKeyword.FolderSearchActionKeyword,
+                ActionKeyword.IndexSearchActionKeyword, ActionKeyword.SearchActionKeyword
+            };
             foreach (var key in keysToUseIndexSearch)
             {
-                var contains = actions.ContainsKey(key);
-                if (!contains) continue;
-                return contains;
+                if (actions.ContainsKey(key))
+                    return true;
             }
 
             return false;
         }
 
+        // Action keywords that supports patch search in results.
         private bool CanUsePatchSearchByActionKeywords(Dictionary<ActionKeyword, string> actions)
         {
-
-            List<ActionKeyword> keysToUsePathSearch =
-            [
-                ActionKeyword.PathSearchActionKeyword,
-                ActionKeyword.SearchActionKeyword,
-                ActionKeyword.FolderSearchActionKeyword
-            ];
-
-            foreach (var key in keysToUsePathSearch)
+            var keysThatSupportPathSearch = new[]
             {
-                var contains = actions.ContainsKey(key);
-                if (!contains) continue;
-                return contains;
+                ActionKeyword.PathSearchActionKeyword, ActionKeyword.SearchActionKeyword,
+                ActionKeyword.FolderSearchActionKeyword
+            };
+
+            foreach (var key in keysThatSupportPathSearch)
+            {
+                if (actions.ContainsKey(key))
+                    return true;
             }
 
             return false;
