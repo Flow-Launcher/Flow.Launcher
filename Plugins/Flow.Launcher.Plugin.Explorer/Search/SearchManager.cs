@@ -72,17 +72,16 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             var queryIsEmpty = string.IsNullOrEmpty(query.Search);
 
+            if (queryIsEmpty && !isPathSearch)
+            {
+                return [];
+            }
+
             if (queryIsEmpty && activeActionKeywords.ContainsKey(ActionKeyword.QuickAccessActionKeyword))
             {
                 return QuickAccess.AccessLinkListAll(query, Settings.QuickAccessLinks);
             }
 
-            // If query is empty and active keyword is folder or search, return empty results.
-            if (queryIsEmpty && (activeActionKeywords.ContainsKey(ActionKeyword.FolderSearchActionKeyword)
-                || activeActionKeywords.ContainsKey(ActionKeyword.FileSearchActionKeyword)))
-            {
-                return [];
-            }
 
             // When file search is active, do not include path search in the active keywords.
             // This prevents unwanted PathSearch results (e.g., drives or raw volume paths).
@@ -99,8 +98,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             switch (isPathSearch)
             {
                 case true
-                    when activeActionKeywords.ContainsKey(ActionKeyword.PathSearchActionKeyword)
-                         || activeActionKeywords.ContainsKey(ActionKeyword.SearchActionKeyword):
+                    when CanUsePatchSearchByActionKeywords(activeActionKeywords):
                     results.UnionWith(await PathSearchAsync(query, token).ConfigureAwait(false));
                     return [.. results];
 
@@ -321,14 +319,34 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         private bool CanUseIndexSearchByActionKeywords(Dictionary<ActionKeyword, string> actions)
         {
-            List<ActionKeyword> keysToUseSearch =
+            List<ActionKeyword> keysToUseIndexSearch =
             [
                 ActionKeyword.FileSearchActionKeyword,
                 ActionKeyword.FolderSearchActionKeyword,
                 ActionKeyword.IndexSearchActionKeyword,
                 ActionKeyword.SearchActionKeyword
             ];
-            foreach (var key in keysToUseSearch)
+            foreach (var key in keysToUseIndexSearch)
+            {
+                var contains = actions.ContainsKey(key);
+                if (!contains) continue;
+                return contains;
+            }
+
+            return false;
+        }
+
+        private bool CanUsePatchSearchByActionKeywords(Dictionary<ActionKeyword, string> actions)
+        {
+
+            List<ActionKeyword> keysToUsePathSearch =
+            [
+                ActionKeyword.PathSearchActionKeyword,
+                ActionKeyword.SearchActionKeyword,
+                ActionKeyword.FolderSearchActionKeyword
+            ];
+
+            foreach (var key in keysToUsePathSearch)
             {
                 var contains = actions.ContainsKey(key);
                 if (!contains) continue;
