@@ -21,7 +21,7 @@ namespace Flow.Launcher.Infrastructure
         public int MapToOriginalIndex(int translatedIndex)
         {
             var searchResult = _originalToTranslated.BinarySearch(translatedIndex);
-            return searchResult >= 0 ? searchResult : ~searchResult;
+            return searchResult >= 0 ? searchResult + 1 : ~searchResult;
         }
 
         public void EndConstruct()
