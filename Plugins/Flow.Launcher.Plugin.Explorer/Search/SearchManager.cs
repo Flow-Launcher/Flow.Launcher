@@ -303,7 +303,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             {
                 if (_typesToFilterByActionKeyword.TryGetValue(action, out var typesToFilter))
                 {
-                    return typesToFilter.Contains(type);
+                    if (typesToFilter.Contains(type))
+                        return true;
                 }
             }
 
