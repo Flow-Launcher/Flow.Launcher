@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -286,11 +286,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         private List<Result> GetQuickAccessResultsFilteredByActionKeyword(Query query, Dictionary<ActionKeyword, string> actions)
         {
-            var results = QuickAccess.AccessLinkListMatched(query, Settings.QuickAccessLinks) ?? [];
+            if (!Settings.QuickAccessKeywordEnabled)
+                return [];
+
+            var results = QuickAccess.AccessLinkListMatched(query, Settings.QuickAccessLinks);
             if (results.Count == 0)
-            {
-                return results;
-            }
+                return [];
 
             return results
                 .Where(r => r.ContextData is SearchResult result
