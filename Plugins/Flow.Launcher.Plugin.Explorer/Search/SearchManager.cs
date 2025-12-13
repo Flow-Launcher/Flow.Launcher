@@ -80,13 +80,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 || EnvironmentVariables.IsEnvironmentVariableSearch(query.Search)
                 || EnvironmentVariables.HasEnvironmentVar(query.Search);
 
-
-            // If no action keyword for path search is specified but the query is a path search, add it.
-            if (!activeActionKeywords.ContainsKey(ActionKeyword.PathSearchActionKeyword) && isPathSearch)
-            {
-                activeActionKeywords.Add(ActionKeyword.PathSearchActionKeyword, keyword);
-            }
-
             IAsyncEnumerable<SearchResult> searchResults;
 
             string engineName;
