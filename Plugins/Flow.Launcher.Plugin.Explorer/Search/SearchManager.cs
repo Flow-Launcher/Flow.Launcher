@@ -333,8 +333,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         {
             var keysThatSupportPathSearch = new[]
             {
-                ActionKeyword.PathSearchActionKeyword, ActionKeyword.SearchActionKeyword,
-                ActionKeyword.FolderSearchActionKeyword
+                ActionKeyword.PathSearchActionKeyword,
+                ActionKeyword.SearchActionKeyword,
             };
 
             foreach (var key in keysThatSupportPathSearch)
