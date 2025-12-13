@@ -19,10 +19,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         internal Settings Settings;
 
-        private readonly Dictionary<ActionKeyword, ResultType[]> _typesToFilterByActionKeyword = new()
+        private readonly Dictionary<ActionKeyword, ResultType[]> _allowedTypesByActionKeyword = new()
         {
-            { ActionKeyword.FileSearchActionKeyword, [ResultType.Folder, ResultType.Volume] },
-            { ActionKeyword.FolderSearchActionKeyword, [ResultType.File] },
+            { ActionKeyword.FileSearchActionKeyword, [ResultType.File] },
+            { ActionKeyword.FolderSearchActionKeyword, [ResultType.Folder, ResultType.Volume] },
         };
 
 
@@ -139,8 +139,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             }
 
+
+            var actions = activeActionKeywords.Keys.ToList();
             //Merge Quick Access Link results for non-path searches.
-            results.UnionWith(GetQuickAccessResultsFilteredByActionKeyword(query, activeActionKeywords));
+            results.UnionWith(GetQuickAccessResultsFilteredByActionKeyword(query, actions));
             try
             {
                 await foreach (var search in searchResults.WithCancellation(token).ConfigureAwait(false))
@@ -148,7 +150,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     if (search.Type == ResultType.File && IsExcludedFile(search))
                         continue;
 
-                    if (IsResultTypeFilteredByActionKeyword(search.Type, activeActionKeywords))
+                    if (IsResultTypeFilteredByActionKeyword(search.Type, actions))
                         continue;
 
                     results.Add(ResultManager.CreateResult(query, search));
@@ -294,7 +296,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             return excludedFileTypes.Contains(fileExtension, StringComparer.OrdinalIgnoreCase);
         }
 
-        private List<Result> GetQuickAccessResultsFilteredByActionKeyword(Query query, Dictionary<ActionKeyword, string> actions)
+        private List<Result> GetQuickAccessResultsFilteredByActionKeyword(Query query, List<ActionKeyword> actions)
         {
             if (!Settings.QuickAccessKeywordEnabled)
                 return [];
@@ -308,18 +310,22 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                        && !IsResultTypeFilteredByActionKeyword(result.Type, actions))
                 .ToList();
         }
-        private bool IsResultTypeFilteredByActionKeyword(ResultType type, Dictionary<ActionKeyword, string> actions)
+        private bool IsResultTypeFilteredByActionKeyword(ResultType type, List<ActionKeyword> actions)
         {
-            foreach (var action in actions.Keys)
+            var actionsWithWhitelist = actions.Intersect(_allowedTypesByActionKeyword.Keys).ToList();
+            if (actionsWithWhitelist.Count <= 0) return false;
+
+            // Check if ANY active keyword allows this type (union behavior)
+            foreach (var action in actionsWithWhitelist)
             {
-                if (_typesToFilterByActionKeyword.TryGetValue(action, out var typesToFilter))
+                if (_allowedTypesByActionKeyword.TryGetValue(action, out var allowedTypes))
                 {
-                    if (typesToFilter.Contains(type))
-                        return true;
+                    if (allowedTypes.Contains(type))
+                        return false; 
                 }
             }
 
-            return false;
+            return true;
         }
 
         private bool CanUseIndexSearchByActionKeywords(Dictionary<ActionKeyword, string> actions)
