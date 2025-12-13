@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -52,6 +52,29 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             }
         }
 
+        /// <summary>
+        /// Results for the different types of searches as follows: 
+        /// 1. Search, only include results from:
+        ///   - Files
+        ///   - Folders
+        ///   - Quick Access Links
+        ///   - Path navigation
+        /// 2. File Content Search, only include results from:
+        ///   - File contents from index search engines i.e. Windows Index, Everything (may not be available due its beta version)
+        /// 3. Path Search, only include results from:
+        ///   - Path navigation
+        /// 4. Quick Access Links, only include results from:
+        ///   - Full list of Quick Access Links if query is empty
+        ///   - Matched Quick Access Links if query is not empty
+        ///   - Quick Access Links that are matched on path, e.g. query "window" for results that contain 'window' in the path (even if not in the title),
+        ///     i.e. result with path c:\windows\system32
+        /// 5. Folder Search, only include results from:
+        ///   - Folders
+        ///   - Quick Access Links
+        /// 6. File Search, only include results from:
+        ///   - Files
+        ///   - Quick Access Links
+        /// </summary>
         internal async Task<List<Result>> SearchAsync(Query query, CancellationToken token)
         {
             var results = new HashSet<Result>(PathEqualityComparator.Instance);
@@ -87,7 +110,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             switch (isPathSearch)
             {
                 case true
-                    when CanUsePatchSearchByActionKeywords(activeActionKeywords):
+                    when CanUsePathSearchByActionKeywords(activeActionKeywords):
                     results.UnionWith(await PathSearchAsync(query, token).ConfigureAwait(false));
                     return [.. results];
 
@@ -123,18 +146,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 await foreach (var search in searchResults.WithCancellation(token).ConfigureAwait(false))
                 {
                     if (search.Type == ResultType.File && IsExcludedFile(search))
-                    {
                         continue;
-                    }
 
                     if (IsResultTypeFilteredByActionKeyword(search.Type, activeActionKeywords))
-                    {
                         continue;
-                    }
 
                     results.Add(ResultManager.CreateResult(query, search));
-
-
                 }
             }
             catch (OperationCanceledException)
@@ -322,7 +339,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         }
 
         // Action keywords that supports patch search in results.
-        private bool CanUsePatchSearchByActionKeywords(Dictionary<ActionKeyword, string> actions)
+        private bool CanUsePathSearchByActionKeywords(Dictionary<ActionKeyword, string> actions)
         {
             var keysThatSupportPathSearch = new[]
             {
