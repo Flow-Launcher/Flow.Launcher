@@ -335,13 +335,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 ActionKeyword.FileSearchActionKeyword, ActionKeyword.FolderSearchActionKeyword,
                 ActionKeyword.IndexSearchActionKeyword, ActionKeyword.SearchActionKeyword
             };
-            foreach (var key in keysToUseIndexSearch)
-            {
-                if (actions.ContainsKey(key))
-                    return true;
-            }
 
-            return false;
+            return keysToUseIndexSearch.Any(actions.ContainsKey);
         }
 
         // Action keywords that supports patch search in results.
@@ -353,13 +348,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 ActionKeyword.SearchActionKeyword,
             };
 
-            foreach (var key in keysThatSupportPathSearch)
-            {
-                if (actions.ContainsKey(key))
-                    return true;
-            }
+            return keysThatSupportPathSearch.Any(actions.ContainsKey);
 
-            return false;
         }
 
     }
