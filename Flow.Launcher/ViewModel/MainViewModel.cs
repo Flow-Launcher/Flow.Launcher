@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -524,7 +523,7 @@ namespace Flow.Launcher.ViewModel
                 {
                     // not null means pressing modifier key + number, should ignore the modifier key
                     SpecialKeyState = index is not null ? SpecialKeyState.Default : GlobalHotkey.CheckModifiers()
-                }).ConfigureAwait(false)  ;
+                }).ConfigureAwait(false);
 
                 if (hideWindow)
                 {
