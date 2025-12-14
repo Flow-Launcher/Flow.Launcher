@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -313,7 +313,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         private bool IsResultTypeFilteredByActionKeyword(ResultType type, List<ActionKeyword> actions)
         {
             var actionsWithWhitelist = actions.Intersect(_allowedTypesByActionKeyword.Keys).ToList();
-            if (actionsWithWhitelist.Count <= 0) return false;
+            if (actionsWithWhitelist.Count == 0) return false;
 
             // Check if ANY active keyword allows this type (union behavior)
             foreach (var action in actionsWithWhitelist)
