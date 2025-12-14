@@ -496,6 +496,34 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
 
+        private bool _autoTopmost = false;
+        public bool AutoTopmost
+        {
+            get => _autoTopmost;
+            set
+            {
+                if (_autoTopmost != value)
+                {
+                    _autoTopmost = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private bool _showTaskbarOnInvoke = false;
+        public bool ShowTaskbarOnInvoke
+        {
+            get => _showTaskbarOnInvoke;
+            set
+            {
+                if (_showTaskbarOnInvoke != value)
+                {
+                    _showTaskbarOnInvoke = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public bool SearchQueryResultsWithDelay { get; set; }
         public int SearchDelayTime { get; set; } = 150;
 
