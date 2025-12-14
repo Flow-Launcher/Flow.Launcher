@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -23,6 +23,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         {
             { ActionKeyword.FileSearchActionKeyword, [ResultType.File] },
             { ActionKeyword.FolderSearchActionKeyword, [ResultType.Folder, ResultType.Volume] },
+            { ActionKeyword.SearchActionKeyword, [ResultType.File, ResultType.Folder, ResultType.Volume] },
         };
 
 
