@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -538,6 +539,7 @@ namespace Flow.Launcher.ViewModel
             {
                 _history.Add(result);
                 lastHistoryIndex = 1;
+                if (Settings.AutoTopmost) _topMostRecord.AddOrUpdate(result);
             }
         }
 
@@ -2122,6 +2124,7 @@ namespace Flow.Launcher.ViewModel
             {
                 Win32Helper.SwitchToEnglishKeyboardLayout(true);
             }
+
         }
 
         public async void Hide(bool reset = true)
