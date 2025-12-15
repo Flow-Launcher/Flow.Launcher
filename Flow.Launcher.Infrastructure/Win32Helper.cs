@@ -1042,3 +1042,5 @@ namespace Flow.Launcher.Infrastructure
         }
 
         #endregion
+    }
+}
