@@ -350,7 +350,7 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
   </a>
   <a href="https://github.com/Calapine">
     <img src='https://avatars.githubusercontent.com/u/76205879?v=4' width="10%"/>
-  </a>     
+  </a>
 </p>
 <p align="center">
   <a href="https://appwrite.io">
