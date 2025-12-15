@@ -1023,7 +1023,7 @@ namespace Flow.Launcher.Infrastructure
         /// Shows the taskbar temporarily by activating it.
         /// This is useful for auto-hidden taskbars and mimics the behavior of hovering over the taskbar edge.
         /// </summary>
-        public static unsafe void ShowTaskbar()
+        public static void ShowTaskbar()
         {
             // Find the taskbar window
             var taskbarHwnd = PInvoke.FindWindowEx(HWND.Null, HWND.Null, "Shell_TrayWnd", null);
