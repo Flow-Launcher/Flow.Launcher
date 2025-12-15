@@ -497,7 +497,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         }
 
         private bool _autoTopmostResults = false;
-        public bool AutoTopmostResults
+        public bool AutoTopmostLastOpenedResult
         {
             get => _autoTopmostResults;
             set
