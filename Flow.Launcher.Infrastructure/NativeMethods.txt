@@ -95,5 +95,4 @@ DeviceNotifyCallbackRoutine
 
 SHAppBarMessage
 APPBARDATA
-ABM_SETSTATE
-ABS_AUTOHIDE
+ABM_ACTIVATE

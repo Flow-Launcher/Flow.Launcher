@@ -1020,8 +1020,8 @@ namespace Flow.Launcher.Infrastructure
         #region Taskbar
 
         /// <summary>
-        /// Shows the taskbar by temporarily disabling auto-hide if it's enabled.
-        /// This mimics the behavior of pressing the Windows key.
+        /// Shows the taskbar temporarily by activating it.
+        /// This is useful for auto-hidden taskbars and mimics the behavior of hovering over the taskbar edge.
         /// </summary>
         public static unsafe void ShowTaskbar()
         {
@@ -1029,17 +1029,16 @@ namespace Flow.Launcher.Infrastructure
             var taskbarHwnd = PInvoke.FindWindowEx(HWND.Null, HWND.Null, "Shell_TrayWnd", null);
             if (taskbarHwnd == HWND.Null) return;
 
-            // Get the current appbar data
+            // Prepare appbar data with the taskbar handle
             var appBarData = new APPBARDATA
             {
                 cbSize = (uint)Marshal.SizeOf<APPBARDATA>(),
                 hWnd = taskbarHwnd
             };
 
-            // Set the state to not auto-hide (ABS_AUTOHIDE = 0x0000001)
-            // Setting lParam to 0 will show the taskbar if it's in auto-hide mode
-            appBarData.lParam = 0;
-            PInvoke.SHAppBarMessage(PInvoke.ABM_SETSTATE, ref appBarData);
+            // Send ABM_ACTIVATE to temporarily show the taskbar
+            // This activates the taskbar without permanently changing its auto-hide state
+            PInvoke.SHAppBarMessage(PInvoke.ABM_ACTIVATE, ref appBarData);
         }
 
         #endregion
