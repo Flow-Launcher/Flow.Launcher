@@ -74,8 +74,8 @@
 
             <ui:SettingsCard
                 Margin="0 4 0 0"
-                Description="{DynamicResource showTaskbarWhenInvokedToolTip}"
-                Header="{DynamicResource showTaskbarWhenInvoked}">
+                Description="{DynamicResource showTaskbarWhenOpenedToolTip}"
+                Header="{DynamicResource showTaskbarWhenOpened}">
                 <ui:ToggleSwitch
                     IsOn="{Binding Settings.ShowTaskbarWhenInvoked}"
                     OffContent="{DynamicResource disable}"
