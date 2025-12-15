@@ -2097,6 +2097,12 @@ namespace Flow.Launcher.ViewModel
             // When application is exiting, we should not show the main window
             if (App.LoadingOrExiting) return;
 
+            // Show the taskbar if the setting is enabled
+            if (Settings.ShowTaskbarWhenInvoked)
+            {
+                Win32Helper.ShowTaskbar();
+            }
+
             // When application is exiting, the Application.Current will be null
             Application.Current?.Dispatcher.Invoke(() =>
             {

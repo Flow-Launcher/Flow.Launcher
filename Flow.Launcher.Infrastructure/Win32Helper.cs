@@ -1016,5 +1016,30 @@ namespace Flow.Launcher.Infrastructure
         }
 
         #endregion
-    }
-}
+
+        #region Taskbar
+
+        /// <summary>
+        /// Shows the taskbar by temporarily disabling auto-hide if it's enabled.
+        /// This mimics the behavior of pressing the Windows key.
+        /// </summary>
+        public static unsafe void ShowTaskbar()
+        {
+            // Find the taskbar window
+            var taskbarHwnd = PInvoke.FindWindowEx(HWND.Null, HWND.Null, "Shell_TrayWnd", null);
+            if (taskbarHwnd == HWND.Null) return;
+
+            // Get the current appbar data
+            var appBarData = new APPBARDATA
+            {
+                cbSize = (uint)Marshal.SizeOf<APPBARDATA>(),
+                hWnd = taskbarHwnd
+            };
+
+            // Set the state to not auto-hide (ABS_AUTOHIDE = 0x0000001)
+            // Setting lParam to 0 will show the taskbar if it's in auto-hide mode
+            appBarData.lParam = 0;
+            PInvoke.SHAppBarMessage(PInvoke.ABM_SETSTATE, ref appBarData);
+        }
+
+        #endregion

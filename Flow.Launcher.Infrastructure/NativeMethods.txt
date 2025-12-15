@@ -92,3 +92,8 @@ PBT_APMRESUMESUSPEND
 PowerRegisterSuspendResumeNotification
 PowerUnregisterSuspendResumeNotification
 DeviceNotifyCallbackRoutine
+
+SHAppBarMessage
+APPBARDATA
+ABM_SETSTATE
+ABS_AUTOHIDE
