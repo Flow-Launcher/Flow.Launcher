@@ -98,14 +98,14 @@
 
             <ui:SettingsCard
                 Margin="0 4 0 0"
-                Description="{DynamicResource autoTopmostResultsToolTip}"
-                Header="{DynamicResource autoTopmostResults}">
+                Description="{DynamicResource autoTopmostLastOpenedResultToolTip}"
+                Header="{DynamicResource autoTopmostLastOpenedResult}">
                 <ui:SettingsCard.HeaderIcon>
                     <ui:FontIcon Glyph="&#xf5ed;" />
                 </ui:SettingsCard.HeaderIcon>
 
                 <ui:ToggleSwitch
-                    IsOn="{Binding Settings.AutoTopmostResults}"
+                    IsOn="{Binding Settings.AutoTopmostLastOpenedResult}"
                     OffContent="{DynamicResource disable}"
                     OnContent="{DynamicResource enable}" />
             </ui:SettingsCard>

@@ -538,7 +538,7 @@ namespace Flow.Launcher.ViewModel
             {
                 _history.Add(result);
                 lastHistoryIndex = 1;
-                if (Settings.AutoTopmostResults)
+                if (Settings.AutoTopmostLastOpenedResult)
                     _topMostRecord.AddOrUpdate(result);
             } 
         }

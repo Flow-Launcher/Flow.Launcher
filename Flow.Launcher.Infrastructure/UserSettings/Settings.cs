@@ -496,15 +496,15 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
 
-        private bool _autoTopmostResults = false;
+        private bool _autoTopmostLastOpenedResults = false;
         public bool AutoTopmostLastOpenedResult
         {
-            get => _autoTopmostResults;
+            get => _autoTopmostLastOpenedResults;
             set
             {
-                if (_autoTopmostResults != value)
+                if (_autoTopmostLastOpenedResults != value)
                 {
-                    _autoTopmostResults = value;
+                    _autoTopmostLastOpenedResults = value;
                     OnPropertyChanged();
                 }
             }
