@@ -526,7 +526,7 @@
                                     <TextBlock
                                         x:Name="PreviewSubTitle"
                                         Style="{DynamicResource PreviewItemSubTitleStyle}"
-                                        Text="{Binding DefaultPreviewCustomDescription}" />
+                                        Text="{Binding PreviewDescription}" />
                                 </StackPanel>
                             </Grid>
                         </Border>
