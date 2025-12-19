@@ -64,10 +64,10 @@
     <system:String x:Key="PositionReset">位置のリセット</system:String>
     <system:String x:Key="PositionResetToolTip">検索ウィンドウの位置をリセット</system:String>
     <system:String x:Key="queryTextBoxPlaceholder">ここに入力して検索</system:String>
-    <system:String x:Key="pluginStillInitializing">{0}: This plugin is still initializing...</system:String>
+    <system:String x:Key="pluginStillInitializing">{0}: このプラグインはまだ初期化中です…</system:String>
     <system:String x:Key="pluginStillInitializingSubtitle">Select this result to requery</system:String>
     <system:String x:Key="pluginFailedToRespond">{0}: Failed to respond!</system:String>
-    <system:String x:Key="pluginFailedToRespondSubtitle">Select this result for more info</system:String>
+    <system:String x:Key="pluginFailedToRespondSubtitle">詳細については、この結果を選択してください</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">設定</system:String>
@@ -454,7 +454,7 @@
     <system:String x:Key="icons">アイコン</system:String>
     <system:String x:Key="about_activate_times">あなたはFlow Launcherを {0} 回利用しました</system:String>
     <system:String x:Key="checkUpdates">アップデートを確認する</system:String>
-    <system:String x:Key="BecomeASponsor">Become a Sponsor</system:String>
+    <system:String x:Key="BecomeASponsor">スポンサーになる</system:String>
     <system:String x:Key="newVersionTips">新しいバージョン {0} が利用可能です。Flow Launcherを再起動してください。</system:String>
     <system:String x:Key="checkUpdatesFailed">アップデートの確認に失敗しました、api.github.com への接続とプロキシ設定を確認してください。</system:String>
     <system:String x:Key="downloadUpdatesFailed">
