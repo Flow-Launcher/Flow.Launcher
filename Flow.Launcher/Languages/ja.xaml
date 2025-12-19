@@ -65,8 +65,8 @@
     <system:String x:Key="PositionResetToolTip">検索ウィンドウの位置をリセット</system:String>
     <system:String x:Key="queryTextBoxPlaceholder">ここに入力して検索</system:String>
     <system:String x:Key="pluginStillInitializing">{0}: このプラグインはまだ初期化中です…</system:String>
-    <system:String x:Key="pluginStillInitializingSubtitle">Select this result to requery</system:String>
-    <system:String x:Key="pluginFailedToRespond">{0}: Failed to respond!</system:String>
+    <system:String x:Key="pluginStillInitializingSubtitle">この結果を選択して再検索する</system:String>
+    <system:String x:Key="pluginFailedToRespond">{0}: 応答に失敗しました！</system:String>
     <system:String x:Key="pluginFailedToRespondSubtitle">詳細については、この結果を選択してください</system:String>
 
     <!--  Setting General  -->
