@@ -93,6 +93,4 @@ PowerRegisterSuspendResumeNotification
 PowerUnregisterSuspendResumeNotification
 DeviceNotifyCallbackRoutine
 
-SHAppBarMessage
-APPBARDATA
-ABM_ACTIVATE
+MonitorFromWindow

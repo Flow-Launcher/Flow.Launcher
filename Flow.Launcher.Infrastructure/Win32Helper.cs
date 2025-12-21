@@ -27,6 +27,7 @@ using Windows.Win32.UI.WindowsAndMessaging;
 using Point = System.Windows.Point;
 using SystemFonts = System.Windows.SystemFonts;
 
+
 namespace Flow.Launcher.Infrastructure
 {
     public static class Win32Helper
@@ -1019,26 +1020,38 @@ namespace Flow.Launcher.Infrastructure
 
         #region Taskbar
 
-        /// <summary>
-        /// Shows the taskbar temporarily by activating it.
-        /// This is useful for auto-hidden taskbars and mimics the behavior of hovering over the taskbar edge.
-        /// </summary>
-        public static void ShowTaskbar()
+        public static unsafe void ShowTaskbar()
         {
             // Find the taskbar window
             var taskbarHwnd = PInvoke.FindWindowEx(HWND.Null, HWND.Null, "Shell_TrayWnd", null);
             if (taskbarHwnd == HWND.Null) return;
 
-            // Prepare appbar data with the taskbar handle
-            var appBarData = new APPBARDATA
-            {
-                cbSize = (uint)Marshal.SizeOf<APPBARDATA>(),
-                hWnd = taskbarHwnd
-            };
+            // Magic from https://github.com/Oliviaophia/SmartTaskbar
+            const uint TrayBarFlag = 0x05D1;
+            var mon = PInvoke.MonitorFromWindow(taskbarHwnd, Windows.Win32.Graphics.Gdi.MONITOR_FROM_FLAGS.MONITOR_DEFAULTTONEAREST);
+            PInvoke.PostMessage(taskbarHwnd, TrayBarFlag, new WPARAM(1), new LPARAM((nint)mon.Value));
+        }
 
-            // Send ABM_ACTIVATE to temporarily show the taskbar
-            // This activates the taskbar without permanently changing its auto-hide state
-            PInvoke.SHAppBarMessage(PInvoke.ABM_ACTIVATE, ref appBarData);
+        public static void HideTaskbar()
+        {
+            // Find the taskbar window
+            var taskbarHwnd = PInvoke.FindWindowEx(HWND.Null, HWND.Null, "Shell_TrayWnd", null);
+            if (taskbarHwnd == HWND.Null) return;
+
+            // Magic from https://github.com/Oliviaophia/SmartTaskbar
+            const uint TrayBarFlag = 0x05D1;
+            PInvoke.PostMessage(taskbarHwnd, TrayBarFlag, new WPARAM(0), IntPtr.Zero);
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct APPBARDATA
+        {
+            public uint cbSize;
+            public HWND hWnd;
+            public uint uCallbackMessage;
+            public uint uEdge;
+            public RECT rc;
+            public nint lParam;
         }
 
         #endregion

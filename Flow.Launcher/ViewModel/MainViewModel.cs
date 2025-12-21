@@ -2208,6 +2208,11 @@ namespace Flow.Launcher.ViewModel
                 Win32Helper.RestorePreviousKeyboardLayout();
             }
 
+            if (Settings.ShowTaskbarWhenInvoked)
+            {
+                Win32Helper.HideTaskbar();
+            }
+
             // Delay for a while to make sure clock will not flicker
             await Task.Delay(50);
 
