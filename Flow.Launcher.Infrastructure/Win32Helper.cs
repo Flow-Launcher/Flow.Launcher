@@ -1043,17 +1043,6 @@ namespace Flow.Launcher.Infrastructure
             PInvoke.PostMessage(taskbarHwnd, TrayBarFlag, new WPARAM(0), IntPtr.Zero);
         }
 
-        [StructLayout(LayoutKind.Sequential)]
-        private struct APPBARDATA
-        {
-            public uint cbSize;
-            public HWND hWnd;
-            public uint uCallbackMessage;
-            public uint uEdge;
-            public RECT rc;
-            public nint lParam;
-        }
-
         #endregion
     }
 }
