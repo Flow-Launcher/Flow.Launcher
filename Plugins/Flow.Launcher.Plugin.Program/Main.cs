@@ -413,9 +413,21 @@ namespace Flow.Launcher.Plugin.Program
 
         internal static void ResetCache()
         {
-            var oldCache = cache;
-            cache = new MemoryCache(cacheOptions);
-            oldCache.Dispose();
+            var newCache = new MemoryCache(cacheOptions);
+
+            // Atomically swap and get the previous cache instance, avoids double-dispose/lost-assignment race
+            // where each caller receives a distinct prior instance to dispose.
+            var oldCache = Interlocked.Exchange(ref cache, newCache);
+
+            // Dispose the previous instance (if any)- each caller gets a unique prior instance from above
+            try
+            {
+                oldCache?.Dispose();
+            }
+            catch (Exception e)
+            {
+                Context.API.LogException(ClassName, "Failed to dispose old program cache", e);
+            }
         }
 
         public Control CreateSettingPanel()
