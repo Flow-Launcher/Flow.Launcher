@@ -56,6 +56,8 @@
     <system:String x:Key="plugin_explorer_actionkeywordview_filecontentsearch">Søk etter filinnhold:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_indexsearch">Indekssøk:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">Hurtigtilgang:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_foldersearch">Folder Search:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_filesearch">File Search:</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_current">Nåværende nøkkelord for handling</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_done">Utført</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled">Aktivert</system:String>
