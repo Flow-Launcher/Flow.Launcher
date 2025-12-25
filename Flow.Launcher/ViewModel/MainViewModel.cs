@@ -761,7 +761,6 @@ namespace Flow.Launcher.ViewModel
             {
                 // Change query text first
                 QueryText = queryText;
-
                 // When we are changing query from codes, we should not delay the query
                 Query(false, isReQuery: false);
 
@@ -794,7 +793,6 @@ namespace Flow.Launcher.ViewModel
             {
                 // Change query text first
                 QueryText = queryText;
-
                 // When we are changing query from codes, we should not delay the query
                 await QueryAsync(false, isReQuery: false);
 
@@ -876,10 +874,10 @@ namespace Flow.Launcher.ViewModel
                     // Because of Fody's optimization
                     // setter won't be called when property value is not changed.
                     // so we need manually call Query()
+                    QueryText = string.Empty;
                     // http://stackoverflow.com/posts/25895769/revisions
                     // When we are changing query because selected results are changed to history or context menu,
                     // we should not delay the query
-                    QueryText = string.Empty;
                     Query(false);
 
                     if (HistorySelected())
