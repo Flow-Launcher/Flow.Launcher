@@ -760,13 +760,7 @@ namespace Flow.Launcher.ViewModel
             if (QueryText != queryText)
             {
                 // Change query text first
-                // We use private field and manually set QueryTextBox instead of QueryText setter
-                // so that QueryTextBox_TextChanged1 will not be invoked to avoid duplicated Query calls
-                _queryText = queryText;
-                if (Application.Current?.MainWindow is MainWindow mainWindow)
-                {
-                    mainWindow.SetQueryTextBoxText(queryText);
-                }
+                QueryText = queryText;
 
                 // When we are changing query from codes, we should not delay the query
                 Query(false, isReQuery: false);
@@ -799,13 +793,7 @@ namespace Flow.Launcher.ViewModel
             if (QueryText != queryText)
             {
                 // Change query text first
-                // We use private field and manually set QueryTextBox instead of QueryText setter
-                // so that QueryTextBox_TextChanged1 will not be invoked to avoid duplicated Query calls
-                _queryText = queryText;
-                if (Application.Current?.MainWindow is MainWindow mainWindow)
-                {
-                    mainWindow.SetQueryTextBoxText(queryText);
-                }
+                QueryText = queryText;
 
                 // When we are changing query from codes, we should not delay the query
                 await QueryAsync(false, isReQuery: false);
@@ -885,15 +873,13 @@ namespace Flow.Launcher.ViewModel
                     }
                     _queryTextBeforeLeaveResults = QueryText;
 
-                    // We can use QueryText setter because the Query as follows does not requery
-                    QueryText = string.Empty;
-
                     // Because of Fody's optimization
                     // setter won't be called when property value is not changed.
                     // so we need manually call Query()
                     // http://stackoverflow.com/posts/25895769/revisions
                     // When we are changing query because selected results are changed to history or context menu,
                     // we should not delay the query
+                    QueryText = string.Empty;
                     Query(false);
 
                     if (HistorySelected())

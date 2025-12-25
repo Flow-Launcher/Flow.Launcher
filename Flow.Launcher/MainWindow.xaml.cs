@@ -76,9 +76,6 @@ namespace Flow.Launcher
         private const double DefaultRightMargin = 66; //* this value from base.xaml
         private bool _isClockPanelAnimating = false;
 
-        // Search Delay
-        private bool _ignoreTextChange = false;
-
         // IDisposable
         private bool _disposed = false;
 
@@ -1359,7 +1356,7 @@ namespace Flow.Launcher
             if (_viewModel.QueryText != QueryTextBox.Text)
             {
                 BindingExpression be = QueryTextBox.GetBindingExpression(TextBox.TextProperty);
-                be?.UpdateSource();
+                be.UpdateSource();
             }
         }
 
@@ -1424,17 +1421,9 @@ namespace Flow.Launcher
 
         private void QueryTextBox_TextChanged1(object sender, TextChangedEventArgs e)
         {
-            if (_ignoreTextChange) return;
             var textBox = (TextBox)sender;
             _viewModel.QueryText = textBox.Text;
             _viewModel.Query(_settings.SearchQueryResultsWithDelay);
-        }
-
-        public void SetQueryTextBoxText(string text)
-        {
-            _ignoreTextChange = true;
-            QueryTextBox.Text = text;
-            _ignoreTextChange = false;
         }
 
         #endregion
