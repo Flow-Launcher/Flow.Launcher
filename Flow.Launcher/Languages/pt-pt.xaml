@@ -420,13 +420,13 @@
     <system:String x:Key="DialogJumpWindowPositionFollowDefault">Default search window position. Displayed when triggered by search window hotkey</system:String>
     <system:String x:Key="dialogJumpResultBehaviour">Dialog Jump Result Navigation Behaviour</system:String>
     <system:String x:Key="dialogJumpResultBehaviourToolTip">Behaviour to navigate Open/Save As dialog window to the selected result path</system:String>
-    <system:String x:Key="DialogJumpResultBehaviourLeftClick">Left click or Enter key</system:String>
-    <system:String x:Key="DialogJumpResultBehaviourRightClick">Right click</system:String>
+    <system:String x:Key="DialogJumpResultBehaviourLeftClick">Clique esquerdo ou tecla Enter</system:String>
+    <system:String x:Key="DialogJumpResultBehaviourRightClick">Clique direito</system:String>
     <system:String x:Key="dialogJumpFileResultBehaviour">Dialog Jump File Navigation Behaviour</system:String>
     <system:String x:Key="dialogJumpFileResultBehaviourToolTip">Behaviour to navigate Open/Save As dialog window when the result is a file path</system:String>
-    <system:String x:Key="DialogJumpFileResultBehaviourFullPath">Fill full path in file name box</system:String>
-    <system:String x:Key="DialogJumpFileResultBehaviourFullPathOpen">Fill full path in file name box and open</system:String>
-    <system:String x:Key="DialogJumpFileResultBehaviourDirectory">Fill directory in path box</system:String>
+    <system:String x:Key="DialogJumpFileResultBehaviourFullPath">Preencher caminho total na caixa Nome do ficheiro</system:String>
+    <system:String x:Key="DialogJumpFileResultBehaviourFullPathOpen">Preencher caminho total na caixa Nome do ficheiro e abrir</system:String>
+    <system:String x:Key="DialogJumpFileResultBehaviourDirectory">Preencher diretório na caixa Caminho</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">Proxy HTTP</system:String>

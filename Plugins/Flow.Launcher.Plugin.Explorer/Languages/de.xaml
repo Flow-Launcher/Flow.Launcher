@@ -56,6 +56,8 @@
     <system:String x:Key="plugin_explorer_actionkeywordview_filecontentsearch">Suche nach Dateiinhalten:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_indexsearch">Index-Suche:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">Schnellzugriff:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_foldersearch">Folder Search:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_filesearch">File Search:</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_current">Aktuelles Aktions-Schlüsselwort</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_done">Fertig</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled">Aktiviert</system:String>
