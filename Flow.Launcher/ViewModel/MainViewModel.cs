@@ -64,6 +64,8 @@ namespace Flow.Launcher.ViewModel
             Priority = 0 // Priority is for calculating scores in UpdateResultView
         };
 
+        private bool _taskbarShownByFlow = false;
+
         #endregion
 
         #region Constructor
@@ -2098,9 +2100,10 @@ namespace Flow.Launcher.ViewModel
             if (App.LoadingOrExiting) return;
 
             // Show the taskbar if the setting is enabled
-            if (Settings.ShowTaskbarWhenInvoked)
+            if (Settings.ShowTaskbarWhenInvoked && !_taskbarShownByFlow)
             {
                 Win32Helper.ShowTaskbar();
+                _taskbarShownByFlow = true;
             }
 
             // When application is exiting, the Application.Current will be null
@@ -2208,9 +2211,10 @@ namespace Flow.Launcher.ViewModel
                 Win32Helper.RestorePreviousKeyboardLayout();
             }
 
-            if (Settings.ShowTaskbarWhenInvoked)
+            if (Settings.ShowTaskbarWhenInvoked && _taskbarShownByFlow)
             {
                 Win32Helper.HideTaskbar();
+                _taskbarShownByFlow = false;
             }
 
             // Delay for a while to make sure clock will not flicker
