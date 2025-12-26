@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Policy;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -20,6 +21,8 @@ namespace Flow.Launcher.Plugin
         private string _pluginDirectory;
 
         private string _icoPath;
+
+        private string _icoAbsoluteFullPath;
 
         private string _copyText = string.Empty;
 
@@ -67,12 +70,17 @@ namespace Flow.Launcher.Plugin
         /// The image to be displayed for the result.
         /// </summary>
         /// <value>Can be a local file path or a URL.</value>
-        /// <remarks>GlyphInfo is prioritized if not null</remarks>
+        /// <remarks>
+        /// GlyphInfo is prioritized if not null.
+        /// Use IcoPathRelative for storage where it needs to be resistant to plugin location change.
+        /// </remarks>
         public string IcoPath
         {
             get => _icoPath;
             set
             {
+                _icoPath = value;
+
                 // As a standard this property will handle prepping and converting to absolute local path for icon image processing
                 if (!string.IsNullOrEmpty(value)
                     && !string.IsNullOrEmpty(PluginDirectory)
@@ -81,40 +89,40 @@ namespace Flow.Launcher.Plugin
                     && !value.StartsWith("https://", StringComparison.OrdinalIgnoreCase)
                     && !value.StartsWith("data:image", StringComparison.OrdinalIgnoreCase))
                 {
-                    _icoPath = Path.Combine(PluginDirectory, value);
+                    _icoAbsoluteFullPath = Path.Combine(PluginDirectory, value);
                 }
                 else
                 {
-                    _icoPath = value;
+                    _icoAbsoluteFullPath = value;
                 }
             }
         }
 
         /// <summary>
-        /// Returns the plugin directory relative IcoPath or URL. This path is useful for storage where the it needs
-        /// to be resistant to changes in plugin location from update or portable mode change.
+        /// TODO COMMENT
         /// </summary>
-        /// <value>Must be a local file path.</value>
-        /// <remarks>This will be empty string if IcoPath is a URL, so must check for empty string during usage</remarks>
+        public string IcoAbsoluteFullPath => _icoAbsoluteFullPath;
+
+        /// <summary>
+        /// Returns IcoPath's relative path based on the plugin directory or original value if not file path.
+        /// This property is useful for storage where it needs to be resistant to changes in plugin location from update
+        /// or portable mode change.
+        /// </summary>
         public string IcoPathRelative
         {
-            get => _icoPath;
-            set
+            get
             {
-                // As a standard this property will handle prepping and converting to absolute local path for icon image processing
-                if (!string.IsNullOrEmpty(value)
-                    && !string.IsNullOrEmpty(PluginDirectory)
-                    && !Path.IsPathRooted(value)
-                    && !value.StartsWith("http://", StringComparison.OrdinalIgnoreCase)
-                    && !value.StartsWith("https://", StringComparison.OrdinalIgnoreCase)
-                    && !value.StartsWith("data:image", StringComparison.OrdinalIgnoreCase))
+                if (string.IsNullOrEmpty(IcoAbsoluteFullPath)
+                    || string.IsNullOrEmpty(PluginDirectory)
+                    || !Path.IsPathRooted(IcoAbsoluteFullPath)
+                    || IcoAbsoluteFullPath.StartsWith("http://", StringComparison.OrdinalIgnoreCase)
+                    || IcoAbsoluteFullPath.StartsWith("https://", StringComparison.OrdinalIgnoreCase)
+                    || IcoAbsoluteFullPath.StartsWith("data:image", StringComparison.OrdinalIgnoreCase))
                 {
-                    _icoPath = Path.Combine(PluginDirectory, value);
+                    return IcoAbsoluteFullPath;
                 }
-                else
-                {
-                    _icoPath = value;
-                }
+
+                return Path.GetRelativePath(PluginDirectory, IcoAbsoluteFullPath);
             }
         }
 
