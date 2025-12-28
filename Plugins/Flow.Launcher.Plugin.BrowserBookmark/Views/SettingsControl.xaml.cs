@@ -48,6 +48,16 @@ public partial class SettingsControl
         }
     }
 
+    public bool ReuseTabs
+    {
+        get => Settings.ReuseTabs;
+        set
+        {
+            Settings.ReuseTabs = value;
+            _ = Task.Run(() => Main.ReloadAllBookmarks());
+        }
+    }
+
     public bool OpenInNewBrowserWindow
     {
         get => Settings.OpenInNewBrowserWindow;

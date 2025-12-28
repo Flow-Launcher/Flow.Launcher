@@ -13,6 +13,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <StackPanel
             Grid.Row="0"
@@ -99,5 +100,12 @@
             VerticalAlignment="Center"
             Content="{DynamicResource flowlauncher_plugin_browserbookmark_enable_favicons}"
             IsChecked="{Binding Settings.EnableFavicons}" />
+        <CheckBox
+            Grid.Row="3"
+            Margin="{StaticResource SettingPanelItemTopBottomMargin}"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Content="{DynamicResource flowlauncher_plugin_browserbookmark_reuse_tabs}"
+            IsChecked="{Binding Settings.ReuseTabs}" />
     </Grid>
 </UserControl>
