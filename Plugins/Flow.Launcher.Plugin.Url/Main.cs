@@ -17,19 +17,30 @@ namespace Flow.Launcher.Plugin.Url
             "(?:\\S+(?::\\S*)?@)?" +
             "(?:" +
             // IPv6 address with optional brackets (brackets required if followed by port)
-            // IPv6 with brackets
-            "(?:\\[(?:[0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}\\]|" + // standard IPv6
-            "\\[(?:[0-9a-fA-F]{1,4}:){1,7}:\\]|" + // IPv6 with trailing ::
-            "\\[(?:[0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}\\]|" + // IPv6 compressed
-            "\\[::(?:[0-9a-fA-F]{1,4}:){0,6}[0-9a-fA-F]{1,4}\\]|" + // IPv6 with leading ::
-            "\\[::1\\])" + // IPv6 loopback
+            // IPv6 with brackets - patterns ordered from most specific to most general
+            "(?:\\[(?:[0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}\\]|" + // Full IPv6 (8 groups)
+            "\\[(?:[0-9a-fA-F]{1,4}:){6}:[0-9a-fA-F]{1,4}\\]|" + // 6 groups :: 1 group
+            "\\[(?:[0-9a-fA-F]{1,4}:){5}:(?:[0-9a-fA-F]{1,4}:)?[0-9a-fA-F]{1,4}\\]|" + // 5 groups :: 1-2 groups
+            "\\[(?:[0-9a-fA-F]{1,4}:){4}:(?:[0-9a-fA-F]{1,4}:){0,2}[0-9a-fA-F]{1,4}\\]|" + // 4 groups :: 1-3 groups
+            "\\[(?:[0-9a-fA-F]{1,4}:){3}:(?:[0-9a-fA-F]{1,4}:){0,3}[0-9a-fA-F]{1,4}\\]|" + // 3 groups :: 1-4 groups
+            "\\[(?:[0-9a-fA-F]{1,4}:){2}:(?:[0-9a-fA-F]{1,4}:){0,4}[0-9a-fA-F]{1,4}\\]|" + // 2 groups :: 1-5 groups
+            "\\[[0-9a-fA-F]{1,4}::(?:[0-9a-fA-F]{1,4}:){0,5}[0-9a-fA-F]{1,4}\\]|" + // 1 group :: 1-6 groups
+            "\\[::(?:[0-9a-fA-F]{1,4}:){0,6}[0-9a-fA-F]{1,4}\\]|" + // :: followed by 1-7 groups
+            "\\[::\\]|" + // All zeros
+            "\\[(?:[0-9a-fA-F]{1,4}:){1,7}:\\])" + // 1-7 groups ::
             "|" +
             // IPv6 without brackets (only when no port follows)
-            "(?:(?:[0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}|" + // standard IPv6
-            "(?:[0-9a-fA-F]{1,4}:){1,7}:|" + // IPv6 with trailing ::
-            "(?:[0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|" + // IPv6 compressed
-            "::(?:[0-9a-fA-F]{1,4}:){0,6}[0-9a-fA-F]{1,4}|" + // IPv6 with leading ::
-            "::1)(?!:[0-9])" + // IPv6 loopback (not followed by port)
+            // Patterns ordered from most specific to most general to avoid incorrect partial matches
+            "(?:(?:[0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}|" + // Full IPv6 (8 groups)
+            "(?:[0-9a-fA-F]{1,4}:){6}:[0-9a-fA-F]{1,4}|" + // 6 groups :: 1 group
+            "(?:[0-9a-fA-F]{1,4}:){5}:(?:[0-9a-fA-F]{1,4}:)?[0-9a-fA-F]{1,4}|" + // 5 groups :: 1-2 groups
+            "(?:[0-9a-fA-F]{1,4}:){4}:(?:[0-9a-fA-F]{1,4}:){0,2}[0-9a-fA-F]{1,4}|" + // 4 groups :: 1-3 groups
+            "(?:[0-9a-fA-F]{1,4}:){3}:(?:[0-9a-fA-F]{1,4}:){0,3}[0-9a-fA-F]{1,4}|" + // 3 groups :: 1-4 groups
+            "(?:[0-9a-fA-F]{1,4}:){2}:(?:[0-9a-fA-F]{1,4}:){0,4}[0-9a-fA-F]{1,4}|" + // 2 groups :: 1-5 groups
+            "[0-9a-fA-F]{1,4}::(?:[0-9a-fA-F]{1,4}:){0,5}[0-9a-fA-F]{1,4}|" + // 1 group :: 1-6 groups
+            "::(?:[0-9a-fA-F]{1,4}:){0,6}[0-9a-fA-F]{1,4}|" + // :: followed by 1-7 groups
+            "::|" + // All zeros
+            "(?:[0-9a-fA-F]{1,4}:){1,7}:)(?!:[0-9])" + // 1-7 groups :: (not followed by port)
             "|" +
             // IPv4 address - all valid addresses including private networks (excluding 0.0.0.0)
             "(?:(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|[1-9])\\.(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d))" +
