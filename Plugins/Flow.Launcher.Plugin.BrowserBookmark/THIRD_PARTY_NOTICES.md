@@ -7,7 +7,7 @@ This project uses third-party NuGet packages.
 | BrowserTabs                | 0.2.0   | Apache-2.0   | https://licenses.nuget.org/Apache-2.0 |
 | CommunityToolkit.Mvvm      | 8.4.0   | MIT          | https://licenses.nuget.org/MIT        |
 | Flow.Launcher.Localization | 0.0.6   | MIT          | https://licenses.nuget.org/MIT        |
-| Microsoft.Data.Sqlite      | 10.0.0  | MIT          | https://licenses.nuget.org/MIT        |
+| Microsoft.Data.Sqlite      | 10.0.1  | MIT          | https://licenses.nuget.org/MIT        |
 | SkiaSharp                  | 3.119.1 | MIT          | https://licenses.nuget.org/MIT        |
 | Svg.Skia                   | 3.2.1   | MIT          | https://licenses.nuget.org/MIT        |
 
@@ -26,6 +26,7 @@ Finally Browser Tabs plugin wasn't used but **it's code had great impact on this
 1. Rename `licenses.json` to `THIRD_PARTY_NOTICES.json` and format the json
 
 ```
+cd Plugins\Flow.Launcher.Plugin.BrowserBookmark
 dotnet tool install --global dotnet-project-licenses
 dotnet-project-licenses --input Flow.Launcher.Plugin.BrowserBookmark.csproj --json
 ```
