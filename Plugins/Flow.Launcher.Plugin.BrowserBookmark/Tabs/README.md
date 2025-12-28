@@ -38,5 +38,3 @@ However due to security reasons it has several limitations:
 
 - different browsers exposes internals differently
 - it is not easily accessible (e.g. you cannot make Chrome expose internal details on a dev TCP port from default profile so user would have to take care about special settings).
-
-_"Reuse tabs" setting was created initially by [Andrzej Martyna](https://github.com/andrzejmartyna)_  
