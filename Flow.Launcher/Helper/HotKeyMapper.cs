@@ -143,6 +143,8 @@ internal static class HotKeyMapper
                 return;
 
             App.API.ShowMainWindow();
+            // Make sure to go back to the query results page first since it can cause issues if current page is context menu
+            App.API.BackToQueryResults();
             App.API.ChangeQuery(hotkey.ActionKeyword, true);
         });
     }

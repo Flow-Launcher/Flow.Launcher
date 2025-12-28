@@ -56,6 +56,8 @@
     <system:String x:Key="plugin_explorer_actionkeywordview_filecontentsearch">بحث في محتوى الملفات:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_indexsearch">بحث مفهرس:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">وصول سريع:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_foldersearch">Folder Search:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_filesearch">File Search:</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_current">الكلمة المفتاحية الحالية للإجراء</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_done">تم</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled">مفعّل</system:String>

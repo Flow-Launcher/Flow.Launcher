@@ -56,6 +56,8 @@
     <system:String x:Key="plugin_explorer_actionkeywordview_filecontentsearch">Tìm kiếm nội dung tệp:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_indexsearch">Tìm kiếm chỉ mục:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">Truy cập nhanh</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_foldersearch">Folder Search:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_filesearch">File Search:</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_current">Từ hành động hiện tại</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_done">Xong</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled">Đã bật</system:String>

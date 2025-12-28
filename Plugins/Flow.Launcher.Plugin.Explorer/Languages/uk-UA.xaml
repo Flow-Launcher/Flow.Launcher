@@ -56,6 +56,8 @@
     <system:String x:Key="plugin_explorer_actionkeywordview_filecontentsearch">Пошук вмісту файлу:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_indexsearch">Індексний пошук:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">Швидкий доступ:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_foldersearch">Пошук теки:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_filesearch">Пошук файлу:</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_current">Поточне ключове слово дії</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_done">Готово</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled">Увімкнено</system:String>

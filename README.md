@@ -246,9 +246,9 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
 
 <img src="https://user-images.githubusercontent.com/6903107/144533523-afd79dca-a444-40e5-b2d9-6d3fe3aaece1.png" width="400">
 
-### [Clipboard History](https://github.com/liberize/Flow.Launcher.Plugin.ClipboardHistory)
+### [Clipboard+](https://github.com/Jack251970/Flow.Launcher.Plugin.ClipboardPlus)
 
-<img src="https://user-images.githubusercontent.com/6903107/144533481-58e473fd-38d9-4604-861f-ad870770967d.png" width="400">
+<img src="https://github.com/user-attachments/assets/4a001dc9-0895-4670-a911-e5b81c70f571" width="400">
 
 ### [Home Assistant Commander](https://github.com/Garulf/HA-Commander)
 
@@ -348,8 +348,8 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
   <a href="https://github.com/TheBestPessimist">
     <img src='https://avatars.githubusercontent.com/u/4482210?v=4' width="10%"/>
   </a>
-  <a href="https://github.com/AjmalParkar006">
-    <img src='https://avatars.githubusercontent.com/u/76547256?v=4' width="10%"/>
+  <a href="https://github.com/Calapine">
+    <img src='https://avatars.githubusercontent.com/u/76205879?v=4' width="10%"/>
   </a>
 </p>
 <p align="center">
