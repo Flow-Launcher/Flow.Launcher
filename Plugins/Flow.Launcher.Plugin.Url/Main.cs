@@ -115,7 +115,9 @@ namespace Flow.Launcher.Plugin.Url
 
         public bool IsURL(string raw)
         {
-            if (UrlRegex.Match(raw.ToLower()).Value == raw) return true;
+            raw = raw.ToLower();
+
+            if (UrlRegex.Match(raw).Value == raw) return true;
 
             return false;
         }
