@@ -11,9 +11,9 @@
     "LicenseUrl": "https://licenses.nuget.org/Apache-2.0",
     "LicenseType": "Apache-2.0",
     "Repository": {
-      "Type": "",
+      "Type": "git",
       "Url": "https://github.com/jjw24/BrowserTabs",
-      "Commit": ""
+      "Commit": "8d81f8f686e82ddceb3e1a8a49e698cec56b5e3d"
     }
   },
   {
