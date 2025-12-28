@@ -22,6 +22,7 @@ namespace Flow.Launcher.Plugin.Url
             "\\[(?:[0-9a-fA-F]{1,4}:){1,7}:\\]|" + // IPv6 with trailing ::
             "\\[(?:[0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}\\]|" + // IPv6 compressed
             "\\[::(?:[0-9a-fA-F]{1,4}:){0,6}[0-9a-fA-F]{1,4}\\]|" + // IPv6 with leading ::
+            "\\[(?:(?:[0-9a-fA-F]{1,4}:){1,6}|:):(?:[0-9a-fA-F]{1,4}:){0,5}[0-9a-fA-F]{1,4}\\]|" + // IPv6 with :: in the middle
             "\\[::1\\])" + // IPv6 loopback
             "|" +
             // IPv6 without brackets (only when no port follows)
@@ -29,6 +30,7 @@ namespace Flow.Launcher.Plugin.Url
             "(?:[0-9a-fA-F]{1,4}:){1,7}:|" + // IPv6 with trailing ::
             "(?:[0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|" + // IPv6 compressed
             "::(?:[0-9a-fA-F]{1,4}:){0,6}[0-9a-fA-F]{1,4}|" + // IPv6 with leading ::
+            "(?:(?:[0-9a-fA-F]{1,4}:){1,6}|:):(?:[0-9a-fA-F]{1,4}:){0,5}[0-9a-fA-F]{1,4}|" + // IPv6 with :: in the middle
             "::1)(?!:[0-9])" + // IPv6 loopback (not followed by port)
             "|" +
             // IPv4 address - all valid addresses including private networks (excluding 0.0.0.0)
