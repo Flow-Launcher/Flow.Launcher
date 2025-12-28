@@ -8,6 +8,7 @@ using System.Threading;
 using System.Windows.Controls;
 using Flow.Launcher.Plugin.BrowserBookmark.Commands;
 using Flow.Launcher.Plugin.BrowserBookmark.Models;
+using Flow.Launcher.Plugin.BrowserBookmark.Tabs;
 using Flow.Launcher.Plugin.BrowserBookmark.Views;
 using Flow.Launcher.Plugin.SharedCommands;
 
@@ -26,7 +27,9 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
     private static List<Bookmark> _cachedBookmarks = new();
 
     private static bool _initialized = false;
-    
+
+    private readonly TabsTracker tabsTracker = new();
+
     public void Init(PluginInitContext context)
     {
         Context = context;
@@ -58,6 +61,8 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
         }
 
         LoadBookmarksIfEnabled();
+
+        tabsTracker.Init();
     }
 
     private static void LoadBookmarksIfEnabled()
@@ -88,11 +93,10 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
 
         // Should top results be returned? (true if no search parameters have been passed)
         var topResults = string.IsNullOrEmpty(param);
-
         if (!topResults)
         {
             // Since we mixed chrome and firefox bookmarks, we should order them again
-            return _cachedBookmarks
+            return tabsTracker.InjectExistingTabs(_settings, _cachedBookmarks
                 .Select(
                     c => new Result
                     {
@@ -104,19 +108,18 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
                         Score = BookmarkLoader.MatchProgram(c, param).Score,
                         Action = _ =>
                         {
-                            Context.API.OpenUrl(c.Url);
-
+                            tabsTracker.OpenUrlAndTrack(_settings, c.Url);
                             return true;
                         },
                         ContextData = new BookmarkAttributes { Url = c.Url }
                     }
                 )
                 .Where(r => r.Score > 0)
-                .ToList();
+                .ToList());
         }
         else
         {
-            return _cachedBookmarks
+            return tabsTracker.InjectExistingTabs(_settings, _cachedBookmarks
                 .Select(
                     c => new Result
                     {
@@ -128,13 +131,13 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
                         Score = 5,
                         Action = _ =>
                         {
-                            Context.API.OpenUrl(c.Url);
+                            tabsTracker.OpenUrlAndTrack(_settings, c.Url);
                             return true;
                         },
                         ContextData = new BookmarkAttributes { Url = c.Url }
                     }
                 )
-                .ToList();
+                .ToList());
         }
     }
 
