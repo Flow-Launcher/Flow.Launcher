@@ -93,6 +93,7 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
 
         // Should top results be returned? (true if no search parameters have been passed)
         var topResults = string.IsNullOrEmpty(param);
+
         if (!topResults)
         {
             // Since we mixed chrome and firefox bookmarks, we should order them again

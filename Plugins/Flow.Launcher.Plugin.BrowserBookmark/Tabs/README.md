@@ -23,8 +23,8 @@ Next, each time the bookmark is triggered again, it just switches to the existin
 
 The extension bases on RuntimeId of AutomationElement from Microsoft UI Automation.  
 This is a weak spot as browsers are used to regenerate internal structures and even reuse RuntimeId.  
-It sometimes means that a bookmark activates a wrong tab.  
-Still **"just take me to THIS place in milliseconds** works almost all of the time so it bring so much value that it is worthwhile to accepts the fact it fails sometimes.  
+It **rarely** happens that a bookmark activates a wrong tab.  
+Still **"just take me to THIS place in milliseconds"** works almost all of the time so it bring so much value that it is worthwhile to accepts the fact it fails sometimes.  
 
 The quickest workaround is:  
 
@@ -39,4 +39,4 @@ However due to security reasons it has several limitations:
 - different browsers exposes internals differently
 - it is not easily accessible (e.g. you cannot make Chrome expose internal details on a dev TCP port from default profile so user would have to take care about special settings).
 
-_"Reuse tabs" settings created initially by [Andrzej Martyna](https://github.com/andrzejmartyna)_  
+_"Reuse tabs" setting was created initially by [Andrzej Martyna](https://github.com/andrzejmartyna)_  
