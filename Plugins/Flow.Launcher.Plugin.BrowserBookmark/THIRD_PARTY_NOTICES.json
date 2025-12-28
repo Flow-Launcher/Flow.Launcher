@@ -36,8 +36,8 @@
   {
     "PackageName": "Flow.Launcher.Localization",
     "PackageVersion": "0.0.6",
-    "PackageUrl": "",
-    "Copyright": "",
+    "PackageUrl": "https://github.com/Flow-Launcher/Flow.Launcher.Localization",
+    "Copyright": "Flow-Launcher",
     "Authors": [
       "Flow-Launcher"
     ],
