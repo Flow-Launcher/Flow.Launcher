@@ -1,5 +1,6 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
 using Flow.Launcher.Plugin.SharedCommands;
@@ -15,19 +16,26 @@ namespace Flow.Launcher.Plugin.Url
             // user:pass authentication
             "(?:\\S+(?::\\S*)?@)?" +
             "(?:" +
-            // IP address exclusion
-            // private & local networks
-            "(?!(?:10|127)(?:\\.\\d{1,3}){3})" +
-            "(?!(?:169\\.254|192\\.168)(?:\\.\\d{1,3}){2})" +
-            "(?!172\\.(?:1[6-9]|2\\d|3[0-1])(?:\\.\\d{1,3}){2})" +
-            // IP address dotted notation octets
-            // excludes loopback network 0.0.0.0
-            // excludes reserved space >= 224.0.0.0
-            // excludes network & broacast addresses
-            // (first & last IP address of each class)
-            "(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])" +
-            "(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}" +
-            "(?:\\.(?:[1-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))" +
+            // IPv6 address with optional brackets (brackets required if followed by port)
+            // IPv6 with brackets
+            "(?:\\[(?:[0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}\\]|" + // standard IPv6
+            "\\[(?:[0-9a-fA-F]{1,4}:){1,7}:\\]|" + // IPv6 with trailing ::
+            "\\[(?:[0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}\\]|" + // IPv6 compressed
+            "\\[::(?:[0-9a-fA-F]{1,4}:){0,6}[0-9a-fA-F]{1,4}\\]|" + // IPv6 with leading ::
+            "\\[::1\\])" + // IPv6 loopback
+            "|" +
+            // IPv6 without brackets (only when no port follows)
+            "(?:(?:[0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}|" + // standard IPv6
+            "(?:[0-9a-fA-F]{1,4}:){1,7}:|" + // IPv6 with trailing ::
+            "(?:[0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|" + // IPv6 compressed
+            "::(?:[0-9a-fA-F]{1,4}:){0,6}[0-9a-fA-F]{1,4}|" + // IPv6 with leading ::
+            "::1)(?!:[0-9])" + // IPv6 loopback (not followed by port)
+            "|" +
+            // IPv4 address - all valid addresses including private networks (excluding 0.0.0.0)
+            "(?:(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|[1-9])\\.(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d))" +
+            "|" +
+            // localhost
+            "localhost" +
             "|" +
             // host name
             "(?:(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)" +
@@ -37,7 +45,7 @@ namespace Flow.Launcher.Plugin.Url
             "(?:\\.(?:[a-z\\u00a1-\\uffff]{2,}))" +
             ")" +
             // port number
-            "(?::\\d{2,5})?" +
+            "(?::\\d{1,5})?" +
             // resource path
             "(?:/\\S*)?" +
             "$";
@@ -45,12 +53,17 @@ namespace Flow.Launcher.Plugin.Url
         internal static PluginInitContext Context { get; private set; }
         internal static Settings Settings { get; private set; }
 
+        private static readonly string[] UrlSchemes = ["http://", "https://", "ftp://"];
+
         public List<Result> Query(Query query)
         {
             var raw = query.Search;
-            if (IsURL(raw))
+            if (!IsURL(raw))
             {
-                return
+                return [];
+            }
+
+            return
                 [
                     new()
                     {
@@ -60,7 +73,8 @@ namespace Flow.Launcher.Plugin.Url
                         Score = 8,
                         Action = _ =>
                         {
-                            if (!raw.StartsWith("http://", StringComparison.OrdinalIgnoreCase) && !raw.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
+                            // not a recognized scheme, add preferred http scheme
+                            if (!UrlSchemes.Any(scheme => raw.StartsWith(scheme, StringComparison.OrdinalIgnoreCase)))
                             {
                                 raw = GetHttpPreference() + "://" + raw;
                             }
@@ -92,9 +106,6 @@ namespace Flow.Launcher.Plugin.Url
                         }
                     }
                 ];
-            }
-
-            return [];
         }
 
         private static string GetHttpPreference()
@@ -104,17 +115,7 @@ namespace Flow.Launcher.Plugin.Url
 
         public bool IsURL(string raw)
         {
-            raw = raw.ToLower();
-
-            if (UrlRegex.Match(raw).Value == raw) return true;
-
-            if (raw == "localhost" || raw.StartsWith("localhost:") ||
-                raw == "http://localhost" || raw.StartsWith("http://localhost:") ||
-                raw == "https://localhost" || raw.StartsWith("https://localhost:")
-                )
-            {
-                return true;
-            }
+            if (UrlRegex.Match(raw.ToLower()).Value == raw) return true;
 
             return false;
         }
