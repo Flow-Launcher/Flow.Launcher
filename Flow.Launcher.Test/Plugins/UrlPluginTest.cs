@@ -36,6 +36,7 @@ namespace Flow.Launcher.Test.Plugins
             ClassicAssert.IsTrue(plugin.IsURL("[::1]"));
             ClassicAssert.IsTrue(plugin.IsURL("[::1]:8080"));
             ClassicAssert.IsTrue(plugin.IsURL("2001:db8::1"));
+            ClassicAssert.IsTrue(plugin.IsURL("fe80:1:2::3:4"));
             ClassicAssert.IsTrue(plugin.IsURL("::1"));
             ClassicAssert.IsTrue(plugin.IsURL("HTTP://EXAMPLE.COM"));
             ClassicAssert.IsTrue(plugin.IsURL("HTTPS://EXAMPLE.COM"));
