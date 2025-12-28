@@ -132,7 +132,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
                 case false
                     when CanUseIndexSearchByActionKeywords(activeActionKeywords):
-                    searchResults = Settings.IndexProvider.SearchAsync(query.Search, token);
+                    searchResults = Settings.IndexProvider.SearchAsync(query.Search, token, GetAllowedResultTypeByUsedActionKeyword(activeActionKeywords));
                     engineName = Enum.GetName(Settings.IndexSearchEngine);
                     break;
                 default:
@@ -150,7 +150,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 {
                     if (search.Type == ResultType.File && IsExcludedFile(search))
                         continue;
-
+                    // TODO: Optimize filtering by action keyword at the provider level to reduce unnecessary searches.
+                    // 1. Path search and content search may not need filtering as they are specific enough.
+                    // 2. Index search can be optimized by passing allowed result types to the provider to limit the search scope.
+                    // 3. Quick access link filtering is already handled separately.
+                    // 
                     if (IsResultTypeFilteredByActionKeyword(search.Type, actions))
                         continue;
 
@@ -327,6 +331,20 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             }
 
             return true;
+        }
+
+        private List<ResultType> GetAllowedResultTypeByUsedActionKeyword(Dictionary<ActionKeyword, string> activeActionKeywords)
+        {
+            List<ActionKeyword> activeKeywords = activeActionKeywords.Keys.ToList();
+            var allowedResultTypes = new List<ResultType>();
+            foreach (var actionKeyword in activeKeywords)
+            {
+                if (_allowedTypesByActionKeyword.TryGetValue(actionKeyword, out var resultTypes))
+                {
+                    allowedResultTypes.AddRange(resultTypes);
+                }
+            }
+            return allowedResultTypes.Distinct().ToList();
         }
 
         private bool CanUseIndexSearchByActionKeywords(Dictionary<ActionKeyword, string> actions)

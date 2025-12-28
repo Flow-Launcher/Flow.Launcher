@@ -83,8 +83,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             }
         }
 
-        public IAsyncEnumerable<SearchResult> SearchAsync(string search, CancellationToken token)
+        public IAsyncEnumerable<SearchResult> SearchAsync(string search, CancellationToken token, IEnumerable<ResultType> allowedResultTypes = null)
         {
+            // TODO: result type filter
             return WindowsIndexFilesAndFoldersSearchAsync(search, token: token);
         }
 

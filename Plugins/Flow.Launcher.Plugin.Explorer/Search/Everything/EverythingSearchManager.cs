@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -72,14 +73,16 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             }
         }
 
-        public async IAsyncEnumerable<SearchResult> SearchAsync(string search, [EnumeratorCancellation] CancellationToken token)
+        public async IAsyncEnumerable<SearchResult> SearchAsync(string search, [EnumeratorCancellation] CancellationToken token, IEnumerable<ResultType> allowedResultTypes = null)
         {
             await ThrowIfEverythingNotAvailableAsync(token);
 
             if (token.IsCancellationRequested)
                 yield break;
 
-            var option = new EverythingSearchOption(search, 
+            var searchKeyword = BuildSearchKeywordWithTypeFilter(search, allowedResultTypes);
+
+            var option = new EverythingSearchOption(searchKeyword, 
                 Settings.SortOption, 
                 MaxCount: Settings.MaxResult, 
                 IsFullPathSearch: Settings.EverythingSearchFullPath, 
@@ -87,6 +90,33 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
             await foreach (var result in EverythingApi.SearchAsync(option, token))
                 yield return result;
+        }
+
+        private static string BuildSearchKeywordWithTypeFilter(string search, IEnumerable<ResultType> allowedResultTypes)
+        {
+            if (allowedResultTypes == null)
+                return search;
+
+            var typesList = allowedResultTypes as IList<ResultType> ?? allowedResultTypes.ToList();
+            if (typesList.Count == 0 || typesList.Count == 3)
+                return search; // No filtering needed
+
+            var hasFile = typesList.Contains(ResultType.File);
+            var hasFolder = typesList.Contains(ResultType.Folder);
+            var hasVolume = typesList.Contains(ResultType.Volume);
+
+            var filter = (hasFile, hasFolder, hasVolume) switch
+            {
+                (true, false, false) => "file:",
+                (false, true, false) => "folder:",
+                (false, false, true) => "volume:",
+                (true, true, false) => "<file:|folder:>",
+                (true, false, true) => "<file:|volume:>",
+                (false, true, true) => "<folder:|volume:>",
+                _ => null
+            };
+
+            return filter == null ? search : $"{filter} {search}";
         }
 
         public async IAsyncEnumerable<SearchResult> ContentSearchAsync(string plainSearch, string contentSearch,
