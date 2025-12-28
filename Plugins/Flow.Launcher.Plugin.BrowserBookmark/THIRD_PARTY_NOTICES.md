@@ -16,7 +16,7 @@ Detailed information (package id, version, license, repository URL) is available
 # Additional credits
 
 Initially there was a plan to integrate [Browser Bookmarks plugin](https://github.com/Flow-Launcher/Flow.Launcher/tree/dev/Plugins/Flow.Launcher.Plugin.BrowserBookmark) and [Browser Tabs plugin](https://github.com/Flow-Launcher/Flow.Launcher.Plugin.BrowserTabs) but it looks like inter-plugin communication or integration of plugins is not possible.  
-Finally Browser Tabs plugin wasn't used but **it's code had great impact on this final solution**.  
+Finally Browser Tabs plugin wasn't used but **its code had great impact on this final solution**.  
 
 # How to generate the list
 
