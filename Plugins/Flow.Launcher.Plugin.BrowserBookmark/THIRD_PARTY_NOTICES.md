@@ -13,6 +13,11 @@ This project uses third-party NuGet packages.
 
 Detailed information (package id, version, license, repository URL) is available in [THIRD_PARTY_NOTICES.json](THIRD_PARTY_NOTICES.json).  
 
+# Additional credits
+
+Initially there was a plan to integrate [Browser Bookmarks plugin](https://github.com/Flow-Launcher/Flow.Launcher/tree/dev/Plugins/Flow.Launcher.Plugin.BrowserBookmark) and [Browser Tabs plugin](https://github.com/Flow-Launcher/Flow.Launcher.Plugin.BrowserTabs) but it looks like inter-plugin communication or integration of plugins is not possible.  
+Finally Browser Tabs plugin wasn't used but **it's code had great impact on this final solution**.  
+
 # How to generate the list
 
 1. Install `dotnet-project-licenses`
