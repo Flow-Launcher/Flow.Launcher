@@ -1,61 +1,73 @@
 ﻿using NUnit.Framework;
-using NUnit.Framework.Legacy;
 using Flow.Launcher.Plugin.Url;
+using System.Reflection;
 
 namespace Flow.Launcher.Test.Plugins
 {
     [TestFixture]
     public class UrlPluginTest
     {
-        [Test]
-        public void URLMatchTest()
+        private static Main plugin;
+
+        [OneTimeSetUp]
+        public void OneTimeSetup()
         {
-            var plugin = new Main();
-            ClassicAssert.IsTrue(plugin.IsURL("http://www.google.com"));
-            ClassicAssert.IsTrue(plugin.IsURL("https://www.google.com"));
-            ClassicAssert.IsTrue(plugin.IsURL("http://google.com"));
-            ClassicAssert.IsTrue(plugin.IsURL("ftp://google.com"));
-            ClassicAssert.IsTrue(plugin.IsURL("www.google.com"));
-            ClassicAssert.IsTrue(plugin.IsURL("google.com"));
-            ClassicAssert.IsTrue(plugin.IsURL("http://localhost"));
-            ClassicAssert.IsTrue(plugin.IsURL("https://localhost"));
-            ClassicAssert.IsTrue(plugin.IsURL("http://localhost:80"));
-            ClassicAssert.IsTrue(plugin.IsURL("https://localhost:80"));
-            ClassicAssert.IsTrue(plugin.IsURL("localhost"));
-            ClassicAssert.IsTrue(plugin.IsURL("localhost:8080"));
-            ClassicAssert.IsTrue(plugin.IsURL("http://110.10.10.10"));
-            ClassicAssert.IsTrue(plugin.IsURL("110.10.10.10"));
-            ClassicAssert.IsTrue(plugin.IsURL("110.10.10.10:8080"));
-            ClassicAssert.IsTrue(plugin.IsURL("192.168.1.1"));
-            ClassicAssert.IsTrue(plugin.IsURL("192.168.1.1:3000"));
-            ClassicAssert.IsTrue(plugin.IsURL("ftp://110.10.10.10"));
-            ClassicAssert.IsTrue(plugin.IsURL("[2001:db8::1]"));
-            ClassicAssert.IsTrue(plugin.IsURL("[2001:db8::1]:8080"));
-            ClassicAssert.IsTrue(plugin.IsURL("http://[2001:db8::1]"));
-            ClassicAssert.IsTrue(plugin.IsURL("https://[2001:db8::1]:8080"));
-            ClassicAssert.IsTrue(plugin.IsURL("[::1]"));
-            ClassicAssert.IsTrue(plugin.IsURL("[::1]:8080"));
-            ClassicAssert.IsTrue(plugin.IsURL("2001:db8::1"));
-            ClassicAssert.IsTrue(plugin.IsURL("fe80:1:2::3:4"));
-            ClassicAssert.IsTrue(plugin.IsURL("::1"));
-            ClassicAssert.IsTrue(plugin.IsURL("HTTP://EXAMPLE.COM"));
-            ClassicAssert.IsTrue(plugin.IsURL("HTTPS://EXAMPLE.COM"));
-            ClassicAssert.IsTrue(plugin.IsURL("EXAMPLE.COM"));
-            ClassicAssert.IsTrue(plugin.IsURL("LOCALHOST"));
+            var settingsField = typeof(Main).GetField("Settings", BindingFlags.NonPublic | BindingFlags.Static);
+            settingsField?.SetValue(null, new Settings());
 
+            plugin = new Main();
+        }
 
-            ClassicAssert.IsFalse(plugin.IsURL("wwww"));
-            ClassicAssert.IsFalse(plugin.IsURL("wwww.c"));
-            ClassicAssert.IsFalse(plugin.IsURL("wwww.c"));
-            ClassicAssert.IsFalse(plugin.IsURL("not a url"));
-            ClassicAssert.IsFalse(plugin.IsURL("just text"));
-            ClassicAssert.IsFalse(plugin.IsURL("http://"));
-            ClassicAssert.IsFalse(plugin.IsURL("://example.com"));
-            ClassicAssert.IsFalse(plugin.IsURL("0.0.0.0")); // Pattern excludes 0.0.0.0
-            ClassicAssert.IsFalse(plugin.IsURL("256.1.1.1")); // Invalid IPv4
-            ClassicAssert.IsFalse(plugin.IsURL("example")); // No TLD
-            ClassicAssert.IsFalse(plugin.IsURL(".com"));
-            ClassicAssert.IsFalse(plugin.IsURL("http://.com"));
+        [TestCase("http://www.google.com")]
+        [TestCase("https://www.google.com")]
+        [TestCase("http://google.com")]
+        [TestCase("ftp://google.com")]
+        [TestCase("www.google.com")]
+        [TestCase("google.com")]
+        [TestCase("http://localhost")]
+        [TestCase("https://localhost")]
+        [TestCase("http://localhost:80")]
+        [TestCase("https://localhost:80")]
+        [TestCase("localhost")]
+        [TestCase("localhost:8080")]
+        [TestCase("http://110.10.10.10")]
+        [TestCase("110.10.10.10")]
+        [TestCase("110.10.10.10:8080")]
+        [TestCase("192.168.1.1")]
+        [TestCase("192.168.1.1:3000")]
+        [TestCase("ftp://110.10.10.10")]
+        [TestCase("[2001:db8::1]")]
+        [TestCase("[2001:db8::1]:8080")]
+        [TestCase("http://[2001:db8::1]")]
+        [TestCase("https://[2001:db8::1]:8080")]
+        [TestCase("[::1]")]
+        [TestCase("[::1]:8080")]
+        [TestCase("2001:db8::1")]
+        [TestCase("fe80:1:2::3:4")]
+        [TestCase("::1")]
+        [TestCase("HTTP://EXAMPLE.COM")]
+        [TestCase("HTTPS://EXAMPLE.COM")]
+        [TestCase("EXAMPLE.COM")]
+        [TestCase("LOCALHOST")]
+        public void WhenValidUrlThenIsUrlReturnsTrue(string url)
+        {
+            Assert.That(plugin.IsURL(url), Is.True);
+        }
+
+        [TestCase("wwww")]
+        [TestCase("wwww.c")]
+        [TestCase("not a url")]
+        [TestCase("just text")]
+        [TestCase("http://")]
+        [TestCase("://example.com")]
+        [TestCase("0.0.0.0")] // Pattern excludes 0.0.0.0
+        [TestCase("256.1.1.1")] // Invalid IPv4
+        [TestCase("example")] // No TLD
+        [TestCase(".com")]
+        [TestCase("http://.com")]
+        public void WhenInvalidUrlThenIsUrlReturnsFalse(string url)
+        {
+            Assert.That(plugin.IsURL(url), Is.False);
         }
     }
 }
