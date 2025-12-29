@@ -79,7 +79,6 @@ internal class TabsWalker
                     // Let's take the last one and assume this is the one that was created recently
                     // This is the best known approach as of today
                     // There might be some browsers' settings that change this behavior but weren't tested nor considered yet
-                    //TODO: research browsers' settings and check if it may break current assumption of just taking the last tab
                     return InitiateTab(process, tabs.Last());
                 }
 
