@@ -12,7 +12,16 @@ internal class TabsCache
     private readonly HashSet<string> _knownTabs = new();
     private readonly object sync = new();
 
-    private static string RuntimeIdToKey(AutomationElement elem) => elem != null ? string.Join("-", elem.GetRuntimeId()) : "NULL";
+    private static string RuntimeIdToKey(AutomationElement elem) {
+        try
+        {
+            return elem != null ? string.Join("-", elem.GetRuntimeId()) : null;
+        }
+        catch (ElementNotAvailableException)
+        {
+            return null;
+        }
+    }
 
     public bool Empty()
     {
@@ -26,18 +35,19 @@ internal class TabsCache
     {
         lock (sync)
         {
-            _knownTabs.Add(RuntimeIdToKey(tab));
+            var key = RuntimeIdToKey(tab);
+            if (key != null)
+            {
+                _knownTabs.Add(key);
+            }
         }
     }
 
     public void Add(IEnumerable<AutomationElement> tabs)
     {
-        lock (sync)
+        foreach (var tab in tabs)
         {
-            foreach (var tab in tabs)
-            {
-                _knownTabs.Add(RuntimeIdToKey(tab));
-            }
+            Add(tab);
         }
     }
 
@@ -45,7 +55,12 @@ internal class TabsCache
     {
         lock (sync)
         {
-            return _knownTabs.Contains(RuntimeIdToKey(tab));
+            var key = RuntimeIdToKey(tab);
+            if (key != null)
+            {
+                return _knownTabs.Contains(key);
+            }
         }
+        return false;
     }
 }

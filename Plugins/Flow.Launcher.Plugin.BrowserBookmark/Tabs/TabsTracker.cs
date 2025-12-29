@@ -48,7 +48,8 @@ public class TabsTracker : IDisposable
         foreach (var r in results)
         {
             var bookmarkUrl = ((BookmarkAttributes)r.ContextData).Url;
-            if (UrlToBrowserTab.TryGetValue(bookmarkUrl, out var existingTab))
+            var existingTab = GetExistingTab(bookmarkUrl);
+            if (existingTab != null)
             {
                 Context.API.LogDebug(ClassName, $"Mapped {bookmarkUrl}");
 
@@ -96,6 +97,18 @@ public class TabsTracker : IDisposable
         }
     }
 
+    private BrowserTab GetExistingTab(string url)
+    {
+        lock (_sync)
+        {
+            if (UrlToBrowserTab.TryGetValue(url, out var existingTab))
+            {
+                return existingTab;
+            }
+        }
+        return null;
+    }
+
     private void Remove(string url)
     {
         lock (_sync)
@@ -122,37 +135,40 @@ public class TabsTracker : IDisposable
                 return;
 
             int pid = element.Current.ProcessId;
-            Process? process = null;
-            try { process = Process.GetProcessById(pid); }
-            catch { /* could disappear */ }
-            if (process is null)
-                return;
-
-            var chromium = chromiumProcessNames.Contains(process.ProcessName);
-            var firefox = firefoxProcessNames.Contains(process.ProcessName);
-            if (!chromium && !firefox)
-                return; // not a browser
-
-            Context.API.LogDebug(ClassName, $"The active browser is {process.ProcessName}");
-
-            var rootElement = AutomationElement.FromHandle(process.MainWindowHandle);
-            if (rootElement == null)
-                return;
-
-            Context.API.LogDebug(ClassName, $"The root element is {rootElement.Current.Name}");
-
-            var currentTab = _walker.GetCurrentTabFromWindow(rootElement, process, CancellationToken.None);
-            if (currentTab != null)
+            try
             {
-                lock (_sync)
-                {
-                    Context.API.LogDebug(ClassName, $"Registering {urlToBind} as tab: {currentTab.Title}");
-                    UrlToBrowserTab[urlToBind] = currentTab;
-                    _expectedUrl = null;
+                using var process = Process.GetProcessById(pid);
+                var chromium = chromiumProcessNames.Contains(process.ProcessName);
+                var firefox = firefoxProcessNames.Contains(process.ProcessName);
+                if (!chromium && !firefox)
+                    return; // not a browser
 
-                    // required to take the tab into account by Flow Launcher main UI search window
-                    Context.API.ReQuery();
+                Context.API.LogDebug(ClassName, $"The active browser is {process.ProcessName}");
+
+                var rootElement = AutomationElement.FromHandle(process.MainWindowHandle);
+                if (rootElement == null)
+                    return;
+
+                Context.API.LogDebug(ClassName, $"The root element is {rootElement.Current.Name}");
+
+                var currentTab = _walker.GetCurrentTabFromWindow(rootElement, process, CancellationToken.None);
+                if (currentTab != null)
+                {
+                    lock (_sync)
+                    {
+                        Context.API.LogDebug(ClassName, $"Registering {urlToBind} as tab: {currentTab.Title}");
+                        UrlToBrowserTab[urlToBind] = currentTab;
+                        _expectedUrl = null;
+
+                        // required to take the tab into account by Flow Launcher main UI search window
+                        Context.API.ReQuery();
+                    }
                 }
+            }
+            catch (ArgumentException)
+            {
+                // No such process / not running
+                return;
             }
         }
         catch (Exception ex)
