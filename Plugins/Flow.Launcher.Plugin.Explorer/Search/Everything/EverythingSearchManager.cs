@@ -97,10 +97,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             if (allowedResultTypes == null)
                 return search;
 
-            var typesList = allowedResultTypes as IList<ResultType> ?? allowedResultTypes.ToList();
-            var hasFile = typesList.Contains(ResultType.File);
-            var hasFolder = typesList.Contains(ResultType.Folder);
-            var hasVolume = typesList.Contains(ResultType.Volume);
+            var hasFile = allowedResultTypes.Contains(ResultType.File);
+            var hasFolder = allowedResultTypes.Contains(ResultType.Folder);
+            var hasVolume = allowedResultTypes.Contains(ResultType.Volume);
 
             var filter = (hasFile, hasFolder, hasVolume) switch
             {
