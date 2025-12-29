@@ -98,9 +98,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 return search;
 
             var typesList = allowedResultTypes as IList<ResultType> ?? allowedResultTypes.ToList();
-            if (typesList.Count == 0 || typesList.Count == 3)
-                return search; // No filtering needed
-
             var hasFile = typesList.Contains(ResultType.File);
             var hasFolder = typesList.Contains(ResultType.Folder);
             var hasVolume = typesList.Contains(ResultType.Volume);
@@ -113,7 +110,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 (true, true, false) => "<file:|folder:>",
                 (true, false, true) => "<file:|volume:>",
                 (false, true, true) => "<folder:|volume:>",
-                _ => null
+                _ => null // No filtering needed when all allowed or unspecified
             };
 
             return filter == null ? search : $"{filter} {search}";
