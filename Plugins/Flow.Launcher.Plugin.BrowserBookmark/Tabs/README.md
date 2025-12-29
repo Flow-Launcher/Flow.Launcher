@@ -36,5 +36,5 @@ The quickest workaround is:
 Reading URLs of existing tabs was tried. It would make mapping of bookmarks to tabs more reliable.  
 However due to security reasons it has several limitations:  
 
-- different browsers exposes internals differently
+- different browsers expose internals differently
 - it is not easily accessible (e.g. you cannot make Chrome expose internal details on a dev TCP port from default profile so user would have to take care about special settings).
