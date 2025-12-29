@@ -1,5 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Automation;
+using System.Windows.Forms;
+using System.Windows.Input;
+using System.Xml.Linq;
+using static Flow.Launcher.Plugin.BrowserBookmark.Main;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark.Tabs;
 
@@ -9,13 +15,16 @@ namespace Flow.Launcher.Plugin.BrowserBookmark.Tabs;
 /// </summary>
 internal class TabsCache
 {
-    private readonly HashSet<string> _knownTabs = new();
-    private readonly object sync = new();
+    private static readonly string ClassName = nameof(TabsCache);
+    private readonly HashSet<string> _knownTabs = [];
+    private readonly object _sync = new();
 
-    private static string RuntimeIdToKey(AutomationElement elem) {
+    public static string RuntimeIdToKey(int[] runtimeId) => string.Join("-", runtimeId);
+
+    public static string RuntimeIdToKey(AutomationElement elem) {
         try
         {
-            return elem != null ? string.Join("-", elem.GetRuntimeId()) : null;
+            return elem != null ? RuntimeIdToKey(elem.GetRuntimeId()) : null;
         }
         catch (ElementNotAvailableException)
         {
@@ -25,7 +34,7 @@ internal class TabsCache
 
     public bool Empty()
     {
-        lock (sync)
+        lock (_sync)
         {
             return _knownTabs.Count == 0;
         }
@@ -33,16 +42,16 @@ internal class TabsCache
 
     public void Add(AutomationElement tab)
     {
-        lock (sync)
+        lock (_sync)
         {
             var key = RuntimeIdToKey(tab);
             if (key != null)
             {
+                Context.API.LogDebug(ClassName, $"Adding a tab to cache: {tab.Current.Name}");
                 _knownTabs.Add(key);
             }
         }
     }
-
     public void Add(IEnumerable<AutomationElement> tabs)
     {
         foreach (var tab in tabs)
@@ -53,7 +62,7 @@ internal class TabsCache
 
     public bool Contains(AutomationElement tab)
     {
-        lock (sync)
+        lock (_sync)
         {
             var key = RuntimeIdToKey(tab);
             if (key != null)
@@ -62,5 +71,26 @@ internal class TabsCache
             }
         }
         return false;
+    }
+
+    public void RemoveAllNonExistentTabs(AutomationElement rootElement, IEnumerable<AutomationElement> existingTabs)
+    {
+        if (rootElement == null || existingTabs == null)
+            return;
+
+        var rootKey = RuntimeIdToKey(rootElement);
+        var existingKeys = existingTabs.Select(RuntimeIdToKey).Where(k => k != null).ToHashSet();
+        var keysToRemove = _knownTabs.Where(t => t.StartsWith(rootKey) && !existingKeys.Contains(t));
+
+        //Context.API.LogDebug(ClassName, $"Rootkey: {rootKey}");
+        //Context.API.LogDebug(ClassName, $"Existing keys:\r\n{string.Join("\r\n", existingKeys)}");
+        //Context.API.LogDebug(ClassName, $"Known Tabs:\r\n{string.Join("\r\n", _knownTabs)}");
+        //Context.API.LogDebug(ClassName, $"Tabs to remove:\r\n{string.Join("\r\n", keysToRemove)}");
+
+        foreach (var key in keysToRemove)
+        {
+            Context.API.LogDebug(ClassName, $"Removing a tab from cache: {key}");
+            _knownTabs.Remove(key);
+        }
     }
 }

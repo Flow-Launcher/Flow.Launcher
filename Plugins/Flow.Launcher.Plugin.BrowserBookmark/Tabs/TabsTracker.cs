@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using System.Windows.Automation;
 using BrowserTabs;
@@ -27,6 +28,7 @@ public class TabsTracker : IDisposable
     private readonly object _sync = new();
 
     private AutomationFocusChangedEventHandler? _focusHandler;
+    private readonly HashSet<AutomationElement> _browserWindowsTracked = [];
     private bool _initialized;
 
     public void OpenUrlAndTrack(Settings settings, string url)
@@ -82,7 +84,15 @@ public class TabsTracker : IDisposable
     public void Dispose()
     {
         if (_focusHandler != null)
+        {
             Automation.RemoveAutomationFocusChangedEventHandler(_focusHandler);
+            _focusHandler = null;
+        }
+        var windowsToUnsubscribe = _browserWindowsTracked.ToList();
+        foreach (var wnd in windowsToUnsubscribe)
+        {
+            UnsubscribeStructureChangedForWindow(wnd);
+        }
     }
 
     public void ExpectUrl(string url)
@@ -163,6 +173,10 @@ public class TabsTracker : IDisposable
                         // required to take the tab into account by Flow Launcher main UI search window
                         Context.API.ReQuery();
                     }
+
+                    Automation.AddStructureChangedEventHandler(rootElement, TreeScope.Subtree, OnStructureChanged);
+                    Automation.AddAutomationEventHandler(WindowPattern.WindowClosedEvent, rootElement, TreeScope.Subtree, OnWindowClosed);
+                    _browserWindowsTracked.Add(rootElement);
                 }
             }
             catch (ArgumentException)
@@ -174,6 +188,46 @@ public class TabsTracker : IDisposable
         catch (Exception ex)
         {
             Context.API.LogException(ClassName, "Exception", ex);
+        }
+    }
+
+    private void OnStructureChanged(object sender, StructureChangedEventArgs e)
+    {
+        // TODO: Consider ChildAdded to handle new tabs appearance instead of AutomationFocusChangedEventHandler
+        // However think twice if it is worthwhile as the current approach might already be a good one
+        //if (e.StructureChangeType == StructureChangeType.ChildAdded)
+        //{
+        //}
+        if (e.StructureChangeType == StructureChangeType.ChildRemoved)
+        {
+            var eventRuntimeId = TabsCache.RuntimeIdToKey(e.GetRuntimeId());
+            foreach (var window in _browserWindowsTracked)
+            {
+                var windowRuntimeId = TabsCache.RuntimeIdToKey(window);
+                if (windowRuntimeId != null && eventRuntimeId.StartsWith(windowRuntimeId))
+                {
+                    _walker.RescanTabsForContainer(window);
+                }
+            }
+        }
+    }
+
+    private void OnWindowClosed(object sender, AutomationEventArgs e)
+    {
+        var element = sender as AutomationElement;
+        if (element == null)
+            return;
+        UnsubscribeStructureChangedForWindow(element);
+    }
+
+    private void UnsubscribeStructureChangedForWindow(AutomationElement wnd)
+    {
+        if (_browserWindowsTracked.Contains(wnd))
+        {
+            Context.API.LogDebug(ClassName, "Unsubscribe window from StructureChanged events");
+            Automation.RemoveStructureChangedEventHandler(wnd, OnStructureChanged);
+            _browserWindowsTracked.Remove(wnd);
+            _walker?.RemoveAllTabs(wnd);
         }
     }
 }

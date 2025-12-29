@@ -79,6 +79,7 @@ internal class TabsWalker
                     // Let's take the last one and assume this is the one that was created recently
                     // This is the best known approach as of today
                     // There might be some browsers' settings that change this behavior but weren't tested nor considered yet
+                    // TODO: Research browsers' settings and check if it may break current assumption of just taking the last tab
                     return InitiateTab(process, tabs.Last());
                 }
 
@@ -91,7 +92,7 @@ internal class TabsWalker
                     var tab = tabs[i];
                     if (!_cache.Contains(tab))
                     {
-                        Context.API.LogDebug(ClassName, $"FOUND NEW TAB: name={tab.Current.Name}, className={tab.Current.ClassName}");
+                        Context.API.LogDebug(ClassName, $"FOUND A NEW TAB: name={tab.Current.Name}, className={tab.Current.ClassName}");
                         _cache.Add(tab);
                         return InitiateTab(process, tab);
                     }
@@ -112,5 +113,17 @@ internal class TabsWalker
             Context.API.LogException(ClassName, "Error getting current tab from window", ex);
         }
         return null;
+    }
+
+    internal void RescanTabsForContainer(AutomationElement browserWindow)
+    {
+        Context.API.LogDebug(ClassName, "Rescaning tabs in order to find removed tabs");
+        _cache.RemoveAllNonExistentTabs(browserWindow, FindAllValidTabs(browserWindow));
+    }
+
+    internal void RemoveAllTabs(AutomationElement browserWindow)
+    {
+        Context.API.LogDebug(ClassName, "Removing all tabs in a window");
+        _cache.RemoveAllNonExistentTabs(browserWindow, []);
     }
 }
