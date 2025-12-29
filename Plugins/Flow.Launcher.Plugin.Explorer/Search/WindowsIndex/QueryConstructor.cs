@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Microsoft.Search.Interop;
 
@@ -74,7 +76,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         ///<summary>
         /// Search will be performed on all folders and files based on user's search keywords.
         ///</summary>
-        public string FilesAndFolders(ReadOnlySpan<char> userSearchString)
+        public string FilesAndFolders(ReadOnlySpan<char> userSearchString, IEnumerable<ResultType> allowedResultTypes = null)
         {
             if (userSearchString.IsWhiteSpace())
                 userSearchString = "*";
@@ -82,8 +84,50 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             // Remove any special characters that might cause issues with the query
             var replacedSearchString = ReplaceSpecialCharacterWithTwoSideWhiteSpace(userSearchString);
 
+            // Build the type filter constraint
+            var typeFilterConstraint = BuildTypeFilterConstraint(allowedResultTypes);
+
             // Generate SQL from constructed parameters, converting the userSearchString from AQS->WHERE clause
-            return $"{CreateBaseQuery().GenerateSQLFromUserQuery(replacedSearchString)} AND {RestrictionsForAllFilesAndFoldersSearch} ORDER BY {OrderIdentifier}";
+            var baseQuery = $"{CreateBaseQuery().GenerateSQLFromUserQuery(replacedSearchString)} AND {RestrictionsForAllFilesAndFoldersSearch}";
+            
+            // Append type filter if present
+            if (!string.IsNullOrEmpty(typeFilterConstraint))
+                baseQuery += $" AND {typeFilterConstraint}";
+            
+            return $"{baseQuery} ORDER BY {OrderIdentifier}";
+        }
+
+        /// <summary>
+        /// Build WHERE clause constraint to filter by result types (File, Folder, Volume).
+        /// </summary>
+        /// <remarks>
+        /// System.ItemType values:
+        /// - ".directory" for folders
+        /// - Specific file extensions (e.g., ".txt", ".pdf") for files
+        /// - Drive volumes are identified by their path structure
+        /// </remarks>
+        private static string BuildTypeFilterConstraint(IEnumerable<ResultType> allowedResultTypes)
+        {
+            if (allowedResultTypes == null)
+                return null;
+
+            var typesList = allowedResultTypes as IList<ResultType> ?? allowedResultTypes.ToList();
+
+            // No filtering needed if empty or all types are allowed
+            // TODO: what if more types are added in the future?
+            if (typesList.Count == 0 || typesList.Count == 3)
+                return null;
+
+            var hasFile = typesList.Contains(ResultType.File);
+            var hasFolder = typesList.Contains(ResultType.Folder) || typesList.Contains(ResultType.Volume); // Folder and volume are merged in Folder action keyword so treat them as same
+
+            if (hasFolder)
+                return "System.ItemType = '.directory'";
+
+            if (hasFile)
+                return "System.ItemType <> '.directory'";
+
+            return null;
         }
 
         /// <summary>
