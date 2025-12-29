@@ -12,7 +12,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark.Tabs;
 /// <summary>
 /// TabsTracker maps initial URLs into existing browser's tabs.
 /// The sequence of events:
-/// 1. OpenUrlAndTrack - before lauching an URL it is remembered for later mapping to a browser's tab
+/// 1. OpenUrlAndTrack - before launching an URL it is remembered for later mapping to a browser's tab
 /// 2. OnFocusChanged - whenever a browser's window gets focused a new tab discovery is started and result is put into the UrlToBrowserTab map
 /// 3. InjectExistingTabs - iterates over BrowserBookmark's query result and replaces OpenUrl with ActivateTab for known, existing tabs
 /// </summary>
