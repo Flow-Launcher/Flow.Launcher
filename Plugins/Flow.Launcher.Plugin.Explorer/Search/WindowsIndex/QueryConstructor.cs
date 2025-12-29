@@ -112,14 +112,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                 return null;
 
             var typesList = allowedResultTypes as IList<ResultType> ?? allowedResultTypes.ToList();
-
-            // No filtering needed if empty or all types are allowed
-            // TODO: what if more types are added in the future?
-            if (typesList.Count == 0 || typesList.Count == 3)
-                return null;
-
             var hasFile = typesList.Contains(ResultType.File);
             var hasFolder = typesList.Contains(ResultType.Folder) || typesList.Contains(ResultType.Volume); // Folder and volume are merged in Folder action keyword so treat them as same
+
+            // No filtering needed if empty or all types are allowed
+            if (hasFile && hasFolder || !hasFile && !hasFolder)
+                return null;
 
             if (hasFolder)
                 return "System.ItemType = '.directory'";
