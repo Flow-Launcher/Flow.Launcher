@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Automation;
-using System.Windows.Forms;
-using System.Windows.Input;
-using System.Xml.Linq;
 using static Flow.Launcher.Plugin.BrowserBookmark.Main;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark.Tabs;

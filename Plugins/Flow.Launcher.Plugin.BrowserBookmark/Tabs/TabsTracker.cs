@@ -83,15 +83,16 @@ public class TabsTracker : IDisposable
 
     public void Dispose()
     {
-        if (_focusHandler != null)
-        {
-            Automation.RemoveAutomationFocusChangedEventHandler(_focusHandler);
-            _focusHandler = null;
-        }
         var windowsToUnsubscribe = _browserWindowsTracked.ToList();
         foreach (var wnd in windowsToUnsubscribe)
         {
             UnsubscribeStructureChangedForWindow(wnd);
+        }
+        if (_focusHandler != null)
+        {
+            Automation.RemoveAutomationFocusChangedEventHandler(_focusHandler);
+            _focusHandler = null;
+            _initialized = false;
         }
     }
 
@@ -145,44 +146,37 @@ public class TabsTracker : IDisposable
                 return;
 
             int pid = element.Current.ProcessId;
-            try
-            {
-                using var process = Process.GetProcessById(pid);
-                var chromium = chromiumProcessNames.Contains(process.ProcessName);
-                var firefox = firefoxProcessNames.Contains(process.ProcessName);
-                if (!chromium && !firefox)
-                    return; // not a browser
+            using var process = Process.GetProcessById(pid);
 
-                Context.API.LogDebug(ClassName, $"The active browser is {process.ProcessName}");
+            var chromium = chromiumProcessNames.Contains(process.ProcessName);
+            var firefox = firefoxProcessNames.Contains(process.ProcessName);
+            if (!chromium && !firefox)
+                return; // not a browser
 
-                var rootElement = AutomationElement.FromHandle(process.MainWindowHandle);
-                if (rootElement == null)
-                    return;
+            Context.API.LogDebug(ClassName, $"The active browser is {process.ProcessName}");
 
-                Context.API.LogDebug(ClassName, $"The root element is {rootElement.Current.Name}");
-
-                var currentTab = _walker.GetCurrentTabFromWindow(rootElement, process, CancellationToken.None);
-                if (currentTab != null)
-                {
-                    lock (_sync)
-                    {
-                        Context.API.LogDebug(ClassName, $"Registering {urlToBind} as tab: {currentTab.Title}");
-                        UrlToBrowserTab[urlToBind] = currentTab;
-                        _expectedUrl = null;
-
-                        // required to take the tab into account by Flow Launcher main UI search window
-                        Context.API.ReQuery();
-                    }
-
-                    Automation.AddStructureChangedEventHandler(rootElement, TreeScope.Subtree, OnStructureChanged);
-                    Automation.AddAutomationEventHandler(WindowPattern.WindowClosedEvent, rootElement, TreeScope.Subtree, OnWindowClosed);
-                    _browserWindowsTracked.Add(rootElement);
-                }
-            }
-            catch (ArgumentException)
-            {
-                // No such process / not running
+            var rootElement = AutomationElement.FromHandle(process.MainWindowHandle);
+            if (rootElement == null)
                 return;
+
+            Context.API.LogDebug(ClassName, $"The root element is {rootElement.Current.Name}");
+
+            var currentTab = _walker.GetCurrentTabFromWindow(rootElement, process, CancellationToken.None);
+            if (currentTab != null)
+            {
+                lock (_sync)
+                {
+                    Context.API.LogDebug(ClassName, $"Registering {urlToBind} as tab: {currentTab.Title}");
+                    UrlToBrowserTab[urlToBind] = currentTab;
+                    _expectedUrl = null;
+
+                    // required to take the tab into account by Flow Launcher main UI search window
+                    Context.API.ReQuery();
+                }
+
+                Automation.AddStructureChangedEventHandler(rootElement, TreeScope.Subtree, OnStructureChanged);
+                Automation.AddAutomationEventHandler(WindowPattern.WindowClosedEvent, rootElement, TreeScope.Subtree, OnWindowClosed);
+                _browserWindowsTracked.Add(rootElement);
             }
         }
         catch (Exception ex)

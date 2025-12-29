@@ -54,7 +54,7 @@ public partial class SettingsControl
         set
         {
             Settings.ReuseTabs = value;
-            _ = Task.Run(() => Main.ReloadAllBookmarks());
+            // reloading of bookmarks is not needed while this settings changes
         }
     }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Automation;
 using BrowserTabs;
 using static Flow.Launcher.Plugin.BrowserBookmark.Main;
@@ -67,7 +68,7 @@ internal class TabsWalker
                 if (tabs.Count == 0)
                 {
                     Context.API.LogDebug(ClassName, "No valid tabs found");
-                    Thread.Sleep(_tabRetryInterval);
+                    Task.Delay(_tabRetryInterval, cancellationToken);
                     continue;
                 }
 
@@ -99,7 +100,7 @@ internal class TabsWalker
                 }
 
                 Context.API.LogDebug(ClassName, "No new tab found");
-                Thread.Sleep(_tabRetryInterval);
+                Task.Delay(_tabRetryInterval, cancellationToken);
             }
 
             Context.API.LogDebug(ClassName, "Timeout waiting for new tab");
