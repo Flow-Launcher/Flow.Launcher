@@ -106,6 +106,6 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Center"
             Content="{DynamicResource flowlauncher_plugin_browserbookmark_reuse_tabs}"
-            IsChecked="{Binding Settings.ReuseTabs}" />
+            IsChecked="{Binding ReuseTabs}" />
     </Grid>
 </UserControl>
