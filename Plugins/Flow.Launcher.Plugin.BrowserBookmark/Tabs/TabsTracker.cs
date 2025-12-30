@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
+using System.Threading;
 using System.Windows.Automation;
 using BrowserTabs;
 using Flow.Launcher.Plugin.BrowserBookmark.Models;
 using static Flow.Launcher.Plugin.BrowserBookmark.Main;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark.Tabs;
+
+#nullable enable
 
 /// <summary>
 /// TabsTracker maps initial URLs into existing browser's tabs.
@@ -19,14 +21,14 @@ namespace Flow.Launcher.Plugin.BrowserBookmark.Tabs;
 public class TabsTracker : IDisposable
 {
     private static readonly string ClassName = nameof(TabsTracker);
-    private static readonly HashSet<string> chromiumProcessNames = new HashSet<string>(["msedge", "chrome", "brave", "vivaldi", "opera", "chromium"], StringComparer.OrdinalIgnoreCase);
-    private static readonly HashSet<string> firefoxProcessNames = new HashSet<string>(["firefox"], StringComparer.OrdinalIgnoreCase);
+    private static readonly HashSet<string> chromiumProcessNames = new(["msedge", "chrome", "brave", "vivaldi", "opera", "chromium"], StringComparer.OrdinalIgnoreCase);
+    private static readonly HashSet<string> firefoxProcessNames = new(["firefox"], StringComparer.OrdinalIgnoreCase);
     private readonly TabsWalker _walker = new();
     private readonly Queue<string> _expectedUrls = [];
     private Dictionary<string, BrowserTab> UrlToBrowserTab { get; } = [];
-    private readonly object _sync = new();
+    private readonly Lock _sync = new();
 
-    private TabsFocusEventDispatcher _focusHandlerDispatcher;
+    private TabsFocusEventDispatcher? _focusHandlerDispatcher;
     private AutomationFocusChangedEventHandler? _focusHandler;
     private readonly HashSet<AutomationElement> _browserWindowsTracked = [];
     private bool _initialized;
@@ -87,7 +89,7 @@ public class TabsTracker : IDisposable
         List<AutomationElement> windowsToUnsubscribe;
         lock (_sync)
         {
-            windowsToUnsubscribe = _browserWindowsTracked.ToList();
+            windowsToUnsubscribe = [.. _browserWindowsTracked];
         }
 
         foreach (var wnd in windowsToUnsubscribe)
@@ -111,7 +113,7 @@ public class TabsTracker : IDisposable
         }
     }
 
-    private BrowserTab GetExistingTab(string url)
+    private BrowserTab? GetExistingTab(string url)
     {
         lock (_sync)
         {
@@ -144,7 +146,7 @@ public class TabsTracker : IDisposable
             if (sender is not AutomationElement element)
                 return;
 
-            int pid = 0;
+            var pid = 0;
             try
             {
                 pid = element.Current.ProcessId;
@@ -215,7 +217,7 @@ public class TabsTracker : IDisposable
             //    break;
             case StructureChangeType.ChildRemoved:
             case StructureChangeType.ChildrenBulkRemoved:
-                AutomationElement foundWindow = null;
+                AutomationElement? foundWindow = null;
                 lock (_sync)
                 {
                     foreach (var window in _browserWindowsTracked)
@@ -245,7 +247,7 @@ public class TabsTracker : IDisposable
 
     private void UnsubscribeStructureChangedForWindow(AutomationElement wnd)
     {
-        bool contains = false;
+        var contains = false;
         lock (_sync)
         {
             contains = _browserWindowsTracked.Contains(wnd);

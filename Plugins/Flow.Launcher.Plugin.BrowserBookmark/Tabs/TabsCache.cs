@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Windows.Automation;
 using static Flow.Launcher.Plugin.BrowserBookmark.Main;
 
@@ -13,11 +14,15 @@ internal class TabsCache
 {
     private static readonly string ClassName = nameof(TabsCache);
     private readonly HashSet<string> _knownTabs = [];
-    private readonly object _sync = new();
+    private readonly Lock _sync = new();
 
-    public static string RuntimeIdToKey(int[] runtimeId) => string.Join("-", runtimeId);
+    public static string RuntimeIdToKey(int[] runtimeId)
+    {
+        return string.Join("-", runtimeId);
+    }
 
-    public static string RuntimeIdToKey(AutomationElement elem) {
+    public static string RuntimeIdToKey(AutomationElement elem)
+    {
         try
         {
             return elem != null ? RuntimeIdToKey(elem.GetRuntimeId()) : null;

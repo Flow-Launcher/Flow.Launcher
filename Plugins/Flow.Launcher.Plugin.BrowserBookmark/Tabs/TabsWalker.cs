@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Automation;
 using BrowserTabs;
 using static Flow.Launcher.Plugin.BrowserBookmark.Main;
@@ -45,13 +44,16 @@ internal class TabsWalker
         }
     }
 
-    private static BrowserTab InitiateTab(Process process, AutomationElement tab) => new()
+    private static BrowserTab InitiateTab(Process process, AutomationElement tab)
     {
-        Title = tab.Current.Name,
-        BrowserName = process.ProcessName,
-        Hwnd = process.MainWindowHandle,
-        AutomationElement = tab
-    };
+        return new()
+        {
+            Title = tab.Current.Name,
+            BrowserName = process.ProcessName,
+            Hwnd = process.MainWindowHandle,
+            AutomationElement = tab
+        };
+    }
 
     public BrowserTab GetCurrentTabFromWindow(AutomationElement mainWindow, Process process, CancellationToken cancellationToken)
     {
