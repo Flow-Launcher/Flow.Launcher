@@ -58,12 +58,16 @@ internal class TabsCache
 
     public bool Contains(AutomationElement tab)
     {
+        return Contains(RuntimeIdToKey(tab));
+    }
+
+    public bool Contains(string runtimeId)
+    {
         lock (_sync)
         {
-            var key = RuntimeIdToKey(tab);
-            if (key != null)
+            if (runtimeId != null)
             {
-                return _knownTabs.Contains(key);
+                return _knownTabs.Contains(runtimeId);
             }
         }
         return false;

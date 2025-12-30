@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading;
 using System.Windows.Automation;
 using BrowserTabs;
 using Flow.Launcher.Plugin.BrowserBookmark.Models;
@@ -23,10 +22,11 @@ public class TabsTracker : IDisposable
     private static readonly HashSet<string> chromiumProcessNames = new HashSet<string>(["msedge", "chrome", "brave", "vivaldi", "opera", "chromium"], StringComparer.OrdinalIgnoreCase);
     private static readonly HashSet<string> firefoxProcessNames = new HashSet<string>(["firefox"], StringComparer.OrdinalIgnoreCase);
     private readonly TabsWalker _walker = new();
-    private string? _expectedUrl;
+    private readonly Queue<string> _expectedUrls = [];
     private Dictionary<string, BrowserTab> UrlToBrowserTab { get; } = [];
     private readonly object _sync = new();
 
+    private TabsFocusEventDispatcher _focusHandlerDispatcher;
     private AutomationFocusChangedEventHandler? _focusHandler;
     private readonly HashSet<AutomationElement> _browserWindowsTracked = [];
     private bool _initialized;
@@ -76,6 +76,7 @@ public class TabsTracker : IDisposable
         if (_initialized)
             return;
 
+        _focusHandlerDispatcher = new(_walker, this);
         _focusHandler = OnFocusChanged;
         Automation.AddAutomationFocusChangedEventHandler(_focusHandler);
         _initialized = true;
@@ -94,17 +95,14 @@ public class TabsTracker : IDisposable
             _focusHandler = null;
             _initialized = false;
         }
+        _focusHandlerDispatcher?.Dispose();
     }
 
     public void ExpectUrl(string url)
     {
         lock (_sync)
         {
-            if (_expectedUrl != null)
-            {
-                Context.API.LogError(ClassName, $"Opening {url} while older is still not resolved ({_expectedUrl}). Forgetting the older.");
-            }
-            _expectedUrl = url;
+            _expectedUrls.Enqueue(url);
         }
     }
 
@@ -130,22 +128,27 @@ public class TabsTracker : IDisposable
 
     private void OnFocusChanged(object sender, AutomationFocusChangedEventArgs e)
     {
-        string? urlToBind;
         lock (_sync)
         {
-            urlToBind = _expectedUrl;
+            if (_expectedUrls.Count == 0)
+                return;
         }
-        if (urlToBind is null)
-            return;
 
         try
         {
-            Context.API.LogDebug(ClassName, $"Searching for... {urlToBind}");
-
             if (sender is not AutomationElement element)
                 return;
 
-            int pid = element.Current.ProcessId;
+            int pid = 0;
+            try
+            {
+                pid = element.Current.ProcessId;
+            }
+            catch (ElementNotAvailableException)
+            {
+                return;
+            }
+
             using var process = Process.GetProcessById(pid);
 
             var chromium = chromiumProcessNames.Contains(process.ProcessName);
@@ -161,23 +164,21 @@ public class TabsTracker : IDisposable
 
             Context.API.LogDebug(ClassName, $"The root element is {rootElement.Current.Name}");
 
-            var currentTab = _walker.GetCurrentTabFromWindow(rootElement, process, CancellationToken.None);
-            if (currentTab != null)
+            string? urlToBind;
+            lock (_sync)
             {
-                lock (_sync)
-                {
-                    Context.API.LogDebug(ClassName, $"Registering {urlToBind} as tab: {currentTab.Title}");
-                    UrlToBrowserTab[urlToBind] = currentTab;
-                    _expectedUrl = null;
+                if (_expectedUrls.Count == 0)
+                    return;
 
-                    // required to take the tab into account by Flow Launcher main UI search window
-                    Context.API.ReQuery();
-                }
-
-                Automation.AddStructureChangedEventHandler(rootElement, TreeScope.Subtree, OnStructureChanged);
-                Automation.AddAutomationEventHandler(WindowPattern.WindowClosedEvent, rootElement, TreeScope.Subtree, OnWindowClosed);
-                _browserWindowsTracked.Add(rootElement);
+                urlToBind = _expectedUrls.Dequeue();
             }
+            if (urlToBind is null)
+                return;
+
+            Context.API.LogDebug(ClassName, $"Searching for... {urlToBind}");
+
+            // Further handling requires waiting for tabs so its better to run it on a separate thread
+            _focusHandlerDispatcher?.Enqueue(urlToBind, rootElement, pid);
         }
         catch (Exception ex)
         {
@@ -187,22 +188,37 @@ public class TabsTracker : IDisposable
 
     private void OnStructureChanged(object sender, StructureChangedEventArgs e)
     {
-        // TODO: Consider ChildAdded to handle new tabs appearance instead of AutomationFocusChangedEventHandler
-        // However think twice if it is worthwhile as the current approach might already be a good one
-        //if (e.StructureChangeType == StructureChangeType.ChildAdded)
+        //if (e.StructureChangeType == StructureChangeType.ChildAdded || e.StructureChangeType == StructureChangeType.ChildrenBulkAdded)
         //{
         //}
-        if (e.StructureChangeType == StructureChangeType.ChildRemoved)
+        var eventRuntimeId = TabsCache.RuntimeIdToKey(e.GetRuntimeId());
+        switch (e.StructureChangeType)
         {
-            var eventRuntimeId = TabsCache.RuntimeIdToKey(e.GetRuntimeId());
-            foreach (var window in _browserWindowsTracked)
-            {
-                var windowRuntimeId = TabsCache.RuntimeIdToKey(window);
-                if (windowRuntimeId != null && eventRuntimeId.StartsWith(windowRuntimeId))
+            // TODO: Consider ChildAdded to handle new tabs appearance instead of AutomationFocusChangedEventHandler
+            // However think twice if it is worthwhile as the current approach based on focus might already be a good one
+            //case StructureChangeType.ChildAdded:
+            //    Context.API.LogDebug(ClassName, $"StructureChangeType.ChildAdded occurred on {eventRuntimeId}");
+            //    break;
+            //case StructureChangeType.ChildrenBulkAdded:
+            //    Context.API.LogDebug(ClassName, $"StructureChangeType.ChildrenBulkAdded occurred on {eventRuntimeId}");
+            //    break;
+            //case StructureChangeType.ChildrenInvalidated:
+            //    _walker.CheckTabExistence(eventRuntimeId, "StructureChangeType.ChildrenInvalidated");
+            //    break;
+            //case StructureChangeType.ChildrenReordered:
+            //    _walker.CheckTabExistence(eventRuntimeId, "StructureChangeType.ChildrenReordered");
+            //    break;
+            case StructureChangeType.ChildRemoved:
+            case StructureChangeType.ChildrenBulkRemoved:
+                foreach (var window in _browserWindowsTracked)
                 {
-                    _walker.RescanTabsForContainer(window);
+                    var windowRuntimeId = TabsCache.RuntimeIdToKey(window);
+                    if (windowRuntimeId != null && eventRuntimeId.StartsWith(windowRuntimeId))
+                    {
+                        _walker.RescanTabsForContainer(window);
+                    }
                 }
-            }
+                break;
         }
     }
 
@@ -223,5 +239,21 @@ public class TabsTracker : IDisposable
             _browserWindowsTracked.Remove(wnd);
             _walker?.RemoveAllTabs(wnd);
         }
+    }
+
+    internal void RegisterTab(string url, AutomationElement rootElement, BrowserTab currentTab)
+    {
+        lock (_sync)
+        {
+            Context.API.LogDebug(ClassName, $"Registering {url} as tab: {currentTab.Title}");
+            UrlToBrowserTab[url] = currentTab;
+
+            // required to take the tab into account by Flow Launcher main UI search window
+            Context.API.ReQuery();
+        }
+
+        Automation.AddStructureChangedEventHandler(rootElement, TreeScope.Subtree, OnStructureChanged);
+        Automation.AddAutomationEventHandler(WindowPattern.WindowClosedEvent, rootElement, TreeScope.Subtree, OnWindowClosed);
+        _browserWindowsTracked.Add(rootElement);
     }
 }

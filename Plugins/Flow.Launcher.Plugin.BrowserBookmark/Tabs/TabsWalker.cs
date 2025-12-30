@@ -68,7 +68,7 @@ internal class TabsWalker
                 if (tabs.Count == 0)
                 {
                     Context.API.LogDebug(ClassName, "No valid tabs found");
-                    Task.Delay(_tabRetryInterval, cancellationToken);
+                    Thread.Sleep(_tabRetryInterval);
                     continue;
                 }
 
@@ -100,7 +100,7 @@ internal class TabsWalker
                 }
 
                 Context.API.LogDebug(ClassName, "No new tab found");
-                Task.Delay(_tabRetryInterval, cancellationToken);
+                Thread.Sleep(_tabRetryInterval);
             }
 
             Context.API.LogDebug(ClassName, "Timeout waiting for new tab");
@@ -126,5 +126,13 @@ internal class TabsWalker
     {
         Context.API.LogDebug(ClassName, "Removing all tabs in a window");
         _cache.RemoveAllNonExistentTabs(browserWindow, []);
+    }
+
+    internal void CheckTabExistence(string runtimeId, string reason = "")
+    {
+        if (_cache.Contains(runtimeId))
+        {
+            Context.API.LogDebug(ClassName, $"Tab exists {reason}");
+        }
     }
 }
