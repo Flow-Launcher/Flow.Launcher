@@ -1004,17 +1004,6 @@ namespace Flow.Launcher.ViewModel
 
         public bool StartWithEnglishMode => Settings.AlwaysStartEn;
 
-        private bool isOnPrimaryScreen = true;
-        public bool IsOnPrimaryScreen
-        {             
-            get => isOnPrimaryScreen;
-                set
-                {
-                    isOnPrimaryScreen = value;
-                    OnPropertyChanged();
-                }
-        }
-
         #endregion
 
         #region Preview
@@ -2151,7 +2140,7 @@ namespace Flow.Launcher.ViewModel
             // Show the taskbar if the setting is enabled
             if (Settings.ShowTaskbarWhenInvoked && !_taskbarShownByFlow)
             {
-                Win32Helper.ShowTaskbar(isOnPrimaryScreen);
+                Win32Helper.ShowTaskbar();
                 _taskbarShownByFlow = true;
             }
         }
