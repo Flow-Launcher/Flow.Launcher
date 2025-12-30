@@ -1004,6 +1004,17 @@ namespace Flow.Launcher.ViewModel
 
         public bool StartWithEnglishMode => Settings.AlwaysStartEn;
 
+        private bool isOnPrimaryScreen = true;
+        public bool IsOnPrimaryScreen
+        {             
+            get => isOnPrimaryScreen;
+                set
+                {
+                    isOnPrimaryScreen = value;
+                    OnPropertyChanged();
+                }
+        }
+
         #endregion
 
         #region Preview
@@ -2099,13 +2110,6 @@ namespace Flow.Launcher.ViewModel
             // When application is exiting, we should not show the main window
             if (App.LoadingOrExiting) return;
 
-            // Show the taskbar if the setting is enabled
-            if (Settings.ShowTaskbarWhenInvoked && !_taskbarShownByFlow)
-            {
-                Win32Helper.ShowTaskbar();
-                _taskbarShownByFlow = true;
-            }
-
             // When application is exiting, the Application.Current will be null
             Application.Current?.Dispatcher.Invoke(() =>
             {
@@ -2142,6 +2146,13 @@ namespace Flow.Launcher.ViewModel
             if (StartWithEnglishMode)
             {
                 Win32Helper.SwitchToEnglishKeyboardLayout(true);
+            }
+
+            // Show the taskbar if the setting is enabled
+            if (Settings.ShowTaskbarWhenInvoked && !_taskbarShownByFlow)
+            {
+                Win32Helper.ShowTaskbar(isOnPrimaryScreen);
+                _taskbarShownByFlow = true;
             }
         }
 
@@ -2211,9 +2222,10 @@ namespace Flow.Launcher.ViewModel
                 Win32Helper.RestorePreviousKeyboardLayout();
             }
 
-            if (Settings.ShowTaskbarWhenInvoked && _taskbarShownByFlow)
+            // Hide the taskbar if the setting is enabled
+            if (_taskbarShownByFlow)
             {
-                Win32Helper.HideTaskbar();
+                Win32Helper.HideTaskbar(isOnPrimaryScreen);
                 _taskbarShownByFlow = false;
             }
 
