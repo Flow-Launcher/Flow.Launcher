@@ -383,6 +383,10 @@ Yes please, let us know in the [Q&A](https://github.com/Flow-Launcher/Flow.Launc
 
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=Flow-Launcher/Flow.Launcher&type=date&legend=top-left)](https://www.star-history.com/#Flow-Launcher/Flow.Launcher&type=date&legend=top-left)
+
 ## Development
 
 ### Localization
