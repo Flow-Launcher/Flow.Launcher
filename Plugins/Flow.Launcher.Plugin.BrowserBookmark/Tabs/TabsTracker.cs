@@ -84,7 +84,12 @@ public class TabsTracker : IDisposable
 
     public void Dispose()
     {
-        var windowsToUnsubscribe = _browserWindowsTracked.ToList();
+        List<AutomationElement> windowsToUnsubscribe;
+        lock (_sync)
+        {
+            windowsToUnsubscribe = _browserWindowsTracked.ToList();
+        }
+
         foreach (var wnd in windowsToUnsubscribe)
         {
             UnsubscribeStructureChangedForWindow(wnd);
@@ -210,13 +215,21 @@ public class TabsTracker : IDisposable
             //    break;
             case StructureChangeType.ChildRemoved:
             case StructureChangeType.ChildrenBulkRemoved:
-                foreach (var window in _browserWindowsTracked)
+                AutomationElement foundWindow = null;
+                lock (_sync)
                 {
-                    var windowRuntimeId = TabsCache.RuntimeIdToKey(window);
-                    if (windowRuntimeId != null && eventRuntimeId.StartsWith(windowRuntimeId))
+                    foreach (var window in _browserWindowsTracked)
                     {
-                        _walker.RescanTabsForContainer(window);
+                        var windowRuntimeId = TabsCache.RuntimeIdToKey(window);
+                        if (windowRuntimeId != null && eventRuntimeId.StartsWith(windowRuntimeId))
+                        {
+                            foundWindow = window;
+                        }
                     }
+                }
+                if (foundWindow != null)
+                {
+                    _walker.RescanTabsForContainer(foundWindow);
                 }
                 break;
         }
@@ -232,11 +245,16 @@ public class TabsTracker : IDisposable
 
     private void UnsubscribeStructureChangedForWindow(AutomationElement wnd)
     {
-        if (_browserWindowsTracked.Contains(wnd))
+        bool contains = false;
+        lock (_sync)
+        {
+            contains = _browserWindowsTracked.Contains(wnd);
+            _browserWindowsTracked.Remove(wnd);
+        }
+        if (contains)
         {
             Context.API.LogDebug(ClassName, "Unsubscribe window from StructureChanged events");
             Automation.RemoveStructureChangedEventHandler(wnd, OnStructureChanged);
-            _browserWindowsTracked.Remove(wnd);
             _walker?.RemoveAllTabs(wnd);
         }
     }
@@ -254,6 +272,10 @@ public class TabsTracker : IDisposable
 
         Automation.AddStructureChangedEventHandler(rootElement, TreeScope.Subtree, OnStructureChanged);
         Automation.AddAutomationEventHandler(WindowPattern.WindowClosedEvent, rootElement, TreeScope.Subtree, OnWindowClosed);
-        _browserWindowsTracked.Add(rootElement);
+
+        lock (_sync)
+        {
+            _browserWindowsTracked.Add(rootElement);
+        }
     }
 }

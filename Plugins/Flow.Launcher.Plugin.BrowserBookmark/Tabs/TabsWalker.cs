@@ -33,7 +33,7 @@ internal class TabsWalker
                 continue;
             }
 
-            // on Chrome, there are kind of technical tabs that should be ignored
+            // There are kind of technical tabs that should be ignored
             var className = tab.Current.ClassName;
             if (className.Contains("bolt-tab", StringComparison.OrdinalIgnoreCase))
             {

@@ -23,7 +23,8 @@ Next, each time the bookmark is triggered again, it just switches to the existin
 
 The extension bases on RuntimeId of AutomationElement from Microsoft UI Automation.  
 This is a weak spot as browsers are used to regenerate internal structures and even reuse RuntimeId.  
-It **rarely** happens that a bookmark activates a wrong tab.  
+Therefore it happens that a bookmark activates a wrong tab.  
+The most common case is while user opens several tabs one after the other quickly.  
 Still **"just take me to THIS place in milliseconds"** works almost all of the time so it brings so much value that it is worthwhile to accept the fact it fails sometimes.  
 
 The quickest workaround is:  
