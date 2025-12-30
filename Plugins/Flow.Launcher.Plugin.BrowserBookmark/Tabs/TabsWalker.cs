@@ -18,7 +18,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark.Tabs;
 internal class TabsWalker
 {
     private static readonly string ClassName = nameof(TabsWalker);
-    private readonly TimeSpan _tabRetryTimeout = TimeSpan.FromSeconds(4);
+    private readonly TimeSpan _tabRetryTimeout = TimeSpan.FromSeconds(5);
     private readonly TimeSpan _tabRetryInterval = TimeSpan.FromMilliseconds(250);
     private readonly TabsCache _cache = new();
 

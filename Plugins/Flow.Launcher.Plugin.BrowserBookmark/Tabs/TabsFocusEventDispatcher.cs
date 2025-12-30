@@ -6,6 +6,10 @@ using System.Windows.Automation;
 using Flow.Launcher.Plugin.BrowserBookmark.Tabs;
 using static Flow.Launcher.Plugin.BrowserBookmark.Main;
 
+/// <summary>
+/// TabsFocusEventDispatcher handles TabsTracker.OnFocusChanged events in a separate thread.
+/// This is to avoid sleeping in Automation.AddAutomationFocusChangedEventHandler.
+/// </summary>
 internal sealed class TabsFocusEventDispatcher : IDisposable
 {
     private static readonly string ClassName = nameof(TabsFocusEventDispatcher);
