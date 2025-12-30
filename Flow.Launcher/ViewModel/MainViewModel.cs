@@ -2214,7 +2214,7 @@ namespace Flow.Launcher.ViewModel
             // Hide the taskbar if the setting is enabled
             if (_taskbarShownByFlow)
             {
-                Win32Helper.HideTaskbar(isOnPrimaryScreen);
+                Win32Helper.HideTaskbar();
                 _taskbarShownByFlow = false;
             }
 
