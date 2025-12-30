@@ -118,7 +118,7 @@ internal class TabsWalker
 
     internal void RescanTabsForContainer(AutomationElement browserWindow)
     {
-        Context.API.LogDebug(ClassName, "Rescaning tabs in order to find removed tabs");
+        Context.API.LogDebug(ClassName, "Rescanning tabs in order to find removed tabs");
         _cache.RemoveAllNonExistentTabs(browserWindow, FindAllValidTabs(browserWindow));
     }
 
