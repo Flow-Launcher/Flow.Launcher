@@ -265,7 +265,7 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
 
     public void Dispose()
     {
-        _tabsTracker?.Dispose();
+        _tabsTracker.Dispose();
         DisposeFileWatchers();
     }
 
