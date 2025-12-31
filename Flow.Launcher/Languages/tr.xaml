@@ -79,6 +79,8 @@
     <system:String x:Key="useLogonTaskForStartupTooltip">Kaldırma işleminden sonra, bu görevi (Flow.Launcher Startup) Görev Zamanlayıcı üzerinden elle kaldırmanız gerekmektedir</system:String>
     <system:String x:Key="setAutoStartFailed">Sistemle başlatma ayarı başarısız oldu</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Odak Pencereden Ayrıldığında Gizle</system:String>
+    <system:String x:Key="showTaskbarWhenOpened">Show taskbar when Flow Launcher is opened</system:String>
+    <system:String x:Key="showTaskbarWhenOpenedToolTip">Temporarily show the taskbar when Flow Launcher is opened, useful for auto-hidden taskbars.</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Güncelleme bildirimlerini gösterme</system:String>
     <system:String x:Key="SearchWindowPosition">Pencere Konumu</system:String>
     <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Son Konumu Hatırla</system:String>
