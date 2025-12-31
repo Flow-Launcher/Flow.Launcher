@@ -27,7 +27,6 @@ using Windows.Win32.UI.WindowsAndMessaging;
 using Point = System.Windows.Point;
 using SystemFonts = System.Windows.SystemFonts;
 
-
 namespace Flow.Launcher.Infrastructure
 {
     public static class Win32Helper
