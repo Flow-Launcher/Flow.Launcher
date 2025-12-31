@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
@@ -41,10 +42,32 @@ namespace Flow.Launcher.ViewModel
         private string _queryTextBeforeLeaveResults;
         private string _ignoredQueryText; // Used to ignore query text change when switching between context menu and query results
 
-        private readonly FlowLauncherJsonStorage<History> _historyItemsStorage;
+        private int QueryHistoryItemsInitialized = 0;
+        private FlowLauncherJsonStorage<History> _historyItemsStorage;
+        private History _queryHistoryItems;
+        private History QueryHistoryItems
+        {
+            get
+            {
+                if (QueryHistoryItemsInitialized == 0)
+                {
+                    App.API.LogException(ClassName,
+                                         "QueryHistoryItems is not initialized. Call InitializeQueryHistoryItems() before accessing QueryHistoryItems.",
+                                         new InvalidOperationException(),
+                                         "QueryHistoryItems");
+                    throw new InvalidOperationException("QueryHistoryItems is not initialized. Call InitializeQueryHistoryItems() before accessing QueryHistoryItems.");
+                }
+
+                return _queryHistoryItems;
+            }
+            set
+            {
+                _queryHistoryItems = value;
+            }
+        }
+
         private readonly FlowLauncherJsonStorage<UserSelectedRecord> _userSelectedRecordStorage;
         private readonly FlowLauncherJsonStorageTopMostRecord _topMostRecord;
-        private readonly History _history;
         private int lastHistoryIndex = 1;
         private readonly UserSelectedRecord _userSelectedRecord;
 
@@ -151,8 +174,6 @@ namespace Flow.Launcher.ViewModel
             _historyItemsStorage = new FlowLauncherJsonStorage<History>();
             _userSelectedRecordStorage = new FlowLauncherJsonStorage<UserSelectedRecord>();
             _topMostRecord = new FlowLauncherJsonStorageTopMostRecord();
-            _history = _historyItemsStorage.Load();
-            _history.PopulateHistoryFromLegacyHistory();
             _userSelectedRecord = _userSelectedRecordStorage.Load();
 
             ContextMenu = new ResultsViewModel(Settings, this)
@@ -352,7 +373,7 @@ namespace Flow.Launcher.ViewModel
             if (QueryResultsSelected())
             {
                 SelectedResults = History;
-                History.SelectedIndex = _history.LastOpenedHistoryItems.Count - 1;
+                History.SelectedIndex = QueryHistoryItems.LastOpenedHistoryItems.Count - 1;
             }
             else
             {
@@ -380,7 +401,7 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         public void ReverseHistory()
         {
-            var historyItems = _history.LastOpenedHistoryItems;
+            var historyItems = QueryHistoryItems.LastOpenedHistoryItems;
             if (historyItems.Count > 0)
             {
                 ChangeQueryText(historyItems[^lastHistoryIndex].Query);
@@ -394,7 +415,7 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         public void ForwardHistory()
         {
-            var historyItems = _history.LastOpenedHistoryItems;
+            var historyItems = QueryHistoryItems.LastOpenedHistoryItems;
             if (historyItems.Count > 0)
             {
                 ChangeQueryText(historyItems[^lastHistoryIndex].Query);
@@ -536,7 +557,7 @@ namespace Flow.Launcher.ViewModel
             // Add item to history only if it is from results but not context menu or history
             if (queryResultsSelected)
             {
-                _history.Add(result);
+                QueryHistoryItems.Add(result);
                 lastHistoryIndex = 1;
             }
         }
@@ -612,7 +633,7 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void SelectPrevItem()
         {
-            var historyItems = _history.LastOpenedHistoryItems;
+            var historyItems = QueryHistoryItems.LastOpenedHistoryItems;
             if (QueryResultsSelected() // Results selected
                 && string.IsNullOrEmpty(QueryText) // No input
                 && Results.Visibility != Visibility.Visible // No items in result list, e.g. when home page is off and no query text is entered, therefore the view is collapsed.
@@ -1298,7 +1319,7 @@ namespace Flow.Launcher.ViewModel
             var query = QueryText.ToLower().Trim();
             History.Clear();
 
-            var results = GetHistoryItems(_history.LastOpenedHistoryItems);
+            var results = GetHistoryItems(QueryHistoryItems.LastOpenedHistoryItems);
 
             if (!string.IsNullOrEmpty(query))
             {
@@ -1315,7 +1336,7 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private List<Result> GetHistoryItems(IEnumerable<LastOpenedHistoryItem> historyItems)
+        private List<Result> GetHistoryItems(IEnumerable<LastOpenedHistoryResult> historyItems)
         {
             var results = new List<Result>();
 
@@ -1329,68 +1350,124 @@ namespace Flow.Launcher.ViewModel
             foreach (var item in historyItems)
             {
                 Result result = null;
-                var glyph = item.Glyph is null && !string.IsNullOrEmpty(item.IcoPath) // Some plugins won't have Glyph, then prefer IcoPath
-                              ? null
-                              : item.Glyph is not null
-                                  ? item.Glyph
-                                  : new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE81C"); // Default fallback
+                //var glyph = item.Glyph is null && !string.IsNullOrEmpty(item.IcoPath) // Some plugins won't have Glyph, then prefer IcoPath
+                //              ? null
+                //              : item.Glyph is not null
+                //                  ? item.Glyph
+                //                  : new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE81C"); // Default fallback
 
-                var icoPath = !string.IsNullOrEmpty(item.IcoPath) ? item.IcoPath : Constant.HistoryIcon;
+                //var icoPath = !string.IsNullOrEmpty(item.IcoPath) ? item.IcoPath : Constant.HistoryIcon;
 
-                if (Settings.HistoryStyle == HistoryStyle.Query)
+
+
+
+
+
+                result = new Result
                 {
-                    result = new Result
+                    Title = Settings.HistoryStyle == HistoryStyle.Query
+                            ? Localize.executeQuery(item.Query)
+                            : item.Title,
+                    SubTitle = Localize.lastExecuteTime(item.ExecutedDateTime),
+                    IcoPath = item.IcoAbsoluteFullPath,
+                    OriginQuery = new Query { RawQuery = item.Query },
+                    Action = _ =>
                     {
-                        Title = Localize.executeQuery(item.Query),
-                        SubTitle = Localize.lastExecuteTime(item.ExecutedDateTime),
-                        IcoPath = icoPath,
-                        OriginQuery = new Query { RawQuery = item.Query },
-                        Action = _ =>
-                        {
-                            App.API.BackToQueryResults();
-                            App.API.ChangeQuery(item.Query);
-                            return false;
-                        },
-                        Glyph = glyph
-                    };
-                }
-                else
-                {
-
-                    result = new Result
+                        App.API.BackToQueryResults();
+                        App.API.ChangeQuery(item.Query);
+                        return false;
+                    },
+                    AsyncAction = async c =>
                     {
-                        Title = string.IsNullOrEmpty(item.Title) ?  // Old migrated history items have no title
-                                Localize.executeQuery(item.Query) :
-                                item.Title,
-                        SubTitle = Localize.lastExecuteTime(item.ExecutedDateTime),
-                        IcoPath = icoPath,
-                        OriginQuery = new Query { RawQuery = item.Query },
-                        AsyncAction = async c =>
+                        var reflectResult = await ResultHelper.PopulateResultsAsync(item);
+                        if (reflectResult != null)
                         {
-                            var reflectResult = await ResultHelper.PopulateResultsAsync(item);
-                            if (reflectResult != null)
-                            {
-                                // Record the user selected record for result ranking
-                                _userSelectedRecord.Add(reflectResult);
+                            // Record the user selected record for result ranking
+                            _userSelectedRecord.Add(reflectResult);
 
-                                // Since some actions may need to hide the Flow window to execute
-                                // So let us populate the results of them
-                                return await reflectResult.ExecuteAsync(c);
-                            }
+                            // Since some actions may need to hide the Flow window to execute
+                            // So let us populate the results of them
+                            return await reflectResult.ExecuteAsync(c);
+                        }
 
-                            // If we cannot get the result, fallback to re-query
-                            App.API.BackToQueryResults();
-                            App.API.ChangeQuery(item.Query);
-                            return false;
-                        },
-                        Glyph = glyph
-                    };
-                }
+                        // If we cannot get the result, fallback to re-query
+                        App.API.BackToQueryResults();
+                        App.API.ChangeQuery(item.Query);
+                        return false;
+                    },
+                    Glyph = item.Glyph
+                };
+
+
+
+                //if (Settings.HistoryStyle == HistoryStyle.Query)
+                //{
+                //    result = new Result
+                //    {
+                //        Title = Localize.executeQuery(item.Query),
+                //        SubTitle = Localize.lastExecuteTime(item.ExecutedDateTime),
+                //        IcoPath = icoPath,
+                //        OriginQuery = new Query { RawQuery = item.Query },
+                //        Action = _ =>
+                //        {
+                //            App.API.BackToQueryResults();
+                //            App.API.ChangeQuery(item.Query);
+                //            return false;
+                //        },
+                //        Glyph = glyph
+                //    };
+                //}
+                //else
+                //{
+                //    result = new Result
+                //    {
+                //        Title = string.IsNullOrEmpty(item.Title) ?  // Old migrated history items have no title
+                //                Localize.executeQuery(item.Query) :
+                //                item.Title,
+                //        SubTitle = Localize.lastExecuteTime(item.ExecutedDateTime),
+                //        IcoPath = icoPath,
+                //        OriginQuery = new Query { RawQuery = item.Query },
+                //        AsyncAction = async c =>
+                //        {
+                //            var reflectResult = await ResultHelper.PopulateResultsAsync(item);
+                //            if (reflectResult != null)
+                //            {
+                //                // Record the user selected record for result ranking
+                //                _userSelectedRecord.Add(reflectResult);
+
+                //                // Since some actions may need to hide the Flow window to execute
+                //                // So let us populate the results of them
+                //                return await reflectResult.ExecuteAsync(c);
+                //            }
+
+                //            // If we cannot get the result, fallback to re-query
+                //            App.API.BackToQueryResults();
+                //            App.API.ChangeQuery(item.Query);
+                //            return false;
+                //        },
+                //        Glyph = glyph
+                //    };
+                //}
 
                 results.Add(result);
             }
-                                 
+
             return results;
+        }
+
+        /// <summary>
+        /// TODO COMMENT- Requires the plugins to have initialized first because 
+        /// it needs the plugin directory paths for initialization
+        /// </summary>
+        public void InitializeQueryHistoryItems()
+        {
+            // ensure single-run even if called from multiple threads
+            if (Interlocked.Exchange(ref QueryHistoryItemsInitialized, 1) == 1) 
+                return;
+
+            QueryHistoryItems = _historyItemsStorage.Load();
+            QueryHistoryItems.PopulateHistoryFromLegacyHistory();
+            QueryHistoryItems.UpdateIcoAbsoluteFullPath();
         }
 
         private async Task QueryResultsAsync(bool searchDelay, bool isReQuery = false, bool reSelect = true)
@@ -1620,7 +1697,7 @@ namespace Flow.Launcher.ViewModel
             void QueryHistoryTask(CancellationToken token)
             {
                 // Select last history results and revert its order to make sure last history results are on top
-                var historyItems = _history.LastOpenedHistoryItems.TakeLast(Settings.MaxHistoryResultsToShowForHomePage).Reverse();
+                var historyItems = QueryHistoryItems.LastOpenedHistoryItems.TakeLast(Settings.MaxHistoryResultsToShowForHomePage).Reverse();
 
                 var results = GetHistoryItems(historyItems);
 

@@ -5,6 +5,7 @@ using System.Security.Policy;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Text.Json.Serialization;
 
 namespace Flow.Launcher.Plugin
 {
@@ -167,11 +168,13 @@ namespace Flow.Launcher.Plugin
         /// <summary>
         /// Delegate to load an icon for this result.
         /// </summary>
+        [JsonIgnore]
         public IconDelegate Icon = null;
 
         /// <summary>
         /// Delegate to load an icon for the badge of this result.
         /// </summary>
+        [JsonIgnore]
         public IconDelegate BadgeIcon = null;
 
         /// <summary>
@@ -187,6 +190,7 @@ namespace Flow.Launcher.Plugin
         /// Its result determines what happens to Flow Launcher's query form:
         /// when true, the form will be hidden; when false, it will stay in focus.
         /// </remarks>
+        [JsonIgnore]
         public Func<ActionContext, bool> Action { get; set; }
 
         /// <summary>
@@ -197,6 +201,7 @@ namespace Flow.Launcher.Plugin
         /// Its result determines what happens to Flow Launcher's query form:
         /// when true, the form will be hidden; when false, it will stay in focus.
         /// </remarks>
+        [JsonIgnore]
         public Func<ActionContext, ValueTask<bool>> AsyncAction { get; set; }
 
         /// <summary>
@@ -239,6 +244,7 @@ namespace Flow.Launcher.Plugin
         /// <example>
         /// As external information for ContextMenu
         /// </example>
+        [JsonIgnore]
         public object ContextData { get; set; }
 
         /// <summary>
@@ -259,6 +265,7 @@ namespace Flow.Launcher.Plugin
         /// <summary>
         /// Customized Preview Panel
         /// </summary>
+        [JsonIgnore]
         public Lazy<UserControl> PreviewPanel { get; set; }
 
         /// <summary>
@@ -388,6 +395,7 @@ namespace Flow.Launcher.Plugin
             /// <summary>
             /// Delegate to get the preview panel's image
             /// </summary>
+            [JsonIgnore]
             public IconDelegate PreviewDelegate { get; set; } = null;
 
             /// <summary>

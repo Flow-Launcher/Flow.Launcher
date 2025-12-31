@@ -11,7 +11,7 @@ namespace Flow.Launcher.Helper;
 
 public static class ResultHelper
 {
-    public static async Task<Result?> PopulateResultsAsync(LastOpenedHistoryItem item)
+    public static async Task<Result?> PopulateResultsAsync(LastOpenedHistoryResult item)
     {
         return await PopulateResultsAsync(item.PluginID, item.Query, item.Title, item.SubTitle, item.RecordKey);
     }

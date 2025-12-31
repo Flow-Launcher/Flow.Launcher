@@ -1,8 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.Json.Serialization;
+using Flow.Launcher.Core.Plugin;
+using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin;
+using Windows.Devices.Geolocation;
+using YamlDotNet.Core.Tokens;
 
 namespace Flow.Launcher.Storage
 {
@@ -14,7 +19,7 @@ namespace Flow.Launcher.Storage
 #pragma warning restore CS0618 // Type or member is obsolete
 
         [JsonInclude]
-        public List<LastOpenedHistoryItem> LastOpenedHistoryItems { get; private set; } = [];
+        public List<LastOpenedHistoryResult> LastOpenedHistoryItems { get; private set; } = [];
 
         private readonly int _maxHistory = 300;
 
@@ -24,8 +29,12 @@ namespace Flow.Launcher.Storage
             // Migrate old history items to new LastOpenedHistoryItems
             foreach (var item in Items)
             {
-                LastOpenedHistoryItems.Add(new LastOpenedHistoryItem
+                LastOpenedHistoryItems.Add(new LastOpenedHistoryResult
                 {
+                    Title = Localize.executeQuery(item.Query),
+                    IcoPath = Constant.HistoryIcon,
+                    OriginQuery = new Query { RawQuery = item.Query },
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE81C"),
                     Query = item.Query,
                     ExecutedDateTime = item.ExecutedDateTime
                 });
@@ -47,29 +56,42 @@ namespace Flow.Launcher.Storage
             if (LastOpenedHistoryItems.Count > 0 &&
                 TryGetLastOpenedHistoryResult(result, out var existingHistoryItem))
             {
-                existingHistoryItem.IcoPath = result.IcoPath;
+                //existingHistoryItem.IcoPath = result.IcoPath;
                 existingHistoryItem.ExecutedDateTime = DateTime.Now;
             }
             else
             {
-                LastOpenedHistoryItems.Add(new LastOpenedHistoryItem
-                {
-                    Title = result.Title,
-                    SubTitle = result.SubTitle,
-                    PluginID = result.PluginID,
-                    Query = result.OriginQuery.RawQuery,
-                    RecordKey = result.RecordKey,
-                    IcoPath = result.IcoPath,
-                    Glyph = result.Glyph,
-                    ExecutedDateTime = DateTime.Now
-                });
+                LastOpenedHistoryItems.Add(new LastOpenedHistoryResult(result));
             }
         }
 
-        private bool TryGetLastOpenedHistoryResult(Result result, out LastOpenedHistoryItem historyItem)
+        private bool TryGetLastOpenedHistoryResult(Result result, out LastOpenedHistoryResult historyItem)
         {
             historyItem = LastOpenedHistoryItems.FirstOrDefault(x => x.Equals(result));
             return historyItem is not null;
+        }
+
+        /// <summary>
+        /// Refresh stored PluginDirectory (and optionally normalize relative ico paths)
+        /// using current plugin metadata. Call this after plugins are loaded/initialized.
+        /// </summary>
+        public void UpdateIcoAbsoluteFullPath()
+        {
+            if (LastOpenedHistoryItems.Count == 0) return;
+
+            foreach (var item in LastOpenedHistoryItems)
+            {
+                if (string.IsNullOrEmpty(item.PluginID))
+                    continue;
+
+                var pluginPair = PluginManager.GetPluginForId(item.PluginID);
+                if (pluginPair == null)
+                    continue;
+
+                //item.IcoPath = Path.Combine(pluginPair.Metadata.PluginDirectory, item.IcoPath);
+
+                item.PluginDirectory = pluginPair.Metadata.PluginDirectory;
+            }
         }
     }
 }
