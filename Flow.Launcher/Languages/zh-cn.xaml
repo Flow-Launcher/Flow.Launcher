@@ -79,6 +79,8 @@
     <system:String x:Key="useLogonTaskForStartupTooltip">卸载后，您需要通过任务计划程序手动移除此任务 (Flow.Launcher Startup)</system:String>
     <system:String x:Key="setAutoStartFailed">设置开机自启时出错</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">失去焦点时自动隐藏 Flow Launcher</system:String>
+    <system:String x:Key="showTaskbarWhenOpened">Show taskbar when Flow Launcher is opened</system:String>
+    <system:String x:Key="showTaskbarWhenOpenedToolTip">Temporarily show the taskbar when Flow Launcher is opened, useful for auto-hidden taskbars.</system:String>
     <system:String x:Key="dontPromptUpdateMsg">不显示新版本提示</system:String>
     <system:String x:Key="SearchWindowPosition">搜索窗口位置</system:String>
     <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">记住上次的位置</system:String>
