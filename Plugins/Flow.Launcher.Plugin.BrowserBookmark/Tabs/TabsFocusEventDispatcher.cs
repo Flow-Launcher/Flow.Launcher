@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Threading;
 using System.Windows.Automation;
+using System.Windows.Input;
 using Flow.Launcher.Plugin.BrowserBookmark.Tabs;
 using static Flow.Launcher.Plugin.BrowserBookmark.Main;
 
@@ -70,11 +71,11 @@ internal sealed class TabsFocusEventDispatcher : IDisposable
         }
         catch (ArgumentException)
         {
-            Context.API.LogError(ClassName, $"Process {processId} no longer runs");
+            Context.API.LogError(ClassName, $"TABS:Process {processId} no longer runs");
         }
         catch (Exception ex)
         {
-            Context.API.LogException(ClassName, "Exception", ex);
+            Context.API.LogException(ClassName, "TABS:Exception", ex);
         }
     }
 

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Windows.Automation;
+using System.Windows.Forms;
+using System.Windows.Input;
 using BrowserTabs;
 using Flow.Launcher.Plugin.BrowserBookmark.Models;
 using static Flow.Launcher.Plugin.BrowserBookmark.Main;
@@ -37,7 +39,6 @@ public class TabsTracker : IDisposable
     {
         if (settings.ReuseTabs)
         {
-            Context.API.LogDebug(ClassName, $"Opening... {url}");
             ExpectUrl(url);
         }
         Context.API.OpenUrl(url);
@@ -55,14 +56,12 @@ public class TabsTracker : IDisposable
             var existingTab = GetExistingTab(bookmarkUrl);
             if (existingTab != null)
             {
-                Context.API.LogDebug(ClassName, $"Mapped {bookmarkUrl}");
-
                 r.ContextData = existingTab;
                 r.Action = c =>
                 {
                     if (!existingTab.ActivateTab())
                     {
-                        Context.API.LogError(ClassName, "Failed to activate a tab");
+                        Context.API.LogError(ClassName, $"TABS:{TabsCache.RuntimeIdToKey(existingTab.AutomationElement)}:Failed to activate");
                         Remove(bookmarkUrl);
                         OpenUrlAndTrack(settings, bookmarkUrl);
                     }
@@ -163,13 +162,11 @@ public class TabsTracker : IDisposable
             if (!chromium && !firefox)
                 return; // not a browser
 
-            Context.API.LogDebug(ClassName, $"The active browser is {process.ProcessName}");
+            Context.API.LogDebug(ClassName, $"TABS:The active browser is {process.ProcessName}");
 
             var rootElement = AutomationElement.FromHandle(process.MainWindowHandle);
             if (rootElement == null)
                 return;
-
-            Context.API.LogDebug(ClassName, $"The root element is {rootElement.Current.Name}");
 
             string? urlToBind;
             lock (_sync)
@@ -182,14 +179,14 @@ public class TabsTracker : IDisposable
             if (urlToBind is null)
                 return;
 
-            Context.API.LogDebug(ClassName, $"Searching for... {urlToBind}");
+            Context.API.LogDebug(ClassName, $"TABS:Searching for... {urlToBind}");
 
             // Further handling requires waiting for tabs so its better to run it on a separate thread
             _focusHandlerDispatcher?.Enqueue(urlToBind, rootElement, pid);
         }
         catch (Exception ex)
         {
-            Context.API.LogException(ClassName, "Exception", ex);
+            Context.API.LogException(ClassName, "TABS:Exception", ex);
         }
     }
 
@@ -204,17 +201,20 @@ public class TabsTracker : IDisposable
             // TODO: Consider ChildAdded to handle new tabs appearance instead of AutomationFocusChangedEventHandler
             // However think twice if it is worthwhile as the current approach based on focus might already be a good one
             //case StructureChangeType.ChildAdded:
-            //    Context.API.LogDebug(ClassName, $"StructureChangeType.ChildAdded occurred on {eventRuntimeId}");
+            //    Context.API.LogDebug(ClassName, $"TABS:StructureChangeType.ChildAdded occurred on {sender} for {eventRuntimeId}");
             //    break;
             //case StructureChangeType.ChildrenBulkAdded:
-            //    Context.API.LogDebug(ClassName, $"StructureChangeType.ChildrenBulkAdded occurred on {eventRuntimeId}");
+            //    Context.API.LogDebug(ClassName, $"TABS:StructureChangeType.ChildrenBulkAdded occurred on {sender} for {eventRuntimeId}");
             //    break;
             //case StructureChangeType.ChildrenInvalidated:
+            //    Context.API.LogDebug(ClassName, $"TABS:StructureChangeType.ChildrenInvalidated occurred on {sender} for {eventRuntimeId}");
             //    _walker.CheckTabExistence(eventRuntimeId, "StructureChangeType.ChildrenInvalidated");
             //    break;
             //case StructureChangeType.ChildrenReordered:
+            //    Context.API.LogDebug(ClassName, $"TABS:StructureChangeType.ChildrenReordered occurred on {sender} for {eventRuntimeId}");
             //    _walker.CheckTabExistence(eventRuntimeId, "StructureChangeType.ChildrenReordered");
             //    break;
+
             case StructureChangeType.ChildRemoved:
             case StructureChangeType.ChildrenBulkRemoved:
                 AutomationElement? foundWindow = null;
@@ -255,7 +255,7 @@ public class TabsTracker : IDisposable
         }
         if (contains)
         {
-            Context.API.LogDebug(ClassName, "Unsubscribe window from StructureChanged events");
+            Context.API.LogDebug(ClassName, "TABS:Unsubscribe window from StructureChanged events");
             Automation.RemoveStructureChangedEventHandler(wnd, OnStructureChanged);
             _walker?.RemoveAllTabs(wnd);
         }
@@ -265,7 +265,7 @@ public class TabsTracker : IDisposable
     {
         lock (_sync)
         {
-            Context.API.LogDebug(ClassName, $"Registering {url} as tab: {currentTab.Title}");
+            Context.API.LogDebug(ClassName, $"TABS:{TabsCache.RuntimeIdToKey(currentTab.AutomationElement)}:Registering {url} as tab: {currentTab.Title}");
             UrlToBrowserTab[url] = currentTab;
 
             // required to take the tab into account by Flow Launcher main UI search window

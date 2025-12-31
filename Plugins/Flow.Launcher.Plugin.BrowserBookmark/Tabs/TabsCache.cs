@@ -48,7 +48,7 @@ internal class TabsCache
             var key = RuntimeIdToKey(tab);
             if (key != null)
             {
-                Context.API.LogDebug(ClassName, $"Adding a tab to cache: {tab.Current.Name}");
+                Context.API.LogDebug(ClassName, $"TABS:{key}:Adding to cache: {tab.Current.Name}");
                 _knownTabs.Add(key);
             }
         }
@@ -87,14 +87,9 @@ internal class TabsCache
         var existingKeys = existingTabs.Select(RuntimeIdToKey).Where(k => k != null).ToHashSet();
         var keysToRemove = _knownTabs.Where(t => t.StartsWith(rootKey) && !existingKeys.Contains(t));
 
-        //Context.API.LogDebug(ClassName, $"Rootkey: {rootKey}");
-        //Context.API.LogDebug(ClassName, $"Existing keys:\r\n{string.Join("\r\n", existingKeys)}");
-        //Context.API.LogDebug(ClassName, $"Known Tabs:\r\n{string.Join("\r\n", _knownTabs)}");
-        //Context.API.LogDebug(ClassName, $"Tabs to remove:\r\n{string.Join("\r\n", keysToRemove)}");
-
         foreach (var key in keysToRemove)
         {
-            Context.API.LogDebug(ClassName, $"Removing a tab from cache: {key}");
+            Context.API.LogDebug(ClassName, $"TABS:{key}:Removing from cache");
             _knownTabs.Remove(key);
         }
     }

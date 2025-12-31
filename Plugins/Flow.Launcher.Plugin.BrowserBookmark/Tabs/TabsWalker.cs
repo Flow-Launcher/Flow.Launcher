@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Windows.Automation;
+using System.Windows.Forms;
+using System.Windows.Input;
 using BrowserTabs;
 using static Flow.Launcher.Plugin.BrowserBookmark.Main;
 
@@ -36,7 +38,7 @@ internal class TabsWalker
             var className = tab.Current.ClassName;
             if (className.Contains("bolt-tab", StringComparison.OrdinalIgnoreCase))
             {
-                Context.API.LogDebug(ClassName, $"Skipping name='{name}', className='{className}'");
+                Context.API.LogDebug(ClassName, $"TABS:Skipping name='{name}', className='{className}'");
                 continue;
             }
 
@@ -64,19 +66,19 @@ internal class TabsWalker
 
             while (sw.Elapsed < _tabRetryTimeout && !cancellationToken.IsCancellationRequested)
             {
-                Context.API.LogDebug(ClassName, $"Start searching for a new tab... Try no {count++}");
+                Context.API.LogDebug(ClassName, $"TABS:Start searching for a new tab... Try no {count++}");
 
                 var tabs = FindAllValidTabs(mainWindow).ToList();
                 if (tabs.Count == 0)
                 {
-                    Context.API.LogDebug(ClassName, "No valid tabs found");
+                    Context.API.LogDebug(ClassName, "TABS:No valid tabs found");
                     Thread.Sleep(_tabRetryInterval);
                     continue;
                 }
 
                 if (_cache.Empty())
                 {
-                    Context.API.LogDebug(ClassName, "First time filling the cache");
+                    Context.API.LogDebug(ClassName, "TABS:First time filling the cache");
                     _cache.Add(tabs);
 
                     // Let's take the last one and assume this is the one that was created recently
@@ -86,8 +88,8 @@ internal class TabsWalker
                     return InitiateTab(process, tabs.Last());
                 }
 
-                Context.API.LogDebug(ClassName, $"Found tabs: {tabs.Count}");
-                //TabsDebug.DumpElements(mainWindow, null, "Tab");
+                Context.API.LogDebug(ClassName, $"TABS:Found tabs: {tabs.Count}");
+                //TabsDebug.DumpTabs(mainWindow);
 
                 // searching from the end and looking for a tab not in the cache
                 for (var i = tabs.Count - 1; i >= 0; i--)
@@ -95,38 +97,38 @@ internal class TabsWalker
                     var tab = tabs[i];
                     if (!_cache.Contains(tab))
                     {
-                        Context.API.LogDebug(ClassName, $"FOUND A NEW TAB: name={tab.Current.Name}, className={tab.Current.ClassName}");
+                        Context.API.LogDebug(ClassName, $"TABS:FOUND A NEW TAB: name={tab.Current.Name}, className={tab.Current.ClassName}");
                         _cache.Add(tab);
                         return InitiateTab(process, tab);
                     }
                 }
 
-                Context.API.LogDebug(ClassName, "No new tab found");
+                Context.API.LogDebug(ClassName, "TABS:No new tab found");
                 Thread.Sleep(_tabRetryInterval);
             }
 
-            Context.API.LogDebug(ClassName, "Timeout waiting for new tab");
+            Context.API.LogDebug(ClassName, "TABS:Timeout waiting for new tab");
         }
         catch (ElementNotAvailableException ex)
         {
-            Context.API.LogException(ClassName, "Element not available", ex);
+            Context.API.LogException(ClassName, "TABS:Element not available", ex);
         }
         catch (Exception ex)
         {
-            Context.API.LogException(ClassName, "Error getting current tab from window", ex);
+            Context.API.LogException(ClassName, "TABS:Error getting current tab from window", ex);
         }
         return null;
     }
 
     internal void RescanTabsForContainer(AutomationElement browserWindow)
     {
-        Context.API.LogDebug(ClassName, "Rescanning tabs in order to find removed tabs");
+        Context.API.LogDebug(ClassName, "TABS:Rescanning tabs in order to find removed tabs");
         _cache.RemoveAllNonExistentTabs(browserWindow, FindAllValidTabs(browserWindow));
     }
 
     internal void RemoveAllTabs(AutomationElement browserWindow)
     {
-        Context.API.LogDebug(ClassName, "Removing all tabs in a window");
+        Context.API.LogDebug(ClassName, "TABS:Removing all tabs in a window");
         _cache.RemoveAllNonExistentTabs(browserWindow, []);
     }
 
@@ -134,7 +136,7 @@ internal class TabsWalker
     {
         if (_cache.Contains(runtimeId))
         {
-            Context.API.LogDebug(ClassName, $"Tab exists {reason}");
+            Context.API.LogDebug(ClassName, $"TABS:{runtimeId}:Tab exists {reason}");
         }
     }
 }

@@ -12,8 +12,16 @@ internal class TabsDebug
 {
     private static readonly string ClassName = nameof(TabsDebug);
 
+    public static void DumpTabs(AutomationElement parent)
+    {
+        DumpElements(parent, null, "Tab");
+    }
+
     public static void DumpElements(AutomationElement parent, string classNameOnly = null, string controlTypeOnly = null, int indent = 0)
     {
+        if (parent == null)
+            return;
+
         AutomationElementCollection children;
         try
         {
@@ -21,7 +29,7 @@ internal class TabsDebug
         }
         catch (ElementNotAvailableException ex)
         {
-            Context.API.LogDebug(ClassName, $"Parent not available: {ex.Message}");
+            Context.API.LogDebug(ClassName, $"TABS:Parent not available: {ex.Message}");
             return;
         }
 
@@ -48,7 +56,7 @@ internal class TabsDebug
                 {
                     Context.API.LogDebug(
                         ClassName,
-                        $"{new string(' ', indent)}" +
+                        $"TABS:{new string(' ', indent)}" +
                         $"Type='{type}', " +
                         $"ClassName='{className}', " +
                         $"Name='{name}', " +
@@ -62,11 +70,11 @@ internal class TabsDebug
             }
             catch (ElementNotAvailableException ex)
             {
-                Context.API.LogDebug(ClassName, $"Child not available: {ex.Message}");
+                Context.API.LogDebug(ClassName, $"TABS:Child not available: {ex.Message}");
             }
             catch (Exception ex)
             {
-                Context.API.LogException(ClassName, $"Unexpected error", ex);
+                Context.API.LogException(ClassName, $"TABS:Unexpected error", ex);
             }
         }
     }
