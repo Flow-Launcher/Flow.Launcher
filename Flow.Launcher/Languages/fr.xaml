@@ -80,7 +80,7 @@
     <system:String x:Key="setAutoStartFailed">Erreur lors de la configuration du lancement au démarrage</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Cacher Flow Launcher lors de la perte de focus</system:String>
     <system:String x:Key="showTaskbarWhenOpened">Afficher la barre des tâches lorsque Flow Launcher est ouvert</system:String>
-    <system:String x:Key="showTaskbarWhenOpenedToolTip">Temporarily show the taskbar when Flow Launcher is opened, useful for auto-hidden taskbars.</system:String>
+    <system:String x:Key="showTaskbarWhenOpenedToolTip">Afficher temporairement la barre des tâches lorsque Flow Launcher est ouvert, utile pour les barres de tâches auto-masquées.</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Ne pas afficher le message de mise à jour pour les nouvelles versions</system:String>
     <system:String x:Key="SearchWindowPosition">Emplacement de la fenêtre de recherche</system:String>
     <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Se souvenir de la dernière position</system:String>
