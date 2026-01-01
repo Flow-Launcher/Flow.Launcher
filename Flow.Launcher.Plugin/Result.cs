@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Security.Policy;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -10,7 +9,8 @@ using System.Text.Json.Serialization;
 namespace Flow.Launcher.Plugin
 {
     /// <summary>
-    /// Describes a result of a <see cref="Query"/> executed by a plugin
+    /// Describes a result of a <see cref="Query"/> executed by a plugin.
+    /// This or its child classses is serializable.
     /// </summary>
     public class Result
     {
@@ -103,29 +103,6 @@ namespace Flow.Launcher.Plugin
         /// TODO COMMENT
         /// </summary>
         public string IcoAbsoluteFullPath => _icoAbsoluteFullPath;
-
-        /// <summary>
-        /// Returns IcoPath's relative path based on the plugin directory or original value if not file path.
-        /// This property is useful for storage where it needs to be resistant to changes in plugin location from update
-        /// or portable mode change.
-        /// </summary>
-        public string IcoPathRelative
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(IcoAbsoluteFullPath)
-                    || string.IsNullOrEmpty(PluginDirectory)
-                    || !Path.IsPathRooted(IcoAbsoluteFullPath)
-                    || IcoAbsoluteFullPath.StartsWith("http://", StringComparison.OrdinalIgnoreCase)
-                    || IcoAbsoluteFullPath.StartsWith("https://", StringComparison.OrdinalIgnoreCase)
-                    || IcoAbsoluteFullPath.StartsWith("data:image", StringComparison.OrdinalIgnoreCase))
-                {
-                    return IcoAbsoluteFullPath;
-                }
-
-                return Path.GetRelativePath(PluginDirectory, IcoAbsoluteFullPath);
-            }
-        }
 
         /// <summary>
         /// The image to be displayed for the badge of the result.

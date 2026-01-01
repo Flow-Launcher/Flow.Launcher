@@ -1349,107 +1349,31 @@ namespace Flow.Launcher.ViewModel
 
             foreach (var item in historyItems)
             {
-                Result result = null;
-                //var glyph = item.Glyph is null && !string.IsNullOrEmpty(item.IcoPath) // Some plugins won't have Glyph, then prefer IcoPath
-                //              ? null
-                //              : item.Glyph is not null
-                //                  ? item.Glyph
-                //                  : new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE81C"); // Default fallback
-
-                //var icoPath = !string.IsNullOrEmpty(item.IcoPath) ? item.IcoPath : Constant.HistoryIcon;
-
-
-
-
-
-
-                result = new Result
+                var copiedItem = item.Copy();
+                // Subtitle has datetime which can cause duplicates when saving.
+                copiedItem.SubTitle = Localize.lastExecuteTime(item.ExecutedDateTime);
+                // Empty PluginID so the source of last opened history results won't be updated, these results are meant to be temporary copy.
+                copiedItem.PluginID = string.Empty;
+                copiedItem.AsyncAction = async c =>
                 {
-                    Title = Settings.HistoryStyle == HistoryStyle.Query
-                            ? Localize.executeQuery(item.Query)
-                            : item.Title,
-                    SubTitle = Localize.lastExecuteTime(item.ExecutedDateTime),
-                    IcoPath = item.IcoAbsoluteFullPath,
-                    OriginQuery = new Query { RawQuery = item.Query },
-                    Action = _ =>
+                    var reflectResult = await ResultHelper.PopulateResultsAsync(item);
+                    if (reflectResult != null)
                     {
-                        App.API.BackToQueryResults();
-                        App.API.ChangeQuery(item.Query);
-                        return false;
-                    },
-                    AsyncAction = async c =>
-                    {
-                        var reflectResult = await ResultHelper.PopulateResultsAsync(item);
-                        if (reflectResult != null)
-                        {
-                            // Record the user selected record for result ranking
-                            _userSelectedRecord.Add(reflectResult);
+                        // Record the user selected record for result ranking
+                        _userSelectedRecord.Add(reflectResult);
 
-                            // Since some actions may need to hide the Flow window to execute
-                            // So let us populate the results of them
-                            return await reflectResult.ExecuteAsync(c);
-                        }
+                        // Since some actions may need to hide the Flow window to execute
+                        // So let us populate the results of them
+                        return await reflectResult.ExecuteAsync(c);
+                    }
 
-                        // If we cannot get the result, fallback to re-query
-                        App.API.BackToQueryResults();
-                        App.API.ChangeQuery(item.Query);
-                        return false;
-                    },
-                    Glyph = item.Glyph
-                };
+                    // If we cannot get the result, fallback to re-query
+                    App.API.BackToQueryResults();
+                    App.API.ChangeQuery(item.Query);
+                    return false;
+                }; 
 
-
-
-                //if (Settings.HistoryStyle == HistoryStyle.Query)
-                //{
-                //    result = new Result
-                //    {
-                //        Title = Localize.executeQuery(item.Query),
-                //        SubTitle = Localize.lastExecuteTime(item.ExecutedDateTime),
-                //        IcoPath = icoPath,
-                //        OriginQuery = new Query { RawQuery = item.Query },
-                //        Action = _ =>
-                //        {
-                //            App.API.BackToQueryResults();
-                //            App.API.ChangeQuery(item.Query);
-                //            return false;
-                //        },
-                //        Glyph = glyph
-                //    };
-                //}
-                //else
-                //{
-                //    result = new Result
-                //    {
-                //        Title = string.IsNullOrEmpty(item.Title) ?  // Old migrated history items have no title
-                //                Localize.executeQuery(item.Query) :
-                //                item.Title,
-                //        SubTitle = Localize.lastExecuteTime(item.ExecutedDateTime),
-                //        IcoPath = icoPath,
-                //        OriginQuery = new Query { RawQuery = item.Query },
-                //        AsyncAction = async c =>
-                //        {
-                //            var reflectResult = await ResultHelper.PopulateResultsAsync(item);
-                //            if (reflectResult != null)
-                //            {
-                //                // Record the user selected record for result ranking
-                //                _userSelectedRecord.Add(reflectResult);
-
-                //                // Since some actions may need to hide the Flow window to execute
-                //                // So let us populate the results of them
-                //                return await reflectResult.ExecuteAsync(c);
-                //            }
-
-                //            // If we cannot get the result, fallback to re-query
-                //            App.API.BackToQueryResults();
-                //            App.API.ChangeQuery(item.Query);
-                //            return false;
-                //        },
-                //        Glyph = glyph
-                //    };
-                //}
-
-                results.Add(result);
+                results.Add(copiedItem);
             }
 
             return results;

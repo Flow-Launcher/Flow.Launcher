@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text.Json.Serialization;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin;
-using Windows.Devices.Geolocation;
-using YamlDotNet.Core.Tokens;
 
 namespace Flow.Launcher.Storage
 {
@@ -36,6 +33,12 @@ namespace Flow.Launcher.Storage
                     OriginQuery = new Query { RawQuery = item.Query },
                     Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE81C"),
                     Query = item.Query,
+                    Action = _ =>
+                    {
+                        App.API.BackToQueryResults();
+                        App.API.ChangeQuery(item.Query);
+                        return false;
+                    },
                     ExecutedDateTime = item.ExecutedDateTime
                 });
             }

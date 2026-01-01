@@ -13,6 +13,7 @@ public class LastOpenedHistoryResult : Result
 
     public LastOpenedHistoryResult()
     {
+        this.OriginQuery = new Query { RawQuery = Query };
     }
 
     public LastOpenedHistoryResult(Result result)
@@ -21,71 +22,42 @@ public class LastOpenedHistoryResult : Result
         SubTitle = result.SubTitle;
         PluginID = result.PluginID;
         Query = result.OriginQuery.RawQuery;
+        OriginQuery = result.OriginQuery;
         RecordKey = result.RecordKey;
         IcoPath = result.IcoPath;
         PluginDirectory = result.PluginDirectory;
         Glyph = result.Glyph;
         ExecutedDateTime = DateTime.Now;
+        // Used for Query History style reopening
+        Action = _ =>
+        {
+            App.API.BackToQueryResults();
+            App.API.ChangeQuery(result.OriginQuery.RawQuery);
+            return false;
+        };
+        //Used for last history style reopening, currently need to be assigned at MainViewModel.cs
+        AsyncAction = null;
     }
 
-    //public Result ToResult(bool isQueryHistoryStyle)
-    //{
-    //    Result result = null;
+    public LastOpenedHistoryResult Copy()
+    {
         
-    //    if (isQueryHistoryStyle)
-    //    {
-    //        result = new Result
-    //        {
-    //            Action = _ =>
-    //            {
-    //                App.API.BackToQueryResults();
-    //                App.API.ChangeQuery(Query);
-    //                return false;
-    //            },
-    //            Glyph = Glyph,
-    //        };
-    //    }
-    //    else
-    //    {
-    //        result = new Result
-    //        {
-    //            AsyncAction = async c =>
-    //            {
-    //                var reflectResult = await ResultHelper.PopulateResultsAsync(item);
-    //                if (reflectResult != null)
-    //                {
-    //                    // Record the user selected record for result ranking
-    //                    _userSelectedRecord.Add(reflectResult);
-
-    //                    // Since some actions may need to hide the Flow window to execute
-    //                    // So let us populate the results of them
-    //                    return await reflectResult.ExecuteAsync(c);
-    //                }
-
-    //                // If we cannot get the result, fallback to re-query
-    //                App.API.BackToQueryResults();
-    //                App.API.ChangeQuery(item.Query);
-    //                return false;
-    //            },
-    //            Glyph = Glyph,
-    //        };
-    //    }
-
-    //    var result = new Result
-    //    {
-    //        Title = Title,
-    //        SubTitle = Localize.lastExecuteTime(ExecutedDateTime),
-    //        IcoPath = IcoPath,
-    //        OriginQuery = new Query { RawQuery = Query },
-    //        Action = _ =>
-    //        {
-    //            App.API.BackToQueryResults();
-    //            App.API.ChangeQuery(Query);
-    //            return false;
-    //        },
-    //        Glyph = Glyph,
-    //    };
-    //}
+        return new LastOpenedHistoryResult
+        {
+            Title = this.Title,
+            SubTitle = this.SubTitle,
+            PluginID = this.PluginID,
+            Query = this.Query,
+            OriginQuery = this.OriginQuery,
+            RecordKey = this.RecordKey,
+            IcoPath = this.IcoPath,
+            PluginDirectory = this.PluginDirectory,
+            Action = this.Action,
+            AsyncAction = this.AsyncAction,
+            Glyph = this.Glyph,
+            ExecutedDateTime = this.ExecutedDateTime
+        };
+    }
 
     public bool Equals(Result r)
     {
