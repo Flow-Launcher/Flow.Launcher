@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
@@ -48,6 +48,9 @@ namespace Flow.Launcher.Storage
         public void Add(Result result)
         {
             if (string.IsNullOrEmpty(result.OriginQuery.TrimmedQuery)) return;
+            // History results triggered from homepage do not contain PluginID,
+            // these are intentionally not saved otherwise cause duplicates due to subtitle
+            // containing datetime string.
             if (string.IsNullOrEmpty(result.PluginID)) return;
 
             // Maintain the max history limit
@@ -59,7 +62,6 @@ namespace Flow.Launcher.Storage
             if (LastOpenedHistoryItems.Count > 0 &&
                 TryGetLastOpenedHistoryResult(result, out var existingHistoryItem))
             {
-                //existingHistoryItem.IcoPath = result.IcoPath;
                 existingHistoryItem.ExecutedDateTime = DateTime.Now;
             }
             else
@@ -90,8 +92,6 @@ namespace Flow.Launcher.Storage
                 var pluginPair = PluginManager.GetPluginForId(item.PluginID);
                 if (pluginPair == null)
                     continue;
-
-                //item.IcoPath = Path.Combine(pluginPair.Metadata.PluginDirectory, item.IcoPath);
 
                 item.PluginDirectory = pluginPair.Metadata.PluginDirectory;
             }
