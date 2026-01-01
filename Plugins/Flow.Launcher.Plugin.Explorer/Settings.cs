@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Text.Json.Serialization;
 using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.Everything;
@@ -25,7 +26,37 @@ namespace Flow.Launcher.Plugin.Explorer
 
         public string ShellPath { get; set; } = "cmd";
 
-        public string ExcludedFileTypes { get; set; } = "";
+        [JsonIgnore]
+        private string _excludedFileTypes = "";
+        /// <summary>
+        /// File extensions, without dot prefix separated by comma.
+        /// </summary>
+        public string ExcludedFileTypes
+        {
+            get => _excludedFileTypes;
+            set
+            {
+                if (_excludedFileTypes == value) return;
+                _excludedFileTypes = value;
+                _excludedFileTypeList = ExcludedFileTypes.Split(Constants.ExcludedFileTypesSeparator, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).ToArray();
+            }
+        }
+
+        [JsonIgnore]
+        private string[] _excludedFileTypeList = null;
+
+        [JsonIgnore]
+        public string[] ExcludedFileTypeList
+        {
+            get
+            {
+                if (_excludedFileTypeList == null)
+                {
+                    _excludedFileTypeList = ExcludedFileTypes.Split(Constants.ExcludedFileTypesSeparator, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).ToArray();
+                }
+                return _excludedFileTypeList;
+            }
+        }
 
         public bool UseLocationAsWorkingDir { get; set; } = false;
 

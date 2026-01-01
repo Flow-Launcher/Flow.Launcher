@@ -148,12 +148,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             {
                 await foreach (var search in searchResults.WithCancellation(token).ConfigureAwait(false))
                 {
+                    // TODO exclude in quick access
                     if (search.Type == ResultType.File && IsExcludedFile(search))
                         continue;
                     // TODO: Optimize filtering by action keyword at the provider level to reduce unnecessary searches.
-                    // 1. Path search and content search may not need filtering as they are specific enough.
-                    // 2. Index search can be optimized by passing allowed result types to the provider to limit the search scope.
-                    // 3. Quick access link filtering is already handled separately.
+                    // 3. Filter in quick access
                     // 
                     if (IsResultTypeFilteredByActionKeyword(search.Type, actions))
                         continue;
@@ -199,6 +198,13 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             ];
         }
 
+        /// <summary>
+        /// Path search logic. Don't apply filtering by file extensions as it's like ls command.
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        /// <exception cref="SearchException"></exception>
         private async Task<List<Result>> PathSearchAsync(Query query, CancellationToken token = default)
         {
             var querySearch = query.Search;
@@ -295,7 +301,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         private bool IsExcludedFile(SearchResult result)
         {
-            string[] excludedFileTypes = Settings.ExcludedFileTypes.Split([','], StringSplitOptions.RemoveEmptyEntries);
+            // TODO may remove this function
+            string[] excludedFileTypes = Settings.ExcludedFileTypes.Split([Constants.ExcludedFileTypesSeparator], StringSplitOptions.RemoveEmptyEntries);
             string fileExtension = Path.GetExtension(result.FullPath).TrimStart('.');
 
             return excludedFileTypes.Contains(fileExtension, StringComparer.OrdinalIgnoreCase);

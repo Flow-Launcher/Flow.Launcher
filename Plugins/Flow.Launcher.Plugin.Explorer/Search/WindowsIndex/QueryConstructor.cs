@@ -34,7 +34,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             baseQuery.QueryContentProperties = "System.FileName";
 
             // Set sorting order 
-            //baseQuery.QuerySorting = "System.ItemType DESC";
+            baseQuery.QuerySorting = OrderIdentifier;
 
             return baseQuery;
         }
@@ -62,15 +62,15 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         ///</summary>
         public string Directory(ReadOnlySpan<char> path, ReadOnlySpan<char> searchString = default, bool recursive = false)
         {
-            var queryConstraint = searchString.IsWhiteSpace() ? "" : $"AND (System.FileName LIKE '{searchString}%' OR CONTAINS(System.FileName,'\"{searchString}*\"'))";
+            var queryConstraint = searchString.IsWhiteSpace() ? "" : $" AND (System.FileName LIKE '{searchString}%' OR CONTAINS(System.FileName,'\"{searchString}*\"'))";
 
             var scopeConstraint = recursive
                 ? RecursiveDirectoryConstraint(path)
                 : TopLevelDirectoryConstraint(path);
 
-            var query = $"SELECT TOP {Settings.MaxResult} {CreateBaseQuery().QuerySelectColumns} FROM {SystemIndex} WHERE {scopeConstraint} {queryConstraint} ORDER BY {OrderIdentifier}";
-
-            return query;
+            var baseQueryHelper = CreateBaseQuery();
+            baseQueryHelper.QueryWhereRestrictions = $"AND {scopeConstraint}{queryConstraint}";
+            return baseQueryHelper.GenerateSQLFromUserQuery("*");
         }
 
         ///<summary>
@@ -84,17 +84,22 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             // Remove any special characters that might cause issues with the query
             var replacedSearchString = ReplaceSpecialCharacterWithTwoSideWhiteSpace(userSearchString);
 
-            // Build the type filter constraint
-            var typeFilterConstraint = BuildTypeFilterConstraint(allowedResultTypes);
+            var constraints = new List<string>
+            {
+                RestrictionsForAllFilesAndFoldersSearch
+            };
 
-            // Generate SQL from constructed parameters, converting the userSearchString from AQS->WHERE clause
-            var baseQuery = $"{CreateBaseQuery().GenerateSQLFromUserQuery(replacedSearchString)} AND {RestrictionsForAllFilesAndFoldersSearch}";
-            
-            // Append type filter if present
-            if (!string.IsNullOrEmpty(typeFilterConstraint))
-                baseQuery += $" AND {typeFilterConstraint}";
-            
-            return $"{baseQuery} ORDER BY {OrderIdentifier}";
+            var typeConstraint = BuildTypeFilterConstraint(allowedResultTypes);
+            if (!string.IsNullOrEmpty(typeConstraint))
+                constraints.Add(typeConstraint);
+
+            var extensionConstraint = BuildExtensionExclusionConstraint();
+            if (!string.IsNullOrEmpty(extensionConstraint))
+                constraints.Add(extensionConstraint);
+
+            var queryHelper = CreateBaseQuery();
+            queryHelper.QueryWhereRestrictions = $"AND {string.Join(" AND ", constraints)}";
+            return queryHelper.GenerateSQLFromUserQuery(replacedSearchString);
         }
 
         /// <summary>
@@ -126,6 +131,22 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                 return "System.ItemType <> '.directory'";
 
             return null;
+        }
+
+        /// <summary>
+        /// Build WHERE clause constraint to exclude specific file extensions.
+        /// </summary>
+        /// <param name="excludedFileTypes">Comma or semicolon separated file extensions without dots (e.g., "queryHelper,log,bak")</param>
+        private string BuildExtensionExclusionConstraint()
+        {
+            var extensions = Settings.ExcludedFileTypeList
+                .Select(ext => $"System.FileExtension NOT LIKE '.{ext}'")
+                .ToArray();
+
+            if (extensions.Length == 0)
+                return "";
+
+            return string.Join(" AND ", extensions);
         }
 
         /// <summary>
@@ -174,10 +195,19 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         ///</summary>
         public string FileContent(ReadOnlySpan<char> userSearchString)
         {
-            string query =
-                $"SELECT TOP {Settings.MaxResult} {CreateBaseQuery().QuerySelectColumns} FROM {SystemIndex} WHERE {RestrictionsForFileContentSearch(userSearchString)} AND {RestrictionsForAllFilesAndFoldersSearch} ORDER BY {OrderIdentifier}";
+            var constraints = new List<string>
+            {
+                RestrictionsForFileContentSearch(userSearchString),
+                RestrictionsForAllFilesAndFoldersSearch
+            };
 
-            return query;
+            var extensionConstraint = BuildExtensionExclusionConstraint();
+            if (!string.IsNullOrEmpty(extensionConstraint))
+                constraints.Add(extensionConstraint);
+
+            var queryHelper = CreateBaseQuery();
+            queryHelper.QueryWhereRestrictions = $"AND {string.Join(" AND ", constraints)}";
+            return queryHelper.GenerateSQLFromUserQuery("*");
         }
 
         ///<summary>

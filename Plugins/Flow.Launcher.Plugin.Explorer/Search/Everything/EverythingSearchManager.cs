@@ -80,7 +80,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             if (token.IsCancellationRequested)
                 yield break;
 
-            var searchKeyword = BuildSearchKeywordWithTypeFilter(search, allowedResultTypes);
+            var searchKeyword = BuildSearchKeyword(search, allowedResultTypes);
 
             var option = new EverythingSearchOption(searchKeyword, 
                 Settings.SortOption, 
@@ -92,16 +92,35 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 yield return result;
         }
 
-        private static string BuildSearchKeywordWithTypeFilter(string search, IEnumerable<ResultType> allowedResultTypes)
+        private string BuildSearchKeyword(string search, IEnumerable<ResultType> allowedResultTypes)
+        {
+            var filters = new List<string>();
+
+            var typeFilter = BuildTypeFilter(allowedResultTypes);
+            if (!string.IsNullOrEmpty(typeFilter))
+                filters.Add(typeFilter);
+
+            var extensionFilter = BuildExtensionExclusionFilter();
+            if (!string.IsNullOrEmpty(extensionFilter))
+                filters.Add(extensionFilter);
+
+            if (filters.Count == 0)
+                return search;
+
+            var combinedFilters = string.Join(" ", filters);
+            return string.IsNullOrEmpty(search) ? combinedFilters : $"{combinedFilters} {search}";
+        }
+
+        private static string BuildTypeFilter(IEnumerable<ResultType> allowedResultTypes)
         {
             if (allowedResultTypes == null)
-                return search;
+                return "";
 
             var hasFile = allowedResultTypes.Contains(ResultType.File);
             var hasFolder = allowedResultTypes.Contains(ResultType.Folder);
             var hasVolume = allowedResultTypes.Contains(ResultType.Volume);
 
-            var filter = (hasFile, hasFolder, hasVolume) switch
+            return (hasFile, hasFolder, hasVolume) switch
             {
                 (true, false, false) => "file:",
                 (false, true, false) => "folder:",
@@ -109,10 +128,23 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 (true, true, false) => "<file:|folder:>",
                 (true, false, true) => "<file:|volume:>",
                 (false, true, true) => "<folder:|volume:>",
-                _ => null // No filtering needed when all allowed or unspecified
+                _ => "" // No filtering needed when all allowed or unspecified
             };
+        }
 
-            return filter == null ? search : $"{filter} {search}";
+        private string BuildExtensionExclusionFilter()
+        {
+            // Split extensions, remove whitespace, and add dot prefix
+            var extensions = Settings.ExcludedFileTypeList
+                .Where(ext => !string.IsNullOrWhiteSpace(ext))
+                .Select(ext => $"!*.{ext}")
+                .ToArray();
+
+            if (extensions.Length == 0)
+                return "";
+
+            // Everything syntax: !*.ext1 !*.ext2 to exclude these extensions
+            return string.Join(" ", extensions);
         }
 
         public async IAsyncEnumerable<SearchResult> ContentSearchAsync(string plainSearch, string contentSearch,
@@ -137,7 +169,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             if (token.IsCancellationRequested)
                 yield break;
 
-            var option = new EverythingSearchOption(plainSearch,
+            // Apply excluded file types in content search
+            var searchKeyword = BuildSearchKeyword(plainSearch, new[] { ResultType.File });
+
+            var option = new EverythingSearchOption(searchKeyword,
                 Settings.SortOption,
                 IsContentSearch: true,
                 ContentSearchKeyword: contentSearch,
@@ -158,7 +193,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             if (token.IsCancellationRequested)
                 yield break;
 
-            var option = new EverythingSearchOption(search,
+            // Apply excluded file types in path enumeration
+            var searchKeyword = BuildSearchKeyword(search, null);
+
+            var option = new EverythingSearchOption(searchKeyword,
                 Settings.SortOption,
                 ParentPath: path,
                 IsRecursive: recursive,
