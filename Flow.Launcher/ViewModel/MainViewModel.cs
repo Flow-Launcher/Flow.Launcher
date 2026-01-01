@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -355,7 +355,9 @@ namespace Flow.Launcher.ViewModel
             if (QueryResultsSelected())
             {
                 SelectedResults = History;
-                History.SelectedIndex = _history.LastOpenedHistoryItems.Count - 1;
+
+                SelectedResults.SelectedIndex = 0;
+                SelectedResults.SelectedItem = SelectedResults.Results[0];
             }
             else
             {
