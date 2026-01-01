@@ -252,12 +252,14 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListBox">
-                    <cc:CustomScrollViewerEx
+                    <ui:ScrollViewerEx
                         x:Name="ListBoxScrollViewer"
                         Focusable="False"
+                        IsScrollAnimationEnabled="False"
+                        RewriteWheelChange="True"
                         Template="{DynamicResource ScrollViewerControlTemplate}">
-                        <cc:CustomScrollViewerEx.Style>
-                            <Style TargetType="cc:CustomScrollViewerEx">
+                        <ui:ScrollViewerEx.Style>
+                            <Style TargetType="ui:ScrollViewerEx">
                                 <Style.Triggers>
                                     <Trigger Property="ComputedVerticalScrollBarVisibility" Value="Visible">
                                         <Setter Property="Margin" Value="0 0 0 0" />
@@ -269,9 +271,9 @@
                                     </Trigger>
                                 </Style.Triggers>
                             </Style>
-                        </cc:CustomScrollViewerEx.Style>
+                        </ui:ScrollViewerEx.Style>
                         <VirtualizingStackPanel IsItemsHost="True" />
-                    </cc:CustomScrollViewerEx>
+                    </ui:ScrollViewerEx>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

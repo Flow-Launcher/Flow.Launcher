@@ -496,6 +496,8 @@ namespace Flow.Launcher.Infrastructure.DialogJump
             uint dwmsEventTime
         )
         {
+            if (hwnd.IsNull) return;
+
             await _foregroundChangeLock.WaitAsync();
             try
             {
@@ -647,6 +649,8 @@ namespace Flow.Launcher.Infrastructure.DialogJump
             uint dwmsEventTime
         )
         {
+            if (hwnd.IsNull) return;
+
             // If the dialog window is moved, update the Dialog Jump window position
             var dialogWindowExist = false;
             lock (_dialogWindowLock)
@@ -672,6 +676,8 @@ namespace Flow.Launcher.Infrastructure.DialogJump
             uint dwmsEventTime
         )
         {
+            if (hwnd.IsNull) return;
+
             // If the dialog window is moved or resized, update the Dialog Jump window position
             if (_dragMoveTimer != null)
             {
@@ -697,6 +703,8 @@ namespace Flow.Launcher.Infrastructure.DialogJump
             uint dwmsEventTime
         )
         {
+            if (hwnd.IsNull) return;
+
             // If the dialog window is destroyed, set _dialogWindowHandle to null
             var dialogWindowExist = false;
             lock (_dialogWindowLock)
@@ -728,6 +736,8 @@ namespace Flow.Launcher.Infrastructure.DialogJump
             uint dwmsEventTime
         )
         {
+            if (hwnd.IsNull) return;
+
             // If the dialog window is hidden, set _dialogWindowHandle to null
             var dialogWindowExist = false;
             lock (_dialogWindowLock)
@@ -759,6 +769,8 @@ namespace Flow.Launcher.Infrastructure.DialogJump
             uint dwmsEventTime
         )
         {
+            if (hwnd.IsNull) return;
+
             // If the dialog window is ended, set _dialogWindowHandle to null
             var dialogWindowExist = false;
             lock (_dialogWindowLock)

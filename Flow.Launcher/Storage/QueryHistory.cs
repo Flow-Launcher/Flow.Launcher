@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
@@ -47,7 +47,7 @@ namespace Flow.Launcher.Storage
 
         public void Add(Result result)
         {
-            if (string.IsNullOrEmpty(result.OriginQuery.RawQuery)) return;
+            if (string.IsNullOrEmpty(result.OriginQuery.TrimmedQuery)) return;
             if (string.IsNullOrEmpty(result.PluginID)) return;
 
             // Maintain the max history limit

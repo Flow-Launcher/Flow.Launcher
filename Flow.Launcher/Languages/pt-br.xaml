@@ -64,6 +64,10 @@
     <system:String x:Key="PositionReset">Redefinição de Posição</system:String>
     <system:String x:Key="PositionResetToolTip">Reset search window position</system:String>
     <system:String x:Key="queryTextBoxPlaceholder">Type here to search</system:String>
+    <system:String x:Key="pluginStillInitializing">{0}: This plugin is still initializing...</system:String>
+    <system:String x:Key="pluginStillInitializingSubtitle">Select this result to requery</system:String>
+    <system:String x:Key="pluginFailedToRespond">{0}: Failed to respond!</system:String>
+    <system:String x:Key="pluginFailedToRespondSubtitle">Select this result for more info</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Configurações</system:String>
@@ -90,7 +94,7 @@
     <system:String x:Key="SearchWindowAlignCustom">Posição Personalizada</system:String>
     <system:String x:Key="language">Idioma</system:String>
     <system:String x:Key="lastQueryMode">Estilo da Última Consulta</system:String>
-    <system:String x:Key="lastQueryModeToolTip">Mostrar/ocultar resultados anteriores quando o Lançador de Fluxos é reativado.</system:String>
+    <system:String x:Key="lastQueryModeToolTip">Mostrar/ocultar resultados anteriores quando o Flow Launcher for reativado.</system:String>
     <system:String x:Key="LastQueryPreserved">Preservar Última Consulta</system:String>
     <system:String x:Key="LastQuerySelected">Selecionar última consulta</system:String>
     <system:String x:Key="LastQueryEmpty">Limpar última consulta</system:String>
@@ -138,7 +142,7 @@
     <system:String x:Key="DoublePinyinSchemasXiaoLang">Xiao Lang</system:String>
 
     <system:String x:Key="AlwaysPreview">Sempre Pré-visualizar</system:String>
-    <system:String x:Key="AlwaysPreviewToolTip">Sempre abrir o painel de pré-visualização quando o Flow é ativado. Pressione {0} para ativar ou desativar a pré-visualização.</system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Sempre abrir o painel de pré-visualização quando o Flow for ativado. Pressione {0} para alternar a pré-visualização.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">O efeito de sombra não é permitido enquanto o tema atual tem o efeito de desfoque ativado</system:String>
     <system:String x:Key="searchDelay">Search Delay</system:String>
     <system:String x:Key="searchDelayToolTip">Adds a short delay while typing to reduce UI flicker and result load. Recommended if your typing speed is average.</system:String>
@@ -171,6 +175,10 @@
     <system:String x:Key="homePageToolTip">Show home page results when query text is empty.</system:String>
     <system:String x:Key="historyResultsForHomePage">Show History Results in Home Page</system:String>
     <system:String x:Key="historyResultsCountForHomePage">Maximum History Results Shown in Home Page</system:String>
+    <system:String x:Key="historyStyle">History Style</system:String>
+    <system:String x:Key="historyStyleTooltip">Choose the type of history to show in the History and Home Page</system:String>
+    <system:String x:Key="queryHistory">Query history</system:String>
+    <system:String x:Key="executedHistory">Last opened history</system:String>
     <system:String x:Key="homeToggleBoxToolTip">This can only be edited if plugin supports Home feature and Home Page is enabled.</system:String>
     <system:String x:Key="showAtTopmost">Show Search Window at Foremost</system:String>
     <system:String x:Key="showAtTopmostToolTip">Overrides other programs' 'Always on Top' setting and displays Flow in the foremost position.</system:String>
@@ -446,7 +454,7 @@
     <system:String x:Key="icons">Ícones</system:String>
     <system:String x:Key="about_activate_times">Você ativou o Flow Launcher {0} vezes</system:String>
     <system:String x:Key="checkUpdates">Procurar atualizações</system:String>
-    <system:String x:Key="BecomeASponsor">Torne-se um Sponsor</system:String>
+    <system:String x:Key="BecomeASponsor">Become a Sponsor</system:String>
     <system:String x:Key="newVersionTips">A nova versão {0} está disponível, por favor reinicie o Flow Launcher.</system:String>
     <system:String x:Key="checkUpdatesFailed">Falha ao procurar atualizações, confira sua conexão e configuração de proxy para api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">

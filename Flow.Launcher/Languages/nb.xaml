@@ -64,6 +64,10 @@
     <system:String x:Key="PositionReset">Tilbakestilling av posisjon</system:String>
     <system:String x:Key="PositionResetToolTip">Reset search window position</system:String>
     <system:String x:Key="queryTextBoxPlaceholder">Type here to search</system:String>
+    <system:String x:Key="pluginStillInitializing">{0}: This plugin is still initializing...</system:String>
+    <system:String x:Key="pluginStillInitializingSubtitle">Select this result to requery</system:String>
+    <system:String x:Key="pluginFailedToRespond">{0}: Failed to respond!</system:String>
+    <system:String x:Key="pluginFailedToRespondSubtitle">Select this result for more info</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Innstillinger</system:String>
@@ -171,6 +175,10 @@
     <system:String x:Key="homePageToolTip">Show home page results when query text is empty.</system:String>
     <system:String x:Key="historyResultsForHomePage">Show History Results in Home Page</system:String>
     <system:String x:Key="historyResultsCountForHomePage">Maximum History Results Shown in Home Page</system:String>
+    <system:String x:Key="historyStyle">History Style</system:String>
+    <system:String x:Key="historyStyleTooltip">Choose the type of history to show in the History and Home Page</system:String>
+    <system:String x:Key="queryHistory">Query history</system:String>
+    <system:String x:Key="executedHistory">Last opened history</system:String>
     <system:String x:Key="homeToggleBoxToolTip">This can only be edited if plugin supports Home feature and Home Page is enabled.</system:String>
     <system:String x:Key="showAtTopmost">Show Search Window at Foremost</system:String>
     <system:String x:Key="showAtTopmostToolTip">Overrides other programs' 'Always on Top' setting and displays Flow in the foremost position.</system:String>
@@ -446,7 +454,7 @@
     <system:String x:Key="icons">Ikoner</system:String>
     <system:String x:Key="about_activate_times">Du har aktivert Flow Launcher {0} ganger</system:String>
     <system:String x:Key="checkUpdates">Se etter oppdateringer</system:String>
-    <system:String x:Key="BecomeASponsor">Bli en sponsor</system:String>
+    <system:String x:Key="BecomeASponsor">Become a Sponsor</system:String>
     <system:String x:Key="newVersionTips">Ny versjon {0} er tilgjengelig, vil du starte Flow Launcher på nytt for å bruke oppdateringen?</system:String>
     <system:String x:Key="checkUpdatesFailed">Sjekk oppdateringer mislyktes, vennligst sjekk tilkoblingen og proxy-innstillingene til api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">

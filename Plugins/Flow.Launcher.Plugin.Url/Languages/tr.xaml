@@ -10,13 +10,13 @@
     <system:String x:Key="flowlauncher_plugin_url_plugin_choose">Seç</system:String>
     <system:String x:Key="flowlauncher_plugin_url_plugin_filter">Programlar (*.exe)|*.exe|Tüm Dosyalar|*.*</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_url_use_custom_browser">Use custom instead of Flow's default web browser</system:String>
-    <system:String x:Key="flowlauncher_plugin_url_browser_path">Browser path</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_use_custom_browser">Flow'un varsayılan web tarayıcısı yerine özel tarayıcıyı kullanın</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_browser_path">Tarayıcı yolu</system:String>
 
     <system:String x:Key="flowlauncher_plugin_url_new_tab">Yeni sekme</system:String>
     <system:String x:Key="flowlauncher_plugin_url_new_window">Yeni pencere</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_url_private_mode">Private mode</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_private_mode">Gizli mod</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_url_usehttps">Prefer https over http</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_usehttps">http yerine https'yi tercih et</system:String>
 </ResourceDictionary>

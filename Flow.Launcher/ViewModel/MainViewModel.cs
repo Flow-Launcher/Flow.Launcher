@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -36,9 +36,10 @@ namespace Flow.Launcher.ViewModel
 
         private static readonly string ClassName = nameof(MainViewModel);
 
-        private bool _isQueryRunning;
         private Query _lastQuery;
         private bool _previousIsHomeQuery;
+        private Query _progressQuery; // Used for QueryResultAsync
+        private Query _updateQuery; // Used for ResultsUpdated
         private string _queryTextBeforeLeaveResults;
         private string _ignoredQueryText; // Used to ignore query text change when switching between context menu and query results
 
@@ -63,6 +64,8 @@ namespace Flow.Launcher.ViewModel
             ID = "298303A65D128A845D28A7B83B3968C2", // ID is for identifying the update plugin in UpdateActionAsync
             Priority = 0 // Priority is for calculating scores in UpdateResultView
         };
+
+        private bool _taskbarShownByFlow = false;
 
         #endregion
 
@@ -283,7 +286,7 @@ namespace Flow.Launcher.ViewModel
 
             plugin.ResultsUpdated += (s, e) =>
             {
-                if (e.Query.RawQuery != QueryText || e.Token.IsCancellationRequested)
+                if (_updateQuery == null || e.Query.OriginalQuery != _updateQuery.OriginalQuery || e.Token.IsCancellationRequested)
                 {
                     return;
                 }
@@ -442,7 +445,7 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void Backspace(object index)
         {
-            var query = QueryBuilder.Build(QueryText.Trim(), PluginManager.GetNonGlobalPlugins());
+            var query = QueryBuilder.Build(QueryText, QueryText.Trim(), PluginManager.GetNonGlobalPlugins());
 
             // GetPreviousExistingDirectory does not require trailing '\', otherwise will return empty string
             var path = FilesFolders.GetPreviousExistingDirectory((_) => true, query.Search.TrimEnd('\\'));
@@ -1382,7 +1385,7 @@ namespace Flow.Launcher.ViewModel
                 return;
             }
 
-            App.API.LogDebug(ClassName, $"Start query with ActionKeyword <{query.ActionKeyword}> and RawQuery <{query.RawQuery}>");
+            App.API.LogDebug(ClassName, $"Start query with ActionKeyword <{query.ActionKeyword}> and TrimmedQuery <{query.TrimmedQuery}>");
 
             var currentIsHomeQuery = query.IsHomeQuery;
             var currentIsDialogJump = _isDialogJump;
@@ -1394,69 +1397,73 @@ namespace Flow.Launcher.ViewModel
                 return;
             }
 
-            _updateSource?.Dispose();
-
-            var currentUpdateSource = new CancellationTokenSource();
-            _updateSource = currentUpdateSource;
-            var currentCancellationToken = _updateSource.Token;
-            _updateToken = currentCancellationToken;
-
-            ProgressBarVisibility = Visibility.Hidden;
-            _isQueryRunning = true;
-
-            // Switch to ThreadPool thread
-            await TaskScheduler.Default;
-
-            if (currentCancellationToken.IsCancellationRequested) return;
-
-            // Update the query's IsReQuery property to true if this is a re-query
-            query.IsReQuery = isReQuery;
-
-            ICollection<PluginPair> plugins = Array.Empty<PluginPair>();
-            if (currentIsHomeQuery)
+            try
             {
-                if (Settings.ShowHomePage)
-                {
-                    plugins = PluginManager.ValidPluginsForHomeQuery();
-                }
+                _updateSource?.Dispose();
 
-                PluginIconPath = null;
-                PluginIconSource = null;
-                SearchIconVisibility = Visibility.Visible;
-            }
-            else
-            {
-                plugins = PluginManager.ValidPluginsForQuery(query, currentIsDialogJump);
+                var currentUpdateSource = new CancellationTokenSource();
+                _updateSource = currentUpdateSource;
+                var currentCancellationToken = _updateSource.Token;
+                _updateToken = currentCancellationToken;
 
-                if (plugins.Count == 1)
+                ProgressBarVisibility = Visibility.Hidden;
+
+                _progressQuery = query;
+                _updateQuery = query;
+
+                // Switch to ThreadPool thread
+                await TaskScheduler.Default;
+
+                if (currentCancellationToken.IsCancellationRequested) return;
+
+                // Update the query's IsReQuery property to true if this is a re-query
+                query.IsReQuery = isReQuery;
+
+                ICollection<PluginPair> plugins = Array.Empty<PluginPair>();
+                if (currentIsHomeQuery)
                 {
-                    PluginIconPath = plugins.Single().Metadata.IcoPath;
-                    PluginIconSource = await App.API.LoadImageAsync(PluginIconPath);
-                    SearchIconVisibility = Visibility.Hidden;
-                }
-                else
-                {
+                    if (Settings.ShowHomePage)
+                    {
+                        plugins = PluginManager.ValidPluginsForHomeQuery();
+                    }
+
                     PluginIconPath = null;
                     PluginIconSource = null;
                     SearchIconVisibility = Visibility.Visible;
                 }
-            }
+                else
+                {
+                    plugins = PluginManager.ValidPluginsForQuery(query, currentIsDialogJump);
 
-            App.API.LogDebug(ClassName, $"Valid <{plugins.Count}> plugins: {string.Join(" ", plugins.Select(x => $"<{x.Metadata.Name}>"))}");
+                    if (plugins.Count == 1)
+                    {
+                        PluginIconPath = plugins.Single().Metadata.IcoPath;
+                        PluginIconSource = await App.API.LoadImageAsync(PluginIconPath);
+                        SearchIconVisibility = Visibility.Hidden;
+                    }
+                    else
+                    {
+                        PluginIconPath = null;
+                        PluginIconSource = null;
+                        SearchIconVisibility = Visibility.Visible;
+                    }
+                }
 
-            // Do not wait for performance improvement
-            /*if (string.IsNullOrEmpty(query.ActionKeyword))
-            {
-                // Wait 15 millisecond for query change in global query
-                // if query changes, return so that it won't be calculated
-                await Task.Delay(15, currentCancellationToken);
-                if (currentCancellationToken.IsCancellationRequested) return;
-            }*/
+                App.API.LogDebug(ClassName, $"Valid <{plugins.Count}> plugins: {string.Join(" ", plugins.Select(x => $"<{x.Metadata.Name}>"))}");
 
-            _ = Task.Delay(200, currentCancellationToken).ContinueWith(_ =>
+                // Do not wait for performance improvement
+                /*if (string.IsNullOrEmpty(query.ActionKeyword))
+                {
+                    // Wait 15 millisecond for query change in global query
+                    // if query changes, return so that it won't be calculated
+                    await Task.Delay(15, currentCancellationToken);
+                    if (currentCancellationToken.IsCancellationRequested) return;
+                }*/
+
+                _ = Task.Delay(200, currentCancellationToken).ContinueWith(_ =>
                 {
                     // start the progress bar if query takes more than 200 ms and this is the current running query and it didn't finish yet
-                    if (_isQueryRunning)
+                    if (_progressQuery != null && _progressQuery.OriginalQuery == query.OriginalQuery)
                     {
                         ProgressBarVisibility = Visibility.Visible;
                     }
@@ -1465,58 +1472,65 @@ namespace Flow.Launcher.ViewModel
                 TaskContinuationOptions.NotOnCanceled,
                 TaskScheduler.Default);
 
-            // plugins are ICollection, meaning LINQ will get the Count and preallocate Array
+                // plugins are ICollection, meaning LINQ will get the Count and preallocate Array
 
-            Task[] tasks;
-            if (currentIsHomeQuery)
-            {
-                if (ShouldClearExistingResultsForNonQuery(plugins))
+                Task[] tasks;
+                if (currentIsHomeQuery)
                 {
-                    Results.Clear();
-                    App.API.LogDebug(ClassName, $"Existing results are cleared for non-query");
+                    if (ShouldClearExistingResultsForNonQuery(plugins))
+                    {
+                        // there are no update tasks and so we can directly return
+                        ClearResults();
+                        return;
+                    }
+
+                    tasks = plugins.Select(plugin => plugin.Metadata.HomeDisabled switch
+                    {
+                        false => QueryTaskAsync(plugin, currentCancellationToken),
+                        true => Task.CompletedTask
+                    }).ToArray();
+
+                    // Query history results for home page firstly so it will be put on top of the results
+                    if (Settings.ShowHistoryResultsForHomePage)
+                    {
+                        QueryHistoryTask(currentCancellationToken);
+                    }
+                }
+                else
+                {
+                    tasks = plugins.Select(plugin => plugin.Metadata.Disabled switch
+                    {
+                        false => QueryTaskAsync(plugin, currentCancellationToken),
+                        true => Task.CompletedTask
+                    }).ToArray();
                 }
 
-                tasks = plugins.Select(plugin => plugin.Metadata.HomeDisabled switch
+                try
                 {
-                    false => QueryTaskAsync(plugin, currentCancellationToken),
-                    true => Task.CompletedTask
-                }).ToArray();
+                    // Check the code, WhenAll will translate all type of IEnumerable or Collection to Array, so make an array at first
+                    await Task.WhenAll(tasks);
+                }
+                catch (OperationCanceledException)
+                {
+                    // nothing to do here
+                }
 
-                // Query history results for home page firstly so it will be put on top of the results
-                if (Settings.ShowHistoryResultsForHomePage)
+                if (currentCancellationToken.IsCancellationRequested) return;
+
+                // this should happen once after all queries are done so progress bar should continue
+                // until the end of all querying
+                _progressQuery = null;
+
+                if (!currentCancellationToken.IsCancellationRequested)
                 {
-                    QueryHistoryTask(currentCancellationToken);
+                    // update to hidden if this is still the current query
+                    ProgressBarVisibility = Visibility.Hidden;
                 }
             }
-            else
+            finally
             {
-                tasks = plugins.Select(plugin => plugin.Metadata.Disabled switch
-                {
-                    false => QueryTaskAsync(plugin, currentCancellationToken),
-                    true => Task.CompletedTask
-                }).ToArray();
-            }
-
-            try
-            {
-                // Check the code, WhenAll will translate all type of IEnumerable or Collection to Array, so make an array at first
-                await Task.WhenAll(tasks);
-            }
-            catch (OperationCanceledException)
-            {
-                // nothing to do here
-            }
-
-            if (currentCancellationToken.IsCancellationRequested) return;
-
-            // this should happen once after all queries are done so progress bar should continue
-            // until the end of all querying
-            _isQueryRunning = false;
-
-            if (!currentCancellationToken.IsCancellationRequested)
-            {
-                // update to hidden if this is still the current query
-                ProgressBarVisibility = Visibility.Hidden;
+                // this make sures progress query is null when this query is canceled
+                _progressQuery = null;
             }
 
             // Local function
@@ -1616,7 +1630,7 @@ namespace Flow.Launcher.ViewModel
         {
             if (string.IsNullOrWhiteSpace(queryText))
             {
-                return QueryBuilder.Build(string.Empty, PluginManager.GetNonGlobalPlugins());
+                return QueryBuilder.Build(string.Empty, string.Empty, PluginManager.GetNonGlobalPlugins());
             }
 
             var queryBuilder = new StringBuilder(queryText);
@@ -1636,7 +1650,7 @@ namespace Flow.Launcher.ViewModel
             // Applying builtin shortcuts
             await BuildQueryAsync(builtInShortcuts, queryBuilder, queryBuilderTmp);
 
-            return QueryBuilder.Build(queryBuilder.ToString().Trim(), PluginManager.GetNonGlobalPlugins());
+            return QueryBuilder.Build(queryText, queryBuilder.ToString().Trim(), PluginManager.GetNonGlobalPlugins());
         }
 
         private async Task BuildQueryAsync(IEnumerable<BaseBuiltinShortcutModel> builtInShortcuts,
@@ -2113,6 +2127,13 @@ namespace Flow.Launcher.ViewModel
             {
                 Win32Helper.SwitchToEnglishKeyboardLayout(true);
             }
+
+            // Show the taskbar if the setting is enabled
+            if (Settings.ShowTaskbarWhenInvoked && !_taskbarShownByFlow)
+            {
+                Win32Helper.ShowTaskbar();
+                _taskbarShownByFlow = true;
+            }
         }
 
         public async void Hide(bool reset = true)
@@ -2179,6 +2200,13 @@ namespace Flow.Launcher.ViewModel
             if (StartWithEnglishMode)
             {
                 Win32Helper.RestorePreviousKeyboardLayout();
+            }
+
+            // Hide the taskbar if the setting is enabled
+            if (_taskbarShownByFlow)
+            {
+                Win32Helper.HideTaskbar();
+                _taskbarShownByFlow = false;
             }
 
             // Delay for a while to make sure clock will not flicker

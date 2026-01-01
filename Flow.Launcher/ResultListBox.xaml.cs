@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -9,7 +10,7 @@ namespace Flow.Launcher
 {
     public partial class ResultListBox
     {
-        protected object _lock = new object();
+        protected Lock _lock = new();
         private Point _lastpos;
         private ListBoxItem curItem = null;
         public ResultListBox()
@@ -88,12 +89,11 @@ namespace Flow.Launcher
             }
         }
 
-
-        private Point start;
-        private string path;
-        private string query;
+        private Point _start;
+        private string _path;
+        private string _trimmedQuery;
         // this method is called by the UI thread, which is single threaded, so we can be sloppy with locking
-        private bool isDragging;
+        private bool _isDragging;
 
         private void ResultList_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -104,53 +104,55 @@ namespace Flow.Launcher
                         Result:
                         {
                             CopyText: { } copyText,
-                            OriginQuery.RawQuery: { } rawQuery
+                            OriginQuery.TrimmedQuery: { } trimmedQuery
                         }
                     }
                 }) return;
 
-            path = copyText;
-            query = rawQuery;
-            start = e.GetPosition(null);
-            isDragging = true;
+            _path = copyText;
+            _trimmedQuery = trimmedQuery;
+            _start = e.GetPosition(null);
+            _isDragging = true;
         }
+
         private void ResultList_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.LeftButton != MouseButtonState.Pressed || !isDragging)
+            if (e.LeftButton != MouseButtonState.Pressed || !_isDragging)
             {
-                start = default;
-                path = string.Empty;
-                query = string.Empty;
-                isDragging = false;
+                _start = default;
+                _path = string.Empty;
+                _trimmedQuery = string.Empty;
+                _isDragging = false;
                 return;
             }
 
-            if (!File.Exists(path) && !Directory.Exists(path))
+            if (!File.Exists(_path) && !Directory.Exists(_path))
                 return;
 
             Point mousePosition = e.GetPosition(null);
-            Vector diff = this.start - mousePosition;
+            Vector diff = _start - mousePosition;
 
             if (Math.Abs(diff.X) < SystemParameters.MinimumHorizontalDragDistance
                 || Math.Abs(diff.Y) < SystemParameters.MinimumVerticalDragDistance)
                 return;
 
-            isDragging = false;
+            _isDragging = false;
 
             App.API.HideMainWindow();
 
             var data = new DataObject(DataFormats.FileDrop, new[]
             {
-                path
+                _path
             });
 
             // Reassigning query to a new variable because for some reason
             // after DragDrop.DoDragDrop call, 'query' loses its content, i.e. becomes empty string
-            var rawQuery = query;
+            var trimmedQuery = _trimmedQuery;
             var effect = DragDrop.DoDragDrop((DependencyObject)sender, data, DragDropEffects.Move | DragDropEffects.Copy);
             if (effect == DragDropEffects.Move)
-                App.API.ChangeQuery(rawQuery, true);
+                App.API.ChangeQuery(trimmedQuery, true);
         }
+
         private void ResultListBox_OnPreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (Mouse.DirectlyOver is not FrameworkElement { DataContext: ResultViewModel result })
@@ -158,6 +160,7 @@ namespace Flow.Launcher
 
             RightClickResultCommand?.Execute(result.Result);
         }
+
         private void ResultListBox_OnPreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             if (Mouse.DirectlyOver is not FrameworkElement { DataContext: ResultViewModel result })
