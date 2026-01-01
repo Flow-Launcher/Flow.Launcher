@@ -82,12 +82,16 @@ namespace Flow.Launcher.Plugin.Explorer
 
         public string PreviewPanelTimeFormat { get; set; } = "HH:mm";
 
-        private EverythingSearchManager _everythingManagerInstance;
-        private WindowsIndexSearchManager _windowsIndexSearchManager;
 
         #region SearchEngine
 
+        [JsonIgnore]
+        private EverythingSearchManager _everythingManagerInstance;
+        [JsonIgnore]
+        private WindowsIndexSearchManager _windowsIndexSearchManager;
+        [JsonIgnore]
         private EverythingSearchManager EverythingManagerInstance => _everythingManagerInstance ??= new EverythingSearchManager(this);
+        [JsonIgnore]
         private WindowsIndexSearchManager WindowsIndexSearchManager => _windowsIndexSearchManager ??= new WindowsIndexSearchManager(this);
 
         public IndexSearchEngineOption IndexSearchEngine { get; set; } = IndexSearchEngineOption.WindowsIndex;
