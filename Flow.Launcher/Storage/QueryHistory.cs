@@ -80,7 +80,7 @@ namespace Flow.Launcher.Storage
         /// Refresh stored PluginDirectory (and optionally normalize relative ico paths)
         /// using current plugin metadata. Call this after plugins are loaded/initialized.
         /// </summary>
-        public void UpdateIcoAbsoluteFullPath()
+        public void UpdateIcoPathAbsolute()
         {
             if (LastOpenedHistoryItems.Count == 0) return;
 

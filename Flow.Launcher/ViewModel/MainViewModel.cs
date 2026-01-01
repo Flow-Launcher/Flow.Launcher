@@ -1370,7 +1370,7 @@ namespace Flow.Launcher.ViewModel
         internal void RefreshLastOpenedHistoryResult()
         {
             _history.PopulateHistoryFromLegacyHistory();
-            _history.UpdateIcoAbsoluteFullPath();
+            _history.UpdateIcoPathAbsolute();
         }
 
         private async Task QueryResultsAsync(bool searchDelay, bool isReQuery = false, bool reSelect = true)

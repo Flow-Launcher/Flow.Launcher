@@ -23,7 +23,7 @@ namespace Flow.Launcher.Plugin
 
         private string _icoPath;
 
-        private string _icoAbsoluteFullPath;
+        private string _icoPathAbsolute;
 
         private string _copyText = string.Empty;
 
@@ -72,9 +72,7 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         /// <value>Can be a local file path or a URL.</value>
         /// <remarks>
-        /// GlyphInfo is prioritized if not null.
-        /// Use IcoPathRelative for storage where it needs to be resistant to plugin location change.
-        /// </remarks>
+        /// GlyphInfo is prioritized if not null</remarks>
         public string IcoPath
         {
             get => _icoPath;
@@ -90,11 +88,11 @@ namespace Flow.Launcher.Plugin
                     && !value.StartsWith("https://", StringComparison.OrdinalIgnoreCase)
                     && !value.StartsWith("data:image", StringComparison.OrdinalIgnoreCase))
                 {
-                    _icoAbsoluteFullPath = Path.Combine(PluginDirectory, value);
+                    _icoPathAbsolute = Path.Combine(PluginDirectory, value);
                 }
                 else
                 {
-                    _icoAbsoluteFullPath = value;
+                    _icoPathAbsolute = value;
                 }
             }
         }
@@ -102,7 +100,7 @@ namespace Flow.Launcher.Plugin
         /// <summary>
         /// TODO COMMENT
         /// </summary>
-        public string IcoAbsoluteFullPath => _icoAbsoluteFullPath;
+        public string IcoPathAbsolute => _icoPathAbsolute;
 
         /// <summary>
         /// The image to be displayed for the badge of the result.
