@@ -227,6 +227,7 @@ namespace Flow.Launcher.Plugin
         /// <summary>
         /// Plugin ID that generated this result
         /// </summary>
+        [JsonInclude]
         public string PluginID { get; internal set; }
 
         /// <summary>
