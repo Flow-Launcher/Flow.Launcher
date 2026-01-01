@@ -30,7 +30,7 @@ namespace Flow.Launcher.Storage
                 {
                     Title = Localize.executeQuery(item.Query),
                     IcoPath = Constant.HistoryIcon,
-                    OriginQuery = new Query { RawQuery = item.Query },
+                    OriginQuery = new Query { TrimmedQuery = item.Query },
                     Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE81C"),
                     Query = item.Query,
                     Action = _ =>

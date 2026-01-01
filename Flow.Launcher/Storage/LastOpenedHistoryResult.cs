@@ -13,7 +13,7 @@ public class LastOpenedHistoryResult : Result
 
     public LastOpenedHistoryResult()
     {
-        this.OriginQuery = new Query { RawQuery = Query };
+        this.OriginQuery = new Query { TrimmedQuery = Query };
     }
 
     public LastOpenedHistoryResult(Result result)
@@ -21,7 +21,7 @@ public class LastOpenedHistoryResult : Result
         Title = result.Title;
         SubTitle = result.SubTitle;
         PluginID = result.PluginID;
-        Query = result.OriginQuery.RawQuery;
+        Query = result.OriginQuery.TrimmedQuery;
         OriginQuery = result.OriginQuery;
         RecordKey = result.RecordKey;
         IcoPath = result.IcoPath;
@@ -32,10 +32,10 @@ public class LastOpenedHistoryResult : Result
         Action = _ =>
         {
             App.API.BackToQueryResults();
-            App.API.ChangeQuery(result.OriginQuery.RawQuery);
+            App.API.ChangeQuery(result.OriginQuery.TrimmedQuery);
             return false;
         };
-        //Used for last history style reopening, currently need to be assigned at MainViewModel.cs
+        //Used for Last Opened History style reopening, currently need to be assigned at MainViewModel.cs
         AsyncAction = null;
     }
 
@@ -66,13 +66,13 @@ public class LastOpenedHistoryResult : Result
             return Title == r.Title
                 && SubTitle == r.SubTitle
                 && PluginID == r.PluginID
-                && Query == r.OriginQuery.RawQuery;
+                && Query == r.OriginQuery.TrimmedQuery;
         }
         else
         {
             return RecordKey == r.RecordKey
                 && PluginID == r.PluginID
-                && Query == r.OriginQuery.RawQuery;
+                && Query == r.OriginQuery.TrimmedQuery;
         }
     }
 }

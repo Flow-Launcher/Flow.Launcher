@@ -1367,7 +1367,7 @@ namespace Flow.Launcher.ViewModel
         /// TODO COMMENT- Requires the plugins to have initialized first because 
         /// it needs the plugin directory paths for initialization
         /// </summary>
-        internal void RefreshLastOpenedHistoryResult()
+        internal void RefreshLastOpenedHistoryResults()
         {
             _history.PopulateHistoryFromLegacyHistory();
             _history.UpdateIcoPathAbsolute();
