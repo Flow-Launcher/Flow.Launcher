@@ -98,19 +98,21 @@ namespace Flow.Launcher.Plugin.Program.Programs
         }
 
         /// <summary>
-        /// Returns the best match between localized name and English name when both are available.
+        /// Returns the best match between the primary display name and the English name when both are available.
         /// </summary>
-        private MatchResult GetBestMatch(string query, string localizedName, string englishName, bool useLocalizedName)
+        private MatchResult GetBestMatch(string query, string primaryName, string englishName, bool hasDifferentLocalizedName)
         {
-            var localizedMatch = Main.Context.API.FuzzySearch(query, localizedName);
+            var primaryMatch = Main.Context.API.FuzzySearch(query, primaryName);
             
-            if (!useLocalizedName)
+            // If there's no different localized name, just return the primary match
+            if (!hasDifferentLocalizedName)
             {
-                return localizedMatch;
+                return primaryMatch;
             }
             
+            // Search the English name as well and return the better match
             var englishMatch = Main.Context.API.FuzzySearch(query, englishName);
-            return englishMatch.Score > localizedMatch.Score ? englishMatch : localizedMatch;
+            return englishMatch.Score > primaryMatch.Score ? englishMatch : primaryMatch;
         }
 
         public Result Result(string query, IPublicAPI api)
