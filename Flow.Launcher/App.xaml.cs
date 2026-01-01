@@ -259,7 +259,7 @@ namespace Flow.Launcher
 
                     await PluginManager.InitializePluginsAsync(_mainVM);
 
-                    _mainVM.InitializeQueryHistoryItems();
+                    _mainVM.RefreshLastOpenedHistoryResult();
 
                     // Refresh home page after plugins are initialized because users may open main window during plugin initialization
                     // And home page is created without full plugin list

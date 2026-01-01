@@ -42,33 +42,11 @@ namespace Flow.Launcher.ViewModel
         private string _queryTextBeforeLeaveResults;
         private string _ignoredQueryText; // Used to ignore query text change when switching between context menu and query results
 
-        private int QueryHistoryItemsInitialized = 0;
-        private FlowLauncherJsonStorage<History> _historyItemsStorage;
-        private History _queryHistoryItems;
-        private History QueryHistoryItems
-        {
-            get
-            {
-                if (QueryHistoryItemsInitialized == 0)
-                {
-                    App.API.LogException(ClassName,
-                                         "QueryHistoryItems is not initialized. Call InitializeQueryHistoryItems() before accessing QueryHistoryItems.",
-                                         new InvalidOperationException(),
-                                         "QueryHistoryItems");
-                    throw new InvalidOperationException("QueryHistoryItems is not initialized. Call InitializeQueryHistoryItems() before accessing QueryHistoryItems.");
-                }
-
-                return _queryHistoryItems;
-            }
-            set
-            {
-                _queryHistoryItems = value;
-            }
-        }
-
+        private readonly FlowLauncherJsonStorage<History> _historyItemsStorage;
+        private readonly History _history;
+        private int lastHistoryIndex = 1;
         private readonly FlowLauncherJsonStorage<UserSelectedRecord> _userSelectedRecordStorage;
         private readonly FlowLauncherJsonStorageTopMostRecord _topMostRecord;
-        private int lastHistoryIndex = 1;
         private readonly UserSelectedRecord _userSelectedRecord;
 
         private CancellationTokenSource _updateSource; // Used to cancel old query flows
@@ -172,9 +150,10 @@ namespace Flow.Launcher.ViewModel
             };
 
             _historyItemsStorage = new FlowLauncherJsonStorage<History>();
+            _history = _historyItemsStorage.Load();
             _userSelectedRecordStorage = new FlowLauncherJsonStorage<UserSelectedRecord>();
-            _topMostRecord = new FlowLauncherJsonStorageTopMostRecord();
             _userSelectedRecord = _userSelectedRecordStorage.Load();
+            _topMostRecord = new FlowLauncherJsonStorageTopMostRecord();
 
             ContextMenu = new ResultsViewModel(Settings, this)
             {
@@ -373,7 +352,7 @@ namespace Flow.Launcher.ViewModel
             if (QueryResultsSelected())
             {
                 SelectedResults = History;
-                History.SelectedIndex = QueryHistoryItems.LastOpenedHistoryItems.Count - 1;
+                History.SelectedIndex = _history.LastOpenedHistoryItems.Count - 1;
             }
             else
             {
@@ -401,7 +380,7 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         public void ReverseHistory()
         {
-            var historyItems = QueryHistoryItems.LastOpenedHistoryItems;
+            var historyItems = _history.LastOpenedHistoryItems;
             if (historyItems.Count > 0)
             {
                 ChangeQueryText(historyItems[^lastHistoryIndex].Query);
@@ -415,7 +394,7 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         public void ForwardHistory()
         {
-            var historyItems = QueryHistoryItems.LastOpenedHistoryItems;
+            var historyItems = _history.LastOpenedHistoryItems;
             if (historyItems.Count > 0)
             {
                 ChangeQueryText(historyItems[^lastHistoryIndex].Query);
@@ -557,7 +536,7 @@ namespace Flow.Launcher.ViewModel
             // Add item to history only if it is from results but not context menu or history
             if (queryResultsSelected)
             {
-                QueryHistoryItems.Add(result);
+                _history.Add(result);
                 lastHistoryIndex = 1;
             }
         }
@@ -633,7 +612,7 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void SelectPrevItem()
         {
-            var historyItems = QueryHistoryItems.LastOpenedHistoryItems;
+            var historyItems = _history.LastOpenedHistoryItems;
             if (QueryResultsSelected() // Results selected
                 && string.IsNullOrEmpty(QueryText) // No input
                 && Results.Visibility != Visibility.Visible // No items in result list, e.g. when home page is off and no query text is entered, therefore the view is collapsed.
@@ -1319,7 +1298,7 @@ namespace Flow.Launcher.ViewModel
             var query = QueryText.ToLower().Trim();
             History.Clear();
 
-            var results = GetHistoryItems(QueryHistoryItems.LastOpenedHistoryItems);
+            var results = GetHistoryItems(_history.LastOpenedHistoryItems);
 
             if (!string.IsNullOrEmpty(query))
             {
@@ -1383,15 +1362,10 @@ namespace Flow.Launcher.ViewModel
         /// TODO COMMENT- Requires the plugins to have initialized first because 
         /// it needs the plugin directory paths for initialization
         /// </summary>
-        public void InitializeQueryHistoryItems()
+        internal void RefreshLastOpenedHistoryResult()
         {
-            // ensure single-run even if called from multiple threads
-            if (Interlocked.Exchange(ref QueryHistoryItemsInitialized, 1) == 1) 
-                return;
-
-            QueryHistoryItems = _historyItemsStorage.Load();
-            QueryHistoryItems.PopulateHistoryFromLegacyHistory();
-            QueryHistoryItems.UpdateIcoAbsoluteFullPath();
+            _history.PopulateHistoryFromLegacyHistory();
+            _history.UpdateIcoAbsoluteFullPath();
         }
 
         private async Task QueryResultsAsync(bool searchDelay, bool isReQuery = false, bool reSelect = true)
@@ -1621,7 +1595,7 @@ namespace Flow.Launcher.ViewModel
             void QueryHistoryTask(CancellationToken token)
             {
                 // Select last history results and revert its order to make sure last history results are on top
-                var historyItems = QueryHistoryItems.LastOpenedHistoryItems.TakeLast(Settings.MaxHistoryResultsToShowForHomePage).Reverse();
+                var historyItems = _history.LastOpenedHistoryItems.TakeLast(Settings.MaxHistoryResultsToShowForHomePage).Reverse();
 
                 var results = GetHistoryItems(historyItems);
 
