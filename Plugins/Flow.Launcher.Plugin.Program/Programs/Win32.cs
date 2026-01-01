@@ -97,6 +97,22 @@ namespace Flow.Launcher.Plugin.Program.Programs
             return match?.IsSearchPrecisionScoreMet() ?? false ? match : null;
         }
 
+        /// <summary>
+        /// Returns the best match between localized name and English name when both are available.
+        /// </summary>
+        private MatchResult GetBestMatch(string query, string localizedName, string englishName, bool useLocalizedName)
+        {
+            var localizedMatch = Main.Context.API.FuzzySearch(query, localizedName);
+            
+            if (!useLocalizedName)
+            {
+                return localizedMatch;
+            }
+            
+            var englishMatch = Main.Context.API.FuzzySearch(query, englishName);
+            return englishMatch.Score > localizedMatch.Score ? englishMatch : localizedMatch;
+        }
+
         public Result Result(string query, IPublicAPI api)
         {
             string title;
@@ -111,34 +127,15 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 resultName.Equals(Description))
             {
                 title = resultName;
-                matchResult = Main.Context.API.FuzzySearch(query, resultName);
-                
-                // When there's a localized name, also search the original English name
-                // This allows users to search using either the localized name or the English filename
-                if (useLocalizedName)
-                {
-                    var englishNameMatch = Main.Context.API.FuzzySearch(query, Name);
-                    if (englishNameMatch.Score > matchResult.Score)
-                    {
-                        matchResult = englishNameMatch;
-                    }
-                }
+                // When there's a localized name, search both the localized name and the English filename
+                matchResult = GetBestMatch(query, resultName, Name, useLocalizedName);
             }
             else
             {
-                // Search in both
+                // Search in both name and description
                 title = $"{resultName}: {Description}";
-                var nameMatch = Main.Context.API.FuzzySearch(query, resultName);
-                
-                // When there's a localized name, also search the original English name
-                if (useLocalizedName)
-                {
-                    var englishNameMatch = Main.Context.API.FuzzySearch(query, Name);
-                    if (englishNameMatch.Score > nameMatch.Score)
-                    {
-                        nameMatch = englishNameMatch;
-                    }
-                }
+                // When there's a localized name, search both the localized name and the English filename
+                var nameMatch = GetBestMatch(query, resultName, Name, useLocalizedName);
                 
                 var descriptionMatch = Main.Context.API.FuzzySearch(query, Description);
                 if (descriptionMatch.Score > nameMatch.Score)
