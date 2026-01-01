@@ -112,12 +112,34 @@ namespace Flow.Launcher.Plugin.Program.Programs
             {
                 title = resultName;
                 matchResult = Main.Context.API.FuzzySearch(query, resultName);
+                
+                // When there's a localized name, also search the original English name
+                // This allows users to search using either the localized name or the English filename
+                if (useLocalizedName)
+                {
+                    var englishNameMatch = Main.Context.API.FuzzySearch(query, Name);
+                    if (englishNameMatch.Score > matchResult.Score)
+                    {
+                        matchResult = englishNameMatch;
+                    }
+                }
             }
             else
             {
                 // Search in both
                 title = $"{resultName}: {Description}";
                 var nameMatch = Main.Context.API.FuzzySearch(query, resultName);
+                
+                // When there's a localized name, also search the original English name
+                if (useLocalizedName)
+                {
+                    var englishNameMatch = Main.Context.API.FuzzySearch(query, Name);
+                    if (englishNameMatch.Score > nameMatch.Score)
+                    {
+                        nameMatch = englishNameMatch;
+                    }
+                }
+                
                 var descriptionMatch = Main.Context.API.FuzzySearch(query, Description);
                 if (descriptionMatch.Score > nameMatch.Score)
                 {
@@ -141,11 +163,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 if (ExecutableName != null) // only lnk program will need this one
                 {
                     candidates.Add(ExecutableName);
-                }
-
-                if (useLocalizedName)
-                {
-                    candidates.Add(Name);
                 }
 
                 matchResult = Match(query, candidates);
