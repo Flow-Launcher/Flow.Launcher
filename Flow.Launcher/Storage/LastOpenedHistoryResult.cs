@@ -60,26 +60,37 @@ public class LastOpenedHistoryResult : Result
     }
 
     /// <summary>
-    /// Creates a deep copy of <see cref="LastOpenedHistoryResult"/>.
+    /// Selectively creates a deep copy of the required properties for <see cref="LastOpenedHistoryResult"/>.
+    /// This copy should be independent of original and full isolated.
     /// </summary>
     /// <returns>A new <see cref="LastOpenedHistoryResult"/> containing the same required data.</returns>
-    public LastOpenedHistoryResult Copy()
+    public LastOpenedHistoryResult DeepCopy()
     {
-        
+        // queryValue and glyphValue are captured to ensure they are correctly referenced in the Action delegate.
+        var queryValue = Query;
+        var glyphValue = this.Glyph;
         return new LastOpenedHistoryResult
         {
             Title = this.Title,
             SubTitle = this.SubTitle,
             PluginID = this.PluginID,
             Query = this.Query,
-            OriginQuery = this.OriginQuery,
+            OriginQuery = new Query { TrimmedQuery = Query },
             RecordKey = this.RecordKey,
             IcoPath = this.IcoPath,
             PluginDirectory = this.PluginDirectory,
-            Action = this.Action,
-            AsyncAction = this.AsyncAction,
-            Glyph = this.Glyph,
+            // Used for Query History style reopening
+            Action = _ =>
+            {
+                App.API.BackToQueryResults();
+                App.API.ChangeQuery(queryValue);
+                return false;
+            },
+            //Used for Last Opened History style reopening, currently need to be assigned at MainViewModel.cs
+            AsyncAction = null,
+            Glyph = new GlyphInfo(this.Glyph.FontFamily, this.Glyph.Glyph),
             ExecutedDateTime = this.ExecutedDateTime
+            // Note: Other properties are left as default — copy if needed.
         };
     }
 

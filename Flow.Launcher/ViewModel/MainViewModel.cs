@@ -1333,7 +1333,7 @@ namespace Flow.Launcher.ViewModel
 
             foreach (var item in historyItems)
             {
-                var copiedItem = item.Copy();
+                var copiedItem = item.DeepCopy();
                 // Subtitle has datetime which can cause duplicates when saving.
                 copiedItem.SubTitle = Localize.lastExecuteTime(item.ExecutedDateTime);
                 // Empty PluginID so the source of last opened history results won't be updated, these results are meant to be temporary copy.
