@@ -37,7 +37,9 @@ public class TabsTracker : IDisposable
     private readonly ConcurrentQueue<Tuple<string, TokenForNewTab>> _expectedUrls = [];
 
     private TabsEventsDispatcher _eventsDispatcher;
-    private ConcurrentQueue<AutomationElement> _structureInvalidations = [];
+
+    private readonly Lock _syncInvalidations = new();
+    private HashSet<AutomationElement> _structureInvalidations = [];
 
     private TabsReservationService _service;
 
@@ -244,8 +246,13 @@ public class TabsTracker : IDisposable
     {
         Context.API.LogDebug(ClassName, "TABS:EnsureHavingAllBrowsersTabs ...");
 
-        var unique = _structureInvalidations.ToArray().Distinct().Where(_browserWindowsTracked.ContainsKey);
-        foreach (var element in unique)
+        List<AutomationElement> elementsToInvalidate;
+        lock (_syncInvalidations)
+        {
+            elementsToInvalidate = [.. _structureInvalidations];
+            _structureInvalidations.Clear();
+        }
+        foreach (var element in elementsToInvalidate)
         {
             _browserWindowsTracked[element].Cache.Invalidate();
         }
@@ -278,7 +285,10 @@ public class TabsTracker : IDisposable
             case StructureChangeType.ChildrenReordered:
             case StructureChangeType.ChildRemoved:
             case StructureChangeType.ChildrenBulkRemoved:
-                _structureInvalidations.Enqueue(window);
+                lock (_syncInvalidations)
+                {
+                    _structureInvalidations.Add(window);
+                }
                 break;
         }
         switch (e.StructureChangeType)
@@ -332,6 +342,11 @@ public class TabsTracker : IDisposable
 
     private void DisableTracking()
     {
+        lock (_syncInvalidations)
+        {
+            _structureInvalidations.Clear();
+        }
+
         lock (_sync)
         {
             _eventsDispatcher?.Dispose();
@@ -346,7 +361,6 @@ public class TabsTracker : IDisposable
                     UnsubscribeStructureChangedEventHandler(tracking.Key, tracking.Value);
                 }
                 _browserWindowsTracked.Clear();
-                _structureInvalidations.Clear();
                 _expectedUrls.Clear();
 
                 _windowsHandlerInitialized = false;
