@@ -10,7 +10,6 @@ I believe it is in line with why Flow Launcher was created in the first place.
 I strongly believe in a higher-level concept of **"just take me to THIS place - as fast as possible, as easy as possible"**.  
 Thus making bridges between plugins may sometimes produce huge value! BTW wouldn't it be nice to allow inter-plugin communication to create this kind of "bridges" more easily?  
 
-
 # How it works
 
 The core is Browser Bookmarks plugin, unchanged by default.  
@@ -18,19 +17,6 @@ You may enable "Reuse tabs" in the plugin settings.
 Then, whenever one opens a bookmark, it also registers a new tab in its cache.  
 Next, each time the bookmark is triggered again, it just switches to the existing tab instead of launching a new one.  
 **It takes milliseconds instead of long seconds** (or sometimes close to half a minute in corporate environments where all is slow even if you have a high-end laptop - you won't believe it until you live it!).  
-
-# Known issues
-
-The extension bases on RuntimeId of AutomationElement from Microsoft UI Automation.  
-This is a weak spot as browsers are used to regenerate internal structures and even reuse RuntimeId.  
-Therefore it happens that a bookmark activates a wrong tab.  
-The most common case is while user opens several tabs one after the other quickly.  
-Still **"just take me to THIS place in milliseconds"** works almost all of the time so it brings so much value that it is worthwhile to accept the fact it fails sometimes.  
-
-The quickest workaround is:  
-
-- close the wrong tab
-- rerun opening the bookmark which will create a new tab this time
 
 # Alternatives
 
