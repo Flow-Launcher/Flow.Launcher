@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Windows.Automation;
@@ -7,90 +8,129 @@ using static Flow.Launcher.Plugin.BrowserBookmark.Main;
 namespace Flow.Launcher.Plugin.BrowserBookmark.Tabs;
 
 /// <summary>
-/// Keeps record of all known browser's tabs.
-/// It is used by TabsWalker to identify new tabs as they appear.
+/// TabsCache keeps record of all known browser's tabs in a single web browser window.
 /// </summary>
-internal class TabsCache
+public class TabsCache
 {
     private static readonly string ClassName = nameof(TabsCache);
-    private readonly HashSet<string> _knownTabs = [];
-    private readonly Lock _sync = new();
 
-    public static string RuntimeIdToKey(int[] runtimeId)
+    // UIA is unreliable. It may return zero elements or a subset of elements.
+    // Thus removal of an AutomationElement from cache SHOULD NOT be done immediately but rather after a few times the element no longer exists.
+    private static int _removeAtAge = 3;
+
+    private readonly Lock _sync = new();
+    private Dictionary<AutomationElement, Info> _elementToInfo = [];
+    private SortedDictionary<int, AutomationElement> _indexToElement = [];
+    public bool Valid { get; private set; } = false;
+
+    private class Info(int index)
     {
-        return string.Join("-", runtimeId);
+        public int Index { get; init; } = index;
+        public int Age { get; set; } = 0;
     }
 
-    public static string RuntimeIdToKey(AutomationElement elem)
+    private static string TryName(AutomationElement element)
     {
         try
         {
-            return elem != null ? RuntimeIdToKey(elem.GetRuntimeId()) : null;
+            return element.Current.Name;
+        }
+        catch (Exception e)
+        {
+            return e.GetType().ToString();
+        }
+    }
+
+    private static bool Destroyed(AutomationElement element)
+    {
+        try
+        {
+            var _ = element.Current.Name;
         }
         catch (ElementNotAvailableException)
         {
-            return null;
-        }
-    }
-
-    public bool Empty()
-    {
-        lock (_sync)
-        {
-            return _knownTabs.Count == 0;
-        }
-    }
-
-    public void Add(AutomationElement tab)
-    {
-        lock (_sync)
-        {
-            var key = RuntimeIdToKey(tab);
-            if (key != null)
-            {
-                Context.API.LogDebug(ClassName, $"TABS:{key}:Adding to cache: {tab.Current.Name}");
-                _knownTabs.Add(key);
-            }
-        }
-    }
-    public void Add(IEnumerable<AutomationElement> tabs)
-    {
-        foreach (var tab in tabs)
-        {
-            Add(tab);
-        }
-    }
-
-    public bool Contains(AutomationElement tab)
-    {
-        return Contains(RuntimeIdToKey(tab));
-    }
-
-    public bool Contains(string runtimeId)
-    {
-        lock (_sync)
-        {
-            if (runtimeId != null)
-            {
-                return _knownTabs.Contains(runtimeId);
-            }
+            return true;
         }
         return false;
     }
 
-    public void RemoveAllNonExistentTabs(AutomationElement rootElement, IEnumerable<AutomationElement> existingTabs)
+    public void Invalidate()
     {
-        if (rootElement == null || existingTabs == null)
-            return;
-
-        var rootKey = RuntimeIdToKey(rootElement);
-        var existingKeys = existingTabs.Select(RuntimeIdToKey).Where(k => k != null).ToHashSet();
-        var keysToRemove = _knownTabs.Where(t => t.StartsWith(rootKey) && !existingKeys.Contains(t));
-
-        foreach (var key in keysToRemove)
+        lock (_sync)
         {
-            Context.API.LogDebug(ClassName, $"TABS:{key}:Removing from cache");
-            _knownTabs.Remove(key);
+            Valid = false;
+        }
+    }
+    
+    public List<AutomationElement> GetTabs()
+    {
+        lock (_sync)
+        {
+            return [.. _indexToElement.Values];
+        }
+    }
+
+    public AutomationElement TryGetTab(int index)
+    {
+        lock (_sync)
+        {
+            Context.API.LogDebug(ClassName, $"TABS:Checking if tab {index} exists in the cache of {_elementToInfo.Count} size and indices between {_indexToElement.Keys.FirstOrDefault()} and {_indexToElement.Keys.LastOrDefault()}");
+
+            if (_indexToElement.TryGetValue(index, out var tab))
+            {
+                return tab;
+            }
+            return null;
+        }
+    }
+
+    public int UpdateTabs(int lastAssignedIndex, List<AutomationElement> actualTabs, out List<AutomationElement> removedTabs)
+    {
+        lock (_sync)
+        {
+            Context.API.LogDebug(ClassName, $"TABS:Start comparing {actualTabs.Count} actual tabs to {_elementToInfo.Count} tabs in the cache; new tabs will start from {lastAssignedIndex+1}");
+
+            removedTabs = [];
+
+            var tabsToRemove = _elementToInfo.Where(t => !actualTabs.Contains(t.Key)).Select(t => t.Key).ToList();
+            var tabsToAdd = actualTabs.Where(t => !_elementToInfo.ContainsKey(t)).ToList();
+            var tabsToRevive = _elementToInfo.Where(t => actualTabs.Contains(t.Key) && t.Value.Age > 0).ToList();
+
+            foreach (var tabToRemove in tabsToRemove)
+            {
+                if (_elementToInfo.TryGetValue(tabToRemove, out var info))
+                {
+                    if (Destroyed(tabToRemove) || info.Age >= _removeAtAge)
+                    {
+                        Context.API.LogDebug(ClassName, $"TABS:Removing {TryName(tabToRemove)} from cache");
+                        _elementToInfo.Remove(tabToRemove);
+                        _indexToElement.Remove(info.Index);
+                        removedTabs.Add(tabToRemove);
+                    }
+                    else
+                    {
+                        Context.API.LogDebug(ClassName, $"TABS:Aging {TryName(tabToRemove)} in cache (got age {info.Age + 1}, will be removed at age {_removeAtAge} or on ElementNotAvailableException)");
+                        _elementToInfo[tabToRemove].Age++;
+                    }
+                }
+            }
+
+            foreach (var tabToAdd in tabsToAdd)
+            {
+                Context.API.LogDebug(ClassName, $"TABS:Adding {TryName(tabToAdd)} to cache");
+                var newIndex = ++lastAssignedIndex;
+                _elementToInfo[tabToAdd] = new Info(newIndex);
+                _indexToElement[newIndex] = tabToAdd;
+            }
+
+            foreach (var tabtoRevive in tabsToRevive)
+            {
+                Context.API.LogDebug(ClassName, $"TABS:Reset age of {TryName(tabtoRevive.Key)} as it appeared again");
+                _elementToInfo[tabtoRevive.Key].Age = 0;
+            }
+
+            Valid = true;
+            return lastAssignedIndex;
         }
     }
 }

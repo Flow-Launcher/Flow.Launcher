@@ -28,7 +28,7 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
 
     private static bool _initialized = false;
 
-    private readonly TabsTracker _tabsTracker = new();
+    private static readonly TabsReservationService _tabsReservationService = new();
 
     public void Init(PluginInitContext context)
     {
@@ -61,8 +61,13 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
         }
 
         LoadBookmarksIfEnabled();
+        SetReuseTabs(_settings.ReuseTabs);
+    }
 
-        _tabsTracker.Init();
+    public static void SetReuseTabs(bool reuseTabs)
+    {
+        _tabsReservationService.EnableTracking(reuseTabs);
+        _settings.ReuseTabs = reuseTabs;
     }
 
     private static void LoadBookmarksIfEnabled()
@@ -97,7 +102,7 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
         if (!topResults)
         {
             // Since we mixed chrome and firefox bookmarks, we should order them again
-            return _tabsTracker.InjectExistingTabs(_settings, _cachedBookmarks
+            return _tabsReservationService.InjectExistingTabs(_settings, _cachedBookmarks
                 .Select(
                     c => new Result
                     {
@@ -109,7 +114,7 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
                         Score = BookmarkLoader.MatchProgram(c, param).Score,
                         Action = _ =>
                         {
-                            _tabsTracker.OpenUrlAndTrack(_settings, c.Url);
+                            _tabsReservationService.OpenUrlAndTrack(_settings, c.Url);
                             return true;
                         },
                         ContextData = new BookmarkAttributes { Url = c.Url }
@@ -120,7 +125,7 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
         }
         else
         {
-            return _tabsTracker.InjectExistingTabs(_settings, _cachedBookmarks
+            return _tabsReservationService.InjectExistingTabs(_settings, _cachedBookmarks
                 .Select(
                     c => new Result
                     {
@@ -132,7 +137,7 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
                         Score = 5,
                         Action = _ =>
                         {
-                            _tabsTracker.OpenUrlAndTrack(_settings, c.Url);
+                            _tabsReservationService.OpenUrlAndTrack(_settings, c.Url);
                             return true;
                         },
                         ContextData = new BookmarkAttributes { Url = c.Url }
@@ -265,7 +270,7 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
 
     public void Dispose()
     {
-        _tabsTracker.Dispose();
+        _tabsReservationService.Dispose();
         DisposeFileWatchers();
     }
 
