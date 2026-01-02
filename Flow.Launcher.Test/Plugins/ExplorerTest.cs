@@ -87,7 +87,7 @@ namespace Flow.Launcher.Test.Plugins
         [TestCase("flow.launcher.sln", "SELECT TOP 100 \"System.FileName\", \"System.ItemUrl\", \"System.ItemType\" " +
                                        "FROM \"SystemIndex\" WHERE (System.FileName LIKE 'flow.launcher.sln%' " +
                                        $"OR CONTAINS(System.FileName,'\"flow.launcher.sln*\"',1033) RANK BY COERCION(ABSOLUTE, 1000)) AND scope='file:' ORDER BY {QueryConstructor.OrderIdentifier}")]
-        [TestCase("", $"SELECT TOP 100 \"System.FileName\", \"System.ItemUrl\", \"System.ItemType\" FROM \"SystemIndex\" WHERE WorkId IS NOT NULL AND (scope='file:') ORDER BY {QueryConstructor.OrderIdentifier}")]
+        [TestCase("", $"SELECT TOP 100 \"System.FileName\", \"System.ItemUrl\", \"System.ItemType\" FROM \"SystemIndex\" WHERE WorkId IS NOT NULL AND scope='file:' ORDER BY {QueryConstructor.OrderIdentifier}")]
         public void GivenWindowsIndexSearch_WhenSearchAllFoldersAndFiles_ThenQueryShouldUseExpectedString(
             string userSearchString, string expectedString)
         {
