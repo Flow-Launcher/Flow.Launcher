@@ -144,20 +144,27 @@ public class TabsReservationService : IDisposable
     {
         lock (_sync)
         {
-            var currentTab = new BrowserTab
+            try
             {
-                Title = tab.Current.Name,
-                BrowserName = trackingInfo.ProcessName,
-                Hwnd = trackingInfo.ProcessMainWindowHandle,
-                AutomationElement = tab
-            };
+                var currentTab = new BrowserTab
+                {
+                    Title = tab.Current.Name,
+                    BrowserName = trackingInfo.ProcessName,
+                    Hwnd = trackingInfo.ProcessMainWindowHandle,
+                    AutomationElement = tab
+                };
 
-            Context.API.LogDebug(ClassName, $"TABS:{RuntimeIdToKey(currentTab.AutomationElement)}:Registering {url} as tab: {currentTab.Title}");
-            _urlToBrowserTab[url] = currentTab;
-            _automationElementToUrl[currentTab.AutomationElement] = url;
+                Context.API.LogDebug(ClassName, $"TABS:{RuntimeIdToKey(currentTab.AutomationElement)}:Registering {url} as tab: {currentTab.Title}");
+                _urlToBrowserTab[url] = currentTab;
+                _automationElementToUrl[currentTab.AutomationElement] = url;
 
-            // required to take the tab into account by Flow Launcher main UI search window
-            Context.API.ReQuery();
+                // required to take the tab into account by Flow Launcher main UI search window
+                Context.API.ReQuery();
+            }
+            catch (ElementNotAvailableException)
+            {
+                Context.API.LogDebug(ClassName, $"TABS:Tab became unavailable before registration for {url}");
+            }
         }
     }
 

@@ -123,10 +123,10 @@ public class TabsCache
                 _indexToElement[newIndex] = tabToAdd;
             }
 
-            foreach (var tabtoRevive in tabsToRevive)
+            foreach (var tabToRevive in tabsToRevive)
             {
-                Context.API.LogDebug(ClassName, $"TABS:Reset age of {TryName(tabtoRevive.Key)} as it appeared again");
-                _elementToInfo[tabtoRevive.Key].Age = 0;
+                Context.API.LogDebug(ClassName, $"TABS:Reset age of {TryName(tabToRevive.Key)} as it appeared again");
+                _elementToInfo[tabToRevive.Key].Age = 0;
             }
 
             Valid = true;
