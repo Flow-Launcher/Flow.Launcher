@@ -3,7 +3,6 @@ using System.IO;
 using System.Runtime.InteropServices;
 using Windows.Win32;
 using Windows.Win32.Foundation;
-using Windows.Win32.System.LibraryLoader;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
@@ -21,46 +20,28 @@ namespace Flow.Launcher.Plugin.Program.Programs
         /// <returns>The localized name as string or <see cref="string.Empty"/>.</returns>
         public static unsafe string GetLocalizedName(string path)
         {
-            const int capacity = 1024;
-            Span<char> buffer = new char[capacity];
-
-            // If there is no resource to localize a file name the method returns a non zero value.
-            fixed (char* bufferPtr = buffer)
+            int retCode = PInvoke.SHCreateItemFromParsingName(path, null, typeof(Windows.Win32.UI.Shell.IShellItem).GUID, out object shellItemObj);
+            if (retCode != 0 || shellItemObj is not Windows.Win32.UI.Shell.IShellItem shellItem)
             {
-                int id;
-                fixed (char* pathPtr = path)
-                {
-                    var result = PInvoke.SHGetLocalizedName(new PCWSTR(pathPtr), bufferPtr, capacity, &id);
-
-                    if (result != HRESULT.S_OK)
-                    {
-                        return string.Empty;
-                    }
-
-                    var resourcePathStr = MemoryMarshal.CreateReadOnlySpanFromNullTerminated(bufferPtr).ToString();
-                    fixed (char* resourcePathPtr = resourcePathStr)
-                    {
-                        _ = PInvoke.ExpandEnvironmentStrings(new PCWSTR(resourcePathPtr), bufferPtr, capacity);
-                        using var handle = PInvoke.LoadLibraryEx(resourcePathStr,
-                            LOAD_LIBRARY_FLAGS.DONT_RESOLVE_DLL_REFERENCES | LOAD_LIBRARY_FLAGS.LOAD_LIBRARY_AS_DATAFILE);
-                        if (handle.IsInvalid)
-                        {
-                            return string.Empty;
-                        }
-
-                        // not sure about the behavior of Pinvoke.LoadString, so we clear the buffer before using it (so it must be a null-terminated string)
-                        buffer.Clear();
-
-                        if (PInvoke.LoadString(handle, (uint)id, buffer, capacity) != 0)
-                        {
-                            var lString = MemoryMarshal.CreateReadOnlySpanFromNullTerminated(bufferPtr).ToString();
-                            return lString;
-                        }
-                    }
-                }
+                return string.Empty;
             }
 
-            return string.Empty;
+            try
+            {
+                PWSTR displayName;
+                shellItem.GetDisplayName(Windows.Win32.UI.Shell.SIGDN.SIGDN_NORMALDISPLAY, &displayName);
+                string filename = displayName.ToString();
+                PInvoke.CoTaskMemFree(displayName);
+                return filename;
+            }
+            catch
+            {
+                return string.Empty;
+            }
+            finally
+            {
+                Marshal.ReleaseComObject(shellItem);
+            }
         }
 
         /// <summary>

@@ -7,4 +7,7 @@ S_OK
 SLGP_FLAGS
 WIN32_FIND_DATAW
 SLR_FLAGS
+IShellItem
+SHCreateItemFromParsingName
 IShellLinkW
+CoTaskMemFree
