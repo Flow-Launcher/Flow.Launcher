@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.InteropServices;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 
@@ -25,12 +26,22 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 return string.Empty;
             }
 
-            PWSTR displayName;
-            shellItem.GetDisplayName(Windows.Win32.UI.Shell.SIGDN.SIGDN_NORMALDISPLAY, &displayName);
-            string filename = displayName.ToString();
-            PInvoke.CoTaskMemFree(displayName);
-
-            return filename;
+            try
+            {
+                PWSTR displayName;
+                shellItem.GetDisplayName(Windows.Win32.UI.Shell.SIGDN.SIGDN_NORMALDISPLAY, &displayName);
+                string filename = displayName.ToString();
+                PInvoke.CoTaskMemFree(displayName);
+                return filename;
+            }
+            catch
+            {
+                return string.Empty;
+            }
+            finally
+            {
+                Marshal.ReleaseComObject(shellItem);
+            }
         }
 
         /// <summary>
