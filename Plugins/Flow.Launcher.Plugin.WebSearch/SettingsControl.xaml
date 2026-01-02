@@ -154,6 +154,20 @@
                 <Label
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
+                    Content="{DynamicResource flowlauncher_plugin_websearch_max_suggestions}" />
+                <TextBox
+                    Width="40"
+                    Height="30"
+                    Margin="{StaticResource SettingPanelItemLeftMargin}"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    TextAlignment="Center"
+                    FontSize="11"
+                    Text="{Binding Settings.MaxSuggestions, UpdateSourceTrigger=PropertyChanged}" />
+                <Label
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Margin="{StaticResource SettingPanelItemLeftMargin}"
                     Content="{DynamicResource flowlauncher_plugin_websearch_enable_suggestion_provider}" />
                 <ComboBox
                     Height="30"

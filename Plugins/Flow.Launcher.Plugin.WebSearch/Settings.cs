@@ -205,6 +205,20 @@ namespace Flow.Launcher.Plugin.WebSearch
             }
         }
 
+        private int maxSuggestions = 1;
+        public int MaxSuggestions
+        {
+            get => maxSuggestions;
+            set
+            {
+                if (maxSuggestions != value)
+                {
+                    maxSuggestions = Math.Max(1, Math.Min(value, 10));
+                    OnPropertyChanged(nameof(MaxSuggestions));
+                }
+            }
+        }
+
         [JsonIgnore]
         public SuggestionSource[] Suggestions { get; set; } = {
             new Google(),
