@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -64,9 +65,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             return result.Type switch
             {
                 ResultType.Folder or ResultType.Volume =>
-                    CreateFolderResult(Path.GetFileName(result.FullPath), result.FullPath, result.FullPath, query, result.Score, result.WindowsIndexed),
+                    CreateFolderResult(Path.GetFileName(result.FullPath), result.FullPath, result.FullPath, query, result.Score, result.WindowsIndexed, result.HighlightData),
                 ResultType.File =>
-                    CreateFileResult(result.FullPath, query, result.Score, result.WindowsIndexed),
+                    CreateFileResult(result.FullPath, query, result.Score, result.WindowsIndexed, result.HighlightData),
                 _ => throw new ArgumentOutOfRangeException(null)
             };
         }
@@ -92,7 +93,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             }
         }
 
-        internal static Result CreateFolderResult(string title, string subtitle, string path, Query query, int score = 0, bool windowsIndexed = false)
+        internal static Result CreateFolderResult(string title, string subtitle, string path, Query query, int score = 0, bool windowsIndexed = false, List<int> HighlightData = null)
         {
             return new Result
             {
@@ -100,7 +101,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 IcoPath = path,
                 SubTitle = subtitle,
                 AutoCompleteText = GetAutoCompleteText(title, query, path, ResultType.Folder),
-                TitleHighlightData = Context.API.FuzzySearch(query.Search, title).MatchData,
+                TitleHighlightData = HighlightData ?? Context.API.FuzzySearch(query.Search, title).MatchData,
                 CopyText = path,
                 Preview = new Result.PreviewInfo
                 {
@@ -282,7 +283,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             };
         }
 
-        internal static Result CreateFileResult(string filePath, Query query, int score = 0, bool windowsIndexed = false)
+        internal static Result CreateFileResult(string filePath, Query query, int score = 0, bool windowsIndexed = false, List<int> HighlightData = null)
         {
             var isMedia = IsMedia(Path.GetExtension(filePath));
             var title = Path.GetFileName(filePath) ?? string.Empty;
@@ -302,7 +303,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     FilePath = filePath,
                 },
                 AutoCompleteText = GetAutoCompleteText(title, query, filePath, ResultType.File),
-                TitleHighlightData = Context.API.FuzzySearch(query.Search, title).MatchData,
+                TitleHighlightData = HighlightData ?? Context.API.FuzzySearch(query.Search, title).MatchData,
                 Score = score,
                 CopyText = filePath,
                 PreviewPanel = new Lazy<UserControl>(() => new PreviewPanel(Settings, filePath, ResultType.File)),
