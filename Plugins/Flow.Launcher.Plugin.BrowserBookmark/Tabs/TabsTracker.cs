@@ -249,7 +249,7 @@ public class TabsTracker : IDisposable
         List<AutomationElement> elementsToInvalidate;
         lock (_syncInvalidations)
         {
-            elementsToInvalidate = [.. _structureInvalidations];
+            elementsToInvalidate = _structureInvalidations.Where(_browserWindowsTracked.ContainsKey).ToList();
             _structureInvalidations.Clear();
         }
         foreach (var element in elementsToInvalidate)
@@ -307,7 +307,7 @@ public class TabsTracker : IDisposable
         }
     }
 
-    public AutomationElement TryGetTab(int expectedIndex, out TrackingInfo foundInTrackingInfo)
+    public (AutomationElement, TrackingInfo) TryGetTab(int expectedIndex)
     {
         lock (_sync)
         {
@@ -316,12 +316,10 @@ public class TabsTracker : IDisposable
                 var tab = trackingInfo.Cache.TryGetTab(expectedIndex);
                 if (tab != null)
                 {
-                    foundInTrackingInfo = trackingInfo;
-                    return tab;
+                    return (tab, trackingInfo);
                 }
             }
-            foundInTrackingInfo = null;
-            return null;
+            return (null, null);
         }
     }
 

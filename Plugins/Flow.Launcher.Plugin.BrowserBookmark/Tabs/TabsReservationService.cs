@@ -122,8 +122,8 @@ public class TabsReservationService : IDisposable
             _tabsTracker.MakeSnapshot();
 
             int expectedIndex = Math.Max(tokenHandling.LastReturnedIndex, token.Index) + 1;
-            var tab = _tabsTracker.TryGetTab(expectedIndex, out var foundInTrackingInfo);
-            trackingInfo = foundInTrackingInfo;
+            var (tab, info) = _tabsTracker.TryGetTab(expectedIndex);
+            trackingInfo = info;
             if (tab != null)
             {
                 if (tokenHandling.RequestedStill <= 1)
