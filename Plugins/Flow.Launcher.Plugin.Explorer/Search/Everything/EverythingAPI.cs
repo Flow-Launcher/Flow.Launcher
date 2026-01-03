@@ -158,7 +158,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                             EverythingApiDllImport.Everything_IsFileResult(idx) ? ResultType.File :
                             ResultType.Volume,
                         Score = (int)EverythingApiDllImport.Everything_GetResultRunCount( (uint)idx),
-                        HighlightData = EverythingHightlightStringToHighlightList(EverythingApiDllImport.Everything_GetResultHighlightedFileName((uint)idx))
+                        HighlightData = EverythingHighlightStringToHighlightList(EverythingApiDllImport.Everything_GetResultHighlightedFileName((uint)idx))
                     };
 
                     yield return result;
@@ -215,7 +215,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         /// </summary>
         /// <param name="highlightString">Text inside a * quote is highlighted, two consecutive *'s is a single literal *. For example, in the highlighted text: abc*123* the 123 part is highlighted.</param>
         /// <returns></returns>
-        public static List<int> EverythingHightlightStringToHighlightList(string highlightString)
+        public static List<int> EverythingHighlightStringToHighlightList(string highlightString)
         {
             var highlightData = new List<int>();
 
