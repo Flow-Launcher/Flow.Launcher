@@ -93,7 +93,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             }
         }
 
-        internal static Result CreateFolderResult(string title, string subtitle, string path, Query query, int score = 0, bool windowsIndexed = false, List<int> HighlightData = null)
+        internal static Result CreateFolderResult(string title, string subtitle, string path, Query query, int score = 0, bool windowsIndexed = false, List<int> highlightData = null)
         {
             return new Result
             {
@@ -101,7 +101,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 IcoPath = path,
                 SubTitle = subtitle,
                 AutoCompleteText = GetAutoCompleteText(title, query, path, ResultType.Folder),
-                TitleHighlightData = HighlightData ?? Context.API.FuzzySearch(query.Search, title).MatchData,
+                TitleHighlightData = highlightData ?? Context.API.FuzzySearch(query.Search, title).MatchData,
                 CopyText = path,
                 Preview = new Result.PreviewInfo
                 {
@@ -283,7 +283,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             };
         }
 
-        internal static Result CreateFileResult(string filePath, Query query, int score = 0, bool windowsIndexed = false, List<int> HighlightData = null)
+        internal static Result CreateFileResult(string filePath, Query query, int score = 0, bool windowsIndexed = false, List<int> highlightData = null)
         {
             var isMedia = IsMedia(Path.GetExtension(filePath));
             var title = Path.GetFileName(filePath) ?? string.Empty;
@@ -303,7 +303,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     FilePath = filePath,
                 },
                 AutoCompleteText = GetAutoCompleteText(title, query, filePath, ResultType.File),
-                TitleHighlightData = HighlightData ?? Context.API.FuzzySearch(query.Search, title).MatchData,
+                TitleHighlightData = highlightData ?? Context.API.FuzzySearch(query.Search, title).MatchData,
                 Score = score,
                 CopyText = filePath,
                 PreviewPanel = new Lazy<UserControl>(() => new PreviewPanel(Settings, filePath, ResultType.File)),
