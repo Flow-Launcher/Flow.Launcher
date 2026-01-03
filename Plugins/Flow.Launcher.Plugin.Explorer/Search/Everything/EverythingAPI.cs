@@ -157,7 +157,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                         Type = EverythingApiDllImport.Everything_IsFolderResult(idx) ? ResultType.Folder :
                             EverythingApiDllImport.Everything_IsFileResult(idx) ? ResultType.File :
                             ResultType.Volume,
-                        Score = (int)EverythingApiDllImport.Everything_GetResultRunCount( (uint)idx),
+                        Score = Convert.ToInt32(EverythingApiDllImport.Everything_GetResultRunCount((uint)idx)),
                         HighlightData = EverythingHighlightStringToHighlightList(EverythingApiDllImport.Everything_GetResultHighlightedFileName((uint)idx))
                     };
 
