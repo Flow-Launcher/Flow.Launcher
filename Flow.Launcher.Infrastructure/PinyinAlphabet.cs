@@ -119,7 +119,7 @@ namespace Flow.Launcher.Infrastructure
         {
             var resultList = WordsHelper.GetPinyinList(content);
             var resultBuilder = new StringBuilder(_settings.UseDoublePinyin ? 3 : 4); // Pre-allocate with estimated capacity
-            var map = new TranslationMapping();
+            var map = new TranslationMapping(resultList.Length);
 
             var previousIsChinese = false;
 
@@ -157,10 +157,7 @@ namespace Flow.Launcher.Infrastructure
 
             map.EndConstruct();
 
-            var translation = resultBuilder.ToString();
-            var result = (translation, map);
-
-            return _pinyinCache[content] = result;
+            return _pinyinCache[content] = (resultBuilder.ToString(), map);
         }
 
         /// <summary>
