@@ -27,7 +27,7 @@
     Style="{DynamicResource BaseListboxStyle}"
     VirtualizingPanel.ScrollUnit="Item"
     VirtualizingStackPanel.IsVirtualizing="True"
-    VirtualizingStackPanel.VirtualizationMode="Standard"
+    VirtualizingStackPanel.VirtualizationMode="Recycling"
     Visibility="{Binding Visibility}"
     mc:Ignorable="d">
     <!--  IsSynchronizedWithCurrentItem: http://stackoverflow.com/a/7833798/2833083  -->
