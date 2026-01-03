@@ -214,7 +214,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         /// Convert the highlighted string from Everything API to a list of highlight indexes for our Result.
         /// </summary>
         /// <param name="highlightString">Text inside a * quote is highlighted, two consecutive *'s is a single literal *. For example, in the highlighted text: abc*123* the 123 part is highlighted.</param>
-        /// <returns></returns>
+        /// <returns>A list of zero-based character indices that should be highlighted.</returns>
         public static List<int> EverythingHighlightStringToHighlightList(string highlightString)
         {
             var highlightData = new List<int>();
