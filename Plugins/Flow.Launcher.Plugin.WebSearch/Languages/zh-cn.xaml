@@ -19,6 +19,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_url">打开链接</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_search">搜索</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">使用搜索查询自动补全</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_max_suggestions">Max Suggestions</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">自动补全数据：</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">请选择一项</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">您确定要删除 {0} 吗?</system:String>
