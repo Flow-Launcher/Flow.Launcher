@@ -148,20 +148,16 @@
 
         <Separator Grid.Row="2" Style="{StaticResource SettingPanelSeparatorStyle}" />
 
-        <StackPanel
-            Grid.Row="3"
-            HorizontalAlignment="Right"
-            Orientation="Vertical">
+        <WrapPanel Grid.Row="3" HorizontalAlignment="Stretch">
             <StackPanel Orientation="Horizontal">
                 <TextBlock
-                    Margin="{StaticResource SettingPanelItemTopBottomMargin}"
-                    HorizontalAlignment="Right"
+                    Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
                     VerticalAlignment="Center"
                     Text="{DynamicResource flowlauncher_plugin_websearch_max_suggestions}" />
                 <ui:NumberBox
                     Width="120"
                     MinWidth="120"
-                    Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
+                    Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
                     Maximum="1000"
                     Minimum="1"
                     SmallChange="10"
@@ -170,27 +166,25 @@
                     ValueChanged="NumberBox_ValueChanged"
                     Value="{Binding Settings.MaxSuggestions, Mode=OneWay}" />
             </StackPanel>
+            <CheckBox
+                Name="EnableSuggestion"
+                Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
+                VerticalAlignment="Center"
+                Content="{DynamicResource flowlauncher_plugin_websearch_enable_suggestion}"
+                IsChecked="{Binding Settings.EnableSuggestion}" />
             <StackPanel Orientation="Horizontal">
                 <TextBlock
-                    Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
-                    HorizontalAlignment="Right"
+                    Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
                     VerticalAlignment="Center"
                     Text="{DynamicResource flowlauncher_plugin_websearch_enable_suggestion_provider}" />
                 <ComboBox
                     Height="30"
-                    Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
+                    Margin="{StaticResource SettingPanelItemTopBottomMargin}"
                     VerticalAlignment="Center"
                     IsEnabled="{Binding Settings.EnableSuggestion}"
                     ItemsSource="{Binding Settings.Suggestions}"
                     SelectedItem="{Binding Settings.SelectedSuggestion}" />
-                <CheckBox
-                    Name="EnableSuggestion"
-                    Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Center"
-                    Content="{DynamicResource flowlauncher_plugin_websearch_enable_suggestion}"
-                    IsChecked="{Binding Settings.EnableSuggestion}" />
             </StackPanel>
-        </StackPanel>
+        </WrapPanel>
     </Grid>
 </UserControl>
