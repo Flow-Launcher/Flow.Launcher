@@ -213,8 +213,8 @@ namespace Flow.Launcher.Plugin.WebSearch
             {
                 if (maxSuggestions != value)
                 {
-                    maxSuggestions = Math.Max(1, Math.Min(value, 10));
-                    OnPropertyChanged(nameof(MaxSuggestions));
+                    maxSuggestions = value;
+                    OnPropertyChanged();
                 }
             }
         }
