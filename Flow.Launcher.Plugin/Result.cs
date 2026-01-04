@@ -68,11 +68,20 @@ namespace Flow.Launcher.Plugin
         public string AutoCompleteText { get; set; }
 
         /// <summary>
-        /// The image to be displayed for the result.
+        /// Path or URI to the icon image for this result.
+        /// Updates <IcoPathAbsolute/> appropriately when set.
         /// </summary>
-        /// <value>Can be a local file path or a URL.</value>
         /// <remarks>
-        /// GlyphInfo is prioritized if not null</remarks>
+        /// Preferred usage: provide a path relative to the plugin directory (for example: "Images\icon.png").
+        /// Because <see cref="IcoPath"/> is serialized, using relative paths keeps the icon reference portable
+        /// when Flow is moved.
+        ///
+        /// Accepted formats:
+        /// - Relative file paths (resolved against <see cref="PluginDirectory"/> into <see cref="IcoPathAbsolute"/>)
+        /// - Absolute file paths (left as-is)
+        /// - HTTP/HTTPS URLs (left as-is)
+        /// - Data URIs (left as-is)
+        /// </remarks>
         public string IcoPath
         {
             get => _icoPath;
@@ -98,7 +107,10 @@ namespace Flow.Launcher.Plugin
         }
 
         /// <summary>
-        /// TODO COMMENT
+        /// Absolute path or URI which is used to load and display the result icon for Flow. 
+        /// This is populated by the <see cref="IcoPath"/> setter.
+        /// If a relative path was provided to <see cref="IcoPath"/>, this property will contain the resolved
+        /// absolute local path after combining with <see cref="PluginDirectory"/>.
         /// </summary>
         public string IcoPathAbsolute => _icoPathAbsolute;
 

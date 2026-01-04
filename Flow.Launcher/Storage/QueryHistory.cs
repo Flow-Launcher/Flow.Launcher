@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
@@ -20,6 +20,11 @@ namespace Flow.Launcher.Storage
 
         private readonly int _maxHistory = 300;
 
+        /// <summary>
+        /// Migrate legacy history data (stored in <see cref="Items"/>) into the new
+        /// <see cref="LastOpenedHistoryResult"/> format and append them to
+        /// <see cref="LastOpenedHistoryItems"/>.
+        /// </summary>
         public void PopulateHistoryFromLegacyHistory()
         {
             if (Items.Count == 0) return;
@@ -78,6 +83,10 @@ namespace Flow.Launcher.Storage
             }
         }
 
+        /// <summary>
+        /// Attempts to find an existing <see cref="LastOpenedHistoryResult"/> in <see cref="LastOpenedHistoryItems"/>
+        /// that is considered equal to the supplied <paramref name="result"/>.
+        /// </summary>
         private bool TryGetLastOpenedHistoryResult(Result result, out LastOpenedHistoryResult historyItem)
         {
             historyItem = LastOpenedHistoryItems.FirstOrDefault(x => x.Equals(result));
@@ -85,12 +94,15 @@ namespace Flow.Launcher.Storage
         }
 
         /// <summary>
-        /// Refresh stored PluginDirectory (and optionally normalize relative ico paths)
-        /// using current plugin metadata. Call this after plugins are loaded/initialized.
+        /// Flow uses IcoPathAbsolute property to display result the icons. This refreshes the IcoPathAbsolute
+        /// property using current plugin metadata by updating the PluginDirectory property, which in turn also
+        /// updates IcoPath. This keeps the saved icon paths of results updated correctly if flow is moved around.
         /// </summary>
+        /// <remarks> Call this after plugins are loaded/initialized.</remarks>
         public void UpdateIcoPathAbsolute()
         {
-            if (LastOpenedHistoryItems.Count == 0) return;
+            if (LastOpenedHistoryItems.Count == 0)
+                return;
 
             foreach (var item in LastOpenedHistoryItems)
             {

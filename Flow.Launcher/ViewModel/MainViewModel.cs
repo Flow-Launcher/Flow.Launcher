@@ -1372,12 +1372,23 @@ namespace Flow.Launcher.ViewModel
         }
 
         /// <summary>
-        /// TODO COMMENT- Requires the plugins to have initialized first because 
-        /// it needs the plugin directory paths for initialization
+        /// Refreshes the last-opened history storage by migrating legacy entries and
+        /// updating stored icon paths to their resolved (absolute) locations.
         /// </summary>
+        /// <remarks>
+        /// Calls <see cref="History.UpdateIcoPathAbsolute"/> to refresh absolute icon
+        /// paths on the migrated/saved history entries by updating each item's
+        /// <c>PluginDirectory</c> (which in turn resolves <c>IcoPathAbsolute</c>).
+        ///
+        /// Important:
+        /// - Plugins must be initialized (their metadata and <c>PluginDirectory</c> set)
+        ///   before calling this method; otherwise icon resolution cannot be performed.
+        /// </remarks>
         internal void RefreshLastOpenedHistoryResults()
         {
+            // TODO: remove after release v2.3.0
             _history.PopulateHistoryFromLegacyHistory();
+
             _history.UpdateIcoPathAbsolute();
         }
 
