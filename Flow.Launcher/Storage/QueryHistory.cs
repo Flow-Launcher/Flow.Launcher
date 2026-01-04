@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
@@ -45,6 +45,11 @@ namespace Flow.Launcher.Storage
             Items.Clear();
         }
 
+        /// <summary>
+        /// Records a result into the last-opened history list (<see cref="LastOpenedHistoryItems"/>).
+        /// This will also update the IcoPath if existing history item has one that is different.
+        /// </summary>
+        /// <param name="result">The result to add to history. Must have a non-empty <see cref="Result.OriginQuery"/>.<see cref="Query.TrimmedQuery"/>.</param>
         public void Add(Result result)
         {
             if (string.IsNullOrEmpty(result.OriginQuery.TrimmedQuery)) return;
@@ -63,6 +68,9 @@ namespace Flow.Launcher.Storage
                 TryGetLastOpenedHistoryResult(result, out var existingHistoryItem))
             {
                 existingHistoryItem.ExecutedDateTime = DateTime.Now;
+
+                if (existingHistoryItem.IcoPath != result.IcoPath)
+                    existingHistoryItem.IcoPath = result.IcoPath;
             }
             else
             {
