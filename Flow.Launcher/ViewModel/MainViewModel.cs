@@ -1326,6 +1326,7 @@ namespace Flow.Launcher.ViewModel
 
             if (Settings.HistoryStyle == HistoryStyle.LastOpened)
             {
+                // Items saved to disk are differentiated by Query also, but LastOpened style only cares about unique results
                 historyItems = historyItems
                                  .GroupBy(r => new { r.Title, r.SubTitle, r.PluginID, r.RecordKey })
                                  .Select(g => g.First());
@@ -1334,28 +1335,35 @@ namespace Flow.Launcher.ViewModel
             foreach (var item in historyItems)
             {
                 var copiedItem = item.DeepCopy();
+
+                if (Settings.HistoryStyle == HistoryStyle.Query)
+                    copiedItem.Title = Localize.executeQuery(copiedItem.Query);
                 // Subtitle has datetime which can cause duplicates when saving.
-                copiedItem.SubTitle = Localize.lastExecuteTime(item.ExecutedDateTime);
+                copiedItem.SubTitle = Localize.lastExecuteTime(copiedItem.ExecutedDateTime);
                 // Empty PluginID so the source of last opened history results won't be updated, these results are meant to be temporary copy.
                 copiedItem.PluginID = string.Empty;
-                copiedItem.AsyncAction = async c =>
+                if (Settings.HistoryStyle == HistoryStyle.LastOpened)
                 {
-                    var reflectResult = await ResultHelper.PopulateResultsAsync(item);
-                    if (reflectResult != null)
+                    copiedItem.AsyncAction = async c =>
                     {
-                        // Record the user selected record for result ranking
-                        _userSelectedRecord.Add(reflectResult);
+                        // Use original history item to reflect correct result because properties like subtitle have been modified in copiedItem
+                        var reflectResult = await ResultHelper.PopulateResultsAsync(item);
+                        if (reflectResult != null)
+                        {
+                            // Record the user selected record for result ranking
+                            _userSelectedRecord.Add(reflectResult);
 
-                        // Since some actions may need to hide the Flow window to execute
-                        // So let us populate the results of them
-                        return await reflectResult.ExecuteAsync(c);
-                    }
+                            // Since some actions may need to hide the Flow window to execute
+                            // So let us populate the results of them
+                            return await reflectResult.ExecuteAsync(c);
+                        }
 
-                    // If we cannot get the result, fallback to re-query
-                    App.API.BackToQueryResults();
-                    App.API.ChangeQuery(item.Query);
-                    return false;
-                }; 
+                        // If we cannot get the result, fallback to re-query
+                        App.API.BackToQueryResults();
+                        App.API.ChangeQuery(copiedItem.Query);
+                        return false;
+                    };
+                }
 
                 results.Add(copiedItem);
             }
