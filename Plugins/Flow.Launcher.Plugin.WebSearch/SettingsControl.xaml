@@ -167,7 +167,8 @@
                     SmallChange="10"
                     SpinButtonPlacementMode="Compact"
                     ValidationMode="InvalidInputOverwritten"
-                    Value="{Binding Settings.MaxSuggestions, Mode=TwoWay}" />
+                    ValueChanged="NumberBox_ValueChanged"
+                    Value="{Binding Settings.MaxSuggestions, Mode=OneWay}" />
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock

@@ -51,6 +51,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- Do not include it in the build files -->
     <PackageReference Include="iNKORE.UI.WPF.Modern" Version="0.10.2.1">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>

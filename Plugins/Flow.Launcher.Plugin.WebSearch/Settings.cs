@@ -211,10 +211,13 @@ namespace Flow.Launcher.Plugin.WebSearch
             get => maxSuggestions;
             set
             {
-                if (maxSuggestions != value)
+                if (value > 0 && value <= 1000)
                 {
-                    maxSuggestions = value;
-                    OnPropertyChanged();
+                    if (maxSuggestions != value)
+                    {
+                        maxSuggestions = value;
+                        OnPropertyChanged();
+                    }
                 }
             }
         }
