@@ -28,8 +28,7 @@ namespace Flow.Launcher.Storage
             {
                 LastOpenedHistoryItems.Add(new LastOpenedHistoryResult
                 {
-                    // Title will be updated properly later on when results are re-constructed for display.
-                    Title = $"Legacy history item query: {item.Query}",
+                    Title = Localize.executeQuery(item.Query),
                     IcoPath = Constant.HistoryIcon,
                     OriginQuery = new Query { TrimmedQuery = item.Query },
                     Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE81C"),
