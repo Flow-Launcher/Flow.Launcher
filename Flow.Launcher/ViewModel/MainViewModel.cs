@@ -1386,7 +1386,6 @@ namespace Flow.Launcher.ViewModel
         /// </remarks>
         internal void RefreshLastOpenedHistoryResults()
         {
-            // TODO: remove after release v2.3.0
             _history.PopulateHistoryFromLegacyHistory();
 
             _history.UpdateIcoPathAbsolute();

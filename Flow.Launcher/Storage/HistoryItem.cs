@@ -2,7 +2,7 @@
 
 namespace Flow.Launcher.Storage
 {
-    [Obsolete("Use LastOpenedHistoryItem instead. This class will be removed in future versions.")]
+    [Obsolete("Use LastOpenedHistoryResult instead. This class will be removed in future versions.")]
     public class HistoryItem
     {
         public string Query { get; set; }
