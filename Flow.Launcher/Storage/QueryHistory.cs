@@ -25,7 +25,7 @@ namespace Flow.Launcher.Storage
         /// <see cref="LastOpenedHistoryResult"/> format and append them to
         /// <see cref="LastOpenedHistoryItems"/>.
         /// </summary>
-        [Obsolete("For backwards comaptibility. Remove after release v2.3.0")]
+        [Obsolete("For backwards compatibility. Remove after release v2.3.0")]
         public void PopulateHistoryFromLegacyHistory()
         {
             if (Items.Count == 0) return;

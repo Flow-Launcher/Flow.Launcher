@@ -10,7 +10,7 @@ namespace Flow.Launcher.Plugin
 {
     /// <summary>
     /// Describes a result of a <see cref="Query"/> executed by a plugin.
-    /// This or its child classses is serializable.
+    /// This or its child classes is serializable.
     /// </summary>
     public class Result
     {

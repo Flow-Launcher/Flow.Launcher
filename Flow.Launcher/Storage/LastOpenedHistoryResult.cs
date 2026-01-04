@@ -18,17 +18,15 @@ public class LastOpenedHistoryResult : Result
     public string Query { get; set; } = string.Empty;
     
     /// <summary>
-    /// The UTC date and time when this result was executed/opened.
+    /// The local date and time when this result was executed/opened.
     /// </summary>
     public DateTime ExecutedDateTime { get; set; }
 
     /// <summary>
     /// Initializes a new instance of <see cref="LastOpenedHistoryResult"/>.
-    /// Sets <see cref="OriginQuery"/> using the current <see cref="Query"/> value, because OriginQuery is not serialized.
     /// </summary>
     public LastOpenedHistoryResult()
     {
-        this.OriginQuery = new Query { TrimmedQuery = Query };
     }
 
     /// <summary>

@@ -356,8 +356,11 @@ namespace Flow.Launcher.ViewModel
             {
                 SelectedResults = History;
 
-                SelectedResults.SelectedIndex = 0;
-                SelectedResults.SelectedItem = SelectedResults.Results[0];
+                if (SelectedResults.Results.Count > 0)
+                {
+                    SelectedResults.SelectedIndex = 0;
+                    SelectedResults.SelectedItem = SelectedResults.Results[0];
+                }
             }
             else
             {
