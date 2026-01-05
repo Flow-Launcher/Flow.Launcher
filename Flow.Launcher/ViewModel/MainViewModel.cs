@@ -646,6 +646,8 @@ namespace Flow.Launcher.ViewModel
             if (!QueryResultsSelected())
             {
                 SelectedResults = Results;
+                PreviewSelectedItem = Results.SelectedItem;
+                _ = UpdatePreviewAsync();
             }
             else
             {
