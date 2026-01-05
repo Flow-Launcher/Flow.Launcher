@@ -1,6 +1,4 @@
 ﻿using System;
-using System.DirectoryServices.ActiveDirectory;
-using Flow.Launcher.Helper;
 using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Storage;
@@ -53,7 +51,7 @@ public class LastOpenedHistoryResult : Result
             App.API.ChangeQuery(result.OriginQuery.TrimmedQuery);
             return false;
         };
-        //Used for Last Opened History style reopening, currently need to be assigned at MainViewModel.cs
+        // Used for Last Opened History style reopening, currently need to be assigned at MainViewModel.cs
         AsyncAction = null;
     }
 
@@ -66,17 +64,17 @@ public class LastOpenedHistoryResult : Result
     {
         // queryValue and glyphValue are captured to ensure they are correctly referenced in the Action delegate.
         var queryValue = Query;
-        var glyphValue = this.Glyph;
+        var glyphValue = Glyph;
         return new LastOpenedHistoryResult
         {
-            Title = this.Title,
-            SubTitle = this.SubTitle,
-            PluginID = this.PluginID,
-            Query = this.Query,
+            Title = Title,
+            SubTitle = SubTitle,
+            PluginID = PluginID,
+            Query = Query,
             OriginQuery = new Query { TrimmedQuery = Query },
-            RecordKey = this.RecordKey,
-            IcoPath = this.IcoPath,
-            PluginDirectory = this.PluginDirectory,
+            RecordKey = RecordKey,
+            IcoPath = IcoPath,
+            PluginDirectory = PluginDirectory,
             // Used for Query History style reopening
             Action = _ =>
             {
@@ -84,12 +82,12 @@ public class LastOpenedHistoryResult : Result
                 App.API.ChangeQuery(queryValue);
                 return false;
             },
-            //Used for Last Opened History style reopening, currently need to be assigned at MainViewModel.cs
+            // Used for Last Opened History style reopening, currently need to be assigned at MainViewModel.cs
             AsyncAction = null,
             Glyph = glyphValue != null 
-                        ? new GlyphInfo(this.Glyph.FontFamily, this.Glyph.Glyph)
+                        ? new GlyphInfo(Glyph.FontFamily, Glyph.Glyph)
                         : null,
-            ExecutedDateTime = this.ExecutedDateTime
+            ExecutedDateTime = ExecutedDateTime
             // Note: Other properties are left as default — copy if needed.
         };
     }
