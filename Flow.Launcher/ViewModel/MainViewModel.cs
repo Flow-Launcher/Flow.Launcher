@@ -1322,11 +1322,18 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private List<Result> GetHistoryItems(IEnumerable<LastOpenedHistoryResult> historyItems)
+        private List<Result> GetHistoryItems(IEnumerable<LastOpenedHistoryResult> historyItems, int? selectLast = null)
         {
             var results = new List<Result>();
 
+            // Order by executed time descending: Latest -> Oldest
             historyItems = historyItems.OrderByDescending(x => x.ExecutedDateTime);
+
+            // Select the last N items if specified
+            if (selectLast.HasValue)
+            {
+                historyItems = historyItems.Take(selectLast.Value);
+            }
 
             if (Settings.HistoryStyle == HistoryStyle.LastOpened)
             {
@@ -1637,10 +1644,8 @@ namespace Flow.Launcher.ViewModel
 
             void QueryHistoryTask(CancellationToken token)
             {
-                // Select last history results and revert its order to make sure last history results are on top
-                var historyItems = _history.LastOpenedHistoryItems.TakeLast(Settings.MaxHistoryResultsToShowForHomePage).Reverse();
-
-                var results = GetHistoryItems(historyItems);
+                // Select last history results
+                var results = GetHistoryItems(_history.LastOpenedHistoryItems, Settings.MaxHistoryResultsToShowForHomePage);
 
                 if (token.IsCancellationRequested) return;
 
