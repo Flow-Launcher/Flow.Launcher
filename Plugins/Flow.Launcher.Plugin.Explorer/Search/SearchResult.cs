@@ -2,8 +2,9 @@
 
 namespace Flow.Launcher.Plugin.Explorer.Search
 {
-    public record struct SearchResult
+    public readonly record struct SearchResult
     {
+        // Constructor is necesssary for record struct
         public SearchResult()
         {
         }
@@ -13,6 +14,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         public int Score { get; init; }
 
         public bool WindowsIndexed { get; init; }
-        public List<int> HighlightData { get; init; } = null;
+        public List<int> HighlightData { get; init; } = [];
     }
 }
