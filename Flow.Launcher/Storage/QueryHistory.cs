@@ -52,6 +52,24 @@ namespace Flow.Launcher.Storage
         }
 
         /// <summary>
+        /// Checks all items in <see cref="LastOpenedHistoryItems"/> for empty IcoPath.
+        /// If found, updates it using the history icon.
+        /// </summary>
+        /// <remarks>
+        /// We need this because some prereleased version of Flow did not set the IcoPath when adding.
+        /// </remarks>
+        public void CheckIcoPathValidity()
+        {
+            foreach (var item in LastOpenedHistoryItems)
+            {
+                if (string.IsNullOrEmpty(item.IcoPath))
+                {
+                    item.IcoPath = Constant.HistoryIcon;
+                }
+            }
+        }
+
+        /// <summary>
         /// Records a result into the last-opened history list (<see cref="LastOpenedHistoryItems"/>).
         /// This will also update the IcoPath if existing history item has one that is different.
         /// </summary>
