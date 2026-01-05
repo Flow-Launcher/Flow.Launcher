@@ -35,9 +35,9 @@ namespace Flow.Launcher.Storage
                 LastOpenedHistoryItems.Add(new LastOpenedHistoryResult
                 {
                     Title = Localize.executeQuery(item.Query),
-                    IcoPath = Constant.HistoryIcon,
+                    IcoPath = null,
                     OriginQuery = new Query { TrimmedQuery = item.Query },
-                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE81C"),
+                    Glyph = null,
                     Query = item.Query,
                     Action = _ =>
                     {

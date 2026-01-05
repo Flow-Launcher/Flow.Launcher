@@ -1352,6 +1352,18 @@ namespace Flow.Launcher.ViewModel
                 if (Settings.HistoryStyle == HistoryStyle.Query)
                 {
                     copiedItem.Title = Localize.executeQuery(copiedItem.Query);
+                    copiedItem.IcoPath = Constant.HistoryIcon;
+                    // TODO: Add Glyph here
+                    // copiedItem.Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE81C");
+                }
+                else
+                {
+                    if (string.IsNullOrEmpty(copiedItem.IcoPath)) // Must manually set missing image icon here
+                    {
+                        copiedItem.IcoPath = Constant.MissingImgIcon;
+                    }
+                    copiedItem.ShowBadge = true;
+                    copiedItem.BadgeIcoPath = Constant.HistoryIcon;
                 }
 
                 // Subtitle has datetime which can cause duplicates when saving.
