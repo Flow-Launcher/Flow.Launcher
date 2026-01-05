@@ -357,8 +357,8 @@ namespace Flow.Launcher.ViewModel
                 SelectedResults = History;
                 if (History.Results.Count > 0)
                 {
-                    History.SelectedIndex = 0;
-                    History.SelectedItem = History.Results[0];
+                    SelectedResults.SelectedIndex = 0;
+                    SelectedResults.SelectedItem = History.Results[0];
                 }
             }
             else
@@ -1325,6 +1325,8 @@ namespace Flow.Launcher.ViewModel
         private List<Result> GetHistoryItems(IEnumerable<LastOpenedHistoryResult> historyItems)
         {
             var results = new List<Result>();
+
+            historyItems = historyItems.OrderByDescending(x => x.ExecutedDateTime);
 
             if (Settings.HistoryStyle == HistoryStyle.LastOpened)
             {
