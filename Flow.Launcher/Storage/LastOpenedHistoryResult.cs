@@ -85,7 +85,7 @@ public class LastOpenedHistoryResult : Result
             // Used for Last Opened History style reopening, currently need to be assigned at MainViewModel.cs
             AsyncAction = null,
             Glyph = glyphValue != null 
-                        ? new GlyphInfo(Glyph.FontFamily, Glyph.Glyph)
+                        ? new GlyphInfo(glyphValue.FontFamily, glyphValue.Glyph)
                         : null,
             ExecutedDateTime = ExecutedDateTime
             // Note: Other properties are left as default — copy if needed.
