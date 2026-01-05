@@ -1405,7 +1405,7 @@ namespace Flow.Launcher.ViewModel
         internal void RefreshLastOpenedHistoryResults()
         {
             _history.PopulateHistoryFromLegacyHistory();
-            _history.CheckIcoPathValidity();
+
             _history.UpdateIcoPathAbsolute();
         }
 
