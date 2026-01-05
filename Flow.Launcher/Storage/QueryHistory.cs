@@ -70,13 +70,15 @@ namespace Flow.Launcher.Storage
                 LastOpenedHistoryItems.RemoveAt(0);
             }
 
+            // If the last item is the same as the current result, just update the timestamp and the icon path
             if (LastOpenedHistoryItems.Count > 0 &&
                 TryGetLastOpenedHistoryResult(result, out var existingHistoryItem))
             {
                 existingHistoryItem.ExecutedDateTime = DateTime.Now;
-
                 if (existingHistoryItem.IcoPath != result.IcoPath)
+                {
                     existingHistoryItem.IcoPath = result.IcoPath;
+                }
             }
             else
             {
@@ -102,17 +104,14 @@ namespace Flow.Launcher.Storage
         /// <remarks> Call this after plugins are loaded/initialized.</remarks>
         public void UpdateIcoPathAbsolute()
         {
-            if (LastOpenedHistoryItems.Count == 0)
-                return;
+            if (LastOpenedHistoryItems.Count == 0) return;
 
             foreach (var item in LastOpenedHistoryItems)
             {
-                if (string.IsNullOrEmpty(item.PluginID))
-                    continue;
+                if (string.IsNullOrEmpty(item.PluginID)) continue;
 
                 var pluginPair = PluginManager.GetPluginForId(item.PluginID);
-                if (pluginPair == null)
-                    continue;
+                if (pluginPair == null) continue;
 
                 item.PluginDirectory = pluginPair.Metadata.PluginDirectory;
             }

@@ -355,11 +355,10 @@ namespace Flow.Launcher.ViewModel
             if (QueryResultsSelected())
             {
                 SelectedResults = History;
-
-                if (SelectedResults.Results.Count > 0)
+                if (History.Results.Count > 0)
                 {
-                    SelectedResults.SelectedIndex = 0;
-                    SelectedResults.SelectedItem = SelectedResults.Results[0];
+                    History.SelectedIndex = 0;
+                    History.SelectedItem = History.Results[0];
                 }
             }
             else
@@ -1331,8 +1330,8 @@ namespace Flow.Launcher.ViewModel
             {
                 // Items saved to disk are differentiated by Query also, but LastOpened style only cares about unique results
                 historyItems = historyItems
-                                 .GroupBy(r => new { r.Title, r.SubTitle, r.PluginID, r.RecordKey })
-                                 .Select(g => g.First());
+                    .GroupBy(r => new { r.Title, r.SubTitle, r.PluginID, r.RecordKey })
+                    .Select(g => g.First());
             }
 
             foreach (var item in historyItems)
@@ -1340,11 +1339,16 @@ namespace Flow.Launcher.ViewModel
                 var copiedItem = item.DeepCopy();
 
                 if (Settings.HistoryStyle == HistoryStyle.Query)
+                {
                     copiedItem.Title = Localize.executeQuery(copiedItem.Query);
+                }
+
                 // Subtitle has datetime which can cause duplicates when saving.
                 copiedItem.SubTitle = Localize.lastExecuteTime(copiedItem.ExecutedDateTime);
+
                 // Empty PluginID so the source of last opened history results won't be updated, these results are meant to be temporary copy.
                 copiedItem.PluginID = string.Empty;
+
                 if (Settings.HistoryStyle == HistoryStyle.LastOpened)
                 {
                     copiedItem.AsyncAction = async c =>
