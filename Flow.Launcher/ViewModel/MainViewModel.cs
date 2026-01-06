@@ -1383,6 +1383,9 @@ namespace Flow.Launcher.ViewModel
                             // Record the user selected record for result ranking
                             _userSelectedRecord.Add(reflectResult);
 
+                            // Update the history with the reflected result
+                            _history.Update(reflectResult);
+
                             // Since some actions may need to hide the Flow window to execute
                             // So let us populate the results of them
                             return await reflectResult.ExecuteAsync(c);
