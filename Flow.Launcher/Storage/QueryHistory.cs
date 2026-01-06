@@ -87,29 +87,6 @@ namespace Flow.Launcher.Storage
         }
 
         /// <summary>
-        /// Update a result into the last-opened history list (<see cref="LastOpenedHistoryItems"/>).
-        /// </summary>
-        public void Update(Result result)
-        {
-            if (string.IsNullOrEmpty(result.OriginQuery.TrimmedQuery)) return;
-            // History results triggered from homepage do not contain PluginID,
-            // these are intentionally not saved otherwise cause duplicates due to subtitle
-            // containing datetime string.
-            if (string.IsNullOrEmpty(result.PluginID)) return;
-
-            // If the last item is the same as the current result, just update the timestamp and the icon path
-            if (LastOpenedHistoryItems.Count > 0 &&
-                TryGetLastOpenedHistoryResult(result, out var existingHistoryItem))
-            {
-                existingHistoryItem.ExecutedDateTime = DateTime.Now;
-                if (existingHistoryItem.IcoPath != result.IcoPath)
-                {
-                    existingHistoryItem.IcoPath = result.IcoPath;
-                }
-            }
-        }
-
-        /// <summary>
         /// Attempts to find an existing <see cref="LastOpenedHistoryResult"/> in <see cref="LastOpenedHistoryItems"/>
         /// that is considered equal to the supplied <paramref name="result"/>.
         /// </summary>
