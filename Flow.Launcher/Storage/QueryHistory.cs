@@ -97,7 +97,7 @@ namespace Flow.Launcher.Storage
             // containing datetime string.
             if (string.IsNullOrEmpty(result.PluginID)) return;
 
-            // If the last item is the same as the current result, just update the icon path
+            // If the last item is the same as the current result, just update the timestamp and the icon path
             if (LastOpenedHistoryItems.Count > 0 &&
                 TryGetLastOpenedHistoryResult(result, out var existingHistoryItem))
             {
