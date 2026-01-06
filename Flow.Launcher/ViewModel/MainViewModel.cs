@@ -443,6 +443,8 @@ namespace Flow.Launcher.ViewModel
             else
             {
                 SelectedResults = Results;
+                PreviewSelectedItem = Results.SelectedItem;
+                _ = UpdatePreviewAsync();
             }
         }
 
