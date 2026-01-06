@@ -435,7 +435,8 @@ namespace Flow.Launcher.ViewModel
             {
                 // When switch to ContextMenu from QueryResults, but no item being chosen, should do nothing
                 // i.e. Shift+Enter/Ctrl+O right after Alt + Space should do nothing
-                if (SelectedResults.SelectedItem != null)
+                if (SelectedResults.SelectedItem?.Result != null &&
+                    !string.IsNullOrEmpty(SelectedResults.SelectedItem.Result.PluginID))  // Do not show context menu for history items
                 {
                     SelectedResults = ContextMenu;
                 }
@@ -1260,22 +1261,12 @@ namespace Flow.Launcher.ViewModel
 
             var selected = Results.SelectedItem?.Result;
 
-            if (selected != null) // SelectedItem returns null if selection is empty.
+            if (selected != null && // SelectedItem returns null if selection is empty.
+                !string.IsNullOrEmpty(selected.PluginID))  // SelectedItem must have a valid PluginID
             {
-                List<Result> results;
-                if (selected.PluginID == null) // SelectedItem from history in home page.
-                {
-                    results = new()
-                    {
-                        ContextMenuTopMost(selected)
-                    };
-                }
-                else
-                {
-                    results = PluginManager.GetContextMenusForPlugin(selected);
-                    results.Add(ContextMenuTopMost(selected));
-                    results.Add(ContextMenuPluginInfo(selected));
-                }
+                List<Result> results = PluginManager.GetContextMenusForPlugin(selected);
+                results.Add(ContextMenuTopMost(selected));
+                results.Add(ContextMenuPluginInfo(selected));
 
                 if (!string.IsNullOrEmpty(query))
                 {
