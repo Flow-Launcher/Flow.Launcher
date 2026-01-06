@@ -24,7 +24,7 @@ public static class ResultHelper
         if (query == null) return null;
         try
         {
-            var freshResults = await plugin.Plugin.QueryAsync(query, CancellationToken.None);
+            var freshResults = await PluginManager.QueryForPluginAsync(plugin, query, CancellationToken.None);
             // Try to match by record key first if it is valid, otherwise fall back to title + subtitle match
             if (string.IsNullOrEmpty(recordKey))
             {
