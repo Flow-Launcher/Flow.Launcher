@@ -101,6 +101,7 @@ namespace Flow.Launcher.Storage
             if (LastOpenedHistoryItems.Count > 0 &&
                 TryGetLastOpenedHistoryResult(result, out var existingHistoryItem))
             {
+                existingHistoryItem.ExecutedDateTime = DateTime.Now;
                 if (existingHistoryItem.IcoPath != result.IcoPath)
                 {
                     existingHistoryItem.IcoPath = result.IcoPath;
