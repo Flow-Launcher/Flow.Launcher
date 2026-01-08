@@ -2,43 +2,43 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--  Startup  -->
     <system:String x:Key="runtimePluginInstalledChooseRuntimePrompt">
-        Flow detected you have installed {0} plugins, which will require {1} to run. Would you like to download {1}?
+        Flow 檢測到你已安裝 {0} 個插件，需要 {1} 才能運行。是否要下載 {1}？
         {2}{2}
-        Click no if it's already installed, and you will be prompted to select the folder that contains the {1} executable
+        如果已安裝，請點擊“否”，系統將提示你選擇包含 {1} 個程式的資料夾
     </system:String>
-    <system:String x:Key="runtimePluginChooseRuntimeExecutable">Please select the {0} executable</system:String>
+    <system:String x:Key="runtimePluginChooseRuntimeExecutable">請選擇 {0} 可執行檔</system:String>
     <system:String x:Key="runtimeExecutableInvalidChooseDownload">
-        Your selected {0} executable is invalid.
+        您所選擇的 {0} 可執行檔無效。
         {2}{2}
-        Click yes if you would like select the {0} executable again. Click no if you would like to download {1}
+        若要重新選取 {0} 可執行檔，請按「是」。若要下載 {1}，請按「否」。
     </system:String>
-    <system:String x:Key="runtimePluginUnableToSetExecutablePath">Unable to set {0} executable path, please try from Flow's settings (scroll down to the bottom).</system:String>
-    <system:String x:Key="failedToInitializePluginsTitle">Fail to Init Plugins</system:String>
-    <system:String x:Key="failedToInitializePluginsMessage">Plugins: {0} - fail to load and would be disabled, please contact plugin creator for help</system:String>
+    <system:String x:Key="runtimePluginUnableToSetExecutablePath">無法設定 {0} 可執行檔路徑，請從 Flow 的設定中嘗試（向下捲動至最底部）。</system:String>
+    <system:String x:Key="failedToInitializePluginsTitle">初始化外掛失敗</system:String>
+    <system:String x:Key="failedToInitializePluginsMessage">外掛：{0} — 載入失敗，將被停用，請聯絡外掛開發者以取得協助</system:String>
 
     <!--  Portable  -->
-    <system:String x:Key="restartToDisablePortableMode">Flow Launcher needs to restart to finish disabling portable mode, after the restart your portable data profile will be deleted and roaming data profile kept</system:String>
-    <system:String x:Key="restartToEnablePortableMode">Flow Launcher needs to restart to finish enabling portable mode, after the restart your roaming data profile will be deleted and portable data profile kept</system:String>
-    <system:String x:Key="moveToDifferentLocation">Flow Launcher has detected you enabled portable mode, would you like to move it to a different location?</system:String>
-    <system:String x:Key="shortcutsUninstallerCreated">Flow Launcher has detected you disabled portable mode, the relevant shortcuts and uninstaller entry have been created</system:String>
-    <system:String x:Key="userDataDuplicated">Flow Launcher detected your user data exists both in {0} and {1}. {2}{2}Please delete {1} in order to proceed. No changes have occurred.</system:String>
+    <system:String x:Key="restartToDisablePortableMode">Flow Launcher 需要重新啟動以完成停用可攜式模式，重新啟動後您的可攜式資料設定檔將被刪除，漫遊資料設定檔會保留</system:String>
+    <system:String x:Key="restartToEnablePortableMode">Flow Launcher 需要重新啟動以完成啟用可攜式模式，重新啟動後您的漫遊資料設定檔將被刪除，而可攜式資料設定檔則會保留</system:String>
+    <system:String x:Key="moveToDifferentLocation">Flow Launcher 偵測到您已啟用可攜式模式，是否要將它移到其他位置？</system:String>
+    <system:String x:Key="shortcutsUninstallerCreated">Flow Launcher 偵測到您已停用可攜模式，相關的捷徑與解除安裝程式項目已建立</system:String>
+    <system:String x:Key="userDataDuplicated">Flow Launcher 偵測到您的使用者資料同時存在於 {0} 與 {1}。{2}{2}請刪除 {1} 以繼續。尚未發生任何變更。</system:String>
 
     <!--  Plugin Loader  -->
-    <system:String x:Key="pluginHasErrored">The following plugin has errored and cannot be loaded:</system:String>
-    <system:String x:Key="pluginsHaveErrored">The following plugins have errored and cannot be loaded:</system:String>
-    <system:String x:Key="referToLogs">Please refer to the logs for more information</system:String>
+    <system:String x:Key="pluginHasErrored">下列外掛發生錯誤，無法載入：</system:String>
+    <system:String x:Key="pluginsHaveErrored">下列外掛發生錯誤，無法載入：</system:String>
+    <system:String x:Key="referToLogs">請參閱日誌以獲得更多資訊</system:String>
 
     <!--  Http  -->
-    <system:String x:Key="pleaseTryAgain">Please try again</system:String>
-    <system:String x:Key="parseProxyFailed">Unable to parse Http Proxy</system:String>
+    <system:String x:Key="pleaseTryAgain">請再試一次</system:String>
+    <system:String x:Key="parseProxyFailed">無法解析 Http 代理</system:String>
 
     <!--  AbstractPluginEnvironment  -->
-    <system:String x:Key="failToInstallTypeScriptEnv">Failed to install TypeScript environment. Please try again later</system:String>
-    <system:String x:Key="failToInstallPythonEnv">Failed to install Python environment. Please try again later.</system:String>
+    <system:String x:Key="failToInstallTypeScriptEnv">無法安裝 TypeScript 環境。請稍後再試一次</system:String>
+    <system:String x:Key="failToInstallPythonEnv">安裝 Python 環境失敗。請稍後再試。</system:String>
 
     <!--  MainWindow  -->
-    <system:String x:Key="registerHotkeyFailed">Failed to register hotkey &quot;{0}&quot;. The hotkey may be in use by another program. Change to a different hotkey, or exit another program.</system:String>
-    <system:String x:Key="unregisterHotkeyFailed">Failed to unregister hotkey &quot;{0}&quot;. Please try again or see log for details</system:String>
+    <system:String x:Key="registerHotkeyFailed">註冊熱鍵「{0}」失敗。此熱鍵可能已被其他程式使用。請更改為不同的熱鍵，或關閉其他程式。</system:String>
+    <system:String x:Key="unregisterHotkeyFailed">無法取消註冊熱鍵「{0}」。請再試一次或查看日誌以取得詳細資訊</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">啟動命令 {0} 失敗</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">無效的 Flow Launcher 外掛格式</system:String>
@@ -54,7 +54,7 @@
     <system:String x:Key="copy">複製</system:String>
     <system:String x:Key="cut">剪下</system:String>
     <system:String x:Key="paste">貼上</system:String>
-    <system:String x:Key="undo">Undo</system:String>
+    <system:String x:Key="undo">還原</system:String>
     <system:String x:Key="selectAll">全選</system:String>
     <system:String x:Key="fileTitle">檔案</system:String>
     <system:String x:Key="folderTitle">資料夾</system:String>
@@ -62,12 +62,12 @@
     <system:String x:Key="GameMode">遊戲模式</system:String>
     <system:String x:Key="GameModeToolTip">暫停使用快捷鍵。</system:String>
     <system:String x:Key="PositionReset">重設位置</system:String>
-    <system:String x:Key="PositionResetToolTip">Reset search window position</system:String>
-    <system:String x:Key="queryTextBoxPlaceholder">Type here to search</system:String>
-    <system:String x:Key="pluginStillInitializing">{0}: This plugin is still initializing...</system:String>
-    <system:String x:Key="pluginStillInitializingSubtitle">Select this result to requery</system:String>
-    <system:String x:Key="pluginFailedToRespond">{0}: Failed to respond!</system:String>
-    <system:String x:Key="pluginFailedToRespondSubtitle">Select this result for more info</system:String>
+    <system:String x:Key="PositionResetToolTip">重設搜尋視窗位置</system:String>
+    <system:String x:Key="queryTextBoxPlaceholder">在此輸入以搜尋</system:String>
+    <system:String x:Key="pluginStillInitializing">「{0}：此外掛程式仍在初始化……」……</system:String>
+    <system:String x:Key="pluginStillInitializingSubtitle">選擇此結果以重新查詢</system:String>
+    <system:String x:Key="pluginFailedToRespond">「{0}：未能回應！」！</system:String>
+    <system:String x:Key="pluginFailedToRespondSubtitle">選取此結果以取得更多資訊</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">設定</system:String>
@@ -75,17 +75,17 @@
     <system:String x:Key="portableMode">便攜模式</system:String>
     <system:String x:Key="portableModeToolTIp">將所有設定和使用者資料存儲在一個資料夾中（當與可移動磁碟或雲服務一起使用時很有用）。</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">開機時啟動</system:String>
-    <system:String x:Key="useLogonTaskForStartup">Use logon task instead of startup entry for faster startup experience</system:String>
-    <system:String x:Key="useLogonTaskForStartupTooltip">After uninstallation, you need to manually remove this task (Flow.Launcher Startup) via Task Scheduler</system:String>
-    <system:String x:Key="setAutoStartFailed">Error setting launch on startup</system:String>
+    <system:String x:Key="useLogonTaskForStartup">使用登入工作取代啟動項目，以加快啟動體驗</system:String>
+    <system:String x:Key="useLogonTaskForStartupTooltip">解除安裝後，您需要透過工作排程程式手動移除此工作（Flow.Launcher Startup）</system:String>
+    <system:String x:Key="setAutoStartFailed">設定開機啟動時發生錯誤</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">失去焦點時自動隱藏 Flow Launcher</system:String>
-    <system:String x:Key="showTaskbarWhenOpened">Show taskbar when Flow Launcher is opened</system:String>
-    <system:String x:Key="showTaskbarWhenOpenedToolTip">Temporarily show the taskbar when Flow Launcher is opened, useful for auto-hidden taskbars.</system:String>
+    <system:String x:Key="showTaskbarWhenOpened">當 Flow Launcher 開啟時顯示工作列</system:String>
+    <system:String x:Key="showTaskbarWhenOpenedToolTip">當開啟 Flow Launcher 時暫時顯示工作列，對自動隱藏的工作列很有用。</system:String>
     <system:String x:Key="dontPromptUpdateMsg">不顯示新版本提示</system:String>
-    <system:String x:Key="SearchWindowPosition">Search Window Location</system:String>
+    <system:String x:Key="SearchWindowPosition">搜尋視窗位置</system:String>
     <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">記住最後位置</system:String>
-    <system:String x:Key="SearchWindowScreenCursor">Monitor with Mouse Cursor</system:String>
-    <system:String x:Key="SearchWindowScreenFocus">Monitor with Focused Window</system:String>
+    <system:String x:Key="SearchWindowScreenCursor">帶有滑鼠游標的顯示器</system:String>
+    <system:String x:Key="SearchWindowScreenFocus">以焦點視窗進行監視</system:String>
     <system:String x:Key="SearchWindowScreenPrimary">Primary Monitor</system:String>
     <system:String x:Key="SearchWindowScreenCustom">Custom Monitor</system:String>
     <system:String x:Key="SearchWindowAlign">搜尋視窗在螢幕上的位置</system:String>
