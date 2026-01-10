@@ -16,6 +16,7 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -61,6 +62,16 @@
 
         <CheckBox
             Grid.Row="2"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Margin="{StaticResource SettingPanelItemTopBottomMargin}"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Content="{DynamicResource flowlauncher_plugin_calculator_use_thousands_separator}"
+            IsChecked="{Binding Settings.UseThousandsSeparator, Mode=TwoWay}" />
+
+        <CheckBox
+            Grid.Row="3"
             Grid.Column="0"
             Grid.ColumnSpan="2"
             Margin="{StaticResource SettingPanelItemTopBottomMargin}"

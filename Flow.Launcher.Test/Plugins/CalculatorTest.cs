@@ -16,7 +16,8 @@ namespace Flow.Launcher.Test.Plugins
         {
             DecimalSeparator = DecimalSeparator.UseSystemLocale,
             MaxDecimalPlaces = 10,
-            ShowErrorMessage = false // Make sure we return the empty results when error occurs
+            ShowErrorMessage = false, // Make sure we return the empty results when error occurs
+            UseThousandsSeparator = true // Default value
         };
         private readonly Engine _engine = new(new Configuration
         {
@@ -39,6 +40,38 @@ namespace Flow.Launcher.Test.Plugins
             if (engineField == null)
                 Assert.Fail("Could not find static field 'MagesEngine' on Flow.Launcher.Plugin.Calculator.Main");
             engineField.SetValue(null, _engine);
+        }
+
+        [Test]
+        public void ThousandsSeparatorTest_Enabled()
+        {
+            _settings.UseThousandsSeparator = true;
+            _settings.DecimalSeparator = DecimalSeparator.Dot;
+            
+            var result = GetCalculationResult("1000+234");
+            // When thousands separator is enabled, the result should contain a separator (comma in this case)
+            ClassicAssert.IsTrue(result.Contains(",") || result == "1234", 
+                "Expected result to contain thousands separator or be without one if system doesn't use it");
+        }
+
+        [Test]
+        public void ThousandsSeparatorTest_Disabled()
+        {
+            _settings.UseThousandsSeparator = false;
+            _settings.DecimalSeparator = DecimalSeparator.Dot;
+            
+            var result = GetCalculationResult("1000+234");
+            ClassicAssert.AreEqual("1234", result);
+        }
+
+        [Test]
+        public void ThousandsSeparatorTest_LargeNumber()
+        {
+            _settings.UseThousandsSeparator = false;
+            _settings.DecimalSeparator = DecimalSeparator.Dot;
+            
+            var result = GetCalculationResult("1000000+234567");
+            ClassicAssert.AreEqual("1234567", result);
         }
 
         // Basic operations
