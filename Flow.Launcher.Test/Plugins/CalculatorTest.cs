@@ -117,7 +117,7 @@ namespace Flow.Launcher.Test.Plugins
         public void CalculatorTest(string expression, string result)
         {
             _settings.UseThousandsSeparator = false;
-            _settings.DecimalSeparator = DecimalSeparator.UseSystemLocale;
+            _settings.DecimalSeparator = DecimalSeparator.Dot;
 
             ClassicAssert.AreEqual(GetCalculationResult(expression), result);
         }
