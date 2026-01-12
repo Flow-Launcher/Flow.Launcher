@@ -46,20 +46,26 @@ namespace Flow.Launcher.Test.Plugins
         public void ThousandsSeparatorTest_Enabled()
         {
             _settings.UseThousandsSeparator = true;
+
             _settings.DecimalSeparator = DecimalSeparator.Dot;
-            
             var result = GetCalculationResult("1000+234");
-            // When thousands separator is enabled, the result should contain a separator (comma in this case)
-            ClassicAssert.IsTrue(result.Contains(",") || result == "1234", 
-                "Expected result to contain thousands separator or be without one if system doesn't use it");
+            // When thousands separator is enabled, the result should contain a separator
+            // Since decimal separator is dot, thousands separator should be comma
+            ClassicAssert.AreEqual("1,234", result);
+
+            _settings.DecimalSeparator = DecimalSeparator.Comma;
+            var result2 = GetCalculationResult("1000+234");
+            // When thousands separator is enabled, the result should contain a separator
+            // Since decimal separator is comma, thousands separator should be dot
+            ClassicAssert.AreEqual("1.234", result2);
         }
 
         [Test]
         public void ThousandsSeparatorTest_Disabled()
         {
             _settings.UseThousandsSeparator = false;
-            _settings.DecimalSeparator = DecimalSeparator.Dot;
-            
+            _settings.DecimalSeparator = DecimalSeparator.UseSystemLocale;
+
             var result = GetCalculationResult("1000+234");
             ClassicAssert.AreEqual("1234", result);
         }
@@ -68,8 +74,8 @@ namespace Flow.Launcher.Test.Plugins
         public void ThousandsSeparatorTest_LargeNumber()
         {
             _settings.UseThousandsSeparator = false;
-            _settings.DecimalSeparator = DecimalSeparator.Dot;
-            
+            _settings.DecimalSeparator = DecimalSeparator.UseSystemLocale;
+
             var result = GetCalculationResult("1000000+234567");
             ClassicAssert.AreEqual("1234567", result);
         }
