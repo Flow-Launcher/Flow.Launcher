@@ -22,9 +22,9 @@ namespace Flow.Launcher.Test.Plugins
         private readonly Engine _engine = new(new Configuration
         {
             Scope = new Dictionary<string, object>
-                {
-                    { "e", Math.E }, // e is not contained in the default mages engine
-                }
+            {
+                { "e", Math.E }, // e is not contained in the default mages engine
+            }
         });
 
         public CalculatorPluginTest()
@@ -116,6 +116,9 @@ namespace Flow.Launcher.Test.Plugins
         [TestCase(@"invalid_expression", "")]
         public void CalculatorTest(string expression, string result)
         {
+            _settings.UseThousandsSeparator = false;
+            _settings.DecimalSeparator = DecimalSeparator.UseSystemLocale;
+
             ClassicAssert.AreEqual(GetCalculationResult(expression), result);
         }
 
