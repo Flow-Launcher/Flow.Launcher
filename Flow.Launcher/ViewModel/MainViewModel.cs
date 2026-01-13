@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
@@ -1340,30 +1339,7 @@ namespace Flow.Launcher.ViewModel
 
             foreach (var item in historyItems)
             {
-                var copiedItem = item.DeepCopy();
-
-                if (Settings.HistoryStyle == HistoryStyle.Query)
-                {
-                    copiedItem.Title = Localize.executeQuery(copiedItem.Query);
-                    copiedItem.IcoPath = Constant.HistoryIcon;
-                    // TODO: Add Glyph here
-                    // copiedItem.Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE81C");
-                }
-                else
-                {
-                    if (string.IsNullOrEmpty(copiedItem.IcoPath)) // Must manually set missing image icon here
-                    {
-                        copiedItem.IcoPath = Constant.MissingImgIcon;
-                    }
-                    copiedItem.ShowBadge = true;
-                    copiedItem.BadgeIcoPath = Constant.HistoryIcon;
-                }
-
-                // Subtitle has datetime which can cause duplicates when saving.
-                copiedItem.SubTitle = Localize.lastExecuteTime(copiedItem.ExecutedDateTime);
-
-                // Empty PluginID so the source of last opened history results won't be updated, these results are meant to be temporary copy.
-                copiedItem.PluginID = string.Empty;
+                var copiedItem = item.DeepCopyForHistoryStyle(Settings.HistoryStyle == HistoryStyle.LastOpened);
 
                 if (Settings.HistoryStyle == HistoryStyle.LastOpened)
                 {

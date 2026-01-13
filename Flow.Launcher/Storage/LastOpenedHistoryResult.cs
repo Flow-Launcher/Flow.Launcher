@@ -1,4 +1,5 @@
 ﻿using System;
+using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Storage;
@@ -56,24 +57,54 @@ public class LastOpenedHistoryResult : Result
     }
 
     /// <summary>
-    /// Selectively creates a deep copy of the required properties for <see cref="LastOpenedHistoryResult"/>.
+    /// Selectively creates a deep copy of the required properties for <see cref="LastOpenedHistoryResult"/>
+    /// based on the style of history- Last Opened or Query.
     /// This copy should be independent of original and full isolated.
     /// </summary>
     /// <returns>A new <see cref="LastOpenedHistoryResult"/> containing the same required data.</returns>
-    public LastOpenedHistoryResult DeepCopy()
+    public LastOpenedHistoryResult DeepCopyForHistoryStyle(bool isHistoryStyleLastOpened)
     {
         // queryValue and glyphValue are captured to ensure they are correctly referenced in the Action delegate.
         var queryValue = Query;
         var glyphValue = Glyph;
+
+        var title = string.Empty;
+        var showBadge = false;
+        var badgeIcoPath = string.Empty;
+        var icoPath = string.Empty;
+        var glyph = null as GlyphInfo;
+
+        if (isHistoryStyleLastOpened)
+        {
+            title = Title;
+            icoPath = IcoPath;
+            glyph = glyphValue != null
+                        ? new GlyphInfo(glyphValue.FontFamily, glyphValue.Glyph)
+                        : null;
+            showBadge = true;
+            badgeIcoPath = Constant.HistoryIcon;
+        }
+        else
+        {
+            title = Localize.executeQuery(Query);
+            icoPath = Constant.HistoryIcon;
+            glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE81C");
+            showBadge = false;
+        }
+
         return new LastOpenedHistoryResult
         {
-            Title = Title,
-            SubTitle = SubTitle,
-            PluginID = PluginID,
+            Title = title,
+            // Subtitle has datetime which can cause duplicates when saving.
+            SubTitle = Localize.lastExecuteTime(ExecutedDateTime),
+            // Empty PluginID so the source of last opened history results won't be updated, this copy is meant to be temporary.
+            PluginID = string.Empty,
             Query = Query,
             OriginQuery = new Query { TrimmedQuery = Query },
             RecordKey = RecordKey,
-            IcoPath = IcoPath,
+            IcoPath = icoPath,
+            ShowBadge = showBadge,
+            BadgeIcoPath = badgeIcoPath,
             PluginDirectory = PluginDirectory,
             // Used for Query History style reopening
             Action = _ =>
@@ -84,9 +115,7 @@ public class LastOpenedHistoryResult : Result
             },
             // Used for Last Opened History style reopening, currently need to be assigned at MainViewModel.cs
             AsyncAction = null,
-            Glyph = glyphValue != null 
-                        ? new GlyphInfo(glyphValue.FontFamily, glyphValue.Glyph)
-                        : null,
+            Glyph = glyph,
             ExecutedDateTime = ExecutedDateTime
             // Note: Other properties are left as default — copy if needed.
         };

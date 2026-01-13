@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
 using Flow.Launcher.Core.Plugin;
-using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Storage
@@ -35,9 +34,7 @@ namespace Flow.Launcher.Storage
                 LastOpenedHistoryItems.Add(new LastOpenedHistoryResult
                 {
                     Title = Localize.executeQuery(item.Query),
-                    IcoPath = null,
                     OriginQuery = new Query { TrimmedQuery = item.Query },
-                    Glyph = null,
                     Query = item.Query,
                     Action = _ =>
                     {
