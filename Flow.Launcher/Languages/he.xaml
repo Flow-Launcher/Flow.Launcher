@@ -8,9 +8,9 @@
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">אנא בחר את קובץ ההפעלה {0}</system:String>
     <system:String x:Key="runtimeExecutableInvalidChooseDownload">
-        Your selected {0} executable is invalid.
+        קובץ ההפעלה {0} שבחרת אינו חוקי.
         {2}{2}
-        Click yes if you would like select the {0} executable again. Click no if you would like to download {1}
+        לחץ על כן אם ברצונך, בחר את {0} ההפעלה הקודמת. לחץ על לא אם ברצונך להוריד את {1}
     </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">לא ניתן להגדיר נתיב הפעלה {0}, אנא נסה שוב בהגדרות Flow (גלול עד למטה).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">נכשל בהפעלת תוספים</system:String>
