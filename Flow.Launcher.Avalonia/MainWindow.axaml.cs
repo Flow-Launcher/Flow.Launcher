@@ -1,0 +1,118 @@
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Input;
+using Avalonia.Interactivity;
+using Avalonia.Markup.Xaml;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using Flow.Launcher.Avalonia.ViewModel;
+using Flow.Launcher.Infrastructure.UserSettings;
+using System;
+
+namespace Flow.Launcher.Avalonia;
+
+public partial class MainWindow : Window
+{
+    private MainViewModel? _viewModel;
+    private TextBox? _queryTextBox;
+
+    public MainWindow()
+    {
+        InitializeComponent();
+        
+        // Create and set the ViewModel
+        var settings = Ioc.Default.GetRequiredService<Settings>();
+        _viewModel = new MainViewModel(settings);
+        DataContext = _viewModel;
+
+        // Get reference to the query text box
+        _queryTextBox = this.FindControl<TextBox>("QueryTextBox");
+
+        // Subscribe to window events
+        this.Deactivated += OnWindowDeactivated;
+
+#if DEBUG
+        this.AttachDevTools();
+#endif
+    }
+
+    private void InitializeComponent()
+    {
+        AvaloniaXamlLoader.Load(this);
+    }
+
+    protected override void OnLoaded(RoutedEventArgs e)
+    {
+        base.OnLoaded(e);
+        
+        // Focus the query text box when window loads
+        _queryTextBox?.Focus();
+    }
+
+    protected override void OnOpened(EventArgs e)
+    {
+        base.OnOpened(e);
+        
+        // Center the window on screen
+        CenterOnScreen();
+        
+        // Focus and select all text
+        if (_queryTextBox != null)
+        {
+            _queryTextBox.Focus();
+            _queryTextBox.SelectAll();
+        }
+    }
+
+    private void CenterOnScreen()
+    {
+        var screen = Screens.Primary;
+        if (screen != null)
+        {
+            var workingArea = screen.WorkingArea;
+            var x = (workingArea.Width - Width) / 2 + workingArea.X;
+            var y = workingArea.Height * 0.25 + workingArea.Y; // Position at 25% from top (like Flow Launcher)
+            Position = new PixelPoint((int)x, (int)y);
+        }
+    }
+
+    protected override void OnKeyDown(KeyEventArgs e)
+    {
+        base.OnKeyDown(e);
+
+        // Handle Escape to hide window
+        if (e.Key == Key.Escape)
+        {
+            Hide();
+            e.Handled = true;
+        }
+    }
+
+    private void OnWindowBorderPointerPressed(object? sender, PointerPressedEventArgs e)
+    {
+        // Allow dragging the window
+        if (e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
+        {
+            BeginMoveDrag(e);
+        }
+    }
+
+    // Note: In Avalonia, use the Deactivated event instead of override
+    // Subscribe in constructor: this.Deactivated += OnWindowDeactivated;
+    private void OnWindowDeactivated(object? sender, EventArgs e)
+    {
+        // Optionally hide window when it loses focus (like original Flow Launcher)
+        // Uncomment if desired:
+        // Hide();
+    }
+
+    /// <summary>
+    /// Shows the window and focuses the query text box
+    /// </summary>
+    public void ShowAndFocus()
+    {
+        Show();
+        Activate();
+        _queryTextBox?.Focus();
+        _queryTextBox?.SelectAll();
+    }
+}

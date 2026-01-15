@@ -1,0 +1,93 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:Flow.Launcher.Avalonia.ViewModel"
+             mc:Ignorable="d" d:DesignWidth="580" d:DesignHeight="300"
+             x:Class="Flow.Launcher.Avalonia.Views.ResultListBox"
+             x:DataType="vm:ResultsViewModel">
+    
+    <ListBox Name="ResultsList"
+             Classes="resultListBox"
+             ItemsSource="{Binding Results}"
+             SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+             SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
+             MaxHeight="{Binding MaxHeight}"
+             SelectionMode="Single"
+             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+             ScrollViewer.VerticalScrollBarVisibility="Auto">
+        
+        <ListBox.ItemTemplate>
+            <DataTemplate x:DataType="vm:ResultViewModel">
+                <Grid Classes="resultItemGrid" ColumnDefinitions="Auto,*,Auto">
+                    
+                    <!-- Selection Bullet -->
+                    <Border Grid.Column="0" 
+                            Classes="resultBullet"
+                            VerticalAlignment="Stretch" />
+                    
+                    <!-- Icon and Text -->
+                    <Grid Grid.Column="1" ColumnDefinitions="Auto,*" Margin="6,0,0,0">
+                        
+                        <!-- Icon -->
+                        <Image Grid.Column="0"
+                               Classes="resultIcon"
+                               Source="{Binding IconPath, TargetNullValue={x:Null}}"
+                               IsVisible="{Binding ShowIcon}"
+                               RenderOptions.BitmapInterpolationMode="HighQuality" />
+                        
+                        <!-- Title and SubTitle -->
+                        <Grid Grid.Column="1" 
+                              RowDefinitions="Auto,Auto"
+                              Margin="10,0,10,0"
+                              VerticalAlignment="Center">
+                            
+                            <TextBlock Grid.Row="0"
+                                       Classes="resultTitle"
+                                       Text="{Binding Title}"
+                                       ToolTip.Tip="{Binding Title}" />
+                            
+                            <TextBlock Grid.Row="1"
+                                       Classes="resultSubTitle"
+                                       Text="{Binding SubTitle}"
+                                       IsVisible="{Binding ShowSubTitle}"
+                                       ToolTip.Tip="{Binding SubTitle}" />
+                        </Grid>
+                    </Grid>
+                    
+                    <!-- Hotkey Badge (optional, can be enabled later) -->
+                    <!--
+                    <Border Grid.Column="2" 
+                            Classes="hotkeyBadge"
+                            VerticalAlignment="Center">
+                        <TextBlock Classes="hotkeyText" Text="Alt+1" />
+                    </Border>
+                    -->
+                </Grid>
+            </DataTemplate>
+        </ListBox.ItemTemplate>
+        
+        <ListBox.ItemContainerTheme>
+            <ControlTheme TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="Margin" Value="4,2,4,2" />
+                <Setter Property="CornerRadius" Value="6" />
+                <Setter Property="MinHeight" Value="50" />
+                <Setter Property="Background" Value="Transparent" />
+                
+                <Style Selector="^:selected">
+                    <Setter Property="Background" Value="#30FFFFFF" />
+                </Style>
+                
+                <Style Selector="^:selected /template/ ContentPresenter#PART_ContentPresenter">
+                    <Setter Property="Background" Value="#30FFFFFF" />
+                </Style>
+                
+                <Style Selector="^:pointerover">
+                    <Setter Property="Background" Value="#20FFFFFF" />
+                </Style>
+            </ControlTheme>
+        </ListBox.ItemContainerTheme>
+        
+    </ListBox>
+</UserControl>

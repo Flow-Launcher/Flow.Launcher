@@ -1,0 +1,211 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Styles.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="avares://Flow.Launcher.Avalonia/Themes/Resources.axaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Styles.Resources>
+
+    <!-- Window Border Style -->
+    <Style Selector="Border.windowBorder">
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Background" Value="#E6202020" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="ClipToBounds" Value="True" />
+    </Style>
+
+    <!-- Query Box Background -->
+    <Style Selector="Border.queryBoxBg">
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="MinHeight" Value="50" />
+    </Style>
+
+    <!-- Query Text Box -->
+    <Style Selector="TextBox.queryBox">
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FontSize" Value="24" />
+        <Setter Property="Margin" Value="16,7,60,7" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="#E3E0E3" />
+        <Setter Property="CaretBrush" Value="#E3E0E3" />
+        <Setter Property="SelectionBrush" Value="#505050" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="MinHeight" Value="42" />
+    </Style>
+
+    <!-- Remove TextBox default styling -->
+    <Style Selector="TextBox.queryBox:focus /template/ Border#PART_BorderElement">
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Background" Value="Transparent" />
+    </Style>
+    <Style Selector="TextBox.queryBox:pointerover /template/ Border#PART_BorderElement">
+        <Setter Property="Background" Value="Transparent" />
+    </Style>
+    <Style Selector="TextBox.queryBox /template/ Border#PART_BorderElement">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+    </Style>
+
+    <!-- Query Suggestion Box (autocomplete hint) -->
+    <Style Selector="TextBox.querySuggestionBox">
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FontSize" Value="24" />
+        <Setter Property="Margin" Value="16,7,60,7" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="#555555" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="MinHeight" Value="42" />
+    </Style>
+    <Style Selector="TextBox.querySuggestionBox /template/ Border#PART_BorderElement">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+    </Style>
+
+    <!-- Search Icon -->
+    <Style Selector="Path.searchIcon">
+        <Setter Property="Fill" Value="#888888" />
+        <Setter Property="Width" Value="24" />
+        <Setter Property="Height" Value="24" />
+    </Style>
+
+    <Style Selector="Canvas.searchIconPosition">
+        <Setter Property="Width" Value="32" />
+        <Setter Property="Height" Value="32" />
+        <Setter Property="Margin" Value="0,0,18,0" />
+        <Setter Property="Background" Value="Transparent" />
+    </Style>
+
+    <!-- Separator -->
+    <Style Selector="Rectangle.separator">
+        <Setter Property="Height" Value="1" />
+        <Setter Property="Fill" Value="#333333" />
+        <Setter Property="Margin" Value="12,0,12,0" />
+    </Style>
+
+    <!-- Progress/Pending Line -->
+    <Style Selector="ProgressBar.pendingLine">
+        <Setter Property="Foreground" Value="{DynamicResource SystemAccentColor}" />
+        <Setter Property="Background" Value="Transparent" />
+    </Style>
+
+    <!-- Result Area Border -->
+    <Style Selector="Border.resultAreaBorder">
+        <Setter Property="CornerRadius" Value="0,0,8,8" />
+    </Style>
+
+    <!-- Result ListBox -->
+    <Style Selector="ListBox.resultListBox">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Margin" Value="0,4,0,4" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+    </Style>
+
+    <!-- Result List Item -->
+    <Style Selector="ListBoxItem.resultItem">
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Margin" Value="4,2,4,2" />
+        <Setter Property="CornerRadius" Value="6" />
+        <Setter Property="MinHeight" Value="50" />
+        <Setter Property="Background" Value="Transparent" />
+    </Style>
+    
+    <Style Selector="ListBoxItem.resultItem:selected">
+        <Setter Property="Background" Value="#30FFFFFF" />
+    </Style>
+
+    <Style Selector="ListBoxItem.resultItem:selected /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="#30FFFFFF" />
+    </Style>
+
+    <Style Selector="ListBoxItem.resultItem:pointerover">
+        <Setter Property="Background" Value="#20FFFFFF" />
+    </Style>
+
+    <!-- Result Item Grid -->
+    <Style Selector="Grid.resultItemGrid">
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="MinHeight" Value="46" />
+    </Style>
+
+    <!-- Result Icon -->
+    <Style Selector="Image.resultIcon">
+        <Setter Property="Width" Value="32" />
+        <Setter Property="Height" Value="32" />
+        <Setter Property="Margin" Value="12,0,0,0" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
+    <!-- Result Title -->
+    <Style Selector="TextBlock.resultTitle">
+        <Setter Property="Foreground" Value="#FFFFF8" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Margin" Value="0,0,0,1" />
+        <Setter Property="VerticalAlignment" Value="Bottom" />
+        <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+    </Style>
+
+    <!-- Result SubTitle -->
+    <Style Selector="TextBlock.resultSubTitle">
+        <Setter Property="Foreground" Value="#999999" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Margin" Value="0,1,0,0" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+    </Style>
+
+    <!-- Result Bullet/Selection Indicator -->
+    <Style Selector="Border.resultBullet">
+        <Setter Property="Width" Value="3" />
+        <Setter Property="CornerRadius" Value="1.5" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Margin" Value="0,8,0,8" />
+    </Style>
+
+    <Style Selector="ListBoxItem.resultItem:selected Border.resultBullet">
+        <Setter Property="Background" Value="{DynamicResource SystemAccentColor}" />
+    </Style>
+
+    <!-- Scrollbar Styles -->
+    <Style Selector="ScrollBar">
+        <Setter Property="Width" Value="6" />
+        <Setter Property="Margin" Value="0,4,2,4" />
+    </Style>
+
+    <Style Selector="ScrollBar /template/ Thumb">
+        <Setter Property="Background" Value="#505050" />
+        <Setter Property="CornerRadius" Value="3" />
+        <Setter Property="MinHeight" Value="20" />
+    </Style>
+
+    <Style Selector="ScrollBar:pointerover /template/ Thumb">
+        <Setter Property="Background" Value="#707070" />
+    </Style>
+
+    <!-- Hotkey Badge -->
+    <Style Selector="Border.hotkeyBadge">
+        <Setter Property="Background" Value="#20FFFFFF" />
+        <Setter Property="CornerRadius" Value="4" />
+        <Setter Property="Padding" Value="6,2,6,2" />
+        <Setter Property="Margin" Value="0,0,10,0" />
+    </Style>
+
+    <Style Selector="TextBlock.hotkeyText">
+        <Setter Property="Foreground" Value="#888888" />
+        <Setter Property="FontSize" Value="11" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
+</Styles>
