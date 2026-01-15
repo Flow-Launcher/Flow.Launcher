@@ -22,6 +22,7 @@ public partial class MainWindow : Window
         // Get the ViewModel from DI (same instance that App uses)
         _viewModel = Ioc.Default.GetRequiredService<MainViewModel>();
         _viewModel.HideRequested += () => Hide();
+        _viewModel.ShowRequested += () => ShowAndFocus();
         DataContext = _viewModel;
 
         // Get reference to the query text box

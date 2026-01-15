@@ -23,6 +23,10 @@ public partial class MainViewModel : ObservableObject
     private bool _pluginsReady;
 
     public event Action? HideRequested;
+    public event Action? ShowRequested;
+
+    [ObservableProperty]
+    private bool _mainWindowVisibility = true;
 
     [ObservableProperty]
     private string _queryText = string.Empty;
@@ -53,6 +57,43 @@ public partial class MainViewModel : ObservableObject
     }
 
     public void RequestHide() => HideRequested?.Invoke();
+
+    /// <summary>
+    /// Toggle the main window visibility. Called by global hotkey.
+    /// </summary>
+    public void ToggleFlowLauncher()
+    {
+        Log.Info(ClassName, $"ToggleFlowLauncher called, currently visible: {MainWindowVisibility}");
+        if (MainWindowVisibility)
+        {
+            Hide();
+        }
+        else
+        {
+            Show();
+        }
+    }
+
+    /// <summary>
+    /// Show the main window.
+    /// </summary>
+    public void Show()
+    {
+        MainWindowVisibility = true;
+        ShowRequested?.Invoke();
+        Log.Info(ClassName, "Show requested");
+    }
+
+    /// <summary>
+    /// Hide the main window.
+    /// </summary>
+    public void Hide()
+    {
+        MainWindowVisibility = false;
+        QueryText = "";
+        HideRequested?.Invoke();
+        Log.Info(ClassName, "Hide requested");
+    }
 
     partial void OnQueryTextChanged(string value) => _ = QueryAsync();
 
@@ -128,7 +169,7 @@ public partial class MainViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void Esc() { QueryText = ""; HideRequested?.Invoke(); }
+    private void Esc() { Hide(); }
 
     [RelayCommand]
     private async Task OpenResultAsync()

@@ -3,6 +3,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using Flow.Launcher.Avalonia.Helper;
 using Flow.Launcher.Avalonia.ViewModel;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure;
@@ -38,7 +39,13 @@ public partial class App : Application
 
             desktop.MainWindow = new MainWindow();
 
+            // Initialize hotkeys after window is created
+            HotKeyMapper.Initialize();
+
             Dispatcher.UIThread.Post(async () => await InitializePluginsAsync(), DispatcherPriority.Background);
+
+            // Cleanup on exit
+            desktop.Exit += (_, _) => HotKeyMapper.Shutdown();
         }
         base.OnFrameworkInitializationCompleted();
     }
