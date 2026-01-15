@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -131,60 +132,91 @@ public partial class MainViewModel : ObservableObject
 
             if (plugins.Count == 0) { HasResults = false; return; }
 
-            // Query all plugins in parallel and collect results
-            var tasks = plugins.Select(p => QueryPluginAsync(p, query, token));
-            var pluginResults = await Task.WhenAll(tasks);
+            // Use a thread-safe collection to accumulate results from all plugins
+            var allResults = new ConcurrentBag<ResultViewModel>();
 
-            if (token.IsCancellationRequested) return;
-
-            // Flatten, sort by score, take top N, and replace all at once
-            var allResults = pluginResults
-                .SelectMany(r => r)
-                .OrderByDescending(r => r.Score)
-                .Take(_settings.MaxResultsToShow)
-                .ToList();
-
-            // Replace results with minimal UI updates (EditDiff)
-            await global::Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
+            // Query all plugins in parallel - results shown progressively as each completes
+            var tasks = plugins.Select(async plugin =>
             {
-                Results.ReplaceResults(allResults);
-                HasResults = Results.Results.Count > 0;
+                var pluginResults = await QueryPluginAsync(plugin, query, token);
+                if (token.IsCancellationRequested) return;
+
+                // Add results to the bag
+                foreach (var r in pluginResults)
+                {
+                    allResults.Add(r);
+                }
+
+                // Update UI with current accumulated results (progressive update)
+                if (!token.IsCancellationRequested)
+                {
+                    await UpdateResultsOnUIThread(allResults, token);
+                }
             });
+
+            await Task.WhenAll(tasks);
+
+            // Final update after all plugins complete
+            if (!token.IsCancellationRequested)
+            {
+                await UpdateResultsOnUIThread(allResults, token);
+            }
         }
         catch (OperationCanceledException) { }
         catch (Exception e) { Log.Exception(ClassName, "Query error", e); }
         finally { if (!token.IsCancellationRequested) IsQueryRunning = false; }
     }
 
-    private async Task<List<ResultViewModel>> QueryPluginAsync(PluginPair plugin, Query query, CancellationToken token)
+    private async Task UpdateResultsOnUIThread(ConcurrentBag<ResultViewModel> allResults, CancellationToken token)
     {
-        var resultList = new List<ResultViewModel>();
+        if (token.IsCancellationRequested) return;
 
-        try
+        var sortedResults = allResults
+            .OrderByDescending(r => r.Score)
+            .Take(_settings.MaxResultsToShow)
+            .ToList();
+
+        await global::Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
         {
-            var delay = plugin.Metadata.SearchDelayTime ?? _settings.SearchDelayTime;
-            if (delay > 0) await Task.Delay(delay, token);
-            if (token.IsCancellationRequested) return resultList;
+            if (token.IsCancellationRequested) return;
+            Results.ReplaceResults(sortedResults);
+            HasResults = Results.Results.Count > 0;
+        });
+    }
 
-            var results = await PluginManager.QueryForPluginAsync(plugin, query, token);
-            if (token.IsCancellationRequested || results == null || results.Count == 0) return resultList;
+    private Task<List<ResultViewModel>> QueryPluginAsync(PluginPair plugin, Query query, CancellationToken token)
+    {
+        // Run entirely on thread pool to avoid blocking UI if plugin has synchronous code
+        return Task.Run(async () =>
+        {
+            var resultList = new List<ResultViewModel>();
 
-            foreach (var r in results)
+            try
             {
-                resultList.Add(new ResultViewModel
-                {
-                    Title = r.Title ?? "",
-                    SubTitle = r.SubTitle ?? "",
-                    IconPath = r.IcoPath ?? plugin.Metadata.IcoPath ?? "",
-                    Score = r.Score,
-                    PluginResult = r
-                });
-            }
-        }
-        catch (OperationCanceledException) { }
-        catch (Exception e) { Log.Exception(ClassName, $"Plugin {plugin.Metadata.Name} error", e); }
+                var delay = plugin.Metadata.SearchDelayTime ?? _settings.SearchDelayTime;
+                if (delay > 0) await Task.Delay(delay, token);
+                if (token.IsCancellationRequested) return resultList;
 
-        return resultList;
+                var results = await PluginManager.QueryForPluginAsync(plugin, query, token);
+                if (token.IsCancellationRequested || results == null || results.Count == 0) return resultList;
+
+                foreach (var r in results)
+                {
+                    resultList.Add(new ResultViewModel
+                    {
+                        Title = r.Title ?? "",
+                        SubTitle = r.SubTitle ?? "",
+                        IconPath = r.IcoPath ?? plugin.Metadata.IcoPath ?? "",
+                        Score = r.Score,
+                        PluginResult = r
+                    });
+                }
+            }
+            catch (OperationCanceledException) { }
+            catch (Exception e) { Log.Exception(ClassName, $"Plugin {plugin.Metadata.Name} error", e); }
+
+            return resultList;
+        }, token);
     }
 
     [RelayCommand]
