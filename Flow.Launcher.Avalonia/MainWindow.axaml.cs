@@ -19,9 +19,8 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
         
-        // Create and set the ViewModel
-        var settings = Ioc.Default.GetRequiredService<Settings>();
-        _viewModel = new MainViewModel(settings);
+        // Get the ViewModel from DI (same instance that App uses)
+        _viewModel = Ioc.Default.GetRequiredService<MainViewModel>();
         _viewModel.HideRequested += () => Hide();
         DataContext = _viewModel;
 

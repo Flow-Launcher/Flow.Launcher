@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Runtime.ExceptionServices;
@@ -149,6 +149,9 @@ namespace Flow.Launcher.Infrastructure.Logger
             var logger = LogManager.GetLogger(classNameWithMethod);
 
             logger.Log(level, message);
+
+            // Also output to console for easy debugging
+            System.Console.WriteLine($"[{level}] {classNameWithMethod}: {message}");
         }
 
         public static void Debug(string className, string message, [CallerMemberName] string methodName = "")
