@@ -22,6 +22,7 @@ public partial class MainWindow : Window
         // Create and set the ViewModel
         var settings = Ioc.Default.GetRequiredService<Settings>();
         _viewModel = new MainViewModel(settings);
+        _viewModel.HideRequested += () => Hide();
         DataContext = _viewModel;
 
         // Get reference to the query text box

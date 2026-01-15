@@ -1,26 +1,31 @@
 using System;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Flow.Launcher.Core.Plugin;
+using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Avalonia.ViewModel;
 
 /// <summary>
-/// Simplified MainViewModel for the Avalonia version.
-/// This will eventually be unified with the WPF MainViewModel.
+/// MainViewModel for Avalonia - minimal implementation for plugin queries.
 /// </summary>
 public partial class MainViewModel : ObservableObject
 {
+    private static readonly string ClassName = nameof(MainViewModel);
     private readonly Settings _settings;
+    private CancellationTokenSource? _queryTokenSource;
+    private bool _pluginsReady;
+
+    public event Action? HideRequested;
 
     [ObservableProperty]
     private string _queryText = string.Empty;
-
-    [ObservableProperty]
-    private string _querySuggestionText = string.Empty;
 
     [ObservableProperty]
     private bool _isQueryRunning;
@@ -37,115 +42,107 @@ public partial class MainViewModel : ObservableObject
     {
         _settings = settings;
         _results = new ResultsViewModel(settings);
-        
-        // Add some demo results for testing
-        AddDemoResults();
     }
 
-    partial void OnQueryTextChanged(string value)
+    public void OnPluginsReady()
     {
-        // Simulate query execution
-        if (!string.IsNullOrWhiteSpace(value))
+        _pluginsReady = true;
+        Log.Info(ClassName, "Plugins ready");
+        if (!string.IsNullOrWhiteSpace(QueryText))
+            _ = QueryAsync();
+    }
+
+    public void RequestHide() => HideRequested?.Invoke();
+
+    partial void OnQueryTextChanged(string value) => _ = QueryAsync();
+
+    private async Task QueryAsync()
+    {
+        _queryTokenSource?.Cancel();
+        _queryTokenSource = new CancellationTokenSource();
+        var token = _queryTokenSource.Token;
+        var queryText = QueryText.Trim();
+
+        if (string.IsNullOrWhiteSpace(queryText) || !_pluginsReady)
         {
-            IsQueryRunning = true;
-            HasResults = true;
-            
-            // Simulate search
-            Task.Delay(100).ContinueWith(_ =>
-            {
-                IsQueryRunning = false;
-            }, TaskScheduler.FromCurrentSynchronizationContext());
-        }
-        else
-        {
+            Results.Clear();
             HasResults = false;
             IsQueryRunning = false;
+            return;
         }
-    }
 
-    private void AddDemoResults()
-    {
-        // Add demo results for UI testing
-        Results.AddResult(new ResultViewModel
-        {
-            Title = "Welcome to Flow Launcher (Avalonia)",
-            SubTitle = "This is a demo result - Avalonia migration in progress",
-            IconPath = "Images/app.png"
-        });
-        
-        Results.AddResult(new ResultViewModel
-        {
-            Title = "Settings",
-            SubTitle = "Open Flow Launcher settings",
-            IconPath = "Images/app.png"
-        });
-        
-        Results.AddResult(new ResultViewModel
-        {
-            Title = "Notepad",
-            SubTitle = "C:\\Windows\\System32\\notepad.exe",
-            IconPath = "Images/app.png"
-        });
+        IsQueryRunning = true;
 
-        Results.AddResult(new ResultViewModel
+        try
         {
-            Title = "Calculator",
-            SubTitle = "Microsoft Calculator",
-            IconPath = "Images/app.png"
-        });
+            var query = QueryBuilder.Build(queryText, PluginManager.NonGlobalPlugins);
+            if (query == null) { Results.Clear(); HasResults = false; return; }
 
-        HasResults = true;
-    }
+            var plugins = PluginManager.ValidPluginsForQuery(query, dialogJump: false)
+                .Where(p => !p.Metadata.Disabled).ToList();
 
-    [RelayCommand]
-    private void Esc()
-    {
-        QueryText = string.Empty;
-    }
+            if (plugins.Count == 0) { Results.Clear(); HasResults = false; return; }
 
-    [RelayCommand]
-    private void OpenResult(object? parameter)
-    {
-        var selectedResult = Results.SelectedItem;
-        if (selectedResult != null)
-        {
-            // Execute the result action
-            System.Diagnostics.Debug.WriteLine($"Opening result: {selectedResult.Title}");
+            Results.Clear();
+
+            var tasks = plugins.Select(p => QueryPluginAsync(p, query, token));
+            await Task.WhenAll(tasks);
+
+            if (!token.IsCancellationRequested)
+                HasResults = Results.Results.Count > 0;
         }
+        catch (OperationCanceledException) { }
+        catch (Exception e) { Log.Exception(ClassName, "Query error", e); }
+        finally { if (!token.IsCancellationRequested) IsQueryRunning = false; }
     }
 
-    [RelayCommand]
-    private void SelectNextItem()
+    private async Task QueryPluginAsync(PluginPair plugin, Query query, CancellationToken token)
     {
-        Results.SelectNextItem();
-    }
-
-    [RelayCommand]
-    private void SelectPrevItem()
-    {
-        Results.SelectPrevItem();
-    }
-
-    [RelayCommand]
-    private void AutocompleteQuery()
-    {
-        if (Results.SelectedItem != null)
+        try
         {
-            QueryText = Results.SelectedItem.Title;
+            var delay = plugin.Metadata.SearchDelayTime ?? _settings.SearchDelayTime;
+            if (delay > 0) await Task.Delay(delay, token);
+            if (token.IsCancellationRequested) return;
+
+            var results = await PluginManager.QueryForPluginAsync(plugin, query, token);
+            if (token.IsCancellationRequested || results == null || results.Count == 0) return;
+
+            await global::Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
+            {
+                foreach (var r in results.OrderByDescending(r => r.Score).Take(_settings.MaxResultsToShow))
+                {
+                    if (token.IsCancellationRequested) return;
+                    Results.AddResult(new ResultViewModel
+                    {
+                        Title = r.Title ?? "",
+                        SubTitle = r.SubTitle ?? "",
+                        IconPath = r.IcoPath ?? plugin.Metadata.IcoPath ?? "",
+                        PluginResult = r
+                    });
+                }
+                HasResults = Results.Results.Count > 0;
+            });
         }
+        catch (OperationCanceledException) { }
+        catch (Exception e) { Log.Exception(ClassName, $"Plugin {plugin.Metadata.Name} error", e); }
     }
 
     [RelayCommand]
-    private void ReloadPluginData()
-    {
-        // Placeholder for plugin data reload
-        System.Diagnostics.Debug.WriteLine("Reloading plugin data...");
-    }
+    private void Esc() { QueryText = ""; HideRequested?.Invoke(); }
 
     [RelayCommand]
-    private void ReQuery()
+    private async Task OpenResultAsync()
     {
-        // Placeholder for re-query
-        System.Diagnostics.Debug.WriteLine("Re-querying...");
+        var result = Results.SelectedItem?.PluginResult;
+        if (result == null) return;
+        try
+        {
+            if (await result.ExecuteAsync(new ActionContext { SpecialKeyState = SpecialKeyState.Default }))
+                HideRequested?.Invoke();
+        }
+        catch (Exception e) { Log.Exception(ClassName, "Execute error", e); }
     }
+
+    [RelayCommand] private void SelectNextItem() => Results.SelectNextItem();
+    [RelayCommand] private void SelectPrevItem() => Results.SelectPrevItem();
 }

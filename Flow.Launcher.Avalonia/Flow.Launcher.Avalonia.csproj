@@ -49,6 +49,11 @@
     <ProjectReference Include="..\Flow.Launcher.Plugin\Flow.Launcher.Plugin.csproj" />
   </ItemGroup>
 
+  <!-- WPF assemblies needed for IPublicAPI compatibility (ImageSource, MessageBox types) -->
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.WindowsDesktop.App.WPF" />
+  </ItemGroup>
+
   <!-- Copy themes and languages from WPF project -->
   <ItemGroup>
     <Content Include="..\Flow.Launcher\Languages\*.xaml" Link="Languages\%(Filename)%(Extension)">

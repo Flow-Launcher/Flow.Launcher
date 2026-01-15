@@ -31,16 +31,9 @@
 
     <Window.KeyBindings>
         <KeyBinding Gesture="Escape" Command="{Binding EscCommand}" />
-        <KeyBinding Gesture="F5" Command="{Binding ReloadPluginDataCommand}" />
         <KeyBinding Gesture="Enter" Command="{Binding OpenResultCommand}" />
-        <KeyBinding Gesture="Ctrl+Enter" Command="{Binding OpenResultCommand}" />
-        <KeyBinding Gesture="Alt+Enter" Command="{Binding OpenResultCommand}" />
         <KeyBinding Gesture="Down" Command="{Binding SelectNextItemCommand}" />
         <KeyBinding Gesture="Up" Command="{Binding SelectPrevItemCommand}" />
-        <KeyBinding Gesture="Ctrl+N" Command="{Binding SelectNextItemCommand}" />
-        <KeyBinding Gesture="Ctrl+P" Command="{Binding SelectPrevItemCommand}" />
-        <KeyBinding Gesture="Tab" Command="{Binding AutocompleteQueryCommand}" />
-        <KeyBinding Gesture="Ctrl+R" Command="{Binding ReQueryCommand}" />
     </Window.KeyBindings>
 
     <!-- Main container with rounded corners and background -->
@@ -52,14 +45,6 @@
             <!-- Query Box Area -->
             <Grid Name="QueryBoxArea">
                 <Border Name="QueryBoxBg" Classes="queryBoxBg" MinHeight="30">
-                    <Grid>
-                        <!-- Query Suggestion Box (autocomplete hint) -->
-                        <TextBox Name="QueryTextSuggestionBox"
-                                 Classes="querySuggestionBox"
-                                 IsEnabled="False"
-                                 IsHitTestVisible="False"
-                                 Text="{Binding QuerySuggestionText, Mode=OneWay}" />
-                        
                         <!-- Main Query Text Box -->
                         <TextBox Name="QueryTextBox"
                                  Classes="queryBox"
@@ -67,7 +52,6 @@
                                  Watermark="Type to search..."
                                  AcceptsReturn="False"
                                  TextWrapping="NoWrap" />
-                    </Grid>
                 </Border>
 
                 <!-- Search Icon -->
