@@ -25,11 +25,13 @@ public class AvaloniaPublicAPI : IPublicAPI
 {
     private readonly Settings _settings;
     private readonly Func<MainViewModel> _getMainViewModel;
+    private readonly Internationalization _i18n;
 
-    public AvaloniaPublicAPI(Settings settings, Func<MainViewModel> getMainViewModel)
+    public AvaloniaPublicAPI(Settings settings, Func<MainViewModel> getMainViewModel, Internationalization i18n)
     {
         _settings = settings;
         _getMainViewModel = getMainViewModel;
+        _i18n = i18n;
     }
 
 #pragma warning disable CS0067
@@ -40,14 +42,7 @@ public class AvaloniaPublicAPI : IPublicAPI
     // Essential for plugins
     public void ChangeQuery(string query, bool requery = false) => _getMainViewModel().QueryText = query;
     
-    public string GetTranslation(string key)
-    {
-        var i18n = App.I18n;
-        if (i18n == null)
-            return key;
-        
-        return i18n.GetTranslation(key);
-    }
+    public string GetTranslation(string key) => _i18n.GetTranslation(key);
     
     public List<PluginPair> GetAllPlugins() => PluginManager.AllPlugins;
     public MatchResult FuzzySearch(string query, string stringToCompare) => 

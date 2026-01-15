@@ -1,6 +1,7 @@
 using Avalonia.Data;
 using Avalonia.Markup.Xaml;
 using Avalonia.Markup.Xaml.MarkupExtensions;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using System;
 
 namespace Flow.Launcher.Avalonia.Resource;
@@ -37,7 +38,7 @@ public class LocalizeExtension : MarkupExtension
             return Fallback ?? "[No Key]";
         }
 
-        var i18n = App.I18n;
+        var i18n = Ioc.Default.GetService<Internationalization>();
         if (i18n == null)
         {
             return Fallback ?? $"[{Key}]";
@@ -64,7 +65,7 @@ public static class Translator
     /// <returns>The translated string or the key in brackets if not found</returns>
     public static string GetString(string key)
     {
-        var i18n = App.I18n;
+        var i18n = Ioc.Default.GetService<Internationalization>();
         if (i18n == null)
         {
             return $"[{key}]";

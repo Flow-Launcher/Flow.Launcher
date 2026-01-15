@@ -34,6 +34,7 @@ public class Internationalization
     public Internationalization(Settings settings)
     {
         _settings = settings;
+        Initialize();
     }
 
     /// <summary>

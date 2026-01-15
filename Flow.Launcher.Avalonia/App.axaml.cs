@@ -23,14 +23,8 @@ public partial class App : Application
     private static readonly string ClassName = nameof(App);
     private Settings? _settings;
     private MainViewModel? _mainVM;
-    private Internationalization? _i18n;
 
     public static IPublicAPI? API { get; private set; }
-    
-    /// <summary>
-    /// Gets the internationalization service for translations.
-    /// </summary>
-    public static Internationalization? I18n { get; private set; }
 
     public override void Initialize() => AvaloniaXamlLoader.Load(this);
 
@@ -39,7 +33,6 @@ public partial class App : Application
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             LoadSettings();
-            InitializeInternationalization();
             ConfigureDI();
 
             API = Ioc.Default.GetRequiredService<IPublicAPI>();
@@ -77,31 +70,18 @@ public partial class App : Application
         }
     }
 
-    private void InitializeInternationalization()
-    {
-        try
-        {
-            _i18n = new Internationalization(_settings!);
-            _i18n.Initialize();
-            I18n = _i18n;
-            Log.Info(ClassName, "Internationalization initialized");
-        }
-        catch (Exception e)
-        {
-            Log.Exception(ClassName, "Failed to initialize internationalization", e);
-        }
-    }
-
     private void ConfigureDI()
     {
         var services = new ServiceCollection();
         services.AddSingleton(_settings!);
         services.AddSingleton<IAlphabet, PinyinAlphabet>();
         services.AddSingleton<StringMatcher>();
+        services.AddSingleton<Internationalization>();
         services.AddSingleton<MainViewModel>();
         services.AddSingleton<IPublicAPI>(sp => new AvaloniaPublicAPI(
             sp.GetRequiredService<Settings>(),
-            () => sp.GetRequiredService<MainViewModel>()));
+            () => sp.GetRequiredService<MainViewModel>(),
+            sp.GetRequiredService<Internationalization>()));
         Ioc.Default.ConfigureServices(services.BuildServiceProvider());
     }
 
