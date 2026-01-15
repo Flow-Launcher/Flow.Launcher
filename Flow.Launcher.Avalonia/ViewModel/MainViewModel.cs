@@ -104,10 +104,17 @@ public partial class MainViewModel : ObservableObject
         var token = _queryTokenSource.Token;
         var queryText = QueryText.Trim();
 
-        if (string.IsNullOrWhiteSpace(queryText) || !_pluginsReady)
+        // Only clear results when query is empty
+        if (string.IsNullOrWhiteSpace(queryText))
         {
             Results.Clear();
             HasResults = false;
+            IsQueryRunning = false;
+            return;
+        }
+
+        if (!_pluginsReady)
+        {
             IsQueryRunning = false;
             return;
         }
@@ -117,55 +124,67 @@ public partial class MainViewModel : ObservableObject
         try
         {
             var query = QueryBuilder.Build(queryText, PluginManager.NonGlobalPlugins);
-            if (query == null) { Results.Clear(); HasResults = false; return; }
+            if (query == null) { HasResults = false; return; }
 
             var plugins = PluginManager.ValidPluginsForQuery(query, dialogJump: false)
                 .Where(p => !p.Metadata.Disabled).ToList();
 
-            if (plugins.Count == 0) { Results.Clear(); HasResults = false; return; }
+            if (plugins.Count == 0) { HasResults = false; return; }
 
-            Results.Clear();
-
+            // Query all plugins in parallel and collect results
             var tasks = plugins.Select(p => QueryPluginAsync(p, query, token));
-            await Task.WhenAll(tasks);
+            var pluginResults = await Task.WhenAll(tasks);
 
-            if (!token.IsCancellationRequested)
+            if (token.IsCancellationRequested) return;
+
+            // Flatten, sort by score, take top N, and replace all at once
+            var allResults = pluginResults
+                .SelectMany(r => r)
+                .OrderByDescending(r => r.Score)
+                .Take(_settings.MaxResultsToShow)
+                .ToList();
+
+            // Replace results with minimal UI updates (EditDiff)
+            await global::Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
+            {
+                Results.ReplaceResults(allResults);
                 HasResults = Results.Results.Count > 0;
+            });
         }
         catch (OperationCanceledException) { }
         catch (Exception e) { Log.Exception(ClassName, "Query error", e); }
         finally { if (!token.IsCancellationRequested) IsQueryRunning = false; }
     }
 
-    private async Task QueryPluginAsync(PluginPair plugin, Query query, CancellationToken token)
+    private async Task<List<ResultViewModel>> QueryPluginAsync(PluginPair plugin, Query query, CancellationToken token)
     {
+        var resultList = new List<ResultViewModel>();
+
         try
         {
             var delay = plugin.Metadata.SearchDelayTime ?? _settings.SearchDelayTime;
             if (delay > 0) await Task.Delay(delay, token);
-            if (token.IsCancellationRequested) return;
+            if (token.IsCancellationRequested) return resultList;
 
             var results = await PluginManager.QueryForPluginAsync(plugin, query, token);
-            if (token.IsCancellationRequested || results == null || results.Count == 0) return;
+            if (token.IsCancellationRequested || results == null || results.Count == 0) return resultList;
 
-            await global::Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
+            foreach (var r in results)
             {
-                foreach (var r in results.OrderByDescending(r => r.Score).Take(_settings.MaxResultsToShow))
+                resultList.Add(new ResultViewModel
                 {
-                    if (token.IsCancellationRequested) return;
-                    Results.AddResult(new ResultViewModel
-                    {
-                        Title = r.Title ?? "",
-                        SubTitle = r.SubTitle ?? "",
-                        IconPath = r.IcoPath ?? plugin.Metadata.IcoPath ?? "",
-                        PluginResult = r
-                    });
-                }
-                HasResults = Results.Results.Count > 0;
-            });
+                    Title = r.Title ?? "",
+                    SubTitle = r.SubTitle ?? "",
+                    IconPath = r.IcoPath ?? plugin.Metadata.IcoPath ?? "",
+                    Score = r.Score,
+                    PluginResult = r
+                });
+            }
         }
         catch (OperationCanceledException) { }
         catch (Exception e) { Log.Exception(ClassName, $"Plugin {plugin.Metadata.Name} error", e); }
+
+        return resultList;
     }
 
     [RelayCommand]

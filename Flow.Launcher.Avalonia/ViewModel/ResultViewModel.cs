@@ -1,4 +1,7 @@
+using System.Threading.Tasks;
+using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Flow.Launcher.Avalonia.Helper;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 
@@ -24,6 +27,9 @@ public partial class ResultViewModel : ObservableObject
     [ObservableProperty]
     private Settings? _settings;
 
+    [ObservableProperty]
+    private int _score;
+
     /// <summary>
     /// The underlying plugin result. Used for executing actions and accessing additional properties.
     /// </summary>
@@ -38,4 +44,13 @@ public partial class ResultViewModel : ObservableObject
     /// Gets the query suggestion text for autocomplete, if available.
     /// </summary>
     public string? QuerySuggestionText => PluginResult?.AutoCompleteText;
+
+    // Cached task for the image - created once per IconPath
+    private Task<IImage?>? _imageTask;
+
+    /// <summary>
+    /// The icon image task. Use with Avalonia's ^ stream binding operator.
+    /// Returns a cached task to avoid re-loading on every property access.
+    /// </summary>
+    public Task<IImage?> Image => _imageTask ??= ImageLoader.LoadAsync(IconPath);
 }

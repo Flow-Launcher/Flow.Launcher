@@ -3,6 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:Flow.Launcher.Avalonia.ViewModel"
+             xmlns:helper="using:Flow.Launcher.Avalonia.Helper"
              mc:Ignorable="d" d:DesignWidth="580" d:DesignHeight="300"
              x:Class="Flow.Launcher.Avalonia.Views.ResultListBox"
              x:DataType="vm:ResultsViewModel">
@@ -17,6 +18,13 @@
              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
              ScrollViewer.VerticalScrollBarVisibility="Auto">
         
+        <!-- Enable virtualization for better performance -->
+        <ListBox.ItemsPanel>
+            <ItemsPanelTemplate>
+                <VirtualizingStackPanel />
+            </ItemsPanelTemplate>
+        </ListBox.ItemsPanel>
+        
         <ListBox.ItemTemplate>
             <DataTemplate x:DataType="vm:ResultViewModel">
                 <Grid Classes="resultItemGrid" ColumnDefinitions="Auto,*,Auto">
@@ -29,10 +37,10 @@
                     <!-- Icon and Text -->
                     <Grid Grid.Column="1" ColumnDefinitions="Auto,*" Margin="6,0,0,0">
                         
-                        <!-- Icon -->
+                        <!-- Icon (async loaded via ^ stream operator) -->
                         <Image Grid.Column="0"
                                Classes="resultIcon"
-                               Source="{Binding IconPath, TargetNullValue={x:Null}}"
+                               Source="{Binding Image^, FallbackValue={x:Static helper:ImageLoader.DefaultImage}}"
                                IsVisible="{Binding ShowIcon}"
                                RenderOptions.BitmapInterpolationMode="HighQuality" />
                         
