@@ -13,6 +13,7 @@ using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Avalonia.ViewModel;
+using Flow.Launcher.Avalonia.Resource;
 using CommunityToolkit.Mvvm.DependencyInjection;
 
 namespace Flow.Launcher.Avalonia;
@@ -38,7 +39,16 @@ public class AvaloniaPublicAPI : IPublicAPI
 
     // Essential for plugins
     public void ChangeQuery(string query, bool requery = false) => _getMainViewModel().QueryText = query;
-    public string GetTranslation(string key) => key;
+    
+    public string GetTranslation(string key)
+    {
+        var i18n = App.I18n;
+        if (i18n == null)
+            return key;
+        
+        return i18n.GetTranslation(key);
+    }
+    
     public List<PluginPair> GetAllPlugins() => PluginManager.AllPlugins;
     public MatchResult FuzzySearch(string query, string stringToCompare) => 
         Ioc.Default.GetRequiredService<StringMatcher>().FuzzyMatch(query, stringToCompare);

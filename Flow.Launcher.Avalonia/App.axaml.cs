@@ -4,6 +4,7 @@ using Avalonia.Markup.Xaml;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Avalonia.Helper;
+using Flow.Launcher.Avalonia.Resource;
 using Flow.Launcher.Avalonia.ViewModel;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure;
@@ -22,8 +23,14 @@ public partial class App : Application
     private static readonly string ClassName = nameof(App);
     private Settings? _settings;
     private MainViewModel? _mainVM;
+    private Internationalization? _i18n;
 
     public static IPublicAPI? API { get; private set; }
+    
+    /// <summary>
+    /// Gets the internationalization service for translations.
+    /// </summary>
+    public static Internationalization? I18n { get; private set; }
 
     public override void Initialize() => AvaloniaXamlLoader.Load(this);
 
@@ -32,6 +39,7 @@ public partial class App : Application
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             LoadSettings();
+            InitializeInternationalization();
             ConfigureDI();
 
             API = Ioc.Default.GetRequiredService<IPublicAPI>();
@@ -66,6 +74,21 @@ public partial class App : Application
                 WindowSize = 580, WindowHeightSize = 42, QueryBoxFontSize = 24,
                 ItemHeightSize = 50, ResultItemFontSize = 14, ResultSubItemFontSize = 12, MaxResultsToShow = 6
             };
+        }
+    }
+
+    private void InitializeInternationalization()
+    {
+        try
+        {
+            _i18n = new Internationalization(_settings!);
+            _i18n.Initialize();
+            I18n = _i18n;
+            Log.Info(ClassName, "Internationalization initialized");
+        }
+        catch (Exception e)
+        {
+            Log.Exception(ClassName, "Failed to initialize internationalization", e);
         }
     }
 

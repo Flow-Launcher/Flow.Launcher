@@ -6,6 +6,7 @@
         xmlns:views="using:Flow.Launcher.Avalonia.Views"
         xmlns:vm="using:Flow.Launcher.Avalonia.ViewModel"
         xmlns:converters="using:Flow.Launcher.Avalonia.Converters"
+        xmlns:i18n="using:Flow.Launcher.Avalonia.Resource"
         mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="400"
         x:Class="Flow.Launcher.Avalonia.MainWindow"
         x:DataType="vm:MainViewModel"
@@ -50,7 +51,7 @@
                         <TextBox Name="QueryTextBox"
                                  Classes="queryBox"
                                  Text="{Binding QueryText, Mode=TwoWay}"
-                                 Watermark="Type to search..."
+                                 Watermark="{i18n:Localize queryTextBoxPlaceholder, Fallback='Type here to search'}"
                                  AcceptsReturn="False"
                                  TextWrapping="NoWrap" />
                 </Border>
