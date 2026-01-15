@@ -14,6 +14,15 @@ using Flow.Launcher.Plugin;
 namespace Flow.Launcher.Avalonia.ViewModel;
 
 /// <summary>
+/// Represents which view is currently active.
+/// </summary>
+public enum ActiveView
+{
+    Results,
+    ContextMenu
+}
+
+/// <summary>
 /// MainViewModel for Avalonia - minimal implementation for plugin queries.
 /// </summary>
 public partial class MainViewModel : ObservableObject
@@ -41,12 +50,46 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty]
     private ResultsViewModel _results;
 
+    [ObservableProperty]
+    private ResultsViewModel _contextMenu;
+
+    [ObservableProperty]
+    private ActiveView _activeView = ActiveView.Results;
+
+    /// <summary>
+    /// Whether the results view is currently active.
+    /// </summary>
+    public bool IsResultsViewActive => ActiveView == ActiveView.Results;
+
+    /// <summary>
+    /// Whether the context menu view is currently active.
+    /// </summary>
+    public bool IsContextMenuViewActive => ActiveView == ActiveView.ContextMenu;
+
+    /// <summary>
+    /// Whether to show the results/context menu area (separator + list).
+    /// </summary>
+    public bool ShowResultsArea => HasResults || IsContextMenuViewActive;
+
     public Settings Settings => _settings;
 
     public MainViewModel(Settings settings)
     {
         _settings = settings;
         _results = new ResultsViewModel(settings);
+        _contextMenu = new ResultsViewModel(settings);
+    }
+
+    partial void OnActiveViewChanged(ActiveView value)
+    {
+        OnPropertyChanged(nameof(IsResultsViewActive));
+        OnPropertyChanged(nameof(IsContextMenuViewActive));
+        OnPropertyChanged(nameof(ShowResultsArea));
+    }
+
+    partial void OnHasResultsChanged(bool value)
+    {
+        OnPropertyChanged(nameof(ShowResultsArea));
     }
 
     public void OnPluginsReady()
@@ -92,8 +135,20 @@ public partial class MainViewModel : ObservableObject
     {
         MainWindowVisibility = false;
         QueryText = "";
+        ActiveView = ActiveView.Results;
+        ContextMenu.Clear();
         HideRequested?.Invoke();
         Log.Info(ClassName, "Hide requested");
+    }
+
+    /// <summary>
+    /// Go back from context menu to results view.
+    /// </summary>
+    [RelayCommand]
+    private void BackToResults()
+    {
+        ActiveView = ActiveView.Results;
+        ContextMenu.Clear();
     }
 
     partial void OnQueryTextChanged(string value) => _ = QueryAsync();
@@ -220,21 +275,96 @@ public partial class MainViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void Esc() { Hide(); }
+    private void Esc()
+    {
+        // If in context menu, go back to results; otherwise hide window
+        if (ActiveView == ActiveView.ContextMenu)
+        {
+            BackToResults();
+        }
+        else
+        {
+            Hide();
+        }
+    }
 
     [RelayCommand]
     private async Task OpenResultAsync()
     {
-        var result = Results.SelectedItem?.PluginResult;
+        Result? result;
+        if (ActiveView == ActiveView.ContextMenu)
+        {
+            result = ContextMenu.SelectedItem?.PluginResult;
+        }
+        else
+        {
+            result = Results.SelectedItem?.PluginResult;
+        }
+
         if (result == null) return;
+
         try
         {
             if (await result.ExecuteAsync(new ActionContext { SpecialKeyState = SpecialKeyState.Default }))
-                HideRequested?.Invoke();
+            {
+                Hide();
+            }
+            else if (ActiveView == ActiveView.ContextMenu)
+            {
+                // If context menu action didn't hide, go back to results
+                BackToResults();
+            }
         }
         catch (Exception e) { Log.Exception(ClassName, "Execute error", e); }
     }
 
-    [RelayCommand] private void SelectNextItem() => Results.SelectNextItem();
-    [RelayCommand] private void SelectPrevItem() => Results.SelectPrevItem();
+    /// <summary>
+    /// Load context menu for the currently selected result.
+    /// </summary>
+    [RelayCommand]
+    private void LoadContextMenu()
+    {
+        var selectedResult = Results.SelectedItem?.PluginResult;
+        if (selectedResult == null) return;
+
+        try
+        {
+            var contextMenuResults = PluginManager.GetContextMenusForPlugin(selectedResult);
+            if (contextMenuResults == null || contextMenuResults.Count == 0) return;
+
+            var contextMenuItems = contextMenuResults.Select(r => new ResultViewModel
+            {
+                Title = r.Title ?? "",
+                SubTitle = r.SubTitle ?? "",
+                IconPath = r.IcoPath ?? "",
+                Score = r.Score,
+                PluginResult = r
+            }).ToList();
+
+            ContextMenu.ReplaceResults(contextMenuItems);
+            ActiveView = ActiveView.ContextMenu;
+        }
+        catch (Exception e)
+        {
+            Log.Exception(ClassName, "Failed to load context menu", e);
+        }
+    }
+
+    [RelayCommand]
+    private void SelectNextItem()
+    {
+        if (ActiveView == ActiveView.ContextMenu)
+            ContextMenu.SelectNextItem();
+        else
+            Results.SelectNextItem();
+    }
+
+    [RelayCommand]
+    private void SelectPrevItem()
+    {
+        if (ActiveView == ActiveView.ContextMenu)
+            ContextMenu.SelectPrevItem();
+        else
+            Results.SelectPrevItem();
+    }
 }

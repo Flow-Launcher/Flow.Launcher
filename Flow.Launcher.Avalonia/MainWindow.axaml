@@ -34,6 +34,7 @@
         <KeyBinding Gesture="Enter" Command="{Binding OpenResultCommand}" />
         <KeyBinding Gesture="Down" Command="{Binding SelectNextItemCommand}" />
         <KeyBinding Gesture="Up" Command="{Binding SelectPrevItemCommand}" />
+        <KeyBinding Gesture="Shift+Enter" Command="{Binding LoadContextMenuCommand}" />
     </Window.KeyBindings>
 
     <!-- Main container with rounded corners and background -->
@@ -78,7 +79,7 @@
             <!-- Separator between query and results -->
             <Rectangle Name="MiddleSeparator"
                        Classes="separator"
-                       IsVisible="{Binding HasResults}" />
+                       IsVisible="{Binding ShowResultsArea}" />
 
             <!-- Results Area -->
             <Border Name="ResultAreaBorder" Classes="resultAreaBorder">
@@ -89,10 +90,18 @@
                         <ColumnDefinition Width="0" /> <!-- Preview panel, hidden for now -->
                     </Grid.ColumnDefinitions>
 
-                    <!-- Result List -->
-                    <StackPanel Name="ResultArea" Grid.Column="0">
+                    <!-- Result List (visible when in Results view) -->
+                    <StackPanel Name="ResultArea" Grid.Column="0"
+                                IsVisible="{Binding IsResultsViewActive}">
                         <views:ResultListBox Name="ResultListBox"
                                              DataContext="{Binding Results}" />
+                    </StackPanel>
+
+                    <!-- Context Menu List (visible when in ContextMenu view) -->
+                    <StackPanel Name="ContextMenuArea" Grid.Column="0"
+                                IsVisible="{Binding IsContextMenuViewActive}">
+                        <views:ResultListBox Name="ContextMenuListBox"
+                                             DataContext="{Binding ContextMenu}" />
                     </StackPanel>
 
                     <!-- Preview Panel Separator (hidden for now) -->

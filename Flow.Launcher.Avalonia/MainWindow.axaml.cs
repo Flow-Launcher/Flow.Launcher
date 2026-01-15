@@ -80,11 +80,38 @@ public partial class MainWindow : Window
     {
         base.OnKeyDown(e);
 
-        // Handle Escape to hide window
+        // Handle Escape to hide window (handled by command, but keep as fallback)
         if (e.Key == Key.Escape)
         {
-            Hide();
+            _viewModel?.EscCommand.Execute(null);
             e.Handled = true;
+            return;
+        }
+
+        // Handle Right Arrow to open context menu when cursor is at end of query
+        if (e.Key == Key.Right && _viewModel != null)
+        {
+            // Only trigger context menu if:
+            // 1. We're in results view
+            // 2. There's a selected result
+            // 3. Cursor is at the end of the query text
+            if (_viewModel.IsResultsViewActive &&
+                _viewModel.Results.SelectedItem != null &&
+                _queryTextBox != null &&
+                _queryTextBox.CaretIndex >= (_viewModel.QueryText?.Length ?? 0))
+            {
+                _viewModel.LoadContextMenuCommand.Execute(null);
+                e.Handled = true;
+                return;
+            }
+        }
+
+        // Handle Left Arrow to go back from context menu
+        if (e.Key == Key.Left && _viewModel != null && _viewModel.IsContextMenuViewActive)
+        {
+            _viewModel.BackToResultsCommand.Execute(null);
+            e.Handled = true;
+            return;
         }
     }
 
