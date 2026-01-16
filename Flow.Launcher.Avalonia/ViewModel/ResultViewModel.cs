@@ -53,4 +53,25 @@ public partial class ResultViewModel : ObservableObject
     /// Returns a cached task to avoid re-loading on every property access.
     /// </summary>
     public Task<IImage?> Image => _imageTask ??= ImageLoader.LoadAsync(IconPath);
+
+    // Glyph support
+    private GlyphInfo? _glyph;
+
+    public GlyphInfo? Glyph
+    {
+        get => _glyph;
+        set
+        {
+            if (SetProperty(ref _glyph, value))
+            {
+                OnPropertyChanged(nameof(GlyphAvailable));
+                OnPropertyChanged(nameof(ShowGlyph));
+            }
+        }
+    }
+
+    public bool GlyphAvailable => Glyph != null;
+
+    public bool ShowGlyph => 
+        Settings?.UseGlyphIcons == true && GlyphAvailable;
 }

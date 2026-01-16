@@ -7,7 +7,7 @@
              mc:Ignorable="d" d:DesignWidth="580" d:DesignHeight="300"
              x:Class="Flow.Launcher.Avalonia.Views.ResultListBox"
              x:DataType="vm:ResultsViewModel">
-    
+     
     <ListBox Name="ResultsList"
              Classes="resultListBox"
              ItemsSource="{Binding Results}"
@@ -17,7 +17,7 @@
              SelectionMode="Single"
              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
              ScrollViewer.VerticalScrollBarVisibility="Auto">
-        
+         
         <!-- Enable virtualization for better performance -->
         <ListBox.ItemsPanel>
             <ItemsPanelTemplate>
@@ -37,13 +37,20 @@
                     <!-- Icon and Text -->
                     <Grid Grid.Column="1" ColumnDefinitions="Auto,*" Margin="6,0,0,0">
                         
-                        <!-- Icon (async loaded via ^ stream operator) -->
+                        <!-- Glyph Icon (shown when UseGlyphIcons is enabled and glyph is available) -->
+                        <TextBlock Grid.Column="0"
+                                   Classes="resultGlyph"
+                                   Text="{Binding Glyph.Glyph}"
+                                   IsVisible="{Binding ShowGlyph}"
+                                   FontFamily="{Binding Glyph.FontFamily}" />
+                        
+                        <!-- Image Icon (shown when no glyph or UseGlyphIcons is disabled) -->
                         <Image Grid.Column="0"
                                Classes="resultIcon"
                                Source="{Binding Image^, FallbackValue={x:Static helper:ImageLoader.DefaultImage}}"
-                               IsVisible="{Binding ShowIcon}"
+                               IsVisible="{Binding !ShowGlyph}"
                                RenderOptions.BitmapInterpolationMode="HighQuality" />
-                        
+
                         <!-- Title and SubTitle -->
                         <Grid Grid.Column="1" 
                               RowDefinitions="Auto,Auto"

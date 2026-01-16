@@ -265,7 +265,8 @@ public partial class MainViewModel : ObservableObject
                         SubTitle = r.SubTitle ?? "",
                         IconPath = r.IcoPath ?? plugin.Metadata.IcoPath ?? "",
                         Score = r.Score,
-                        PluginResult = r
+                        PluginResult = r,
+                        Glyph = r.Glyph
                     });
                 }
             }
@@ -340,7 +341,8 @@ public partial class MainViewModel : ObservableObject
                 SubTitle = r.SubTitle ?? "",
                 IconPath = r.IcoPath ?? "",
                 Score = r.Score,
-                PluginResult = r
+                PluginResult = r,
+                Glyph = r.Glyph
             }).ToList();
 
             ContextMenu.ReplaceResults(contextMenuItems);

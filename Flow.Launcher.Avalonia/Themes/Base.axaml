@@ -148,6 +148,17 @@
         <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
 
+    <!-- Result Glyph -->
+    <Style Selector="TextBlock.resultGlyph">
+        <Setter Property="Width" Value="32" />
+        <Setter Property="Height" Value="32" />
+        <Setter Property="Margin" Value="12,0,0,0" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="TextAlignment" Value="Center" />
+        <Setter Property="FontSize" Value="20" />
+    </Style>
+
     <!-- Result Title -->
     <Style Selector="TextBlock.resultTitle">
         <Setter Property="Foreground" Value="#FFFFF8" />
