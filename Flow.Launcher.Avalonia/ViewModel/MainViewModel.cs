@@ -37,7 +37,7 @@ public partial class MainViewModel : ObservableObject
     public event Action? ShowRequested;
 
     [ObservableProperty]
-    private bool _mainWindowVisibility = true;
+    private bool _mainWindowVisibility = false;
 
     [ObservableProperty]
     private string _queryText = string.Empty;
@@ -96,7 +96,8 @@ public partial class MainViewModel : ObservableObject
     public void OnPluginsReady()
     {
         _pluginsReady = true;
-        Log.Info(ClassName, "Plugins ready");
+        MainWindowVisibility = true;
+        Log.Info(ClassName, "Plugins ready - window shown");
         if (!string.IsNullOrWhiteSpace(QueryText))
             _ = QueryAsync();
     }

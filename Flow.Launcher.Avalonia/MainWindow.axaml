@@ -24,7 +24,8 @@
         Background="Transparent"
         ExtendClientAreaToDecorationsHint="True"
         ExtendClientAreaChromeHints="NoChrome"
-        SizeToContent="Height">
+        SizeToContent="Height"
+        IsVisible="{Binding MainWindowVisibility, Mode=TwoWay}">
 
     <Window.Resources>
         <converters:BoolToIsVisibleConverter x:Key="BoolToVisibilityConverter" />
