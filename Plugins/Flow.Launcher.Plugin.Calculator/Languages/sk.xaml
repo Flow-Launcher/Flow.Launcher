@@ -12,6 +12,7 @@
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_comma">Čiarka (,)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_dot">Bodka (.)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_max_decimal_places">Desatinné miesta</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_use_thousands_separator">Show thousands separator in results</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_failed_to_copy">Kopírovanie zlyhalo, skúste to neskôr</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_show_error_message">Zobraziť chybovú správu, keď výpočet zlyhá</system:String>
 </ResourceDictionary>
