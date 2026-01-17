@@ -12,6 +12,7 @@
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_comma">Vírgula (,)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_dot">Ponto (.)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_max_decimal_places">Número máximo de casas decimais</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_use_thousands_separator">Show thousands separator in results</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_failed_to_copy">Falha ao copiar. Por favor tente mais tarde.</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_show_error_message">Mostrar mensagem de erro se o cálculo falhar</system:String>
 </ResourceDictionary>
