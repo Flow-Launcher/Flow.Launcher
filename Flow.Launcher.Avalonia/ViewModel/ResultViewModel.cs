@@ -66,6 +66,7 @@ public partial class ResultViewModel : ObservableObject
             {
                 OnPropertyChanged(nameof(GlyphAvailable));
                 OnPropertyChanged(nameof(ShowGlyph));
+                OnPropertyChanged(nameof(GlyphFontFamily));
             }
         }
     }
@@ -74,4 +75,9 @@ public partial class ResultViewModel : ObservableObject
 
     public bool ShowGlyph => 
         Settings?.UseGlyphIcons == true && GlyphAvailable;
+
+    /// <summary>
+    /// Gets the FontFamily for the glyph icon, handling file paths and resource paths.
+    /// </summary>
+    public FontFamily? GlyphFontFamily => Glyph != null ? FontLoader.GetFontFamily(Glyph) : null;
 }

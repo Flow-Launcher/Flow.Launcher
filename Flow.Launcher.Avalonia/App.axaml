@@ -14,8 +14,10 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <!-- Additional resources can be added here -->
+                <!-- Embedded fonts -->
             </ResourceDictionary.MergedDictionaries>
+            <!-- Register Segoe Fluent Icons font for glyph icons -->
+            <FontFamily x:Key="SegoeFluentIcons">avares://Flow.Launcher.Avalonia/Resources#Segoe Fluent Icons</FontFamily>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

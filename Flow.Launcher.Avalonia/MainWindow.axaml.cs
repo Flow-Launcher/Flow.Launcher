@@ -18,7 +18,7 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
-        
+
         // Get the ViewModel from DI (same instance that App uses)
         _viewModel = Ioc.Default.GetRequiredService<MainViewModel>();
         _viewModel.HideRequested += () => Hide();
@@ -44,7 +44,7 @@ public partial class MainWindow : Window
     protected override void OnLoaded(RoutedEventArgs e)
     {
         base.OnLoaded(e);
-        
+
         // Focus the query text box when window loads
         _queryTextBox?.Focus();
     }
@@ -52,10 +52,10 @@ public partial class MainWindow : Window
     protected override void OnOpened(EventArgs e)
     {
         base.OnOpened(e);
-        
+
         // Center the window on screen
         CenterOnScreen();
-        
+
         // Focus and select all text
         if (_queryTextBox != null)
         {

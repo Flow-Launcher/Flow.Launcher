@@ -42,7 +42,7 @@
                                    Classes="resultGlyph"
                                    Text="{Binding Glyph.Glyph}"
                                    IsVisible="{Binding ShowGlyph}"
-                                   FontFamily="{Binding Glyph.FontFamily}" />
+                                   FontFamily="{Binding GlyphFontFamily}" />
                         
                         <!-- Image Icon (shown when no glyph or UseGlyphIcons is disabled) -->
                         <Image Grid.Column="0"
