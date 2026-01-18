@@ -1,6 +1,6 @@
 # Flow.Launcher Avalonia Migration Checklist
 
-> **Overall Progress: ~30-35%**  
+> **Overall Progress: ~35-40%**  
 > Last Updated: January 2026
 
 ---
@@ -48,44 +48,53 @@
 ## 2. Settings Pages
 
 ### 2.1 General Settings (`SettingsPaneGeneral.xaml` - 538 lines)
-**Avalonia: 71 lines (~13%)**
+**Avalonia: ~270 lines (~50%)**
 
 | Setting | Status | Binding Property |
 |---------|--------|------------------|
 | **Startup Section** |
-| Start on system startup | :x: Missing | `StartFlowLauncherOnSystemStartup` |
-| Use logon task | :x: Missing | `UseLogonTaskForStartup` |
-| Hide on startup | :x: Missing | `Settings.HideOnStartup` |
+| Start on system startup | :white_check_mark: Done | `StartOnStartup` |
+| Use logon task | :white_check_mark: Done | `UseLogonTaskForStartup` |
+| Hide on startup | :white_check_mark: Done | `HideOnStartup` |
 | **Behavior Section** |
-| Hide when lose focus | :x: Missing | `Settings.HideWhenDeactivated` |
-| Hide notify icon | :x: Missing | `Settings.HideNotifyIcon` |
-| Show at topmost | :x: Missing | `Settings.ShowAtTopmost` |
+| Hide when lose focus | :white_check_mark: Done | `HideWhenDeactivated` |
+| Hide notify icon | :white_check_mark: Done | `HideNotifyIcon` |
+| Show at topmost | :white_check_mark: Done | `ShowAtTopmost` |
+| Ignore hotkeys on fullscreen | :white_check_mark: Done | `IgnoreHotkeysOnFullscreen` |
+| Always preview | :white_check_mark: Done | `AlwaysPreview` |
 | **Position Section** |
-| Search window position | :x: Missing | `Settings.SearchWindowScreen` |
+| Search window position | :white_check_mark: Done | `SelectedSearchWindowScreen` |
+| Search window align | :white_check_mark: Done | `SelectedSearchWindowAlign` |
 | Custom position X/Y | :x: Missing | `Settings.CustomWindowLeft/Top` |
-| Remember last position | :x: Missing | `Settings.RememberLastLaunchLocation` |
 | **Search Section** |
-| Max results shown | :x: Missing | `Settings.MaxResultsToShow` |
-| Clear input on close | :x: Missing | `Settings.ClearInputOnLaunch` |
-| Auto-complete text | :white_check_mark: Done | `Settings.AutoCompleteText` |
-| Keep search text | :x: Missing | `Settings.KeepMaxResults` |
-| Query search precision | :x: Missing | `Settings.QuerySearchPrecision` |
-| **Input Section** |
-| Always start English mode | :x: Missing | `Settings.AlwaysStartEn` |
-| First search delay | :x: Missing | `Settings.FirstSearchDelay` |
-| Input delay | :x: Missing | `Settings.InputDelay` |
-| **Language Section** |
-| Language selector | :white_check_mark: Done | `Settings.Language` |
+| Query search precision | :white_check_mark: Done | `SelectedSearchPrecision` |
+| Last query mode | :white_check_mark: Done | `SelectedLastQueryMode` |
+| Search delay toggle | :white_check_mark: Done | `SearchQueryResultsWithDelay` |
+| Search delay time | :white_check_mark: Done | `SearchDelayTime` |
+| **Home Page Section** |
+| Show home page | :white_check_mark: Done | `ShowHomePage` |
+| History results for home | :white_check_mark: Done | `ShowHistoryResultsForHomePage` |
+| History results count | :white_check_mark: Done | `MaxHistoryResultsToShow` |
 | **Updates Section** |
-| Auto-update interval | :x: Missing | `Settings.UpdateCheckInterval` |
-| Check for updates | :x: Missing | `UpdateApp` command |
-| **Advanced Section** |
-| Python directory | :x: Missing | `Settings.PluginSettings.PythonExecutablePath` |
-| Node directory | :x: Missing | `Settings.PluginSettings.NodeExecutablePath` |
-| Plugin directory | :x: Missing | `Settings.PluginSettings.PluginDirectory` |
+| Auto updates | :white_check_mark: Done | `AutoUpdates` |
+| Auto update plugins | :white_check_mark: Done | `AutoUpdatePlugins` |
+| **Miscellaneous** |
+| Auto restart after changing | :white_check_mark: Done | `AutoRestartAfterChanging` |
+| Show unknown source warning | :white_check_mark: Done | `ShowUnknownSourceWarning` |
+| Always start English | :white_check_mark: Done | `AlwaysStartEn` |
+| Use Pinyin | :white_check_mark: Done | `ShouldUsePinyin` |
+| **Language Section** |
+| Language selector | :white_check_mark: Done | `SelectedLanguage` |
+| **Paths** |
+| Python directory | :white_check_mark: Done | `PythonPath` (display + select) |
+| Node directory | :white_check_mark: Done | `NodePath` (display + select) |
+| **Not Yet Implemented** |
 | Select browser | :x: Missing | Opens `SelectBrowserWindow` |
 | Select file manager | :x: Missing | Opens `SelectFileManagerWindow` |
-| Portable mode | :x: Missing | `Settings.ShouldUsePinyin` |
+| Portable mode | :x: Missing | Toggle |
+| Dialog jump settings | :x: Missing | ExCard with nested options |
+| Double pinyin settings | :x: Missing | ExCard with schema selector |
+| Korean IME settings | :x: Missing | ExCard with registry toggle |
 
 ### 2.2 Theme Settings (`SettingsPaneTheme.xaml` - 803 lines)
 **Avalonia: 66 lines (~8%)**
@@ -192,7 +201,7 @@
 | Open logs folder | :x: Missing | Button |
 | Open settings folder | :x: Missing | Button |
 
-**Settings Progress: 312/2609 lines (~12%)**
+**Settings Progress: ~550/2609 lines (~21%)**
 
 ---
 
@@ -200,9 +209,9 @@
 
 | Control | WPF File | Status | Description |
 |---------|----------|--------|-------------|
-| Card | `Card.xaml.cs` | :x: Missing | Settings card with icon, title, subtitle |
-| ExCard | `ExCard.xaml.cs` | :x: Missing | Expandable card with nested content |
-| CardGroup | `CardGroup.xaml.cs` | :x: Missing | Groups cards with rounded corners |
+| Card | `Card.xaml.cs` | :white_check_mark: Done | Settings card with icon, title, subtitle |
+| ExCard | `ExCard.xaml.cs` | :white_check_mark: Done | Expandable card with nested content |
+| CardGroup | `CardGroup.xaml.cs` | :white_check_mark: Done | Groups cards with rounded corners |
 | InfoBar | `InfoBar.xaml.cs` | :x: Missing | Information/warning banner |
 | HyperLink | `HyperLink.xaml.cs` | :x: Missing | Clickable link control |
 | HotkeyDisplay | `HotkeyDisplay.xaml.cs` | :x: Missing | Displays hotkey as key badges |
@@ -210,7 +219,9 @@
 | InstalledPluginDisplayKeyword | `InstalledPluginDisplayKeyword.xaml.cs` | :x: Missing | Keyword badge |
 | InstalledPluginDisplayBottomData | `InstalledPluginDisplayBottomData.xaml.cs` | :x: Missing | Plugin metadata footer |
 
-**Progress: 0/9 (0%)**
+**Progress: 3/9 (33%)**
+
+> Note: Using FluentAvalonia's `SettingsExpander` for most settings pages instead of custom Card controls.
 
 ---
 
@@ -222,6 +233,7 @@
 | ResultsViewModel | ~200 | ~150 | :white_check_mark: 75% | Core functionality done |
 | ResultViewModel | ~300 | ~200 | :white_check_mark: 67% | Basic display done |
 | SettingWindowViewModel | ~100 | ~50 | :yellow_circle: 50% | Navigation works |
+| GeneralSettingsViewModel | ~100 | ~400 | :white_check_mark: 95% | Most settings implemented |
 | PluginViewModel | ~150 | ~30 | :yellow_circle: 20% | Basic list only |
 | PluginStoreItemViewModel | ~100 | 0 | :x: 0% | Not started |
 | WelcomeViewModel | ~80 | 0 | :x: 0% | Not started |
@@ -375,8 +387,8 @@
 ### High Priority (Core UX)
 1. [ ] **HighlightTextConverter** - Search match highlighting
 2. [ ] **History cycling** - Up/Down arrow through history
-3. [ ] **GeneralSettingsPage** - Essential settings (startup, behavior)
-4. [ ] **Card/ExCard controls** - Required for all settings pages
+3. [x] **GeneralSettingsPage** - Essential settings (startup, behavior) - DONE
+4. [x] **Card/ExCard controls** - Required for all settings pages - DONE (using FluentAvalonia SettingsExpander)
 5. [ ] **Hide on focus loss** - Expected behavior
 
 ### Medium Priority (Feature Completeness)
@@ -429,10 +441,13 @@ Flow.Launcher.Avalonia/
 │   ├── PreviewPanel.axaml
 │   ├── Controls/
 │   │   ├── HotkeyControl.axaml
-│   │   └── HotkeyRecorderDialog.axaml
+│   │   ├── HotkeyRecorderDialog.axaml
+│   │   ├── Card.axaml (+ .cs)
+│   │   ├── ExCard.axaml (+ .cs)
+│   │   └── CardGroup.axaml (+ .cs)
 │   └── SettingPages/
 │       ├── SettingsWindow.axaml
-│       ├── GeneralSettingsPage.axaml (71 lines)
+│       ├── GeneralSettingsPage.axaml (~270 lines)
 │       ├── ThemeSettingsPage.axaml (66 lines)
 │       ├── HotkeySettingsPage.axaml (26 lines)
 │       ├── PluginsSettingsPage.axaml (47 lines)
@@ -440,7 +455,9 @@ Flow.Launcher.Avalonia/
 │       └── AboutSettingsPage.axaml (25 lines)
 ├── ViewModel/
 │   ├── MainViewModel.cs (~420 lines)
-│   └── SettingPages/*.cs
+│   ├── SettingPages/
+│   │   └── GeneralSettingsViewModel.cs (~400 lines)
+│   └── ...
 ├── Helper/ (4 files)
 ├── Converters/ (3 files)
 └── Themes/
