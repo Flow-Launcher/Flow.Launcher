@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Avalonia.Resource;
+using Flow.Launcher.Avalonia.Views.SettingPages;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
@@ -57,6 +58,12 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty]
     private ActiveView _activeView = ActiveView.Results;
 
+    [ObservableProperty]
+    private ResultViewModel? _previewSelectedItem;
+
+    [ObservableProperty]
+    private bool _isPreviewOn;
+
     /// <summary>
     /// Whether the results view is currently active.
     /// </summary>
@@ -79,6 +86,22 @@ public partial class MainViewModel : ObservableObject
         _settings = settings;
         _results = new ResultsViewModel(settings);
         _contextMenu = new ResultsViewModel(settings);
+        
+        _results.PropertyChanged += (s, e) =>
+        {
+            if (e.PropertyName == nameof(ResultsViewModel.SelectedItem) && IsResultsViewActive)
+            {
+                PreviewSelectedItem = _results.SelectedItem;
+            }
+        };
+        
+        _contextMenu.PropertyChanged += (s, e) =>
+        {
+            if (e.PropertyName == nameof(ResultsViewModel.SelectedItem) && IsContextMenuViewActive)
+            {
+                PreviewSelectedItem = _contextMenu.SelectedItem;
+            }
+        };
     }
 
     partial void OnActiveViewChanged(ActiveView value)
@@ -86,6 +109,14 @@ public partial class MainViewModel : ObservableObject
         OnPropertyChanged(nameof(IsResultsViewActive));
         OnPropertyChanged(nameof(IsContextMenuViewActive));
         OnPropertyChanged(nameof(ShowResultsArea));
+        
+        PreviewSelectedItem = value == ActiveView.Results ? Results.SelectedItem : ContextMenu.SelectedItem;
+    }
+
+    [RelayCommand]
+    public void TogglePreview()
+    {
+        IsPreviewOn = !IsPreviewOn;
     }
 
     partial void OnHasResultsChanged(bool value)
@@ -289,6 +320,17 @@ public partial class MainViewModel : ObservableObject
         {
             Hide();
         }
+    }
+
+    [RelayCommand]
+    public void OpenSettings()
+    {
+        global::Avalonia.Threading.Dispatcher.UIThread.Post(() =>
+        {
+            var settingsWindow = new SettingsWindow();
+            settingsWindow.Show();
+            Hide();
+        });
     }
 
     [RelayCommand]

@@ -107,7 +107,7 @@ public class AvaloniaPublicAPI : IPublicAPI
     public void ShowMsg(string title, string subTitle, string iconPath, bool useMainWindowAsOwner = true) { }
     public void ShowMsgWithButton(string title, string buttonText, Action buttonAction, string subTitle = "", string iconPath = "") { }
     public void ShowMsgWithButton(string title, string buttonText, Action buttonAction, string subTitle, string iconPath, bool useMainWindowAsOwner = true) { }
-    public void OpenSettingDialog() { }
+    public void OpenSettingDialog() => _getMainViewModel()?.OpenSettings();
     public void RegisterGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback) { }
     public void RemoveGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback) { }
     public T LoadSettingJsonStorage<T>() where T : new() => new T();

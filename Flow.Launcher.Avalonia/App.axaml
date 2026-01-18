@@ -1,13 +1,15 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="using:Flow.Launcher.Avalonia"
+             xmlns:sty="using:FluentAvalonia.Styling"
+             xmlns:i18n="using:Flow.Launcher.Avalonia.Resource"
              x:Class="Flow.Launcher.Avalonia.App"
              RequestedThemeVariant="Default">
     <!-- "Default" ThemeVariant follows system theme variant. 
          "Dark" or "Light" are other available options. -->
 
     <Application.Styles>
-        <FluentTheme />
+        <sty:FluentAvaloniaTheme />
         <StyleInclude Source="avares://Flow.Launcher.Avalonia/Themes/Base.axaml"/>
     </Application.Styles>
 
@@ -20,4 +22,21 @@
             <FontFamily x:Key="SegoeFluentIcons">avares://Flow.Launcher.Avalonia/Resources#Segoe Fluent Icons</FontFamily>
         </ResourceDictionary>
     </Application.Resources>
+
+    <TrayIcon.Icons>
+        <TrayIcons>
+            <TrayIcon Icon="avares://Flow.Launcher.Avalonia/Images/app.ico" 
+                      ToolTipText="Flow Launcher"
+                      Clicked="TrayIcon_OnClicked">
+                <TrayIcon.Menu>
+                    <NativeMenu>
+                        <NativeMenuItem Header="{i18n:Localize show}" Click="MenuShow_OnClick" />
+                        <NativeMenuItem Header="{i18n:Localize settings}" Click="MenuSettings_OnClick" />
+                        <NativeMenuItemSeparator />
+                        <NativeMenuItem Header="{i18n:Localize exit}" Click="MenuExit_OnClick" />
+                    </NativeMenu>
+                </TrayIcon.Menu>
+            </TrayIcon>
+        </TrayIcons>
+    </TrayIcon.Icons>
 </Application>

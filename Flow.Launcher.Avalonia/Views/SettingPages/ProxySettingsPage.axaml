@@ -1,0 +1,47 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
+             xmlns:vm="using:Flow.Launcher.Avalonia.ViewModel.SettingPages"
+             xmlns:i18n="using:Flow.Launcher.Avalonia.Resource"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+             x:Class="Flow.Launcher.Avalonia.Views.SettingPages.ProxySettingsPage"
+             x:DataType="vm:ProxySettingsViewModel">
+
+    <StackPanel Spacing="20">
+        <TextBlock Text="{i18n:Localize proxy}" FontSize="28" FontWeight="SemiBold" />
+
+        <ui:SettingsExpander Header="{i18n:Localize proxyEnabled}"
+                            IconSource="Globe">
+            <ui:SettingsExpander.Footer>
+                <ToggleSwitch IsChecked="{Binding ProxyEnabled}" />
+            </ui:SettingsExpander.Footer>
+        </ui:SettingsExpander>
+
+        <ui:SettingsExpander Header="{i18n:Localize proxyServer}">
+            <ui:SettingsExpander.Footer>
+                <TextBox Text="{Binding ProxyServer}" MinWidth="200" IsEnabled="{Binding ProxyEnabled}" />
+            </ui:SettingsExpander.Footer>
+        </ui:SettingsExpander>
+
+        <ui:SettingsExpander Header="{i18n:Localize proxyPort}">
+            <ui:SettingsExpander.Footer>
+                <NumericUpDown Value="{Binding ProxyPort}" Minimum="0" Maximum="65535" IsEnabled="{Binding ProxyEnabled}" />
+            </ui:SettingsExpander.Footer>
+        </ui:SettingsExpander>
+
+        <ui:SettingsExpander Header="{i18n:Localize proxyUserName}">
+            <ui:SettingsExpander.Footer>
+                <TextBox Text="{Binding ProxyUserName}" MinWidth="200" IsEnabled="{Binding ProxyEnabled}" />
+            </ui:SettingsExpander.Footer>
+        </ui:SettingsExpander>
+
+        <ui:SettingsExpander Header="{i18n:Localize proxyPassword}">
+            <ui:SettingsExpander.Footer>
+                <TextBox Text="{Binding ProxyPassword}" PasswordChar="*" MinWidth="200" IsEnabled="{Binding ProxyEnabled}" />
+            </ui:SettingsExpander.Footer>
+        </ui:SettingsExpander>
+
+    </StackPanel>
+</UserControl>

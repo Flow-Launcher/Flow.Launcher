@@ -1,0 +1,26 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
+             xmlns:vm="using:Flow.Launcher.Avalonia.ViewModel.SettingPages"
+             xmlns:i18n="using:Flow.Launcher.Avalonia.Resource"
+             xmlns:controls="using:Flow.Launcher.Avalonia.Views.Controls"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Flow.Launcher.Avalonia.Views.SettingPages.HotkeySettingsPage"
+             x:DataType="vm:HotkeySettingsViewModel">
+
+    <StackPanel Spacing="20">
+        <TextBlock Text="{i18n:Localize hotkey}" FontSize="28" FontWeight="SemiBold" />
+
+        <ui:SettingsExpander Header="{i18n:Localize toggleFlowLauncher}"
+                            Description="{i18n:Localize toggleFlowLauncherTip}"
+                            IconSource="Keyboard">
+            <ui:SettingsExpander.Footer>
+                <controls:HotkeyControl Hotkey="{Binding ToggleHotkey, Mode=TwoWay}" MinWidth="150" />
+            </ui:SettingsExpander.Footer>
+        </ui:SettingsExpander>
+        
+        <TextBlock Text="{i18n:Localize hotkeyFormatTip}" Foreground="Gray" FontSize="12" />
+    </StackPanel>
+</UserControl>

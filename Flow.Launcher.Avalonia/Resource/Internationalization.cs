@@ -7,9 +7,11 @@ using System.Threading;
 using System.Xml.Linq;
 using Avalonia;
 using Avalonia.Controls;
+using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Avalonia.Resource;
 
@@ -68,6 +70,27 @@ public class Internationalization
         catch (Exception e)
         {
             Log.Exception(ClassName, "Failed to initialize internationalization", e);
+        }
+    }
+
+    /// <summary>
+    /// Update plugin metadata name & description and call OnCultureInfoChanged.
+    /// </summary>
+    public void UpdatePluginMetadataTranslations()
+    {
+        foreach (var p in PluginManager.GetTranslationPlugins())
+        {
+            if (p.Plugin is not IPluginI18n pluginI18N) continue;
+            try
+            {
+                p.Metadata.Name = pluginI18N.GetTranslatedPluginTitle();
+                p.Metadata.Description = pluginI18N.GetTranslatedPluginDescription();
+                pluginI18N.OnCultureInfoChanged(CultureInfo.CurrentCulture);
+            }
+            catch (Exception e)
+            {
+                Log.Exception(ClassName, $"Failed for <{p.Metadata.Name}>", e);
+            }
         }
     }
 

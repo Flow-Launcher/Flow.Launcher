@@ -37,6 +37,8 @@
         <KeyBinding Gesture="Down" Command="{Binding SelectNextItemCommand}" />
         <KeyBinding Gesture="Up" Command="{Binding SelectPrevItemCommand}" />
         <KeyBinding Gesture="Shift+Enter" Command="{Binding LoadContextMenuCommand}" />
+        <KeyBinding Gesture="Ctrl+OemComma" Command="{Binding OpenSettingsCommand}" />
+        <KeyBinding Gesture="F1" Command="{Binding TogglePreviewCommand}" />
     </Window.KeyBindings>
 
     <!-- Main container with rounded corners and background -->
@@ -89,7 +91,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" MinWidth="80" />
                         <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="0" /> <!-- Preview panel, hidden for now -->
+                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
                     <!-- Result List (visible when in Results view) -->
@@ -106,19 +108,20 @@
                                              DataContext="{Binding ContextMenu}" />
                     </StackPanel>
 
-                    <!-- Preview Panel Separator (hidden for now) -->
+                    <!-- Preview Panel Separator -->
                     <GridSplitter Name="PreviewSplitter"
                                   Grid.Column="1"
                                   Width="5"
                                   Background="Transparent"
-                                  IsVisible="False" />
+                                  IsVisible="{Binding IsPreviewOn}" />
 
-                    <!-- Preview Panel (to be implemented) -->
-                    <Grid Name="PreviewPanel"
-                          Grid.Column="2"
-                          IsVisible="False">
-                        <!-- Preview content will go here -->
-                    </Grid>
+                    <!-- Preview Panel -->
+                    <Border Name="PreviewPanelContainer"
+                            Grid.Column="2"
+                            Width="300"
+                            IsVisible="{Binding IsPreviewOn}">
+                        <views:PreviewPanel DataContext="{Binding PreviewSelectedItem}" />
+                    </Border>
                 </Grid>
             </Border>
         </StackPanel>

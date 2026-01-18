@@ -1,0 +1,65 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:Flow.Launcher.Avalonia.ViewModel"
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="400"
+             x:Class="Flow.Launcher.Avalonia.Views.PreviewPanel"
+             x:DataType="vm:ResultViewModel">
+
+    <Grid RowDefinitions="Auto,Auto,*" Margin="20">
+        
+        <!-- Large Icon -->
+        <Border Width="128" Height="128" 
+                CornerRadius="8" 
+                Background="{DynamicResource ControlFillColorDefaultBrush}"
+                Margin="0,0,0,20">
+            <Panel>
+                <!-- Image Icon -->
+                <Image Source="{Binding Image^}" 
+                       Stretch="Uniform"
+                       IsVisible="{Binding !ShowGlyph}" />
+                
+                <!-- Glyph Icon -->
+                <TextBlock Text="{Binding Glyph.Glyph}" 
+                           FontFamily="{Binding GlyphFontFamily}"
+                           FontSize="64"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                           IsVisible="{Binding ShowGlyph}" />
+            </Panel>
+        </Border>
+
+        <!-- Title -->
+        <SelectableTextBlock Grid.Row="1"
+                   Text="{Binding Title}"
+                   FontSize="20"
+                   FontWeight="SemiBold"
+                   TextWrapping="Wrap"
+                   TextAlignment="Center"
+                   Margin="0,0,0,10" />
+
+        <!-- SubTitle and Details -->
+        <ScrollViewer Grid.Row="2">
+            <StackPanel Spacing="10">
+                <SelectableTextBlock Text="{Binding SubTitle}"
+                           Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                           TextWrapping="Wrap"
+                           TextAlignment="Center" />
+                
+                <!-- Separator -->
+                <Border Height="1" Background="{DynamicResource DividerStrokeColorDefaultBrush}" Margin="0,10" />
+                
+                <!-- Additional Metadata could go here -->
+                <TextBlock Text="Score" FontWeight="Bold" FontSize="12" Foreground="{DynamicResource TextFillColorTertiaryBrush}" />
+                <TextBlock Text="{Binding Score}" FontSize="12" />
+                
+                <TextBlock Text="Plugin" FontWeight="Bold" FontSize="12" Foreground="{DynamicResource TextFillColorTertiaryBrush}" Margin="0,10,0,0" />
+                <TextBlock Text="{Binding PluginResult.PluginDirectory}" FontSize="12" TextWrapping="Wrap" />
+
+            </StackPanel>
+        </ScrollViewer>
+
+    </Grid>
+</UserControl>

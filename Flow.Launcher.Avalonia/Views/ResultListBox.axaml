@@ -34,22 +34,27 @@
                             Classes="resultBullet"
                             VerticalAlignment="Stretch" />
                     
-                    <!-- Icon and Text -->
+                    <!-- Icon Area -->
                     <Grid Grid.Column="1" ColumnDefinitions="Auto,*" Margin="6,0,0,0">
                         
-                        <!-- Glyph Icon (shown when UseGlyphIcons is enabled and glyph is available) -->
-                        <TextBlock Grid.Column="0"
-                                   Classes="resultGlyph"
-                                   Text="{Binding Glyph.Glyph}"
-                                   IsVisible="{Binding ShowGlyph}"
-                                   FontFamily="{Binding GlyphFontFamily}" />
-                        
-                        <!-- Image Icon (shown when no glyph or UseGlyphIcons is disabled) -->
-                        <Image Grid.Column="0"
-                               Classes="resultIcon"
-                               Source="{Binding Image^, FallbackValue={x:Static helper:ImageLoader.DefaultImage}}"
-                               IsVisible="{Binding !ShowGlyph}"
-                               RenderOptions.BitmapInterpolationMode="HighQuality" />
+                        <!-- Icon Container (fixed size for perfect centering) -->
+                        <Panel Grid.Column="0" Width="32" Height="32" Margin="12,0,0,0" VerticalAlignment="Center">
+                            <!-- Glyph Icon -->
+                            <TextBlock Classes="resultGlyph"
+                                       Text="{Binding Glyph.Glyph}"
+                                       IsVisible="{Binding ShowGlyph}"
+                                       FontFamily="{Binding GlyphFontFamily}"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center" />
+                            
+                            <!-- Image Icon -->
+                            <Image Classes="resultIcon"
+                                   Source="{Binding Image^, FallbackValue={x:Static helper:ImageLoader.DefaultImage}}"
+                                   IsVisible="{Binding !ShowGlyph}"
+                                   RenderOptions.BitmapInterpolationMode="HighQuality"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" />
+                        </Panel>
 
                         <!-- Title and SubTitle -->
                         <Grid Grid.Column="1" 

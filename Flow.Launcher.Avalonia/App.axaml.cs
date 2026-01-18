@@ -1,4 +1,5 @@
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Avalonia.Threading;
@@ -6,6 +7,7 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Avalonia.Helper;
 using Flow.Launcher.Avalonia.Resource;
 using Flow.Launcher.Avalonia.ViewModel;
+using Flow.Launcher.Avalonia.Views.SettingPages;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
@@ -26,19 +28,24 @@ public partial class App : Application
 
     public static IPublicAPI? API { get; private set; }
 
-    public override void Initialize() => AvaloniaXamlLoader.Load(this);
+    public override void Initialize()
+    {
+        // Configure DI before loading XAML so markup extensions can access services
+        LoadSettings();
+        ConfigureDI();
+        
+        AvaloniaXamlLoader.Load(this);
+    }
 
     public override void OnFrameworkInitializationCompleted()
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            LoadSettings();
-            ConfigureDI();
-
             API = Ioc.Default.GetRequiredService<IPublicAPI>();
             _mainVM = Ioc.Default.GetRequiredService<MainViewModel>();
 
             desktop.MainWindow = new MainWindow();
+            desktop.ShutdownMode = ShutdownMode.OnExplicitShutdown;
 
             // Initialize hotkeys after window is created
             HotKeyMapper.Initialize();
@@ -49,6 +56,30 @@ public partial class App : Application
             desktop.Exit += (_, _) => HotKeyMapper.Shutdown();
         }
         base.OnFrameworkInitializationCompleted();
+    }
+
+    private void TrayIcon_OnClicked(object? sender, EventArgs e)
+    {
+        _mainVM?.ToggleFlowLauncher();
+    }
+
+    private void MenuShow_OnClick(object? sender, EventArgs e)
+    {
+        _mainVM?.Show();
+    }
+
+    private void MenuSettings_OnClick(object? sender, EventArgs e)
+    {
+        var settingsWindow = new SettingsWindow();
+        settingsWindow.Show();
+    }
+
+    private void MenuExit_OnClick(object? sender, EventArgs e)
+    {
+        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        {
+            desktop.Shutdown();
+        }
     }
 
     private void LoadSettings()
@@ -95,6 +126,10 @@ public partial class App : Application
 
             await PluginManager.InitializePluginsAsync();
             Log.Info(ClassName, "Plugins initialized");
+
+            // Update plugin translations after they are initialized
+            var i18n = Ioc.Default.GetRequiredService<Internationalization>();
+            i18n.UpdatePluginMetadataTranslations();
 
             _mainVM?.OnPluginsReady();
         }

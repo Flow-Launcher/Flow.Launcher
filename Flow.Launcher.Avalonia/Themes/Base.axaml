@@ -144,19 +144,13 @@
     <Style Selector="Image.resultIcon">
         <Setter Property="Width" Value="32" />
         <Setter Property="Height" Value="32" />
-        <Setter Property="Margin" Value="12,0,0,0" />
-        <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
 
     <!-- Result Glyph -->
     <Style Selector="TextBlock.resultGlyph">
-        <Setter Property="Width" Value="32" />
-        <Setter Property="Height" Value="32" />
-        <Setter Property="Margin" Value="12,0,0,0" />
-        <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="HorizontalAlignment" Value="Center" />
-        <Setter Property="TextAlignment" Value="Center" />
         <Setter Property="FontSize" Value="20" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="TextAlignment" Value="Center" />
     </Style>
 
     <!-- Result Title -->

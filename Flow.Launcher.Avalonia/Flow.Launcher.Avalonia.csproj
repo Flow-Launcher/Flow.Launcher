@@ -67,6 +67,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <AvaloniaResource Include="Resources\SegoeFluentIcons.ttf" />
+    <AvaloniaResource Include="..\Flow.Launcher\Resources\app.ico" Link="Images\app.ico" />
   </ItemGroup>
 
 </Project>

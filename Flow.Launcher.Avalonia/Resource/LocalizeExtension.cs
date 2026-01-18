@@ -38,15 +38,18 @@ public class LocalizeExtension : MarkupExtension
             return Fallback ?? "[No Key]";
         }
 
-        var i18n = Ioc.Default.GetService<Internationalization>();
-        if (i18n == null)
+        try
         {
-            return Fallback ?? $"[{Key}]";
+            // Try to get I18n service from DI
+            var i18n = Ioc.Default.GetService<Internationalization>();
+            if (i18n != null && i18n.HasTranslation(Key))
+            {
+                return i18n.GetTranslation(Key);
+            }
         }
-
-        if (i18n.HasTranslation(Key))
+        catch
         {
-            return i18n.GetTranslation(Key);
+            // Ioc.Default might throw if not configured yet
         }
 
         return Fallback ?? $"[{Key}]";
@@ -65,13 +68,20 @@ public static class Translator
     /// <returns>The translated string or the key in brackets if not found</returns>
     public static string GetString(string key)
     {
-        var i18n = Ioc.Default.GetService<Internationalization>();
-        if (i18n == null)
+        try
+        {
+            var i18n = Ioc.Default.GetService<Internationalization>();
+            if (i18n == null)
+            {
+                return $"[{key}]";
+            }
+
+            return i18n.GetTranslation(key);
+        }
+        catch
         {
             return $"[{key}]";
         }
-
-        return i18n.GetTranslation(key);
     }
 
     /// <summary>

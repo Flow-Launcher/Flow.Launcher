@@ -1,6 +1,7 @@
 using System;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Avalonia.ViewModel;
+using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 
@@ -45,12 +46,7 @@ internal static class HotKeyMapper
     /// </summary>
     internal static void SetToggleHotkey(string hotkeyString)
     {
-        // Unregister existing hotkey
-        if (_toggleHotkeyId >= 0)
-        {
-            GlobalHotkey.Unregister(_toggleHotkeyId);
-            _toggleHotkeyId = -1;
-        }
+        RemoveToggleHotkey();
 
         if (string.IsNullOrWhiteSpace(hotkeyString))
         {
@@ -78,10 +74,44 @@ internal static class HotKeyMapper
         }
     }
 
+    /// <summary>
+    /// Remove the current toggle hotkey.
+    /// </summary>
+    internal static void RemoveToggleHotkey()
+    {
+        if (_toggleHotkeyId >= 0)
+        {
+            GlobalHotkey.Unregister(_toggleHotkeyId);
+            _toggleHotkeyId = -1;
+        }
+    }
+
     private static void OnToggleHotkey()
     {
         Log.Info(ClassName, "Toggle hotkey triggered");
         _mainViewModel?.ToggleFlowLauncher();
+    }
+
+    /// <summary>
+    /// Checks if a hotkey is available for registration.
+    /// </summary>
+    internal static bool CheckAvailability(HotkeyModel hotkey)
+    {
+        var hotkeyString = hotkey.ToString();
+        var (mods, key) = GlobalHotkey.ParseHotkeyString(hotkeyString);
+
+        if (key == 0)
+            return false;
+
+        // Try to register and immediately unregister
+        int id = GlobalHotkey.Register(mods, key, () => { });
+        if (id >= 0)
+        {
+            GlobalHotkey.Unregister(id);
+            return true;
+        }
+
+        return false;
     }
 
     /// <summary>
