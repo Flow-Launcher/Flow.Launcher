@@ -86,7 +86,8 @@
                        IsVisible="{Binding ShowResultsArea}" />
 
             <!-- Results Area -->
-            <Border Name="ResultAreaBorder" Classes="resultAreaBorder">
+            <Border Name="ResultAreaBorder" Classes="resultAreaBorder"
+                    IsVisible="{Binding ShowResultsArea}">
                 <Grid Name="ResultPreviewArea">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" MinWidth="80" />

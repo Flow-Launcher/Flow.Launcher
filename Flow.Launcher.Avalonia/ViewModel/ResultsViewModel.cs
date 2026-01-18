@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using DynamicData;
 using DynamicData.Binding;
@@ -50,18 +51,19 @@ public partial class ResultsViewModel : ObservableObject, IDisposable
     }
 
     /// <summary>
-    /// Replace all results with new ones using EditDiff to minimize UI updates.
-    /// Items with matching Title+SubTitle are kept, reducing flickering.
+    /// Replace all results with new ones using atomic Edit to prevent flickering.
+    /// Edit batches changes and fires only one notification at the end.
     /// </summary>
     public void ReplaceResults(IEnumerable<ResultViewModel> newResults)
     {
-        foreach (var r in newResults)
+        var resultsList = newResults.ToList();
+        foreach (var r in resultsList)
         {
             r.Settings = _settings;
         }
 
-        // EditDiff calculates minimal changes needed
-        _sourceList.EditDiff(newResults, ResultViewModelComparer.Instance);
+        // EditDiff calculates minimal changes needed - items with same Title+SubTitle are kept
+        _sourceList.EditDiff(resultsList, ResultViewModelComparer.Instance);
 
         // Select first item after replacement
         if (_results.Count > 0)

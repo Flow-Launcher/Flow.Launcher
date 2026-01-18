@@ -4,9 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:Flow.Launcher.Avalonia.ViewModel"
              xmlns:helper="using:Flow.Launcher.Avalonia.Helper"
+             xmlns:converters="using:Flow.Launcher.Avalonia.Converters"
              mc:Ignorable="d" d:DesignWidth="580" d:DesignHeight="300"
              x:Class="Flow.Launcher.Avalonia.Views.ResultListBox"
              x:DataType="vm:ResultsViewModel">
+    
+    <UserControl.Resources>
+        <converters:HighlightTextConverter x:Key="HighlightTextConverter" />
+    </UserControl.Resources>
      
     <ListBox Name="ResultsList"
              Classes="resultListBox"
@@ -64,14 +69,26 @@
                             
                             <TextBlock Grid.Row="0"
                                        Classes="resultTitle"
-                                       Text="{Binding Title}"
-                                       ToolTip.Tip="{Binding Title}" />
+                                       ToolTip.Tip="{Binding Title}">
+                                <helper:TextBlockHelper.FormattedText>
+                                    <MultiBinding Converter="{StaticResource HighlightTextConverter}">
+                                        <Binding Path="Title" />
+                                        <Binding Path="TitleHighlightData" />
+                                    </MultiBinding>
+                                </helper:TextBlockHelper.FormattedText>
+                            </TextBlock>
                             
                             <TextBlock Grid.Row="1"
                                        Classes="resultSubTitle"
-                                       Text="{Binding SubTitle}"
                                        IsVisible="{Binding ShowSubTitle}"
-                                       ToolTip.Tip="{Binding SubTitle}" />
+                                       ToolTip.Tip="{Binding SubTitle}">
+                                <helper:TextBlockHelper.FormattedText>
+                                    <MultiBinding Converter="{StaticResource HighlightTextConverter}">
+                                        <Binding Path="SubTitle" />
+                                        <Binding Path="SubTitleHighlightData" />
+                                    </MultiBinding>
+                                </helper:TextBlockHelper.FormattedText>
+                            </TextBlock>
                         </Grid>
                     </Grid>
                     

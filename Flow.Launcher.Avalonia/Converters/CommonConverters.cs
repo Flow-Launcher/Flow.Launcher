@@ -1,26 +1,64 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Controls.Documents;
 using Avalonia.Data.Converters;
 using Avalonia.Media;
 
 namespace Flow.Launcher.Avalonia.Converters;
 
 /// <summary>
-/// Converts text with highlight ranges to formatted text with bold highlights.
-/// This is a simplified version - full implementation would use Avalonia's TextDecorations.
+/// Converts text with highlight indices to InlineCollection with bold highlights.
+/// Usage: MultiBinding with [0]=text string, [1]=List&lt;int&gt; of character indices to highlight.
 /// </summary>
 public class HighlightTextConverter : IMultiValueConverter
 {
     public object? Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture)
     {
-        // For now, just return the plain text
-        // Full implementation would create formatted inline text with highlights
-        if (values.Count >= 1 && values[0] is string text)
+        if (values.Count < 1 || values[0] is not string text || string.IsNullOrEmpty(text))
+            return new InlineCollection { new Run(string.Empty) };
+
+        // If no highlight data, return plain text as single Run
+        if (values.Count < 2 || values[1] is not IList<int> { Count: > 0 } highlightData)
+            return new InlineCollection { new Run(text) };
+
+        var inlines = new InlineCollection();
+        var highlightSet = new HashSet<int>(highlightData);
+
+        // Build runs by grouping consecutive characters with same highlight state
+        var currentRun = new System.Text.StringBuilder();
+        var currentIsHighlight = highlightSet.Contains(0);
+
+        for (var i = 0; i < text.Length; i++)
         {
-            return text;
+            var shouldHighlight = highlightSet.Contains(i);
+
+            if (shouldHighlight != currentIsHighlight && currentRun.Length > 0)
+            {
+                // Flush current run
+                inlines.Add(CreateRun(currentRun.ToString(), currentIsHighlight));
+                currentRun.Clear();
+                currentIsHighlight = shouldHighlight;
+            }
+
+            currentRun.Append(text[i]);
         }
-        return string.Empty;
+
+        // Flush final run
+        if (currentRun.Length > 0)
+            inlines.Add(CreateRun(currentRun.ToString(), currentIsHighlight));
+
+        return inlines;
+    }
+
+    private static Run CreateRun(string text, bool isHighlight)
+    {
+        var run = new Run(text);
+        if (isHighlight)
+            run.FontWeight = FontWeight.Bold;
+        return run;
     }
 }
 

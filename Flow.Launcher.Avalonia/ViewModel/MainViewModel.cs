@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -33,6 +34,11 @@ public partial class MainViewModel : ObservableObject
     private readonly Settings _settings;
     private CancellationTokenSource? _queryTokenSource;
     private bool _pluginsReady;
+
+    // Channel-based debouncing for result updates (matches WPF approach)
+    private readonly Channel<ResultsForUpdate> _resultsUpdateChannel;
+    private readonly ChannelWriter<ResultsForUpdate> _resultsUpdateChannelWriter;
+    private readonly Task _resultsViewUpdateTask;
 
     public event Action? HideRequested;
     public event Action? ShowRequested;
@@ -76,8 +82,9 @@ public partial class MainViewModel : ObservableObject
 
     /// <summary>
     /// Whether to show the results/context menu area (separator + list).
+    /// Based on whether we have a non-empty query - NOT on collection count to prevent flickering.
     /// </summary>
-    public bool ShowResultsArea => HasResults || IsContextMenuViewActive;
+    public bool ShowResultsArea => !string.IsNullOrWhiteSpace(QueryText) || ContextMenu.Results.Count > 0;
 
     public Settings Settings => _settings;
 
@@ -86,6 +93,11 @@ public partial class MainViewModel : ObservableObject
         _settings = settings;
         _results = new ResultsViewModel(settings);
         _contextMenu = new ResultsViewModel(settings);
+
+        // Initialize channel-based debouncing for result updates
+        _resultsUpdateChannel = Channel.CreateUnbounded<ResultsForUpdate>();
+        _resultsUpdateChannelWriter = _resultsUpdateChannel.Writer;
+        _resultsViewUpdateTask = Task.Run(ProcessResultUpdatesAsync);
         
         _results.PropertyChanged += (s, e) =>
         {
@@ -102,6 +114,51 @@ public partial class MainViewModel : ObservableObject
                 PreviewSelectedItem = _contextMenu.SelectedItem;
             }
         };
+        
+        // Subscribe to context menu collection changes for ShowResultsArea (context menu still uses count)
+        ((System.Collections.Specialized.INotifyCollectionChanged)_contextMenu.Results).CollectionChanged += (s, e) => OnPropertyChanged(nameof(ShowResultsArea));
+    }
+
+    /// <summary>
+    /// Background task that processes result updates with debouncing.
+    /// Waits 20ms to batch multiple plugin completions into a single UI update.
+    /// </summary>
+    private async Task ProcessResultUpdatesAsync()
+    {
+        var channelReader = _resultsUpdateChannel.Reader;
+
+        while (await channelReader.WaitToReadAsync())
+        {
+            // Wait 20ms to allow multiple plugin results to arrive
+            await Task.Delay(20);
+
+            // Get the latest snapshot from the channel (discard intermediate ones)
+            ResultsForUpdate? latestUpdate = null;
+
+            while (channelReader.TryRead(out var update))
+            {
+                if (!update.Token.IsCancellationRequested)
+                {
+                    latestUpdate = update;
+                }
+            }
+
+            // Apply batched update on UI thread
+            if (latestUpdate.HasValue && !latestUpdate.Value.Token.IsCancellationRequested)
+            {
+                var update = latestUpdate.Value;
+                var sortedResults = update.Results
+                    .OrderByDescending(r => r.Score)
+                    .ToList();
+
+                await global::Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
+                {
+                    if (update.Token.IsCancellationRequested) return;
+                    Results.ReplaceResults(sortedResults);
+                    HasResults = Results.Results.Count > 0;
+                });
+            }
+        }
     }
 
     partial void OnActiveViewChanged(ActiveView value)
@@ -113,15 +170,15 @@ public partial class MainViewModel : ObservableObject
         PreviewSelectedItem = value == ActiveView.Results ? Results.SelectedItem : ContextMenu.SelectedItem;
     }
 
+    partial void OnIsQueryRunningChanged(bool value)
+    {
+        // ShowResultsArea no longer depends on IsQueryRunning - it uses QueryText instead
+    }
+
     [RelayCommand]
     public void TogglePreview()
     {
         IsPreviewOn = !IsPreviewOn;
-    }
-
-    partial void OnHasResultsChanged(bool value)
-    {
-        OnPropertyChanged(nameof(ShowResultsArea));
     }
 
     public void OnPluginsReady()
@@ -184,7 +241,12 @@ public partial class MainViewModel : ObservableObject
         ContextMenu.Clear();
     }
 
-    partial void OnQueryTextChanged(string value) => _ = QueryAsync();
+    partial void OnQueryTextChanged(string value)
+    {
+        // Notify ShowResultsArea when query text changes (it depends on QueryText)
+        OnPropertyChanged(nameof(ShowResultsArea));
+        _ = QueryAsync();
+    }
 
     private async Task QueryAsync()
     {
@@ -213,12 +275,22 @@ public partial class MainViewModel : ObservableObject
         try
         {
             var query = QueryBuilder.Build(queryText, PluginManager.NonGlobalPlugins);
-            if (query == null) { HasResults = false; return; }
+            if (query == null)
+            {
+                Results.Clear();
+                HasResults = false;
+                return;
+            }
 
             var plugins = PluginManager.ValidPluginsForQuery(query, dialogJump: false)
                 .Where(p => !p.Metadata.Disabled).ToList();
 
-            if (plugins.Count == 0) { HasResults = false; return; }
+            if (plugins.Count == 0)
+            {
+                Results.Clear();
+                HasResults = false;
+                return;
+            }
 
             // Use a thread-safe collection to accumulate results from all plugins
             var allResults = new ConcurrentBag<ResultViewModel>();
@@ -235,10 +307,10 @@ public partial class MainViewModel : ObservableObject
                     allResults.Add(r);
                 }
 
-                // Update UI with current accumulated results (progressive update)
+                // Update UI with current accumulated results (progressive update via channel)
                 if (!token.IsCancellationRequested)
                 {
-                    await UpdateResultsOnUIThread(allResults, token);
+                    _resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(allResults.ToList(), token));
                 }
             });
 
@@ -247,29 +319,12 @@ public partial class MainViewModel : ObservableObject
             // Final update after all plugins complete
             if (!token.IsCancellationRequested)
             {
-                await UpdateResultsOnUIThread(allResults, token);
+                _resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(allResults.ToList(), token));
             }
         }
         catch (OperationCanceledException) { }
         catch (Exception e) { Log.Exception(ClassName, "Query error", e); }
         finally { if (!token.IsCancellationRequested) IsQueryRunning = false; }
-    }
-
-    private async Task UpdateResultsOnUIThread(ConcurrentBag<ResultViewModel> allResults, CancellationToken token)
-    {
-        if (token.IsCancellationRequested) return;
-
-        var sortedResults = allResults
-            .OrderByDescending(r => r.Score)
-            .Take(_settings.MaxResultsToShow)
-            .ToList();
-
-        await global::Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
-        {
-            if (token.IsCancellationRequested) return;
-            Results.ReplaceResults(sortedResults);
-            HasResults = Results.Results.Count > 0;
-        });
     }
 
     private Task<List<ResultViewModel>> QueryPluginAsync(PluginPair plugin, Query query, CancellationToken token)
@@ -297,7 +352,8 @@ public partial class MainViewModel : ObservableObject
                         IconPath = r.IcoPath ?? plugin.Metadata.IcoPath ?? "",
                         Score = r.Score,
                         PluginResult = r,
-                        Glyph = r.Glyph
+                        Glyph = r.Glyph,
+                        TitleHighlightData = r.TitleHighlightData
                     });
                 }
             }
@@ -412,5 +468,21 @@ public partial class MainViewModel : ObservableObject
             ContextMenu.SelectPrevItem();
         else
             Results.SelectPrevItem();
+    }
+}
+
+/// <summary>
+/// Represents a batch of results from a plugin for UI update.
+/// Used for channel-based debouncing.
+/// </summary>
+internal readonly struct ResultsForUpdate
+{
+    public IReadOnlyList<ResultViewModel> Results { get; }
+    public CancellationToken Token { get; }
+
+    public ResultsForUpdate(IReadOnlyList<ResultViewModel> results, CancellationToken token)
+    {
+        Results = results;
+        Token = token;
     }
 }

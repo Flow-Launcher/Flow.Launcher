@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -29,6 +30,12 @@ public partial class ResultViewModel : ObservableObject
 
     [ObservableProperty]
     private int _score;
+
+    [ObservableProperty]
+    private IList<int>? _titleHighlightData;
+
+    [ObservableProperty]
+    private IList<int>? _subTitleHighlightData;
 
     /// <summary>
     /// The underlying plugin result. Used for executing actions and accessing additional properties.
