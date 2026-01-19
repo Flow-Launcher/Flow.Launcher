@@ -209,6 +209,19 @@ public partial class MainViewModel : ObservableObject
     }
 
     /// <summary>
+    /// Hide the main window.
+    /// </summary>
+    public void Hide()
+    {
+        MainWindowVisibility = false;
+        QueryText = "";
+        ActiveView = ActiveView.Results;
+        ContextMenu.Clear();
+        HideRequested?.Invoke();
+        Log.Info(ClassName, "Hide requested");
+    }
+
+    /// <summary>
     /// Show the main window.
     /// </summary>
     public void Show()
@@ -217,8 +230,8 @@ public partial class MainViewModel : ObservableObject
         QueryText = "";
         ActiveView = ActiveView.Results;
         ContextMenu.Clear();
-        HideRequested?.Invoke();
-        Log.Info(ClassName, "Hide requested");
+        ShowRequested?.Invoke();
+        Log.Info(ClassName, "Show requested");
     }
 
     /// <summary>
