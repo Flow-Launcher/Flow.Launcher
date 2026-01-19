@@ -214,16 +214,6 @@ public partial class MainViewModel : ObservableObject
     public void Show()
     {
         MainWindowVisibility = true;
-        ShowRequested?.Invoke();
-        Log.Info(ClassName, "Show requested");
-    }
-
-    /// <summary>
-    /// Hide the main window.
-    /// </summary>
-    public void Hide()
-    {
-        MainWindowVisibility = false;
         QueryText = "";
         ActiveView = ActiveView.Results;
         ContextMenu.Clear();
@@ -382,8 +372,11 @@ public partial class MainViewModel : ObservableObject
     public void OpenSettings()
     {
         Hide();
-        var settingsWindow = new SettingsWindow();
-        settingsWindow.Show();
+        global::Avalonia.Threading.Dispatcher.UIThread.Post(() =>
+        {
+            var settingsWindow = new SettingsWindow();
+            settingsWindow.Show();
+        });
     }
 
     [RelayCommand]
