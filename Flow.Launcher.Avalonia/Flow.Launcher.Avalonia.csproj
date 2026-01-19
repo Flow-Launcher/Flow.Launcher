@@ -67,7 +67,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <AvaloniaResource Include="Resources\SegoeFluentIcons.ttf" />
+    <Content Include="Resources\SegoeFluentIcons.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <AvaloniaResource Include="..\Flow.Launcher\Resources\app.ico" Link="Images\app.ico" />
+  </ItemGroup>
+
+  <!-- WPF Resources for legacy plugin settings -->
+  <ItemGroup>
+    <Resource Include="WpfResources\*.xaml" />
   </ItemGroup>
 
 </Project>

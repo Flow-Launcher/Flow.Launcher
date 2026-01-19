@@ -3,9 +3,11 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Plugin;
+using Flow.Launcher.Avalonia.Views.Controls;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows.Controls;
 
 namespace Flow.Launcher.Avalonia.ViewModel.SettingPages;
 
@@ -42,35 +44,56 @@ public partial class PluginsSettingsViewModel : ObservableObject
 public partial class PluginItemViewModel : ObservableObject
 {
     private readonly PluginPair _plugin;
+    private readonly ISettingProvider? _settingProvider;
 
     public PluginItemViewModel(PluginPair plugin)
     {
         _plugin = plugin;
 
+        // Check if plugin has settings - for JsonRPC plugins, also check NeedCreateSettingPanel()
         if (plugin.Plugin is ISettingProvider settingProvider)
         {
-            try
+            // JsonRPC plugins may not have settings even if they implement ISettingProvider
+            if (plugin.Plugin is JsonRPCPluginBase jsonRpcPlugin)
             {
-                // Create the WPF settings panel
-                SettingControl = settingProvider.CreateSettingPanel();
-                HasSettings = SettingControl != null;
+                if (jsonRpcPlugin.NeedCreateSettingPanel())
+                {
+                    _settingProvider = settingProvider;
+                    HasSettings = true;
+                }
             }
-            catch (System.Exception)
+            else
             {
-                // TODO: Log error using logger
-                HasSettings = false;
+                _settingProvider = settingProvider;
+                HasSettings = true;
             }
         }
     }
 
     [ObservableProperty]
-    private object? _settingControl;
-
-    [ObservableProperty]
     private bool _hasSettings;
 
-    [ObservableProperty]
-    private bool _isExpanded;
+    [RelayCommand]
+    private void OpenSettings()
+    {
+        if (_settingProvider == null) return;
+
+        try
+        {
+            // Create the WPF settings panel on demand
+            var settingsControl = _settingProvider.CreateSettingPanel();
+            if (settingsControl != null)
+            {
+                WpfSettingsWindow.Show(settingsControl, Name);
+            }
+        }
+        catch (System.Exception ex)
+        {
+            // Log the error so we can diagnose issues
+            System.Diagnostics.Debug.WriteLine($"Failed to open settings for {Name}: {ex}");
+            Flow.Launcher.Infrastructure.Logger.Log.Exception(nameof(PluginItemViewModel), $"Failed to open settings for {Name}", ex);
+        }
+    }
 
     public string Name => _plugin.Metadata.Name;
     public string Description => _plugin.Metadata.Description;

@@ -5,7 +5,6 @@
              xmlns:ui="using:FluentAvalonia.UI.Controls"
              xmlns:vm="using:Flow.Launcher.Avalonia.ViewModel.SettingPages"
              xmlns:i18n="using:Flow.Launcher.Avalonia.Resource"
-             xmlns:controls="using:Flow.Launcher.Avalonia.Views.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
              x:Class="Flow.Launcher.Avalonia.Views.SettingPages.PluginsSettingsPage"
              x:DataType="vm:PluginsSettingsViewModel">
@@ -24,8 +23,7 @@
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ListBox.ItemTemplate>
                 <DataTemplate x:DataType="vm:PluginItemViewModel">
-                    <StackPanel Spacing="5">
-                        <Grid ColumnDefinitions="Auto,*,Auto" Margin="0,5">
+                    <Grid ColumnDefinitions="Auto,*,Auto" Margin="0,5">
                             <Image Grid.Column="0" Source="{Binding IconPath}" Width="32" Height="32" Margin="0,0,15,0" VerticalAlignment="Center" />
                             
                             <StackPanel Grid.Column="1" VerticalAlignment="Center">
@@ -38,29 +36,17 @@
                             </StackPanel>
 
                             <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
-                                <ToggleButton IsChecked="{Binding IsExpanded}"
-                                              IsVisible="{Binding HasSettings}"
-                                              ToolTip.Tip="Settings">
+                                <Button Command="{Binding OpenSettingsCommand}"
+                                        IsVisible="{Binding HasSettings}"
+                                        ToolTip.Tip="Settings">
                                     <ui:SymbolIcon Symbol="Settings" />
-                                </ToggleButton>
+                                </Button>
                                 
                                 <ToggleSwitch IsChecked="{Binding !IsDisabled}" 
                                               OnContent="" OffContent="" />
                             </StackPanel>
                         </Grid>
-                        
-                        <!-- Settings Panel -->
-                        <Border IsVisible="{Binding IsExpanded}"
-                                Background="{DynamicResource SolidBackgroundFillColorBase}"
-                                BorderBrush="{DynamicResource ControlElevationBorderBrush}"
-                                BorderThickness="1"
-                                CornerRadius="4"
-                                Padding="10"
-                                Margin="48,0,0,10">
-                            <controls:WpfControlHost Content="{Binding SettingControl}" Height="500" />
-                        </Border>
-                    </StackPanel>
-                </DataTemplate>
+                    </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
     </Grid>
