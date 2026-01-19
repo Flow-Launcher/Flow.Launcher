@@ -17,37 +17,50 @@
                  Watermark="{i18n:Localize search}"
                  Margin="0,0,0,20" />
 
-        <ListBox Grid.Row="2" 
-                 ItemsSource="{Binding FilteredPlugins}"
-                 Background="Transparent"
-                 ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-            <ListBox.ItemTemplate>
-                <DataTemplate x:DataType="vm:PluginItemViewModel">
-                    <Grid ColumnDefinitions="Auto,*,Auto" Margin="0,5">
-                            <Image Grid.Column="0" Source="{Binding IconPath}" Width="32" Height="32" Margin="0,0,15,0" VerticalAlignment="Center" />
-                            
-                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                <StackPanel Orientation="Horizontal" Spacing="10">
-                                    <TextBlock Text="{Binding Name}" FontWeight="Bold" />
-                                    <TextBlock Text="{Binding Version}" Foreground="Gray" FontSize="12" VerticalAlignment="Bottom" />
-                                </StackPanel>
-                                <TextBlock Text="{Binding Description}" Foreground="Gray" FontSize="12" TextWrapping="Wrap" />
-                                <TextBlock Text="{Binding Author}" Foreground="LightGray" FontSize="11" />
-                            </StackPanel>
-
-                            <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
-                                <Button Command="{Binding OpenSettingsCommand}"
-                                        IsVisible="{Binding HasSettings}"
-                                        ToolTip.Tip="Settings">
-                                    <ui:SymbolIcon Symbol="Settings" />
-                                </Button>
+        <ScrollViewer Grid.Row="2">
+            <ItemsControl ItemsSource="{Binding FilteredPlugins}"
+                          Background="Transparent">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:PluginItemViewModel">
+                        <StackPanel Spacing="5" Margin="0,0,10,0">
+                            <Grid ColumnDefinitions="Auto,*,Auto" Margin="0,5">
+                                <Image Grid.Column="0" Source="{Binding IconPath}" Width="32" Height="32" Margin="0,0,15,0" VerticalAlignment="Center" />
                                 
-                                <ToggleSwitch IsChecked="{Binding !IsDisabled}" 
-                                              OnContent="" OffContent="" />
-                            </StackPanel>
-                        </Grid>
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                    <StackPanel Orientation="Horizontal" Spacing="10">
+                                        <TextBlock Text="{Binding Name}" FontWeight="Bold" />
+                                        <TextBlock Text="{Binding Version}" Foreground="Gray" FontSize="12" VerticalAlignment="Bottom" />
+                                    </StackPanel>
+                                    <TextBlock Text="{Binding Description}" Foreground="Gray" FontSize="12" TextWrapping="Wrap" />
+                                    <TextBlock Text="{Binding Author}" Foreground="LightGray" FontSize="11" />
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
+                                    <Button Command="{Binding OpenSettingsCommand}"
+                                            IsVisible="{Binding HasSettings}"
+                                            ToolTip.Tip="Settings">
+                                        <ui:SymbolIcon Symbol="Settings" />
+                                    </Button>
+                                    
+                                    <ToggleSwitch IsChecked="{Binding !IsDisabled}" 
+                                                  OnContent="" OffContent="" />
+                                </StackPanel>
+                            </Grid>
+                            
+                            <!-- Native Avalonia Settings Panel -->
+                            <Border IsVisible="{Binding IsExpanded}"
+                                    Background="{DynamicResource SolidBackgroundFillColorBase}"
+                                    BorderBrush="{DynamicResource ControlElevationBorderBrush}"
+                                    BorderThickness="1"
+                                    CornerRadius="4"
+                                    Padding="10"
+                                    Margin="48,0,0,10">
+                                <ContentControl Content="{Binding AvaloniaSettingControl}" />
+                            </Border>
+                        </StackPanel>
                     </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
     </Grid>
 </UserControl>

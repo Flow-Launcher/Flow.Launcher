@@ -7,7 +7,7 @@ using Flow.Launcher.Avalonia.Views.Controls;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows.Controls;
+using AvaloniaControl = Avalonia.Controls.Control;
 
 namespace Flow.Launcher.Avalonia.ViewModel.SettingPages;
 
@@ -68,15 +68,46 @@ public partial class PluginItemViewModel : ObservableObject
                 HasSettings = true;
             }
         }
+
+        if (HasSettings && _settingProvider != null)
+        {
+            try
+            {
+                System.Console.WriteLine($"Checking Avalonia settings for {Name}");
+                AvaloniaSettingControl = _settingProvider.CreateSettingPanelAvalonia();
+                HasNativeAvaloniaSettings = AvaloniaSettingControl != null;
+                System.Console.WriteLine($"Avalonia settings for {Name}: {HasNativeAvaloniaSettings}");
+            }
+            catch (System.Exception ex)
+            {
+                System.Console.WriteLine($"Failed to create Avalonia settings for {Name}: {ex}");
+                Flow.Launcher.Infrastructure.Logger.Log.Exception(nameof(PluginItemViewModel), $"Failed to create Avalonia settings for {Name}", ex);
+            }
+        }
     }
 
     [ObservableProperty]
     private bool _hasSettings;
 
+    [ObservableProperty]
+    private bool _hasNativeAvaloniaSettings;
+
+    [ObservableProperty]
+    private AvaloniaControl? _avaloniaSettingControl;
+
+    [ObservableProperty]
+    private bool _isExpanded;
+
     [RelayCommand]
     private void OpenSettings()
     {
         if (_settingProvider == null) return;
+
+        if (HasNativeAvaloniaSettings)
+        {
+            IsExpanded = !IsExpanded;
+            return;
+        }
 
         try
         {
