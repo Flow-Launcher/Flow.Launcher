@@ -381,12 +381,9 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     public void OpenSettings()
     {
-        global::Avalonia.Threading.Dispatcher.UIThread.Post(() =>
-        {
-            var settingsWindow = new SettingsWindow();
-            settingsWindow.Show();
-            Hide();
-        });
+        Hide();
+        var settingsWindow = new SettingsWindow();
+        settingsWindow.Show();
     }
 
     [RelayCommand]
