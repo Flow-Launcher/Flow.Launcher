@@ -25,6 +25,7 @@ public partial class App : Application
     private static readonly string ClassName = nameof(App);
     private Settings? _settings;
     private MainViewModel? _mainVM;
+    private MainWindow? _mainWindow;
 
     public static IPublicAPI? API { get; private set; }
 
@@ -44,7 +45,8 @@ public partial class App : Application
             API = Ioc.Default.GetRequiredService<IPublicAPI>();
             _mainVM = Ioc.Default.GetRequiredService<MainViewModel>();
 
-            desktop.MainWindow = new MainWindow();
+            _mainWindow = new MainWindow();
+            // desktop.MainWindow = _mainWindow; // Prevent auto-show on startup
             desktop.ShutdownMode = ShutdownMode.OnExplicitShutdown;
 
             // Initialize hotkeys after window is created
@@ -130,6 +132,11 @@ public partial class App : Application
             // Update plugin translations after they are initialized
             var i18n = Ioc.Default.GetRequiredService<Internationalization>();
             i18n.UpdatePluginMetadataTranslations();
+
+            if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            {
+                desktop.MainWindow = _mainWindow;
+            }
 
             _mainVM?.OnPluginsReady();
         }
