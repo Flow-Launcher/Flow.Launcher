@@ -46,7 +46,31 @@ public partial class PluginItemViewModel : ObservableObject
     public PluginItemViewModel(PluginPair plugin)
     {
         _plugin = plugin;
+
+        if (plugin.Plugin is ISettingProvider settingProvider)
+        {
+            try
+            {
+                // Create the WPF settings panel
+                SettingControl = settingProvider.CreateSettingPanel();
+                HasSettings = SettingControl != null;
+            }
+            catch (System.Exception)
+            {
+                // TODO: Log error using logger
+                HasSettings = false;
+            }
+        }
     }
+
+    [ObservableProperty]
+    private object? _settingControl;
+
+    [ObservableProperty]
+    private bool _hasSettings;
+
+    [ObservableProperty]
+    private bool _isExpanded;
 
     public string Name => _plugin.Metadata.Name;
     public string Description => _plugin.Metadata.Description;
