@@ -429,16 +429,17 @@ namespace Flow.Launcher.ViewModel
                 return;
             }
 
+            // Do not show context menu for history results, they will have no PluginID set.
+            if (string.IsNullOrEmpty(SelectedResults.SelectedItem?.Result?.PluginID))
+                return;
+
             // For query mode, we load context menu
             if (QueryResultsSelected())
             {
                 // When switch to ContextMenu from QueryResults, but no item being chosen, should do nothing
                 // i.e. Shift+Enter/Ctrl+O right after Alt + Space should do nothing
-                if (SelectedResults.SelectedItem?.Result != null &&
-                    !string.IsNullOrEmpty(SelectedResults.SelectedItem.Result.PluginID))  // Do not show context menu for history items
-                {
+                if (SelectedResults.SelectedItem?.Result != null)
                     SelectedResults = ContextMenu;
-                }
             }
             else
             {
@@ -1260,8 +1261,7 @@ namespace Flow.Launcher.ViewModel
 
             var selected = Results.SelectedItem?.Result;
 
-            if (selected != null && // SelectedItem returns null if selection is empty.
-                !string.IsNullOrEmpty(selected.PluginID))  // SelectedItem must have a valid PluginID
+            if (selected != null) // SelectedItem returns null if selection is empty.
             {
                 List<Result> results = PluginManager.GetContextMenusForPlugin(selected);
                 results.Add(ContextMenuTopMost(selected));
