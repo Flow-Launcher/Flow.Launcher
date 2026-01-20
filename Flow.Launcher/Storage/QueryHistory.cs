@@ -77,8 +77,8 @@ namespace Flow.Launcher.Storage
                 if (existingHistoryItem.IcoPath != result.IcoPath)
                     existingHistoryItem.IcoPath = result.IcoPath;
 
-                if (existingHistoryItem.Glyph.Glyph != result.Glyph.Glyph 
-                    || existingHistoryItem.Glyph.FontFamily != result.Glyph.FontFamily)
+                if (existingHistoryItem.Glyph?.Glyph != result.Glyph?.Glyph
+                    || existingHistoryItem.Glyph?.FontFamily != result.Glyph?.FontFamily)
                     existingHistoryItem.Glyph = result.Glyph;
             }
             else
