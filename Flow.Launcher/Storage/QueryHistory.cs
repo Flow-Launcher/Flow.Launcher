@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Plugin;
+using Svg;
 
 namespace Flow.Launcher.Storage
 {
@@ -72,10 +73,13 @@ namespace Flow.Launcher.Storage
                 TryGetLastOpenedHistoryResult(result, out var existingHistoryItem))
             {
                 existingHistoryItem.ExecutedDateTime = DateTime.Now;
+
                 if (existingHistoryItem.IcoPath != result.IcoPath)
-                {
                     existingHistoryItem.IcoPath = result.IcoPath;
-                }
+
+                if (existingHistoryItem.Glyph.Glyph != result.Glyph.Glyph 
+                    || existingHistoryItem.Glyph.FontFamily != result.Glyph.FontFamily)
+                    existingHistoryItem.Glyph = result.Glyph;
             }
             else
             {
