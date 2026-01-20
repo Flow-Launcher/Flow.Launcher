@@ -1316,18 +1316,12 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private List<Result> GetHistoryItems(IEnumerable<LastOpenedHistoryResult> historyItems, int? selectLast = null)
+        private List<Result> GetHistoryItems(IEnumerable<LastOpenedHistoryResult> historyItems, int? maxResult = null)
         {
             var results = new List<Result>();
 
             // Order by executed time descending: Latest -> Oldest
             historyItems = historyItems.OrderByDescending(x => x.ExecutedDateTime);
-
-            // Select the last N items if specified
-            if (selectLast.HasValue)
-            {
-                historyItems = historyItems.Take(selectLast.Value);
-            }
 
             if (Settings.HistoryStyle == HistoryStyle.LastOpened)
             {
@@ -1336,6 +1330,10 @@ namespace Flow.Launcher.ViewModel
                     .GroupBy(r => new { r.Title, r.SubTitle, r.PluginID, r.RecordKey })
                     .Select(g => g.First());
             }
+
+            // Max history results to return for display
+            if (maxResult.HasValue)
+                historyItems = historyItems.Take(maxResult.Value);
 
             foreach (var item in historyItems)
             {
