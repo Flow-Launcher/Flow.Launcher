@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Plugin;
-using Svg;
 
 namespace Flow.Launcher.Storage
 {

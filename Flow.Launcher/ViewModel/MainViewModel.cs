@@ -1333,7 +1333,9 @@ namespace Flow.Launcher.ViewModel
 
             // Max history results to return for display
             if (maxResult.HasValue)
+            {
                 historyItems = historyItems.Take(maxResult.Value);
+            }
 
             foreach (var item in historyItems)
             {
