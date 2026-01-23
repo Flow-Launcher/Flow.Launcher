@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -164,10 +164,16 @@ namespace Flow.Launcher.Plugin
         [JsonIgnore]
         public IconDelegate BadgeIcon = null;
 
+        private GlyphInfo _glyph;
+        
         /// <summary>
         /// Information for Glyph Icon (Prioritized than IcoPath/Icon if user enable Glyph Icons)
         /// </summary>
-        public GlyphInfo Glyph { get; set; }
+        public GlyphInfo Glyph
+        {
+            get => _glyph;
+            set => _glyph = value;
+        }
 
         /// <summary>
         /// An action to take in the form of a function call when the result has been selected.
