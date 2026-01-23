@@ -78,7 +78,7 @@ namespace Flow.Launcher.Storage
 
                 if (existingHistoryItem.Glyph?.Glyph != result.Glyph?.Glyph
                     || existingHistoryItem.Glyph?.FontFamily != result.Glyph?.FontFamily)
-                    existingHistoryItem.Glyph = result.Glyph;
+                    existingHistoryItem.SetGlyph(result.Glyph);
             }
             else
             {
