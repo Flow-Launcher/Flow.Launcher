@@ -69,7 +69,7 @@ namespace Flow.Launcher.Plugin
 
         /// <summary>
         /// Path or URI to the icon image for this result.
-        /// Updates <IcoPathAbsolute/> appropriately when set.
+        /// Updates <see cref="IcoPathAbsolute"/> appropriately when set.
         /// </summary>
         /// <remarks>
         /// Preferred usage: provide a path relative to the plugin directory (for example: "Images\icon.png").
