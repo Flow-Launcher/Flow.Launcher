@@ -76,5 +76,46 @@ namespace Flow.Launcher.Infrastructure
             // Resolve relative to ProgramDirectory
             return Path.GetFullPath(Path.Combine(ProgramDirectory, path));
         }
+
+        /// <summary>
+        /// Converts an absolute path to a relative path if it's within ProgramDirectory.
+        /// This enables portability by storing paths relative to the program directory when possible.
+        /// </summary>
+        /// <param name="absolutePath">The absolute path to convert</param>
+        /// <returns>A relative path if the path is within ProgramDirectory, otherwise the original absolute path</returns>
+        public static string ConvertToRelativePathIfPossible(string absolutePath)
+        {
+            if (string.IsNullOrEmpty(absolutePath))
+                return absolutePath;
+
+            if (!Path.IsPathRooted(absolutePath))
+                return absolutePath;
+
+            try
+            {
+                // Get the full absolute paths for comparison
+                var fullAbsolutePath = Path.GetFullPath(absolutePath);
+                var fullProgramDir = Path.GetFullPath(ProgramDirectory);
+
+                // Check if the absolute path is within ProgramDirectory
+                if (fullAbsolutePath.StartsWith(fullProgramDir, StringComparison.OrdinalIgnoreCase))
+                {
+                    // Convert to relative path
+                    var relativePath = Path.GetRelativePath(fullProgramDir, fullAbsolutePath);
+                    
+                    // Prefix with .\ for clarity
+                    if (!relativePath.StartsWith("."))
+                        relativePath = ".\\" + relativePath;
+                    
+                    return relativePath;
+                }
+            }
+            catch
+            {
+                // If conversion fails, return the original path
+            }
+
+            return absolutePath;
+        }
     }
 }

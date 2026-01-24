@@ -100,5 +100,89 @@ namespace Flow.Launcher.Test
             // Assert
             Assert.Equal(uncPath, result);
         }
+
+        [Fact]
+        public void ConvertToRelativePathIfPossible_WithPathInProgramDirectory_ReturnsRelativePath()
+        {
+            // Arrange
+            var absolutePath = Path.Combine(Constant.ProgramDirectory, "runtimes", "python", "pythonw.exe");
+
+            // Act
+            var result = Constant.ConvertToRelativePathIfPossible(absolutePath);
+
+            // Assert
+            Assert.True(result.StartsWith(".\\"), "Result should start with .\\");
+            Assert.Contains("runtimes", result);
+            Assert.Contains("python", result);
+        }
+
+        [Fact]
+        public void ConvertToRelativePathIfPossible_WithPathOutsideProgramDirectory_ReturnsAbsolutePath()
+        {
+            // Arrange
+            var absolutePath = @"C:\Python\python.exe";
+
+            // Act
+            var result = Constant.ConvertToRelativePathIfPossible(absolutePath);
+
+            // Assert
+            Assert.Equal(absolutePath, result);
+        }
+
+        [Fact]
+        public void ConvertToRelativePathIfPossible_WithRelativePath_ReturnsOriginalPath()
+        {
+            // Arrange
+            var relativePath = @".\runtimes\python\pythonw.exe";
+
+            // Act
+            var result = Constant.ConvertToRelativePathIfPossible(relativePath);
+
+            // Assert
+            Assert.Equal(relativePath, result);
+        }
+
+        [Fact]
+        public void ConvertToRelativePathIfPossible_WithNullPath_ReturnsNull()
+        {
+            // Arrange
+            string nullPath = null;
+
+            // Act
+            var result = Constant.ConvertToRelativePathIfPossible(nullPath);
+
+            // Assert
+            Assert.Null(result);
+        }
+
+        [Fact]
+        public void ConvertToRelativePathIfPossible_WithEmptyPath_ReturnsEmpty()
+        {
+            // Arrange
+            var emptyPath = string.Empty;
+
+            // Act
+            var result = Constant.ConvertToRelativePathIfPossible(emptyPath);
+
+            // Assert
+            Assert.Equal(string.Empty, result);
+        }
+
+        [Fact]
+        public void RoundTripTest_RelativePathResolutionAndConversion()
+        {
+            // Arrange
+            var originalRelative = @".\runtimes\python\pythonw.exe";
+            
+            // Act - Resolve to absolute
+            var absolute = Constant.ResolveAbsolutePath(originalRelative);
+            // Convert back to relative
+            var backToRelative = Constant.ConvertToRelativePathIfPossible(absolute);
+            
+            // Assert
+            Assert.True(Path.IsPathRooted(absolute), "Resolved path should be absolute");
+            Assert.True(backToRelative.StartsWith(".\\"), "Converted path should be relative");
+            Assert.Contains("runtimes\\python\\pythonw.exe", backToRelative);
+        }
     }
 }
