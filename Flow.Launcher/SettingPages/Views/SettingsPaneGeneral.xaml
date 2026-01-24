@@ -476,10 +476,7 @@
                     Content="{Binding Settings.CustomBrowser.DisplayName}" />
             </ui:SettingsCard>
 
-            <ui:SettingsCard 
-                Margin="0 14 0 0" 
-                Header="{DynamicResource pythonFilePath}"
-                Description="Absolute or relative path (e.g., .\runtimes\python\pythonw.exe)">
+            <ui:SettingsCard Margin="0 14 0 0" Header="{DynamicResource pythonFilePath}">
                 <StackPanel Orientation="Horizontal">
                     <TextBox
                         Width="300"
@@ -493,10 +490,7 @@
                 </StackPanel>
             </ui:SettingsCard>
 
-            <ui:SettingsCard 
-                Margin="0 4 0 0" 
-                Header="{DynamicResource nodeFilePath}"
-                Description="Absolute or relative path (e.g., .\runtimes\nodejs\node.exe)">
+            <ui:SettingsCard Margin="0 4 0 0" Header="{DynamicResource nodeFilePath}">
                 <StackPanel Orientation="Horizontal">
                     <TextBox
                         Width="300"
