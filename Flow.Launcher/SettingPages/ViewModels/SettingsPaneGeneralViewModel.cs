@@ -377,8 +377,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         );
 
         if (!string.IsNullOrEmpty(selectedFile))
-            // Convert to relative path if within ProgramDirectory for portability
-            Settings.PluginSettings.PythonExecutablePath = Constant.ConvertToRelativePathIfPossible(selectedFile);
+            Settings.PluginSettings.PythonExecutablePath = selectedFile;
     }
 
     [RelayCommand]
@@ -390,8 +389,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         );
 
         if (!string.IsNullOrEmpty(selectedFile))
-            // Convert to relative path if within ProgramDirectory for portability
-            Settings.PluginSettings.NodeExecutablePath = Constant.ConvertToRelativePathIfPossible(selectedFile);
+            Settings.PluginSettings.NodeExecutablePath = selectedFile;
     }
 
     [RelayCommand]
