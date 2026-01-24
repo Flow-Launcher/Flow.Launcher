@@ -56,5 +56,25 @@ namespace Flow.Launcher.Infrastructure
         public const string Docs = "https://flowlauncher.com/docs";
 
         public const string SystemLanguageCode = "system";
+
+        /// <summary>
+        /// Resolves a path that may be relative to an absolute path.
+        /// If the path is already absolute, returns it as-is.
+        /// If the path is relative (starts with . or doesn't contain a drive), resolves it relative to ProgramDirectory.
+        /// </summary>
+        /// <param name="path">The path to resolve</param>
+        /// <returns>An absolute path</returns>
+        public static string ResolveAbsolutePath(string path)
+        {
+            if (string.IsNullOrEmpty(path))
+                return path;
+
+            // If already absolute, return as-is
+            if (Path.IsPathRooted(path))
+                return path;
+
+            // Resolve relative to ProgramDirectory
+            return Path.GetFullPath(Path.Combine(ProgramDirectory, path));
+        }
     }
 }
