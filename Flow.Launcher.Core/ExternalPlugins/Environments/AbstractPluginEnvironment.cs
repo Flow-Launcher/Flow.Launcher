@@ -45,7 +45,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
         /// Resolves the configured plugin settings file path to an absolute path.
         /// Supports both absolute paths and relative paths (relative to ProgramDirectory).
         /// </summary>
-        private string ResolvedPluginsSettingsFilePath => Constant.ResolveAbsolutePath(PluginsSettingsFilePath);
+        private string ResolvedPluginsSettingsFilePath => DataLocation.ResolveAbsolutePath(PluginsSettingsFilePath);
 
         internal IEnumerable<PluginPair> Setup()
         {
@@ -75,7 +75,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
                 if (!string.IsNullOrEmpty(selectedFile))
                 {
                     // Convert to relative path if within ProgramDirectory for portability
-                    PluginsSettingsFilePath = Constant.ConvertToRelativePathIfPossible(selectedFile);
+                    PluginsSettingsFilePath = DataLocation.ConvertToRelativePathIfPossible(selectedFile);
                 }
                 // Nothing selected because user pressed cancel from the file dialog window
                 else
@@ -100,7 +100,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
                     if (!string.IsNullOrEmpty(selectedFile))
                     {
                         // Convert to relative path if within ProgramDirectory for portability
-                        PluginsSettingsFilePath = Constant.ConvertToRelativePathIfPossible(selectedFile);
+                        PluginsSettingsFilePath = DataLocation.ConvertToRelativePathIfPossible(selectedFile);
                     }
                     else
                     {
