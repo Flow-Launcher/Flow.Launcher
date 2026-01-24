@@ -73,8 +73,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
 
                 if (!string.IsNullOrEmpty(selectedFile))
                 {
-                    // Convert to relative path if within ProgramDirectory for portability
-                    PluginsSettingsFilePath = DataLocation.ConvertToRelativePathIfPossible(selectedFile);
+                    PluginsSettingsFilePath = selectedFile;
                 }
                 // Nothing selected because user pressed cancel from the file dialog window
                 else
@@ -98,8 +97,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
 
                     if (!string.IsNullOrEmpty(selectedFile))
                     {
-                        // Convert to relative path if within ProgramDirectory for portability
-                        PluginsSettingsFilePath = DataLocation.ConvertToRelativePathIfPossible(selectedFile);
+                        PluginsSettingsFilePath = selectedFile;
                     }
                     else
                     {
