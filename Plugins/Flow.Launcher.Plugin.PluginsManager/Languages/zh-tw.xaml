@@ -59,12 +59,12 @@
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_openwebsite_subtitle">查看擴充功能的網站</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_gotosourcecode_title">查看原始碼</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_gotosourcecode_subtitle">查看擴充功能的原始碼</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_newissue_title">Suggest an enhancement or submit an issue</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_newissue_subtitle">Suggest an enhancement or submit an issue to the plugin developer</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_pluginsmanifest_title">Go to Flow's plugins repository</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_pluginsmanifest_subtitle">Visit the PluginsManifest repository to see community-made plugin submissions</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_newissue_title">提出改進建議或提交問題</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_newissue_subtitle">向作者提出改進建議或提交問題</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_pluginsmanifest_title">前往 Flow 的線上外掛清單</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_pluginsmanifest_subtitle">造訪PluginsManifest儲存庫，查看社群提交的插件</system:String>
 
     <!--  Settings menu items  -->
-    <system:String x:Key="plugin_pluginsmanager_plugin_settings_unknown_source">Install from unknown source warning</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_settings_unknown_source">安裝未知來源警告</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_settings_auto_restart">以插件管理員安裝/移除/更新插件後自動重新啟動Flow Launcher</system:String>
 </ResourceDictionary>
