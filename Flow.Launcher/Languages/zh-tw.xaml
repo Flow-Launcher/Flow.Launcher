@@ -145,7 +145,7 @@
 
     <system:String x:Key="AlwaysPreview">一律預覽</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">當 Flow 啟動時，一律開啟預覽面板。按下 {0} 可切換預覽。</system:String>
-    <system:String x:Key="shadowEffectNotAllowed">Shadow effect is not allowed while current theme has blur effect enabled</system:String>
+    <system:String x:Key="shadowEffectNotAllowed">當目前主題啟用模糊效果時，將不允許使用陰影效果</system:String>
     <system:String x:Key="searchDelay">Search Delay</system:String>
     <system:String x:Key="searchDelayToolTip">Adds a short delay while typing to reduce UI flicker and result load. Recommended if your typing speed is average.</system:String>
     <system:String x:Key="searchDelayNumberBoxToolTip">Enter the wait time (in ms) until input is considered complete. This can only be edited if Search Delay is enabled.</system:String>
@@ -269,7 +269,7 @@
     <system:String x:Key="DownloadingPlugin">正在下載擴充功能</system:String>
     <system:String x:Key="AutoRestartAfterChange">Automatically restart after installing/uninstalling/updating plugins in plugin store</system:String>
     <system:String x:Key="ZipFileNotHavePluginJson">Zip file does not have a valid plugin.json configuration</system:String>
-    <system:String x:Key="InstallFromUnknownSourceTitle">Installing from an unknown source</system:String>
+    <system:String x:Key="InstallFromUnknownSourceTitle">從未知來源安裝</system:String>
     <system:String x:Key="InstallFromUnknownSourceSubtitle">This plugin is from an unknown source and it may contain potential risks!{0}{0}Please ensure you understand where this plugin is from and that it is safe.{0}{0}Would you like to continue still?{0}{0}(You can switch off this warning in general section of setting window)</system:String>
     <system:String x:Key="ZipFiles">Zip files</system:String>
     <system:String x:Key="SelectZipFile">Please select zip file</system:String>
@@ -357,9 +357,9 @@
     <system:String x:Key="hotkeyPresets">Hotkey Presets</system:String>
     <system:String x:Key="hotkeyPresetsToolTip">List of currently registered hotkeys</system:String>
     <system:String x:Key="openResultModifiers">開放結果修飾符</system:String>
-    <system:String x:Key="openResultModifiersToolTip">Select a modifier key to open selected result via keyboard.</system:String>
+    <system:String x:Key="openResultModifiersToolTip">選擇一個修飾鍵以透過鍵盤開啟已選擇的結果。</system:String>
     <system:String x:Key="showOpenResultHotkey">顯示快捷鍵</system:String>
-    <system:String x:Key="showOpenResultHotkeyToolTip">Show result selection hotkey with results.</system:String>
+    <system:String x:Key="showOpenResultHotkeyToolTip">利用結果來顯示選擇的快捷鍵結果。</system:String>
     <system:String x:Key="autoCompleteHotkey">Auto Complete</system:String>
     <system:String x:Key="autoCompleteHotkeyToolTip">Runs autocomplete for the selected items.</system:String>
     <system:String x:Key="SelectNextItemHotkey">Select Next Item</system:String>
@@ -657,12 +657,12 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
     <!--  General Guide & Hotkey  -->
 
     <system:String x:Key="HotkeyUpDownDesc">返回 / 快捷選單</system:String>
-    <system:String x:Key="HotkeyLeftRightDesc">Item Navigation</system:String>
+    <system:String x:Key="HotkeyLeftRightDesc">物件導覽</system:String>
     <system:String x:Key="HotkeyShiftEnterDesc">打開選單</system:String>
     <system:String x:Key="HotkeyCtrlEnterDesc">開啟檔案位置</system:String>
     <system:String x:Key="HotkeyCtrlShiftEnterDesc">Run as Admin / Open Folder in Default File Manager</system:String>
     <system:String x:Key="HotkeyCtrlHDesc">查詢歷史</system:String>
-    <system:String x:Key="HotkeyESCDesc">Back to Result in Context Menu</system:String>
+    <system:String x:Key="HotkeyESCDesc">返回右鍵選單中的結果</system:String>
     <system:String x:Key="HotkeyTabDesc">自動完成</system:String>
     <system:String x:Key="HotkeyRunDesc">開啟／運行選擇項目</system:String>
     <system:String x:Key="HotkeyCtrlIDesc">開啟視窗設定</system:String>
