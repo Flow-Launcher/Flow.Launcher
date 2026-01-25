@@ -12,7 +12,7 @@
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_comma">逗號 (,)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_dot">點 (.)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_max_decimal_places">小數點後最大位數</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_use_thousands_separator">Show thousands separator in results</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_use_thousands_separator">在結果中顯示千位分隔符</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_failed_to_copy">複製失敗，請稍後再試</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_show_error_message">計算失敗時顯示錯誤訊息</system:String>
 </ResourceDictionary>
