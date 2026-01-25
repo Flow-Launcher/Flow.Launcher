@@ -2280,7 +2280,7 @@ namespace Flow.Launcher.ViewModel
                     else
                     {
                         var priorityScore = metaResults.Metadata.Priority * 150;
-                        if (result.AddSelectedCount)
+                        if (result.AddSelectedCount && Settings.UseSelectionScore)
                         {
                             if ((long)result.Score + _userSelectedRecord.GetSelectedCount(result) + priorityScore > Result.MaxScore)
                             {

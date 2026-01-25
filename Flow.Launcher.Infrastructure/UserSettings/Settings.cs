@@ -500,6 +500,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public bool SearchQueryResultsWithDelay { get; set; }
         public int SearchDelayTime { get; set; } = 150;
 
+        public bool UseSelectionScore { get; set; } = true;
+
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public SearchWindowScreens SearchWindowScreen { get; set; } = SearchWindowScreens.Cursor;
 
