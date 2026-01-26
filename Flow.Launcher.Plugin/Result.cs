@@ -176,7 +176,7 @@ namespace Flow.Launcher.Plugin
         }
 
         /// <summary>
-        /// Set the Glyph Icon
+        /// Set the Glyph Icon after initialization
         /// </summary>
         /// <param name="glyph"></param>
         public void SetGlyph(GlyphInfo glyph)
