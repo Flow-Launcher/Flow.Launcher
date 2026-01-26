@@ -1,0 +1,86 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        x:Class="Flow.Launcher.Plugin.Explorer.Views.Avalonia.QuickAccessLinkSettings"
+        Title="{DynamicResource plugin_explorer_manage_quick_access_links_header}"
+        Width="450"
+        Height="280"
+        WindowStartupLocation="CenterOwner"
+        CanResize="False"
+        ShowInTaskbar="False">
+
+    <Grid RowDefinitions="*,Auto">
+        <!-- Main Content -->
+        <StackPanel Grid.Row="0" Margin="24,20,24,10" Spacing="16">
+            <!-- Header -->
+            <TextBlock Text="{DynamicResource plugin_explorer_manage_quick_access_links_header}"
+                       FontSize="20"
+                       FontWeight="SemiBold" />
+
+            <!-- Form Fields -->
+            <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto,Auto">
+                <!-- Name -->
+                <TextBlock Grid.Row="0" Grid.Column="0"
+                           Text="{DynamicResource plugin_explorer_name}"
+                           VerticalAlignment="Center"
+                           Margin="0,0,10,0" />
+                <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"
+                         Text="{Binding SelectedName, Mode=TwoWay}"
+                         Margin="0,0,0,10" />
+
+                <!-- Type -->
+                <TextBlock Grid.Row="1" Grid.Column="0"
+                           Text="{DynamicResource plugin_explorer_type}"
+                           VerticalAlignment="Center"
+                           Margin="0,0,10,0" />
+                <StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
+                            Orientation="Horizontal" Spacing="20"
+                            Margin="0,0,0,10">
+                    <RadioButton Content="{DynamicResource plugin_explorer_file}"
+                                 GroupName="PathType"
+                                 IsChecked="{Binding IsFileSelected, Mode=TwoWay}" />
+                    <RadioButton Content="{DynamicResource plugin_explorer_folder}"
+                                 GroupName="PathType"
+                                 IsChecked="{Binding IsFolderSelected, Mode=TwoWay}" />
+                </StackPanel>
+
+                <!-- Path -->
+                <TextBlock Grid.Row="2" Grid.Column="0"
+                           Text="{DynamicResource plugin_explorer_path}"
+                           VerticalAlignment="Center"
+                           Margin="0,0,10,0" />
+                <TextBox Grid.Row="2" Grid.Column="1"
+                         Text="{Binding SelectedPath, Mode=TwoWay}"
+                         IsReadOnly="True"
+                         Margin="0,0,10,0" />
+                <Button Grid.Row="2" Grid.Column="2"
+                        Content="{DynamicResource select}"
+                        Click="SelectPath_OnClick"
+                        MinWidth="80" />
+            </Grid>
+        </StackPanel>
+
+        <!-- Button Area -->
+        <Border Grid.Row="1"
+                Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}"
+                BorderThickness="0,1,0,0"
+                BorderBrush="{DynamicResource SystemControlForegroundBaseMediumLowBrush}"
+                Padding="24,16">
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        Spacing="10">
+                <Button Content="{DynamicResource cancel}"
+                        Click="BtnCancel_OnClick"
+                        Width="120"
+                        HorizontalContentAlignment="Center" />
+                <Button Content="{DynamicResource done}"
+                        Click="OnDoneButtonClick"
+                        Width="120"
+                        HorizontalContentAlignment="Center"
+                        Classes="accent" />
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

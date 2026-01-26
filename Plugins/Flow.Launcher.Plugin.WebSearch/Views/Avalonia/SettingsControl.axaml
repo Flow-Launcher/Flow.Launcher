@@ -1,0 +1,65 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
+             xmlns:vm="using:Flow.Launcher.Plugin.WebSearch"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+             x:Class="Flow.Launcher.Plugin.WebSearch.Views.Avalonia.SettingsControl"
+             x:DataType="vm:SettingsViewModel">
+
+    <StackPanel Spacing="10" Margin="0,0,10,0">
+        <ui:SettingsExpander Header="{DynamicResource flowlauncher_plugin_websearch_plugin_name}"
+                             IconSource="Globe"
+                             Description="{DynamicResource flowlauncher_plugin_websearch_plugin_description}"
+                             IsExpanded="True">
+            <ui:SettingsExpander.Items>
+                <ui:SettingsExpanderItem>
+                    <Grid RowDefinitions="*,Auto" MinHeight="300">
+                        <ListBox Grid.Row="0"
+                                 ItemsSource="{Binding Settings.SearchSources}"
+                                 SelectedItem="{Binding Settings.SelectedSearchSource}"
+                                 Background="{DynamicResource CardBackgroundFillColorDefault}"
+                                 BorderBrush="{DynamicResource ControlStrokeColorDefault}"
+                                 BorderThickness="1"
+                                 CornerRadius="4"
+                                 Margin="0,0,0,10">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate x:DataType="vm:SearchSource">
+                                    <Grid ColumnDefinitions="Auto,120,*,80,80" Margin="0,5">
+                                        <Image Grid.Column="0" Width="20" Height="20" Source="{Binding IconPath}" Margin="0,0,10,0"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding ActionKeyword}" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                                        <TextBlock Grid.Column="2" Text="{Binding Title}" VerticalAlignment="Center"/>
+                                        <CheckBox Grid.Column="3" IsChecked="{Binding Enabled}" IsEnabled="False" HorizontalAlignment="Center"/>
+                                        <CheckBox Grid.Column="4" IsChecked="{Binding IsPrivateMode}" IsEnabled="False" HorizontalAlignment="Center"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+                        <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="10" HorizontalAlignment="Right">
+                            <Button Content="{DynamicResource flowlauncher_plugin_websearch_add}" Click="OnAddSearchSourceClick"/>
+                            <Button Content="{DynamicResource flowlauncher_plugin_websearch_edit}" Click="OnEditSearchSourceClick"/>
+                            <Button Content="{DynamicResource flowlauncher_plugin_websearch_delete}" Click="OnDeleteSearchSourceClick"/>
+                        </StackPanel>
+                    </Grid>
+                </ui:SettingsExpanderItem>
+            </ui:SettingsExpander.Items>
+        </ui:SettingsExpander>
+
+        <ui:SettingsExpander Header="{DynamicResource flowlauncher_plugin_websearch_enable_suggestion_provider}"
+                             IconSource="Lightbulb"
+                             Description="{DynamicResource flowlauncher_plugin_websearch_enable_suggestion}">
+            <ui:SettingsExpander.Footer>
+                <StackPanel Orientation="Horizontal" Spacing="10">
+                    <ComboBox ItemsSource="{Binding Settings.Suggestions}"
+                              SelectedItem="{Binding Settings.SelectedSuggestion}"
+                              IsEnabled="{Binding Settings.EnableSuggestion}"
+                              MinWidth="150"/>
+                    <ToggleSwitch IsChecked="{Binding Settings.EnableSuggestion}"
+                                  OnContent="" OffContent=""/>
+                </StackPanel>
+            </ui:SettingsExpander.Footer>
+        </ui:SettingsExpander>
+    </StackPanel>
+</UserControl>

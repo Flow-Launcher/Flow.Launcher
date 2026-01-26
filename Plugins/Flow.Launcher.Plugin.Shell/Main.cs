@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -10,6 +10,7 @@ using Flow.Launcher.Plugin.Shell.Views;
 using WindowsInput;
 using WindowsInput.Native;
 using Control = System.Windows.Controls.Control;
+using AvaloniaControl = Avalonia.Controls.Control;
 using Keys = System.Windows.Forms.Keys;
 
 namespace Flow.Launcher.Plugin.Shell
@@ -432,6 +433,11 @@ namespace Flow.Launcher.Plugin.Shell
         public Control CreateSettingPanel()
         {
             return new CMDSetting(_settings);
+        }
+
+        public AvaloniaControl CreateSettingPanelAvalonia()
+        {
+            return new Flow.Launcher.Plugin.Shell.Views.Avalonia.ShellSetting(_settings);
         }
 
         public string GetTranslatedPluginTitle()

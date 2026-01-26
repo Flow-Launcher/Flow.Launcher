@@ -202,18 +202,47 @@ public class Internationalization
     }
 
     /// <summary>
+    /// Inject all translations into Avalonia's Application.Resources so {DynamicResource} works.
+    /// This enables plugin settings to use {DynamicResource key} for localization.
+    /// Must be called after Application is initialized.
+    /// </summary>
+    public void InjectIntoApplicationResources()
+    {
+        try
+        {
+            var app = Application.Current;
+            if (app == null)
+            {
+                Log.Warn(ClassName, "Cannot inject resources: Application.Current is null");
+                return;
+            }
+
+            var count = 0;
+            foreach (var kvp in _translations)
+            {
+                app.Resources[kvp.Key] = kvp.Value;
+                count++;
+            }
+
+            Log.Info(ClassName, $"Injected {count} translations into Application.Resources");
+        }
+        catch (Exception e)
+        {
+            Log.Exception(ClassName, "Failed to inject translations into Application.Resources", e);
+        }
+    }
+
+    /// <summary>
     /// Get a translated string by key.
     /// </summary>
     public string GetTranslation(string key)
     {
         if (_translations.TryGetValue(key, out var translation))
         {
-            Log.Debug(ClassName, $"Translation found for '{key}': '{translation}'");
             return translation;
         }
 
         Log.Warn(ClassName, $"Translation not found for key: {key}");
-        Log.Debug(ClassName, $"Available keys (first 20): {string.Join(", ", _translations.Keys.Take(20))}");
         return $"[{key}]";
     }
 
@@ -260,6 +289,10 @@ public class Internationalization
         }
 
         ChangeCultureInfo(languageCode);
+        
+        // Re-inject into Application.Resources for DynamicResource bindings
+        InjectIntoApplicationResources();
+        
         Log.Info(ClassName, $"Language changed to: {languageCode}");
     }
 }

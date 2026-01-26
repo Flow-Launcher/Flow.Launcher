@@ -36,6 +36,10 @@ public partial class App : Application
         ConfigureDI();
         
         AvaloniaXamlLoader.Load(this);
+        
+        // Inject translations into Application.Resources for DynamicResource bindings in plugins
+        var i18n = Ioc.Default.GetRequiredService<Internationalization>();
+        i18n.InjectIntoApplicationResources();
     }
 
     public override void OnFrameworkInitializationCompleted()

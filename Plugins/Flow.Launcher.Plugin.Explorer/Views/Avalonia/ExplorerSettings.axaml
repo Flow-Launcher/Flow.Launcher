@@ -1,0 +1,320 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
+             xmlns:vm="using:Flow.Launcher.Plugin.Explorer.ViewModels"
+             xmlns:qa="using:Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="1200"
+             x:Class="Flow.Launcher.Plugin.Explorer.Views.Avalonia.ExplorerSettings"
+             x:DataType="vm:SettingsViewModel">
+
+    <ScrollViewer>
+        <StackPanel Spacing="10" Margin="10">
+            
+            <!-- General Settings -->
+            <ui:SettingsExpander Header="{DynamicResource plugin_explorer_generalsetting_header}"
+                                 IconSource="Settings"
+                                 IsExpanded="True">
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsExpanderItem Content="{DynamicResource plugin_explorer_use_location_as_working_dir}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ToggleSwitch IsChecked="{Binding Settings.UseLocationAsWorkingDir}" />
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    
+                    <ui:SettingsExpanderItem Content="{DynamicResource plugin_explorer_default_open_in_file_manager}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ToggleSwitch IsChecked="{Binding Settings.DefaultOpenFolderInFileManager}" />
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    
+                    <ui:SettingsExpanderItem Content="{DynamicResource plugin_explorer_display_more_info_in_tooltip}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ToggleSwitch IsChecked="{Binding Settings.DisplayMoreInformationInToolTip}" />
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+
+                    <ui:SettingsExpanderItem Content="{DynamicResource plugin_explorer_file_editor_path}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <StackPanel Orientation="Horizontal" Spacing="5">
+                                <TextBox Text="{Binding FileEditorPath}" Width="200" />
+                                <Button Content="{DynamicResource select}" Click="BtnOpenFileEditorPath_OnClick" />
+                            </StackPanel>
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+
+                    <ui:SettingsExpanderItem Content="{DynamicResource plugin_explorer_folder_editor_path}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <StackPanel Orientation="Horizontal" Spacing="5">
+                                <TextBox Text="{Binding FolderEditorPath}" Width="200" />
+                                <Button Content="{DynamicResource select}" Click="BtnOpenFolderEditorPath_OnClick" />
+                            </StackPanel>
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+
+                    <ui:SettingsExpanderItem Content="{DynamicResource plugin_explorer_shell_path}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <StackPanel Orientation="Horizontal" Spacing="5">
+                                <TextBox Text="{Binding ShellPath}" Width="200" />
+                                <Button Content="{DynamicResource select}" Click="BtnOpenShellPath_OnClick" />
+                            </StackPanel>
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+
+                    <ui:SettingsExpanderItem Content="{DynamicResource plugin_explorer_Index_Search_Engine}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ComboBox ItemsSource="{Binding IndexSearchEngines}"
+                                      SelectedItem="{Binding SelectedIndexSearchEngine}"
+                                      DisplayMemberBinding="{Binding Description}"
+                                      MinWidth="150"/>
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+
+                    <ui:SettingsExpanderItem Content="{DynamicResource plugin_explorer_Content_Search_Engine}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ComboBox ItemsSource="{Binding ContentIndexSearchEngines}"
+                                      SelectedItem="{Binding SelectedContentSearchEngine}"
+                                      DisplayMemberBinding="{Binding Description}"
+                                      MinWidth="150"/>
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+
+                    <ui:SettingsExpanderItem Content="{DynamicResource plugin_explorer_Directory_Recursive_Search_Engine}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ComboBox ItemsSource="{Binding PathEnumerationEngines}"
+                                      SelectedItem="{Binding SelectedPathEnumerationEngine}"
+                                      DisplayMemberBinding="{Binding Description}"
+                                      MinWidth="150"/>
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+
+                    <ui:SettingsExpanderItem Content="{DynamicResource plugin_explorer_Excluded_File_Types}"
+                                             Description="{DynamicResource plugin_explorer_Excluded_File_Types_Tooltip}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <TextBox Text="{Binding ExcludedFileTypes}" Width="200" />
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+
+                    <ui:SettingsExpanderItem Content="{DynamicResource plugin_explorer_Maximum_Results}"
+                                             Description="{DynamicResource plugin_explorer_Maximum_Results_Tooltip}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <TextBox Text="{Binding MaxResult}" Width="100" />
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+
+                    <ui:SettingsExpanderItem>
+                        <Button Content="{DynamicResource plugin_explorer_Open_Window_Index_Option}" 
+                                Click="btnOpenIndexingOptions_Click" />
+                    </ui:SettingsExpanderItem>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
+
+            <!-- Native Context Menu -->
+            <ui:SettingsExpander Header="{DynamicResource plugin_explorer_native_context_menu_header}"
+                                 IconSource="Menu"
+                                 IsExpanded="False">
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsExpanderItem Content="{DynamicResource plugin_explorer_native_context_menu_display_context_menu}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ToggleSwitch IsChecked="{Binding ShowWindowsContextMenu}" />
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+
+                    <ui:SettingsExpanderItem Content="{DynamicResource plugin_explorer_native_context_menu_include_patterns_guide}">
+                        <ui:SettingsExpanderItem.Footer>
+                             <TextBox Text="{Binding WindowsContextMenuIncludedItems}" 
+                                      AcceptsReturn="True" 
+                                      Height="100" 
+                                      Width="300"
+                                      TextWrapping="Wrap" />
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+
+                    <ui:SettingsExpanderItem Content="{DynamicResource plugin_explorer_native_context_menu_exclude_patterns_guide}">
+                        <ui:SettingsExpanderItem.Footer>
+                             <TextBox Text="{Binding WindowsContextMenuExcludedItems}" 
+                                      AcceptsReturn="True" 
+                                      Height="100" 
+                                      Width="300"
+                                      TextWrapping="Wrap" />
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
+
+            <!-- Preview Panel -->
+            <ui:SettingsExpander Header="{DynamicResource plugin_explorer_previewpanel_setting_header}"
+                                 IconSource="PreviewLink"
+                                 IsExpanded="False">
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsExpanderItem Content="{DynamicResource plugin_explorer_previewpanel_file_info_label}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <StackPanel Orientation="Horizontal" Spacing="10">
+                                <CheckBox Content="{DynamicResource plugin_explorer_previewpanel_display_file_size_checkbox}"
+                                          IsChecked="{Binding ShowFileSizeInPreviewPanel}" />
+                                <CheckBox Content="{DynamicResource plugin_explorer_previewpanel_display_file_creation_checkbox}"
+                                          IsChecked="{Binding ShowCreatedDateInPreviewPanel}" />
+                                <CheckBox Content="{DynamicResource plugin_explorer_previewpanel_display_file_modification_checkbox}"
+                                          IsChecked="{Binding ShowModifiedDateInPreviewPanel}" />
+                                <CheckBox Content="{DynamicResource plugin_explorer_previewpanel_display_file_age_checkbox}"
+                                          IsChecked="{Binding ShowFileAgeInPreviewPanel}" />
+                            </StackPanel>
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+
+                    <ui:SettingsExpanderItem Content="{DynamicResource plugin_explorer_previewpanel_date_and_time_format_label}"
+                                             IsVisible="{Binding ShowPreviewPanelDateTimeChoices}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <StackPanel Spacing="5">
+                                <StackPanel Orientation="Horizontal" Spacing="5">
+                                    <ComboBox ItemsSource="{Binding DateFormatList}"
+                                              SelectedItem="{Binding PreviewPanelDateFormat}" 
+                                              MinWidth="150"/>
+                                    <TextBlock Text="{Binding PreviewPanelDateFormatDemo}" VerticalAlignment="Center" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Spacing="5">
+                                    <ComboBox ItemsSource="{Binding TimeFormatList}"
+                                              SelectedItem="{Binding PreviewPanelTimeFormat}" 
+                                              MinWidth="150"/>
+                                    <TextBlock Text="{Binding PreviewPanelTimeFormatDemo}" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </StackPanel>
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
+
+            <!-- Everything Settings -->
+            <ui:SettingsExpander Header="{DynamicResource plugin_explorer_everything_setting_header}"
+                                 IconSource="Find"
+                                 IsExpanded="False">
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsExpanderItem Content="{DynamicResource flowlauncher_plugin_everything_search_fullpath}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ToggleSwitch IsChecked="{Binding Settings.EverythingSearchFullPath}" />
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+
+                    <ui:SettingsExpanderItem Content="{DynamicResource flowlauncher_plugin_everything_enable_run_count}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ToggleSwitch IsChecked="{Binding Settings.EverythingEnableRunCount}" />
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+
+                    <ui:SettingsExpanderItem Content="{DynamicResource plugin_explorer_everything_sort_option}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ComboBox ItemsSource="{Binding AllEverythingSortOptions}"
+                                      SelectedValue="{Binding SelectedEverythingSortOption}"
+                                      SelectedValueBinding="{Binding Value}"
+                                      DisplayMemberBinding="{Binding Display}"
+                                      MinWidth="150"/>
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+
+                    <ui:SettingsExpanderItem Content="{DynamicResource plugin_explorer_everything_installed_path}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <TextBox Text="{Binding EverythingInstalledPath}" Width="200" />
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    
+                    <ui:SettingsExpanderItem IsVisible="{Binding FastSortWarningVisibility}">
+                        <TextBlock Text="{Binding SortOptionWarningMessage}" Foreground="Orange" TextWrapping="Wrap" />
+                    </ui:SettingsExpanderItem>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
+
+            <!-- Manage Action Keywords -->
+            <ui:SettingsExpander Header="{DynamicResource plugin_explorer_manageactionkeywords_header}"
+                                 IconSource="Keyboard"
+                                 IsExpanded="False">
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsExpanderItem>
+                        <StackPanel Spacing="10">
+                            <ListBox ItemsSource="{Binding ActionKeywordsModels}"
+                                     SelectedItem="{Binding SelectedActionKeyword}"
+                                     Height="150">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid ColumnDefinitions="*,*,*">
+                                            <TextBlock Grid.Column="0" Text="{Binding LocalizedDescription}" />
+                                            <TextBlock Grid.Column="1" Text="{Binding Keyword}" />
+                                            <TextBlock Grid.Column="2" Text="{Binding Enabled}" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                            <Button Content="{DynamicResource plugin_explorer_edit}" 
+                                    Command="{Binding EditActionKeywordCommand}" 
+                                    HorizontalAlignment="Right"/>
+                        </StackPanel>
+                    </ui:SettingsExpanderItem>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
+
+            <!-- Quick Access Links -->
+            <ui:SettingsExpander Header="{DynamicResource plugin_explorer_quickaccesslinks_header}"
+                                 IconSource="Star"
+                                 IsExpanded="False">
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsExpanderItem>
+                        <StackPanel Spacing="10">
+                            <ListBox ItemsSource="{Binding Settings.QuickAccessLinks}"
+                                     SelectedItem="{Binding SelectedQuickAccessLink}"
+                                     Height="200">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate DataType="qa:AccessLink">
+                                        <Grid ColumnDefinitions="*,2*">
+                                            <TextBlock Grid.Column="0" Text="{Binding Name}" FontWeight="Bold" />
+                                            <TextBlock Grid.Column="1" Text="{Binding Path}" TextTrimming="CharacterEllipsis" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                            <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Right">
+                                <Button Content="{DynamicResource plugin_explorer_delete}" 
+                                        Command="{Binding RemoveLinkCommand}" 
+                                        CommandParameter="QuickAccessLink"/>
+                                <Button Content="{DynamicResource plugin_explorer_edit}" 
+                                        Command="{Binding EditQuickAccessLinkCommand}"/>
+                                <Button Content="{DynamicResource plugin_explorer_add}" 
+                                        Command="{Binding AddQuickAccessLinkCommand}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </ui:SettingsExpanderItem>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
+
+            <!-- Index Search Excluded Paths -->
+            <ui:SettingsExpander Header="{DynamicResource plugin_explorer_indexsearchexcludedpaths_header}"
+                                 IconSource="Block"
+                                 IsExpanded="False">
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsExpanderItem>
+                        <StackPanel Spacing="10">
+                            <ListBox ItemsSource="{Binding Settings.IndexSearchExcludedSubdirectoryPaths}"
+                                     SelectedItem="{Binding SelectedIndexSearchExcludedPath}"
+                                     Height="200">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate DataType="qa:AccessLink">
+                                        <TextBlock Text="{Binding Path}" />
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                            <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Right">
+                                <Button Content="{DynamicResource plugin_explorer_delete}" 
+                                        Command="{Binding RemoveLinkCommand}" 
+                                        CommandParameter="IndexSearchExcludedPaths"/>
+                                <Button Content="{DynamicResource plugin_explorer_edit}" 
+                                        Command="{Binding EditIndexSearchExcludePathsCommand}"/>
+                                <Button Content="{DynamicResource plugin_explorer_add}" 
+                                        Command="{Binding AddIndexSearchExcludePathsCommand}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </ui:SettingsExpanderItem>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

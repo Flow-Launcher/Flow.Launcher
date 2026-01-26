@@ -1,4 +1,4 @@
-﻿using Flow.Launcher.Plugin.Explorer.Helper;
+using Flow.Launcher.Plugin.Explorer.Helper;
 using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.Everything;
 using Flow.Launcher.Plugin.Explorer.ViewModels;
@@ -12,6 +12,7 @@ using System.Windows.Controls;
 using Flow.Launcher.Plugin.Explorer.Exceptions;
 using System.Linq;
 using System.Globalization;
+using AvaloniaControl = Avalonia.Controls.Control;
 
 namespace Flow.Launcher.Plugin.Explorer
 {
@@ -32,6 +33,11 @@ namespace Flow.Launcher.Plugin.Explorer
         public Control CreateSettingPanel()
         {
             return new ExplorerSettings(viewModel);
+        }
+
+        public AvaloniaControl CreateSettingPanelAvalonia()
+        {
+            return new Views.Avalonia.ExplorerSettings(viewModel);
         }
 
         public Task InitAsync(PluginInitContext context)

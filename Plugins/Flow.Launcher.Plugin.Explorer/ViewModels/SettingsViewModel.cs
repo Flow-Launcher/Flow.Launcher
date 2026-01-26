@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -6,6 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using CommunityToolkit.Mvvm.Input;
@@ -15,11 +16,18 @@ using Flow.Launcher.Plugin.Explorer.Search.Everything;
 using Flow.Launcher.Plugin.Explorer.Search.Everything.Exceptions;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using Flow.Launcher.Plugin.Explorer.Views;
+using AvaloniaApp = Avalonia.Application;
+using AvaloniaQuickAccessLinkSettings = Flow.Launcher.Plugin.Explorer.Views.Avalonia.QuickAccessLinkSettings;
 
 namespace Flow.Launcher.Plugin.Explorer.ViewModels
 {
     public partial class SettingsViewModel : BaseModel
     {
+        /// <summary>
+        /// Detects if we're running in an Avalonia application context
+        /// </summary>
+        private static bool IsAvalonia => AvaloniaApp.Current != null;
+        
         public Settings Settings { get; set; }
 
         internal PluginInitContext Context { get; set; }
@@ -394,7 +402,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
         }
 
         [RelayCommand]
-        private void EditQuickAccessLink()
+        private async Task EditQuickAccessLinkAsync()
         {
             var selectedLink = SelectedQuickAccessLink;
             var collection = Settings.QuickAccessLinks;
@@ -405,20 +413,50 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                 return;
             }
 
-            var quickAccessLinkSettings = new QuickAccessLinkSettings(collection, SelectedQuickAccessLink);
-            if (quickAccessLinkSettings.ShowDialog() == true)
+            if (IsAvalonia)
             {
-                Save();
+                var dialog = new AvaloniaQuickAccessLinkSettings(collection, selectedLink);
+                var mainWindow = AvaloniaApp.Current?.ApplicationLifetime is global::Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime desktop
+                    ? desktop.MainWindow
+                    : null;
+                var result = await dialog.ShowDialog<bool?>(mainWindow!);
+                if (result == true)
+                {
+                    Save();
+                }
+            }
+            else
+            {
+                var quickAccessLinkSettings = new QuickAccessLinkSettings(collection, SelectedQuickAccessLink);
+                if (quickAccessLinkSettings.ShowDialog() == true)
+                {
+                    Save();
+                }
             }
         }
         
         [RelayCommand]
-        private void AddQuickAccessLink()
+        private async Task AddQuickAccessLinkAsync()
         {
-            var quickAccessLinkSettings = new QuickAccessLinkSettings(Settings.QuickAccessLinks);
-            if (quickAccessLinkSettings.ShowDialog() == true)
+            if (IsAvalonia)
             {
-                Save();
+                var dialog = new AvaloniaQuickAccessLinkSettings(Settings.QuickAccessLinks);
+                var mainWindow = AvaloniaApp.Current?.ApplicationLifetime is global::Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime desktop
+                    ? desktop.MainWindow
+                    : null;
+                var result = await dialog.ShowDialog<bool?>(mainWindow!);
+                if (result == true)
+                {
+                    Save();
+                }
+            }
+            else
+            {
+                var quickAccessLinkSettings = new QuickAccessLinkSettings(Settings.QuickAccessLinks);
+                if (quickAccessLinkSettings.ShowDialog() == true)
+                {
+                    Save();
+                }
             }
         }
 

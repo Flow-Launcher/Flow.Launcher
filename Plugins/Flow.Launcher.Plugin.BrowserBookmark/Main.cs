@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,6 +10,7 @@ using Flow.Launcher.Plugin.BrowserBookmark.Commands;
 using Flow.Launcher.Plugin.BrowserBookmark.Models;
 using Flow.Launcher.Plugin.BrowserBookmark.Views;
 using Flow.Launcher.Plugin.SharedCommands;
+using AvaloniaControl = Avalonia.Controls.Control;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark;
 
@@ -223,6 +224,11 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
     public Control CreateSettingPanel()
     {
         return new SettingsControl(_settings);
+    }
+
+    public AvaloniaControl CreateSettingPanelAvalonia()
+    {
+        return new Views.Avalonia.SettingsControl(_settings);
     }
 
     public List<Result> LoadContextMenus(Result selectedResult)
