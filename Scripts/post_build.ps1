@@ -4,6 +4,11 @@ param(
 )
 Write-Host "Config: $config"
 
+# Constants for build configurations
+$RELEASE_CONFIG = "Release"
+$RELEASE_FD_CONFIG = "Release-FD"
+$FD_SUFFIX = "-FD"
+
 function Build-Version {
     if ([string]::IsNullOrEmpty($env:flowVersion)) {
         $targetPath = Join-Path $solution "Output/Release/Flow.Launcher.dll" -Resolve
@@ -136,7 +141,7 @@ function Main {
     $v = Build-Version
     Copy-Resources $p
 
-    if ($config -eq "Release"){
+    if ($config -eq $RELEASE_CONFIG){
 
         Delete-Unused $p $config
 
@@ -153,9 +158,9 @@ function Main {
         # Build framework-dependent version (requires .NET runtime to be installed)
         Write-Host "Building framework-dependent version..."
         Publish-Framework-Dependent $p
-        Remove-CreateDumpExe $p "Release-FD"
-        Pack-Squirrel-Installer $p $v $o "$p\Output\Release-FD" "-FD"
-        Publish-Portable $o $v "-FD"
+        Remove-CreateDumpExe $p $RELEASE_FD_CONFIG
+        Pack-Squirrel-Installer $p $v $o "$p\Output\$RELEASE_FD_CONFIG" $FD_SUFFIX
+        Publish-Portable $o $v $FD_SUFFIX
     }
 }
 
