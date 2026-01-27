@@ -17,6 +17,7 @@
         <ui:NavigationView.MenuItems>
             <ui:NavigationViewItem Content="{i18n:Localize general}" Tag="General" IconSource="Setting" IsSelected="True" />
             <ui:NavigationViewItem Content="{i18n:Localize plugin}" Tag="Plugins" IconSource="Library" />
+            <ui:NavigationViewItem Content="{i18n:Localize pluginStore}" Tag="PluginStore" IconSource="Shop" />
             <ui:NavigationViewItem Content="{i18n:Localize theme}" Tag="Theme" IconSource="DarkTheme" />
             <ui:NavigationViewItem Content="{i18n:Localize hotkey}" Tag="Hotkey" IconSource="Keyboard" />
             <ui:NavigationViewItem Content="{i18n:Localize proxy}" Tag="Proxy" IconSource="Globe" />

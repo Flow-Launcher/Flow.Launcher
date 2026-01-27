@@ -12,6 +12,7 @@ using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
 using Flow.Launcher.Core.Plugin;
+using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Avalonia.ViewModel;
 using Flow.Launcher.Avalonia.Resource;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -128,8 +129,9 @@ public class AvaloniaPublicAPI : IPublicAPI
     public Task<T> LoadCacheBinaryStorageAsync<T>(string cacheName, string cacheDirectory, T defaultData) where T : new() => Task.FromResult(defaultData);
     public Task SaveCacheBinaryStorageAsync<T>(string cacheName, string cacheDirectory) where T : new() => Task.CompletedTask;
     public ValueTask<ImageSource> LoadImageAsync(string path, bool loadFullImage = false, bool cacheImage = true) => new((ImageSource)null!);
-    public Task<bool> UpdatePluginManifestAsync(bool usePrimaryUrlOnly = false, CancellationToken token = default) => Task.FromResult(true);
-    public IReadOnlyList<UserPlugin> GetPluginManifest() => new List<UserPlugin>();
+    public Task<bool> UpdatePluginManifestAsync(bool usePrimaryUrlOnly = false, CancellationToken token = default) => 
+        PluginsManifest.UpdateManifestAsync(usePrimaryUrlOnly, token);
+    public IReadOnlyList<UserPlugin> GetPluginManifest() => PluginsManifest.UserPlugins ?? new List<UserPlugin>();
     public Task<bool> UpdatePluginAsync(PluginMetadata pluginMetadata, UserPlugin plugin, string zipFilePath) => Task.FromResult(false);
     public bool InstallPlugin(UserPlugin plugin, string zipFilePath) => false;
     public Task<bool> UninstallPluginAsync(PluginMetadata pluginMetadata, bool removePluginSettings = false) => Task.FromResult(false);

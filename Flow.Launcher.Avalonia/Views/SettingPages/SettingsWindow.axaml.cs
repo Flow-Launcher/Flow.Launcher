@@ -31,6 +31,7 @@ public partial class SettingsWindow : Window
         {
             "General" => new GeneralSettingsPage(),
             "Plugins" => new PluginsSettingsPage(),
+            "PluginStore" => new PluginStoreSettingsPage(),
             "Theme" => new ThemeSettingsPage(),
             "Hotkey" => new HotkeySettingsPage(),
             "Proxy" => new ProxySettingsPage(),
