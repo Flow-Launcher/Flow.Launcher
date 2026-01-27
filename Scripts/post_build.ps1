@@ -74,6 +74,14 @@ function Pack-Squirrel-Installer ($path, $version, $output, $inputPath = "$path\
     nuget pack $spec -Version $version -BasePath $inputPath -OutputDirectory $output -Properties Configuration=Release
 
     $nupkg = "$output\FlowLauncher.$version.nupkg"
+    
+    # Rename the nupkg file if this is the framework-dependent version to avoid conflicts
+    if ($suffix -ne "") {
+        $nupkgRenamed = "$output\FlowLauncher$suffix.$version.nupkg"
+        Move-Item $nupkg $nupkgRenamed -Force
+        $nupkg = $nupkgRenamed
+    }
+    
     Write-Host "nupkg path: $nupkg"
     $icon = "$path\Flow.Launcher\Resources\app.ico"
     Write-Host "icon: $icon"
