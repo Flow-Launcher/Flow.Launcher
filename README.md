@@ -44,6 +44,10 @@ Dedicated to making your work flow more seamless. Search everything from applica
 
 [Windows 10+ Installer](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest/download/Flow-Launcher-Setup.exe) or [Portable Version](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest/download/Flow-Launcher-Portable.zip)
 
+> **Note:** The default installers include the .NET runtime. If you already have .NET 9.0 runtime installed, you can download smaller framework-dependent packages:
+> - [Framework-Dependent Installer](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest/download/Flow-Launcher-Setup-FD.exe)
+> - [Framework-Dependent Portable Version](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest/download/Flow-Launcher-Portable-FD.zip)
+
 #### Winget
 
 ```
