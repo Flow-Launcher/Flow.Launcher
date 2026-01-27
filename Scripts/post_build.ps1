@@ -135,6 +135,24 @@ function Publish-Self-Contained ($p) {
     dotnet publish -c Release $csproj /p:PublishProfile=$profile
 }
 
+function Publish-Self-Contained-Avalonia ($p) {
+    $csproj  = "$p\Flow.Launcher.Avalonia\Flow.Launcher.Avalonia.csproj"
+    $profile = "$p\Flow.Launcher.Avalonia\Properties\PublishProfiles\Net9.0-SelfContained.pubxml"
+
+    if (!(Test-Path $csproj)) {
+        Write-Host "Avalonia project not found at $csproj, skipping self-contained publish..."
+        return
+    }
+
+    if (!(Test-Path $profile)) {
+        Write-Host "Avalonia publish profile not found at $profile, skipping self-contained publish..."
+        return
+    }
+
+    Write-Host "Publishing Avalonia self-contained..."
+    dotnet publish -c Release $csproj /p:PublishProfile=$profile
+}
+
 function Publish-Portable ($outputLocation, $version) {
 
     & $outputLocation\Flow-Launcher-Setup.exe --silent | Out-Null
@@ -156,6 +174,7 @@ function Main {
         Remove-CreateDumpExe $p $config
 
         # Process Avalonia build
+        Publish-Self-Contained-Avalonia $p
         Delete-Unused-Avalonia $p $config
         Remove-CreateDumpExe-Avalonia $p $config
 
