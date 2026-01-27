@@ -10,6 +10,7 @@ on:
       - dev
       - master
   pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
 
 jobs:
   build:
@@ -89,3 +90,10 @@ jobs:
           path: |
             Output\Packages\RELEASES
           compression-level: 0
+      - name: Upload Avalonia Build
+        uses: actions/upload-artifact@v5
+        with:
+          name: Flow Launcher Avalonia
+          path: |
+            Output\Release\Avalonia\
+          compression-level: 6
