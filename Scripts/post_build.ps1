@@ -55,6 +55,35 @@ function Remove-CreateDumpExe ($path, $config) {
     Remove-Item -Path $target -Include "*createdump.exe" -Recurse
 }
 
+function Remove-CreateDumpExe-Avalonia ($path, $config) {
+    $target = "$path\Output\$config\Avalonia"
+
+    if (Test-Path "$target\Flow.Launcher.Avalonia.deps.json") {
+        $depjson = Get-Content $target\Flow.Launcher.Avalonia.deps.json -raw
+        $depjson -replace '(?s)(.createdump.exe": {.*?}.*?\n)\s*', "" | Out-File $target\Flow.Launcher.Avalonia.deps.json -Encoding UTF8
+    }
+    Remove-Item -Path $target -Include "*createdump.exe" -Recurse -ErrorAction SilentlyContinue
+}
+
+function Delete-Unused-Avalonia ($path, $config) {
+    $target = "$path\Output\$config\Avalonia"
+    
+    if (!(Test-Path $target)) {
+        Write-Host "Avalonia output not found at $target, skipping..."
+        return
+    }
+    
+    $included = Get-ChildItem $target -Filter "*.dll"
+    if (Test-Path "$target\Plugins") {
+        foreach ($i in $included){
+            $deleteList = Get-ChildItem $target\Plugins -Include $i -Recurse | Where { $_.VersionInfo.FileVersion -eq $i.VersionInfo.FileVersion -And $_.Name -eq "$i" }
+            $deleteList | ForEach-Object{ Write-Host Deleting duplicated $_.Name with version $_.VersionInfo.FileVersion at location $_.Directory.FullName }
+            $deleteList | Remove-Item
+        }
+    }
+    Remove-Item -Path $target -Include "*.xml" -Recurse -ErrorAction SilentlyContinue
+}
+
 
 function Validate-Directory ($output) {
     New-Item $output -ItemType Directory -Force
@@ -125,6 +154,10 @@ function Main {
         Publish-Self-Contained $p
 
         Remove-CreateDumpExe $p $config
+
+        # Process Avalonia build
+        Delete-Unused-Avalonia $p $config
+        Remove-CreateDumpExe-Avalonia $p $config
 
         $o = "$p\Output\Packages"
         Validate-Directory $o
