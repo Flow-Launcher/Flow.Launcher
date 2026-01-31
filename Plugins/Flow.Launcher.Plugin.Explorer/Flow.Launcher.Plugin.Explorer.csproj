@@ -8,7 +8,7 @@
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
-    <Nullable>warnings</Nullable>
+    <Nullable>enable</Nullable>
     <ApplicationIcon />
     <StartupObject />
   </PropertyGroup>

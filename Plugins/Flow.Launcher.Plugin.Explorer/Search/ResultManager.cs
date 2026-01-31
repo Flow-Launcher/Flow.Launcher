@@ -1,11 +1,10 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Flow.Launcher.Plugin.Explorer.Search.Everything;
-using Flow.Launcher.Plugin.Explorer.Views;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Plugin.SharedModels;
 using Peter;
@@ -106,7 +105,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 {
                     FilePath = path,
                 },
-                PreviewPanel = new Lazy<UserControl>(() => new PreviewPanel(Settings, path, ResultType.Folder)),
                 Action = c =>
                 {
                     if (c.SpecialKeyState.ToModifierKeys() == ModifierKeys.Alt)
@@ -305,7 +303,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 TitleHighlightData = Context.API.FuzzySearch(query.Search, title).MatchData,
                 Score = score,
                 CopyText = filePath,
-                PreviewPanel = new Lazy<UserControl>(() => new PreviewPanel(Settings, filePath, ResultType.File)),
                 Action = c =>
                 {
                     if (c.SpecialKeyState.ToModifierKeys() == ModifierKeys.Alt)
@@ -371,9 +368,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         {
             try
             {
-                var fileSize = PreviewPanel.GetFileSize(filePath);
-                var fileCreatedAt = PreviewPanel.GetFileCreatedAt(filePath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
-                var fileModifiedAt = PreviewPanel.GetFileLastModifiedAt(filePath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
+                var fileSize = Views.Avalonia.PreviewPanel.GetFileSize(filePath);
+                var fileCreatedAt = Views.Avalonia.PreviewPanel.GetFileCreatedAt(filePath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
+                var fileModifiedAt = Views.Avalonia.PreviewPanel.GetFileLastModifiedAt(filePath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
                 return Localize.plugin_explorer_plugin_tooltip_more_info(filePath, fileSize, fileCreatedAt, fileModifiedAt, Environment.NewLine);
             }
             catch (Exception e)
@@ -387,9 +384,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         {
             try
             {
-                var folderSize = PreviewPanel.GetFolderSize(folderPath);
-                var folderCreatedAt = PreviewPanel.GetFolderCreatedAt(folderPath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
-                var folderModifiedAt = PreviewPanel.GetFolderLastModifiedAt(folderPath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
+                var folderSize = Views.Avalonia.PreviewPanel.GetFolderSize(folderPath);
+                var folderCreatedAt = Views.Avalonia.PreviewPanel.GetFolderCreatedAt(folderPath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
+                var folderModifiedAt = Views.Avalonia.PreviewPanel.GetFolderLastModifiedAt(folderPath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
                 return Localize.plugin_explorer_plugin_tooltip_more_info(folderPath, folderSize, folderCreatedAt, folderModifiedAt, Environment.NewLine);
             }
             catch (Exception e)

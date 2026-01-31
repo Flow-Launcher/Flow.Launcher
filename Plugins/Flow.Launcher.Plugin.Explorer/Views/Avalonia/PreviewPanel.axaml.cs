@@ -1,59 +1,93 @@
-﻿using System;
+#nullable enable
+using System;
 using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
+using Avalonia.Controls;
+using Avalonia.Media;
+using Avalonia.Media.Imaging;
 using Flow.Launcher.Plugin.Explorer.Search;
-using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace Flow.Launcher.Plugin.Explorer.Views;
+namespace Flow.Launcher.Plugin.Explorer.Views.Avalonia;
 
-#nullable enable
-
-[INotifyPropertyChanged]
-public partial class PreviewPanel : UserControl
+public partial class PreviewPanel : UserControl, INotifyPropertyChanged
 {
     private static readonly string ClassName = nameof(PreviewPanel);
 
     public string FilePath { get; }
     public string FileName { get; }
 
-    [ObservableProperty]
     private string _fileSize = Localize.plugin_explorer_plugin_tooltip_more_info_unknown();
-    
-    [ObservableProperty]
     private string _createdAt = "";
-    
-    [ObservableProperty]
     private string _lastModifiedAt = "";
+    private IImage? _previewImage;
 
-    [ObservableProperty]
-    private ImageSource _previewImage = new BitmapImage();
+    public string FileSize
+    {
+        get => _fileSize;
+        set
+        {
+            if (_fileSize != value)
+            {
+                _fileSize = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
+    public string CreatedAt
+    {
+        get => _createdAt;
+        set
+        {
+            if (_createdAt != value)
+            {
+                _createdAt = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
+    public string LastModifiedAt
+    {
+        get => _lastModifiedAt;
+        set
+        {
+            if (_lastModifiedAt != value)
+            {
+                _lastModifiedAt = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
+    public IImage? PreviewImage
+    {
+        get => _previewImage;
+        set
+        {
+            if (_previewImage != value)
+            {
+                _previewImage = value;
+                OnPropertyChanged();
+            }
+        }
+    }
 
     private Settings Settings { get; }
 
-    public Visibility FileSizeVisibility => Settings.ShowFileSizeInPreviewPanel
-        ? Visibility.Visible
-        : Visibility.Collapsed;
-    public Visibility CreatedAtVisibility => Settings.ShowCreatedDateInPreviewPanel
-        ? Visibility.Visible
-        : Visibility.Collapsed;
-    public Visibility LastModifiedAtVisibility => Settings.ShowModifiedDateInPreviewPanel
-        ? Visibility.Visible
-        : Visibility.Collapsed;
+    public bool FileSizeVisibility => Settings.ShowFileSizeInPreviewPanel;
+    public bool CreatedAtVisibility => Settings.ShowCreatedDateInPreviewPanel;
+    public bool LastModifiedAtVisibility => Settings.ShowModifiedDateInPreviewPanel;
 
-    public Visibility FileInfoVisibility =>
+    public bool FileInfoVisibility =>
         Settings.ShowFileSizeInPreviewPanel ||
         Settings.ShowCreatedDateInPreviewPanel ||
-        Settings.ShowModifiedDateInPreviewPanel
-        ? Visibility.Visible
-        : Visibility.Collapsed;
+        Settings.ShowModifiedDateInPreviewPanel;
 
     public PreviewPanel(Settings settings, string filePath, ResultType type)
     {
@@ -62,6 +96,7 @@ public partial class PreviewPanel : UserControl
         FileName = Path.GetFileName(filePath);
 
         InitializeComponent();
+        DataContext = this;
 
         if (Settings.ShowFileSizeInPreviewPanel)
         {
@@ -73,8 +108,8 @@ public partial class PreviewPanel : UserControl
             {
                 _ = Task.Run(() =>
                 {
-                    FileSize = GetFolderSize(filePath);
-                    OnPropertyChanged(nameof(FileSize));
+                    var size = GetFolderSize(filePath);
+                    global::Avalonia.Threading.Dispatcher.UIThread.Post(() => FileSize = size);
                 }).ConfigureAwait(false);
             }
         }
@@ -88,7 +123,7 @@ public partial class PreviewPanel : UserControl
 
         if (Settings.ShowModifiedDateInPreviewPanel)
         {
-            LastModifiedAt = type == ResultType.File ? 
+            LastModifiedAt = type == ResultType.File ?
                 GetFileLastModifiedAt(filePath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel) :
                 GetFolderLastModifiedAt(filePath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
         }
@@ -98,7 +133,24 @@ public partial class PreviewPanel : UserControl
 
     private async Task LoadImageAsync()
     {
-        PreviewImage = await Main.Context.API.LoadImageAsync(FilePath, true).ConfigureAwait(false);
+        try
+        {
+            var imagePath = FilePath;
+            if (string.IsNullOrEmpty(imagePath) || !File.Exists(imagePath))
+                return;
+
+            var bitmap = new Bitmap(imagePath);
+            global::Avalonia.Threading.Dispatcher.UIThread.Post(() => PreviewImage = bitmap);
+        }
+        catch (Exception e)
+        {
+            Main.Context.API.LogException(ClassName, $"Failed to load image for {FilePath}", e);
+        }
+    }
+
+    private void InitializeComponent()
+    {
+        global::Avalonia.Markup.Xaml.AvaloniaXamlLoader.Load(this);
     }
 
     public static string GetFileSize(string filePath)
@@ -323,8 +375,15 @@ public partial class PreviewPanel : UserControl
 
         var yearsDiff = now.Year - fileDateTime.Year;
         if (now.Month < fileDateTime.Month || (now.Month == fileDateTime.Month && now.Day < fileDateTime.Day))
-            yearsDiff--; 
+            yearsDiff--;
 
-        return yearsDiff == 1 ? Localize.OneYearAgo(): Localize.YearsAgo(yearsDiff);
+        return yearsDiff == 1 ? Localize.OneYearAgo() : Localize.YearsAgo(yearsDiff);
+    }
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

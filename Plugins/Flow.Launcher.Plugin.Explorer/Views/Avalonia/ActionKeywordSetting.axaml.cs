@@ -1,4 +1,5 @@
 #nullable enable
+using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -49,7 +50,11 @@ public partial class ActionKeywordSetting : Window, INotifyPropertyChanged
 
         InitializeComponent();
         DataContext = this;
+    }
 
+    protected override void OnOpened(EventArgs e)
+    {
+        base.OnOpened(e);
         this.FindControl<TextBox>("TxtCurrentActionKeyword")?.Focus();
     }
 

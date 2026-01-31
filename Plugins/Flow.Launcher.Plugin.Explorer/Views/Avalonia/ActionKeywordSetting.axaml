@@ -7,7 +7,7 @@
         Title="{DynamicResource plugin_explorer_manageactionkeywords_header}"
         Width="400"
         Height="255"
-        WindowStartupLocation="CenterOwner"
+        WindowStartupLocation="CenterScreen"
         CanResize="False">
     
     <Grid RowDefinitions="*,80">
