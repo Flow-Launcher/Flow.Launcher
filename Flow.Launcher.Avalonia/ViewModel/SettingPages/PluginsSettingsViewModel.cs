@@ -64,7 +64,7 @@ public partial class PluginsSettingsViewModel : ObservableObject
 
     private void LoadPlugins()
     {
-        var allPlugins = PluginManager.AllPlugins;
+        var allPlugins = PluginManager.GetAllLoadedPlugins();
         foreach (var plugin in allPlugins.OrderBy(p => p.Metadata.Disabled).ThenBy(p => p.Metadata.Name))
         {
             Plugins.Add(new PluginItemViewModel(plugin, _settings));

@@ -28,7 +28,7 @@ public enum ActiveView
 /// <summary>
 /// MainViewModel for Avalonia - minimal implementation for plugin queries.
 /// </summary>
-public partial class MainViewModel : ObservableObject
+public partial class MainViewModel : ObservableObject, IResultUpdateRegister
 {
     private static readonly string ClassName = nameof(MainViewModel);
     private readonly Settings _settings;
@@ -190,6 +190,17 @@ public partial class MainViewModel : ObservableObject
             _ = QueryAsync();
     }
 
+    /// <summary>
+    /// Register a plugin to receive results updated event.
+    /// Required by IResultUpdateRegister for plugin initialization.
+    /// </summary>
+    public void RegisterResultsUpdatedEvent(PluginPair pair)
+    {
+        // Avalonia uses a simplified result update model - plugins that implement
+        // IResultUpdated will have their events registered here when needed.
+        // For now, this is a stub as the basic query flow handles result updates.
+    }
+
     public void RequestHide() => HideRequested?.Invoke();
 
     /// <summary>
@@ -277,7 +288,7 @@ public partial class MainViewModel : ObservableObject
 
         try
         {
-            var query = QueryBuilder.Build(queryText, PluginManager.NonGlobalPlugins);
+            var query = QueryBuilder.Build(QueryText, queryText, PluginManager.GetNonGlobalPlugins());
             if (query == null)
             {
                 Results.Clear();

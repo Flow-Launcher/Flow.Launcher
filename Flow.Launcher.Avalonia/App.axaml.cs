@@ -128,9 +128,9 @@ public partial class App : Application
         {
             Log.Info(ClassName, "Loading plugins...");
             PluginManager.LoadPlugins(_settings!.PluginSettings);
-            Log.Info(ClassName, $"Loaded {PluginManager.AllPlugins.Count} plugins");
+            Log.Info(ClassName, $"Loaded {PluginManager.GetAllLoadedPlugins().Count} plugins");
 
-            await PluginManager.InitializePluginsAsync();
+            await PluginManager.InitializePluginsAsync(_mainVM!);
             Log.Info(ClassName, "Plugins initialized");
 
             // Update plugin translations after they are initialized
