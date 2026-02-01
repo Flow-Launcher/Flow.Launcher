@@ -9,6 +9,7 @@ on:
     branches:
       - dev
       - master
+      - avalonia_migration
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
 
