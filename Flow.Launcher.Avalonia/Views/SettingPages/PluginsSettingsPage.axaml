@@ -153,7 +153,7 @@
                                             <Button Command="{Binding OpenSourceCodeLinkCommand}" ToolTip.Tip="{i18n:Localize website}">
                                                 <ui:SymbolIcon Symbol="Globe"/>
                                             </Button>
-                                            <Button Command="{Binding OpenPluginDirectoryCommand}" ToolTip.Tip="{i18n:Localize plugin_open_plugin_directory}">
+                                            <Button Command="{Binding OpenPluginDirectoryCommand}" ToolTip.Tip="{i18n:Localize pluginDirectory}">
                                                 <ui:SymbolIcon Symbol="Folder"/>
                                             </Button>
                                             <Button Command="{Binding OpenDeletePluginWindowCommand}" ToolTip.Tip="{i18n:Localize plugin_uninstall}">

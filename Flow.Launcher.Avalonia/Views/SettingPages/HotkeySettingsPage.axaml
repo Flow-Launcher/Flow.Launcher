@@ -13,8 +13,8 @@
     <StackPanel Spacing="20">
         <TextBlock Text="{i18n:Localize hotkey}" FontSize="28" FontWeight="SemiBold" />
 
-        <ui:SettingsExpander Header="{i18n:Localize toggleFlowLauncher}"
-                            Description="{i18n:Localize toggleFlowLauncherTip}"
+        <ui:SettingsExpander Header="{i18n:Localize flowlauncherHotkey}"
+                            Description="{i18n:Localize flowlauncherHotkeyToolTip}"
                             IconSource="Keyboard">
             <ui:SettingsExpander.Footer>
                 <controls:HotkeyControl Hotkey="{Binding ToggleHotkey, Mode=TwoWay}" MinWidth="150" />

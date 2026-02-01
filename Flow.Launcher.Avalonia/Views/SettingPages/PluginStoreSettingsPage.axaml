@@ -24,7 +24,7 @@
                     <ui:SymbolIcon Symbol="Sync" FontSize="16"/>
                 </Button>
                 
-                <Button Command="{Binding InstallPluginCommand}" ToolTip.Tip="{i18n:Localize install}">
+                <Button Command="{Binding InstallPluginCommand}" ToolTip.Tip="{i18n:Localize installLocalPluginTooltip}">
                     <ui:SymbolIcon Symbol="Add" FontSize="16"/>
                 </Button>
             </StackPanel>

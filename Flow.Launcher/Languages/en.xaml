@@ -665,4 +665,11 @@
     <system:String x:Key="FileSize">File Size</system:String>
     <system:String x:Key="Created">Created</system:String>
     <system:String x:Key="LastModified">Last Modified</system:String>
+
+    <!--  Avalonia-specific keys  -->
+    <system:String x:Key="hotkeyFormatTip">Format: Modifier+Key (e.g., Alt+Space, Ctrl+Shift+P)</system:String>
+    <system:String x:Key="sourceCode">Source Code</system:String>
+    <system:String x:Key="loading">Loading...</system:String>
+    <system:String x:Key="plugin_settings_open_in_wpf_window">Open plugin settings in WPF window</system:String>
+    <system:String x:Key="openSettings">Open Settings</system:String>
 </ResourceDictionary>

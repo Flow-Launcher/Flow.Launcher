@@ -15,7 +15,7 @@
             <!-- General Settings -->
             <ui:SettingsExpander Header="{DynamicResource plugin_explorer_generalsetting_header}"
                                  IconSource="Settings"
-                                 IsExpanded="True">
+                                 IsExpanded="False">
                 <ui:SettingsExpander.Items>
                     <ui:SettingsExpanderItem Content="{DynamicResource plugin_explorer_use_location_as_working_dir}">
                         <ui:SettingsExpanderItem.Footer>
