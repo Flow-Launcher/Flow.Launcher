@@ -72,26 +72,20 @@
                                 IsExpanded="False">
                 <ui:SettingsExpander.Footer>
                     <ComboBox ItemsSource="{Binding SearchWindowScreens}"
-                              SelectedItem="{Binding SelectedSearchWindowScreen, Mode=TwoWay}"
-                              MinWidth="200">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate x:DataType="vm:EnumDisplayItem`1">
-                                <TextBlock Text="{Binding Display}" />
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
+                              SelectedValue="{Binding SelectedSearchWindowScreen, Mode=TwoWay}"
+                              SelectedValueBinding="{Binding Value}"
+                              DisplayMemberBinding="{Binding Display}"
+                              MinWidth="200" />
+
                 </ui:SettingsExpander.Footer>
                 <ui:SettingsExpanderItem Content="{i18n:Localize SearchWindowAlign}">
                     <ui:SettingsExpanderItem.Footer>
                         <ComboBox ItemsSource="{Binding SearchWindowAligns}"
-                                  SelectedItem="{Binding SelectedSearchWindowAlign, Mode=TwoWay}"
-                                  MinWidth="160">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate x:DataType="vm:EnumDisplayItem`1">
-                                    <TextBlock Text="{Binding Display}" />
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
+                                  SelectedValue="{Binding SelectedSearchWindowAlign, Mode=TwoWay}"
+                                  SelectedValueBinding="{Binding Value}"
+                                  DisplayMemberBinding="{Binding Display}"
+                                  MinWidth="160" />
+
                     </ui:SettingsExpanderItem.Footer>
                 </ui:SettingsExpanderItem>
             </ui:SettingsExpander>
@@ -138,27 +132,21 @@
                                 IsExpanded="False">
                 <ui:SettingsExpander.Footer>
                     <ComboBox ItemsSource="{Binding SearchPrecisionScores}"
-                              SelectedItem="{Binding SelectedSearchPrecision, Mode=TwoWay}"
-                              MinWidth="150">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate x:DataType="vm:EnumDisplayItem`1">
-                                <TextBlock Text="{Binding Display}" />
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
+                              SelectedValue="{Binding SelectedSearchPrecision, Mode=TwoWay}"
+                              SelectedValueBinding="{Binding Value}"
+                              DisplayMemberBinding="{Binding Display}"
+                              MinWidth="150" />
+
                 </ui:SettingsExpander.Footer>
                 <ui:SettingsExpanderItem Content="{i18n:Localize lastQueryMode}"
                                          Description="{i18n:Localize lastQueryModeToolTip}">
                     <ui:SettingsExpanderItem.Footer>
                         <ComboBox ItemsSource="{Binding LastQueryModes}"
-                                  SelectedItem="{Binding SelectedLastQueryMode, Mode=TwoWay}"
-                                  MinWidth="180">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate x:DataType="vm:EnumDisplayItem`1">
-                                    <TextBlock Text="{Binding Display}" />
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
+                                  SelectedValue="{Binding SelectedLastQueryMode, Mode=TwoWay}"
+                                  SelectedValueBinding="{Binding Value}"
+                                  DisplayMemberBinding="{Binding Display}"
+                                  MinWidth="180" />
+
                     </ui:SettingsExpanderItem.Footer>
                 </ui:SettingsExpanderItem>
             </ui:SettingsExpander>

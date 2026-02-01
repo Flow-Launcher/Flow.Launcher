@@ -2,45 +2,59 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Avalonia.Resource;
-using FluentAvalonia.Styling;
 using Avalonia;
 using Avalonia.Styling;
 using System.Collections.Generic;
 using System.Linq;
+using System;
+using AvaloniaI18n = Flow.Launcher.Avalonia.Resource.Internationalization;
 
 namespace Flow.Launcher.Avalonia.ViewModel.SettingPages;
 
 public partial class ThemeSettingsViewModel : ObservableObject
 {
     private readonly Settings _settings;
+    private readonly AvaloniaI18n _i18n;
 
     public ThemeSettingsViewModel()
     {
         _settings = Ioc.Default.GetRequiredService<Settings>();
+        _i18n = Ioc.Default.GetRequiredService<AvaloniaI18n>();
+        ColorSchemeOptions = DropdownDataGeneric<ColorSchemes>.GetEnumData("ColorScheme");
+
+        _settings.PropertyChanged += (s, e) =>
+        {
+            if (e.PropertyName == nameof(Settings.Language))
+            {
+                UpdateLabels();
+            }
+        };
     }
 
-    public List<string> ThemeVariants => new() { "System", "Light", "Dark" };
+    public List<DropdownDataGeneric<ColorSchemes>> ColorSchemeOptions { get; }
 
-    public string SelectedThemeVariant
+    public ColorSchemes SelectedColorScheme
     {
-        get => _settings.Theme switch
-        {
-            "Light" => "Light",
-            "Dark" => "Dark",
-            _ => "System"
-        };
+        get => Enum.TryParse<ColorSchemes>(_settings.Theme, out var result) ? result : ColorSchemes.System;
         set
         {
-            if (value != SelectedThemeVariant)
+            if (SelectedColorScheme != value)
             {
-                _settings.Theme = value;
-                ApplyTheme(value);
+                var themeString = value.ToString();
+                _settings.Theme = themeString;
+                ApplyTheme(themeString);
                 OnPropertyChanged();
             }
         }
     }
 
+    private void UpdateLabels()
+    {
+        ColorSchemeOptions.ForEach(x => x.UpdateLabels());
+    }
+
     private void ApplyTheme(string variant)
+
     {
         if (Application.Current == null) return;
 

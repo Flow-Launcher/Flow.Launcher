@@ -47,9 +47,19 @@ public partial class GeneralSettingsViewModel : ObservableObject
                 _settings.Language = value.LanguageCode;
                 _i18n.ChangeLanguage(value.LanguageCode);
                 OnPropertyChanged();
+                UpdateLabels();
             }
         }
     }
+
+    private void UpdateLabels()
+    {
+        SearchWindowScreens.ForEach(x => x.UpdateLabels());
+        SearchWindowAligns.ForEach(x => x.UpdateLabels());
+        SearchPrecisionScores.ForEach(x => x.UpdateLabels());
+        LastQueryModes.ForEach(x => x.UpdateLabels());
+    }
+
 
     #endregion
 
@@ -168,7 +178,7 @@ public partial class GeneralSettingsViewModel : ObservableObject
     #region Search Window Position
 
     [ObservableProperty]
-    private ObservableCollection<EnumDisplayItem<SearchWindowScreens>> _searchWindowScreens = new();
+    private List<DropdownDataGeneric<SearchWindowScreens>> _searchWindowScreens = new();
 
     public SearchWindowScreens SelectedSearchWindowScreen
     {
@@ -181,7 +191,7 @@ public partial class GeneralSettingsViewModel : ObservableObject
     }
 
     [ObservableProperty]
-    private ObservableCollection<EnumDisplayItem<SearchWindowAligns>> _searchWindowAligns = new();
+    private List<DropdownDataGeneric<SearchWindowAligns>> _searchWindowAligns = new();
 
     public SearchWindowAligns SelectedSearchWindowAlign
     {
@@ -198,7 +208,7 @@ public partial class GeneralSettingsViewModel : ObservableObject
     #region Query Settings
 
     [ObservableProperty]
-    private ObservableCollection<EnumDisplayItem<SearchPrecisionScore>> _searchPrecisionScores = new();
+    private List<DropdownDataGeneric<SearchPrecisionScore>> _searchPrecisionScores = new();
 
     public SearchPrecisionScore SelectedSearchPrecision
     {
@@ -211,7 +221,8 @@ public partial class GeneralSettingsViewModel : ObservableObject
     }
 
     [ObservableProperty]
-    private ObservableCollection<EnumDisplayItem<LastQueryMode>> _lastQueryModes = new();
+    private List<DropdownDataGeneric<LastQueryMode>> _lastQueryModes = new();
+
 
     public LastQueryMode SelectedLastQueryMode
     {
@@ -361,39 +372,20 @@ public partial class GeneralSettingsViewModel : ObservableObject
 
     private void LoadSearchWindowOptions()
     {
-        SearchWindowScreens = new ObservableCollection<EnumDisplayItem<SearchWindowScreens>>(
-            Enum.GetValues<SearchWindowScreens>().Select(v => new EnumDisplayItem<SearchWindowScreens>(v, v.ToString())));
-        
-        SearchWindowAligns = new ObservableCollection<EnumDisplayItem<SearchWindowAligns>>(
-            Enum.GetValues<SearchWindowAligns>().Select(v => new EnumDisplayItem<SearchWindowAligns>(v, v.ToString())));
+        SearchWindowScreens = DropdownDataGeneric<SearchWindowScreens>.GetEnumData("SearchWindowScreen");
+        SearchWindowAligns = DropdownDataGeneric<SearchWindowAligns>.GetEnumData("SearchWindowAlign");
     }
 
     private void LoadSearchPrecisionOptions()
     {
-        SearchPrecisionScores = new ObservableCollection<EnumDisplayItem<SearchPrecisionScore>>(
-            Enum.GetValues<SearchPrecisionScore>().Select(v => new EnumDisplayItem<SearchPrecisionScore>(v, v.ToString())));
+        SearchPrecisionScores = DropdownDataGeneric<SearchPrecisionScore>.GetEnumData("SearchPrecision");
     }
 
     private void LoadLastQueryModeOptions()
     {
-        LastQueryModes = new ObservableCollection<EnumDisplayItem<LastQueryMode>>(
-            Enum.GetValues<LastQueryMode>().Select(v => new EnumDisplayItem<LastQueryMode>(v, v.ToString())));
+        LastQueryModes = DropdownDataGeneric<LastQueryMode>.GetEnumData("LastQuery");
     }
 
     #endregion
 }
 
-/// <summary>
-/// Helper class for displaying enum values in ComboBoxes
-/// </summary>
-public class EnumDisplayItem<T> where T : Enum
-{
-    public T Value { get; }
-    public string Display { get; }
-
-    public EnumDisplayItem(T value, string display)
-    {
-        Value = value;
-        Display = display;
-    }
-}

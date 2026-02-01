@@ -31,10 +31,22 @@ public partial class PluginsSettingsViewModel : ObservableObject
         
         LoadDisplayModes();
         LoadPlugins();
+
+        _settings.PropertyChanged += (s, e) =>
+        {
+            if (e.PropertyName == nameof(Settings.Language))
+            {
+                foreach (var item in DisplayModes)
+                {
+                    item.UpdateLabels();
+                }
+            }
+        };
     }
 
     [ObservableProperty]
     private ObservableCollection<PluginItemViewModel> _plugins = new();
+
 
     [ObservableProperty]
     private string _searchText = string.Empty;
@@ -69,17 +81,34 @@ public partial class PluginsSettingsViewModel : ObservableObject
         HomeOnOff
     }
 
-    public class DisplayModeItem
+    public partial class DisplayModeItem : ObservableObject
     {
+        private readonly Internationalization _i18n;
         public DisplayMode Value { get; }
-        public string Display { get; }
 
-        public DisplayModeItem(DisplayMode value, string display)
+        [ObservableProperty]
+        private string _display;
+
+        public DisplayModeItem(DisplayMode value, Internationalization i18n)
         {
             Value = value;
-            Display = display;
+            _i18n = i18n;
+            UpdateLabels();
+        }
+
+        public void UpdateLabels()
+        {
+            Display = Value switch
+            {
+                DisplayMode.OnOff => _i18n.GetTranslation("DisplayModeOnOff"),
+                DisplayMode.Priority => _i18n.GetTranslation("DisplayModePriority"),
+                DisplayMode.SearchDelay => _i18n.GetTranslation("DisplayModeSearchDelay"),
+                DisplayMode.HomeOnOff => _i18n.GetTranslation("DisplayModeHomeOnOff"),
+                _ => Value.ToString()
+            };
         }
     }
+
 
     [ObservableProperty]
     private List<DisplayModeItem> _displayModes = new();
@@ -109,15 +138,16 @@ public partial class PluginsSettingsViewModel : ObservableObject
     {
         DisplayModes = new List<DisplayModeItem>
         {
-            new(DisplayMode.OnOff, _i18n.GetTranslation("pluginDisplayOnOff")),
-            new(DisplayMode.Priority, _i18n.GetTranslation("pluginDisplayPriority")),
-            new(DisplayMode.SearchDelay, _i18n.GetTranslation("pluginDisplaySearchDelay")),
-            new(DisplayMode.HomeOnOff, _i18n.GetTranslation("pluginDisplayHomeOnOff"))
+            new(DisplayMode.OnOff, _i18n),
+            new(DisplayMode.Priority, _i18n),
+            new(DisplayMode.SearchDelay, _i18n),
+            new(DisplayMode.HomeOnOff, _i18n)
         };
         
         // Set default
         SelectedDisplayModeItem = DisplayModes[0];
     }
+
 
     private void UpdateDisplayModeFlags(DisplayMode mode)
     {

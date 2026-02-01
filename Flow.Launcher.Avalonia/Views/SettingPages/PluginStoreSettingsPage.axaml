@@ -33,11 +33,12 @@
         <!-- Filters and Search -->
         <Grid Grid.Row="1" ColumnDefinitions="Auto,*,Auto" Margin="0,0,0,10">
             <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="15" VerticalAlignment="Center">
-                <CheckBox IsChecked="{Binding ShowDotNet}" Content="C# / .Net" />
-                <CheckBox IsChecked="{Binding ShowPython}" Content="Python" />
-                <CheckBox IsChecked="{Binding ShowNodeJs}" Content="Node.js" />
-                <CheckBox IsChecked="{Binding ShowExecutable}" Content="Executable" />
+                <CheckBox IsChecked="{Binding ShowDotNet}" Content="{i18n:Localize pluginType_CSharp}" />
+                <CheckBox IsChecked="{Binding ShowPython}" Content="{i18n:Localize pluginType_Python}" />
+                <CheckBox IsChecked="{Binding ShowNodeJs}" Content="{i18n:Localize pluginType_Nodejs}" />
+                <CheckBox IsChecked="{Binding ShowExecutable}" Content="{i18n:Localize pluginType_Executable}" />
             </StackPanel>
+
 
             <TextBox Grid.Column="2" 
                      Width="250"

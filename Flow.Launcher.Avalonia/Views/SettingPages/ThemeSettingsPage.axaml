@@ -16,11 +16,14 @@
         <ui:SettingsExpander Header="{i18n:Localize theme}"
                             IconSource="DarkTheme">
             <ui:SettingsExpander.Footer>
-                <ComboBox ItemsSource="{Binding ThemeVariants}"
-                          SelectedItem="{Binding SelectedThemeVariant}"
+                <ComboBox ItemsSource="{Binding ColorSchemeOptions}"
+                          SelectedValue="{Binding SelectedColorScheme}"
+                          DisplayMemberBinding="{Binding Display}"
+                          SelectedValueBinding="{Binding Value}"
                           MinWidth="150" />
             </ui:SettingsExpander.Footer>
         </ui:SettingsExpander>
+
 
         <!-- Glyph Icons -->
         <ui:SettingsExpander Header="{i18n:Localize useGlyphUI}"

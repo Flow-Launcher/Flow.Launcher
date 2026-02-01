@@ -226,6 +226,11 @@
     <system:String x:Key="pluginStore_RecentlyUpdated">Recently Updated</system:String>
     <system:String x:Key="pluginStore_None">Plugins</system:String>
     <system:String x:Key="pluginStore_Installed">Installed</system:String>
+    <system:String x:Key="pluginType_CSharp">C# / .Net</system:String>
+    <system:String x:Key="pluginType_Python">Python</system:String>
+    <system:String x:Key="pluginType_Nodejs">Node.js</system:String>
+    <system:String x:Key="pluginType_Executable">Executable</system:String>
+
     <system:String x:Key="refresh">Refresh</system:String>
     <system:String x:Key="installbtn">Install</system:String>
     <system:String x:Key="uninstallbtn">Uninstall</system:String>
