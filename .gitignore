@@ -304,4 +304,5 @@ Output-Performance.txt
 
 # vscode
 .vscode
-.history
+.history**/codemap.md
+.slim/
