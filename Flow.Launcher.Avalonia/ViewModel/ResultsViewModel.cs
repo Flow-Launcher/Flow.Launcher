@@ -62,6 +62,21 @@ public partial class ResultsViewModel : ObservableObject, IDisposable
             r.Settings = _settings;
         }
 
+        // Update highlight data and score for items that will be kept by EditDiff.
+        // This is necessary because EditDiff reuses existing ResultViewModel instances
+        // based on Title+SubTitle equality, but highlight indices are query-specific.
+        // For example, "Chrome" highlighted for "chr" [0,1,2] vs "chrome" [0,1,2,3,4,5].
+        var existingItems = _sourceList.Items.ToDictionary(r => (r.Title, r.SubTitle));
+        foreach (var newItem in resultsList)
+        {
+            if (existingItems.TryGetValue((newItem.Title, newItem.SubTitle), out var existing))
+            {
+                existing.TitleHighlightData = newItem.TitleHighlightData;
+                existing.SubTitleHighlightData = newItem.SubTitleHighlightData;
+                existing.Score = newItem.Score;
+            }
+        }
+
         // EditDiff calculates minimal changes needed - items with same Title+SubTitle are kept
         _sourceList.EditDiff(resultsList, ResultViewModelComparer.Instance);
 

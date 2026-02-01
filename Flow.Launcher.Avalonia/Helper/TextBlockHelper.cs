@@ -42,7 +42,8 @@ public static class TextBlockHelper
                 {
                     var newRun = new Run(run.Text)
                     {
-                        FontWeight = run.FontWeight
+                        FontWeight = run.FontWeight,
+                        Foreground = run.Foreground
                     };
                     textBlock.Inlines?.Add(newRun);
                 }

@@ -57,7 +57,18 @@ public class HighlightTextConverter : IMultiValueConverter
     {
         var run = new Run(text);
         if (isHighlight)
+        {
             run.FontWeight = FontWeight.Bold;
+            // Try to get from resources, fallback to gold
+            if (Application.Current != null && Application.Current.TryGetResource("HighlightForegroundBrush", null, out var brush) && brush is IBrush b)
+            {
+                run.Foreground = b;
+            }
+            else
+            {
+                run.Foreground = new SolidColorBrush(Colors.Gold);
+            }
+        }
         return run;
     }
 }

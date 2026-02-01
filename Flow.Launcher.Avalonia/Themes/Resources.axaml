@@ -11,6 +11,7 @@
     <Color x:Key="ResultSubTitleColor">#999999</Color>
     <Color x:Key="SeparatorColor">#333333</Color>
     <Color x:Key="SelectedItemBackgroundColor">#30FFFFFF</Color>
+    <Color x:Key="HighlightForegroundColor">#FFD700</Color>
     
     <!-- Brushes -->
     <SolidColorBrush x:Key="WindowBackgroundBrush" Color="{StaticResource WindowBackgroundColor}" />
@@ -19,5 +20,6 @@
     <SolidColorBrush x:Key="ResultSubTitleBrush" Color="{StaticResource ResultSubTitleColor}" />
     <SolidColorBrush x:Key="SeparatorBrush" Color="{StaticResource SeparatorColor}" />
     <SolidColorBrush x:Key="SelectedItemBackgroundBrush" Color="{StaticResource SelectedItemBackgroundColor}" />
+    <SolidColorBrush x:Key="HighlightForegroundBrush" Color="{StaticResource HighlightForegroundColor}" />
 
 </ResourceDictionary>

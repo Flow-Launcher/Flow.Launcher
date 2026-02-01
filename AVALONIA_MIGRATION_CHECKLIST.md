@@ -281,7 +281,7 @@
 
 | Converter | Status | Description |
 |-----------|--------|-------------|
-| HighlightTextConverter | :yellow_circle: Stub | Returns plain text, needs highlighting |
+| HighlightTextConverter | :white_check_mark: Done | Bold gold highlighting for matched characters |
 | QuerySuggestionBoxConverter | :yellow_circle: Stub | Not implemented |
 | BoolToVisibilityConverter | :white_check_mark: Done | Boolean to visibility |
 | TextConverter | :x: Missing | Text transformations |
