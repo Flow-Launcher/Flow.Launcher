@@ -44,10 +44,10 @@ namespace Flow.Launcher.ViewModel
         private string _ignoredQueryText; // Used to ignore query text change when switching between context menu and query results
 
         private readonly FlowLauncherJsonStorage<History> _historyItemsStorage;
-        private readonly FlowLauncherJsonStorage<UserSelectedRecord> _userSelectedRecordStorage;
-        private readonly FlowLauncherJsonStorageTopMostRecord _topMostRecord;
         private readonly History _history;
         private int lastHistoryIndex = 1;
+        private readonly FlowLauncherJsonStorage<UserSelectedRecord> _userSelectedRecordStorage;
+        private readonly FlowLauncherJsonStorageTopMostRecord _topMostRecord;
         private readonly UserSelectedRecord _userSelectedRecord;
 
         private CancellationTokenSource _updateSource; // Used to cancel old query flows
@@ -153,11 +153,10 @@ namespace Flow.Launcher.ViewModel
             };
 
             _historyItemsStorage = new FlowLauncherJsonStorage<History>();
-            _userSelectedRecordStorage = new FlowLauncherJsonStorage<UserSelectedRecord>();
-            _topMostRecord = new FlowLauncherJsonStorageTopMostRecord();
             _history = _historyItemsStorage.Load();
-            _history.PopulateHistoryFromLegacyHistory();
+            _userSelectedRecordStorage = new FlowLauncherJsonStorage<UserSelectedRecord>();
             _userSelectedRecord = _userSelectedRecordStorage.Load();
+            _topMostRecord = new FlowLauncherJsonStorageTopMostRecord();
 
             ContextMenu = new ResultsViewModel(Settings, this)
             {
@@ -356,11 +355,17 @@ namespace Flow.Launcher.ViewModel
             if (QueryResultsSelected())
             {
                 SelectedResults = History;
-                History.SelectedIndex = _history.LastOpenedHistoryItems.Count - 1;
+                if (History.Results.Count > 0)
+                {
+                    SelectedResults.SelectedIndex = 0;
+                    SelectedResults.SelectedItem = History.Results[0];
+                }
             }
             else
             {
                 SelectedResults = Results;
+                PreviewSelectedItem = Results.SelectedItem;
+                _ = UpdatePreviewAsync();
             }
         }
 
@@ -432,7 +437,8 @@ namespace Flow.Launcher.ViewModel
             {
                 // When switch to ContextMenu from QueryResults, but no item being chosen, should do nothing
                 // i.e. Shift+Enter/Ctrl+O right after Alt + Space should do nothing
-                if (SelectedResults.SelectedItem != null)
+                if (SelectedResults.SelectedItem?.Result != null &&
+                    !string.IsNullOrEmpty(SelectedResults.SelectedItem.Result.PluginID))  // Do not show context menu for history results
                 {
                     SelectedResults = ContextMenu;
                 }
@@ -440,6 +446,8 @@ namespace Flow.Launcher.ViewModel
             else
             {
                 SelectedResults = Results;
+                PreviewSelectedItem = Results.SelectedItem;
+                _ = UpdatePreviewAsync();
             }
         }
 
@@ -643,6 +651,8 @@ namespace Flow.Launcher.ViewModel
             if (!QueryResultsSelected())
             {
                 SelectedResults = Results;
+                PreviewSelectedItem = Results.SelectedItem;
+                _ = UpdatePreviewAsync();
             }
             else
             {
@@ -1253,22 +1263,12 @@ namespace Flow.Launcher.ViewModel
 
             var selected = Results.SelectedItem?.Result;
 
-            if (selected != null) // SelectedItem returns null if selection is empty.
+            if (selected != null && // SelectedItem returns null if selection is empty.
+                !string.IsNullOrEmpty(selected.PluginID))  // SelectedItem must have a valid PluginID, history results do not.
             {
-                List<Result> results;
-                if (selected.PluginID == null) // SelectedItem from history in home page.
-                {
-                    results = new()
-                    {
-                        ContextMenuTopMost(selected)
-                    };
-                }
-                else
-                {
-                    results = PluginManager.GetContextMenusForPlugin(selected);
-                    results.Add(ContextMenuTopMost(selected));
-                    results.Add(ContextMenuPluginInfo(selected));
-                }
+                List<Result> results = PluginManager.GetContextMenusForPlugin(selected);
+                results.Add(ContextMenuTopMost(selected));
+                results.Add(ContextMenuPluginInfo(selected));
 
                 if (!string.IsNullOrEmpty(query))
                 {
@@ -1319,66 +1319,75 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private List<Result> GetHistoryItems(IEnumerable<LastOpenedHistoryItem> historyItems)
+        private List<Result> GetHistoryItems(IEnumerable<LastOpenedHistoryResult> historyItems, int? maxResult = null)
         {
             var results = new List<Result>();
-            if (Settings.HistoryStyle == HistoryStyle.Query)
-            {
-                foreach (var h in historyItems)
-                {
-                    var result = new Result
-                    {
-                        Title = Localize.executeQuery(h.Query),
-                        SubTitle = Localize.lastExecuteTime(h.ExecutedDateTime),
-                        IcoPath = Constant.HistoryIcon,
-                        OriginQuery = new Query { TrimmedQuery = h.Query },
-                        Action = _ =>
-                        {
-                            App.API.BackToQueryResults();
-                            App.API.ChangeQuery(h.Query);
-                            return false;
-                        },
-                        Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE81C")
-                    };
-                    results.Add(result);
-                }
-            }
-            else
-            {
-                foreach (var h in historyItems)
-                {
-                    var result = new Result
-                    {
-                        Title = string.IsNullOrEmpty(h.Title) ?  // Old migrated history items have no title
-                            Localize.executeQuery(h.Query) :
-                            h.Title,
-                        SubTitle = Localize.lastExecuteTime(h.ExecutedDateTime),
-                        IcoPath = Constant.HistoryIcon,
-                        OriginQuery = new Query { TrimmedQuery = h.Query },
-                        AsyncAction = async c =>
-                        {
-                            var reflectResult = await ResultHelper.PopulateResultsAsync(h);
-                            if (reflectResult != null)
-                            {
-                                // Record the user selected record for result ranking
-                                _userSelectedRecord.Add(reflectResult);
 
-                                // Since some actions may need to hide the Flow window to execute
-                                // So let us populate the results of them
-                                return await reflectResult.ExecuteAsync(c);
-                            }
+            // Order by executed time descending: Latest -> Oldest
+            historyItems = historyItems.OrderByDescending(x => x.ExecutedDateTime);
 
-                            // If we cannot get the result, fallback to re-query
-                            App.API.BackToQueryResults();
-                            App.API.ChangeQuery(h.Query);
-                            return false;
-                        },
-                        Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE81C")
-                    };
-                    results.Add(result);
-                }
+            if (Settings.HistoryStyle == HistoryStyle.LastOpened)
+            {
+                // Items saved to disk are differentiated by Query also, but LastOpened style only cares about unique results
+                historyItems = historyItems
+                    .GroupBy(r => new { r.Title, r.SubTitle, r.PluginID, r.RecordKey })
+                    .Select(g => g.First());
             }
+
+            // Max history results to return for display
+            if (maxResult.HasValue)
+            {
+                historyItems = historyItems.Take(maxResult.Value);
+            }
+
+            foreach (var item in historyItems)
+            {
+                var copiedItem = item.DeepCopyForHistoryStyle(Settings.HistoryStyle == HistoryStyle.LastOpened);
+
+                if (Settings.HistoryStyle == HistoryStyle.LastOpened)
+                {
+                    copiedItem.AsyncAction = async c =>
+                    {
+                        // Use original history item to reflect correct result because properties like subtitle have been modified in copiedItem
+                        var reflectResult = await ResultHelper.PopulateResultsAsync(item);
+                        if (reflectResult != null)
+                        {
+                            // Since some actions may need to hide the Flow window to execute
+                            // So let us populate the results of them
+                            return await reflectResult.ExecuteAsync(c);
+                        }
+
+                        // If we cannot get the result, fallback to re-query
+                        App.API.BackToQueryResults();
+                        App.API.ChangeQuery(copiedItem.Query);
+                        return false;
+                    };
+                }
+
+                results.Add(copiedItem);
+            }
+
             return results;
+        }
+
+        /// <summary>
+        /// Refreshes the last-opened history storage by migrating legacy entries and
+        /// updating stored icon paths to their resolved (absolute) locations.
+        /// </summary>
+        /// <remarks>
+        /// Calls <see cref="History.UpdateIcoPathAbsolute"/> to refresh absolute icon
+        /// paths on the migrated/saved history entries by updating each item's
+        /// <c>PluginDirectory</c> (which in turn resolves <c>IcoPathAbsolute</c>).
+        ///
+        /// Important:
+        /// - Plugins must be initialized (their metadata and <c>PluginDirectory</c> set)
+        ///   before calling this method; otherwise icon resolution cannot be performed.
+        /// </remarks>
+        internal void RefreshLastOpenedHistoryResults()
+        {
+            _history.PopulateHistoryFromLegacyHistory();
+
+            _history.UpdateIcoPathAbsolute();
         }
 
         private async Task QueryResultsAsync(bool searchDelay, bool isReQuery = false, bool reSelect = true)
@@ -1622,10 +1631,8 @@ namespace Flow.Launcher.ViewModel
 
             void QueryHistoryTask(CancellationToken token)
             {
-                // Select last history results and revert its order to make sure last history results are on top
-                var historyItems = _history.LastOpenedHistoryItems.TakeLast(Settings.MaxHistoryResultsToShowForHomePage).Reverse();
-
-                var results = GetHistoryItems(historyItems);
+                // Select last history results
+                var results = GetHistoryItems(_history.LastOpenedHistoryItems, Settings.MaxHistoryResultsToShowForHomePage);
 
                 if (token.IsCancellationRequested) return;
 
