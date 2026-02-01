@@ -11,6 +11,12 @@
           "YamlDotNet": "9.1.0"
         }
       },
+      "Flow.Launcher.Localization": {
+        "type": "Direct",
+        "requested": "[0.0.6, )",
+        "resolved": "0.0.6",
+        "contentHash": "WNI/TLGPDr3XdOW8gaALN0Uyz9h+bzqOaNZev2nHEuA3HW9o7XuqaM6C0PqNi96mNgxiypwWpVazBNzaylJ2Aw=="
+      },
       "FSharp.Core": {
         "type": "Direct",
         "requested": "[9.0.303, )",
@@ -61,26 +67,6 @@
           "System.IO.Pipelines": "8.0.0"
         }
       },
-      "Avalonia": {
-        "type": "Transitive",
-        "resolved": "11.2.3",
-        "contentHash": "pD6woFAUfGcyEvMmrpctntU4jv4fT8752pfx1J5iRORVX3Ob0oQi8PWo0TXVaAJZiSfH0cdKTeKx0w0DzD0/mg==",
-        "dependencies": {
-          "Avalonia.BuildServices": "0.0.29",
-          "Avalonia.Remote.Protocol": "11.2.3",
-          "MicroCom.Runtime": "0.11.0"
-        }
-      },
-      "Avalonia.BuildServices": {
-        "type": "Transitive",
-        "resolved": "0.0.29",
-        "contentHash": "U4eJLQdoDNHXtEba7MZUCwrBErBTxFp6sUewXBOdAhU0Kwzwaa/EKFcYm8kpcysjzKtfB4S0S9n0uxKZFz/ikw=="
-      },
-      "Avalonia.Remote.Protocol": {
-        "type": "Transitive",
-        "resolved": "11.2.3",
-        "contentHash": "6V0aNtld48WmO8tAlWwlRlUmXYcOWv+1eJUSl1ETF+1blUe5yhcSmuWarPprO0hDk8Ta6wGfdfcrnVl2gITYcA=="
-      },
       "Ben.Demystifier": {
         "type": "Transitive",
         "resolved": "0.4.1",
@@ -103,6 +89,11 @@
         "type": "Transitive",
         "resolved": "1.1.0",
         "contentHash": "j/zGAQ9hLbl7JDpeO40DaXvyyNxwQNDwnJEN7eCexn5F9Kid+VKya/Er0rfIv5Zod/32XarkqFP/V6WFHS/UpQ=="
+      },
+      "ini-parser": {
+        "type": "Transitive",
+        "resolved": "2.5.2",
+        "contentHash": "hp3gKmC/14+6eKLgv7Jd1Z7OV86lO+tNfOXr/stQbwmRhdQuXVSvrRAuAe7G5+lwhkov0XkqZ8/bn1PYWMx6eg=="
       },
       "InputSimulator": {
         "type": "Transitive",
@@ -146,11 +137,6 @@
         "type": "Transitive",
         "resolved": "2.5.192",
         "contentHash": "jaJuwcgovWIZ8Zysdyf3b7b34/BrADw4v82GaEZymUhDd3ScMPrYd/cttekeDteJJPXseJxp04yTIcxiVUjTWg=="
-      },
-      "MicroCom.Runtime": {
-        "type": "Transitive",
-        "resolved": "0.11.0",
-        "contentHash": "MEnrZ3UIiH40hjzMDsxrTyi8dtqB5ziv3iBeeU4bXsL/7NLSal9F1lZKpK+tfBRnUoDSdtcW3KufE4yhATOMCA=="
       },
       "Microsoft.NET.StringTools": {
         "type": "Transitive",
@@ -1186,7 +1172,8 @@
           "Ben.Demystifier": "[0.4.1, )",
           "BitFaster.Caching": "[2.5.4, )",
           "CommunityToolkit.Mvvm": "[8.4.0, )",
-          "Flow.Launcher.Plugin": "[5.1.0, )",
+          "Flow.Launcher.Localization": "[0.0.6, )",
+          "Flow.Launcher.Plugin": "[5.0.0, )",
           "InputSimulator": "[1.0.4, )",
           "MemoryPack": "[1.21.4, )",
           "Microsoft.VisualStudio.Threading": "[17.14.15, )",
@@ -1195,13 +1182,13 @@
           "NLog.OutputDebugString": "[6.0.4, )",
           "SharpVectors.Wpf": "[1.8.5, )",
           "System.Drawing.Common": "[7.0.0, )",
-          "ToolGood.Words.Pinyin": "[3.1.0.3, )"
+          "ToolGood.Words.Pinyin": "[3.1.0.3, )",
+          "ini-parser": "[2.5.2, )"
         }
       },
       "flow.launcher.plugin": {
         "type": "Project",
         "dependencies": {
-          "Avalonia": "[11.2.3, )",
           "JetBrains.Annotations": "[2025.2.2, )"
         }
       }

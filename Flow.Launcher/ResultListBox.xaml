@@ -25,6 +25,7 @@
     SelectionChanged="OnSelectionChanged"
     SelectionMode="Single"
     Style="{DynamicResource BaseListboxStyle}"
+    VirtualizingPanel.ScrollUnit="Item"
     VirtualizingStackPanel.IsVirtualizing="True"
     VirtualizingStackPanel.VirtualizationMode="Standard"
     Visibility="{Binding Visibility}"

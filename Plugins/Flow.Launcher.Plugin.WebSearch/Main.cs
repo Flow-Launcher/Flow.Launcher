@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -92,6 +92,7 @@ namespace Flow.Launcher.Plugin.WebSearch
 
                 if (token.IsCancellationRequested)
                     return null;
+
             }
 
             return results;
@@ -127,7 +128,7 @@ namespace Flow.Launcher.Plugin.WebSearch
 
             token.ThrowIfCancellationRequested();
 
-            var resultsFromSuggestion = suggestions?.Select(o => new Result
+            var resultsFromSuggestion = suggestions?.Take(_settings.MaxSuggestions).Select(o => new Result
             {
                 Title = o,
                 SubTitle = subtitle,

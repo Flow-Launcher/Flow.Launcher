@@ -364,7 +364,7 @@ namespace Flow.Launcher.Plugin.Calculator
             string integerPart = parts[0];
             string fractionalPart = parts.Length > 1 ? parts[1] : string.Empty;
 
-            if (integerPart.Length > 3)
+            if (_settings.UseThousandsSeparator && integerPart.Length > 3)
             {
                 integerPart = ThousandGroupRegex.Replace(integerPart, groupSeparator);
             }

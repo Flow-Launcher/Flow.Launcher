@@ -336,7 +336,7 @@ namespace Flow.Launcher.Plugin.Program
             }
         }
 
-        public static async Task IndexWin32ProgramsAsync()
+        public static async Task IndexWin32ProgramsAsync(bool resetCache)
         {
             await _win32sLock.WaitAsync();
             try
@@ -347,7 +347,10 @@ namespace Flow.Launcher.Plugin.Program
                 {
                     _win32s.Add(win32);
                 }
-                ResetCache();
+                if (resetCache)
+                {
+                    ResetCache();
+                }
                 await Context.API.SaveCacheBinaryStorageAsync<List<Win32>>(Win32CacheName, Context.CurrentPluginMetadata.PluginCacheDirectoryPath);
                 lock (_lastIndexTimeLock)
                 {
@@ -364,7 +367,7 @@ namespace Flow.Launcher.Plugin.Program
             }
         }
 
-        public static async Task IndexUwpProgramsAsync()
+        public static async Task IndexUwpProgramsAsync(bool resetCache)
         {
             await _uwpsLock.WaitAsync();
             try
@@ -375,7 +378,10 @@ namespace Flow.Launcher.Plugin.Program
                 {
                     _uwps.Add(uwp);
                 }
-                ResetCache();
+                if (resetCache)
+                {
+                    ResetCache();
+                }
                 await Context.API.SaveCacheBinaryStorageAsync<List<UWPApp>>(UwpCacheName, Context.CurrentPluginMetadata.PluginCacheDirectoryPath);
                 lock (_lastIndexTimeLock)
                 {
@@ -396,12 +402,12 @@ namespace Flow.Launcher.Plugin.Program
         {
             var win32Task = Task.Run(async () =>
             {
-                await Context.API.StopwatchLogInfoAsync(ClassName, "Win32Program index cost", IndexWin32ProgramsAsync);
+                await Context.API.StopwatchLogInfoAsync(ClassName, "Win32Program index cost", () => IndexWin32ProgramsAsync(resetCache: true));
             });
 
             var uwpTask = Task.Run(async () =>
             {
-                await Context.API.StopwatchLogInfoAsync(ClassName, "UWPProgram index cost", IndexUwpProgramsAsync);
+                await Context.API.StopwatchLogInfoAsync(ClassName, "UWPProgram index cost", () => IndexUwpProgramsAsync(resetCache: true));
             });
 
             await Task.WhenAll(win32Task, uwpTask).ConfigureAwait(false);
@@ -409,9 +415,21 @@ namespace Flow.Launcher.Plugin.Program
 
         internal static void ResetCache()
         {
-            var oldCache = cache;
-            cache = new MemoryCache(cacheOptions);
-            oldCache.Dispose();
+            var newCache = new MemoryCache(cacheOptions);
+
+            // Atomically swap and get the previous cache instance, avoids double-dispose/lost-assignment race
+            // where each caller receives a distinct prior instance to dispose.
+            var oldCache = Interlocked.Exchange(ref cache, newCache);
+
+            // Dispose the previous instance (if any)- each caller gets a unique prior instance from above
+            try
+            {
+                oldCache?.Dispose();
+            }
+            catch (Exception e)
+            {
+                Context.API.LogException(ClassName, "Failed to dispose old program cache", e);
+            }
         }
 
         public Control CreateSettingPanel()
@@ -452,12 +470,26 @@ namespace Flow.Launcher.Plugin.Program
                     Title = Context.API.GetTranslation("flowlauncher_plugin_program_disable_program"),
                     Action = c =>
                     {
-                        _ = DisableProgramAsync(program);
-                        Context.API.ShowMsg(
-                            Context.API.GetTranslation("flowlauncher_plugin_program_disable_dlgtitle_success"),
-                            Context.API.GetTranslation(
-                                "flowlauncher_plugin_program_disable_dlgtitle_success_message"));
-                        Context.API.ReQuery();
+                        _ = Task.Run(async () =>
+                        {
+                            try
+                            {
+                                var disabled = await DisableProgramAsync(program);
+                                if (disabled)
+                                {
+                                    ResetCache();
+                                    Context.API.ShowMsg(
+                                        Context.API.GetTranslation("flowlauncher_plugin_program_disable_dlgtitle_success"),
+                                        Context.API.GetTranslation(
+                                            "flowlauncher_plugin_program_disable_dlgtitle_success_message"));
+                                }
+                                Context.API.ReQuery();
+                            }
+                            catch (Exception e)
+                            {
+                                Context.API.LogException(ClassName, "Failed to disable program", e);
+                            }
+                        });
                         return false;
                     },
                     IcoPath = "Images/disable.png",
@@ -468,52 +500,50 @@ namespace Flow.Launcher.Plugin.Program
             return menuOptions;
         }
 
-        private static async Task DisableProgramAsync(IProgram programToDelete)
+        private static async Task<bool> DisableProgramAsync(IProgram programToDelete)
         {
             if (_settings.DisabledProgramSources.Any(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier))
-                return;
+            {
+                return false;
+            }
 
             await _uwpsLock.WaitAsync();
-            var reindexUwps = true;
             try
             {
-                reindexUwps = _uwps.Any(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier);
-                var program = _uwps.First(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier);
-                program.Enabled = false;
-                _settings.DisabledProgramSources.Add(new ProgramSource(program));
+                var program = _uwps.FirstOrDefault(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier);
+                if (program != null)
+                {
+                    program.Enabled = false;
+                    _settings.DisabledProgramSources.Add(new ProgramSource(program));
+                    // Reindex UWP programs
+                    _ = Task.Run(() => IndexUwpProgramsAsync(resetCache: false));
+                    return true;
+                }
             }
             finally
             {
                 _uwpsLock.Release();
             }
 
-            // Reindex UWP programs
-            if (reindexUwps)
-            {
-                _ = Task.Run(IndexUwpProgramsAsync);
-                return;
-            }
-
             await _win32sLock.WaitAsync();
-            var reindexWin32s = true;
             try
             {
-                reindexWin32s = _win32s.Any(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier);
-                var program = _win32s.First(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier);
-                program.Enabled = false;
-                _settings.DisabledProgramSources.Add(new ProgramSource(program));
+                var program = _win32s.FirstOrDefault(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier);
+                if (program != null)
+                {
+                    program.Enabled = false;
+                    _settings.DisabledProgramSources.Add(new ProgramSource(program));
+                    // Reindex Win32 programs
+                    _ = Task.Run(() => IndexWin32ProgramsAsync(resetCache: false));
+                    return true;
+                }
             }
             finally
             {
                 _win32sLock.Release();
             }
 
-            // Reindex Win32 programs
-            if (reindexWin32s)
-            {
-                _ = Task.Run(IndexWin32ProgramsAsync);
-                return;
-            }
+            return false;
         }
 
         public static void StartProcess(Func<ProcessStartInfo, Process> runProcess, ProcessStartInfo info)

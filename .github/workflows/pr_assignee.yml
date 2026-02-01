@@ -14,4 +14,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Assign PR to creator
-      uses: toshimaru/auto-author-assign@v2.1.1
+      uses: toshimaru/auto-author-assign@v3.0.1

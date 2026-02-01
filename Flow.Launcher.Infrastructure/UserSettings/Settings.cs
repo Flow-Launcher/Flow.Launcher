@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 using System.Windows;
@@ -7,6 +7,7 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
+using Flow.Launcher.Localization.Attributes;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
 
@@ -480,6 +481,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         }
         public bool LeaveCmdOpen { get; set; }
         public bool HideWhenDeactivated { get; set; } = true;
+        public bool ShowTaskbarWhenInvoked { get; set; } = false;
 
         private bool _showAtTopmost = false;
         public bool ShowAtTopmost
@@ -512,6 +514,21 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public LastQueryMode LastQueryMode { get; set; } = LastQueryMode.Selected;
+
+        private HistoryStyle _historyStyle = HistoryStyle.Query;
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public HistoryStyle HistoryStyle
+        {
+            get => _historyStyle;
+            set
+            {
+                if (_historyStyle != value)
+                {
+                    _historyStyle = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public AnimationSpeeds AnimationSpeed { get; set; } = AnimationSpeeds.Medium;
@@ -694,5 +711,15 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         FullPath,
         FullPathOpen,
         Directory
+    }
+
+    [EnumLocalize]
+    public enum HistoryStyle
+    {
+        [EnumLocalizeKey(nameof(Localize.queryHistory))]
+        Query,
+
+        [EnumLocalizeKey(nameof(Localize.executedHistory))]
+        LastOpened
     }
 }

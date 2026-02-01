@@ -64,7 +64,7 @@
 
   <ItemGroup>
     <PackageReference Include="Flow.Launcher.Localization" Version="0.0.6" />
-    <PackageReference Include="Mages" Version="3.0.0" />
+    <PackageReference Include="Mages" Version="3.0.1" />
     <PackageReference Include="Avalonia" Version="11.2.3" />
     <PackageReference Include="FluentAvaloniaUI" Version="2.2.0" />
   </ItemGroup>

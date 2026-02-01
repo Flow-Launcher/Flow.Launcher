@@ -292,7 +292,11 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                 new(Settings.ActionKeyword.IndexSearchActionKeyword,
                     "plugin_explorer_actionkeywordview_indexsearch"),
                 new(Settings.ActionKeyword.QuickAccessActionKeyword,
-                    "plugin_explorer_actionkeywordview_quickaccess")
+                    "plugin_explorer_actionkeywordview_quickaccess"),
+                new(Settings.ActionKeyword.FolderSearchActionKeyword,
+                    "plugin_explorer_actionkeywordview_foldersearch"),
+                new(Settings.ActionKeyword.FileSearchActionKeyword,
+                    "plugin_explorer_actionkeywordview_filesearch")
             };
         }
 
@@ -604,7 +608,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
         [RelayCommand]
         private async Task OpenShellPathAsync()
         {
-            var path = await PromptUserSelectFileAsync(Settings.EditorPath != null ? Path.GetDirectoryName(Settings.EditorPath) : null);
+            var path = await PromptUserSelectFileAsync(Settings.ShellPath != null ? Path.GetDirectoryName(Settings.ShellPath) : null);
             if (path is null)
                 return;
 

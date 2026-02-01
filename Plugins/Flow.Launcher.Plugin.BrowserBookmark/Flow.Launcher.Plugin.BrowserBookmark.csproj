@@ -105,8 +105,8 @@
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="Flow.Launcher.Localization" Version="0.0.6" />
-    <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.0" />
-    <PackageReference Include="Svg.Skia" Version="3.2.1" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.2" />
+    <PackageReference Include="Svg.Skia" Version="3.4.1" />
     <PackageReference Include="SkiaSharp" Version="3.119.1" />
     <PackageReference Include="Avalonia" Version="11.2.3" />
     <PackageReference Include="FluentAvaloniaUI" Version="2.2.0" />

@@ -4,9 +4,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:cc="clr-namespace:Flow.Launcher.Resources.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ikw="http://schemas.inkore.net/lib/ui/wpf"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:settingsVm="clr-namespace:Flow.Launcher.SettingPages.ViewModels"
-    xmlns:ui="http://schemas.modernwpf.com/2019"
+    xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
     Title="About"
     d:DataContext="{d:DesignInstance Type=settingsVm:SettingsPaneAboutViewModel}"
     d:DesignHeight="450"
@@ -17,9 +18,7 @@
             <CollectionViewSource x:Key="SortedFonts" Source="{Binding Source={x:Static Fonts.SystemFontFamilies}}" />
         </ResourceDictionary>
     </ui:Page.Resources>
-    <ScrollViewer
-        Margin="0"
-        CanContentScroll="True"
+    <ui:ScrollViewerEx
         FontSize="14"
         VirtualizingStackPanel.IsVirtualizing="True"
         VirtualizingStackPanel.ScrollUnit="Pixel">
@@ -31,80 +30,80 @@
                 Text="{DynamicResource about}"
                 TextAlignment="left" />
 
-            <cc:Card
-                Title="{Binding Version}"
-                Icon="&#xe946;"
-                Sub="{DynamicResource version}">
-                <StackPanel Orientation="Horizontal">
+            <ui:SettingsCard Description="{DynamicResource version}" Header="{Binding Version}">
+                <ui:SettingsCard.HeaderIcon>
+                    <ui:FontIcon Glyph="&#xe946;" />
+                </ui:SettingsCard.HeaderIcon>
+
+                <ikw:SimpleStackPanel Orientation="Horizontal" Spacing="12">
                     <Button
-                        Margin="0 0 10 0"
+                        x:Name="UpdateAppButton"
                         Command="{Binding UpdateAppCommand}"
                         Content="{DynamicResource checkUpdates}" />
-                    <Button Padding="0" Style="{StaticResource AccentButtonStyle}">
-                        <Hyperlink
-                            NavigateUri="{Binding SponsorPage}"
-                            RequestNavigate="OnRequestNavigate"
-                            TextDecorations="None">
-                            <TextBlock
-                                Padding="10 5"
-                                Foreground="{StaticResource SystemControlForegroundAltHighBrush}"
-                                Text="{DynamicResource BecomeASponsor}" />
-                        </Hyperlink>
-                    </Button>
-                </StackPanel>
-            </cc:Card>
-
-            <cc:Card Title="{DynamicResource releaseNotes}" Icon="&#xe8fd;">
-                <Button Command="{Binding OpenReleaseNotesCommand}" Content="{DynamicResource releaseNotes}" />
-            </cc:Card>
-
-
-            <cc:Card
-                Title="{DynamicResource userdatapath}"
-                Margin="0 14 0 0"
-                Icon="&#xEC25;;"
-                Sub="{DynamicResource userdatapathToolTip}">
-                <StackPanel Orientation="Horizontal">
-                    <Button Command="{Binding OpenParentOfSettingsFolderCommand}" Content="{DynamicResource userdatapathButton}" />
-                </StackPanel>
-            </cc:Card>
-
-            <cc:Card
-                Title="{DynamicResource website}"
-                Margin="0 14 0 0"
-                Icon="&#xeb41;">
-                <StackPanel Orientation="Horizontal">
-                    <cc:HyperLink
-                        Margin="0 0 12 0"
-                        Text="{DynamicResource website}"
-                        Uri="{Binding Website}" />
-                    <cc:HyperLink
-                        Margin="0 0 12 0"
-                        Text="{DynamicResource documentation}"
-                        Uri="{Binding Documentation}" />
-                    <cc:HyperLink Text="{DynamicResource github}" Uri="{Binding Github}" />
-                </StackPanel>
-            </cc:Card>
-
-            <cc:Card Title="{DynamicResource icons}" Icon="&#xE8FE;">
-                <cc:HyperLink Text="icons8.com" Uri="https://icons8.com/" />
-            </cc:Card>
-
-            <cc:Card
-                Title="{DynamicResource devtool}"
-                Margin="0 12 0 0"
-                Icon="&#xf12b;">
-                <StackPanel Orientation="Horizontal">
                     <Button
-                        Margin="0 0 12 0"
+                        Height="{Binding ElementName=UpdateAppButton, Path=ActualHeight}"
+                        Command="{Binding OpenSponsorPageCommand}"
+                        Content="{DynamicResource BecomeASponsor}"
+                        Cursor="Hand"
+                        Style="{StaticResource AccentButtonStyle}" />
+                </ikw:SimpleStackPanel>
+            </ui:SettingsCard>
+
+            <ui:SettingsCard Margin="0 4 0 0" Header="{DynamicResource releaseNotes}">
+                <ui:SettingsCard.HeaderIcon>
+                    <ui:FontIcon Glyph="&#xe8fd;" />
+                </ui:SettingsCard.HeaderIcon>
+
+                <Button Command="{Binding OpenReleaseNotesCommand}" Content="{DynamicResource releaseNotes}" />
+            </ui:SettingsCard>
+
+            <ui:SettingsCard
+                Margin="0 14 0 0"
+                Description="{DynamicResource userdatapathToolTip}"
+                Header="{DynamicResource userdatapath}">
+                <ui:SettingsCard.HeaderIcon>
+                    <ui:FontIcon Glyph="&#xEC25;" />
+                </ui:SettingsCard.HeaderIcon>
+
+                <Button Command="{Binding OpenParentOfSettingsFolderCommand}" Content="{DynamicResource userdatapathButton}" />
+            </ui:SettingsCard>
+
+            <ui:SettingsCard Margin="0 14 0 0" Header="{DynamicResource website}">
+                <ui:SettingsCard.HeaderIcon>
+                    <ui:FontIcon Glyph="&#xeb41;" />
+                </ui:SettingsCard.HeaderIcon>
+
+                <StackPanel Orientation="Horizontal">
+                    <ui:HyperlinkButton Content="{DynamicResource website}" NavigateUri="{Binding Website}" />
+                    <ui:HyperlinkButton Content="{DynamicResource documentation}" NavigateUri="{Binding Documentation}" />
+                    <ui:HyperlinkButton Content="{DynamicResource github}" NavigateUri="{Binding Github}" />
+                </StackPanel>
+            </ui:SettingsCard>
+
+            <ui:SettingsCard Margin="0 4 0 0" Header="{DynamicResource icons}">
+                <ui:SettingsCard.HeaderIcon>
+                    <ui:FontIcon Glyph="&#xE8FE;" />
+                </ui:SettingsCard.HeaderIcon>
+
+                <ui:HyperlinkButton Content="icons8.com" NavigateUri="https://icons8.com/" />
+            </ui:SettingsCard>
+
+            <ui:SettingsCard Margin="0 14 0 0" Header="{DynamicResource devtool}">
+                <ui:SettingsCard.HeaderIcon>
+                    <ui:FontIcon Glyph="&#xf12b;" />
+                </ui:SettingsCard.HeaderIcon>
+
+                <ikw:SimpleStackPanel Orientation="Horizontal" Spacing="12">
+                    <Button
+                        x:Name="AskClearCacheFolderConfirmationButton"
                         Command="{Binding AskClearCacheFolderConfirmationCommand}"
                         Content="{Binding CacheFolderSize, Mode=OneWay}" />
                     <Button
-                        Margin="0 0 12 0"
+                        Height="{Binding ElementName=AskClearCacheFolderConfirmationButton, Path=ActualHeight}"
                         Command="{Binding AskClearLogFolderConfirmationCommand}"
                         Content="{Binding LogFolderSize, Mode=OneWay}" />
-                    <Button>
-                        <ui:FontIcon FontSize="20" Glyph="&#xec7a;" />
+                    <Button Height="{Binding ElementName=AskClearCacheFolderConfirmationButton, Path=ActualHeight}">
+                        <ui:FontIcon FontSize="16" Glyph="&#xec7a;" />
                         <ui:FlyoutService.Flyout>
                             <ui:MenuFlyout>
                                 <MenuItem Command="{Binding OpenWelcomeWindowCommand}" Header="{DynamicResource welcomewindow}">
@@ -133,28 +132,31 @@
                             </ui:MenuFlyout>
                         </ui:FlyoutService.Flyout>
                     </Button>
-                </StackPanel>
-            </cc:Card>
+                </ikw:SimpleStackPanel>
+            </ui:SettingsCard>
 
-            <cc:ExCard
-                Title="{DynamicResource advanced}"
-                Margin="0 14 0 0"
-                Icon="&#xE8B7;">
-                <StackPanel>
-                    <cc:Card
-                        Title="{DynamicResource logLevel}"
-                        Icon="&#xE749;"
-                        Type="Inside">
+            <ui:SettingsExpander Margin="0 4 0 0" Header="{DynamicResource advanced}">
+                <ui:SettingsExpander.HeaderIcon>
+                    <ui:FontIcon Glyph="&#xE8B7;" />
+                </ui:SettingsExpander.HeaderIcon>
+
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsCard Header="{DynamicResource logLevel}">
+                        <ui:SettingsCard.HeaderIcon>
+                            <ui:FontIcon Glyph="&#xE749;" />
+                        </ui:SettingsCard.HeaderIcon>
+
                         <ComboBox
                             DisplayMemberPath="Display"
                             ItemsSource="{Binding LogLevels}"
                             SelectedValue="{Binding LogLevel}"
                             SelectedValuePath="Value" />
-                    </cc:Card>
-                    <cc:Card
-                        Title="{DynamicResource settingWindowFontTitle}"
-                        Icon="&#xf259;"
-                        Type="Inside">
+                    </ui:SettingsCard>
+                    <ui:SettingsCard Header="{DynamicResource settingWindowFontTitle}">
+                        <ui:SettingsCard.HeaderIcon>
+                            <ui:FontIcon Glyph="&#xf259;" />
+                        </ui:SettingsCard.HeaderIcon>
+
                         <StackPanel Orientation="Horizontal">
                             <Button Command="{Binding ResetSettingWindowFontCommand}" Content="{DynamicResource commonReset}" />
                             <ComboBox
@@ -166,9 +168,9 @@
                                 SelectedValue="{Binding SettingWindowFont, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                 SelectedValuePath="Source" />
                         </StackPanel>
-                    </cc:Card>
-                </StackPanel>
-            </cc:ExCard>
+                    </ui:SettingsCard>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
 
             <TextBlock
                 Margin="14 20 0 0"
@@ -180,5 +182,5 @@
                 Text="{Binding ActivatedTimes}"
                 TextWrapping="WrapWithOverflow" />
         </StackPanel>
-    </ScrollViewer>
+    </ui:ScrollViewerEx>
 </ui:Page>

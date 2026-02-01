@@ -69,7 +69,7 @@
         TargetType="{x:Type Rectangle}">
         <Setter Property="Fill" Value="#747881" />
         <Setter Property="Height" Value="1" />
-        <Setter Property="Margin" Value="0,0,0,0" />
+        <Setter Property="Margin" Value="0 0 0 0" />
     </Style>
     <Style x:Key="HighlightStyle">
         <Setter Property="Inline.FontWeight" Value="Bold" />
@@ -122,7 +122,7 @@
         <Setter Property="Background" Value="#686d77" />
         <Setter Property="Width" Value="32" />
         <Setter Property="Height" Value="32" />
-        <Setter Property="Margin" Value="0,8,8,0" />
+        <Setter Property="Margin" Value="0 8 8 0" />
         <Setter Property="HorizontalAlignment" Value="Right" />
     </Style>
 
@@ -149,7 +149,7 @@
         x:Key="ClockPanel"
         BasedOn="{StaticResource ClockPanel}"
         TargetType="{x:Type StackPanel}">
-        <Setter Property="Margin" Value="0,0,54,0" />
+        <Setter Property="Margin" Value="0 0 54 0" />
     </Style>
     <Style
         x:Key="ClockBox"
@@ -168,7 +168,7 @@
         BasedOn="{StaticResource BasePreviewBorderStyle}"
         TargetType="{x:Type Border}">
         <Setter Property="BorderBrush" Value="#747881" />
-        <Setter Property="Margin" Value="0,0,10,0" />
+        <Setter Property="Margin" Value="0 0 10 0" />
     </Style>
     <Style x:Key="WindowRadius" TargetType="{x:Type Border}">
         <Setter Property="CornerRadius" Value="0" />
