@@ -38,7 +38,7 @@
         <KeyBinding Gesture="Up" Command="{Binding SelectPrevItemCommand}" />
         <KeyBinding Gesture="Shift+Enter" Command="{Binding LoadContextMenuCommand}" />
         <KeyBinding Gesture="Ctrl+OemComma" Command="{Binding OpenSettingsCommand}" />
-        <KeyBinding Gesture="F1" Command="{Binding TogglePreviewCommand}" />
+        <!-- Preview hotkey is handled dynamically in code-behind to support customization -->
     </Window.KeyBindings>
 
     <!-- Main container with rounded corners and background -->

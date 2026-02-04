@@ -20,6 +20,14 @@
                 <controls:HotkeyControl Hotkey="{Binding ToggleHotkey, Mode=TwoWay}" MinWidth="150" />
             </ui:SettingsExpander.Footer>
         </ui:SettingsExpander>
+
+        <ui:SettingsExpander Header="{i18n:Localize previewHotkey}"
+                            Description="{i18n:Localize previewHotkeyToolTip}"
+                            IconSource="PreviewLink">
+            <ui:SettingsExpander.Footer>
+                <controls:HotkeyControl Hotkey="{Binding PreviewHotkey, Mode=TwoWay}" MinWidth="150" />
+            </ui:SettingsExpander.Footer>
+        </ui:SettingsExpander>
         
         <TextBlock Text="{i18n:Localize hotkeyFormatTip}" Foreground="Gray" FontSize="12" />
     </StackPanel>

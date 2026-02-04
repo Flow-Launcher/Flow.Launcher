@@ -7,6 +7,7 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Avalonia.ViewModel;
 using Flow.Launcher.Infrastructure.UserSettings;
 using System;
+using System.ComponentModel;
 #if DEBUG
 using Avalonia.Diagnostics;
 #endif
@@ -17,6 +18,8 @@ public partial class MainWindow : Window
 {
     private MainViewModel? _viewModel;
     private TextBox? _queryTextBox;
+    private Settings? _settings;
+    private KeyGesture? _previewHotkeyGesture;
 
     public MainWindow()
     {
@@ -28,6 +31,11 @@ public partial class MainWindow : Window
         _viewModel.ShowRequested += () => ShowAndFocus();
         DataContext = _viewModel;
 
+        // Get settings for hotkey configuration
+        _settings = Ioc.Default.GetRequiredService<Settings>();
+        _settings.PropertyChanged += OnSettingsPropertyChanged;
+        UpdatePreviewHotkeyGesture();
+
         // Get reference to the query text box
         _queryTextBox = this.FindControl<TextBox>("QueryTextBox");
 
@@ -37,6 +45,51 @@ public partial class MainWindow : Window
 #if DEBUG
         this.AttachDevTools();
 #endif
+    }
+
+    private void OnSettingsPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(Settings.PreviewHotkey))
+        {
+            UpdatePreviewHotkeyGesture();
+        }
+    }
+
+    private void UpdatePreviewHotkeyGesture()
+    {
+        if (_settings == null) return;
+        _previewHotkeyGesture = ParseKeyGesture(_settings.PreviewHotkey);
+    }
+
+    private static KeyGesture? ParseKeyGesture(string hotkey)
+    {
+        if (string.IsNullOrWhiteSpace(hotkey)) return null;
+        
+        try
+        {
+            // Try parsing as a standard key gesture
+            return KeyGesture.Parse(hotkey);
+        }
+        catch
+        {
+            // Fallback: manual parsing for common formats
+            var parts = hotkey.Split('+', StringSplitOptions.RemoveEmptyEntries);
+            if (parts.Length == 0) return null;
+
+            var keyPart = parts[^1].Trim();
+            if (!Enum.TryParse<Key>(keyPart, true, out var key))
+                return null;
+
+            var modifiers = KeyModifiers.None;
+            for (int i = 0; i < parts.Length - 1; i++)
+            {
+                var mod = parts[i].Trim();
+                if (Enum.TryParse<KeyModifiers>(mod, true, out var parsedMod))
+                    modifiers |= parsedMod;
+            }
+
+            return new KeyGesture(key, modifiers);
+        }
     }
 
     private void InitializeComponent()
@@ -82,6 +135,16 @@ public partial class MainWindow : Window
     protected override void OnKeyDown(KeyEventArgs e)
     {
         base.OnKeyDown(e);
+
+        // Handle Preview hotkey dynamically
+        if (_previewHotkeyGesture != null && 
+            e.Key == _previewHotkeyGesture.Key && 
+            e.KeyModifiers == _previewHotkeyGesture.KeyModifiers)
+        {
+            _viewModel?.TogglePreviewCommand.Execute(null);
+            e.Handled = true;
+            return;
+        }
 
         // Handle Escape to hide window (handled by command, but keep as fallback)
         if (e.Key == Key.Escape)

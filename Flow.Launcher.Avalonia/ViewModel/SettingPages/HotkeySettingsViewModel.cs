@@ -28,4 +28,17 @@ public partial class HotkeySettingsViewModel : ObservableObject
             }
         }
     }
+
+    public string PreviewHotkey
+    {
+        get => _settings.PreviewHotkey;
+        set
+        {
+            if (_settings.PreviewHotkey != value)
+            {
+                _settings.PreviewHotkey = value;
+                OnPropertyChanged();
+            }
+        }
+    }
 }
