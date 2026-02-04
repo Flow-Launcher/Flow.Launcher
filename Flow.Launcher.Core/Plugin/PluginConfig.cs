@@ -6,6 +6,7 @@ using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin;
 using System.Text.Json;
 using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher.Core.Plugin
 {
@@ -30,7 +31,11 @@ namespace Flow.Launcher.Core.Plugin
                 {
                     try
                     {
-                        Directory.Delete(directory, true);
+                        var fullyDeleted = FilesFolders.TryDeleteDirectoryRobust(directory, maxRetries: 3, retryDelayMs: 100);
+                        if (!fullyDeleted)
+                        {
+                            PublicApi.Instance.LogWarn(ClassName, $"Directory <{directory}> was not fully deleted. Some files or folders may still remain.");
+                        }
                     }
                     catch (Exception e)
                     {
