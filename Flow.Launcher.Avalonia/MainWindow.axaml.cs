@@ -7,6 +7,9 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Avalonia.ViewModel;
 using Flow.Launcher.Infrastructure.UserSettings;
 using System;
+#if DEBUG
+using Avalonia.Diagnostics;
+#endif
 
 namespace Flow.Launcher.Avalonia;
 

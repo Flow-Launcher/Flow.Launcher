@@ -1,180 +1,88 @@
 # AGENTS.md - Flow.Launcher
 
-This document provides essential information for AI agents working on the Flow.Launcher codebase.
-
-## Project Overview
-
-Flow.Launcher is a Windows productivity launcher (similar to Alfred/Raycast) built with:
-- **WPF** (original UI framework) - `Flow.Launcher/`
-- **Avalonia** (migration in progress ~35-40%) - `Flow.Launcher.Avalonia/`
+Windows productivity launcher (like Alfred/Raycast) with dual UI frameworks:
+- **WPF**: `Flow.Launcher/` (original)
+- **Avalonia**: `Flow.Launcher.Avalonia/` (migration ~35-40%)
 - **.NET 9.0** targeting `net9.0-windows10.0.19041.0`
-- **CommunityToolkit.Mvvm** for MVVM patterns
-- **FluentAvalonia** for modern UI in Avalonia version
+- **CommunityToolkit.Mvvm** for MVVM
 
-The codebase is actively being migrated from WPF to Avalonia. See `AVALONIA_MIGRATION_CHECKLIST.md` for detailed progress.
+See `AVALONIA_MIGRATION_CHECKLIST.md` for migration progress.
 
----
-
-## Essential Commands
-
-### Build
+## Commands
 
 ```bash
-# Build entire solution
+# Build
 dotnet build
-
-# Build specific project
-dotnet build Flow.Launcher.Avalonia/Flow.Launcher.Avalonia.csproj
-
-# Release build
 dotnet build -c Release
-
-# Restore dependencies (required for CI)
 nuget restore
-```
 
-### Test
-
-```bash
-# Run all tests
+# Test (NUnit 4.x)
 dotnet test
+dotnet test --filter "FullyQualifiedName~FuzzyMatcherTest"
+dotnet test --filter "Name~WhenSearching"
 
-# Run tests with verbosity
-dotnet test --verbosity normal
-
-# Run specific test file/class
-dotnet test --filter "ClassName=FuzzyMatcherTest"
+# Run
+./Output/Debug/Flow.Launcher.exe              # WPF
+./Output/Debug/Avalonia/Flow.Launcher.Avalonia.exe  # Avalonia
 ```
 
-### Run
-
-```bash
-# Run WPF version
-./Output/Debug/Flow.Launcher.exe
-
-# Run Avalonia version
-./Output/Debug/Avalonia/Flow.Launcher.Avalonia.exe
-```
-
-### Output Locations
-
-| Configuration | WPF Output | Avalonia Output |
-|---------------|------------|-----------------|
-| Debug | `Output/Debug/` | `Output/Debug/Avalonia/` |
-| Release | `Output/Release/` | `Output/Release/Avalonia/` |
-
----
-
-## Project Structure
-
-```
-Flow.Launcher/
-├── Flow.Launcher/              # WPF main application
-│   ├── MainWindow.xaml         # Main search window
-│   ├── SettingWindow.xaml      # Settings window
-│   ├── ViewModel/              # ViewModels (MVVM)
-│   ├── SettingPages/           # Settings page views/viewmodels
-│   ├── Helper/                 # Utility classes
-│   ├── Converters/             # XAML value converters
-│   ├── Themes/                 # Theme XAML files
-│   ├── Languages/              # Localization (*.xaml)
-│   └── Resources/              # Icons, fonts, styles
-│
-├── Flow.Launcher.Avalonia/     # Avalonia main application (migration)
-│   ├── MainWindow.axaml        # Main search window
-│   ├── Views/                  # Avalonia views
-│   │   ├── SettingPages/       # Settings pages
-│   │   └── Controls/           # Custom controls
-│   ├── ViewModel/              # ViewModels
-│   ├── Helper/                 # Utilities
-│   ├── Converters/             # Avalonia converters
-│   └── Themes/                 # Avalonia themes
-│
-├── Flow.Launcher.Plugin/       # Plugin SDK (shared)
-│   ├── Interfaces/             # IPlugin, IPublicAPI, etc.
-│   ├── Result.cs               # Search result model
-│   ├── Query.cs                # Query model
-│   └── PluginMetadata.cs       # Plugin metadata
-│
-├── Flow.Launcher.Infrastructure/  # Shared infrastructure
-│   ├── UserSettings/           # Settings models
-│   ├── StringMatcher.cs        # Fuzzy search algorithm
-│   └── Logger/                 # Logging utilities
-│
-├── Flow.Launcher.Core/         # Core business logic
-│   ├── Plugin/                 # Plugin management
-│   │   └── PluginManager.cs    # Plugin lifecycle
-│   ├── Resource/               # Internationalization
-│   └── ExternalPlugins/        # Plugin store
-│
-├── Plugins/                    # Built-in plugins
-│   ├── Flow.Launcher.Plugin.Calculator/
-│   ├── Flow.Launcher.Plugin.Explorer/
-│   ├── Flow.Launcher.Plugin.Program/
-│   ├── Flow.Launcher.Plugin.WebSearch/
-│   └── ... (10+ plugins)
-│
-├── Flow.Launcher.Test/         # Unit tests (NUnit)
-│
-└── Scripts/                    # Build scripts
-    └── post_build.ps1          # Packaging script
-```
-
----
-
-## Code Conventions
+## Code Style
 
 ### Naming
+- **PascalCase**: types, public members, methods, properties
+- **camelCase**: locals, parameters
+- **_camelCase**: private fields (underscore prefix)
+- **PascalCase**: constants (per `.editorconfig`)
+- No `this.` qualifier
 
-- **PascalCase** for public members, types, properties, methods
-- **camelCase** for local variables, parameters
-- **_camelCase** for private fields (underscore prefix)
-- **UPPER_CASE** constants are PascalCase per `.editorconfig`
-- No `this.` qualifier (per `.editorconfig`)
-
-### C# Style
-
+### C# Conventions
 ```csharp
-// File-scoped namespaces preferred
+// File-scoped namespaces
 namespace Flow.Launcher.ViewModel;
 
 // Prefer var when type is apparent
 var results = new List<Result>();
 
-// Braces always required
+// Allman braces, always required
 if (condition)
 {
     DoSomething();
 }
 
-// Allman brace style (new line before opening brace)
-public void Method()
-{
-    // ...
-}
-
-// 4-space indentation for code
-// 2-space indentation for XML/XAML
+// 4-space indent (code), 2-space (XML/XAML)
 ```
 
-### MVVM Patterns
+### Imports
+- Sort system directives first (`dotnet_sort_system_directives_first = true`)
+- Using placement: outside namespace
 
-The project uses **CommunityToolkit.Mvvm** with source generators:
+### Error Handling
+- Use nullable reference types (enabled in Avalonia project)
+- Prefer `is null` checks over reference equality
+- Use null propagation and coalesce expressions
+
+### XAML (XamlStyler)
+- One attribute per line (except ≤2)
+- Space before closing slash: `<Element />`
+- Attribute order: `x:Class` → `xmlns` → `x:Key/Name` → layout → size → margin/padding → others
+
+**WPF**: `.xaml` with `xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"`
+**Avalonia**: `.axaml` with `xmlns="https://github.com/avaloniaui"`
+
+## MVVM Patterns
 
 ```csharp
-// ViewModels use ObservableObject base
+// Avalonia: CommunityToolkit.Mvvm
 public partial class MainViewModel : ObservableObject
 {
-    // [ObservableProperty] generates property + change notification
     [ObservableProperty]
     private string _queryText = string.Empty;
     
-    // [RelayCommand] generates ICommand implementation
     [RelayCommand]
-    private void Search() { ... }
+    private void Search() { }
 }
 
-// WPF uses BaseModel which wraps INotifyPropertyChanged
+// WPF: BaseModel with manual INPC
 public class MainViewModel : BaseModel
 {
     public string QueryText
@@ -192,119 +100,39 @@ public class MainViewModel : BaseModel
 }
 ```
 
-### XAML Style
-
-Uses XamlStyler with specific rules (see `Settings.XamlStyler`):
-- One attribute per line (except when ≤2)
-- Specific attribute ordering (x:Class first, then xmlns, etc.)
-- Space before closing slash: `<Element />`
-
-**WPF XAML** (`.xaml`):
-```xml
-<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-```
-
-**Avalonia AXAML** (`.axaml`):
-```xml
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:ui="using:FluentAvalonia.UI.Controls">
-```
-
----
-
 ## Plugin Architecture
 
-### Plugin Interface
-
-All plugins implement `IPlugin` or `IAsyncPlugin`:
-
 ```csharp
-public interface IPlugin : IAsyncPlugin
-{
-    List<Result> Query(Query query);
-    void Init(PluginInitContext context);
-}
-
 public interface IAsyncPlugin
 {
     Task<List<Result>> QueryAsync(Query query, CancellationToken token);
     Task InitAsync(PluginInitContext context);
 }
-```
 
-### Creating Results
-
-```csharp
-return new List<Result>
+// Result creation
+new Result
 {
-    new Result
-    {
-        Title = "Result Title",
-        SubTitle = "Optional subtitle",
-        IcoPath = "Images/icon.png",  // Relative to plugin directory
-        Score = 100,                   // Higher = better match
-        Action = context =>
-        {
-            // Execute action, return true to hide window
-            return true;
-        }
-    }
+    Title = "Title",
+    SubTitle = "Subtitle",
+    IcoPath = "Images/icon.png",
+    Score = 100,
+    Action = context => true  // return true to hide window
 };
 ```
 
-### Plugin Metadata
+## Avalonia Migration Notes
 
-Each plugin needs `plugin.json`:
-```json
-{
-    "ID": "unique-guid",
-    "ActionKeyword": "keyword",
-    "Name": "Plugin Name",
-    "Description": "Description",
-    "Author": "Author",
-    "Version": "1.0.0",
-    "Language": "csharp",
-    "Website": "https://...",
-    "IcoPath": "Images\\icon.png",
-    "ExecuteFileName": "Plugin.dll"
-}
-```
+| WPF | Avalonia |
+|-----|----------|
+| `.xaml` | `.axaml` |
+| `Visibility` | `IsVisible` |
+| `Collapsed` | Not available |
+| `BoolToVisibilityConverter` | Direct bool binding |
+| `xmlns:microsoft` | `xmlns:avaloniaui` |
 
-### Plugin Settings
-
-```csharp
-// Load settings
-var settings = context.API.LoadSettingJsonStorage<MySettings>();
-
-// Save (automatic on app close, or manual)
-context.API.SaveSettingJsonStorage<MySettings>();
-```
-
----
-
-## Key Classes & Files
-
-| Class/File | Purpose |
-|------------|---------|
-| `MainViewModel.cs` | Main search window logic |
-| `ResultsViewModel.cs` | Search results management |
-| `Settings.cs` | User settings model |
-| `PluginManager.cs` | Plugin lifecycle management |
-| `StringMatcher.cs` | Fuzzy search algorithm |
-| `IPublicAPI.cs` | Plugin API interface |
-| `Result.cs` | Search result model |
-| `Query.cs` | Search query model |
-
----
+Use `#if AVALONIA` for conditional compilation.
 
 ## Testing
-
-- **Framework**: NUnit 4.x
-- **Mocking**: Moq
-- **Test file naming**: `*Test.cs`
-- **Test class attribute**: `[TestFixture]`
 
 ```csharp
 [TestFixture]
@@ -317,114 +145,31 @@ public class FuzzyMatcherTest
         var result = matcher.FuzzyMatch("chr", "Chrome");
         ClassicAssert.IsTrue(result.RawScore > 0);
     }
-    
-    [TestCase("chrome")]
-    [TestCase("chr")]
-    public void ParameterizedTest(string query)
-    {
-        // ...
-    }
 }
 ```
 
----
+## Key Files
 
-## Avalonia Migration Notes
+| File | Purpose |
+|------|---------|
+| `MainViewModel.cs` | Search window logic |
+| `ResultsViewModel.cs` | Results management |
+| `Settings.cs` | User settings |
+| `PluginManager.cs` | Plugin lifecycle |
+| `StringMatcher.cs` | Fuzzy search |
+| `IPublicAPI.cs` | Plugin API |
 
-When working on the Avalonia migration:
+## Gotchas
 
-1. **File extensions**: Use `.axaml` not `.xaml` for Avalonia
-2. **Namespace**: Use `xmlns="https://github.com/avaloniaui"`
-3. **Controls**: Use FluentAvalonia `ui:SettingsExpander` for settings pages
-4. **Visibility**: Use `IsVisible` not `Visibility` (no `Collapsed` enum)
-5. **Converters**: Different converter approach (see `Converters/`)
-6. **Define directive**: `#if AVALONIA` for conditional compilation
-
-**Key differences**:
-```xml
-<!-- WPF -->
-<Button Visibility="{Binding IsVisible, Converter={StaticResource BoolToVisibility}}" />
-
-<!-- Avalonia -->
-<Button IsVisible="{Binding IsVisible}" />
-```
-
----
-
-## Localization
-
-Resources are in `Languages/*.xaml` files:
-
-```xml
-<!-- Languages/en.xaml -->
-<sys:String x:Key="startFlowLauncherOnSystemStartup">Start Flow Launcher on system startup</sys:String>
-```
-
-Usage in XAML:
-```xml
-<!-- WPF -->
-<TextBlock Text="{DynamicResource startFlowLauncherOnSystemStartup}" />
-
-<!-- Avalonia (custom extension) -->
-<TextBlock Text="{i18n:Localize startFlowLauncherOnSystemStartup}" />
-```
-
----
-
-## Common Tasks
-
-### Adding a new setting
-
-1. Add property to `Flow.Launcher.Infrastructure/UserSettings/Settings.cs`
-2. Add UI in appropriate settings page (WPF and/or Avalonia)
-3. Bind to ViewModel property
-
-### Adding a new plugin
-
-1. Create project under `Plugins/` folder
-2. Reference `Flow.Launcher.Plugin`
-3. Implement `IPlugin` or `IAsyncPlugin`
-4. Add `plugin.json` metadata
-5. Add to solution and build dependencies in WPF project
-
-### Fixing a ViewModel binding
-
-1. Ensure property raises `PropertyChanged` or uses `[ObservableProperty]`
-2. Check DataContext is set correctly
-3. Verify binding path matches property name exactly
-
----
-
-## Gotchas & Tips
-
-1. **Build order matters**: WPF project depends on plugins being built first
-2. **Kill running instance**: Build kills running `Flow.Launcher.exe` automatically
-3. **Plugin isolation**: Plugins run in separate app domains, can't share state directly
-4. **Settings persist**: Changes to `Settings.cs` properties auto-save via Fody PropertyChanged
-5. **Windows Search**: Some tests require Windows Search service (`WSearch`) to be running
-6. **Nullable**: Avalonia project has `<Nullable>enable</Nullable>`, WPF does not
-7. **Framework reference**: Avalonia still references WPF assemblies for `IPublicAPI` compatibility
-
----
-
-## CI/CD
-
-GitHub Actions workflow (`.github/workflows/dotnet.yml`):
-- Runs on Windows
-- Uses .NET 9.0
-- Builds Release configuration
-- Runs tests
-- Creates installer via Squirrel
-
-Key environment variables:
-- `FlowVersion`: Version number (e.g., "1.20.2")
-- `BUILD_NUMBER`: CI build number
-
----
+1. Build order matters - plugins must build before WPF
+2. Build kills running `Flow.Launcher.exe` automatically
+3. Plugins run in separate app domains
+4. Settings auto-save via Fody PropertyChanged
+5. Some tests require Windows Search service (`WSearch`)
+6. Avalonia has `<Nullable>enable</Nullable>`, WPF does not
 
 ## Resources
 
-- **Migration checklist**: `AVALONIA_MIGRATION_CHECKLIST.md`
-- **Plugin SDK docs**: `Flow.Launcher.Plugin/README.md`
-- **EditorConfig**: `.editorconfig` for code style
-- **XAML formatting**: `Settings.XamlStyler`
+- `.editorconfig` - C#/VB style rules
+- `Settings.XamlStyler` - XAML formatting
+- `Flow.Launcher.Plugin/README.md` - Plugin SDK docs

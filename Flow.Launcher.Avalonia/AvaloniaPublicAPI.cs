@@ -45,7 +45,8 @@ public class AvaloniaPublicAPI : IPublicAPI
     
     public string GetTranslation(string key) => _i18n.GetTranslation(key);
     
-    public List<PluginPair> GetAllPlugins() => PluginManager.AllPlugins;
+    public List<PluginPair> GetAllPlugins() => PluginManager.GetAllLoadedPlugins();
+    public List<PluginPair> GetAllInitializedPlugins(bool includeFailed) => PluginManager.GetAllInitializedPlugins(includeFailed);
     public MatchResult FuzzySearch(string query, string stringToCompare) => 
         Ioc.Default.GetRequiredService<StringMatcher>().FuzzyMatch(query, stringToCompare);
 

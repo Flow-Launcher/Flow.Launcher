@@ -14,6 +14,7 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <RootNamespace>Flow.Launcher.Avalonia</RootNamespace>
     <AssemblyName>Flow.Launcher.Avalonia</AssemblyName>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -77,5 +78,76 @@
   <ItemGroup>
     <Resource Include="WpfResources\*.xaml" />
   </ItemGroup>
+
+  <!-- Remove duplicate DLLs from plugins that already exist in the root folder -->
+  <!-- Remove by name since root typically has newer compatible versions -->
+  <Target Name="RemoveDuplicatePluginDlls" AfterTargets="Build" Condition="Exists('$(OutputPath)Plugins')">
+    <Exec Command="powershell.exe -NoProfile -ExecutionPolicy Bypass -Command &quot;Get-ChildItem '$(OutputPath.TrimEnd('\'))' -Filter '*.dll' | ForEach-Object { $name = $_.Name; Get-ChildItem '$(OutputPath)Plugins' -Recurse -Filter $name | Remove-Item -Force }&quot;" IgnoreExitCode="true" />
+  </Target>
+
+  <!-- Remove non-Windows runtime folders from plugins (keep only win-x64) -->
+  <Target Name="RemovePluginNonWindowsRuntimes" AfterTargets="Build" Condition="Exists('$(OutputPath)Plugins')">
+    <Exec Command="powershell.exe -NoProfile -ExecutionPolicy Bypass -Command &quot;Get-ChildItem '$(OutputPath)Plugins' -Recurse -Directory -Filter 'runtimes' | ForEach-Object { Get-ChildItem $_.FullName -Directory | Where-Object { $_.Name -notmatch '^win-x64$' } | Remove-Item -Recurse -Force }&quot;" IgnoreExitCode="true" />
+  </Target>
+
+  <!-- Remove duplicate win-x64 runtime from plugins since root already has it -->
+  <Target Name="RemovePluginDuplicateRuntimes" AfterTargets="RemovePluginNonWindowsRuntimes" Condition="Exists('$(OutputPath)Plugins') And Exists('$(OutputPath)runtimes\win-x64')">
+    <Exec Command="powershell.exe -NoProfile -ExecutionPolicy Bypass -Command &quot;Get-ChildItem '$(OutputPath)runtimes\win-x64' -File | ForEach-Object { $name = $_.Name; Get-ChildItem '$(OutputPath)Plugins' -Recurse -Filter $name | Where-Object { $_.Directory.Name -eq 'win-x64' } | Remove-Item -Force }&quot;" IgnoreExitCode="true" />
+  </Target>
+
+  <!-- Remove XML documentation files to reduce output size -->
+  <Target Name="RemoveXmlDocFiles" AfterTargets="Build">
+    <Delete Files="@(None)" Condition="'%(Extension)' == '.xml'" />
+    <Exec Command="powershell.exe -NoProfile -ExecutionPolicy Bypass -Command &quot;Get-ChildItem '$(OutputPath.TrimEnd('\'))' -Recurse -Filter '*.xml' | Remove-Item -Force -ErrorAction SilentlyContinue&quot;" IgnoreExitCode="true" />
+  </Target>
+
+  <!-- Remove unnecessary runtime folders to reduce output size (Windows-only target) -->
+  <Target Name="RemoveUnnecessaryRuntimesAfterBuild" AfterTargets="Build">
+    <RemoveDir Directories="$(OutputPath)runtimes\browser-wasm;
+                            $(OutputPath)runtimes\linux-arm;
+                            $(OutputPath)runtimes\linux-arm64;
+                            $(OutputPath)runtimes\linux-armel;
+                            $(OutputPath)runtimes\linux-mips64;
+                            $(OutputPath)runtimes\linux-musl-arm;
+                            $(OutputPath)runtimes\linux-musl-arm64;
+                            $(OutputPath)runtimes\linux-musl-x64;
+                            $(OutputPath)runtimes\linux-musl-s390x;
+                            $(OutputPath)runtimes\linux-ppc64le;
+                            $(OutputPath)runtimes\linux-s390x;
+                            $(OutputPath)runtimes\linux-x64;
+                            $(OutputPath)runtimes\linux-x86;
+                            $(OutputPath)runtimes\maccatalyst-arm64;
+                            $(OutputPath)runtimes\maccatalyst-x64;
+                            $(OutputPath)runtimes\osx;
+                            $(OutputPath)runtimes\osx-arm64;
+                            $(OutputPath)runtimes\osx-x64;
+                            $(OutputPath)runtimes\win-arm;
+                            $(OutputPath)runtimes\win-arm64;
+                            $(OutputPath)runtimes\win-x86"/>
+  </Target>
+
+  <Target Name="RemoveUnnecessaryRuntimesAfterPublish" AfterTargets="Publish">
+    <RemoveDir Directories="$(PublishDir)runtimes\browser-wasm;
+                            $(PublishDir)runtimes\linux-arm;
+                            $(PublishDir)runtimes\linux-arm64;
+                            $(PublishDir)runtimes\linux-armel;
+                            $(PublishDir)runtimes\linux-mips64;
+                            $(PublishDir)runtimes\linux-musl-arm;
+                            $(PublishDir)runtimes\linux-musl-arm64;
+                            $(PublishDir)runtimes\linux-musl-x64;
+                            $(PublishDir)runtimes\linux-musl-s390x;
+                            $(PublishDir)runtimes\linux-ppc64le;
+                            $(PublishDir)runtimes\linux-s390x;
+                            $(PublishDir)runtimes\linux-x64;
+                            $(PublishDir)runtimes\linux-x86;
+                            $(PublishDir)runtimes\maccatalyst-arm64;
+                            $(PublishDir)runtimes\maccatalyst-x64;
+                            $(PublishDir)runtimes\osx;
+                            $(PublishDir)runtimes\osx-arm64;
+                            $(PublishDir)runtimes\osx-x64;
+                            $(PublishDir)runtimes\win-arm;
+                            $(PublishDir)runtimes\win-arm64;
+                            $(PublishDir)runtimes\win-x86"/>
+  </Target>
 
 </Project>
