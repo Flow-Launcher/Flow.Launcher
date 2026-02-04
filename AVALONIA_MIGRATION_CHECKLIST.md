@@ -336,7 +336,7 @@
 | Result selection | :white_check_mark: Done | Keyboard navigation |
 | Result activation | :white_check_mark: Done | Enter to execute |
 | Context menu | :white_check_mark: Done | Shift+Enter |
-| Text highlighting | :x: Missing | Match highlighting in results |
+| Text highlighting | :white_check_mark: Done | Match highlighting in results (bold gold) |
 | Auto-complete | :x: Missing | Tab to complete |
 | Query suggestions | :x: Missing | Suggestion dropdown |
 | History cycling | :x: Missing | Up/Down through history |
