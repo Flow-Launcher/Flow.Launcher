@@ -35,17 +35,10 @@ namespace Flow.Launcher.Core.Plugin
                         if (!fullyDeleted)
                         {
                             // Directory was not fully deleted, recreate the marker file so deletion will be retried on next startup
-                            try
+                            var markerFilePath = Path.Combine(directory, DataLocation.PluginDeleteFile);
+                            if (!File.Exists(markerFilePath))
                             {
-                                var markerFilePath = Path.Combine(directory, DataLocation.PluginDeleteFile);
-                                if (!File.Exists(markerFilePath))
-                                {
-                                    File.WriteAllText(markerFilePath, string.Empty);
-                                }
-                            }
-                            catch
-                            {
-                                // If we can't create the marker file, at least log the warning
+                                File.WriteAllText(markerFilePath, string.Empty);
                             }
                             PublicApi.Instance.LogWarn(ClassName, $"Directory <{directory}> was not fully deleted. Some files or folders may still remain. Deletion will be retried on next startup.");
                         }
