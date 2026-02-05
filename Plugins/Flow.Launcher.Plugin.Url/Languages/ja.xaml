@@ -10,13 +10,13 @@
     <system:String x:Key="flowlauncher_plugin_url_plugin_choose">選択</system:String>
     <system:String x:Key="flowlauncher_plugin_url_plugin_filter">Application(*.exe)|*.exe|All files|*.*</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_url_use_custom_browser">Use custom instead of Flow's default web browser</system:String>
-    <system:String x:Key="flowlauncher_plugin_url_browser_path">Browser path</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_use_custom_browser">FlowのデフォルトのWebブラウザの代わりにカスタムを使用する</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_browser_path">ブラウザーのパス</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_url_new_tab">New tab</system:String>
-    <system:String x:Key="flowlauncher_plugin_url_new_window">New window</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_new_tab">新しいタブ</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_new_window">新しいウインドウ</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_url_private_mode">Private mode</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_private_mode">プライベートモード</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_url_usehttps">Prefer https over http</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_usehttps">httpよりもhttpsを優先</system:String>
 </ResourceDictionary>
