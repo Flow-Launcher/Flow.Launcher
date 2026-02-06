@@ -43,9 +43,10 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
         internal IEnumerable<PluginPair> Setup()
         {
             // If no plugin is using the language, return empty list
-            if (!PluginMetadataList.Any(o => o.Language.Equals(Language, StringComparison.OrdinalIgnoreCase)))
+            var pluginCount = PluginMetadataList.Count(o => o.Language.Equals(Language, StringComparison.OrdinalIgnoreCase));
+            if (pluginCount == 0)
             {
-                return new List<PluginPair>();
+                return [];
             }
 
             if (!string.IsNullOrEmpty(PluginsSettingsFilePath) && FilesFolders.FileExists(PluginsSettingsFilePath))
@@ -57,7 +58,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
                 return SetPathForPluginPairs(PluginsSettingsFilePath, Language);
             }
 
-            var noRuntimeMessage = Localize.runtimePluginInstalledChooseRuntimePrompt(Language, EnvName, Environment.NewLine);
+            var noRuntimeMessage = Localize.runtimePluginInstalledChooseRuntimePrompt(pluginCount, EnvName, Environment.NewLine);
             if (API.ShowMsgBox(noRuntimeMessage, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.No)
             {
                 var msg = Localize.runtimePluginChooseRuntimeExecutable(EnvName);
@@ -114,7 +115,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
                     $"Not able to successfully set {EnvName} path, setting's plugin executable path variable is still an empty string.",
                     $"{Language}Environment");
 
-                return new List<PluginPair>();
+                return [];
             }
         }
 
@@ -131,7 +132,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
 
         internal abstract PluginPair CreatePluginPair(string filePath, PluginMetadata metadata);
 
-        private IEnumerable<PluginPair> SetPathForPluginPairs(string filePath, string languageToSet)
+        private List<PluginPair> SetPathForPluginPairs(string filePath, string languageToSet)
         {
             var pluginPairs = new List<PluginPair>();
 
