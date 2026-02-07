@@ -31,16 +31,17 @@ namespace Flow.Launcher.Core.Plugin
                 {
                     try
                     {
-                        var fullyDeleted = FilesFolders.TryDeleteDirectoryRobust(directory, maxRetries: 3, retryDelayMs: 100);
+                        var fullyDeleted = FilesFolders.TryDeleteDirectoryRobust(directory, maxRetries: 3, retryDelayMs: 200);
                         if (!fullyDeleted)
                         {
+                            PublicApi.Instance.LogWarn(ClassName, $"Directory <{directory}> was not fully deleted.");
+
                             // Directory was not fully deleted, recreate the marker file so deletion will be retried on next startup
                             var markerFilePath = Path.Combine(directory, DataLocation.PluginDeleteFile);
                             if (!File.Exists(markerFilePath))
                             {
                                 File.WriteAllText(markerFilePath, string.Empty);
                             }
-                            PublicApi.Instance.LogWarn(ClassName, $"Directory <{directory}> was not fully deleted. Some files or folders may still remain. Deletion will be retried on next startup.");
                         }
                     }
                     catch (Exception e)
