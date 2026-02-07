@@ -31,7 +31,7 @@ namespace Flow.Launcher.Core.Plugin
                 {
                     try
                     {
-                        var fullyDeleted = FilesFolders.TryDeleteDirectoryRobust(directory, maxRetries: 3, retryDelayMs: 100);
+                        var fullyDeleted = FilesFolders.TryDeleteDirectoryRobust(directory, maxRetries: 3, retryDelayMs: 200);
                         if (!fullyDeleted)
                         {
                             // Directory was not fully deleted, recreate the marker file so deletion will be retried on next startup
