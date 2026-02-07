@@ -26,13 +26,13 @@
       },
       "Microsoft.Windows.CsWin32": {
         "type": "Direct",
-        "requested": "[0.3.205, )",
-        "resolved": "0.3.205",
-        "contentHash": "U5wGAnyKd7/I2YMd43nogm81VMtjiKzZ9dsLMVI4eAB7jtv5IEj0gprj0q/F3iRmAIaGv5omOf8iSYx2+nE6BQ==",
+        "requested": "[0.3.269, )",
+        "resolved": "0.3.269",
+        "contentHash": "O4GVJ0ymxcoFRGS07VcoEClj7A9PIciHIjWDrPymzonhYlOfM7V0ZqGBUK19cUH3BPca9MfSOH0KLK/9JzQ8+Q==",
         "dependencies": {
           "Microsoft.Windows.SDK.Win32Docs": "0.1.42-alpha",
-          "Microsoft.Windows.SDK.Win32Metadata": "61.0.15-preview",
-          "Microsoft.Windows.WDK.Win32Metadata": "0.12.8-experimental"
+          "Microsoft.Windows.SDK.Win32Metadata": "69.0.7-preview",
+          "Microsoft.Windows.WDK.Win32Metadata": "0.13.25-experimental"
         }
       },
       "PropertyChanged.Fody": {
@@ -61,15 +61,15 @@
       },
       "Microsoft.Windows.SDK.Win32Metadata": {
         "type": "Transitive",
-        "resolved": "61.0.15-preview",
-        "contentHash": "cysex3dazKtCPALCluC2XX3f5Aedy9H2pw5jb+TW5uas2rkem1Z7FRnbUrg2vKx0pk0Qz+4EJNr37HdYTEcvEQ=="
+        "resolved": "69.0.7-preview",
+        "contentHash": "RJoNjQJVCIDNLPbvYuaygCFknTyAxOUE45of1voj0jjOgJa9MB2m1/G8L8F3IYc+2EFG5aqa/9y8PEx7Tk2tLQ=="
       },
       "Microsoft.Windows.WDK.Win32Metadata": {
         "type": "Transitive",
-        "resolved": "0.12.8-experimental",
-        "contentHash": "3n8R44/Z96Ly+ty4eYVJfESqbzvpw96lRLs3zOzyDmr1x1Kw7FNn5CyE416q+bZQV3e1HRuMUvyegMeRE/WedA==",
+        "resolved": "0.13.25-experimental",
+        "contentHash": "IM50tb/+UIwBr9FMr6ZKcZjCMW+Axo6NjGqKxgjUfyCY8dRnYUfrJEXxAaXoWtYP4X8EmASmC1Jtwh4XucseZg==",
         "dependencies": {
-          "Microsoft.Windows.SDK.Win32Metadata": "61.0.15-preview"
+          "Microsoft.Windows.SDK.Win32Metadata": "63.0.31-preview"
         }
       }
     }
