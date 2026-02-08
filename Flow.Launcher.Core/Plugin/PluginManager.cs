@@ -940,7 +940,7 @@ namespace Flow.Launcher.Core.Plugin
             }
             catch (Exception e)
             {
-                PublicApi.Instance.LogException(ClassName, $"Failed to delete delete mark file", e);
+                PublicApi.Instance.LogException(ClassName, $"Failed to delete plugin marker file in {newPluginPath}", e);
             }
 
             try
