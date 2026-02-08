@@ -175,7 +175,7 @@ namespace Flow.Launcher.Plugin.Sys
                     Privileges = new() { e0 = new LUID_AND_ATTRIBUTES { Luid = luid, Attributes = TOKEN_PRIVILEGES_ATTRIBUTES.SE_PRIVILEGE_ENABLED } }
                 };
 
-                if (!PInvoke.AdjustTokenPrivileges(tokenHandle, false, &privileges, 0, null, null))
+                if (!PInvoke.AdjustTokenPrivileges(tokenHandle, false, &privileges, null, out var _))
                 {
                     return false;
                 }
