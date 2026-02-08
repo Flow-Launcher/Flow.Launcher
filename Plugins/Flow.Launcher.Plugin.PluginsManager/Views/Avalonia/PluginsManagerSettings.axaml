@@ -1,0 +1,29 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
+             xmlns:vm="using:Flow.Launcher.Plugin.PluginsManager.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Flow.Launcher.Plugin.PluginsManager.Views.Avalonia.PluginsManagerSettings"
+             x:DataType="vm:SettingsViewModel">
+    <StackPanel Spacing="10" Margin="0,0,10,0">
+        <ui:SettingsExpander Header="{DynamicResource plugin_pluginsmanager_plugin_name}"
+                             IconSource="Settings"
+                             Description="{DynamicResource plugin_pluginsmanager_plugin_description}"
+                             IsExpanded="True">
+            <ui:SettingsExpander.Items>
+                <ui:SettingsExpanderItem Content="{DynamicResource plugin_pluginsmanager_plugin_settings_unknown_source}">
+                    <ui:SettingsExpanderItem.Footer>
+                        <ToggleSwitch IsChecked="{Binding WarnFromUnknownSource}" OnContent="" OffContent="" />
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+                <ui:SettingsExpanderItem Content="{DynamicResource plugin_pluginsmanager_plugin_settings_auto_restart}">
+                    <ui:SettingsExpanderItem.Footer>
+                        <ToggleSwitch IsChecked="{Binding AutoRestartAfterChanging}" OnContent="" OffContent="" />
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+            </ui:SettingsExpander.Items>
+        </ui:SettingsExpander>
+    </StackPanel>
+</UserControl>

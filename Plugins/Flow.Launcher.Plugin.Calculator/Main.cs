@@ -1,10 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
+using AvaloniaControl = Avalonia.Controls.Control;
 using Flow.Launcher.Plugin.Calculator.ViewModels;
 using Flow.Launcher.Plugin.Calculator.Views;
 using Mages.Core;
@@ -422,6 +423,11 @@ namespace Flow.Launcher.Plugin.Calculator
         public Control CreateSettingPanel()
         {
             return new CalculatorSettings(_settings);
+        }
+
+        public AvaloniaControl CreateSettingPanelAvalonia()
+        {
+            return new Views.Avalonia.CalculatorSettings(_viewModel);
         }
 
         public void OnCultureInfoChanged(CultureInfo newCulture)

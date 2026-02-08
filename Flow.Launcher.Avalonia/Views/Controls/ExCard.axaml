@@ -1,0 +1,78 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="using:Flow.Launcher.Avalonia.Views.Controls"
+             x:Class="Flow.Launcher.Avalonia.Views.Controls.ExCard"
+             x:DataType="controls:ExCard"
+             mc:Ignorable="d">
+
+    <UserControl.Styles>
+        <Style Selector="controls|ExCard">
+            <Setter Property="Template">
+                <ControlTemplate TargetType="controls:ExCard">
+                    <Expander x:Name="CardExpander"
+                              IsExpanded="{TemplateBinding IsExpanded, Mode=TwoWay}"
+                              HorizontalAlignment="Stretch">
+                        <Expander.Styles>
+                            <Style Selector="Expander">
+                                <Setter Property="Background" Value="{DynamicResource CardBackgroundFillColorDefaultBrush}" />
+                                <Setter Property="BorderBrush" Value="{DynamicResource CardStrokeColorDefaultBrush}" />
+                                <Setter Property="BorderThickness" Value="1" />
+                                <Setter Property="CornerRadius" Value="5" />
+                                <Setter Property="Padding" Value="0" />
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            </Style>
+                            <Style Selector="Expander /template/ ToggleButton#ExpanderHeader">
+                                <Setter Property="MinHeight" Value="68" />
+                                <Setter Property="Padding" Value="0" />
+                            </Style>
+                        </Expander.Styles>
+
+                        <Expander.Header>
+                            <Grid ColumnDefinitions="Auto,*,Auto,Auto" Margin="0,12">
+                                <!-- Icon -->
+                                <TextBlock Grid.Column="0"
+                                           Text="{TemplateBinding Icon}"
+                                           FontFamily="{StaticResource SymbolThemeFontFamily}"
+                                           FontSize="20"
+                                           Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                           VerticalAlignment="Center"
+                                           Margin="24,0,16,0"
+                                           IsVisible="{TemplateBinding Icon, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                                <Border Grid.Column="0" Width="24" 
+                                        IsVisible="{TemplateBinding Icon, Converter={x:Static StringConverters.IsNullOrEmpty}}" />
+
+                                <!-- Title and Subtitle -->
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="0,0,14,0">
+                                    <TextBlock Text="{TemplateBinding Title}"
+                                               Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                               TextWrapping="Wrap" />
+                                    <TextBlock Text="{TemplateBinding Sub}"
+                                               Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                               FontSize="12"
+                                               TextWrapping="Wrap"
+                                               Padding="0,0,24,0"
+                                               IsVisible="{TemplateBinding Sub, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                                </StackPanel>
+
+                                <!-- Side Content (e.g., toggle switch) -->
+                                <ContentPresenter Grid.Column="2"
+                                                  Content="{TemplateBinding SideContent}"
+                                                  HorizontalAlignment="Right"
+                                                  VerticalAlignment="Center"
+                                                  Margin="0,0,14,0" />
+                            </Grid>
+                        </Expander.Header>
+
+                        <!-- Expandable Content -->
+                        <ContentPresenter Content="{TemplateBinding Content}"
+                                          HorizontalAlignment="Stretch"
+                                          Margin="0" />
+                    </Expander>
+                </ControlTemplate>
+            </Setter>
+        </Style>
+    </UserControl.Styles>
+
+</UserControl>

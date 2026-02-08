@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using Flow.Launcher.Plugin.SharedCommands;
+using AvaloniaControl = Avalonia.Controls.Control;
 
 namespace Flow.Launcher.Plugin.WebSearch
 {
@@ -192,6 +193,11 @@ namespace Flow.Launcher.Plugin.WebSearch
         public Control CreateSettingPanel()
         {
             return new SettingsControl(_context, _viewModel);
+        }
+
+        public AvaloniaControl CreateSettingPanelAvalonia()
+        {
+            return new Views.Avalonia.SettingsControl(_context, _viewModel);
         }
 
         #endregion

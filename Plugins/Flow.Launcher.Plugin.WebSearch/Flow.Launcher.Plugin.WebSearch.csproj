@@ -1,8 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>net9.0-windows</TargetFramework>
+    <TargetFramework>net10.0-windows</TargetFramework>
     <ProjectGuid>{403B57F2-1856-4FC7-8A24-36AB346B763E}</ProjectGuid>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <UseWPF>true</UseWPF>
@@ -57,5 +57,21 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Flow.Launcher.Plugin\Flow.Launcher.Plugin.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="11.2.3" />
+    <PackageReference Include="FluentAvaloniaUI" Version="2.2.0" />
+  </ItemGroup>
+
+  <!-- Copy plugin output to Avalonia build directory -->
+  <Target Name="CopyToAvaloniaOutput" AfterTargets="Build">
+    <PropertyGroup>
+      <AvaloniaPluginDir>..\..\Output\$(Configuration)\Avalonia\Plugins\$(AssemblyName)\</AvaloniaPluginDir>
+    </PropertyGroup>
+    <ItemGroup>
+      <PluginFiles Include="$(OutputPath)**\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(PluginFiles)" DestinationFolder="$(AvaloniaPluginDir)%(RecursiveDir)" SkipUnchangedFiles="true" />
+  </Target>
 
 </Project>

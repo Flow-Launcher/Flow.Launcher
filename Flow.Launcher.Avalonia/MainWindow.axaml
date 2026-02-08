@@ -1,0 +1,130 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="using:Flow.Launcher.Avalonia"
+        xmlns:views="using:Flow.Launcher.Avalonia.Views"
+        xmlns:vm="using:Flow.Launcher.Avalonia.ViewModel"
+        xmlns:converters="using:Flow.Launcher.Avalonia.Converters"
+        xmlns:i18n="using:Flow.Launcher.Avalonia.Resource"
+        mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="400"
+        x:Class="Flow.Launcher.Avalonia.MainWindow"
+        x:DataType="vm:MainViewModel"
+        x:Name="FlowMainWindow"
+        Title="Flow Launcher"
+        Width="580"
+        MinWidth="400"
+        MinHeight="30"
+        WindowStartupLocation="CenterScreen"
+        CanResize="True"
+        ShowInTaskbar="False"
+        Topmost="True"
+        SystemDecorations="None"
+        TransparencyLevelHint="AcrylicBlur"
+        Background="Transparent"
+        ExtendClientAreaToDecorationsHint="True"
+        ExtendClientAreaChromeHints="NoChrome"
+        SizeToContent="Height"
+        IsVisible="{Binding MainWindowVisibility, Mode=TwoWay}">
+
+    <Window.Resources>
+        <converters:BoolToIsVisibleConverter x:Key="BoolToVisibilityConverter" />
+    </Window.Resources>
+
+    <Window.KeyBindings>
+        <KeyBinding Gesture="Escape" Command="{Binding EscCommand}" />
+        <KeyBinding Gesture="Enter" Command="{Binding OpenResultCommand}" />
+        <KeyBinding Gesture="Down" Command="{Binding SelectNextItemCommand}" />
+        <KeyBinding Gesture="Up" Command="{Binding SelectPrevItemCommand}" />
+        <KeyBinding Gesture="Shift+Enter" Command="{Binding LoadContextMenuCommand}" />
+        <KeyBinding Gesture="Ctrl+OemComma" Command="{Binding OpenSettingsCommand}" />
+        <!-- Preview hotkey is handled dynamically in code-behind to support customization -->
+    </Window.KeyBindings>
+
+    <!-- Main container with rounded corners and background -->
+    <Border Name="WindowBorder"
+            Classes="windowBorder"
+            PointerPressed="OnWindowBorderPointerPressed">
+        <StackPanel Orientation="Vertical">
+            
+            <!-- Query Box Area -->
+            <Grid Name="QueryBoxArea">
+                <Border Name="QueryBoxBg" Classes="queryBoxBg" MinHeight="30">
+                        <!-- Main Query Text Box -->
+                        <TextBox Name="QueryTextBox"
+                                 Classes="queryBox"
+                                 Text="{Binding QueryText, Mode=TwoWay}"
+                                 Watermark="{i18n:Localize queryTextBoxPlaceholder, Fallback='Type here to search'}"
+                                 AcceptsReturn="False"
+                                 TextWrapping="NoWrap" />
+                </Border>
+
+                <!-- Search Icon -->
+                <Canvas Name="SearchIconCanvas" 
+                        Classes="searchIconPosition"
+                        HorizontalAlignment="Right">
+                    <Path Name="SearchIcon"
+                          Classes="searchIcon"
+                          Data="{DynamicResource SearchIconGeometry}"
+                          Stretch="Uniform" />
+                </Canvas>
+
+                <!-- Progress/Loading indicator -->
+                <ProgressBar Name="ProgressBar"
+                             Classes="pendingLine"
+                             IsIndeterminate="True"
+                             IsVisible="{Binding IsQueryRunning}"
+                             VerticalAlignment="Bottom"
+                             HorizontalAlignment="Stretch"
+                             Height="2"
+                             Margin="12,0,12,0" />
+            </Grid>
+
+            <!-- Separator between query and results -->
+            <Rectangle Name="MiddleSeparator"
+                       Classes="separator"
+                       IsVisible="{Binding ShowResultsArea}" />
+
+            <!-- Results Area -->
+            <Border Name="ResultAreaBorder" Classes="resultAreaBorder"
+                    IsVisible="{Binding ShowResultsArea}">
+                <Grid Name="ResultPreviewArea">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" MinWidth="80" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Result List (visible when in Results view) -->
+                    <StackPanel Name="ResultArea" Grid.Column="0"
+                                IsVisible="{Binding IsResultsViewActive}">
+                        <views:ResultListBox Name="ResultListBox"
+                                             DataContext="{Binding Results}" />
+                    </StackPanel>
+
+                    <!-- Context Menu List (visible when in ContextMenu view) -->
+                    <StackPanel Name="ContextMenuArea" Grid.Column="0"
+                                IsVisible="{Binding IsContextMenuViewActive}">
+                        <views:ResultListBox Name="ContextMenuListBox"
+                                             DataContext="{Binding ContextMenu}" />
+                    </StackPanel>
+
+                    <!-- Preview Panel Separator -->
+                    <GridSplitter Name="PreviewSplitter"
+                                  Grid.Column="1"
+                                  Width="5"
+                                  Background="Transparent"
+                                  IsVisible="{Binding IsPreviewOn}" />
+
+                    <!-- Preview Panel -->
+                    <Border Name="PreviewPanelContainer"
+                            Grid.Column="2"
+                            Width="300"
+                            IsVisible="{Binding IsPreviewOn}">
+                        <views:PreviewPanel DataContext="{Binding PreviewSelectedItem}" />
+                    </Border>
+                </Grid>
+            </Border>
+        </StackPanel>
+    </Border>
+</Window>

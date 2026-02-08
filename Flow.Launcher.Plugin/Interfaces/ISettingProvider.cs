@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+using System.Windows.Controls;
+using AvaloniaControl = Avalonia.Controls.Control;
 
 namespace Flow.Launcher.Plugin
 {
@@ -12,5 +13,12 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         /// <returns></returns>
         Control CreateSettingPanel();
+
+        /// <summary>
+        /// Create settings panel control for Avalonia version
+        /// </summary>
+        /// <returns></returns>
+        virtual AvaloniaControl CreateSettingPanelAvalonia() => null;
     }
 }
+

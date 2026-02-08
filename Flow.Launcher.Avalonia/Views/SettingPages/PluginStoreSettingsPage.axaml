@@ -1,0 +1,201 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
+             xmlns:vm="using:Flow.Launcher.Avalonia.ViewModel.SettingPages"
+             xmlns:i18n="using:Flow.Launcher.Avalonia.Resource"
+             xmlns:conv="using:Avalonia.Data.Converters"
+             mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="600"
+             x:Class="Flow.Launcher.Avalonia.Views.SettingPages.PluginStoreSettingsPage"
+             x:DataType="vm:PluginStoreSettingsViewModel">
+
+    <Grid RowDefinitions="Auto,Auto,*">
+        <!-- Header -->
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="0,0,0,10">
+            <TextBlock Text="{i18n:Localize pluginStore}" FontSize="28" FontWeight="SemiBold" VerticalAlignment="Center"/>
+            
+            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10">
+                <Button Command="{Binding RefreshExternalPluginsCommand}" ToolTip.Tip="{i18n:Localize refresh}">
+                    <ui:SymbolIcon Symbol="Refresh" FontSize="16"/>
+                </Button>
+                
+                <Button Command="{Binding CheckPluginUpdatesCommand}" ToolTip.Tip="{i18n:Localize checkUpdates}">
+                    <ui:SymbolIcon Symbol="Sync" FontSize="16"/>
+                </Button>
+                
+                <Button Command="{Binding InstallPluginCommand}" ToolTip.Tip="{i18n:Localize installLocalPluginTooltip}">
+                    <ui:SymbolIcon Symbol="Add" FontSize="16"/>
+                </Button>
+            </StackPanel>
+        </Grid>
+
+        <!-- Filters and Search -->
+        <Grid Grid.Row="1" ColumnDefinitions="Auto,*,Auto" Margin="0,0,0,10">
+            <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="15" VerticalAlignment="Center">
+                <CheckBox IsChecked="{Binding ShowDotNet}" Content="{i18n:Localize pluginType_CSharp}" />
+                <CheckBox IsChecked="{Binding ShowPython}" Content="{i18n:Localize pluginType_Python}" />
+                <CheckBox IsChecked="{Binding ShowNodeJs}" Content="{i18n:Localize pluginType_Nodejs}" />
+                <CheckBox IsChecked="{Binding ShowExecutable}" Content="{i18n:Localize pluginType_Executable}" />
+            </StackPanel>
+
+
+            <TextBox Grid.Column="2" 
+                     Width="250"
+                     Text="{Binding FilterText, Mode=TwoWay}"
+                     Watermark="{i18n:Localize searchplugin}">
+                <TextBox.InnerRightContent>
+                    <Button Theme="{StaticResource TransparentButton}"
+                            IsVisible="{Binding FilterText, Converter={x:Static conv:StringConverters.IsNotNullOrEmpty}}"
+                            Command="{Binding ClearFilterTextCommand}">
+                        <ui:SymbolIcon Symbol="Dismiss" FontSize="12"/>
+                    </Button>
+                </TextBox.InnerRightContent>
+            </TextBox>
+        </Grid>
+
+        <!-- Plugin Grid -->
+        <Grid Grid.Row="2">
+            <!-- Loading indicator -->
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" 
+                        IsVisible="{Binding IsLoading}" Spacing="10">
+                <ui:ProgressRing IsIndeterminate="True" Width="40" Height="40"/>
+                <TextBlock Text="{i18n:Localize loading}" HorizontalAlignment="Center"
+                           Foreground="{DynamicResource TextFillColorSecondaryBrush}"/>
+            </StackPanel>
+            
+            <!-- Plugin list -->
+            <ScrollViewer IsVisible="{Binding !IsLoading}" HorizontalScrollBarVisibility="Disabled">
+                <ui:ItemsRepeater ItemsSource="{Binding FilteredPlugins}">
+                    <ui:ItemsRepeater.Layout>
+                        <ui:UniformGridLayout MinItemWidth="216" MinItemHeight="184"
+                                              MinColumnSpacing="10" MinRowSpacing="10"
+                                              ItemsStretch="None" />
+                    </ui:ItemsRepeater.Layout>
+                    <ui:ItemsRepeater.ItemTemplate>
+                    <DataTemplate x:DataType="vm:PluginStoreItemViewModel">
+                        <Button Padding="0" 
+                                Width="216" Height="184"
+                                HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                                Background="{DynamicResource ControlFillColorDefaultBrush}"
+                                BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                                BorderThickness="1"
+                                CornerRadius="{DynamicResource ControlCornerRadius}">
+                            <Button.Flyout>
+                                <Flyout Placement="RightEdgeAlignedTop">
+                                    <Grid Width="300" RowDefinitions="Auto,Auto,Auto,Auto,Auto,*">
+                                        <Grid ColumnDefinitions="Auto,*" Margin="0,0,0,10">
+                                            <!-- Icon -->
+                                            <Panel Width="48" Height="48" Margin="0,0,15,0">
+                                                <Image Source="{Binding Icon}" 
+                                                       IsVisible="{Binding Icon, Converter={x:Static conv:ObjectConverters.IsNotNull}}"
+                                                       RenderOptions.BitmapInterpolationMode="HighQuality"/>
+                                                <Viewbox IsVisible="{Binding Icon, Converter={x:Static conv:ObjectConverters.IsNull}}">
+                                                    <ui:SymbolIcon Symbol="Library" />
+                                                </Viewbox>
+                                            </Panel>
+                                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                                <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="16" TextWrapping="Wrap"/>
+                                                <TextBlock Text="{Binding Author}" Foreground="{DynamicResource TextFillColorSecondaryBrush}" FontSize="12"/>
+                                            </StackPanel>
+                                        </Grid>
+                                        
+                                        <TextBlock Grid.Row="1" Text="{Binding Description}" TextWrapping="Wrap" Margin="0,0,0,15"/>
+                                        
+                                        <Grid Grid.Row="2" ColumnDefinitions="Auto,*" Margin="0,0,0,5">
+                                            <TextBlock Text="{i18n:Localize version}" Foreground="{DynamicResource TextFillColorSecondaryBrush}" Margin="0,0,10,0"/>
+                                            <TextBlock Grid.Column="1" Text="{Binding Version}" />
+                                        </Grid>
+                                        
+                                        <Grid Grid.Row="3" ColumnDefinitions="Auto,*" Margin="0,0,0,15">
+                                            <TextBlock Text="{i18n:Localize language}" Foreground="{DynamicResource TextFillColorSecondaryBrush}" Margin="0,0,10,0"/>
+                                            <TextBlock Grid.Column="1" Text="{Binding Language}" />
+                                        </Grid>
+                                        
+                                        <StackPanel Grid.Row="4" Orientation="Horizontal" Spacing="10" Margin="0,0,0,15">
+                                            <Button Command="{Binding OpenUrlCommand}" CommandParameter="{Binding Website}" 
+                                                    IsVisible="{Binding Website, Converter={x:Static conv:StringConverters.IsNotNullOrEmpty}}"
+                                                    ToolTip.Tip="{i18n:Localize website}">
+                                                <ui:SymbolIcon Symbol="Globe"/>
+                                            </Button>
+                                            <Button Command="{Binding OpenUrlCommand}" CommandParameter="{Binding UrlSourceCode}"
+                                                    IsVisible="{Binding UrlSourceCode, Converter={x:Static conv:StringConverters.IsNotNullOrEmpty}}"
+                                                    ToolTip.Tip="{i18n:Localize sourceCode}">
+                                                <ui:SymbolIcon Symbol="Code"/>
+                                            </Button>
+                                        </StackPanel>
+                                        
+                                        <StackPanel Grid.Row="5" Spacing="10">
+                                            <Button Command="{Binding InstallCommand}" 
+                                                    Content="{i18n:Localize installbtn}" 
+                                                    HorizontalAlignment="Stretch"
+                                                    IsVisible="{Binding !LabelInstalled}"/>
+                                            
+                                            <Button Command="{Binding UpdateCommand}" 
+                                                    Content="{i18n:Localize updatebtn}" 
+                                                    HorizontalAlignment="Stretch"
+                                                    Classes="accent"
+                                                    IsVisible="{Binding LabelUpdate}"/>
+                                                    
+                                            <Button Command="{Binding UninstallCommand}" 
+                                                    Content="{i18n:Localize uninstallbtn}" 
+                                                    HorizontalAlignment="Stretch"
+                                                    IsVisible="{Binding LabelInstalled}"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </Flyout>
+                            </Button.Flyout>
+                            
+                            <Grid RowDefinitions="Auto,*,Auto" Margin="12">
+                                <!-- Top Row: Icon and Badge -->
+                                <Grid ColumnDefinitions="Auto,*" Height="32">
+                                    <!-- Icon -->
+                                    <Panel Width="32" Height="32">
+                                        <Image Source="{Binding Icon}" 
+                                               IsVisible="{Binding Icon, Converter={x:Static conv:ObjectConverters.IsNotNull}}"
+                                               RenderOptions.BitmapInterpolationMode="HighQuality"/>
+                                        <Viewbox IsVisible="{Binding Icon, Converter={x:Static conv:ObjectConverters.IsNull}}">
+                                            <ui:SymbolIcon Symbol="Library" />
+                                        </Viewbox>
+                                    </Panel>
+                                    
+                                    <!-- Badges -->
+                                    <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="5">
+                                        <Border Background="{DynamicResource SystemFillColorSuccessBrush}" CornerRadius="4" Padding="6,2"
+                                                IsVisible="{Binding LabelInstalled}">
+                                            <TextBlock Text="{i18n:Localize pluginStore_Installed}" FontSize="10" Foreground="White"/>
+                                        </Border>
+                                        <Border Background="{DynamicResource SystemFillColorAttentionBrush}" CornerRadius="4" Padding="6,2"
+                                                IsVisible="{Binding LabelUpdate}">
+                                            <TextBlock Text="{i18n:Localize pluginStore_NewRelease}" FontSize="10" Foreground="Black"/>
+                                        </Border>
+                                    </StackPanel>
+                                </Grid>
+                                
+                                <!-- Middle: Name and Desc -->
+                                <StackPanel Grid.Row="1" Margin="0,10,0,0">
+                                    <TextBlock Text="{Binding Name}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"/>
+                                    <TextBlock Text="{Binding Description}" 
+                                               Foreground="{DynamicResource TextFillColorSecondaryBrush}" 
+                                               FontSize="12" 
+                                               TextWrapping="Wrap" 
+                                               TextTrimming="CharacterEllipsis" 
+                                               MaxLines="3"
+                                               Margin="0,4,0,0"/>
+                                </StackPanel>
+                                
+                                <!-- Bottom: Author -->
+                                <TextBlock Grid.Row="2" 
+                                           Text="{Binding Author}" 
+                                           Foreground="{DynamicResource TextFillColorTertiaryBrush}" 
+                                           FontSize="11" 
+                                           TextTrimming="CharacterEllipsis"/>
+                            </Grid>
+                        </Button>
+                    </DataTemplate>
+                </ui:ItemsRepeater.ItemTemplate>
+            </ui:ItemsRepeater>
+        </ScrollViewer>
+        </Grid>
+    </Grid>
+</UserControl>

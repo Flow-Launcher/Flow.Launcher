@@ -1,0 +1,56 @@
+<ui:ContentDialog xmlns="https://github.com/avaloniaui"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:ui="using:FluentAvalonia.UI.Controls"
+                  xmlns:i18n="using:Flow.Launcher.Avalonia.Resource"
+                  x:Class="Flow.Launcher.Avalonia.Views.Controls.HotkeyRecorderDialog"
+                  x:Name="root"
+                  Title="{i18n:Localize hotkeyRegTitle}"
+                  PrimaryButtonText="{i18n:Localize commonSave}"
+                  SecondaryButtonText="{i18n:Localize commonDelete}"
+                  CloseButtonText="{i18n:Localize commonCancel}">
+
+    <StackPanel Spacing="20" Width="400">
+        <TextBlock Text="{i18n:Localize hotkeyRegGuide}" TextWrapping="Wrap" />
+        
+        <Border Height="100" 
+                Background="{DynamicResource ControlFillColorDefaultBrush}"
+                BorderBrush="{DynamicResource ControlElevationBorderBrush}"
+                BorderThickness="1"
+                CornerRadius="8">
+            <ItemsControl ItemsSource="{Binding #root.KeysToDisplay}" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" Spacing="8" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Padding="12,8"
+                                Background="{DynamicResource AccentFillColorDefaultBrush}"
+                                CornerRadius="6">
+                            <TextBlock Text="{Binding}"
+                                       Foreground="{DynamicResource TextOnAccentFillColorPrimaryBrush}"
+                                       FontSize="20"
+                                       FontWeight="Bold" />
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Border>
+
+        <Border x:Name="Alert"
+                Padding="12"
+                Background="{DynamicResource SystemFillColorCautionBackgroundBrush}"
+                BorderBrush="{DynamicResource SystemFillColorCautionBrush}"
+                BorderThickness="1"
+                CornerRadius="4"
+                IsVisible="False">
+            <Grid ColumnDefinitions="Auto,*">
+                <ui:FontIcon Glyph="&#xf167;" 
+                             FontFamily="{StaticResource SymbolThemeFontFamily}"
+                             Margin="0,0,12,0" />
+                <TextBlock x:Name="tbMsg" Grid.Column="1" TextWrapping="Wrap" />
+            </Grid>
+        </Border>
+    </StackPanel>
+</ui:ContentDialog>

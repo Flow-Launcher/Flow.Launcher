@@ -1,0 +1,130 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:Flow.Launcher.Avalonia.ViewModel"
+             xmlns:helper="using:Flow.Launcher.Avalonia.Helper"
+             xmlns:converters="using:Flow.Launcher.Avalonia.Converters"
+             mc:Ignorable="d" d:DesignWidth="580" d:DesignHeight="300"
+             x:Class="Flow.Launcher.Avalonia.Views.ResultListBox"
+             x:DataType="vm:ResultsViewModel">
+    
+    <UserControl.Resources>
+        <converters:HighlightTextConverter x:Key="HighlightTextConverter" />
+    </UserControl.Resources>
+     
+    <ListBox Name="ResultsList"
+             Classes="resultListBox"
+             ItemsSource="{Binding Results}"
+             SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+             SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
+             MaxHeight="{Binding MaxHeight}"
+             SelectionMode="Single"
+             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+             ScrollViewer.VerticalScrollBarVisibility="Auto">
+         
+        <!-- Enable virtualization for better performance -->
+        <ListBox.ItemsPanel>
+            <ItemsPanelTemplate>
+                <VirtualizingStackPanel />
+            </ItemsPanelTemplate>
+        </ListBox.ItemsPanel>
+        
+        <ListBox.ItemTemplate>
+            <DataTemplate x:DataType="vm:ResultViewModel">
+                <Grid Classes="resultItemGrid" ColumnDefinitions="Auto,*,Auto">
+                    
+                    <!-- Selection Bullet -->
+                    <Border Grid.Column="0" 
+                            Classes="resultBullet"
+                            VerticalAlignment="Stretch" />
+                    
+                    <!-- Icon Area -->
+                    <Grid Grid.Column="1" ColumnDefinitions="Auto,*" Margin="6,0,0,0">
+                        
+                        <!-- Icon Container (fixed size for perfect centering) -->
+                        <Panel Grid.Column="0" Width="32" Height="32" Margin="12,0,0,0" VerticalAlignment="Center">
+                            <!-- Glyph Icon -->
+                            <TextBlock Classes="resultGlyph"
+                                       Text="{Binding Glyph.Glyph}"
+                                       IsVisible="{Binding ShowGlyph}"
+                                       FontFamily="{Binding GlyphFontFamily}"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center" />
+                            
+                            <!-- Image Icon -->
+                            <Image Classes="resultIcon"
+                                   Source="{Binding Image^, FallbackValue={x:Static helper:ImageLoader.DefaultImage}}"
+                                   IsVisible="{Binding !ShowGlyph}"
+                                   RenderOptions.BitmapInterpolationMode="HighQuality"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" />
+                        </Panel>
+
+                        <!-- Title and SubTitle -->
+                        <Grid Grid.Column="1" 
+                              RowDefinitions="Auto,Auto"
+                              Margin="10,0,10,0"
+                              VerticalAlignment="Center">
+                            
+                            <TextBlock Grid.Row="0"
+                                       Classes="resultTitle"
+                                       ToolTip.Tip="{Binding Title}">
+                                <helper:TextBlockHelper.FormattedText>
+                                    <MultiBinding Converter="{StaticResource HighlightTextConverter}">
+                                        <Binding Path="Title" />
+                                        <Binding Path="TitleHighlightData" />
+                                    </MultiBinding>
+                                </helper:TextBlockHelper.FormattedText>
+                            </TextBlock>
+                            
+                            <TextBlock Grid.Row="1"
+                                       Classes="resultSubTitle"
+                                       IsVisible="{Binding ShowSubTitle}"
+                                       ToolTip.Tip="{Binding SubTitle}">
+                                <helper:TextBlockHelper.FormattedText>
+                                    <MultiBinding Converter="{StaticResource HighlightTextConverter}">
+                                        <Binding Path="SubTitle" />
+                                        <Binding Path="SubTitleHighlightData" />
+                                    </MultiBinding>
+                                </helper:TextBlockHelper.FormattedText>
+                            </TextBlock>
+                        </Grid>
+                    </Grid>
+                    
+                    <!-- Hotkey Badge (optional, can be enabled later) -->
+                    <!--
+                    <Border Grid.Column="2" 
+                            Classes="hotkeyBadge"
+                            VerticalAlignment="Center">
+                        <TextBlock Classes="hotkeyText" Text="Alt+1" />
+                    </Border>
+                    -->
+                </Grid>
+            </DataTemplate>
+        </ListBox.ItemTemplate>
+        
+        <ListBox.ItemContainerTheme>
+            <ControlTheme TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="Margin" Value="4,2,4,2" />
+                <Setter Property="CornerRadius" Value="6" />
+                <Setter Property="MinHeight" Value="50" />
+                <Setter Property="Background" Value="Transparent" />
+                
+                <Style Selector="^:selected">
+                    <Setter Property="Background" Value="#30FFFFFF" />
+                </Style>
+                
+                <Style Selector="^:selected /template/ ContentPresenter#PART_ContentPresenter">
+                    <Setter Property="Background" Value="#30FFFFFF" />
+                </Style>
+                
+                <Style Selector="^:pointerover">
+                    <Setter Property="Background" Value="#20FFFFFF" />
+                </Style>
+            </ControlTheme>
+        </ListBox.ItemContainerTheme>
+        
+    </ListBox>
+</UserControl>

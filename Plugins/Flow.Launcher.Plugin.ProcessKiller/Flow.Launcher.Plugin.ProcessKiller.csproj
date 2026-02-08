@@ -1,8 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>net9.0-windows</TargetFramework>
+    <TargetFramework>net10.0-windows</TargetFramework>
     <AssemblyName>Flow.Launcher.Plugin.ProcessKiller</AssemblyName>
     <PackageId>Flow.Launcher.Plugin.ProcessKiller</PackageId>
     <Authors>Flow-Launcher</Authors>
@@ -15,6 +15,11 @@
     <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="11.2.3" />
+    <PackageReference Include="FluentAvaloniaUI" Version="2.2.0" />
+  </ItemGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -63,5 +68,16 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Flow.Launcher.Plugin\Flow.Launcher.Plugin.csproj" />
   </ItemGroup>
+
+  <!-- Copy plugin output to Avalonia build directory -->
+  <Target Name="CopyToAvaloniaOutput" AfterTargets="Build">
+    <PropertyGroup>
+      <AvaloniaPluginDir>..\..\Output\$(Configuration)\Avalonia\Plugins\$(AssemblyName)\</AvaloniaPluginDir>
+    </PropertyGroup>
+    <ItemGroup>
+      <PluginFiles Include="$(OutputPath)**\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(PluginFiles)" DestinationFolder="$(AvaloniaPluginDir)%(RecursiveDir)" SkipUnchangedFiles="true" />
+  </Target>
 
 </Project>

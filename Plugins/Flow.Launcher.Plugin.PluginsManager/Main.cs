@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
+using AvaloniaControl = Avalonia.Controls.Control;
 using System.Threading.Tasks;
 using System.Threading;
 using Flow.Launcher.Plugin.PluginsManager.ViewModels;
 using Flow.Launcher.Plugin.PluginsManager.Views;
+using Flow.Launcher.Plugin.PluginsManager.Views.Avalonia;
 
 namespace Flow.Launcher.Plugin.PluginsManager
 {
@@ -22,7 +24,12 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         public Control CreateSettingPanel()
         {
-            return new PluginsManagerSettings(viewModel);
+            return new Views.PluginsManagerSettings(viewModel);
+        }
+
+        public AvaloniaControl CreateSettingPanelAvalonia()
+        {
+            return new Views.Avalonia.PluginsManagerSettings(viewModel);
         }
 
         public async Task InitAsync(PluginInitContext context)

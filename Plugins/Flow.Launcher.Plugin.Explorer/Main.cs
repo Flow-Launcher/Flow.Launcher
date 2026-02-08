@@ -1,17 +1,17 @@
-﻿using Flow.Launcher.Plugin.Explorer.Helper;
+using Flow.Launcher.Plugin.Explorer.Helper;
 using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.Everything;
 using Flow.Launcher.Plugin.Explorer.ViewModels;
-using Flow.Launcher.Plugin.Explorer.Views;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 using Flow.Launcher.Plugin.Explorer.Exceptions;
 using System.Linq;
 using System.Globalization;
+using System.Windows.Controls;
+using AvaloniaControl = Avalonia.Controls.Control;
 
 namespace Flow.Launcher.Plugin.Explorer
 {
@@ -31,7 +31,12 @@ namespace Flow.Launcher.Plugin.Explorer
 
         public Control CreateSettingPanel()
         {
-            return new ExplorerSettings(viewModel);
+            throw new NotSupportedException("WPF settings are no longer supported. Use Avalonia version instead.");
+        }
+
+        public AvaloniaControl CreateSettingPanelAvalonia()
+        {
+            return new Views.Avalonia.ExplorerSettings(viewModel);
         }
 
         public Task InitAsync(PluginInitContext context)
@@ -39,6 +44,7 @@ namespace Flow.Launcher.Plugin.Explorer
             Context = context;
 
             Settings = context.API.LoadSettingJsonStorage<Settings>();
+            ActionKeywordModel.Init(Settings);
             FillQuickAccessLinkNames();
 
             viewModel = new SettingsViewModel(context, Settings);

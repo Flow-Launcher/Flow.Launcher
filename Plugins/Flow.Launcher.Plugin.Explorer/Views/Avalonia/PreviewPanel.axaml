@@ -1,0 +1,121 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="400"
+             x:Class="Flow.Launcher.Plugin.Explorer.Views.Avalonia.PreviewPanel">
+
+    <Grid x:Name="PreviewGrid" VerticalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Preview Image and File Name -->
+        <Grid Grid.Row="0" VerticalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition MinHeight="96" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Image Grid.Row="0"
+                   MaxWidth="96"
+                   MaxHeight="96"
+                   Margin="5,12,8,0"
+                   Source="{Binding PreviewImage}" />
+
+            <Grid Grid.Row="1">
+                <TextBlock Margin="5,6,5,16"
+                           HorizontalAlignment="Stretch"
+                           VerticalAlignment="Top"
+                           Text="{Binding FileName}"
+                           TextAlignment="Center"
+                           TextWrapping="Wrap"
+                           FontWeight="SemiBold" />
+            </Grid>
+        </Grid>
+
+        <!-- File Info -->
+        <StackPanel Grid.Row="1">
+            <Rectangle x:Name="PreviewSep"
+                       Height="1"
+                       Margin="0,0,5,0"
+                       HorizontalAlignment="Stretch"
+                       Fill="{DynamicResource SystemControlForegroundBaseMediumLowBrush}" />
+
+            <TextBlock Margin="5,8,8,8"
+                       Text="{Binding FilePath}"
+                       TextWrapping="Wrap"
+                       Opacity="0.8" />
+
+            <Rectangle Height="1"
+                       Margin="0,0,5,0"
+                       HorizontalAlignment="Stretch"
+                       Fill="{Binding ElementName=PreviewSep, Path=Fill}"
+                       IsVisible="{Binding FileInfoVisibility}" />
+
+            <Grid Margin="0,10,0,0" IsVisible="{Binding FileInfoVisibility}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!-- File Size -->
+                <TextBlock Grid.Row="0"
+                           Grid.Column="0"
+                           Margin="5,0,0,0"
+                           VerticalAlignment="Top"
+                           Text="{DynamicResource FileSize}"
+                           TextWrapping="Wrap"
+                           IsVisible="{Binding FileSizeVisibility}" />
+                <TextBlock Grid.Row="0"
+                           Grid.Column="1"
+                           Margin="0,0,13,0"
+                           HorizontalAlignment="Right"
+                           VerticalAlignment="Top"
+                           Text="{Binding FileSize}"
+                           TextWrapping="Wrap"
+                           IsVisible="{Binding FileSizeVisibility}" />
+
+                <!-- Created Date -->
+                <TextBlock Grid.Row="1"
+                           Grid.Column="0"
+                           Margin="5,0,8,0"
+                           VerticalAlignment="Top"
+                           Text="{DynamicResource Created}"
+                           TextWrapping="Wrap"
+                           IsVisible="{Binding CreatedAtVisibility}" />
+                <TextBlock Grid.Row="1"
+                           Grid.Column="1"
+                           Margin="0,0,13,0"
+                           HorizontalAlignment="Right"
+                           VerticalAlignment="Top"
+                           Text="{Binding CreatedAt}"
+                           TextWrapping="Wrap"
+                           IsVisible="{Binding CreatedAtVisibility}" />
+
+                <!-- Last Modified Date -->
+                <TextBlock Grid.Row="2"
+                           Grid.Column="0"
+                           Margin="5,0,8,0"
+                           VerticalAlignment="Top"
+                           Text="{DynamicResource LastModified}"
+                           TextWrapping="Wrap"
+                           IsVisible="{Binding LastModifiedAtVisibility}" />
+                <TextBlock Grid.Row="2"
+                           Grid.Column="1"
+                           Margin="0,0,13,0"
+                           HorizontalAlignment="Right"
+                           VerticalAlignment="Top"
+                           Text="{Binding LastModifiedAt}"
+                           TextWrapping="Wrap"
+                           IsVisible="{Binding LastModifiedAtVisibility}" />
+            </Grid>
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>net9.0-windows</TargetFramework>
+    <TargetFramework>net10.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <ProjectGuid>{9B130CC5-14FB-41FF-B310-0A95B6894C37}</ProjectGuid>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -108,6 +108,19 @@
     <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.2" />
     <PackageReference Include="Svg.Skia" Version="3.4.1" />
     <PackageReference Include="SkiaSharp" Version="3.119.1" />
+    <PackageReference Include="Avalonia" Version="11.2.3" />
+    <PackageReference Include="FluentAvaloniaUI" Version="2.2.0" />
   </ItemGroup>
+
+  <!-- Copy plugin output to Avalonia build directory -->
+  <Target Name="CopyToAvaloniaOutput" AfterTargets="Build">
+    <PropertyGroup>
+      <AvaloniaPluginDir>..\..\Output\$(Configuration)\Avalonia\Plugins\$(AssemblyName)\</AvaloniaPluginDir>
+    </PropertyGroup>
+    <ItemGroup>
+      <PluginFiles Include="$(OutputPath)**\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(PluginFiles)" DestinationFolder="$(AvaloniaPluginDir)%(RecursiveDir)" SkipUnchangedFiles="true" />
+  </Target>
 
 </Project>

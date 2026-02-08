@@ -1,0 +1,31 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ui="using:FluentAvalonia.UI.Controls"
+        xmlns:i18n="using:Flow.Launcher.Avalonia.Resource"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Flow.Launcher.Avalonia.Views.SettingPages.SettingsWindow"
+        Title="Flow Launcher Settings"
+        Width="900" Height="650"
+        WindowStartupLocation="CenterScreen">
+
+    <ui:NavigationView Name="NavView"
+                      PaneDisplayMode="Left"
+                      OpenPaneLength="200"
+                      IsSettingsVisible="False">
+        <ui:NavigationView.MenuItems>
+            <ui:NavigationViewItem Content="{i18n:Localize general}" Tag="General" IconSource="Setting" IsSelected="True" />
+            <ui:NavigationViewItem Content="{i18n:Localize plugin}" Tag="Plugins" IconSource="Library" />
+            <ui:NavigationViewItem Content="{i18n:Localize pluginStore}" Tag="PluginStore" IconSource="Shop" />
+            <ui:NavigationViewItem Content="{i18n:Localize theme}" Tag="Theme" IconSource="DarkTheme" />
+            <ui:NavigationViewItem Content="{i18n:Localize hotkey}" Tag="Hotkey" IconSource="Keyboard" />
+            <ui:NavigationViewItem Content="{i18n:Localize proxy}" Tag="Proxy" IconSource="Globe" />
+            <ui:NavigationViewItem Content="{i18n:Localize about}" Tag="About" IconSource="Help" />
+        </ui:NavigationView.MenuItems>
+
+        <ScrollViewer Name="ContentFrame" Padding="20">
+            <!-- Content will be loaded here -->
+        </ScrollViewer>
+    </ui:NavigationView>
+</Window>

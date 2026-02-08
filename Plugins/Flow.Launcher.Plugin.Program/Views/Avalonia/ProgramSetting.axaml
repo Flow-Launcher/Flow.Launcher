@@ -1,0 +1,150 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
+             xmlns:vm="using:Flow.Launcher.Plugin.Program.ViewModels"
+             xmlns:models="using:Flow.Launcher.Plugin.Program.Views.Models"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="800"
+             x:Class="Flow.Launcher.Plugin.Program.Views.Avalonia.ProgramSetting"
+             x:DataType="vm:ProgramSettingViewModel">
+    <StackPanel Spacing="10" Margin="0,0,10,0">
+        <ui:SettingsExpander Header="Index Sources"
+                             IconSource="Library"
+                             Description="Configure which sources to scan for programs">
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsExpanderItem Content="Start Menu">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ToggleSwitch IsChecked="{Binding EnableStartMenuSource}" OnContent="" OffContent="" />
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem Content="Registry">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ToggleSwitch IsChecked="{Binding EnableRegistrySource}" OnContent="" OffContent="" />
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem Content="PATH">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ToggleSwitch IsChecked="{Binding EnablePATHSource}" OnContent="" OffContent="" />
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem Content="UWP Apps" IsVisible="{Binding ShowUWPCheckbox}">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ToggleSwitch IsChecked="{Binding EnableUWP}" OnContent="" OffContent="" />
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
+
+            <ui:SettingsExpander Header="Program Options"
+                                 IconSource="Settings"
+                                 Description="General behavior for program search">
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsExpanderItem Content="Hide App Path">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ToggleSwitch IsChecked="{Binding HideAppsPath}" OnContent="" OffContent="" />
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem Content="Hide Uninstallers">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ToggleSwitch IsChecked="{Binding HideUninstallers}" OnContent="" OffContent="" />
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem Content="Enable Description">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ToggleSwitch IsChecked="{Binding EnableDescription}" OnContent="" OffContent="" />
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem Content="Hide Duplicated Windows App">
+                        <ui:SettingsExpanderItem.Footer>
+                            <ToggleSwitch IsChecked="{Binding HideDuplicatedWindowsApp}" OnContent="" OffContent="" />
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
+
+            <ui:SettingsExpander Header="Advanced Options"
+                                 IconSource="Repair"
+                                 Description="Configure file suffixes and protocols">
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsExpanderItem Content="Executable Suffixes">
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <CheckBox Content="appref-ms" IsChecked="{Binding AppRefMS}" />
+                            <CheckBox Content="exe" IsChecked="{Binding Exe}" />
+                            <CheckBox Content="lnk" IsChecked="{Binding Lnk}" />
+                        </StackPanel>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem Content="Custom Suffixes">
+                        <ui:SettingsExpanderItem.Footer>
+                            <StackPanel Orientation="Horizontal" Spacing="5">
+                                <CheckBox IsChecked="{Binding UseCustomSuffixes}" />
+                                <TextBox Text="{Binding CustomSuffixes}" Width="200" IsEnabled="{Binding UseCustomSuffixes}" Watermark="e.g. py;bat" />
+                            </StackPanel>
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem Content="Protocols">
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <CheckBox Content="Steam" IsChecked="{Binding Steam}" />
+                            <CheckBox Content="Epic" IsChecked="{Binding Epic}" />
+                            <CheckBox Content="Http" IsChecked="{Binding Http}" />
+                        </StackPanel>
+                    </ui:SettingsExpanderItem>
+                    <ui:SettingsExpanderItem Content="Custom Protocols">
+                        <ui:SettingsExpanderItem.Footer>
+                            <StackPanel Orientation="Horizontal" Spacing="5">
+                                <CheckBox IsChecked="{Binding UseCustomProtocols}" />
+                                <TextBox Text="{Binding CustomProtocols}" Width="200" IsEnabled="{Binding UseCustomProtocols}" Watermark="e.g. obsidian;vscode" />
+                            </StackPanel>
+                        </ui:SettingsExpanderItem.Footer>
+                    </ui:SettingsExpanderItem>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
+
+            <ui:SettingsExpander Header="Program Sources"
+                                 IconSource="Folder"
+                                 Description="Manage custom indexing locations">
+                <ui:SettingsExpander.Footer>
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <Button Content="Reindex" Command="{Binding ReindexCommand}" />
+                        <Button Content="Load All" Command="{Binding LoadAllProgramsCommand}" />
+                        <ProgressBar IsIndeterminate="True" IsVisible="{Binding IsIndexing}" VerticalAlignment="Center" Width="80" />
+                    </StackPanel>
+                </ui:SettingsExpander.Footer>
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsExpanderItem>
+                        <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,*" MinHeight="250">
+                            <ListBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                                     ItemsSource="{Binding ProgramSources}"
+                                     SelectedItem="{Binding SelectedProgramSource}"
+                                     Background="{DynamicResource CardBackgroundFillColorDefault}"
+                                     BorderBrush="{DynamicResource ControlStrokeColorDefault}"
+                                     BorderThickness="1"
+                                     CornerRadius="4">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate x:DataType="models:ProgramSource">
+                                        <Grid ColumnDefinitions="*,Auto">
+                                            <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="5">
+                                                <TextBlock Text="{Binding Name}" FontWeight="Medium" />
+                                                <TextBlock Text="{Binding Location}" FontSize="12" Foreground="Gray" TextTrimming="CharacterEllipsis" />
+                                            </StackPanel>
+                                            <TextBlock Grid.Column="1" 
+                                                       Text="{Binding Enabled}" 
+                                                       VerticalAlignment="Center" 
+                                                       Margin="10,0"
+                                                       Foreground="{Binding Enabled, Converter={x:Static vm:ProgramSettingViewModel.EnabledToColorConverter}}" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                            
+                            <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" Spacing="5" HorizontalAlignment="Right" Margin="0,0,0,5">
+                                 <Button Content="Add" Command="{Binding AddSourceCommand}" />
+                                 <Button Content="Toggle Status" Command="{Binding ToggleStatusCommand}" IsEnabled="{Binding SelectedProgramSource, Converter={x:Static vm:ProgramSettingViewModel.IsNotNullConverter}}" />
+                                 <Button Content="Delete" Command="{Binding DeleteSourceCommand}" IsEnabled="{Binding SelectedProgramSource, Converter={x:Static vm:ProgramSettingViewModel.IsNotNullConverter}}" />
+                            </StackPanel>
+                        </Grid>
+                    </ui:SettingsExpanderItem>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
+    </StackPanel>
+</UserControl>

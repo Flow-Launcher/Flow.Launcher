@@ -1,0 +1,69 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
+             xmlns:vm="using:Flow.Launcher.Avalonia.ViewModel.SettingPages"
+             xmlns:i18n="using:Flow.Launcher.Avalonia.Resource"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+             x:Class="Flow.Launcher.Avalonia.Views.SettingPages.ThemeSettingsPage"
+             x:DataType="vm:ThemeSettingsViewModel">
+
+    <StackPanel Spacing="20">
+        <TextBlock Text="{i18n:Localize appearance}" FontSize="28" FontWeight="SemiBold" />
+
+        <!-- Theme Selection -->
+        <ui:SettingsExpander Header="{i18n:Localize theme}"
+                            IconSource="DarkTheme">
+            <ui:SettingsExpander.Footer>
+                <ComboBox ItemsSource="{Binding ColorSchemeOptions}"
+                          SelectedValue="{Binding SelectedColorScheme}"
+                          DisplayMemberBinding="{Binding Display}"
+                          SelectedValueBinding="{Binding Value}"
+                          MinWidth="150" />
+            </ui:SettingsExpander.Footer>
+        </ui:SettingsExpander>
+
+
+        <!-- Glyph Icons -->
+        <ui:SettingsExpander Header="{i18n:Localize useGlyphUI}"
+                            Description="{i18n:Localize useGlyphUIEffect}"
+                            IconSource="Font">
+            <ui:SettingsExpander.Footer>
+                <ToggleSwitch IsChecked="{Binding UseGlyphIcons}" />
+            </ui:SettingsExpander.Footer>
+        </ui:SettingsExpander>
+
+        <!-- Max Results -->
+        <ui:SettingsExpander Header="{i18n:Localize maxShowResults}"
+                            IconSource="List">
+            <ui:SettingsExpander.Footer>
+                <ComboBox ItemsSource="{Binding MaxResultsRange}"
+                          SelectedItem="{Binding MaxResults}"
+                          MinWidth="100" />
+            </ui:SettingsExpander.Footer>
+        </ui:SettingsExpander>
+
+        <!-- Font Sizes -->
+        <ui:SettingsExpander Header="{i18n:Localize queryBoxFont}"
+                            IconSource="FontSize">
+            <ui:SettingsExpander.Footer>
+                <StackPanel Orientation="Horizontal" Spacing="10">
+                    <TextBlock Text="{Binding QueryBoxFontSize}" VerticalAlignment="Center" Width="30" />
+                    <Slider Minimum="10" Maximum="60" Value="{Binding QueryBoxFontSize}" Width="200" />
+                </StackPanel>
+            </ui:SettingsExpander.Footer>
+        </ui:SettingsExpander>
+
+        <ui:SettingsExpander Header="{i18n:Localize resultItemFont}"
+                            IconSource="FontSize">
+            <ui:SettingsExpander.Footer>
+                <StackPanel Orientation="Horizontal" Spacing="10">
+                    <TextBlock Text="{Binding ResultItemFontSize}" VerticalAlignment="Center" Width="30" />
+                    <Slider Minimum="8" Maximum="40" Value="{Binding ResultItemFontSize}" Width="200" />
+                </StackPanel>
+            </ui:SettingsExpander.Footer>
+        </ui:SettingsExpander>
+
+    </StackPanel>
+</UserControl>

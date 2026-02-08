@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>net9.0-windows</TargetFramework>
+    <TargetFramework>net10.0-windows</TargetFramework>
     <ProjectGuid>{59BD9891-3837-438A-958D-ADC7F91F6F7E}</ProjectGuid>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Flow.Launcher.Plugin.Calculator</RootNamespace>
@@ -65,6 +65,19 @@
   <ItemGroup>
     <PackageReference Include="Flow.Launcher.Localization" Version="0.0.6" />
     <PackageReference Include="Mages" Version="3.0.1" />
+    <PackageReference Include="Avalonia" Version="11.2.3" />
+    <PackageReference Include="FluentAvaloniaUI" Version="2.2.0" />
   </ItemGroup>
+
+  <!-- Copy plugin output to Avalonia build directory -->
+  <Target Name="CopyToAvaloniaOutput" AfterTargets="Build">
+    <PropertyGroup>
+      <AvaloniaPluginDir>..\..\Output\$(Configuration)\Avalonia\Plugins\$(AssemblyName)\</AvaloniaPluginDir>
+    </PropertyGroup>
+    <ItemGroup>
+      <PluginFiles Include="$(OutputPath)**\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(PluginFiles)" DestinationFolder="$(AvaloniaPluginDir)%(RecursiveDir)" SkipUnchangedFiles="true" />
+  </Target>
   
 </Project>

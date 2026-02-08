@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -12,11 +12,13 @@ using Flow.Launcher.Plugin.Program.Views.Models;
 using Flow.Launcher.Plugin.SharedCommands;
 using Microsoft.Extensions.Caching.Memory;
 using Path = System.IO.Path;
+using AvaloniaControl = Avalonia.Controls.Control;
 
 namespace Flow.Launcher.Plugin.Program
 {
     public class Main : ISettingProvider, IAsyncPlugin, IPluginI18n, IContextMenu, IAsyncReloadable, IDisposable
     {
+
         private static readonly string ClassName = nameof(Main);
 
         private const string Win32CacheName = "Win32";
@@ -434,6 +436,14 @@ namespace Flow.Launcher.Plugin.Program
         {
             return new ProgramSetting(Context, _settings);
         }
+
+        public AvaloniaControl CreateSettingPanelAvalonia()
+        {
+            System.Console.WriteLine("Program plugin: CreateSettingPanelAvalonia called!");
+            Context.API.LogInfo(ClassName, "Creating Avalonia setting panel");
+            return new Views.Avalonia.ProgramSetting(Context, _settings);
+        }
+
 
         public string GetTranslatedPluginTitle()
         {
