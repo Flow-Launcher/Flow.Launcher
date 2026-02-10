@@ -7,4 +7,6 @@ public class Settings
     public int MaxDecimalPlaces { get; set; } = 10;
 
     public bool ShowErrorMessage { get; set; } = false;
+
+    public bool UseThousandsSeparator { get; set; } = true;
 }
