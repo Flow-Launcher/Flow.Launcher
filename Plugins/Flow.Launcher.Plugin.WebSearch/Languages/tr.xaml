@@ -19,7 +19,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_url">URL</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_search">Ara:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Arama Sorgusu Otomatik Doldurmayı Kullan</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_max_suggestions">Max Suggestions</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_max_suggestions">Maksimum Öneriler</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">Otomatik Doldurma Verileri:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">Lütfen bir web araması seçin</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">{0} bağlantısını silmek istediğinize emin misiniz?</system:String>
