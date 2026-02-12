@@ -79,8 +79,8 @@
     <system:String x:Key="useLogonTaskForStartupTooltip">Kaldırma işleminden sonra, bu görevi (Flow.Launcher Startup) Görev Zamanlayıcı üzerinden elle kaldırmanız gerekmektedir</system:String>
     <system:String x:Key="setAutoStartFailed">Sistemle başlatma ayarı başarısız oldu</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Odak Pencereden Ayrıldığında Gizle</system:String>
-    <system:String x:Key="showTaskbarWhenOpened">Show taskbar when Flow Launcher is opened</system:String>
-    <system:String x:Key="showTaskbarWhenOpenedToolTip">Temporarily show the taskbar when Flow Launcher is opened, useful for auto-hidden taskbars.</system:String>
+    <system:String x:Key="showTaskbarWhenOpened">Flow Launcher açıldığında görev çubuğunu göster</system:String>
+    <system:String x:Key="showTaskbarWhenOpenedToolTip">Flow Launcher açıldığında geçici olarak görev çubuğunu gösterir, otomatik gizlenen görev çubukları için kullanışlıdır.</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Güncelleme bildirimlerini gösterme</system:String>
     <system:String x:Key="SearchWindowPosition">Pencere Konumu</system:String>
     <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Son Konumu Hatırla</system:String>
@@ -456,7 +456,7 @@
     <system:String x:Key="icons">Kullanılan Simgeler</system:String>
     <system:String x:Key="about_activate_times">Şu ana kadar Flow Launcher'ı {0} kez aktifleştirdiniz.</system:String>
     <system:String x:Key="checkUpdates">Güncellemeleri Kontrol Et</system:String>
-    <system:String x:Key="BecomeASponsor">Become a Sponsor</system:String>
+    <system:String x:Key="BecomeASponsor">Sponsor Olun</system:String>
     <system:String x:Key="newVersionTips">Uygulamanın yeni sürümü ({0}) mevcut, Lütfen Flow Launcher'ı yeniden başlatın.</system:String>
     <system:String x:Key="checkUpdatesFailed">Güncelleme kontrolü başarısız oldu. Lütfen bağlantınız ve vekil sunucu ayarlarınızın api.github.com adresine ulaşabilir olduğunu kontrol edin.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
