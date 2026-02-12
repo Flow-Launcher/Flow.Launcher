@@ -12,7 +12,7 @@
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_comma">Virgül (,)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_dot">Nokta (.)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_max_decimal_places">Maks. ondalık basamak</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_use_thousands_separator">Show thousands separator in results</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_use_thousands_separator">Sonuçlarda binlik ayırıcıyı göster</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_failed_to_copy">Kopyalama başarısız oldu, lütfen daha sonra deneyin</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_show_error_message">Hesaplama başarısız olduğunda hata mesajı göster</system:String>
 </ResourceDictionary>
