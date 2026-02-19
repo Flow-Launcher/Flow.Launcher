@@ -79,7 +79,7 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
 
 <img src="https://user-images.githubusercontent.com/6903107/145018796-658b7c24-a34f-46b6-98d4-cf4f636d8b60.png" width="400">
 
-- Support search using environment variable paths.
+- Supports search using environment variable paths.
 
 ### Web Searches & URLs
 
@@ -141,7 +141,7 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
 
 <img src="https://user-images.githubusercontent.com/6903107/144517677-857a2b0a-4b94-4be0-bc89-f35723ecddf9.png" width="400">
 
-- Prioritise the order of each plugin's results.
+- Prioritize the order of each plugin's results.
 
 ### Preview Panel
 
@@ -327,7 +327,7 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
 | Check For Update                   | Check for new Flow Launcher update                                          |
 | Open Log Location                  | Open Flow Launcher's log location                                           |
 | Index Option                       | Open Windows Search Index window                                            |
-| Flow Launcher Tips                 | Visit Flow Launcher's documentation for more help and how to use tips       |
+| Flow Launcher Tips                 | Visit Flow Launcher's documentation for more help and usage tips            |
 | Flow Launcher UserData Folder      | Open the location where Flow Launcher's settings are stored                 |
 | Toggle Game Mode                   | Toggle Game Mode                                                            |
 | Set Flow Launcher Theme            | Set the Flow Launcher Theme                                                 |
@@ -397,9 +397,9 @@ Our UI library is using [iNKORE.UI.WPF.Modern](https://github.com/iNKORE-NET/UI.
   <img src="https://github.com/iNKORE-NET/UI.WPF.Modern/blob/main/assets/images/banners/UI.WPF.Modern_Main_1280w.png?raw=true" alt="iNKORE.UI.WPF.Modern" width="400">
 </a>
 
-### New changes
+### New Changes
 
-All changes to flow are captured via pull requests. Some new changes will have been merged but still pending release, this means while a change may not exist in the current release, it may very well have been accepted and merged into the dev branch and available as a pre-release download. It is therefore a good idea to search through the open and closed pull requests before you start to make changes to ensure the change you intend to make is not already done.
+All changes to Flow are captured via pull requests. Some new changes may have been merged but are still pending release. This means that while a change may not exist in the current release, it may have been accepted and merged into the dev branch and is available as a pre-release download. It is therefore a good idea to search through the open and closed pull requests before you start to make changes to ensure the change you intend to make is not already done.
 
 Each of the pull requests will be marked with a milestone indicating the planned release version for the change.  
 
