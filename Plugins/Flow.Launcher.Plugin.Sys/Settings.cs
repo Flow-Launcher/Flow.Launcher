@@ -124,4 +124,13 @@ public class Settings : BaseModel
 
     [JsonIgnore]
     public Command SelectedCommand { get; set; }
+    private bool _skipPowerActionConfirmation;
+    public bool SkipPowerActionConfirmation
+    {
+        get => _skipPowerActionConfirmation;
+        set
+        {
+            _skipPowerActionConfirmation = value;
+        }
+    }
 }
