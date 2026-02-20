@@ -193,7 +193,7 @@ namespace Flow.Launcher.Plugin.Sys
             }
         }
 
-        private static List<Result> Commands(Query query)
+        private List<Result> Commands(Query query)
         {
             var results = new List<Result>();
             var recycleBinFolder = "shell:RecycleBinFolder";
@@ -206,22 +206,23 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\shutdown.png",
                     Action = c =>
                     {
-                        var result = Context.API.ShowMsgBox(
-                            Localize.flowlauncher_plugin_sys_dlgtext_shutdown_computer(),
-                            Localize.flowlauncher_plugin_sys_shutdown_computer(),
-                            MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                        MessageBoxResult result = _settings.SkipPowerActionConfirmation
+                            ? MessageBoxResult.Yes
+                            : Context.API.ShowMsgBox(
+                                Localize.flowlauncher_plugin_sys_dlgtext_shutdown_computer(),
+                                Localize.flowlauncher_plugin_sys_shutdown_computer(),
+                                MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
                         if (result == MessageBoxResult.Yes)
                         {
-                            // Save settings before shutdown to avoid data loss
                             Context.API.SaveAppAllSettings();
-
                             if (EnableShutdownPrivilege())
                                 PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_SHUTDOWN | EXIT_WINDOWS_FLAGS.EWX_POWEROFF, REASON);
                             else
                                 Process.Start("shutdown", "/s /t 0");
                         }
                         return true;
-                    }
+                        }
                 },
                 new Result
                 {
@@ -230,21 +231,22 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\restart.png",
                     Action = c =>
                     {
-                        var result = Context.API.ShowMsgBox(
-                            Localize.flowlauncher_plugin_sys_dlgtext_restart_computer(),
-                            Localize.flowlauncher_plugin_sys_restart_computer(),
-                            MessageBoxButton.YesNo, MessageBoxImage.Warning);
-                        if (result == MessageBoxResult.Yes)
-                        {
-                            // Save settings before restart to avoid data loss
-                            Context.API.SaveAppAllSettings();
+                        MessageBoxResult result = _settings.SkipPowerActionConfirmation
+                                ? MessageBoxResult.Yes
+                                : Context.API.ShowMsgBox(
+                                    Localize.flowlauncher_plugin_sys_dlgtext_restart_computer(),
+                                    Localize.flowlauncher_plugin_sys_restart_computer(),
+                                    MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
-                            if (EnableShutdownPrivilege())
-                                PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_REBOOT, REASON);
-                            else
-                                Process.Start("shutdown", "/r /t 0");
-                        }
-                        return true;
+                            if (result == MessageBoxResult.Yes)
+                            {
+                                Context.API.SaveAppAllSettings();
+                                if (EnableShutdownPrivilege())
+                                    PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_REBOOT, REASON);
+                                else
+                                    Process.Start("shutdown", "/r /t 0");
+                            }
+                            return true;
                     }
                 },
                 new Result
@@ -254,10 +256,13 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\restart_advanced.png",
                     Action = c =>
                     {
-                        var result = Context.API.ShowMsgBox(
-                            Localize.flowlauncher_plugin_sys_dlgtext_restart_computer_advanced(),
-                            Localize.flowlauncher_plugin_sys_restart_computer(),
-                            MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                        var result = _settings.SkipPowerActionConfirmation
+                            ? MessageBoxResult.Yes
+                            : Context.API.ShowMsgBox(
+                                Localize.flowlauncher_plugin_sys_dlgtext_restart_computer_advanced(),
+                                Localize.flowlauncher_plugin_sys_restart_computer(),
+                                MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
                         if (result == MessageBoxResult.Yes)
                         {
                             // Save settings before advanced restart to avoid data loss
@@ -278,13 +283,16 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\logoff.png",
                     Action = c =>
                     {
-                        var result = Context.API.ShowMsgBox(
-                            Localize.flowlauncher_plugin_sys_dlgtext_logoff_computer(),
-                            Localize.flowlauncher_plugin_sys_log_off(),
-                            MessageBoxButton.YesNo, MessageBoxImage.Warning);
-                        if (result == MessageBoxResult.Yes)
-                            PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_LOGOFF, REASON);
-                        return true;
+                        MessageBoxResult result = _settings.SkipPowerActionConfirmation
+                                ? MessageBoxResult.Yes
+                                : Context.API.ShowMsgBox(
+                                    Localize.flowlauncher_plugin_sys_dlgtext_logoff_computer(),
+                                    Localize.flowlauncher_plugin_sys_log_off(),
+                                    MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+                            if (result == MessageBoxResult.Yes)
+                                PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_LOGOFF, REASON);
+                            return true;
                     }
                 },
                 new Result
