@@ -130,7 +130,12 @@ public class Settings : BaseModel
         get => _skipPowerActionConfirmation;
         set
         {
+            if (_skipPowerActionConfirmation == value)
+            {
+                return;
+            }
             _skipPowerActionConfirmation = value;
+            OnPropertyChanged();
         }
     }
 }

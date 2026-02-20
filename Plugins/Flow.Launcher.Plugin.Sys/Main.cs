@@ -222,7 +222,7 @@ namespace Flow.Launcher.Plugin.Sys
                                 Process.Start("shutdown", "/s /t 0");
                         }
                         return true;
-                        }
+                    }
                 },
                 new Result
                 {
@@ -238,15 +238,15 @@ namespace Flow.Launcher.Plugin.Sys
                                     Localize.flowlauncher_plugin_sys_restart_computer(),
                                     MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
-                            if (result == MessageBoxResult.Yes)
-                            {
-                                Context.API.SaveAppAllSettings();
-                                if (EnableShutdownPrivilege())
-                                    PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_REBOOT, REASON);
-                                else
-                                    Process.Start("shutdown", "/r /t 0");
-                            }
-                            return true;
+                        if (result == MessageBoxResult.Yes)
+                        {
+                            Context.API.SaveAppAllSettings();
+                            if (EnableShutdownPrivilege())
+                                PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_REBOOT, REASON);
+                            else
+                                Process.Start("shutdown", "/r /t 0");
+                        }
+                        return true;
                     }
                 },
                 new Result
