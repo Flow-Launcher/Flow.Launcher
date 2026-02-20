@@ -19,9 +19,9 @@
 A quick file search and app launcher for Windows with community-made plugins.</p>
 
 <p align="center">
-Dedicated to making your work flow more seamless. Search everything from applications, files, bookmarks, YouTube, Twitter and more. Flow will continue to evolve, designed to be open and built with the community at heart.</p>
+Dedicated to making your workflow more seamless. Search everything from applications, files, bookmarks, YouTube, Twitter and more. Flow will continue to evolve, designed to be open and built with the community at heart.</p>
 
-<p align="center"> <sub>Remember to star it, flow will love you more :)</sub></p>
+<p align="center"> <sub>Remember to star it, Flow will love you more :)</sub></p>
 
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
@@ -228,7 +228,7 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
 ## 📦 Plugins
 
 - Support wide range of plugins. Visit [here](https://www.flowlauncher.com/plugins/) for our plugin portfolio.
-- Publish your own plugin to flow! Create plugins in:
+- Publish your own plugin to Flow! Create plugins in:
 
 <p align="center">
 <a href="https://flowlauncher.com/docs/#/develop-dotnet-plugins"><img src="https://user-images.githubusercontent.com/6903107/147870065-4096f233-147c-434e-a3ac-69519582605f.png" width="64"></a>
@@ -407,7 +407,7 @@ Each of the pull requests will be marked with a milestone indicating the planned
 
 Contributions are very welcome, in addition to the main project (C#) there are also [documentation](https://github.com/Flow-Launcher/docs) (md), [website](https://github.com/Flow-Launcher/flow-launcher.github.io) (html/css) and [others](https://github.com/Flow-Launcher) that can be contributed to. If you are unsure of a change you want to make, let us know in the [Discussions](https://github.com/Flow-Launcher/Flow.Launcher/discussions/categories/ideas), otherwise feel free to submit a pull request.
 
-You will find the main goals of flow placed under the [Projects board](https://github.com/orgs/Flow-Launcher/projects/4), so feel free to contribute on that. If you would like to make small incremental changes, feel free to do so as well.
+You will find the main goals of Flow placed under the [Projects board](https://github.com/orgs/Flow-Launcher/projects/4), so feel free to contribute on that. If you would like to make small incremental changes, feel free to do so as well.
 
 Get in touch if you would like to join the Flow-Launcher Team and help build this great tool.
 
