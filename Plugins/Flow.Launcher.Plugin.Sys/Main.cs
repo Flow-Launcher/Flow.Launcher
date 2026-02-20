@@ -232,11 +232,11 @@ namespace Flow.Launcher.Plugin.Sys
                     Action = c =>
                     {
                         MessageBoxResult result = _settings.SkipPowerActionConfirmation
-                                ? MessageBoxResult.Yes
-                                : Context.API.ShowMsgBox(
-                                    Localize.flowlauncher_plugin_sys_dlgtext_restart_computer(),
-                                    Localize.flowlauncher_plugin_sys_restart_computer(),
-                                    MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                            ? MessageBoxResult.Yes
+                            : Context.API.ShowMsgBox(
+                                Localize.flowlauncher_plugin_sys_dlgtext_restart_computer(),
+                                Localize.flowlauncher_plugin_sys_restart_computer(),
+                                MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
                         if (result == MessageBoxResult.Yes)
                         {
