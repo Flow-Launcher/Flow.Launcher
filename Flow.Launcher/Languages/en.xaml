@@ -81,6 +81,8 @@
     <system:String x:Key="useLogonTaskForStartupTooltip">After uninstallation, you need to manually remove this task (Flow.Launcher Startup) via Task Scheduler</system:String>
     <system:String x:Key="setAutoStartFailed">Error setting launch on startup</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Hide Flow Launcher when focus is lost</system:String>
+    <system:String x:Key="showTaskbarWhenOpened">Show taskbar when Flow Launcher is opened</system:String>
+    <system:String x:Key="showTaskbarWhenOpenedToolTip">Temporarily show the taskbar when Flow Launcher is opened, useful for auto-hidden taskbars.</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Do not show new version notifications</system:String>
     <system:String x:Key="SearchWindowPosition">Search Window Location</system:String>
     <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Remember Last Position</system:String>
@@ -450,7 +452,7 @@
     <system:String x:Key="icons">Icons</system:String>
     <system:String x:Key="about_activate_times">You have activated Flow Launcher {0} times</system:String>
     <system:String x:Key="checkUpdates">Check for Updates</system:String>
-    <system:String x:Key="BecomeASponsor">Become A Sponsor</system:String>
+    <system:String x:Key="BecomeASponsor">Become a Sponsor</system:String>
     <system:String x:Key="newVersionTips">New version {0} is available, would you like to restart Flow Launcher to use the update?</system:String>
     <system:String x:Key="checkUpdatesFailed">Check updates failed, please check your connection and proxy settings to api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">

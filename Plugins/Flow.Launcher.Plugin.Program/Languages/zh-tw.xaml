@@ -82,7 +82,7 @@
     <system:String x:Key="flowlauncher_plugin_program_plugin_name">程式</system:String>
     <system:String x:Key="flowlauncher_plugin_program_plugin_description">在 Flow Launcher 中搜尋程式</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_program_invalid_path">Invalid Path</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_invalid_path">無效的路徑</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_customizedexplorer">Customized Explorer</system:String>
     <system:String x:Key="flowlauncher_plugin_program_args">Args</system:String>

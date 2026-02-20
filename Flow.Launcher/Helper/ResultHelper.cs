@@ -11,20 +11,20 @@ namespace Flow.Launcher.Helper;
 
 public static class ResultHelper
 {
-    public static async Task<Result?> PopulateResultsAsync(LastOpenedHistoryItem item)
+    public static async Task<Result?> PopulateResultsAsync(LastOpenedHistoryResult item)
     {
         return await PopulateResultsAsync(item.PluginID, item.Query, item.Title, item.SubTitle, item.RecordKey);
     }
 
-    public static async Task<Result?> PopulateResultsAsync(string pluginId, string rawQuery, string title, string subTitle, string recordKey)
+    public static async Task<Result?> PopulateResultsAsync(string pluginId, string trimmedQuery, string title, string subTitle, string recordKey)
     {
         var plugin = PluginManager.GetPluginForId(pluginId);
         if (plugin == null) return null;
-        var query = QueryBuilder.Build(rawQuery, PluginManager.GetNonGlobalPlugins());
+        var query = QueryBuilder.Build(trimmedQuery, trimmedQuery, PluginManager.GetNonGlobalPlugins());
         if (query == null) return null;
         try
         {
-            var freshResults = await plugin.Plugin.QueryAsync(query, CancellationToken.None);
+            var freshResults = await PluginManager.QueryForPluginAsync(plugin, query, CancellationToken.None);
             // Try to match by record key first if it is valid, otherwise fall back to title + subtitle match
             if (string.IsNullOrEmpty(recordKey))
             {

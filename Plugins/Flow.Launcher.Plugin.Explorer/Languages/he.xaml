@@ -56,6 +56,8 @@
     <system:String x:Key="plugin_explorer_actionkeywordview_filecontentsearch">חיפוש תוכן קובץ:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_indexsearch">חיפוש אינדקס:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">גישה מהירה:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_foldersearch">Folder Search:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_filesearch">File Search:</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_current">מילת פעולה נוכחית</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_done">בוצע</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled">מופעל</system:String>

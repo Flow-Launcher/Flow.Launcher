@@ -2,16 +2,16 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <system:String x:Key="flowlauncher_plugin_calculator_plugin_name">計算機</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_plugin_description">Perform mathematical calculations, including hex values and advanced functions such as 'min(1,2,3)', 'sqrt(123)' and 'cos(123)'.</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_plugin_description">執行數學計算，包括十六進位數值以及進階函數，例如 'min(1,2,3)'、'sqrt(123)' 和 'cos(123)'。</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_not_a_number">不是一個數 (NaN)</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_expression_not_complete">Expression wrong or incomplete (Did you forget some parentheses?)</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_expression_not_complete">表示式錯誤或不完整（你是否忘記了某些括號？）</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_copy_number_to_clipboard">複製此數至剪貼簿</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_output_decimal_separator">小數點分隔符號</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_output_decimal_separator_help">The decimal separator to be used in the output.</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_output_decimal_separator_help">用於輸出的小數點分隔符。</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_use_system_locale">使用系統區域設定</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_comma">逗號 (,)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_dot">點 (.)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_max_decimal_places">小數點後最大位數</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_failed_to_copy">Copy failed, please try later</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_show_error_message">Show error message when calculation fails</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_failed_to_copy">複製失敗，請稍後再試</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_show_error_message">計算失敗時顯示錯誤訊息</system:String>
 </ResourceDictionary>

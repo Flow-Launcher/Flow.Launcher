@@ -31,7 +31,7 @@
     <system:String x:Key="plugin_pluginsmanager_update_failed_subtitle">Please check if you can connect to github.com. This error means you may not be able to install or update plugins.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_all_title">Update all plugins</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_all_subtitle">Would you like to update all plugins?</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_all_prompt">Would you like to update {0} plugins?{1}Flow Launcher will restart after updating all plugins.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_prompt">你要更新{0}個插件？{1}Flow Launcher會在更新所有插件後重新啟動。</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_all_prompt_no_restart">Would you like to update {0} plugins?</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_all_success_restart">{0} plugins successfully updated. Restarting Flow, please wait...</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_success_restart">Plugin {0} successfully updated. Restarting Flow, please wait...</system:String>
@@ -66,5 +66,5 @@
 
     <!--  Settings menu items  -->
     <system:String x:Key="plugin_pluginsmanager_plugin_settings_unknown_source">Install from unknown source warning</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_settings_auto_restart">Restart Flow Launcher automatically after installing/uninstalling/updating plugin via Plugins Manager</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_settings_auto_restart">以插件管理員安裝/移除/更新插件後自動重新啟動Flow Launcher</system:String>
 </ResourceDictionary>

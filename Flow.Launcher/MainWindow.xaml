@@ -363,7 +363,7 @@
                                     <TextBlock
                                         x:Name="PreviewSubTitle"
                                         Style="{DynamicResource PreviewItemSubTitleStyle}"
-                                        Text="{Binding Result.SubTitle}" />
+                                        Text="{Binding PreviewDescription}" />
                                 </StackPanel>
                             </Grid>
                         </Border>
