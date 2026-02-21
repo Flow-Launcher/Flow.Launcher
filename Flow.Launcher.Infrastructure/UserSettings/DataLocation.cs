@@ -59,8 +59,19 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             if (Path.IsPathRooted(path))
                 return path;
 
-            // Resolve relative to ProgramDirectory
-            return Path.GetFullPath(Path.Combine(Constant.ProgramDirectory, path));
+            // Resolve relative to ProgramDirectory, handling invalid path formats gracefully
+            try
+            {
+                return Path.GetFullPath(Path.Combine(Constant.ProgramDirectory, path));
+            }
+            catch (Exception ex) when (ex is ArgumentException ||
+                                       ex is NotSupportedException ||
+                                       ex is PathTooLongException)
+            {
+                // If the path cannot be resolved (invalid characters, format, or too long),
+                // return the original path to avoid crashing the application.
+                return path;
+            }
         }
     }
 }
