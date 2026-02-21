@@ -46,7 +46,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         /// <summary>
         /// Resolves a path that may be relative to an absolute path.
         /// If the path is already absolute, returns it as-is.
-        /// If the path is relative (starts with . or doesn't contain a drive), resolves it relative to ProgramDirectory.
+        /// If the path is not rooted (as determined by <see cref="Path.IsPathRooted(string)"/>), resolves it relative to ProgramDirectory.
         /// </summary>
         /// <param name="path">The path to resolve</param>
         /// <returns>An absolute path</returns>
