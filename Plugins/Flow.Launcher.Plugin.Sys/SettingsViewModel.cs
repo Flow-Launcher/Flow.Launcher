@@ -4,6 +4,4 @@
     {
         public Settings Settings { get; } = settings;
     }
-
-
 }

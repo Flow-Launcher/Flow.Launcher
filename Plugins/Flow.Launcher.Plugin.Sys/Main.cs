@@ -206,7 +206,7 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\shutdown.png",
                     Action = c =>
                     {
-                        MessageBoxResult result = _settings.SkipPowerActionConfirmation
+                        var result = _settings.SkipPowerActionConfirmation
                             ? MessageBoxResult.Yes
                             : Context.API.ShowMsgBox(
                                 Localize.flowlauncher_plugin_sys_dlgtext_shutdown_computer(),
@@ -231,7 +231,7 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\restart.png",
                     Action = c =>
                     {
-                        MessageBoxResult result = _settings.SkipPowerActionConfirmation
+                        var result = _settings.SkipPowerActionConfirmation
                             ? MessageBoxResult.Yes
                             : Context.API.ShowMsgBox(
                                 Localize.flowlauncher_plugin_sys_dlgtext_restart_computer(),
@@ -283,16 +283,16 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\logoff.png",
                     Action = c =>
                     {
-                        MessageBoxResult result = _settings.SkipPowerActionConfirmation
-                                ? MessageBoxResult.Yes
-                                : Context.API.ShowMsgBox(
-                                    Localize.flowlauncher_plugin_sys_dlgtext_logoff_computer(),
-                                    Localize.flowlauncher_plugin_sys_log_off(),
-                                    MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                        var result = _settings.SkipPowerActionConfirmation
+                            ? MessageBoxResult.Yes
+                            : Context.API.ShowMsgBox(
+                                Localize.flowlauncher_plugin_sys_dlgtext_logoff_computer(),
+                                Localize.flowlauncher_plugin_sys_log_off(),
+                                MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
-                            if (result == MessageBoxResult.Yes)
-                                PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_LOGOFF, REASON);
-                            return true;
+                        if (result == MessageBoxResult.Yes)
+                            PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_LOGOFF, REASON);
+                        return true;
                     }
                 },
                 new Result
