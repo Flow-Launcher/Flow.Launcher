@@ -56,7 +56,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 return path;
 
             // If already absolute, return as-is
-            if (Path.IsPathRooted(path))
+            if (Path.IsPathFullyQualified(path))
                 return path;
 
             // Resolve relative to ProgramDirectory, handling invalid path formats gracefully
