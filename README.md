@@ -413,11 +413,11 @@ Get in touch if you would like to join the Flow-Launcher Team and help build thi
 
 ### Developing/Debugging
 
-- Flow Launcher's target framework is .Net 9
+- Flow Launcher's target framework is .Net 10
 
 - Install Visual Studio 2022 (v17.12+)
 
-- Install .Net 9 SDK
+- Install .Net 10 SDK
   - via Visual Studio installer
-  - via winget `winget install Microsoft.DotNet.SDK.9`
-  - Manually from [here](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)
+  - via winget `winget install Microsoft.DotNet.SDK.10`
+  - Manually from [here](https://dotnet.microsoft.com/en-us/download/dotnet/10.0)
