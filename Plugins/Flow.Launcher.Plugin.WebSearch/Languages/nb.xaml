@@ -19,6 +19,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_url">Nettadresse</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_search">Søk</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Use Search Query Autocomplete</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_max_suggestions">Max Suggestions</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">Autofullfør data fra:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">Vennligst velg et websøk</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">Er du sikker på at du ønsker å slette {0}?</system:String>
