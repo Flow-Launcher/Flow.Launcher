@@ -64,9 +64,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             {
                 return Path.GetFullPath(Path.Combine(Constant.ProgramDirectory, path));
             }
-            catch (System.Exception ex) when (ex is ArgumentException ||
-                                       ex is NotSupportedException ||
-                                       ex is PathTooLongException)
+            catch (System.Exception)
             {
                 // If the path cannot be resolved (invalid characters, format, or too long),
                 // return the original path to avoid crashing the application.
