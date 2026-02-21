@@ -41,7 +41,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
         }
 
         /// <summary>
-        /// Resolves the configured plugin settings file path to an absolute path.
+        /// Resolves the configured runtime executable path to an absolute path.
         /// Supports both absolute paths and relative paths (relative to ProgramDirectory).
         /// </summary>
         private string ResolvedPluginsSettingsFilePath => DataLocation.ResolveAbsolutePath(PluginsSettingsFilePath);
