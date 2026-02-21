@@ -61,7 +61,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
                 if (resolvedPath.StartsWith(EnvPath, StringComparison.OrdinalIgnoreCase))
                     EnsureLatestInstalled(ExecutablePath, resolvedPath, EnvPath);
 
-                // Ensure the path is updated in settings in case user has moved Flow to a different location
+                // Ensure the path is updated in settings in case environment was updated
                 resolvedPath = ResolvedPluginsSettingsFilePath;
                 return SetPathForPluginPairs(resolvedPath, Language);
             }
@@ -112,6 +112,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
                 InstallEnvironment();
             }
 
+            // Ensure the path is updated when user has chosen to install or select environment executable
             resolvedPath = ResolvedPluginsSettingsFilePath;
             if (FilesFolders.FileExists(resolvedPath))
             {
