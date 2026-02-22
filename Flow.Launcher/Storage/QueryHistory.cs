@@ -1,64 +1,34 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
-using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Storage
 {
     public class History
     {
         [JsonInclude]
-#pragma warning disable CS0618 // Type or member is obsolete
-        public List<HistoryItem> Items { get; private set; } = [];
-#pragma warning restore CS0618 // Type or member is obsolete
+        public List<HistoryItem> Items { get; private set; } = new List<HistoryItem>();
 
-        [JsonInclude]
-        public List<LastOpenedHistoryItem> LastOpenedHistoryItems { get; private set; } = [];
+        private int _maxHistory = 300;
 
-        private readonly int _maxHistory = 300;
-
-        public void PopulateHistoryFromLegacyHistory()
+        public void Add(string query)
         {
-            if (Items.Count == 0) return;
-            // Migrate old history items to new LastOpenedHistoryItems
-            foreach (var item in Items)
+            if (string.IsNullOrEmpty(query)) return;
+            if (Items.Count > _maxHistory)
             {
-                LastOpenedHistoryItems.Add(new LastOpenedHistoryItem
-                {
-                    Query = item.Query,
-                    ExecutedDateTime = item.ExecutedDateTime
-                });
-            }
-            Items.Clear();
-        }
-
-        public void Add(Result result)
-        {
-            if (string.IsNullOrEmpty(result.OriginQuery.TrimmedQuery)) return;
-            if (string.IsNullOrEmpty(result.PluginID)) return;
-
-            // Maintain the max history limit
-            if (LastOpenedHistoryItems.Count > _maxHistory)
-            {
-                LastOpenedHistoryItems.RemoveAt(0);
+                Items.RemoveAt(0);
             }
 
-            // If the last item is the same as the current result, just update the timestamp
-            if (LastOpenedHistoryItems.Count > 0 && 
-                LastOpenedHistoryItems.Last().Equals(result))
+            if (Items.Count > 0 && Items.Last().Query == query)
             {
-                LastOpenedHistoryItems.Last().ExecutedDateTime = DateTime.Now;
+                Items.Last().ExecutedDateTime = DateTime.Now;
             }
             else
             {
-                LastOpenedHistoryItems.Add(new LastOpenedHistoryItem
+                Items.Add(new HistoryItem
                 {
-                    Title = result.Title,
-                    SubTitle = result.SubTitle,
-                    PluginID = result.PluginID,
-                    Query = result.OriginQuery.TrimmedQuery,
-                    RecordKey = result.RecordKey,
+                    Query = query,
                     ExecutedDateTime = DateTime.Now
                 });
             }
