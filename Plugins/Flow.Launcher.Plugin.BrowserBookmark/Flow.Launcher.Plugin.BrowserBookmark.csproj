@@ -87,6 +87,20 @@
                             $(PublishDir)runtimes\win-arm64;"/>
   </Target>
 
+  <!-- Workaround for https://github.com/mono/SkiaSharp/issues/3519 -->
+  <Target Name="RemoveUnnecessaryPdbFilesAfterBuild" AfterTargets="Build">
+    <ItemGroup>
+      <PdbFilesToRemoveBuild Include="$(OutputPath)**\*.pdb" />
+    </ItemGroup>
+    <Delete Files="@(PdbFilesToRemoveBuild)" />
+  </Target>
+  <Target Name="RemoveUnnecessaryPdbFilesAfterPublish" AfterTargets="Publish">
+    <ItemGroup>
+      <PdbFilesToRemovePublish Include="$(PublishDir)**\*.pdb" />
+    </ItemGroup>
+    <Delete Files="@(PdbFilesToRemovePublish)" />
+  </Target>
+
   <ItemGroup>
     <None Include="plugin.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
