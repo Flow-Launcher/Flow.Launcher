@@ -240,15 +240,5 @@ namespace Flow.Launcher.Plugin.WebSearch
             }
             return null;
         }
-
-        // This is used for NumberBox to force its value to be 1 when the user clears the value
-        private void NumberBox_ValueChanged(iNKORE.UI.WPF.Modern.Controls.NumberBox sender, iNKORE.UI.WPF.Modern.Controls.NumberBoxValueChangedEventArgs args)
-        {
-            if (double.IsNaN(args.NewValue))
-            {
-                sender.Value = 1;
-                _settings.MaxSuggestions = (int)sender.Value;
-            }
-        }
     }
 }
