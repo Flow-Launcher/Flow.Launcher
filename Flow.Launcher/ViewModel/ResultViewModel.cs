@@ -141,7 +141,7 @@ namespace Flow.Launcher.ViewModel
 
         private bool GlyphAvailable => Glyph is not null;
 
-        private bool ImgIconAvailable => !string.IsNullOrEmpty(Result.IcoPathAbsolute) || Result.Icon is not null;
+        private bool ImgIconAvailable => !string.IsNullOrEmpty(Result.IcoPath) || Result.Icon is not null;
 
         private bool BadgeIconAvailable => !string.IsNullOrEmpty(Result.BadgeIcoPath) || Result.BadgeIcon is not null;
 
@@ -236,7 +236,7 @@ namespace Flow.Launcher.ViewModel
 
         private async Task LoadImageAsync()
         {
-            var imagePath = Result.IcoPathAbsolute;
+            var imagePath = Result.IcoPath;
             var iconDelegate = Result.Icon;
             if (ImageLoader.TryGetValue(imagePath, false, out var img))
             {
@@ -266,7 +266,7 @@ namespace Flow.Launcher.ViewModel
 
         private async Task LoadPreviewImageAsync()
         {
-            var imagePath = Result.Preview.PreviewImagePath ?? Result.IcoPathAbsolute;
+            var imagePath = Result.Preview.PreviewImagePath ?? Result.IcoPath;
             var iconDelegate = Result.Preview.PreviewDelegate ?? Result.Icon;
             if (ImageLoader.TryGetValue(imagePath, true, out var img))
             {

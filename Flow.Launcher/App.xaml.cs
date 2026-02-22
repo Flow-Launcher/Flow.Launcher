@@ -259,9 +259,6 @@ namespace Flow.Launcher
 
                     await PluginManager.InitializePluginsAsync(_mainVM);
 
-                    // Refresh the history results after plugins are initialized so that we can parse the absolute icon paths
-                    _mainVM.RefreshLastOpenedHistoryResults();
-
                     // Refresh home page after plugins are initialized because users may open main window during plugin initialization
                     // And home page is created without full plugin list
                     if (_settings.ShowHomePage && _mainVM.QueryResultsSelected() && string.IsNullOrEmpty(_mainVM.QueryText))
