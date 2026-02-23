@@ -87,20 +87,6 @@
                             $(PublishDir)runtimes\win-arm64;"/>
   </Target>
 
-  <!-- Workaround for https://github.com/mono/SkiaSharp/issues/3519 -->
-  <Target Name="RemoveUnnecessaryPdbFilesAfterBuild" AfterTargets="Build">
-    <ItemGroup>
-      <PdbFilesToRemoveBuild Include="$(OutputPath)runtimes\**\*.pdb" />
-    </ItemGroup>
-    <Delete Files="@(PdbFilesToRemoveBuild)" />
-  </Target>
-  <Target Name="RemoveUnnecessaryPdbFilesAfterPublish" AfterTargets="Publish">
-    <ItemGroup>
-      <PdbFilesToRemovePublish Include="$(PublishDir)runtimes\**\*.pdb" />
-    </ItemGroup>
-    <Delete Files="@(PdbFilesToRemovePublish)" />
-  </Target>
-
   <ItemGroup>
     <None Include="plugin.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -125,7 +111,7 @@
     <PackageReference Include="Flow.Launcher.Localization" Version="0.0.6" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.3" />
     <PackageReference Include="Svg.Skia" Version="3.4.1" />
-    <PackageReference Include="SkiaSharp" Version="3.119.2" />
+    <PackageReference Include="SkiaSharp" Version="3.119.1" />
   </ItemGroup>
 
 </Project>
