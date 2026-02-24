@@ -64,7 +64,9 @@ public class AutoStartup
                 if (task.Definition.Actions.FirstOrDefault() is Microsoft.Win32.TaskScheduler.Action taskAction)
                 {
                     var action = taskAction.ToString().Trim();
-                    if (!action.Equals(Constant.ExecutablePath, StringComparison.OrdinalIgnoreCase))
+                    var needsRecreation = !action.Equals(Constant.ExecutablePath, StringComparison.OrdinalIgnoreCase)
+                        || task.Definition.Settings.Priority != System.Diagnostics.ProcessPriorityClass.Normal;
+                    if (needsRecreation)
                     {
                         UnscheduleLogonTask();
                         ScheduleLogonTask();
@@ -184,6 +186,7 @@ public class AutoStartup
         td.Settings.StopIfGoingOnBatteries = false;
         td.Settings.DisallowStartIfOnBatteries = false;
         td.Settings.ExecutionTimeLimit = TimeSpan.Zero;
+        td.Settings.Priority = System.Diagnostics.ProcessPriorityClass.Normal;
 
         try
         {
