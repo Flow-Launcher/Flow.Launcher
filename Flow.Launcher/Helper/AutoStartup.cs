@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Security.Principal;
 using Flow.Launcher.Infrastructure;
@@ -65,7 +66,7 @@ public class AutoStartup
                 {
                     var action = taskAction.ToString().Trim();
                     var needsRecreation = !action.Equals(Constant.ExecutablePath, StringComparison.OrdinalIgnoreCase)
-                        || task.Definition.Settings.Priority != System.Diagnostics.ProcessPriorityClass.Normal;
+                        || task.Definition.Settings.Priority != ProcessPriorityClass.Normal;
                     if (needsRecreation)
                     {
                         UnscheduleLogonTask();
@@ -186,7 +187,7 @@ public class AutoStartup
         td.Settings.StopIfGoingOnBatteries = false;
         td.Settings.DisallowStartIfOnBatteries = false;
         td.Settings.ExecutionTimeLimit = TimeSpan.Zero;
-        td.Settings.Priority = System.Diagnostics.ProcessPriorityClass.Normal;
+        td.Settings.Priority = ProcessPriorityClass.Normal;
 
         try
         {
