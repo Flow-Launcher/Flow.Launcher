@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 using System.Windows;
@@ -480,6 +480,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         }
         public bool LeaveCmdOpen { get; set; }
         public bool HideWhenDeactivated { get; set; } = true;
+        public bool ShowTaskbarWhenInvoked { get; set; } = false;
 
         private bool _showAtTopmost = false;
         public bool ShowAtTopmost

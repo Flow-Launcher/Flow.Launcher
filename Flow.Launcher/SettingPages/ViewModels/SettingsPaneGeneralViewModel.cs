@@ -65,7 +65,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
             }
             catch (Exception e)
             {
-                App.API.ShowMsgError(App.API.GetTranslation("setAutoStartFailed"), e.Message);
+                App.API.ShowMsgError(Localize.setAutoStartFailed(), e.Message);
             }
         }
     }
@@ -92,7 +92,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
                 }
                 catch (Exception e)
                 {
-                    App.API.ShowMsgError(App.API.GetTranslation("setAutoStartFailed"), e.Message);
+                    App.API.ShowMsgError(Localize.setAutoStartFailed(), e.Message);
                 }
             } 
         }
@@ -257,7 +257,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
             else
             {
                 // Since this is rarely seen text, language support is not provided.
-                App.API.ShowMsgError(App.API.GetTranslation("KoreanImeSettingChangeFailTitle"), App.API.GetTranslation("KoreanImeSettingChangeFailSubTitle"));
+                App.API.ShowMsgError(Localize.KoreanImeSettingChangeFailTitle(), Localize.KoreanImeSettingChangeFailSubTitle());
             }
         }
     }
@@ -325,10 +325,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
 
     public List<Language> Languages => _translater.LoadAvailableLanguages();
 
-    public string AlwaysPreviewToolTip => string.Format(
-        App.API.GetTranslation("AlwaysPreviewToolTip"),
-        Settings.PreviewHotkey
-    );
+    public string AlwaysPreviewToolTip => Localize.AlwaysPreviewToolTip(Settings.PreviewHotkey);
 
     private static string GetFileFromDialog(string title, string filter = "")
     {
@@ -372,7 +369,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     private void SelectPython()
     {
         var selectedFile = GetFileFromDialog(
-            App.API.GetTranslation("selectPythonExecutable"),
+            Localize.selectPythonExecutable(),
             "Python|pythonw.exe"
         );
 
@@ -384,7 +381,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     private void SelectNode()
     {
         var selectedFile = GetFileFromDialog(
-            App.API.GetTranslation("selectNodeExecutable"),
+            Localize.selectNodeExecutable(),
             "node|*.exe"
         );
 

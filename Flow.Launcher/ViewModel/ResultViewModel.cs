@@ -288,6 +288,8 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        public string PreviewDescription => Result.Preview?.Description ?? Result.SubTitle;
+
         public Result Result { get; }
         public int ResultProgress
         {

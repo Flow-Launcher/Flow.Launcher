@@ -113,7 +113,7 @@ namespace Flow.Launcher.Storage
 
         internal bool IsTopMost(Result result)
         {
-            if (records.IsEmpty || !records.TryGetValue(result.OriginQuery.RawQuery, out var value))
+            if (records.IsEmpty || !records.TryGetValue(result.OriginQuery.TrimmedQuery, out var value))
             {
                 return false;
             }
@@ -124,7 +124,7 @@ namespace Flow.Launcher.Storage
 
         internal void Remove(Result result)
         {
-            records.Remove(result.OriginQuery.RawQuery, out _);
+            records.Remove(result.OriginQuery.TrimmedQuery, out _);
         }
 
         internal void AddOrUpdate(Result result)
@@ -136,7 +136,7 @@ namespace Flow.Launcher.Storage
                 SubTitle = result.SubTitle,
                 RecordKey = result.RecordKey
             };
-            records.AddOrUpdate(result.OriginQuery.RawQuery, record, (key, oldValue) => record);
+            records.AddOrUpdate(result.OriginQuery.TrimmedQuery, record, (key, oldValue) => record);
         }
     }
 
@@ -154,7 +154,7 @@ namespace Flow.Launcher.Storage
             // origin query is null when user select the context menu item directly of one item from query list
             // in this case, we do not need to check if the result is top most
             if (records.IsEmpty || result.OriginQuery == null ||
-                !records.TryGetValue(result.OriginQuery.RawQuery, out var value))
+                !records.TryGetValue(result.OriginQuery.TrimmedQuery, out var value))
             {
                 return false;
             }
@@ -168,7 +168,7 @@ namespace Flow.Launcher.Storage
             // origin query is null when user select the context menu item directly of one item from query list
             // in this case, we do not need to check if the result is top most
             if (records.IsEmpty || result.OriginQuery == null ||
-                !records.TryGetValue(result.OriginQuery.RawQuery, out var value))
+                !records.TryGetValue(result.OriginQuery.TrimmedQuery, out var value))
             {
                 return -1;
             }
@@ -194,7 +194,7 @@ namespace Flow.Launcher.Storage
             // origin query is null when user select the context menu item directly of one item from query list
             // in this case, we do not need to remove the record
             if (result.OriginQuery == null ||
-                !records.TryGetValue(result.OriginQuery.RawQuery, out var value))
+                !records.TryGetValue(result.OriginQuery.TrimmedQuery, out var value))
             {
                 return;
             }
@@ -204,12 +204,12 @@ namespace Flow.Launcher.Storage
             if (queue.IsEmpty)
             {
                 // if the queue is empty, remove the queue from the dictionary
-                records.TryRemove(result.OriginQuery.RawQuery, out _);
+                records.TryRemove(result.OriginQuery.TrimmedQuery, out _);
             }
             else
             {
                 // change the queue in the dictionary
-                records[result.OriginQuery.RawQuery] = queue;
+                records[result.OriginQuery.TrimmedQuery] = queue;
             }
         }
 
@@ -229,19 +229,19 @@ namespace Flow.Launcher.Storage
                 SubTitle = result.SubTitle,
                 RecordKey = result.RecordKey
             };
-            if (!records.TryGetValue(result.OriginQuery.RawQuery, out var value))
+            if (!records.TryGetValue(result.OriginQuery.TrimmedQuery, out var value))
             {
                 // create a new queue if it does not exist
                 value = new ConcurrentQueue<Record>();
                 value.Enqueue(record);
-                records.TryAdd(result.OriginQuery.RawQuery, value);
+                records.TryAdd(result.OriginQuery.TrimmedQuery, value);
             }
             else
             {
                 // add or update the record in the queue
                 var queue = new ConcurrentQueue<Record>(value.Where(r => !r.Equals(result))); // make sure we don't have duplicates
                 queue.Enqueue(record);
-                records[result.OriginQuery.RawQuery] = queue;
+                records[result.OriginQuery.TrimmedQuery] = queue;
             }
         }
     }

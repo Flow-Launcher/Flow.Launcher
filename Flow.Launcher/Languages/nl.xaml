@@ -79,6 +79,8 @@
     <system:String x:Key="useLogonTaskForStartupTooltip">After uninstallation, you need to manually remove this task (Flow.Launcher Startup) via Task Scheduler</system:String>
     <system:String x:Key="setAutoStartFailed">Fout bij het instellen van uitvoeren bij opstarten</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Verberg Flow Launcher als focus verloren is</system:String>
+    <system:String x:Key="showTaskbarWhenOpened">Show taskbar when Flow Launcher is opened</system:String>
+    <system:String x:Key="showTaskbarWhenOpenedToolTip">Temporarily show the taskbar when Flow Launcher is opened, useful for auto-hidden taskbars.</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Laat geen nieuwe versie notificaties zien</system:String>
     <system:String x:Key="SearchWindowPosition">Search Window Location</system:String>
     <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Laatste Positie Onthouden</system:String>

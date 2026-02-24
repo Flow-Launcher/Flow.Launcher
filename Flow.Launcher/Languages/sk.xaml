@@ -80,6 +80,8 @@ Nevykonali sa žiadne zmeny.</system:String>
     <system:String x:Key="useLogonTaskForStartupTooltip">Po odinštalovaní musíte úlohu manuálne odstrániť (Flow.Launcher Startup) cez Plánovač úloh</system:String>
     <system:String x:Key="setAutoStartFailed">Chybné nastavenie spustenia pri spustení</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Schovať Flow Launcher po strate fokusu</system:String>
+    <system:String x:Key="showTaskbarWhenOpened">Zobraziť panel úloh, keď je Flow Launcher otvorený</system:String>
+    <system:String x:Key="showTaskbarWhenOpenedToolTip">Dočasne zobraziť panel úloh pri otvorení Flow Launchera, užitočné pri automatickom skrývaní panela úloh.</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Nezobrazovať upozornenia na novú verziu</system:String>
     <system:String x:Key="SearchWindowPosition">Poloha vyhľadávacieho okna</system:String>
     <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Zapamätať si poslednú pozíciu</system:String>
@@ -636,7 +638,7 @@ Ak pri zadávaní skratky pred ňu pridáte &quot;@&quot;, bude sa zhodovať s �
 
     <!--  Plugin Update Window  -->
     <system:String x:Key="restartAfterUpdating">Po aktualizácii pluginov reštartovať Flow Launcher</system:String>
-    <system:String x:Key="updatePluginCheckboxContent">{0}: Aktualizované z v{1} na v{2}</system:String>
+    <system:String x:Key="updatePluginCheckboxContent">{0}: Aktualizácia z v{1} na v{2}</system:String>
     <system:String x:Key="updatePluginNoSelected">Nie je vybraný žiaden plugin</system:String>
 
     <!--  Welcome Window  -->

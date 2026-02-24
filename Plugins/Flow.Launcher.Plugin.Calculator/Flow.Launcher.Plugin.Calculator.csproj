@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
@@ -64,7 +64,7 @@
 
   <ItemGroup>
     <PackageReference Include="Flow.Launcher.Localization" Version="0.0.6" />
-    <PackageReference Include="Mages" Version="3.0.0" />
+    <PackageReference Include="Mages" Version="3.0.1" />
   </ItemGroup>
   
 </Project>

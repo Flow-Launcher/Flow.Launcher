@@ -22,19 +22,33 @@ namespace Flow.Launcher.Test
             ClassicAssert.AreEqual(10, GetOriginalToTranslatedAt(mapping, 1));
         }
 
-        [TestCase(0, 0)]
-        [TestCase(2, 1)]
-        [TestCase(3, 1)]
-        [TestCase(5, 2)]
-        [TestCase(6, 2)]
+
+        [TestCase(0, 0)] // "F" -> "F"
+        [TestCase(1, 1)] // "l" -> "l"
+        [TestCase(2, 2)] // "o" -> "o"
+        [TestCase(3, 3)] // "w" -> "w"
+        [TestCase(4, 4)] // " " -> " "
+        [TestCase(5, 5)] // "Y" (translated from "用") -> original index 5
+        [TestCase(6, 5)] // "o" (translated from "用") -> original index 5
+        [TestCase(7, 5)] // "n" (translated from "用") -> original index 5
+        [TestCase(8, 5)] // "g" (translated from "用") -> original index 5
+        [TestCase(10, 6)] // "H" (translated from "户") -> original index 6
+        [TestCase(11, 6)] // "u" (translated from "户") -> original index 6
         public void MapToOriginalIndex_ShouldReturnExpectedIndex(int translatedIndex, int expectedOriginalIndex)
         {
             var mapping = new TranslationMapping();
-            // a测试
-            // a Ce Shi
-            mapping.AddNewIndex(0, 1);
-            mapping.AddNewIndex(2, 2);
-            mapping.AddNewIndex(5, 3);
+            // Test case :
+            // 0123456
+            // Flow 用户
+            // 012345678901
+            // Flow Yong Hu
+            mapping.AddNewIndex(0, 1); // F
+            mapping.AddNewIndex(1, 1); // l
+            mapping.AddNewIndex(2, 1); // o
+            mapping.AddNewIndex(3, 1); // w
+            mapping.AddNewIndex(4, 1); // ' '
+            mapping.AddNewIndex(5, 4); // 用 -> Yong
+            mapping.AddNewIndex(10, 2); // 户 -> Hu
 
             var result = mapping.MapToOriginalIndex(translatedIndex);
             ClassicAssert.AreEqual(expectedOriginalIndex, result);

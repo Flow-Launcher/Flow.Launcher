@@ -1,7 +1,9 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cc="clr-namespace:Flow.Launcher.Resources.Controls;assembly=Flow.Launcher"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
+    xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
     xmlns:userSettings="clr-namespace:Flow.Launcher.Infrastructure.UserSettings;assembly=Flow.Launcher.Infrastructure">
     <CornerRadius x:Key="ItemRadius">0</CornerRadius>
     <Thickness x:Key="ItemMargin">0</Thickness>
@@ -46,20 +48,20 @@
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
                         SnapsToDevicePixels="True">
-                        <ScrollViewer
+                        <ui:ScrollViewerEx
                             x:Name="PART_ContentHost"
                             Background="{TemplateBinding Background}"
                             Focusable="false"
                             HorizontalScrollBarVisibility="Hidden"
                             VerticalScrollBarVisibility="Hidden">
-                            <ScrollViewer.ContentTemplate>
+                            <ui:ScrollViewerEx.ContentTemplate>
                                 <DataTemplate>
                                     <Grid Background="{Binding Background, ElementName=PART_ContentHost}">
                                         <ContentPresenter Content="{Binding Path=Content, ElementName=PART_ContentHost}" />
                                     </Grid>
                                 </DataTemplate>
-                            </ScrollViewer.ContentTemplate>
-                        </ScrollViewer>
+                            </ui:ScrollViewerEx.ContentTemplate>
+                        </ui:ScrollViewerEx>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
@@ -250,9 +252,12 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListBox">
-                    <ScrollViewer Focusable="false" Template="{DynamicResource ScrollViewerControlTemplate}">
-                        <ScrollViewer.Style>
-                            <Style TargetType="ScrollViewer">
+                    <cc:CustomScrollViewerEx
+                        x:Name="ListBoxScrollViewer"
+                        Focusable="False"
+                        Template="{DynamicResource ScrollViewerControlTemplate}">
+                        <cc:CustomScrollViewerEx.Style>
+                            <Style TargetType="cc:CustomScrollViewerEx">
                                 <Style.Triggers>
                                     <Trigger Property="ComputedVerticalScrollBarVisibility" Value="Visible">
                                         <Setter Property="Margin" Value="0 0 0 0" />
@@ -264,9 +269,9 @@
                                     </Trigger>
                                 </Style.Triggers>
                             </Style>
-                        </ScrollViewer.Style>
+                        </cc:CustomScrollViewerEx.Style>
                         <VirtualizingStackPanel IsItemsHost="True" />
-                    </ScrollViewer>
+                    </cc:CustomScrollViewerEx>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
