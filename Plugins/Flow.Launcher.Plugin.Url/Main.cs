@@ -83,31 +83,15 @@ namespace Flow.Launcher.Plugin.Url
             if (decimal.TryParse(input, out _))
                 return false;
 
-            // Check if it's a bare IP address (without protocol)
-            var inputHost = Uri.TryCreate(input, UriKind.Absolute, out var tempUri) ? tempUri.Host : input.Split(['/', ':'])[0].Trim('[', ']');
-            if (IPAddress.TryParse(inputHost, out var ip))
-            {
-                // Exclude invalid address 0.0.0.0
-                if (ip.Equals(IPAddress.Any))
-                    return false;
-
+            // Check if it's a bare IP address with optional port and path
+            var ipPart = input.Split('/')[0]; // Remove path
+            if (IPEndPoint.TryParse(ipPart, out var endpoint) && !endpoint.Address.Equals(IPAddress.Any))
                 return true;
-            }
 
-            // Check if it's a bare IPv6 address (contains multiple colons but no protocol)
-            if (input.Count(c => c == ':') > 1 && !input.Contains("://"))
-            {
-                var ipv6Part = input.Split('/')[0].Trim('[', ']');
-                if (IPAddress.TryParse(ipv6Part, out _))
-                    return true;
-            }
-
-            // Validate using Uri after adding protocol
-            var urlToValidate = input;
-            if (!UrlSchemes.Any(s => input.StartsWith(s, StringComparison.OrdinalIgnoreCase)))
-            {
-                urlToValidate = GetHttpPreference() + "://" + input;
-            }
+            // Add protocol if missing for Uri validation
+            var urlToValidate = UrlSchemes.Any(s => input.StartsWith(s, StringComparison.OrdinalIgnoreCase))
+                ? input
+                : GetHttpPreference() + "://" + input;
 
             if (!Uri.TryCreate(urlToValidate, UriKind.Absolute, out var uri))
                 return false;
@@ -116,24 +100,22 @@ namespace Flow.Launcher.Plugin.Url
             if (uri.Scheme != Uri.UriSchemeHttp && uri.Scheme != Uri.UriSchemeHttps && uri.Scheme != Uri.UriSchemeFtp)
                 return false;
 
-            // Validate host: must contain a dot (domain), be localhost, or be a valid IP
             var host = uri.Host;
+
+            // localhost is valid
             if (host.Equals("localhost", StringComparison.OrdinalIgnoreCase))
                 return true;
 
+            // Valid IP address (excluding 0.0.0.0)
             if (IPAddress.TryParse(host, out var hostIp))
                 return !hostIp.Equals(IPAddress.Any);
 
-            // Domain must contain at least one dot, and dot cannot be at the start or end
-            if (!host.Contains('.'))
-                return false;
-
-            // Ensure valid domain format (not starting or ending with dot, TLD at least 2 characters)
+            // Domain must have valid format with TLD
             var parts = host.Split('.');
             if (parts.Length < 2 || parts.Any(string.IsNullOrEmpty))
                 return false;
 
-            // TLD must be at least 2 characters
+            // TLD must be at least 2 letters
             var tld = parts[^1];
             return tld.Length >= 2 && tld.All(char.IsLetter);
         }
