@@ -147,6 +147,8 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     public List<LastQueryModeData> LastQueryModes { get; } =
         DropdownDataGeneric<LastQueryMode>.GetValues<LastQueryModeData>("LastQuery");
 
+    public List<HistoryStyleLocalized> HistoryStyles { get; } = HistoryStyleLocalized.GetValues();
+
     public bool EnableDialogJump
     {
         get => Settings.EnableDialogJump;
@@ -213,6 +215,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         DropdownDataGeneric<SearchWindowAligns>.UpdateLabels(SearchWindowAligns);
         DropdownDataGeneric<SearchPrecisionScore>.UpdateLabels(SearchPrecisionScores);
         DropdownDataGeneric<LastQueryMode>.UpdateLabels(LastQueryModes);
+        HistoryStyleLocalized.UpdateLabels(HistoryStyles);
         DropdownDataGeneric<DoublePinyinSchemas>.UpdateLabels(DoublePinyinSchemas);
         DropdownDataGeneric<DialogJumpWindowPositions>.UpdateLabels(DialogJumpWindowPositions);
         DropdownDataGeneric<DialogJumpResultBehaviours>.UpdateLabels(DialogJumpResultBehaviours);
