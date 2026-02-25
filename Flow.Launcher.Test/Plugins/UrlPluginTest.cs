@@ -12,8 +12,8 @@ namespace Flow.Launcher.Test.Plugins
         [OneTimeSetUp]
         public void OneTimeSetup()
         {
-            var settingsField = typeof(Main).GetField("Settings", BindingFlags.NonPublic | BindingFlags.Static);
-            settingsField?.SetValue(null, new Settings());
+            var settingsProperty = typeof(Main).GetProperty("Settings", BindingFlags.NonPublic | BindingFlags.Static);
+            settingsProperty?.SetValue(null, new Settings());
 
             plugin = new Main();
         }

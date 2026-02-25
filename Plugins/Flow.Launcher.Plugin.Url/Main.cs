@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
+using System.Net;
 using System.Windows.Controls;
 using Flow.Launcher.Plugin.SharedCommands;
 
@@ -9,49 +9,6 @@ namespace Flow.Launcher.Plugin.Url
 {
     public class Main : IPlugin, IPluginI18n, ISettingProvider
     {
-        //based on https://gist.github.com/dperini/729294
-        private const string UrlPattern = "^" +
-            // protocol identifier
-            "(?:(?:https?|ftp)://|)" +
-            // user:pass authentication
-            "(?:\\S+(?::\\S*)?@)?" +
-            "(?:" +
-            // IPv6 address with optional brackets (brackets required if followed by port)
-            // IPv6 with brackets
-            "(?:\\[(?:[0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}\\]|" + // standard IPv6
-            "\\[(?:[0-9a-fA-F]{1,4}:){1,7}:\\]|" + // IPv6 with trailing ::
-            "\\[(?:[0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}\\]|" + // IPv6 compressed
-            "\\[::(?:[0-9a-fA-F]{1,4}:){0,6}[0-9a-fA-F]{1,4}\\]|" + // IPv6 with leading ::
-            "\\[(?:(?:[0-9a-fA-F]{1,4}:){1,6}|:):(?:[0-9a-fA-F]{1,4}:){0,5}[0-9a-fA-F]{1,4}\\]|" + // IPv6 with :: in the middle
-            "\\[::1\\])" + // IPv6 loopback
-            "|" +
-            // IPv6 without brackets (only when no port follows)
-            "(?:(?:[0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}|" + // standard IPv6
-            "(?:[0-9a-fA-F]{1,4}:){1,7}:|" + // IPv6 with trailing ::
-            "(?:[0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|" + // IPv6 compressed
-            "::(?:[0-9a-fA-F]{1,4}:){0,6}[0-9a-fA-F]{1,4}|" + // IPv6 with leading ::
-            "(?:(?:[0-9a-fA-F]{1,4}:){1,6}|:):(?:[0-9a-fA-F]{1,4}:){0,5}[0-9a-fA-F]{1,4}|" + // IPv6 with :: in the middle
-            "::1)(?!:[0-9])" + // IPv6 loopback (not followed by port)
-            "|" +
-            // IPv4 address - all valid addresses including private networks (excluding 0.0.0.0)
-            "(?:(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|[1-9])\\.(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d))" +
-            "|" +
-            // localhost
-            "localhost" +
-            "|" +
-            // host name
-            "(?:(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)" +
-            // domain name
-            "(?:\\.(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)*" +
-            // TLD identifier
-            "(?:\\.(?:[a-z\\u00a1-\\uffff]{2,}))" +
-            ")" +
-            // port number
-            "(?::\\d{1,5})?" +
-            // resource path
-            "(?:/\\S*)?" +
-            "$";
-        private readonly Regex UrlRegex = new(UrlPattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
         internal static PluginInitContext Context { get; private set; }
         internal static Settings Settings { get; private set; }
 
@@ -117,11 +74,68 @@ namespace Flow.Launcher.Plugin.Url
 
         public bool IsURL(string raw)
         {
-            raw = raw.ToLower();
+            if (string.IsNullOrWhiteSpace(raw))
+                return false;
 
-            if (UrlRegex.Match(raw).Value == raw) return true;
+            var input = raw.Trim();
 
-            return false;
+            // Exclude numbers (e.g. 1.2345)
+            if (decimal.TryParse(input, out _))
+                return false;
+
+            // Check if it's a bare IP address (without protocol)
+            var inputHost = Uri.TryCreate(input, UriKind.Absolute, out var tempUri) ? tempUri.Host : input.Split(['/', ':'])[0].Trim('[', ']');
+            if (IPAddress.TryParse(inputHost, out var ip))
+            {
+                // Exclude invalid address 0.0.0.0
+                if (ip.Equals(IPAddress.Any))
+                    return false;
+
+                return true;
+            }
+
+            // Check if it's a bare IPv6 address (contains multiple colons but no protocol)
+            if (input.Count(c => c == ':') > 1 && !input.Contains("://"))
+            {
+                var ipv6Part = input.Split('/')[0].Trim('[', ']');
+                if (IPAddress.TryParse(ipv6Part, out _))
+                    return true;
+            }
+
+            // Validate using Uri after adding protocol
+            var urlToValidate = input;
+            if (!UrlSchemes.Any(s => input.StartsWith(s, StringComparison.OrdinalIgnoreCase)))
+            {
+                urlToValidate = GetHttpPreference() + "://" + input;
+            }
+
+            if (!Uri.TryCreate(urlToValidate, UriKind.Absolute, out var uri))
+                return false;
+
+            // Validate protocol
+            if (uri.Scheme != Uri.UriSchemeHttp && uri.Scheme != Uri.UriSchemeHttps && uri.Scheme != Uri.UriSchemeFtp)
+                return false;
+
+            // Validate host: must contain a dot (domain), be localhost, or be a valid IP
+            var host = uri.Host;
+            if (host.Equals("localhost", StringComparison.OrdinalIgnoreCase))
+                return true;
+
+            if (IPAddress.TryParse(host, out var hostIp))
+                return !hostIp.Equals(IPAddress.Any);
+
+            // Domain must contain at least one dot, and dot cannot be at the start or end
+            if (!host.Contains('.'))
+                return false;
+
+            // Ensure valid domain format (not starting or ending with dot, TLD at least 2 characters)
+            var parts = host.Split('.');
+            if (parts.Length < 2 || parts.Any(string.IsNullOrEmpty))
+                return false;
+
+            // TLD must be at least 2 characters
+            var tld = parts[^1];
+            return tld.Length >= 2 && tld.All(char.IsLetter);
         }
 
         public void Init(PluginInitContext context)
