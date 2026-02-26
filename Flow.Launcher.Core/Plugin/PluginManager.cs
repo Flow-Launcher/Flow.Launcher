@@ -388,7 +388,7 @@ namespace Flow.Launcher.Core.Plugin
                     return [.. GetGlobalPlugins().Where(p => !PluginModified(p.Metadata.ID))];
             }
 
-            var validPlugins = plugins.Where(p => !PluginModified(p.Metadata.ID));
+            var validPlugins = plugins.Where(p => !p.Metadata.Disabled && !PluginModified(p.Metadata.ID));
             if (dialogJump)
                 validPlugins = validPlugins.Where(p => p.Plugin is IAsyncDialogJump);
 
