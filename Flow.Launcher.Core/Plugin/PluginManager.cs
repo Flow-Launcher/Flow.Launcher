@@ -816,6 +816,11 @@ namespace Flow.Launcher.Core.Plugin
                     lock (plugins)
                     {
                         plugins.RemoveAll(p => p.Metadata.ID == id);
+
+                        if (plugins.Count == 0)
+                        {
+                            _nonGlobalPlugins.TryRemove(new KeyValuePair<string, List<PluginPair>>(oldActionkeyword, plugins));
+                        }
                     }
                 }
             }
@@ -1081,6 +1086,11 @@ namespace Flow.Launcher.Core.Plugin
                     lock (entry.Value)
                     {
                         entry.Value.RemoveAll(p => p.Metadata.ID == plugin.ID);
+
+                        if (entry.Value.Count == 0)
+                        {
+                            _nonGlobalPlugins.TryRemove(entry.Key, out var __);
+                        }
                     }
                 }
             }
