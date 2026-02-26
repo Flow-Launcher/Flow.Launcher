@@ -26,7 +26,7 @@
     <!--  Plugin Loader  -->
     <system:String x:Key="pluginHasErrored">The following plugin has errored and cannot be loaded:</system:String>
     <system:String x:Key="pluginsHaveErrored">The following plugins have errored and cannot be loaded:</system:String>
-    <system:String x:Key="referToLogs">Please refer to the logs for more information</system:String>
+    <system:String x:Key="referToLogs">Hãy xem log để biết thêm thông tin</system:String>
 
     <!--  Http  -->
     <system:String x:Key="pleaseTryAgain">Xin vui lòng thử lại</system:String>
@@ -34,11 +34,11 @@
 
     <!--  AbstractPluginEnvironment  -->
     <system:String x:Key="failToInstallTypeScriptEnv">Failed to install TypeScript environment. Please try again later</system:String>
-    <system:String x:Key="failToInstallPythonEnv">Failed to install Python environment. Please try again later.</system:String>
+    <system:String x:Key="failToInstallPythonEnv">Cài đặt môi trường Python thất bại. Xin vui lòng thử lại sau.</system:String>
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Không thể đăng ký phím nóng &quot;{0}&quot;. Phím nóng có thể được sử dụng bởi một chương trình khác. Chuyển sang phím nóng khác hoặc thoát khỏi chương trình khác.</system:String>
-    <system:String x:Key="unregisterHotkeyFailed">Failed to unregister hotkey &quot;{0}&quot;. Please try again or see log for details</system:String>
+    <system:String x:Key="unregisterHotkeyFailed">Hủy đăng ký phím nóng &quot;{0}&quot; thất bại. Xin vui lòng thử lại hoặc xem log để biết thêm chi tiết</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">Không thể khởi động {0}</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Định dạng tệp plugin Flow Launcher không chính xác</system:String>
@@ -66,7 +66,7 @@
     <system:String x:Key="queryTextBoxPlaceholder">Gõ vào đây để tìm kiếm</system:String>
     <system:String x:Key="pluginStillInitializing">{0}: Plugin này vẫn đang được khởi tạo...</system:String>
     <system:String x:Key="pluginStillInitializingSubtitle">Select this result to requery</system:String>
-    <system:String x:Key="pluginFailedToRespond">{0}: Failed to respond!</system:String>
+    <system:String x:Key="pluginFailedToRespond">{0}: Phản hồi thất bại!</system:String>
     <system:String x:Key="pluginFailedToRespondSubtitle">Hãy chọn kết quả này để biết thêm thông tin</system:String>
 
     <!--  Setting General  -->
@@ -75,14 +75,14 @@
     <system:String x:Key="portableMode">Chế độ Portabler</system:String>
     <system:String x:Key="portableModeToolTIp">Lưu trữ tất cả cài đặt và dữ liệu người dùng trong một thư mục (hữu ích khi sử dụng với thiết bị lưu trữ di động hoặc dịch vụ đám mây).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Khởi động Flow Launcher khi khởi động hệ thống</system:String>
-    <system:String x:Key="useLogonTaskForStartup">Use logon task instead of startup entry for faster startup experience</system:String>
-    <system:String x:Key="useLogonTaskForStartupTooltip">After uninstallation, you need to manually remove this task (Flow.Launcher Startup) via Task Scheduler</system:String>
+    <system:String x:Key="useLogonTaskForStartup">Dùng logon task thay cho startup entry để khởi động nhanh hơn</system:String>
+    <system:String x:Key="useLogonTaskForStartupTooltip">Sau khi gỡ cài đặt, bạn cần tự xóa task này (Flow.Launcher Startup) bằng Task Scheduler</system:String>
     <system:String x:Key="setAutoStartFailed">Không lưu được tính năng tự khởi động khi khởi động hệ thống</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Ẩn Flow Launcher khi mất tiêu điểm</system:String>
-    <system:String x:Key="showTaskbarWhenOpened">Show taskbar when Flow Launcher is opened</system:String>
-    <system:String x:Key="showTaskbarWhenOpenedToolTip">Temporarily show the taskbar when Flow Launcher is opened, useful for auto-hidden taskbars.</system:String>
+    <system:String x:Key="showTaskbarWhenOpened">Hiện thanh tác vụ khi đang mở Flow Launcher</system:String>
+    <system:String x:Key="showTaskbarWhenOpenedToolTip">Tạm thời hiện thanh tác vụ khi Flow Launcher được bật, hữu ích khi bạn dùng taskbar tự động ẩn.</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Không hiển thị thông báo khi có phiên bản mới</system:String>
-    <system:String x:Key="SearchWindowPosition">Search Window Location</system:String>
+    <system:String x:Key="SearchWindowPosition">Vị trí cửa sổ tìm kiếm</system:String>
     <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Ghi nhớ vị trí cuối cùng</system:String>
     <system:String x:Key="SearchWindowScreenCursor">Màn hình bằng con trỏ chuột</system:String>
     <system:String x:Key="SearchWindowScreenFocus">Màn hình có cửa sổ được tập trung</system:String>
@@ -117,7 +117,7 @@
     <system:String x:Key="typingStartEn">Luôn bắt đầu nhập ở chế độ tiếng Anh</system:String>
     <system:String x:Key="typingStartEnTooltip">Tạm thời chuyển phương thức nhập sang tiếng Anh khi kích hoạt Flow.</system:String>
     <system:String x:Key="autoUpdates">Cập nhật tự động</system:String>
-    <system:String x:Key="autoUpdatesTooltip">Automatically check and update the app when available</system:String>
+    <system:String x:Key="autoUpdatesTooltip">Tự động kiểm tra và cập nhật app khi có phiên bản mới</system:String>
     <system:String x:Key="select">Chọn</system:String>
     <system:String x:Key="hideOnStartup">Ẩn Flow Launcher khi khởi động</system:String>
     <system:String x:Key="hideOnStartupToolTip">Flow Launcher sẽ ẩn trong khay hệ thống sau khi khởi động.</system:String>
@@ -173,9 +173,9 @@
     <system:String x:Key="KoreanImeRegistryTooltip">You can change the Previous Korean IME settings directly from here</system:String>
     <system:String x:Key="KoreanImeSettingChangeFailTitle">Failed to change Korean IME setting</system:String>
     <system:String x:Key="KoreanImeSettingChangeFailSubTitle">Please check your system registry access or contact support.</system:String>
-    <system:String x:Key="homePage">Home Page</system:String>
+    <system:String x:Key="homePage">Trang chủ</system:String>
     <system:String x:Key="homePageToolTip">Show home page results when query text is empty.</system:String>
-    <system:String x:Key="historyResultsForHomePage">Show History Results in Home Page</system:String>
+    <system:String x:Key="historyResultsForHomePage">Hiện lịch sử kết quả ở trang chủ</system:String>
     <system:String x:Key="historyResultsCountForHomePage">Maximum History Results Shown in Home Page</system:String>
     <system:String x:Key="historyStyle">History Style</system:String>
     <system:String x:Key="historyStyleTooltip">Choose the type of history to show in the History and Home Page</system:String>
@@ -212,7 +212,7 @@
     <system:String x:Key="DisplayModeOnOff">Đã bật</system:String>
     <system:String x:Key="DisplayModePriority">Ưu tiên</system:String>
     <system:String x:Key="DisplayModeSearchDelay">Search Delay</system:String>
-    <system:String x:Key="DisplayModeHomeOnOff">Home Page</system:String>
+    <system:String x:Key="DisplayModeHomeOnOff">Trang chủ</system:String>
     <system:String x:Key="currentPriority">Ưu tiên hiện tại</system:String>
     <system:String x:Key="newPriority">Ưu tiên mới</system:String>
     <system:String x:Key="priority">Ưu tiên</system:String>
@@ -255,7 +255,7 @@
     <system:String x:Key="ErrorInstallingPlugin">Lỗi cài đặt plugin</system:String>
     <system:String x:Key="ErrorUninstallingPlugin">Lỗi cài đặt plugin</system:String>
     <system:String x:Key="ErrorUpdatingPlugin">Error updating plugin</system:String>
-    <system:String x:Key="KeepPluginSettingsTitle">Keep plugin settings</system:String>
+    <system:String x:Key="KeepPluginSettingsTitle">Giữ lại các cài đặt plugin</system:String>
     <system:String x:Key="KeepPluginSettingsSubtitle">Do you want to keep the settings of the plugin for the next usage?</system:String>
     <system:String x:Key="InstallSuccessNoRestart">Plugin {0} successfully installed. Please restart Flow.</system:String>
     <system:String x:Key="UninstallSuccessNoRestart">Plugin {0} successfully uninstalled. Please restart Flow.</system:String>
@@ -545,7 +545,7 @@
     <system:String x:Key="searchDelayTimeTips">Input the search delay time in ms you like to use for the plugin. Input empty if you don't want to specify any, and the plugin will use default search delay time.</system:String>
 
     <!--  Search Delay Settings Dialog  -->
-    <system:String x:Key="homeTitle">Home Page</system:String>
+    <system:String x:Key="homeTitle">Trang chủ</system:String>
     <system:String x:Key="homeTips">Enable the plugin home page state if you like to show the plugin results when query is empty.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
