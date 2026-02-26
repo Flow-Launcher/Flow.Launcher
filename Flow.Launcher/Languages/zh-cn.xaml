@@ -2,7 +2,7 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--  Startup  -->
     <system:String x:Key="runtimePluginInstalledChooseRuntimePrompt">
-        Flow 检测到您已安装 {0} 个插件，需要 {1} 才能运行。是否要下载 {1}？
+        Flow 检测到您已安装 {0} 插件，需要 {1} 才能运行。是否要下载 {1}？
         {2}{2}
         如果已安装，请单击“否”，系统将提示您选择包含 {1} 可执行文件的文件夹
     </system:String>
@@ -79,6 +79,8 @@
     <system:String x:Key="useLogonTaskForStartupTooltip">卸载后，您需要通过任务计划程序手动移除此任务 (Flow.Launcher Startup)</system:String>
     <system:String x:Key="setAutoStartFailed">设置开机自启时出错</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">失去焦点时自动隐藏 Flow Launcher</system:String>
+    <system:String x:Key="showTaskbarWhenOpened">打开 Flow 时显示任务栏</system:String>
+    <system:String x:Key="showTaskbarWhenOpenedToolTip">打开 Flow 时临时显示任务栏，用于自动隐藏任务栏</system:String>
     <system:String x:Key="dontPromptUpdateMsg">不显示新版本提示</system:String>
     <system:String x:Key="SearchWindowPosition">搜索窗口位置</system:String>
     <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">记住上次的位置</system:String>

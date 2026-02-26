@@ -79,6 +79,8 @@
     <system:String x:Key="useLogonTaskForStartupTooltip">After uninstallation, you need to manually remove this task (Flow.Launcher Startup) via Task Scheduler</system:String>
     <system:String x:Key="setAutoStartFailed">Errore nell'impostazione del lancio all'avvio</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Nascondi Flow Launcher quando perde il focus</system:String>
+    <system:String x:Key="showTaskbarWhenOpened">Show taskbar when Flow Launcher is opened</system:String>
+    <system:String x:Key="showTaskbarWhenOpenedToolTip">Temporarily show the taskbar when Flow Launcher is opened, useful for auto-hidden taskbars.</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Non mostrare le notifiche per una nuova versione</system:String>
     <system:String x:Key="SearchWindowPosition">Search Window Location</system:String>
     <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Ricorda L'Ultima Posizione</system:String>
@@ -147,8 +149,8 @@
     <system:String x:Key="searchDelay">Search Delay</system:String>
     <system:String x:Key="searchDelayToolTip">Adds a short delay while typing to reduce UI flicker and result load. Recommended if your typing speed is average.</system:String>
     <system:String x:Key="searchDelayNumberBoxToolTip">Enter the wait time (in ms) until input is considered complete. This can only be edited if Search Delay is enabled.</system:String>
-    <system:String x:Key="searchDelayTime">Default Search Delay Time</system:String>
-    <system:String x:Key="searchDelayTimeToolTip">Wait time before showing results after typing stops. Higher values wait longer. (ms)</system:String>
+    <system:String x:Key="searchDelayTime">Tempo predefinito ritardo ricerca</system:String>
+    <system:String x:Key="searchDelayTimeToolTip">Tempo di attesa prima di mostrare i risultati dopo l'interruzione della digitazione. Valori più alti attendono più a lungo. (ms)</system:String>
     <system:String x:Key="KoreanImeTitle">Information for Korean IME user</system:String>
     <system:String x:Key="KoreanImeGuide">
         The Korean input method used in Windows 11 may cause some issues in Flow Launcher.
@@ -265,11 +267,11 @@
     <system:String x:Key="UpdatePromptTitle">Plugin update</system:String>
     <system:String x:Key="UpdatePromptSubtitle">{0} di {1} {2}{2}Vuoi aggiornare questo plugin?</system:String>
     <system:String x:Key="DownloadingPlugin">Download del plugin</system:String>
-    <system:String x:Key="AutoRestartAfterChange">Automatically restart after installing/uninstalling/updating plugins in plugin store</system:String>
-    <system:String x:Key="ZipFileNotHavePluginJson">Zip file does not have a valid plugin.json configuration</system:String>
+    <system:String x:Key="AutoRestartAfterChange">Riavvia automaticamente dopo l'installazione/disinstallazione/aggiornamento dei plugin nel Plugin Store</system:String>
+    <system:String x:Key="ZipFileNotHavePluginJson">Il file zip non contiene una configurazione plugin.json valida</system:String>
     <system:String x:Key="InstallFromUnknownSourceTitle">Installazione da una fonte sconosciuta</system:String>
     <system:String x:Key="InstallFromUnknownSourceSubtitle">This plugin is from an unknown source and it may contain potential risks!{0}{0}Please ensure you understand where this plugin is from and that it is safe.{0}{0}Would you like to continue still?{0}{0}(You can switch off this warning in general section of setting window)</system:String>
-    <system:String x:Key="ZipFiles">Zip files</system:String>
+    <system:String x:Key="ZipFiles">File zip</system:String>
     <system:String x:Key="SelectZipFile">Please select zip file</system:String>
     <system:String x:Key="installLocalPluginTooltip">Install plugin from local path</system:String>
     <system:String x:Key="updateNoResultTitle">Nessun aggiornamento disponibile</system:String>
@@ -469,7 +471,7 @@
     <system:String x:Key="clearlogfolder">Cancella i log</system:String>
     <system:String x:Key="clearlogfolderMessage">Sei sicuro di voler cancellare tutti i log?</system:String>
     <system:String x:Key="cachefolder">Cache Folder</system:String>
-    <system:String x:Key="clearcachefolder">Clear Caches</system:String>
+    <system:String x:Key="clearcachefolder">Cancella cache</system:String>
     <system:String x:Key="clearcachefolderMessage">Are you sure you want to delete all caches?</system:String>
     <system:String x:Key="clearfolderfailMessage">Failed to clear part of folders and files. Please see log file for more information</system:String>
     <system:String x:Key="welcomewindow">Wizard</system:String>
@@ -636,7 +638,7 @@ Se si aggiunge un prefisso '@' mentre si inserisce una scorciatoia, corrisponde 
     <!--  Plugin Update Window  -->
     <system:String x:Key="restartAfterUpdating">Restart Flow Launcher after updating plugins</system:String>
     <system:String x:Key="updatePluginCheckboxContent">{0}: Update from v{1} to v{2}</system:String>
-    <system:String x:Key="updatePluginNoSelected">No plugin selected</system:String>
+    <system:String x:Key="updatePluginNoSelected">Nessun plugin selezionato</system:String>
 
     <!--  Welcome Window  -->
     <system:String x:Key="Skip">Salta</system:String>
