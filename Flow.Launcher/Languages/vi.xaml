@@ -13,14 +13,14 @@
         Click yes if you would like select the {0} executable again. Click no if you would like to download {1}
     </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">Unable to set {0} executable path, please try from Flow's settings (scroll down to the bottom).</system:String>
-    <system:String x:Key="failedToInitializePluginsTitle">Fail to Init Plugins</system:String>
+    <system:String x:Key="failedToInitializePluginsTitle">Khởi tạo các Plugin thất bại</system:String>
     <system:String x:Key="failedToInitializePluginsMessage">Plugins: {0} - fail to load and would be disabled, please contact plugin creator for help</system:String>
 
     <!--  Portable  -->
-    <system:String x:Key="restartToDisablePortableMode">Flow Launcher needs to restart to finish disabling portable mode, after the restart your portable data profile will be deleted and roaming data profile kept</system:String>
-    <system:String x:Key="restartToEnablePortableMode">Flow Launcher needs to restart to finish enabling portable mode, after the restart your roaming data profile will be deleted and portable data profile kept</system:String>
-    <system:String x:Key="moveToDifferentLocation">Flow Launcher has detected you enabled portable mode, would you like to move it to a different location?</system:String>
-    <system:String x:Key="shortcutsUninstallerCreated">Flow Launcher has detected you disabled portable mode, the relevant shortcuts and uninstaller entry have been created</system:String>
+    <system:String x:Key="restartToDisablePortableMode">Flow Launcher cần được khởi động lại để hoàn tất tắt chế độ Portable. Sau khi khởi động lại, hồ sơ dữ liệu Portable của bạn sẽ bị xóa và hồ sơ dữ liệu Roaming sẽ được giữ lại</system:String>
+    <system:String x:Key="restartToEnablePortableMode">Flow Launcher cần được khởi động lại để hoàn tất bật chế độ Portable. Sau khi khởi động lại, hồ sơ dữ liệu Roaming của bạn sẽ bị xóa và hồ sơ dữ liệu Portable sẽ được giữ lại</system:String>
+    <system:String x:Key="moveToDifferentLocation">Flow Launcher nhận thấy bạn đã bật chế độ Portable. Bạn có muốn chuyển Flow Launcher tới một vị trí khác không?</system:String>
+    <system:String x:Key="shortcutsUninstallerCreated">Flow Launcher nhận thấy bạn đã tắt chế độ Portable. Những shortcut liên quan và mục gỡ cài đặt đã được tạo</system:String>
     <system:String x:Key="userDataDuplicated">Flow Launcher detected your user data exists both in {0} and {1}. {2}{2}Please delete {1} in order to proceed. No changes have occurred.</system:String>
 
     <!--  Plugin Loader  -->
@@ -29,7 +29,7 @@
     <system:String x:Key="referToLogs">Please refer to the logs for more information</system:String>
 
     <!--  Http  -->
-    <system:String x:Key="pleaseTryAgain">Please try again</system:String>
+    <system:String x:Key="pleaseTryAgain">Xin vui lòng thử lại</system:String>
     <system:String x:Key="parseProxyFailed">Unable to parse Http Proxy</system:String>
 
     <!--  AbstractPluginEnvironment  -->
@@ -63,11 +63,11 @@
     <system:String x:Key="GameModeToolTip">Tạm dừng sử dụng phím nóng.</system:String>
     <system:String x:Key="PositionReset">Đặt lại vị trí</system:String>
     <system:String x:Key="PositionResetToolTip">Cài lại vị trí cửa sổ tìm kiếm</system:String>
-    <system:String x:Key="queryTextBoxPlaceholder">Type here to search</system:String>
-    <system:String x:Key="pluginStillInitializing">{0}: This plugin is still initializing...</system:String>
+    <system:String x:Key="queryTextBoxPlaceholder">Gõ vào đây để tìm kiếm</system:String>
+    <system:String x:Key="pluginStillInitializing">{0}: Plugin này vẫn đang được khởi tạo...</system:String>
     <system:String x:Key="pluginStillInitializingSubtitle">Select this result to requery</system:String>
     <system:String x:Key="pluginFailedToRespond">{0}: Failed to respond!</system:String>
-    <system:String x:Key="pluginFailedToRespondSubtitle">Select this result for more info</system:String>
+    <system:String x:Key="pluginFailedToRespondSubtitle">Hãy chọn kết quả này để biết thêm thông tin</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Cài đặt</system:String>
