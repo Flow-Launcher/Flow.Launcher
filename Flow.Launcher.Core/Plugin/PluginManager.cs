@@ -1089,7 +1089,7 @@ namespace Flow.Launcher.Core.Plugin
 
                         if (entry.Value.Count == 0)
                         {
-                            _nonGlobalPlugins.TryRemove(entry.Key, out var __);
+                            _nonGlobalPlugins.TryRemove(new KeyValuePair<string, List<PluginPair>>(entry.Key, entry.Value));
                         }
                     }
                 }
