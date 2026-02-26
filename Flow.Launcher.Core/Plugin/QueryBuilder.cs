@@ -35,8 +35,7 @@ namespace Flow.Launcher.Core.Plugin
             string possibleActionKeyword = terms[0];
             string[] searchTerms;
 
-            if (nonGlobalPlugins.TryGetValue(possibleActionKeyword, out var pluginPairs)
-                && pluginPairs.Any(plugin => !plugin.Metadata.Disabled))
+            if (nonGlobalPlugins.TryGetValue(possibleActionKeyword, out var pluginPairs) && CheckPlugin(pluginPairs))
             {
                 // use non global plugin for query
                 actionKeyword = possibleActionKeyword;
@@ -60,6 +59,14 @@ namespace Flow.Launcher.Core.Plugin
                 ActionKeyword = actionKeyword,
                 IsHomeQuery = false
             };
+        }
+
+        private static bool CheckPlugin(List<PluginPair> pluginPairs)
+        {
+            lock (pluginPairs)
+            {
+                return pluginPairs.Any(plugin => !plugin.Metadata.Disabled);
+            }
         }
     }
 }
