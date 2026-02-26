@@ -12,6 +12,7 @@
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_comma">Przecinek (,)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_dot">Kropka (.)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_max_decimal_places">Maks. liczba miejsc po przecinku</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_use_thousands_separator">Show thousands separator in results</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_failed_to_copy">Copy failed, please try later</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_show_error_message">Show error message when calculation fails</system:String>
 </ResourceDictionary>
