@@ -4,11 +4,13 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Text.Json.Serialization;
 
 namespace Flow.Launcher.Plugin
 {
     /// <summary>
-    /// Describes a result of a <see cref="Query"/> executed by a plugin
+    /// Describes a result of a <see cref="Query"/> executed by a plugin.
+    /// This or its child classes is serializable.
     /// </summary>
     public class Result
     {
@@ -20,6 +22,8 @@ namespace Flow.Launcher.Plugin
         private string _pluginDirectory;
 
         private string _icoPath;
+
+        private string _icoPathAbsolute;
 
         private string _copyText = string.Empty;
 
@@ -64,15 +68,27 @@ namespace Flow.Launcher.Plugin
         public string AutoCompleteText { get; set; }
 
         /// <summary>
-        /// The image to be displayed for the result.
+        /// Path or URI to the icon image for this result.
+        /// Updates <see cref="IcoPathAbsolute"/> appropriately when set.
         /// </summary>
-        /// <value>Can be a local file path or a URL.</value>
-        /// <remarks>GlyphInfo is prioritized if not null</remarks>
+        /// <remarks>
+        /// Preferred usage: provide a path relative to the plugin directory (for example: "Images\icon.png").
+        /// Because <see cref="IcoPath"/> is serialized, using relative paths keeps the icon reference portable
+        /// when Flow is moved.
+        ///
+        /// Accepted formats:
+        /// - Relative file paths (resolved against <see cref="PluginDirectory"/> into <see cref="IcoPathAbsolute"/>)
+        /// - Absolute file paths (left as-is)
+        /// - HTTP/HTTPS URLs (left as-is)
+        /// - Data URIs (left as-is)
+        /// </remarks>
         public string IcoPath
         {
             get => _icoPath;
             set
             {
+                _icoPath = value;
+
                 // As a standard this property will handle prepping and converting to absolute local path for icon image processing
                 if (!string.IsNullOrEmpty(value)
                     && !string.IsNullOrEmpty(PluginDirectory)
@@ -81,14 +97,22 @@ namespace Flow.Launcher.Plugin
                     && !value.StartsWith("https://", StringComparison.OrdinalIgnoreCase)
                     && !value.StartsWith("data:image", StringComparison.OrdinalIgnoreCase))
                 {
-                    _icoPath = Path.Combine(PluginDirectory, value);
+                    _icoPathAbsolute = Path.Combine(PluginDirectory, value);
                 }
                 else
                 {
-                    _icoPath = value;
+                    _icoPathAbsolute = value;
                 }
             }
         }
+
+        /// <summary>
+        /// Absolute path or URI which is used to load and display the result icon for Flow. 
+        /// This is populated by the <see cref="IcoPath"/> setter.
+        /// If a relative path was provided to <see cref="IcoPath"/>, this property will contain the resolved
+        /// absolute local path after combining with <see cref="PluginDirectory"/>.
+        /// </summary>
+        public string IcoPathAbsolute => _icoPathAbsolute;
 
         /// <summary>
         /// The image to be displayed for the badge of the result.
@@ -131,17 +155,34 @@ namespace Flow.Launcher.Plugin
         /// <summary>
         /// Delegate to load an icon for this result.
         /// </summary>
+        [JsonIgnore]
         public IconDelegate Icon = null;
 
         /// <summary>
         /// Delegate to load an icon for the badge of this result.
         /// </summary>
+        [JsonIgnore]
         public IconDelegate BadgeIcon = null;
+
+        private GlyphInfo _glyph;
 
         /// <summary>
         /// Information for Glyph Icon (Prioritized than IcoPath/Icon if user enable Glyph Icons)
         /// </summary>
-        public GlyphInfo Glyph { get; init; }
+        public GlyphInfo Glyph
+        {
+            get => _glyph;
+            init => _glyph = value;
+        }
+
+        /// <summary>
+        /// Set the Glyph Icon after initialization
+        /// </summary>
+        /// <param name="glyph"></param>
+        public void SetGlyph(GlyphInfo glyph)
+        {
+            _glyph = glyph;
+        }
 
         /// <summary>
         /// An action to take in the form of a function call when the result has been selected.
@@ -151,6 +192,7 @@ namespace Flow.Launcher.Plugin
         /// Its result determines what happens to Flow Launcher's query form:
         /// when true, the form will be hidden; when false, it will stay in focus.
         /// </remarks>
+        [JsonIgnore]
         public Func<ActionContext, bool> Action { get; set; }
 
         /// <summary>
@@ -161,6 +203,7 @@ namespace Flow.Launcher.Plugin
         /// Its result determines what happens to Flow Launcher's query form:
         /// when true, the form will be hidden; when false, it will stay in focus.
         /// </remarks>
+        [JsonIgnore]
         public Func<ActionContext, ValueTask<bool>> AsyncAction { get; set; }
 
         /// <summary>
@@ -203,11 +246,13 @@ namespace Flow.Launcher.Plugin
         /// <example>
         /// As external information for ContextMenu
         /// </example>
+        [JsonIgnore]
         public object ContextData { get; set; }
 
         /// <summary>
         /// Plugin ID that generated this result
         /// </summary>
+        [JsonInclude]
         public string PluginID { get; internal set; }
 
         /// <summary>
@@ -223,6 +268,7 @@ namespace Flow.Launcher.Plugin
         /// <summary>
         /// Customized Preview Panel
         /// </summary>
+        [JsonIgnore]
         public Lazy<UserControl> PreviewPanel { get; set; }
 
         /// <summary>
@@ -352,6 +398,7 @@ namespace Flow.Launcher.Plugin
             /// <summary>
             /// Delegate to get the preview panel's image
             /// </summary>
+            [JsonIgnore]
             public IconDelegate PreviewDelegate { get; set; } = null;
 
             /// <summary>

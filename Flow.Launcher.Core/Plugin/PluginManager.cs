@@ -931,6 +931,18 @@ namespace Flow.Launcher.Core.Plugin
 
             FilesFolders.CopyAll(pluginFolderPath, newPluginPath, (s) => PublicApi.Instance.ShowMsgBox(s));
 
+            // Check if marker file exists and delete it
+            try
+            {
+                var markerFilePath = Path.Combine(newPluginPath, DataLocation.PluginDeleteFile);
+                if (File.Exists(markerFilePath))
+                    File.Delete(markerFilePath);
+            }
+            catch (Exception e)
+            {
+                PublicApi.Instance.LogException(ClassName, $"Failed to delete plugin marker file in {newPluginPath}", e);
+            }
+
             try
             {
                 if (Directory.Exists(tempFolderPluginPath))

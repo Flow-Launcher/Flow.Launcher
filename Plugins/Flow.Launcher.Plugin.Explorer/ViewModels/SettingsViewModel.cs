@@ -532,7 +532,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
         [RelayCommand]
         private void OpenShellPath()
         {
-            var path = PromptUserSelectPath(ResultType.File, Settings.EditorPath != null ? Path.GetDirectoryName(Settings.EditorPath) : null);
+            var path = PromptUserSelectPath(ResultType.File, Settings.ShellPath != null ? Path.GetDirectoryName(Settings.ShellPath) : null);
             if (path is null)
                 return;
 
