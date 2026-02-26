@@ -591,7 +591,10 @@ namespace Flow.Launcher.Core.Plugin
             var nonGlobalPlugins = new Dictionary<string, List<PluginPair>>();
             foreach (var kvp in _nonGlobalPlugins)
             {
-                nonGlobalPlugins.Add(kvp.Key, [.. kvp.Value]);
+                lock (kvp.Value)
+                {
+                    nonGlobalPlugins.Add(kvp.Key, [.. kvp.Value]);
+                }
             }
             return nonGlobalPlugins;
         }
