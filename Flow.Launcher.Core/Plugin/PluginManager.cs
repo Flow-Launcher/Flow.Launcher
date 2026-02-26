@@ -588,7 +588,12 @@ namespace Flow.Launcher.Core.Plugin
 
         public static Dictionary<string, List<PluginPair>> GetNonGlobalPlugins()
         {
-            return _nonGlobalPlugins.ToDictionary();
+            var nonGlobalPlugins = new Dictionary<string, List<PluginPair>>();
+            foreach (var kvp in _nonGlobalPlugins)
+            {
+                nonGlobalPlugins.Add(kvp.Key, [.. kvp.Value]);
+            }
+            return nonGlobalPlugins;
         }
 
         public static List<PluginPair> GetTranslationPlugins()
