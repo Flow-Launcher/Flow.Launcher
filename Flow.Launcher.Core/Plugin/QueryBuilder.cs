@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Core.Plugin
 {
     public static class QueryBuilder
     {
-        public static Query Build(string originalQuery, string trimmedQuery, Dictionary<string, PluginPair> nonGlobalPlugins)
+        public static Query Build(string originalQuery, string trimmedQuery, Dictionary<string, List<PluginPair>> nonGlobalPlugins)
         {
             // home query
             if (string.IsNullOrEmpty(trimmedQuery))
@@ -34,7 +35,8 @@ namespace Flow.Launcher.Core.Plugin
             string possibleActionKeyword = terms[0];
             string[] searchTerms;
 
-            if (nonGlobalPlugins.TryGetValue(possibleActionKeyword, out var pluginPair) && !pluginPair.Metadata.Disabled)
+            if (nonGlobalPlugins.TryGetValue(possibleActionKeyword, out var pluginPairs)
+                && pluginPairs.Any(plugin => !plugin.Metadata.Disabled))
             {
                 // use non global plugin for query
                 actionKeyword = possibleActionKeyword;
