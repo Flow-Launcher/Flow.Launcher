@@ -36,7 +36,7 @@ namespace Flow.Launcher.Test
         {
             var nonGlobalPlugins = new Dictionary<string, List<PluginPair>>
             {
-                { ">", new List<PluginPair>(){ new() { Metadata = new PluginMetadata { ActionKeywords = [">"] } } } }
+                { ">", new List<PluginPair>(){ new() { Metadata = new PluginMetadata { ActionKeywords = [">"], Disabled = true } } } }
             };
 
             Query q = QueryBuilder.Build(">   ping    google.com   -n 20  -6", ">   ping    google.com   -n 20  -6", nonGlobalPlugins);
