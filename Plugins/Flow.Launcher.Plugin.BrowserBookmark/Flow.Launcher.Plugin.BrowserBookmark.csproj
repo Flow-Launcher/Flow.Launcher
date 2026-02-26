@@ -51,6 +51,8 @@
                             $(OutputPath)runtimes\linux-s390x;
                             $(OutputPath)runtimes\linux-x64;
                             $(OutputPath)runtimes\linux-x86;
+                            $(OutputPath)runtimes\linux-musl-riscv64;
+                            $(OutputPath)runtimes\linux-riscv64;
                             $(OutputPath)runtimes\maccatalyst-arm64;
                             $(OutputPath)runtimes\maccatalyst-x64;
                             $(OutputPath)runtimes\osx;
@@ -74,6 +76,8 @@
                             $(PublishDir)runtimes\linux-s390x;
                             $(PublishDir)runtimes\linux-x64;
                             $(PublishDir)runtimes\linux-x86;
+                            $(PublishDir)runtimes\linux-musl-riscv64;
+                            $(PublishDir)runtimes\linux-riscv64;
                             $(PublishDir)runtimes\maccatalyst-arm64;
                             $(PublishDir)runtimes\maccatalyst-x64;
                             $(PublishDir)runtimes\osx;
@@ -105,8 +109,8 @@
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="Flow.Launcher.Localization" Version="0.0.6" />
-    <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.0" />
-    <PackageReference Include="Svg.Skia" Version="3.2.1" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.3" />
+    <PackageReference Include="Svg.Skia" Version="3.4.1" />
     <PackageReference Include="SkiaSharp" Version="3.119.1" />
   </ItemGroup>
 

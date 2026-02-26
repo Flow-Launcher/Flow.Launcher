@@ -100,11 +100,11 @@ namespace Flow.Launcher.Core.Plugin
 
             RPC = new JsonRpc(handler, new JsonRPCPublicAPI(Context.API));
 
-            RPC.AddLocalRpcMethod("UpdateResults", new Action<string, JsonRPCQueryResponseModel>((rawQuery, response) =>
+            RPC.AddLocalRpcMethod("UpdateResults", new Action<string, JsonRPCQueryResponseModel>((trimmedQuery, response) =>
             {
                 var results = ParseResults(response);
                 ResultsUpdated?.Invoke(this,
-                    new ResultUpdatedEventArgs { Query = new Query() { RawQuery = rawQuery }, Results = results });
+                    new ResultUpdatedEventArgs { Query = new Query() { TrimmedQuery = trimmedQuery }, Results = results });
             }));
             RPC.SynchronizationContext = null;
             RPC.StartListening();

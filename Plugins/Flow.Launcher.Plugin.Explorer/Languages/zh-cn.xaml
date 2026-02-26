@@ -56,6 +56,8 @@
     <system:String x:Key="plugin_explorer_actionkeywordview_filecontentsearch">文件内容搜索：</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_indexsearch">索引搜索：</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">快速访问：</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_foldersearch">目录搜索：</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_filesearch">文件搜索：</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_current">当前触发关键字</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_done">确认</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled">已启用</system:String>

@@ -401,7 +401,7 @@ namespace Flow.Launcher.Core.Plugin
                 {
                     Title = Localize.pluginStillInitializing(metadata.Name),
                     SubTitle = Localize.pluginStillInitializingSubtitle(),
-                    AutoCompleteText = query.RawQuery,
+                    AutoCompleteText = query.TrimmedQuery,
                     IcoPath = metadata.IcoPath,
                     PluginDirectory = metadata.PluginDirectory,
                     ActionKeywordAssigned = query.ActionKeyword,
@@ -443,7 +443,7 @@ namespace Flow.Launcher.Core.Plugin
                 {
                     Title = Localize.pluginFailedToRespond(metadata.Name),
                     SubTitle = Localize.pluginFailedToRespondSubtitle(),
-                    AutoCompleteText = query.RawQuery,
+                    AutoCompleteText = query.TrimmedQuery,
                     IcoPath = Constant.ErrorIcon,
                     PluginDirectory = metadata.PluginDirectory,
                     ActionKeywordAssigned = query.ActionKeyword,
@@ -467,7 +467,7 @@ namespace Flow.Launcher.Core.Plugin
                 {
                     Title = Localize.pluginStillInitializing(metadata.Name),
                     SubTitle = Localize.pluginStillInitializingSubtitle(),
-                    AutoCompleteText = query.RawQuery,
+                    AutoCompleteText = query.TrimmedQuery,
                     IcoPath = metadata.IcoPath,
                     PluginDirectory = metadata.PluginDirectory,
                     ActionKeywordAssigned = query.ActionKeyword,
@@ -930,6 +930,18 @@ namespace Flow.Launcher.Core.Plugin
             var newPluginPath = Path.Combine(installDirectory, folderName);
 
             FilesFolders.CopyAll(pluginFolderPath, newPluginPath, (s) => PublicApi.Instance.ShowMsgBox(s));
+
+            // Check if marker file exists and delete it
+            try
+            {
+                var markerFilePath = Path.Combine(newPluginPath, DataLocation.PluginDeleteFile);
+                if (File.Exists(markerFilePath))
+                    File.Delete(markerFilePath);
+            }
+            catch (Exception e)
+            {
+                PublicApi.Instance.LogException(ClassName, $"Failed to delete plugin marker file in {newPluginPath}", e);
+            }
 
             try
             {

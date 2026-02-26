@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Security.Principal;
 using Flow.Launcher.Infrastructure;
@@ -61,14 +62,15 @@ public class AutoStartup
             {
                 if (task.Definition.Actions.FirstOrDefault() is Microsoft.Win32.TaskScheduler.Action taskAction)
                 {
-                    var action = taskAction.ToString().Trim();
+                    var action = taskAction.ToString().Trim(); 
                     var pathCorrect = action.Equals(Constant.ExecutablePath, StringComparison.OrdinalIgnoreCase);
                     var runLevelCorrect = CheckRunLevel(task.Definition.Principal.RunLevel, alwaysRunAsAdministrator);
+                    var priorityCorrect = task.Definition.Settings.Priority == ProcessPriorityClass.Normal;
 
                     if (Win32Helper.IsAdministrator())
                     {
-                        // If path or run level is not correct, we need to unschedule and reschedule the task
-                        if (!pathCorrect || !runLevelCorrect)
+                        // If path, run level or priority is not correct, we need to unschedule and reschedule the task
+                        if (!pathCorrect || !runLevelCorrect || !priorityCorrect)
                         {
                             UnscheduleLogonTask();
                             ScheduleLogonTask(alwaysRunAsAdministrator);
@@ -83,8 +85,8 @@ public class AutoStartup
                             throw new UnauthorizedAccessException("Cannot edit task run level because the app is not running as administrator.");
                         }
 
-                        // If run level is correct and path is not correct, we need to unschedule and reschedule the task
-                        if (!pathCorrect)
+                        // If run level is correct and path or priority is not correct, we need to unschedule and reschedule the task
+                        if (!pathCorrect || !priorityCorrect)
                         {
                             UnscheduleLogonTask();
                             ScheduleLogonTask(alwaysRunAsAdministrator);
@@ -219,6 +221,7 @@ public class AutoStartup
         td.Settings.StopIfGoingOnBatteries = false;
         td.Settings.DisallowStartIfOnBatteries = false;
         td.Settings.ExecutionTimeLimit = TimeSpan.Zero;
+        td.Settings.Priority = ProcessPriorityClass.Normal;
 
         try
         {

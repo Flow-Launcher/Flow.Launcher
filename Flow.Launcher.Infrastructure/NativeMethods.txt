@@ -106,3 +106,7 @@ OpenProcess
 GetProcessId
 DuplicateTokenEx
 CreateProcessWithTokenW
+
+DeviceNotifyCallbackRoutine
+
+MonitorFromWindow

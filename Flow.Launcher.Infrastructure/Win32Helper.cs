@@ -1177,5 +1177,32 @@ cleanup:
         }
 
         #endregion
+
+        #region Taskbar
+
+        public static unsafe void ShowTaskbar()
+        {
+            // Find the taskbar window
+            var taskbarHwnd = PInvoke.FindWindowEx(HWND.Null, HWND.Null, "Shell_TrayWnd", null);
+            if (taskbarHwnd == HWND.Null) return;
+
+            // Magic from https://github.com/Oliviaophia/SmartTaskbar
+            const uint TrayBarFlag = 0x05D1;
+            var mon = PInvoke.MonitorFromWindow(taskbarHwnd, Windows.Win32.Graphics.Gdi.MONITOR_FROM_FLAGS.MONITOR_DEFAULTTONEAREST);
+            PInvoke.PostMessage(taskbarHwnd, TrayBarFlag, new WPARAM(1), new LPARAM((nint)mon.Value));
+        }
+
+        public static void HideTaskbar()
+        {
+            // Find the taskbar window
+            var taskbarHwnd = PInvoke.FindWindowEx(HWND.Null, HWND.Null, "Shell_TrayWnd", null);
+            if (taskbarHwnd == HWND.Null) return;
+
+            // Magic from https://github.com/Oliviaophia/SmartTaskbar
+            const uint TrayBarFlag = 0x05D1;
+            PInvoke.PostMessage(taskbarHwnd, TrayBarFlag, new WPARAM(0), IntPtr.Zero);
+        }
+
+        #endregion
     }
 }

@@ -481,6 +481,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         }
         public bool LeaveCmdOpen { get; set; }
         public bool HideWhenDeactivated { get; set; } = true;
+        public bool ShowTaskbarWhenInvoked { get; set; } = false;
 
         public bool AlwaysRunAsAdministrator { get; set; } = false;
 
