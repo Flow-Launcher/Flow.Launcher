@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
@@ -37,7 +38,7 @@ namespace Flow.Launcher.ViewModel
 
         private Query _lastQuery;
         private bool _previousIsHomeQuery;
-        private Query _progressQuery; // Used for QueryResultAsync
+        private readonly ConcurrentDictionary<Guid, Query> _progressQueryDict = new(); // Used for QueryResultAsync
         private Query _updateQuery; // Used for ResultsUpdated
         private string _queryTextBeforeLeaveResults;
         private string _ignoredQueryText; // Used to ignore query text change when switching between context menu and query results
@@ -1417,6 +1418,9 @@ namespace Flow.Launcher.ViewModel
                 return;
             }
 
+            // Create a Guid for this update session so that we can filter out in progress checking
+            var updateGuid = Guid.NewGuid();
+
             try
             {
                 _updateSource?.Dispose();
@@ -1428,7 +1432,7 @@ namespace Flow.Launcher.ViewModel
 
                 ProgressBarVisibility = Visibility.Hidden;
 
-                _progressQuery = query;
+                _progressQueryDict.TryAdd(updateGuid, query);
                 _updateQuery = query;
 
                 // Switch to ThreadPool thread
@@ -1483,7 +1487,8 @@ namespace Flow.Launcher.ViewModel
                 _ = Task.Delay(200, currentCancellationToken).ContinueWith(_ =>
                 {
                     // start the progress bar if query takes more than 200 ms and this is the current running query and it didn't finish yet
-                    if (_progressQuery != null && _progressQuery.OriginalQuery == query.OriginalQuery)
+                    if (_progressQueryDict.TryGetValue(updateGuid, out var progressQuery) &&
+                        progressQuery.OriginalQuery == query.OriginalQuery)
                     {
                         ProgressBarVisibility = Visibility.Visible;
                     }
@@ -1539,7 +1544,7 @@ namespace Flow.Launcher.ViewModel
 
                 // this should happen once after all queries are done so progress bar should continue
                 // until the end of all querying
-                _progressQuery = null;
+                _progressQueryDict.Remove(updateGuid, out _);
 
                 if (!currentCancellationToken.IsCancellationRequested)
                 {
@@ -1549,8 +1554,8 @@ namespace Flow.Launcher.ViewModel
             }
             finally
             {
-                // this make sures progress query is null when this query is canceled
-                _progressQuery = null;
+                // this ensures the query is removed from the progress tracking dictionary when this query is canceled or completes
+                _progressQueryDict.Remove(updateGuid, out _);
             }
 
             // Local function

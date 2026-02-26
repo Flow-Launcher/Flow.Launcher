@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
-    <system:String x:Key="flowlauncher_plugin_processkiller_plugin_name">Process Killer</system:String>
-    <system:String x:Key="flowlauncher_plugin_processkiller_plugin_description">Kill running processes from Flow Launcher</system:String>
+    <system:String x:Key="flowlauncher_plugin_processkiller_plugin_name">進程結束器</system:String>
+    <system:String x:Key="flowlauncher_plugin_processkiller_plugin_description">使用Flow Launcher終止正在執行的進程</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_processkiller_kill_all">kill all instances of &quot;{0}&quot;</system:String>
-    <system:String x:Key="flowlauncher_plugin_processkiller_kill_all_count">kill {0} processes</system:String>
-    <system:String x:Key="flowlauncher_plugin_processkiller_kill_instances">kill all instances</system:String>
+    <system:String x:Key="flowlauncher_plugin_processkiller_kill_all">刪除{0}的所有實例</system:String>
+    <system:String x:Key="flowlauncher_plugin_processkiller_kill_all_count">終止 {0} 個進程</system:String>
+    <system:String x:Key="flowlauncher_plugin_processkiller_kill_instances">終止所有實例</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_processkiller_show_window_title">Show title for processes with visible windows</system:String>
-    <system:String x:Key="flowlauncher_plugin_processkiller_put_visible_window_process_top">Put processes with visible windows on the top</system:String>
+    <system:String x:Key="flowlauncher_plugin_processkiller_show_window_title">顯示具有可見視窗的進程的標題</system:String>
+    <system:String x:Key="flowlauncher_plugin_processkiller_put_visible_window_process_top">將可見的進程置於最上方</system:String>
 
 </ResourceDictionary>

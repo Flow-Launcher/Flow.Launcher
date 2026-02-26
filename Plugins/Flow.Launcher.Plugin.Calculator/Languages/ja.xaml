@@ -12,6 +12,7 @@
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_comma">コンマ（,）</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_dot">ドット (.)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_max_decimal_places">小数点以下の最大桁数</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_use_thousands_separator">Show thousands separator in results</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_failed_to_copy">コピーに失敗しました。後でやり直してください</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_show_error_message">計算に失敗したときにエラーメッセージを表示</system:String>
 </ResourceDictionary>

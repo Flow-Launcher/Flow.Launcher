@@ -19,9 +19,9 @@
 A quick file search and app launcher for Windows with community-made plugins.</p>
 
 <p align="center">
-Dedicated to making your work flow more seamless. Search everything from applications, files, bookmarks, YouTube, Twitter and more. Flow will continue to evolve, designed to be open and built with the community at heart.</p>
+Dedicated to making your workflow more seamless. Search everything from applications, files, bookmarks, YouTube, Twitter and more. Flow will continue to evolve, designed to be open and built with the community at heart.</p>
 
-<p align="center"> <sub>Remember to star it, flow will love you more :)</sub></p>
+<p align="center"> <sub>Remember to star it, Flow will love you more :)</sub></p>
 
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
@@ -79,7 +79,7 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
 
 <img src="https://user-images.githubusercontent.com/6903107/145018796-658b7c24-a34f-46b6-98d4-cf4f636d8b60.png" width="400">
 
-- Support search using environment variable paths.
+- Supports search using environment variable paths.
 
 ### Web Searches & URLs
 
@@ -135,13 +135,13 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
 <img src="https://user-images.githubusercontent.com/6903107/207159486-1993510f-09f2-4e33-bba7-4ca59ca1bc5a.png" width="400">
 
 - Drag a file/folder to File Explorer, or even Discord.
-- Copy/move behavior can be change via <kbd>Ctrl</kbd> or <kbd>Shift</kbd>, and the operation is displayed on the mouse cursor.
+- Copy/move behavior can be changed via <kbd>Ctrl</kbd> or <kbd>Shift</kbd>, and the operation is displayed on the mouse cursor.
 
 ### Priority
 
 <img src="https://user-images.githubusercontent.com/6903107/144517677-857a2b0a-4b94-4be0-bc89-f35723ecddf9.png" width="400">
 
-- Prioritise the order of each plugin's results.
+- Prioritize the order of each plugin's results.
 
 ### Preview Panel
 
@@ -228,7 +228,7 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
 ## 📦 Plugins
 
 - Support wide range of plugins. Visit [here](https://www.flowlauncher.com/plugins/) for our plugin portfolio.
-- Publish your own plugin to flow! Create plugins in:
+- Publish your own plugin to Flow! Create plugins in:
 
 <p align="center">
 <a href="https://flowlauncher.com/docs/#/develop-dotnet-plugins"><img src="https://user-images.githubusercontent.com/6903107/147870065-4096f233-147c-434e-a3ac-69519582605f.png" width="64"></a>
@@ -327,7 +327,7 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
 | Check For Update                   | Check for new Flow Launcher update                                          |
 | Open Log Location                  | Open Flow Launcher's log location                                           |
 | Index Option                       | Open Windows Search Index window                                            |
-| Flow Launcher Tips                 | Visit Flow Launcher's documentation for more help and how to use tips       |
+| Flow Launcher Tips                 | Visit Flow Launcher's documentation for more help and usage tips            |
 | Flow Launcher UserData Folder      | Open the location where Flow Launcher's settings are stored                 |
 | Toggle Game Mode                   | Toggle Game Mode                                                            |
 | Set Flow Launcher Theme            | Set the Flow Launcher Theme                                                 |
@@ -397,9 +397,9 @@ Our UI library is using [iNKORE.UI.WPF.Modern](https://github.com/iNKORE-NET/UI.
   <img src="https://github.com/iNKORE-NET/UI.WPF.Modern/blob/main/assets/images/banners/UI.WPF.Modern_Main_1280w.png?raw=true" alt="iNKORE.UI.WPF.Modern" width="400">
 </a>
 
-### New changes
+### New Changes
 
-All changes to flow are captured via pull requests. Some new changes will have been merged but still pending release, this means while a change may not exist in the current release, it may very well have been accepted and merged into the dev branch and available as a pre-release download. It is therefore a good idea to search through the open and closed pull requests before you start to make changes to ensure the change you intend to make is not already done.
+All changes to Flow are captured via pull requests. Some new changes may have been merged but are still pending release. This means that while a change may not exist in the current release, it may have been accepted and merged into the dev branch and is available as a pre-release download. It is therefore a good idea to search through the open and closed pull requests before you start to make changes to ensure the change you intend to make is not already done.
 
 Each of the pull requests will be marked with a milestone indicating the planned release version for the change.  
 
@@ -407,7 +407,7 @@ Each of the pull requests will be marked with a milestone indicating the planned
 
 Contributions are very welcome, in addition to the main project (C#) there are also [documentation](https://github.com/Flow-Launcher/docs) (md), [website](https://github.com/Flow-Launcher/flow-launcher.github.io) (html/css) and [others](https://github.com/Flow-Launcher) that can be contributed to. If you are unsure of a change you want to make, let us know in the [Discussions](https://github.com/Flow-Launcher/Flow.Launcher/discussions/categories/ideas), otherwise feel free to submit a pull request.
 
-You will find the main goals of flow placed under the [Projects board](https://github.com/orgs/Flow-Launcher/projects/4), so feel free to contribute on that. If you would like to make small incremental changes, feel free to do so as well.
+You will find the main goals of Flow placed under the [Projects board](https://github.com/orgs/Flow-Launcher/projects/4), so feel free to contribute on that. If you would like to make small incremental changes, feel free to do so as well.
 
 Get in touch if you would like to join the Flow-Launcher Team and help build this great tool.
 
