@@ -79,6 +79,8 @@
     <system:String x:Key="useLogonTaskForStartupTooltip">Nach der Deinstallation müssen Sie diese Aufgabe (Flow.Launcher Startup) via Task-Scheduler manuell entfernen</system:String>
     <system:String x:Key="setAutoStartFailed">Fehler bei Einstellungsstart beim Start</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Flow Launcher ausblenden, wenn Fokus verloren geht</system:String>
+    <system:String x:Key="showTaskbarWhenOpened">Show taskbar when Flow Launcher is opened</system:String>
+    <system:String x:Key="showTaskbarWhenOpenedToolTip">Temporarily show the taskbar when Flow Launcher is opened, useful for auto-hidden taskbars.</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Versionsbenachrichtigungen nicht zeigen</system:String>
     <system:String x:Key="SearchWindowPosition">Ort des Suchfensters</system:String>
     <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Letzte Position merken</system:String>

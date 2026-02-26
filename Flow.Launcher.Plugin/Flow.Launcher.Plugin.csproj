@@ -15,10 +15,10 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>5.1.0</Version>
-    <PackageVersion>5.1.0</PackageVersion>
-    <AssemblyVersion>5.1.0</AssemblyVersion>
-    <FileVersion>5.1.0</FileVersion>
+    <Version>5.2.0</Version>
+    <PackageVersion>5.2.0</PackageVersion>
+    <AssemblyVersion>5.2.0</AssemblyVersion>
+    <FileVersion>5.2.0</FileVersion>
     <PackageId>Flow.Launcher.Plugin</PackageId>
     <Authors>Flow-Launcher</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -72,7 +72,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.102" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.103" PrivateAssets="All" />
     <PackageReference Include="JetBrains.Annotations" Version="2025.2.2" />
     <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.269">
       <PrivateAssets>all</PrivateAssets>

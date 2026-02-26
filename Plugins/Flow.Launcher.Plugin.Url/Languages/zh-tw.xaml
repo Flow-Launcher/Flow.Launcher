@@ -10,13 +10,13 @@
     <system:String x:Key="flowlauncher_plugin_url_plugin_choose">選擇</system:String>
     <system:String x:Key="flowlauncher_plugin_url_plugin_filter">應用程式(*.exe)|*.exe|檔案|*.*</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_url_use_custom_browser">Use custom instead of Flow's default web browser</system:String>
-    <system:String x:Key="flowlauncher_plugin_url_browser_path">Browser path</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_use_custom_browser">使用自訂瀏覽器而非Flow的預設瀏覽器</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_browser_path">瀏覽器路徑</system:String>
 
     <system:String x:Key="flowlauncher_plugin_url_new_tab">新增分頁</system:String>
     <system:String x:Key="flowlauncher_plugin_url_new_window">新增視窗</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_url_private_mode">Private mode</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_private_mode">隱私模式</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_url_usehttps">Prefer https over http</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_usehttps">偏好https而非http</system:String>
 </ResourceDictionary>
