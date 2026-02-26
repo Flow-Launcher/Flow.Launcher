@@ -92,3 +92,5 @@ PBT_APMRESUMESUSPEND
 PowerRegisterSuspendResumeNotification
 PowerUnregisterSuspendResumeNotification
 DeviceNotifyCallbackRoutine
+
+MonitorFromWindow

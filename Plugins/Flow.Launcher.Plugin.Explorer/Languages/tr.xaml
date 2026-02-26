@@ -56,8 +56,8 @@
     <system:String x:Key="plugin_explorer_actionkeywordview_filecontentsearch">Dosya İçeriğini Ara:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_indexsearch">Dizin Araması:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">Hızlı Erişim:</system:String>
-    <system:String x:Key="plugin_explorer_actionkeywordview_foldersearch">Folder Search:</system:String>
-    <system:String x:Key="plugin_explorer_actionkeywordview_filesearch">File Search:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_foldersearch">Klasör Araması:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_filesearch">Dosya Araması:</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_current">Geçerli Anahtar Kelime</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_done">Tamam</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled">Etkin</system:String>
