@@ -380,7 +380,7 @@ namespace Flow.Launcher.Core.Plugin
             if (query is null)
                 return Array.Empty<PluginPair>();
 
-            if (!_nonGlobalPlugins.TryGetValue(query.ActionKeyword, out var plugins))
+            if (!GetNonGlobalPlugins().TryGetValue(query.ActionKeyword, out var plugins))
             {
                 if (dialogJump)
                     return [.. GetGlobalPlugins().Where(p => p.Plugin is IAsyncDialogJump && !PluginModified(p.Metadata.ID))];
