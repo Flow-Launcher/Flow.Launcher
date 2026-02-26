@@ -11,9 +11,9 @@ namespace Flow.Launcher.Test
         [Test]
         public void ExclusivePluginQueryTest()
         {
-            var nonGlobalPlugins = new Dictionary<string, PluginPair>
+            var nonGlobalPlugins = new Dictionary<string, List<PluginPair>>
             {
-                {">", new PluginPair {Metadata = new PluginMetadata {ActionKeywords = new List<string> {">"}}}}
+                { ">", new List<PluginPair>(){ new() { Metadata = new PluginMetadata { ActionKeywords = [">"] } } } }
             };
 
             Query q = QueryBuilder.Build(">   ping    google.com   -n 20  -6", ">   ping    google.com   -n 20  -6", nonGlobalPlugins);
@@ -34,9 +34,9 @@ namespace Flow.Launcher.Test
         [Test]
         public void ExclusivePluginQueryIgnoreDisabledTest()
         {
-            var nonGlobalPlugins = new Dictionary<string, PluginPair>
+            var nonGlobalPlugins = new Dictionary<string, List<PluginPair>>
             {
-                {">", new PluginPair {Metadata = new PluginMetadata {ActionKeywords = new List<string> {">"}, Disabled = true}}}
+                { ">", new List<PluginPair>(){ new() { Metadata = new PluginMetadata { ActionKeywords = [">"] } } } }
             };
 
             Query q = QueryBuilder.Build(">   ping    google.com   -n 20  -6", ">   ping    google.com   -n 20  -6", nonGlobalPlugins);
@@ -51,7 +51,7 @@ namespace Flow.Launcher.Test
         [Test]
         public void GenericPluginQueryTest()
         {
-            Query q = QueryBuilder.Build("file.txt file2 file3", "file.txt file2 file3", new Dictionary<string, PluginPair>());
+            Query q = QueryBuilder.Build("file.txt file2 file3", "file.txt file2 file3", []);
 
             ClassicAssert.AreEqual("file.txt file2 file3", q.Search);
             ClassicAssert.AreEqual("", q.ActionKeyword);
