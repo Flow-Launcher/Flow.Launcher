@@ -293,6 +293,10 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         /// <param name="actionKeyword">The actionkeyword for checking</param>
         /// <returns>True if the actionkeyword is already assigned, False otherwise</returns>
+        /// <remarks>
+        /// Flow now supports to one action keyword to multiple plugins,
+        /// so this method is only used for old Flow compatibility.
+        /// </remarks>
         bool ActionKeywordAssigned(string actionKeyword);
 
         /// <summary>

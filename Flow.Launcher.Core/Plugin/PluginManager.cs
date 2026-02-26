@@ -721,12 +721,12 @@ namespace Flow.Launcher.Core.Plugin
 
         #region Plugin Action Keyword
 
+        [Obsolete("This method is only used for old Flow compatibility.")]
         public static bool ActionKeywordRegistered(string actionKeyword)
         {
-            // this method is only checking for action keywords (defined as not '*') registration
-            // hence the actionKeyword != Query.GlobalPluginWildcardSign logic
-            return actionKeyword != Query.GlobalPluginWildcardSign 
-                && _nonGlobalPlugins.ContainsKey(actionKeyword);
+            // Since now we support to assign one action keyword to multiple plugins,
+            // this check is unnecessary, so we will just return false here to ensure compatibility for old plugins.
+            return false;
         }
 
         /// <summary>
