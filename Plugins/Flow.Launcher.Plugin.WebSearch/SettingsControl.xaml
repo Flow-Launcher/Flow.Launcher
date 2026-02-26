@@ -164,7 +164,7 @@
                     SpinButtonPlacementMode="Compact"
                     ValidationMode="InvalidInputOverwritten"
                     ValueChanged="NumberBox_ValueChanged"
-                    Value="{Binding Settings.MaxSuggestions, Mode=OneWay}" />
+                    Value="{Binding Settings.MaxSuggestions, Mode=TwoWay}" />
             </StackPanel>
             <CheckBox
                 Name="EnableSuggestion"
