@@ -83,9 +83,9 @@ namespace Flow.Launcher.Plugin.Url
             if (decimal.TryParse(input, out _))
                 return false;
 
-            // Check if it's a bare IP address with optional port and path
-            var ipPart = input.Split('/')[0]; // Remove path
-            if (IPEndPoint.TryParse(ipPart, out var endpoint) && !endpoint.Address.Equals(IPAddress.Any))
+            // Check if it's a bare IP address with optional port, path, query, or fragment
+            var ipPart = input.Split('/', '?', '#')[0]; // Remove path, query, and fragment
+            if (IPEndPoint.TryParse(ipPart, out var endpoint) && !endpoint.Address.Equals(IPAddress.Any) && !endpoint.Address.Equals(IPAddress.IPv6Any))
                 return true;
 
             // Add protocol if missing for Uri validation
@@ -108,16 +108,16 @@ namespace Flow.Launcher.Plugin.Url
 
             // Valid IP address (excluding 0.0.0.0)
             if (IPAddress.TryParse(host, out var hostIp))
-                return !hostIp.Equals(IPAddress.Any);
+                return !hostIp.Equals(IPAddress.Any) && !hostIp.Equals(IPAddress.IPv6Any);
 
             // Domain must have valid format with TLD
             var parts = host.Split('.');
             if (parts.Length < 2 || parts.Any(string.IsNullOrEmpty))
                 return false;
 
-            // TLD must be at least 2 letters
+            // TLD must be at least 2 characters, allowing letters and digits
             var tld = parts[^1];
-            return tld.Length >= 2 && tld.All(char.IsLetter);
+            return tld.Length >= 2 && tld.All(char.IsLetterOrDigit);
         }
 
         public void Init(PluginInitContext context)
