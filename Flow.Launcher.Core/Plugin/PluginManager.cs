@@ -778,7 +778,10 @@ namespace Flow.Launcher.Core.Plugin
             }
 
             // Update action keywords and action keyword in plugin metadata
-            plugin.Metadata.ActionKeywords.Add(newActionKeyword);
+            if (!plugin.Metadata.ActionKeywords.Contains(newActionKeyword))
+            {
+                plugin.Metadata.ActionKeywords.Add(newActionKeyword);
+            }
             if (plugin.Metadata.ActionKeywords.Count > 0)
             {
                 plugin.Metadata.ActionKeyword = plugin.Metadata.ActionKeywords[0];
@@ -818,7 +821,7 @@ namespace Flow.Launcher.Core.Plugin
             }
 
             // Update action keywords and action keyword in plugin metadata
-            plugin.Metadata.ActionKeywords.Remove(oldActionkeyword);
+            plugin.Metadata.ActionKeywords.RemoveAll(k => k == oldActionkeyword);
             if (plugin.Metadata.ActionKeywords.Count > 0)
             {
                 plugin.Metadata.ActionKeyword = plugin.Metadata.ActionKeywords[0];
