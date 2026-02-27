@@ -1078,6 +1078,7 @@ namespace Flow.Launcher.Core.Plugin
 
         internal static bool IsMinimumAppVersionSatisfied(string pluginName, string minimumAppVersion)
         {
+            // If the minimum app version is not specified in plugin.json, this plugin is compatible with all app versions
             if (string.IsNullOrEmpty(minimumAppVersion))
                 return true;
 
@@ -1092,10 +1093,6 @@ namespace Flow.Launcher.Core.Plugin
 
             if (appVersion >= minimumVersion)
                 return true;
-
-            PublicApi.Instance.LogInfo(ClassName,
-                $"Plugin {pluginName} requires minimum Flow Launcher version {minimumAppVersion}, "
-                + $"but current version is {Constant.Version}.");
 
             return false;
         }
