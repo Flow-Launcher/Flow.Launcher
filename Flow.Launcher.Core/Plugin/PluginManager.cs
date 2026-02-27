@@ -1082,17 +1082,16 @@ namespace Flow.Launcher.Core.Plugin
 
             var appVersion = Version.Parse(Constant.Version);
 
-            try
+            if (!Version.TryParse(minimumAppVersion, out var minimumVersion))
             {
-                if (appVersion >= Version.Parse(minimumAppVersion))
+                PublicApi.Instance.LogError(ClassName,
+                    $"Failed to parse the minimum app version {minimumAppVersion} for plugin {pluginName}. "
+                    + "Plugin excluded from manifest");
+                return false;  // If the minimum app version specified in plugin.json is invalid, we assume it is not satisfied
+            }
+
+            if (appVersion >= minimumVersion)
                     return true;
-            }
-            catch (Exception e)
-            {
-                PublicApi.Instance.LogException(ClassName, $"Failed to parse the minimum app version {minimumAppVersion} for plugin {pluginName}. "
-                    + "Plugin excluded from manifest", e);
-                return false;
-            }
 
             PublicApi.Instance.LogInfo(ClassName, $"Plugin {pluginName} requires minimum Flow Launcher version {minimumAppVersion}, "
                     + $"but current version is {Constant.Version}. Plugin excluded from manifest.");
