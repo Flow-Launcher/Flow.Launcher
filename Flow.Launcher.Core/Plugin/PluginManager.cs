@@ -896,7 +896,19 @@ namespace Flow.Launcher.Core.Plugin
                 return false;
             }
 
-            var newMetadata = JsonSerializer.Deserialize<PluginMetadata>(File.ReadAllText(metadataJsonFilePath));
+            PluginMetadata newMetadata;
+            try
+            {
+                newMetadata = JsonSerializer.Deserialize<PluginMetadata>(File.ReadAllText(metadataJsonFilePath));
+            }
+            catch (Exception ex)
+            {
+                PublicApi.Instance.ShowMsgError(Localize.failedToInstallPluginTitle(plugin.Name),
+                    Localize.pluginJsonInvalidOrCorrupted());
+                PublicApi.Instance.LogException(ClassName,
+                    $"Failed to deserialize plugin metadata for plugin {plugin.Name} from file {metadataJsonFilePath}", ex);
+                return false;
+            }
 
             if (SameOrLesserPluginVersionExists(newMetadata))
             {
