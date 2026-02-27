@@ -922,7 +922,7 @@ namespace Flow.Launcher.Core.Plugin
             {
                 // Ask users if they want to install the plugin that doesn't satisfy the minimum app version requirement
                 if (PublicApi.Instance.ShowMsgBox(
-                    Localize.pluginMinimumAppVersionUnsatisfiedMessage(newMetadata.Name),
+                    Localize.pluginMinimumAppVersionUnsatisfiedMessage(newMetadata.Name, Environment.NewLine),
                     Localize.pluginMinimumAppVersionUnsatisfiedTitle(newMetadata.Name, newMetadata.MinimumAppVersion),
                     MessageBoxButton.YesNo) == MessageBoxResult.No)
                 {
@@ -1092,7 +1092,7 @@ namespace Flow.Launcher.Core.Plugin
             }
 
             if (appVersion >= minimumVersion)
-                    return true;
+                return true;
 
             PublicApi.Instance.LogInfo(ClassName, $"Plugin {pluginName} requires minimum Flow Launcher version {minimumAppVersion}, "
                     + $"but current version is {Constant.Version}. Plugin excluded from manifest.");
