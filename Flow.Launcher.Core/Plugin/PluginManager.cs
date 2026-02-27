@@ -899,7 +899,8 @@ namespace Flow.Launcher.Core.Plugin
             PluginMetadata newMetadata;
             try
             {
-                newMetadata = JsonSerializer.Deserialize<PluginMetadata>(File.ReadAllText(metadataJsonFilePath));
+                newMetadata = JsonSerializer.Deserialize<PluginMetadata>(File.ReadAllText(metadataJsonFilePath)) ??
+                    throw new JsonException("Deserialized metadata is null");
             }
             catch (Exception ex)
             {
