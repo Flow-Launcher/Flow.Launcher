@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure;
@@ -813,15 +814,13 @@ namespace Flow.Launcher.Core.Plugin
             return string.Empty;
         }
 
-        private static bool SameOrLesserPluginVersionExists(string metadataPath)
+        private static bool SameOrLesserPluginVersionExists(PluginMetadata metadata)
         {
-            var newMetadata = JsonSerializer.Deserialize<PluginMetadata>(File.ReadAllText(metadataPath));
-
-            if (!Version.TryParse(newMetadata.Version, out var newVersion))
+            if (!Version.TryParse(metadata.Version, out var newVersion))
                 return true; // If version is not valid, we assume it is lesser than any existing version
 
             // Get all plugins even if initialization failed so that we can check if the plugin with the same ID exists
-            return GetAllInitializedPlugins(includeFailed: true).Any(x => x.Metadata.ID == newMetadata.ID
+            return GetAllInitializedPlugins(includeFailed: true).Any(x => x.Metadata.ID == metadata.ID
                 && Version.TryParse(x.Metadata.Version, out var version)
                 && newVersion <= version);
         }
@@ -897,11 +896,25 @@ namespace Flow.Launcher.Core.Plugin
                 return false;
             }
 
-            if (SameOrLesserPluginVersionExists(metadataJsonFilePath))
+            var newMetadata = JsonSerializer.Deserialize<PluginMetadata>(File.ReadAllText(metadataJsonFilePath));
+
+            if (SameOrLesserPluginVersionExists(newMetadata))
             {
                 PublicApi.Instance.ShowMsgError(Localize.failedToInstallPluginTitle(plugin.Name),
                     Localize.pluginExistAlreadyMessage());
                 return false;
+            }
+
+            if (!IsMinimumAppVersionSatisfied(newMetadata.Name, newMetadata.MinimumAppVersion))
+            {
+                // Ask users if they want to install the plugin that doesn't satisfy the minimum app version requirement
+                if (PublicApi.Instance.ShowMsgBox(
+                    Localize.pluginMinimumAppVersionUnsatisfiedMessage(newMetadata.Name),
+                    Localize.pluginMinimumAppVersionUnsatisfiedTitle(newMetadata.Name, newMetadata.MinimumAppVersion),
+                    MessageBoxButton.YesNo) == MessageBoxResult.No)
+                {
+                    return false;
+                }
             }
 
             var folderName = string.IsNullOrEmpty(plugin.Version) ? $"{plugin.Name}-{Guid.NewGuid()}" : $"{plugin.Name}-{plugin.Version}";
@@ -1048,6 +1061,31 @@ namespace Flow.Launcher.Core.Plugin
             }
 
             return true;
+        }
+
+        internal static bool IsMinimumAppVersionSatisfied(string pluginName, string minimumAppVersion)
+        {
+            if (string.IsNullOrEmpty(minimumAppVersion))
+                return true;
+
+            var appVersion = Version.Parse(Constant.Version);
+
+            try
+            {
+                if (appVersion >= Version.Parse(minimumAppVersion))
+                    return true;
+            }
+            catch (Exception e)
+            {
+                PublicApi.Instance.LogException(ClassName, $"Failed to parse the minimum app version {minimumAppVersion} for plugin {pluginName}. "
+                    + "Plugin excluded from manifest", e);
+                return false;
+            }
+
+            PublicApi.Instance.LogInfo(ClassName, $"Plugin {pluginName} requires minimum Flow Launcher version {minimumAppVersion}, "
+                    + $"but current version is {Constant.Version}. Plugin excluded from manifest.");
+
+            return false;
         }
 
         #endregion
