@@ -80,7 +80,7 @@ namespace Flow.Launcher.Plugin.Url
             var input = raw.Trim();
 
             // Exclude numbers (e.g. 1.2345)
-            if (decimal.TryParse(input, out _))
+            if (decimal.TryParse(input, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out _))
                 return false;
 
             // Check if it's a bare IP address with optional port, path, query, or fragment
