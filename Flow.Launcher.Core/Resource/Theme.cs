@@ -11,7 +11,6 @@ using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Shell;
-using System.Windows.Threading;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
@@ -638,26 +637,29 @@ namespace Flow.Launcher.Core.Resource
         /// </summary>
         public async Task RefreshFrameAsync()
         {
-            await Application.Current.Dispatcher.InvokeAsync(() =>
+            if (Application.Current?.Dispatcher.CheckAccess() != true)
             {
-                // Get the actual backdrop type and drop shadow effect settings
-                var (backdropType, useDropShadowEffect) = GetActualValue();
+                await Application.Current?.Dispatcher.InvokeAsync(RefreshFrameAsync);
+                return;
+            }
 
-                // Remove OS minimizing/maximizing animation
-                // Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_TRANSITIONS_FORCEDISABLED, 3);
+            // Get the actual backdrop type and drop shadow effect settings
+            var (backdropType, useDropShadowEffect) = GetActualValue();
 
-                // The timing of adding the shadow effect should vary depending on whether the theme is transparent.
-                if (BlurEnabled)
-                {
-                    AutoDropShadow(useDropShadowEffect);
-                }
-                SetBlurForWindow(_settings.Theme, backdropType);
+            // Remove OS minimizing/maximizing animation
+            // Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_TRANSITIONS_FORCEDISABLED, 3);
 
-                if (!BlurEnabled)
-                {
-                    AutoDropShadow(useDropShadowEffect);
-                }
-            }, DispatcherPriority.Render);
+            // The timing of adding the shadow effect should vary depending on whether the theme is transparent.
+            if (BlurEnabled)
+            {
+                AutoDropShadow(useDropShadowEffect);
+            }
+            SetBlurForWindow(_settings.Theme, backdropType);
+
+            if (!BlurEnabled)
+            {
+                AutoDropShadow(useDropShadowEffect);
+            }
         }
 
         /// <summary>
@@ -665,13 +667,16 @@ namespace Flow.Launcher.Core.Resource
         /// </summary>
         public async Task SetBlurForWindowAsync()
         {
-            await Application.Current.Dispatcher.InvokeAsync(() =>
+            if (Application.Current?.Dispatcher.CheckAccess() != true)
             {
-                // Get the actual backdrop type and drop shadow effect settings
-                var (backdropType, _) = GetActualValue();
+                await Application.Current?.Dispatcher.InvokeAsync(RefreshFrameAsync);
+                return;
+            }
 
-                SetBlurForWindow(_settings.Theme, backdropType);
-            }, DispatcherPriority.Render);
+            // Get the actual backdrop type and drop shadow effect settings
+            var (backdropType, _) = GetActualValue();
+
+            SetBlurForWindow(_settings.Theme, backdropType);
         }
 
         /// <summary>
