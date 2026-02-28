@@ -25,12 +25,6 @@ public static class ErrorReporting
         // This change modifies the behavior to log the exception instead of showing the "Error report UI".
         if (ExceptionHelper.IsRecoverableDwmCompositionException(e)) return;
 
-        // Workaround for a WPF issue where changing the Windows theme or accent color triggers
-        // SystemResources.InvalidateTreeResources, which tries to clone Color values stored in styles
-        // and fails with an InvalidCastException. This is a benign framework-level exception that
-        // does not affect Flow Launcher functionality, so we log it silently instead of showing the error dialog.
-        if (ExceptionHelper.IsRecoverableSystemResourceException(e)) return;
-
         var reportWindow = new ReportWindow(e);
         reportWindow.Show();
     }
