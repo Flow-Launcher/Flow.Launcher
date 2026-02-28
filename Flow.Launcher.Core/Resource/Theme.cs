@@ -757,13 +757,12 @@ namespace Flow.Launcher.Core.Resource
 
         private void AutoDropShadow(bool useDropShadowEffect)
         {
-            SetWindowCornerPreference("Default");
-            RemoveDropShadowEffectFromCurrentTheme();
             if (useDropShadowEffect)
             {
                 if (BlurEnabled && Win32Helper.IsBackdropSupported())
                 {
                     SetWindowCornerPreference("Round");
+                    RemoveDropShadowEffectFromCurrentTheme();
                 }
                 else
                 {
@@ -776,9 +775,11 @@ namespace Flow.Launcher.Core.Resource
                 if (BlurEnabled && Win32Helper.IsBackdropSupported())
                 {
                     SetWindowCornerPreference("Default");
+                    RemoveDropShadowEffectFromCurrentTheme();
                 }
                 else
                 {
+                    SetWindowCornerPreference("Default");
                     RemoveDropShadowEffectFromCurrentTheme();
                 }
             }
