@@ -644,7 +644,8 @@ namespace Flow.Launcher.Core.Resource
         /// </summary>
         public async Task RefreshFrameAsync()
         {
-            if (Application.Current?.Dispatcher.CheckAccess() != true)
+            if (Application.Current == null) return;
+            if (!Application.Current.Dispatcher.CheckAccess())
             {
                 await Application.Current?.Dispatcher.InvokeAsync(RefreshFrameAsync);
                 return;
@@ -676,9 +677,10 @@ namespace Flow.Launcher.Core.Resource
         /// </summary>
         public async Task SetBlurForWindowAsync()
         {
-            if (Application.Current?.Dispatcher.CheckAccess() != true)
+            if (Application.Current == null) return;
+            if (!Application.Current.Dispatcher.CheckAccess())
             {
-                await Application.Current?.Dispatcher.InvokeAsync(RefreshFrameAsync);
+                await Application.Current?.Dispatcher.InvokeAsync(SetBlurForWindowAsync);
                 return;
             }
 
