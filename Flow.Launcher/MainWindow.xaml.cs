@@ -109,7 +109,10 @@ namespace Flow.Launcher
 
         private void ViewModel_ActualApplicationThemeChanged(object sender, ActualApplicationThemeChangedEventArgs args)
         {
-            _ = _theme.RefreshFrameAsync();
+            if (_settings.ColorScheme == Constant.System)
+            {
+                _ = _theme.RefreshFrameAsync();
+            }
         }
 
         private void OnSourceInitialized(object sender, EventArgs e)
