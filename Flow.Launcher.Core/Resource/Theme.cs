@@ -221,7 +221,13 @@ namespace Flow.Launcher.Core.Resource
                 var foregroundPropertyValue = style.Setters.OfType<Setter>().Where(x => x.Property.Name == "Foreground")
                     .Select(x => x.Value).FirstOrDefault();
                 if (!caretBrushPropertyValue && foregroundPropertyValue != null)
-                    style.Setters.Add(new Setter(TextBoxBase.CaretBrushProperty, foregroundPropertyValue));
+                {
+                    var newCaretValue = GetNewCaretValue(foregroundPropertyValue);
+                    if (newCaretValue != null)
+                    {
+                        style.Setters.Add(new Setter(TextBoxBase.CaretBrushProperty, newCaretValue));
+                    }
+                }
             }
             else
             {
@@ -244,6 +250,37 @@ namespace Flow.Launcher.Core.Resource
                 style.Setters.Add(new Setter(TextBlock.FontWeightProperty, fontWeight));
                 style.Setters.Add(new Setter(TextBlock.FontStretchProperty, fontStretch));
             }
+        }
+
+        private static object GetNewCaretValue(object foregroundPropertyValue)
+        {
+            object newCaretValue;
+            if (foregroundPropertyValue is DynamicResourceExtension dynamicResource)
+            {
+                newCaretValue = new DynamicResourceExtension(dynamicResource.ResourceKey);
+            }
+            else if (foregroundPropertyValue is SolidColorBrush solidBrush)
+            {
+                // Create a new brush to avoid sharing mutable freezables with potential expressions
+                if (solidBrush.IsFrozen)
+                {
+                    newCaretValue = solidBrush;
+                }
+                else
+                {
+                    var newBrush = new SolidColorBrush(solidBrush.Color)
+                    {
+                        Opacity = solidBrush.Opacity
+                    };
+                    if (newBrush.CanFreeze) newBrush.Freeze();
+                    newCaretValue = newBrush;
+                }
+            }
+            else
+            {
+                newCaretValue = foregroundPropertyValue;
+            }
+            return newCaretValue;
         }
 
         private ResourceDictionary GetThemeResourceDictionary(string theme)
@@ -275,10 +312,15 @@ namespace Flow.Launcher.Core.Resource
                 queryBoxStyle.Setters.Add(new Setter(Control.FontStretchProperty, fontStretch));
 
                 var caretBrushPropertyValue = queryBoxStyle.Setters.OfType<Setter>().Any(x => x.Property.Name == "CaretBrush");
-                var foregroundPropertyValue = queryBoxStyle.Setters.OfType<Setter>().Where(x => x.Property.Name == "Foreground")
-                    .Select(x => x.Value).FirstOrDefault();
+                var foregroundPropertyValue = queryBoxStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Foreground")?.Value;
                 if (!caretBrushPropertyValue && foregroundPropertyValue != null) //otherwise BaseQueryBoxStyle will handle styling
-                    queryBoxStyle.Setters.Add(new Setter(TextBoxBase.CaretBrushProperty, foregroundPropertyValue));
+                {
+                    var newCaretValue = GetNewCaretValue(foregroundPropertyValue);
+                    if (newCaretValue != null)
+                    {
+                        queryBoxStyle.Setters.Add(new Setter(TextBoxBase.CaretBrushProperty, newCaretValue));
+                    }
+                }
 
                 // Query suggestion box's font style is aligned with query box
                 querySuggestionBoxStyle.Setters.Add(new Setter(Control.FontFamilyProperty, fontFamily));
@@ -674,14 +716,18 @@ namespace Flow.Launcher.Core.Resource
                 if (backdropType == BackdropTypes.Mica || backdropType == BackdropTypes.MicaAlt)
                 {
                     windowBorderStyle.Setters.Remove(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background"));
-                    windowBorderStyle.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(Color.FromArgb(1, 0, 0, 0))));
+                    var brush = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0));
+                    brush.Freeze();
+                    windowBorderStyle.Setters.Add(new Setter(Border.BackgroundProperty, brush));
                 }
                 else if (backdropType == BackdropTypes.Acrylic)
                 {
                     windowBorderStyle.Setters.Remove(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background"));
-                    windowBorderStyle.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(Colors.Transparent)));
+                    var brush = new SolidColorBrush(Colors.Transparent);
+                    brush.Freeze();
+                    windowBorderStyle.Setters.Add(new Setter(Border.BackgroundProperty, brush));
                 }
-                
+
                 // For themes with blur enabled, the window border is rendered by the system, so it's treated as a simple rectangle regardless of thickness.
                 //(This is to avoid issues when the window is forcibly changed to a rectangular shape during snap scenarios.)
                 var cornerRadiusSetter = windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property == Border.CornerRadiusProperty);
@@ -689,7 +735,7 @@ namespace Flow.Launcher.Core.Resource
                     cornerRadiusSetter.Value = new CornerRadius(0);
                 else
                     windowBorderStyle.Setters.Add(new Setter(Border.CornerRadiusProperty, new CornerRadius(0)));
-                
+
                 // Apply the blur effect
                 Win32Helper.DWMSetBackdropForWindow(mainWindow, backdropType);
                 ColorizeWindow(theme, backdropType);
@@ -765,7 +811,7 @@ namespace Flow.Launcher.Core.Resource
                 else if (backgroundValue is DynamicResourceExtension dynamicResource)
                 {
                     // When DynamicResource Extension it is, Key is resource's name.
-                    var resourceKey = backgroundSetter.Value.ToString();
+                    var resourceKey = dynamicResource.ResourceKey.ToString();
 
                     // find key in resource and return color.
                     if (Resources.Contains(resourceKey))
@@ -803,7 +849,9 @@ namespace Flow.Launcher.Core.Resource
 
             // Apply background color (remove transparency in color)
             Color backgroundColor = Color.FromRgb(bgColor.Value.R, bgColor.Value.G, bgColor.Value.B);
-            previewStyle.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(backgroundColor)));
+            var brush = new SolidColorBrush(backgroundColor);
+            brush.Freeze();
+            previewStyle.Setters.Add(new Setter(Border.BackgroundProperty, brush));
 
             // The blur theme keeps the corner round fixed (applying DWM code to modify it causes rendering issues).
             // The non-blur theme retains the previously set WindowBorderStyle.
@@ -817,7 +865,7 @@ namespace Flow.Launcher.Core.Resource
             Application.Current.Resources["PreviewWindowBorderStyle"] = previewStyle;
         }
 
-        private void CopyStyle(Style originalStyle, Style targetStyle)
+        private static void CopyStyle(Style originalStyle, Style targetStyle)
         {
             // If the style is based on another style, copy the base style first
             if (originalStyle.BasedOn != null)
