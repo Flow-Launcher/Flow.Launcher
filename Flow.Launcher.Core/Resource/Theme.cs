@@ -99,12 +99,6 @@ namespace Flow.Launcher.Core.Resource
 
         private void UpdateResourceDictionary(ResourceDictionary dictionaryToUpdate)
         {
-            // Add new resources
-            if (!Application.Current.Resources.MergedDictionaries.Contains(dictionaryToUpdate))
-            {
-                Application.Current.Resources.MergedDictionaries.Add(dictionaryToUpdate);
-            }
-
             // Remove old resources
             if (_oldResource != null && _oldResource != dictionaryToUpdate &&
                 Application.Current.Resources.MergedDictionaries.Contains(_oldResource))
@@ -112,7 +106,20 @@ namespace Flow.Launcher.Core.Resource
                 Application.Current.Resources.MergedDictionaries.Remove(_oldResource);
             }
 
-            _oldResource = dictionaryToUpdate;
+            // Add new resources
+            try
+            {
+                if (!Application.Current.Resources.MergedDictionaries.Contains(dictionaryToUpdate))
+                {
+                    Application.Current.Resources.MergedDictionaries.Add(dictionaryToUpdate);
+                }
+                _oldResource = dictionaryToUpdate;
+            }
+            catch (InvalidCastException)
+            {
+                // System.InvalidCastException: Unable to cast object of type 'System.Windows.Media.Color' to type 'System.Windows.Expression'.
+                _oldResource = null;
+            }
         }
 
         /// <summary>
@@ -654,7 +661,9 @@ namespace Flow.Launcher.Core.Resource
             {
                 AutoDropShadow(useDropShadowEffect);
             }
+#pragma warning disable VSTHRD103 // Call async methods when in an async method
             SetBlurForWindow(_settings.Theme, backdropType);
+#pragma warning restore VSTHRD103 // Call async methods when in an async method
 
             if (!BlurEnabled)
             {
