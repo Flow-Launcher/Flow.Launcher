@@ -24,7 +24,7 @@ namespace Flow.Launcher.Plugin.Url
 
             if (IPEndPoint.TryParse(raw, out var endpoint))
             {
-                if (endpoint.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
+                if (endpoint.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6 && raw[0] != '[' && raw[^1] != ']')
                 {
                     // Enclose IPv6 addresses in brackets for URL formatting
                     raw = $"[{raw}]";
