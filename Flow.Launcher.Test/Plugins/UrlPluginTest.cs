@@ -49,6 +49,14 @@ namespace Flow.Launcher.Test.Plugins
         [TestCase("HTTPS://EXAMPLE.COM")]
         [TestCase("EXAMPLE.COM")]
         [TestCase("LOCALHOST")]
+        [TestCase("example.com/path")]
+        [TestCase("example.com/path/to/resource")]
+        [TestCase("http://example.com/path")]
+        [TestCase("https://example.com/path?query=1")]
+        [TestCase("192.168.1.1/path/to/resource")]
+        [TestCase("localhost:8080/api/endpoint")]
+        [TestCase("http://localhost/path")]
+        [TestCase("[::1]/path")]
         public void WhenValidUrlThenIsUrlReturnsTrue(string url)
         {
             Assert.That(plugin.IsURL(url), Is.True);
