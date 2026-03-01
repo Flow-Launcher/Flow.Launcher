@@ -130,8 +130,8 @@ namespace Flow.Launcher.Core.Resource
             try
             {
                 // Load a ResourceDictionary for the specified theme.
-                var themeName = _settings.Theme;
-                var dict = GetThemeResourceDictionary(themeName);
+                var theme = _settings.Theme;
+                var dict = GetThemeResourceDictionary(theme);
 
                 // Apply font settings to the theme resource.
                 ApplyFontSettings(dict);
