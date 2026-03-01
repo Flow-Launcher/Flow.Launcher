@@ -588,7 +588,7 @@ namespace Flow.Launcher.Core.Resource
 
             SetResizeBoarderThickness(newMargin);
 
-            _oldResource["WindowBorderStyle"] = newWindowBorderStyle;
+            Application.Current.Resources["WindowBorderStyle"] = newWindowBorderStyle;
         }
 
         public void RemoveDropShadowEffectFromCurrentTheme()
@@ -629,7 +629,7 @@ namespace Flow.Launcher.Core.Resource
 
             SetResizeBoarderThickness(null);
 
-            _oldResource["WindowBorderStyle"] = newWindowBorderStyle;
+            Application.Current.Resources["WindowBorderStyle"] = newWindowBorderStyle;
         }
 
         public void SetResizeBorderThickness(WindowChrome windowChrome, bool fixedWindowSize)
