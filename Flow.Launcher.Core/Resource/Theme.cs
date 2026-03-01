@@ -530,7 +530,8 @@ namespace Flow.Launcher.Core.Resource
             if (windowBorderStyle == null) return;
 
             // Get a new unsealed style based on the old one, and copy Resources and Triggers
-            var newWindowBorderStyle = GetNewWindowBorderStyle(windowBorderStyle);
+            var newWindowBorderStyle = new Style(typeof(Border));
+            CopyStyle(windowBorderStyle, newWindowBorderStyle);
 
             // Identify existing Margin to calculate new Margin, and copy other setters
             Setter existingMarginSetter = null;
@@ -599,7 +600,8 @@ namespace Flow.Launcher.Core.Resource
             if (windowBorderStyle == null) return;
 
             // Get a new unsealed style based on the old one, and copy Resources and Triggers
-            var newWindowBorderStyle = GetNewWindowBorderStyle(windowBorderStyle);
+            var newWindowBorderStyle = new Style(typeof(Border));
+            CopyStyle(windowBorderStyle, newWindowBorderStyle);
 
             // Copy Setters, excluding the Effect setter and updating the Margin setter
             foreach (var setterBase in windowBorderStyle.Setters)
@@ -628,21 +630,6 @@ namespace Flow.Launcher.Core.Resource
             SetResizeBoarderThickness(null);
 
             _oldResource["WindowBorderStyle"] = newWindowBorderStyle;
-        }
-
-        private static Style GetNewWindowBorderStyle(Style windowBorderStyle)
-        {
-            // Create a new unsealed style based on the old one
-            var newWindowBorderStyle = new Style(windowBorderStyle.TargetType, windowBorderStyle.BasedOn);
-
-            // Copy Resources and Triggers
-            foreach (var key in windowBorderStyle.Resources.Keys)
-                newWindowBorderStyle.Resources.Add(key, windowBorderStyle.Resources[key]);
-
-            foreach (var trigger in windowBorderStyle.Triggers)
-                newWindowBorderStyle.Triggers.Add(trigger);
-
-            return newWindowBorderStyle;
         }
 
         public void SetResizeBorderThickness(WindowChrome windowChrome, bool fixedWindowSize)
