@@ -116,8 +116,8 @@ namespace Flow.Launcher.Plugin.Url
                 return true;
 
             // Valid IP address (excluding 0.0.0.0)
-            if (IPAddress.TryParse(host, out var hostIp))
-                return !hostIp.Equals(IPAddress.Any) && !hostIp.Equals(IPAddress.IPv6Any);
+            if (IPEndPoint.TryParse(host, out endpoint))
+                return !endpoint.Address.Equals(IPAddress.Any) && !endpoint.Address.Equals(IPAddress.IPv6Any);
 
             // Domain must have valid format with TLD
             var parts = host.Split('.');
