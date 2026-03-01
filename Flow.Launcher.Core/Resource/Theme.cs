@@ -697,6 +697,7 @@ namespace Flow.Launcher.Core.Resource
             {
                 AutoDropShadow(useDropShadowEffect);
             }
+
 #pragma warning disable VSTHRD103 // Call async methods when in an async method
             SetBlurForWindow(_settings.Theme, backdropType);
 #pragma warning restore VSTHRD103 // Call async methods when in an async method
