@@ -467,20 +467,17 @@ namespace Flow.Launcher.Core.Resource
                 if (string.IsNullOrEmpty(path))
                     throw new DirectoryNotFoundException($"Theme path can't be found <{path}>");
 
-                // Retrieve theme resource – always use the resource with font settings applied.
-                var resourceDict = GetResourceDictionary(theme);
-
-                UpdateResourceDictionary(resourceDict);
-
                 _settings.Theme = theme;
 
-                //always allow re-loading default theme, in case of failure of switching to a new theme from default theme
+                // Always allow re-loading default theme, in case of failure of switching to a new theme from default theme
                 if (_oldTheme != theme || theme == Constant.DefaultTheme)
                 {
                     _oldTheme = Path.GetFileNameWithoutExtension(_oldResource.Source.AbsolutePath);
                 }
 
-                BlurEnabled = IsBlurTheme();
+                // Check if blur is enabled
+                var dict = GetThemeResourceDictionary(theme);
+                BlurEnabled = IsBlurTheme(dict);
 
                 // Apply blur and drop shadow effect so that we do not need to call it again
                 _ = RefreshFrameAsync();
@@ -991,14 +988,12 @@ namespace Flow.Launcher.Core.Resource
             }
         }
 
-        private static bool IsBlurTheme()
+        private static bool IsBlurTheme(ResourceDictionary dict)
         {
             if (!Win32Helper.IsBackdropSupported()) // Windows 11 미만이면 무조건 false
                 return false;
 
-            var resource = Application.Current.TryFindResource("ThemeBlurEnabled");
-
-            return resource is bool b && b;
+            return dict.Contains("ThemeBlurEnabled") && dict["ThemeBlurEnabled"] is bool enabled && enabled;
         }
 
         #endregion
