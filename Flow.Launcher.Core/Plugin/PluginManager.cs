@@ -380,7 +380,7 @@ namespace Flow.Launcher.Core.Plugin
             if (query is null)
                 return Array.Empty<PluginPair>();
 
-            if (!GetNonGlobalPlugins().TryGetValue(query.ActionKeyword, out var plugins))
+            if (TryGetNonGlobalPlugins(query.ActionKeyword, out var plugins))
             {
                 if (dialogJump)
                     return [.. GetGlobalPlugins().Where(p => p.Plugin is IAsyncDialogJump && !PluginModified(p.Metadata.ID))];
@@ -393,6 +393,20 @@ namespace Flow.Launcher.Core.Plugin
                 validPlugins = validPlugins.Where(p => p.Plugin is IAsyncDialogJump);
 
             return [.. validPlugins];
+        }
+
+        private static bool TryGetNonGlobalPlugins(string actionKeyword, out List<PluginPair> plugins)
+        {
+            if (_nonGlobalPlugins.TryGetValue(actionKeyword, out var list))
+            {
+                lock (list)
+                {
+                    plugins = [.. list];
+                }
+                return true;
+            }
+            plugins = [];
+            return false;
         }
 
         public static ICollection<PluginPair> ValidPluginsForHomeQuery()
