@@ -237,6 +237,9 @@
     <system:String x:Key="fileNotFoundMessage">Не вдалося знайти файл plugin.json у розпакованому zip-файлі або цей шлях {0} не існує.</system:String>
     <system:String x:Key="pluginExistAlreadyMessage">Вже існує плагін з таким самим ідентифікатором та версією, або версія цього плагіну вища за версію завантаженого.</system:String>
     <system:String x:Key="errorCreatingSettingPanel">Помилка створення панелі налаштувань для плагіну {0}: {1}{2}</system:String>
+    <system:String x:Key="pluginMinimumAppVersionUnsatisfiedTitle">{0} requires Flow version {1} to run</system:String>
+    <system:String x:Key="pluginMinimumAppVersionUnsatisfiedMessage">Flow does not meet the minimum version requirements for {0} to run. Do you want to continue installing it?{1}{1}We recommend updating Flow to the latest version to ensure that {0} works without issues.</system:String>
+    <system:String x:Key="pluginJsonInvalidOrCorrupted">Failed to install plugin because plugin.json is invalid or corrupted</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Магазин плагінів</system:String>
