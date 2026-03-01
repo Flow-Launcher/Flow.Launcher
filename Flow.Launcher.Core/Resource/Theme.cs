@@ -526,7 +526,8 @@ namespace Flow.Launcher.Core.Resource
             // Get current theme's WindowBorderStyle
             var theme = _settings.Theme;
             var dict = GetThemeResourceDictionary(theme);
-            if (dict["WindowBorderStyle"] is not Style windowBorderStyle) return;
+            var windowBorderStyle = dict.Contains("WindowBorderStyle") ? dict["WindowBorderStyle"] as Style : null;
+            if (windowBorderStyle == null) return;
 
             // Get a new unsealed style based on the old one, and copy Resources and Triggers
             var newWindowBorderStyle = GetNewWindowBorderStyle(windowBorderStyle);
@@ -594,7 +595,8 @@ namespace Flow.Launcher.Core.Resource
             // Get current theme's WindowBorderStyle
             var theme = _settings.Theme;
             var dict = GetThemeResourceDictionary(theme);
-            if (dict["WindowBorderStyle"] is not Style windowBorderStyle) return;
+            var windowBorderStyle = dict.Contains("WindowBorderStyle") ? dict["WindowBorderStyle"] as Style : null;
+            if (windowBorderStyle == null) return;
 
             // Get a new unsealed style based on the old one, and copy Resources and Triggers
             var newWindowBorderStyle = GetNewWindowBorderStyle(windowBorderStyle);
@@ -855,8 +857,9 @@ namespace Flow.Launcher.Core.Resource
         // for theme has not "LightBG" or "DarkBG" case.
         private Color GetWindowBorderStyleBackground(string theme)
         {
-            var Resources = GetThemeResourceDictionary(theme);
-            var windowBorderStyle = (Style)Resources["WindowBorderStyle"];
+            var dict = GetThemeResourceDictionary(theme);
+            var windowBorderStyle = dict.Contains("WindowBorderStyle") ? dict["WindowBorderStyle"] as Style : null;
+            if (windowBorderStyle == null) return Colors.Transparent; // Default is transparent
 
             var backgroundSetter = windowBorderStyle.Setters
                 .OfType<Setter>()
@@ -877,9 +880,9 @@ namespace Flow.Launcher.Core.Resource
                     var resourceKey = dynamicResource.ResourceKey.ToString();
 
                     // find key in resource and return color.
-                    if (Resources.Contains(resourceKey))
+                    if (dict.Contains(resourceKey))
                     {
-                        var colorResource = Resources[resourceKey];
+                        var colorResource = dict[resourceKey];
                         if (colorResource is SolidColorBrush colorBrush)
                         {
                             return colorBrush.Color;
