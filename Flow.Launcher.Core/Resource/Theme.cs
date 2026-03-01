@@ -16,6 +16,7 @@ using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
 using Microsoft.Win32;
+using System.Windows.Threading;
 
 namespace Flow.Launcher.Core.Resource
 {
@@ -692,7 +693,7 @@ namespace Flow.Launcher.Core.Resource
             if (Application.Current == null) return;
             if (!Application.Current.Dispatcher.CheckAccess())
             {
-                await Application.Current?.Dispatcher.InvokeAsync(RefreshFrameAsync);
+                await Application.Current?.Dispatcher.InvokeAsync(RefreshFrameAsync, DispatcherPriority.Render);
                 return;
             }
 
@@ -725,7 +726,7 @@ namespace Flow.Launcher.Core.Resource
             if (Application.Current == null) return;
             if (!Application.Current.Dispatcher.CheckAccess())
             {
-                await Application.Current?.Dispatcher.InvokeAsync(SetBlurForWindowAsync);
+                await Application.Current?.Dispatcher.InvokeAsync(SetBlurForWindowAsync, DispatcherPriority.Render);
                 return;
             }
 
