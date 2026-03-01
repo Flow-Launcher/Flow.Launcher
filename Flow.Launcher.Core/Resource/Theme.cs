@@ -1036,11 +1036,15 @@ namespace Flow.Launcher.Core.Resource
                 // Only set the background to transparent if the theme supports blur
                 if (backdropType == BackdropTypes.Mica || backdropType == BackdropTypes.MicaAlt)
                 {
-                    mainWindow.Background = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0));
+                    var backgroundBrush = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0));
+                    backgroundBrush.Freeze();
+                    mainWindow.Background = backgroundBrush;
                 }
                 else
                 {
-                    mainWindow.Background = new SolidColorBrush(selectedBG);
+                    var backgroundBrush = new SolidColorBrush(selectedBG);
+                    backgroundBrush.Freeze();
+                    mainWindow.Background = backgroundBrush;
                 }
             }
         }
