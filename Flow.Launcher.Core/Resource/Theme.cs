@@ -963,12 +963,8 @@ namespace Flow.Launcher.Core.Resource
             // Check the user's ColorScheme setting
             var colorScheme = _settings.ColorScheme;
 
-            // Check system dark mode setting (read AppsUseLightTheme value)
-            int themeValue = (int)Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", 1);
-            bool isSystemDark = themeValue == 0;
-
             // Final decision on whether to use dark mode
-            bool useDarkMode = false;
+            var useDarkMode = false;
 
             // If systemBG is not "Auto", prioritize it over ColorScheme and set the mode based on systemBG value
             if (systemBG == "Dark")
@@ -983,11 +979,20 @@ namespace Flow.Launcher.Core.Resource
             {
                 // If systemBG is "Auto", decide based on ColorScheme
                 if (colorScheme == "Dark")
+                {
                     useDarkMode = true;
+                }
                 else if (colorScheme == "Light")
+                {
                     useDarkMode = false;
+                }
                 else
+                {
+                    // Check system dark mode setting (read AppsUseLightTheme value)
+                    var themeValue = (int)Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", 1);
+                    var isSystemDark = themeValue == 0;
                     useDarkMode = isSystemDark;  // Auto (based on system setting)
+                }
             }
 
             // Apply DWM Dark Mode
