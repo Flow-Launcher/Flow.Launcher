@@ -478,7 +478,7 @@ namespace Flow.Launcher.Core.Resource
 
                 // Check if blur is enabled
                 var dict = GetThemeResourceDictionary(theme);
-                BlurEnabled = IsBlurTheme(dict);
+                BlurEnabled = Win32Helper.IsBackdropSupported() && IsThemeBlurEnabled(dict);
 
                 // Apply blur and drop shadow effect so that we do not need to call it again
                 _ = RefreshFrameAsync();
@@ -773,7 +773,7 @@ namespace Flow.Launcher.Core.Resource
             if (mainWindow == null) return;
 
             // Check if the theme supports blur
-            bool hasBlur = dict.Contains("ThemeBlurEnabled") && dict["ThemeBlurEnabled"] is bool b && b;
+            var hasBlur = IsThemeBlurEnabled(dict);
             if (BlurEnabled && hasBlur && Win32Helper.IsBackdropSupported())
             {
                 // If the BackdropType is Mica or MicaAlt, set the windowborderstyle's background to transparent
@@ -955,13 +955,13 @@ namespace Flow.Launcher.Core.Resource
             if (mainWindow == null) return;
 
             // Check if the theme supports blur
-            bool hasBlur = dict.Contains("ThemeBlurEnabled") && dict["ThemeBlurEnabled"] is bool b && b;
+            var hasBlur = IsThemeBlurEnabled(dict);
 
             // SystemBG value check (Auto, Light, Dark)
-            string systemBG = dict.Contains("SystemBG") ? dict["SystemBG"] as string : "Auto"; // 기본값 Auto
+            var systemBG = dict.Contains("SystemBG") ? dict["SystemBG"] as string : "Auto"; // 기본값 Auto
 
             // Check the user's ColorScheme setting
-            string colorScheme = _settings.ColorScheme;
+            var colorScheme = _settings.ColorScheme;
 
             // Check system dark mode setting (read AppsUseLightTheme value)
             int themeValue = (int)Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", 1);
@@ -1020,8 +1020,8 @@ namespace Flow.Launcher.Core.Resource
             Color selectedBG = useDarkMode ? DarkBG : LightBG;
             ApplyPreviewBackground(selectedBG);
 
-            bool isBlurAvailable = hasBlur && Win32Helper.IsBackdropSupported(); // Windows 11 미만이면 hasBlur를 강제 false
-
+            // If Windows does not support backdrop, treat as blur unavailable
+            var isBlurAvailable = hasBlur && Win32Helper.IsBackdropSupported();
             if (!isBlurAvailable)
             {
                 mainWindow.Background = Brushes.Transparent;
@@ -1040,11 +1040,8 @@ namespace Flow.Launcher.Core.Resource
             }
         }
 
-        private static bool IsBlurTheme(ResourceDictionary dict)
+        private static bool IsThemeBlurEnabled(ResourceDictionary dict)
         {
-            if (!Win32Helper.IsBackdropSupported()) // Windows 11 미만이면 무조건 false
-                return false;
-
             return dict.Contains("ThemeBlurEnabled") && dict["ThemeBlurEnabled"] is bool enabled && enabled;
         }
 
