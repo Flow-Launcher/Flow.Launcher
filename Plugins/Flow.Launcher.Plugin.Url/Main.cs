@@ -22,6 +22,15 @@ namespace Flow.Launcher.Plugin.Url
                 return [];
             }
 
+            if (IPEndPoint.TryParse(raw, out var endpoint))
+            {
+                if (endpoint.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
+                {
+                    // Enclose IPv6 addresses in brackets for URL formatting
+                    raw = $"[{raw}]";
+                }
+            }
+
             return
                 [
                     new()
