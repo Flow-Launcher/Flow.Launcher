@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Flow.Launcher.Plugin;
-using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Core.Plugin;
 
 namespace Flow.Launcher.Core.ExternalPlugins
 {
@@ -41,11 +41,10 @@ namespace Flow.Launcher.Core.ExternalPlugins
                         return false;
 
                     var updatedPluginResults = new List<UserPlugin>();
-                    var appVersion = SemanticVersioning.Version.Parse(Constant.Version);
                     
                     for (int i = 0; i < results.Count; i++)
                     {
-                        if (IsMinimumAppVersionSatisfied(results[i], appVersion))
+                        if (PluginManager.IsMinimumAppVersionSatisfied(results[i].Name, results[i].MinimumAppVersion))
                             updatedPluginResults.Add(results[i]);
                     }
 
@@ -69,29 +68,6 @@ namespace Flow.Launcher.Core.ExternalPlugins
                 // Only release the lock if it was acquired
                 if (lockAcquired) manifestUpdateLock.Release();
             }
-
-            return false;
-        }
-
-        private static bool IsMinimumAppVersionSatisfied(UserPlugin plugin, SemanticVersioning.Version appVersion)
-        {
-            if (string.IsNullOrEmpty(plugin.MinimumAppVersion))
-                return true;
-
-            try
-            {
-                if (appVersion >= SemanticVersioning.Version.Parse(plugin.MinimumAppVersion))
-                    return true;
-            }
-            catch (Exception e)
-            {
-                PublicApi.Instance.LogException(ClassName, $"Failed to parse the minimum app version {plugin.MinimumAppVersion} for plugin {plugin.Name}. "
-                    + "Plugin excluded from manifest", e);
-                return false;
-            }
-
-            PublicApi.Instance.LogInfo(ClassName, $"Plugin {plugin.Name} requires minimum Flow Launcher version {plugin.MinimumAppVersion}, "
-                    + $"but current version is {Constant.Version}. Plugin excluded from manifest.");
 
             return false;
         }
