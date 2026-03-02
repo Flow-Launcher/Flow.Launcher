@@ -124,8 +124,8 @@ namespace Flow.Launcher.Core.Resource
             try
             {
                 // Load a ResourceDictionary for the specified theme.
-                var themeName = _settings.Theme;
-                var dict = GetThemeResourceDictionary(themeName);
+                var theme = _settings.Theme;
+                var dict = GetThemeResourceDictionary(theme);
 
                 // Apply font settings to the theme resource.
                 ApplyFontSettings(dict);
@@ -292,10 +292,10 @@ namespace Flow.Launcher.Core.Resource
                 dict["ItemHotkeyStyle"] is Style resultHotkeyItemStyle &&
                 dict["ItemHotkeySelectedStyle"] is Style resultHotkeyItemSelectedStyle)
             {
-                Setter fontFamily = new Setter(TextBlock.FontFamilyProperty, new FontFamily(_settings.ResultFont));
-                Setter fontStyle = new Setter(TextBlock.FontStyleProperty, FontHelper.GetFontStyleFromInvariantStringOrNormal(_settings.ResultFontStyle));
-                Setter fontWeight = new Setter(TextBlock.FontWeightProperty, FontHelper.GetFontWeightFromInvariantStringOrNormal(_settings.ResultFontWeight));
-                Setter fontStretch = new Setter(TextBlock.FontStretchProperty, FontHelper.GetFontStretchFromInvariantStringOrNormal(_settings.ResultFontStretch));
+                var fontFamily = new Setter(TextBlock.FontFamilyProperty, new FontFamily(_settings.ResultFont));
+                var fontStyle = new Setter(TextBlock.FontStyleProperty, FontHelper.GetFontStyleFromInvariantStringOrNormal(_settings.ResultFontStyle));
+                var fontWeight = new Setter(TextBlock.FontWeightProperty, FontHelper.GetFontWeightFromInvariantStringOrNormal(_settings.ResultFontWeight));
+                var fontStretch = new Setter(TextBlock.FontStretchProperty, FontHelper.GetFontStretchFromInvariantStringOrNormal(_settings.ResultFontStretch));
 
                 Setter[] setters = { fontFamily, fontStyle, fontWeight, fontStretch };
                 Array.ForEach(
@@ -307,10 +307,10 @@ namespace Flow.Launcher.Core.Resource
                 dict["ItemSubTitleStyle"] is Style resultSubItemStyle &&
                 dict["ItemSubTitleSelectedStyle"] is Style resultSubItemSelectedStyle)
             {
-                Setter fontFamily = new Setter(TextBlock.FontFamilyProperty, new FontFamily(_settings.ResultSubFont));
-                Setter fontStyle = new Setter(TextBlock.FontStyleProperty, FontHelper.GetFontStyleFromInvariantStringOrNormal(_settings.ResultSubFontStyle));
-                Setter fontWeight = new Setter(TextBlock.FontWeightProperty, FontHelper.GetFontWeightFromInvariantStringOrNormal(_settings.ResultSubFontWeight));
-                Setter fontStretch = new Setter(TextBlock.FontStretchProperty, FontHelper.GetFontStretchFromInvariantStringOrNormal(_settings.ResultSubFontStretch));
+                var fontFamily = new Setter(TextBlock.FontFamilyProperty, new FontFamily(_settings.ResultSubFont));
+                var fontStyle = new Setter(TextBlock.FontStyleProperty, FontHelper.GetFontStyleFromInvariantStringOrNormal(_settings.ResultSubFontStyle));
+                var fontWeight = new Setter(TextBlock.FontWeightProperty, FontHelper.GetFontWeightFromInvariantStringOrNormal(_settings.ResultSubFontWeight));
+                var fontStretch = new Setter(TextBlock.FontStretchProperty, FontHelper.GetFontStretchFromInvariantStringOrNormal(_settings.ResultSubFontStretch));
 
                 Setter[] setters = { fontFamily, fontStyle, fontWeight, fontStretch };
                 Array.ForEach(
@@ -395,7 +395,7 @@ namespace Flow.Launcher.Core.Resource
 
         public List<ThemeData> GetAvailableThemes()
         {
-            List<ThemeData> themes = new List<ThemeData>();
+            var themes = new List<ThemeData>();
             foreach (var themeDirectory in _themeDirectories)
             {
                 var filePaths = Directory
@@ -410,8 +410,7 @@ namespace Flow.Launcher.Core.Resource
 
         public bool ChangeTheme(string theme = null)
         {
-            if (string.IsNullOrEmpty(theme))
-                theme = _settings.Theme;
+            if (string.IsNullOrEmpty(theme)) theme = _settings.Theme;
 
             string path = GetThemePath(theme);
             try
@@ -426,13 +425,14 @@ namespace Flow.Launcher.Core.Resource
 
                 _settings.Theme = theme;
 
-                //always allow re-loading default theme, in case of failure of switching to a new theme from default theme
+                // Always allow re-loading default theme, in case of failure of switching to a new theme from default theme
                 if (_oldTheme != theme || theme == Constant.DefaultTheme)
                 {
                     _oldTheme = Path.GetFileNameWithoutExtension(_oldResource.Source.AbsolutePath);
                 }
 
-                BlurEnabled = IsBlurTheme();
+                // Check if blur is enabled
+                BlurEnabled = Win32Helper.IsBackdropSupported() && IsThemeBlurEnabled(resourceDict);
 
                 // Apply blur and drop shadow effect so that we do not need to call it again
                 _ = RefreshFrameAsync();
@@ -667,11 +667,11 @@ namespace Flow.Launcher.Core.Resource
             if (mainWindow == null) return;
 
             // Check if the theme supports blur
-            bool hasBlur = dict.Contains("ThemeBlurEnabled") && dict["ThemeBlurEnabled"] is bool b && b;
+            var hasBlur = IsThemeBlurEnabled(dict);
             if (BlurEnabled && hasBlur && Win32Helper.IsBackdropSupported())
             {
                 // If the BackdropType is Mica or MicaAlt, set the windowborderstyle's background to transparent
-                if (backdropType == BackdropTypes.Mica || backdropType == BackdropTypes.MicaAlt)
+                if (backdropType is BackdropTypes.Mica or BackdropTypes.MicaAlt)
                 {
                     windowBorderStyle.Setters.Remove(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background"));
                     windowBorderStyle.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(Color.FromArgb(1, 0, 0, 0))));
@@ -681,7 +681,7 @@ namespace Flow.Launcher.Core.Resource
                     windowBorderStyle.Setters.Remove(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background"));
                     windowBorderStyle.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(Colors.Transparent)));
                 }
-                
+
                 // For themes with blur enabled, the window border is rendered by the system, so it's treated as a simple rectangle regardless of thickness.
                 //(This is to avoid issues when the window is forcibly changed to a rectangular shape during snap scenarios.)
                 var cornerRadiusSetter = windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property == Border.CornerRadiusProperty);
@@ -689,7 +689,7 @@ namespace Flow.Launcher.Core.Resource
                     cornerRadiusSetter.Value = new CornerRadius(0);
                 else
                     windowBorderStyle.Setters.Add(new Setter(Border.CornerRadiusProperty, new CornerRadius(0)));
-                
+
                 // Apply the blur effect
                 Win32Helper.DWMSetBackdropForWindow(mainWindow, backdropType);
                 ColorizeWindow(theme, backdropType);
@@ -802,7 +802,7 @@ namespace Flow.Launcher.Core.Resource
             }
 
             // Apply background color (remove transparency in color)
-            Color backgroundColor = Color.FromRgb(bgColor.Value.R, bgColor.Value.G, bgColor.Value.B);
+            var backgroundColor = Color.FromRgb(bgColor.Value.R, bgColor.Value.G, bgColor.Value.B);
             previewStyle.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(backgroundColor)));
 
             // The blur theme keeps the corner round fixed (applying DWM code to modify it causes rendering issues).
@@ -841,20 +841,16 @@ namespace Flow.Launcher.Core.Resource
             if (mainWindow == null) return;
 
             // Check if the theme supports blur
-            bool hasBlur = dict.Contains("ThemeBlurEnabled") && dict["ThemeBlurEnabled"] is bool b && b;
+            var hasBlur = IsThemeBlurEnabled(dict);
 
             // SystemBG value check (Auto, Light, Dark)
-            string systemBG = dict.Contains("SystemBG") ? dict["SystemBG"] as string : "Auto"; // 기본값 Auto
+            var systemBG = dict.Contains("SystemBG") ? dict["SystemBG"] as string : "Auto"; // 기본값 Auto
 
             // Check the user's ColorScheme setting
-            string colorScheme = _settings.ColorScheme;
-
-            // Check system dark mode setting (read AppsUseLightTheme value)
-            int themeValue = (int)Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", 1);
-            bool isSystemDark = themeValue == 0;
+            var colorScheme = _settings.ColorScheme;
 
             // Final decision on whether to use dark mode
-            bool useDarkMode = false;
+            var useDarkMode = false;
 
             // If systemBG is not "Auto", prioritize it over ColorScheme and set the mode based on systemBG value
             if (systemBG == "Dark")
@@ -869,11 +865,20 @@ namespace Flow.Launcher.Core.Resource
             {
                 // If systemBG is "Auto", decide based on ColorScheme
                 if (colorScheme == "Dark")
+                {
                     useDarkMode = true;
+                }
                 else if (colorScheme == "Light")
+                {
                     useDarkMode = false;
+                }
                 else
+                {
+                    // Check system dark mode setting (read AppsUseLightTheme value)
+                    var themeValue = (int)Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", 1);
+                    var isSystemDark = themeValue == 0;
                     useDarkMode = isSystemDark;  // Auto (based on system setting)
+                }
             }
 
             // Apply DWM Dark Mode
@@ -915,7 +920,7 @@ namespace Flow.Launcher.Core.Resource
             else
             {
                 // Only set the background to transparent if the theme supports blur
-                if (backdropType == BackdropTypes.Mica || backdropType == BackdropTypes.MicaAlt)
+                if (backdropType is BackdropTypes.Mica or BackdropTypes.MicaAlt)
                 {
                     mainWindow.Background = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0));
                 }
@@ -926,14 +931,9 @@ namespace Flow.Launcher.Core.Resource
             }
         }
 
-        private static bool IsBlurTheme()
+        private static bool IsThemeBlurEnabled(ResourceDictionary dict)
         {
-            if (!Win32Helper.IsBackdropSupported()) // Windows 11 미만이면 무조건 false
-                return false;
-
-            var resource = Application.Current.TryFindResource("ThemeBlurEnabled");
-
-            return resource is bool b && b;
+            return dict.Contains("ThemeBlurEnabled") && dict["ThemeBlurEnabled"] is bool enabled && enabled;
         }
 
         #endregion
