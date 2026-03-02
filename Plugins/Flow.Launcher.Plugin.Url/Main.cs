@@ -94,8 +94,25 @@ namespace Flow.Launcher.Plugin.Url
 
             // Check if it's a bare IP address with optional port, path, query, or fragment
             var ipPart = input.Split('/', '?', '#')[0]; // Remove path, query, and fragment
-            if (IPEndPoint.TryParse(ipPart, out var endpoint) && !endpoint.Address.Equals(IPAddress.Any) && !endpoint.Address.Equals(IPAddress.IPv6Any))
+            if (IPEndPoint.TryParse(ipPart, out var endpoint))
+            {
+                switch (endpoint.AddressFamily)
+                {
+                    case System.Net.Sockets.AddressFamily.InterNetwork:
+                        return !endpoint.Address.Equals(IPAddress.Any);
+                    case System.Net.Sockets.AddressFamily.InterNetworkV6:
+                        if (input.Contains('/') || input.Contains('?') || input.Contains('#'))
+                        {
+                            // Check if IPv6 address is properly bracketed
+                            var bracketStart = input.IndexOf('[');
+                            var bracketEnd = input.IndexOf(']');
+                            if (bracketStart == -1 || bracketEnd == -1 || bracketStart > bracketEnd)
+                                return false;
+                        }
+                        return !endpoint.Address.Equals(IPAddress.IPv6Any);
+                }
                 return true;
+            }
 
             // Add protocol if missing for Uri validation
             var urlToValidate = UrlSchemes.Any(s => input.StartsWith(s, StringComparison.OrdinalIgnoreCase))
@@ -104,6 +121,7 @@ namespace Flow.Launcher.Plugin.Url
 
             if (!Uri.TryCreate(urlToValidate, UriKind.Absolute, out var uri))
                 return false;
+            
 
             // Validate protocol
             if (uri.Scheme != Uri.UriSchemeHttp && uri.Scheme != Uri.UriSchemeHttps && uri.Scheme != Uri.UriSchemeFtp)
