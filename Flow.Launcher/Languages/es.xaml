@@ -79,8 +79,8 @@
     <system:String x:Key="useLogonTaskForStartupTooltip">Después de la desinstalación, es necesario eliminar manualmente la tarea (Flow.Launcher Startup) mediante el Programador de Tareas</system:String>
     <system:String x:Key="setAutoStartFailed">Error de configuración de arranque al iniciar</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Ocultar Flow Launcher cuando se pierde el foco</system:String>
-    <system:String x:Key="showTaskbarWhenOpened">Show taskbar when Flow Launcher is opened</system:String>
-    <system:String x:Key="showTaskbarWhenOpenedToolTip">Temporarily show the taskbar when Flow Launcher is opened, useful for auto-hidden taskbars.</system:String>
+    <system:String x:Key="showTaskbarWhenOpened">Mostrar la barra de tareas cuando Flow Launcher está abierto</system:String>
+    <system:String x:Key="showTaskbarWhenOpenedToolTip">Muestra temporalmente la barra de tareas cuando Flow Launcher está abierto, útil para barras de tareas que se ocultan automáticamente.</system:String>
     <system:String x:Key="dontPromptUpdateMsg">No mostrar notificaciones de nuevas versiones</system:String>
     <system:String x:Key="SearchWindowPosition">Ubicación de la ventana de búsqueda</system:String>
     <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Recordar última ubicación</system:String>
@@ -237,9 +237,9 @@
     <system:String x:Key="fileNotFoundMessage">No se puede encontrar plugin.json en el archivo zip extraído, o esta ruta {0} no existe</system:String>
     <system:String x:Key="pluginExistAlreadyMessage">Ya existe un complemento con el mismo ID y versión, o la versión es superior a la de este complemento descargado</system:String>
     <system:String x:Key="errorCreatingSettingPanel">Error al crear el panel de configuración para el complemento {0}:{1}{2}</system:String>
-    <system:String x:Key="pluginMinimumAppVersionUnsatisfiedTitle">{0} requires Flow version {1} to run</system:String>
-    <system:String x:Key="pluginMinimumAppVersionUnsatisfiedMessage">Flow does not meet the minimum version requirements for {0} to run. Do you want to continue installing it?{1}{1}We recommend updating Flow to the latest version to ensure that {0} works without issues.</system:String>
-    <system:String x:Key="pluginJsonInvalidOrCorrupted">Failed to install plugin because plugin.json is invalid or corrupted</system:String>
+    <system:String x:Key="pluginMinimumAppVersionUnsatisfiedTitle">{0} requiere la versión {1} de Flow para ejecutarse</system:String>
+    <system:String x:Key="pluginMinimumAppVersionUnsatisfiedMessage">Flow no cumple los requisitos mínimos de versión para ejecutar {0}. ¿Desea continuar con la instalación?{1}{1}Recomendamos actualizar Flow a la última versión para garantizar que {0} funcione sin problemas.</system:String>
+    <system:String x:Key="pluginJsonInvalidOrCorrupted">No se pudo instalar el plugin porque plugin.json no es válido o está dañado</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Tienda complementos</system:String>
