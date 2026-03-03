@@ -194,7 +194,7 @@ namespace Flow.Launcher.Core.Resource
             // Remove existing font-related setters  
             if (isTextBox)
             {
-                //  First, find the setters to remove and store them in a list  
+                // Find the setters to remove and store them in a list
                 var settersToRemove = style.Setters
                     .OfType<Setter>()
                     .Where(setter =>
@@ -204,7 +204,7 @@ namespace Flow.Launcher.Core.Resource
                         setter.Property == Control.FontStretchProperty)
                     .ToList();
 
-                // Remove each found setter one by one  
+                // Remove each found setter one by one
                 foreach (var setter in settersToRemove)
                 {
                     style.Setters.Remove(setter);
@@ -216,24 +216,30 @@ namespace Flow.Launcher.Core.Resource
                 style.Setters.Add(new Setter(Control.FontWeightProperty, fontWeight));
                 style.Setters.Add(new Setter(Control.FontStretchProperty, fontStretch));
 
-                //  Set caret brush (retain existing logic)
-                var caretBrushPropertyValue = style.Setters.OfType<Setter>().Any(x => x.Property.Name == "CaretBrush");
+                // Set caret brush (retain existing logic)
+                var caretBrushProperty = style.Setters.OfType<Setter>().Where(x => x.Property.Name == "CaretBrush")?
+                    .FirstOrDefault();
                 var foregroundPropertyValue = style.Setters.OfType<Setter>().Where(x => x.Property.Name == "Foreground")
                     .Select(x => x.Value).FirstOrDefault();
-                if (!caretBrushPropertyValue && foregroundPropertyValue != null)
+                if (caretBrushProperty != null && foregroundPropertyValue != null)
+                {
+                    style.Setters.Remove(caretBrushProperty);
                     style.Setters.Add(new Setter(TextBoxBase.CaretBrushProperty, foregroundPropertyValue));
+                }
             }
             else
             {
+                // Find the setters to remove and store them in a list
                 var settersToRemove = style.Setters
                     .OfType<Setter>()
                     .Where(setter =>
-                        setter.Property == TextBlock.FontFamilyProperty ||
-                        setter.Property == TextBlock.FontStyleProperty ||
-                        setter.Property == TextBlock.FontWeightProperty ||
-                        setter.Property == TextBlock.FontStretchProperty)
+                        setter.Property == Control.FontFamilyProperty ||
+                        setter.Property == Control.FontStyleProperty ||
+                        setter.Property == Control.FontWeightProperty ||
+                        setter.Property == Control.FontStretchProperty)
                     .ToList();
 
+                // Remove each found setter one by one
                 foreach (var setter in settersToRemove)
                 {
                     style.Setters.Remove(setter);
@@ -274,11 +280,15 @@ namespace Flow.Launcher.Core.Resource
                 queryBoxStyle.Setters.Add(new Setter(Control.FontWeightProperty, fontWeight));
                 queryBoxStyle.Setters.Add(new Setter(Control.FontStretchProperty, fontStretch));
 
-                var caretBrushPropertyValue = queryBoxStyle.Setters.OfType<Setter>().Any(x => x.Property.Name == "CaretBrush");
+                var caretBrushProperty = queryBoxStyle.Setters.OfType<Setter>().Where(x => x.Property.Name == "CaretBrush")?
+                    .FirstOrDefault();
                 var foregroundPropertyValue = queryBoxStyle.Setters.OfType<Setter>().Where(x => x.Property.Name == "Foreground")
                     .Select(x => x.Value).FirstOrDefault();
-                if (!caretBrushPropertyValue && foregroundPropertyValue != null) //otherwise BaseQueryBoxStyle will handle styling
+                if (caretBrushProperty != null && foregroundPropertyValue != null)
+                {
+                    queryBoxStyle.Setters.Remove(caretBrushProperty);
                     queryBoxStyle.Setters.Add(new Setter(TextBoxBase.CaretBrushProperty, foregroundPropertyValue));
+                }
 
                 // Query suggestion box's font style is aligned with query box
                 querySuggestionBoxStyle.Setters.Add(new Setter(Control.FontFamilyProperty, fontFamily));
