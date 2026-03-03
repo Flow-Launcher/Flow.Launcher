@@ -218,15 +218,11 @@ namespace Flow.Launcher.Core.Resource
                 style.Setters.Add(new Setter(Control.FontStretchProperty, fontStretch));
 
                 // Set caret brush (retain existing logic)
-                var caretBrushPropertySetters = style.Setters.OfType<Setter>().Where(x => x.Property == TextBoxBase.CaretBrushProperty).ToList();
+                var caretBrushPropertyExist = style.Setters.OfType<Setter>().Any(x => x.Property == TextBoxBase.CaretBrushProperty);
                 var foregroundPropertyValue = style.Setters.OfType<Setter>().Where(x => x.Property == Control.ForegroundProperty)
                     .Select(x => x.Value).FirstOrDefault();
-                if (caretBrushPropertySetters.Count > 0 && foregroundPropertyValue != null)
+                if (!caretBrushPropertyExist && foregroundPropertyValue != null)
                 {
-                    foreach (var setter in caretBrushPropertySetters)
-                    {
-                        style.Setters.Remove(setter);
-                    }
                     style.Setters.Add(new Setter(TextBoxBase.CaretBrushProperty, foregroundPropertyValue));
                 }
             }
