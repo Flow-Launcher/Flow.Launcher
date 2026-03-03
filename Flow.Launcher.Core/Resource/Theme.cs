@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.IO;
 using System.Linq;
-using System.Xml;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Shell;
 using System.Windows.Threading;
+using System.Xml;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
@@ -217,13 +218,15 @@ namespace Flow.Launcher.Core.Resource
                 style.Setters.Add(new Setter(Control.FontStretchProperty, fontStretch));
 
                 // Set caret brush (retain existing logic)
-                var caretBrushProperty = style.Setters.OfType<Setter>().Where(x => x.Property == TextBoxBase.CaretBrushProperty)?
-                    .FirstOrDefault();
+                var caretBrushPropertySetters = style.Setters.OfType<Setter>().Where(x => x.Property == TextBoxBase.CaretBrushProperty).ToList();
                 var foregroundPropertyValue = style.Setters.OfType<Setter>().Where(x => x.Property == Control.ForegroundProperty)
                     .Select(x => x.Value).FirstOrDefault();
-                if (caretBrushProperty != null && foregroundPropertyValue != null)
+                if (caretBrushPropertySetters.Count > 0 && foregroundPropertyValue != null)
                 {
-                    style.Setters.Remove(caretBrushProperty);
+                    foreach (var setter in caretBrushPropertySetters)
+                    {
+                        style.Setters.Remove(setter);
+                    }
                     style.Setters.Add(new Setter(TextBoxBase.CaretBrushProperty, foregroundPropertyValue));
                 }
             }
@@ -273,11 +276,17 @@ namespace Flow.Launcher.Core.Resource
             /* Ignore Theme Window Width and use setting */
             if (dict.Contains("WindowStyle") && dict["WindowStyle"] is Style windowStyle)
             {
-                var windowStyleProperty = windowStyle.Setters.OfType<Setter>().FirstOrDefault(s => s.Property == FrameworkElement.WidthProperty);
-                if (windowStyleProperty != null)
+                // Remove all width setters
+                var widthSetters = windowStyle.Setters
+                    .OfType<Setter>()
+                    .Where(s => s.Property == FrameworkElement.WidthProperty)
+                    .ToList();
+                foreach (var setter in widthSetters)
                 {
-                    windowStyle.Setters.Remove(windowStyleProperty);
+                    windowStyle.Setters.Remove(setter);
                 }
+
+                // Add width setter based on user settings
                 windowStyle.Setters.Add(new Setter(FrameworkElement.WidthProperty, _settings.WindowSize));
             }
             return dict;
