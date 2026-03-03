@@ -217,9 +217,9 @@ namespace Flow.Launcher.Core.Resource
                 style.Setters.Add(new Setter(Control.FontStretchProperty, fontStretch));
 
                 // Set caret brush (retain existing logic)
-                var caretBrushProperty = style.Setters.OfType<Setter>().Where(x => x.Property.Name == "CaretBrush")?
+                var caretBrushProperty = style.Setters.OfType<Setter>().Where(x => x.Property == TextBoxBase.CaretBrushProperty)?
                     .FirstOrDefault();
-                var foregroundPropertyValue = style.Setters.OfType<Setter>().Where(x => x.Property.Name == "Foreground")
+                var foregroundPropertyValue = style.Setters.OfType<Setter>().Where(x => x.Property == Control.ForegroundProperty)
                     .Select(x => x.Value).FirstOrDefault();
                 if (caretBrushProperty != null && foregroundPropertyValue != null)
                 {
@@ -245,6 +245,7 @@ namespace Flow.Launcher.Core.Resource
                     style.Setters.Remove(setter);
                 }
 
+                // Add New font setter
                 style.Setters.Add(new Setter(TextBlock.FontFamilyProperty, fontFamily));
                 style.Setters.Add(new Setter(TextBlock.FontStyleProperty, fontStyle));
                 style.Setters.Add(new Setter(TextBlock.FontWeightProperty, fontWeight));
