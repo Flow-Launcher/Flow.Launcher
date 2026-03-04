@@ -41,49 +41,11 @@
   </PropertyGroup>
 
   <Target Name="RemoveUnnecessaryRuntimesAfterBuild" AfterTargets="Build">
-    <RemoveDir Directories="$(OutputPath)runtimes\browser-wasm;
-                            $(OutputPath)runtimes\linux-arm;
-                            $(OutputPath)runtimes\linux-arm64;
-                            $(OutputPath)runtimes\linux-armel;
-                            $(OutputPath)runtimes\linux-mips64;
-                            $(OutputPath)runtimes\linux-musl-arm;
-                            $(OutputPath)runtimes\linux-musl-arm64;
-                            $(OutputPath)runtimes\linux-musl-x64;
-                            $(OutputPath)runtimes\linux-musl-s390x;
-                            $(OutputPath)runtimes\linux-ppc64le;
-                            $(OutputPath)runtimes\linux-s390x;
-                            $(OutputPath)runtimes\linux-x64;
-                            $(OutputPath)runtimes\linux-x86;
-                            $(OutputPath)runtimes\maccatalyst-arm64;
-                            $(OutputPath)runtimes\maccatalyst-x64;
-                            $(OutputPath)runtimes\osx;
-                            $(OutputPath)runtimes\osx-arm64;
-                            $(OutputPath)runtimes\osx-x64;
-                            $(OutputPath)runtimes\win-arm;
-                            $(OutputPath)runtimes\win-arm64;"/>
+    <RemoveDir Directories="$(OutputPath)runtimes\browser-wasm;&#xA;                            $(OutputPath)runtimes\linux-arm;&#xA;                            $(OutputPath)runtimes\linux-arm64;&#xA;                            $(OutputPath)runtimes\linux-armel;&#xA;                            $(OutputPath)runtimes\linux-mips64;&#xA;                            $(OutputPath)runtimes\linux-musl-arm;&#xA;                            $(OutputPath)runtimes\linux-musl-arm64;&#xA;                            $(OutputPath)runtimes\linux-musl-x64;&#xA;                            $(OutputPath)runtimes\linux-musl-s390x;&#xA;                            $(OutputPath)runtimes\linux-ppc64le;&#xA;                            $(OutputPath)runtimes\linux-s390x;&#xA;                            $(OutputPath)runtimes\linux-x64;&#xA;                            $(OutputPath)runtimes\linux-x86;&#xA;                            $(OutputPath)runtimes\maccatalyst-arm64;&#xA;                            $(OutputPath)runtimes\maccatalyst-x64;&#xA;                            $(OutputPath)runtimes\osx;&#xA;                            $(OutputPath)runtimes\osx-arm64;&#xA;                            $(OutputPath)runtimes\osx-x64;&#xA;                            $(OutputPath)runtimes\win-arm;&#xA;                            $(OutputPath)runtimes\win-arm64;" />
   </Target>
 
   <Target Name="RemoveUnnecessaryRuntimesAfterPublish" AfterTargets="Publish">
-    <RemoveDir Directories="$(PublishDir)runtimes\browser-wasm;
-                            $(PublishDir)runtimes\linux-arm;
-                            $(PublishDir)runtimes\linux-arm64;
-                            $(PublishDir)runtimes\linux-armel;
-                            $(PublishDir)runtimes\linux-mips64;
-                            $(PublishDir)runtimes\linux-musl-arm;
-                            $(PublishDir)runtimes\linux-musl-arm64;
-                            $(PublishDir)runtimes\linux-musl-x64;
-                            $(PublishDir)runtimes\linux-musl-s390x;
-                            $(PublishDir)runtimes\linux-ppc64le;
-                            $(PublishDir)runtimes\linux-s390x;
-                            $(PublishDir)runtimes\linux-x64;
-                            $(PublishDir)runtimes\linux-x86;
-                            $(PublishDir)runtimes\maccatalyst-arm64;
-                            $(PublishDir)runtimes\maccatalyst-x64;
-                            $(PublishDir)runtimes\osx;
-                            $(PublishDir)runtimes\osx-arm64;
-                            $(PublishDir)runtimes\osx-x64;
-                            $(PublishDir)runtimes\win-arm;
-                            $(PublishDir)runtimes\win-arm64;"/>
+    <RemoveDir Directories="$(PublishDir)runtimes\browser-wasm;&#xA;                            $(PublishDir)runtimes\linux-arm;&#xA;                            $(PublishDir)runtimes\linux-arm64;&#xA;                            $(PublishDir)runtimes\linux-armel;&#xA;                            $(PublishDir)runtimes\linux-mips64;&#xA;                            $(PublishDir)runtimes\linux-musl-arm;&#xA;                            $(PublishDir)runtimes\linux-musl-arm64;&#xA;                            $(PublishDir)runtimes\linux-musl-x64;&#xA;                            $(PublishDir)runtimes\linux-musl-s390x;&#xA;                            $(PublishDir)runtimes\linux-ppc64le;&#xA;                            $(PublishDir)runtimes\linux-s390x;&#xA;                            $(PublishDir)runtimes\linux-x64;&#xA;                            $(PublishDir)runtimes\linux-x86;&#xA;                            $(PublishDir)runtimes\maccatalyst-arm64;&#xA;                            $(PublishDir)runtimes\maccatalyst-x64;&#xA;                            $(PublishDir)runtimes\osx;&#xA;                            $(PublishDir)runtimes\osx-arm64;&#xA;                            $(PublishDir)runtimes\osx-x64;&#xA;                            $(PublishDir)runtimes\win-arm;&#xA;                            $(PublishDir)runtimes\win-arm64;" />
   </Target>
 
   <ItemGroup>
@@ -147,6 +109,7 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.9" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.9" />
     <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications" Version="7.1.3" />
+    <PackageReference Include="PowerStatus" Version="*" />
     <PackageReference Include="PropertyChanged.Fody" Version="4.1.0">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
