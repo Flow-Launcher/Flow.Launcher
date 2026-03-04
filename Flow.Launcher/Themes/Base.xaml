@@ -152,20 +152,6 @@
             </DataTrigger>
         </Style.Triggers>
     </Style>
-    <Style x:Key="BaseBatteryBox" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="18" />
-        <Setter Property="Foreground" Value="#8f8f8f" />
-        <Setter Property="HorizontalAlignment" Value="Right" />
-        <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="Margin" Value="0 0 0 0" />
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding ElementName=ClockBox, Path=Visibility}" Value="Visible">
-                <Setter Property="FontSize" Value="14" />
-                <Setter Property="Margin" Value="0 0 0 3" />
-            </DataTrigger>
-        </Style.Triggers>
-    </Style>
-
     <Style
         x:Key="ClockBox"
         BasedOn="{StaticResource BaseClockBox}"
@@ -175,12 +161,6 @@
     <Style
         x:Key="DateBox"
         BasedOn="{StaticResource BaseDateBox}"
-        TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="#C6C6C6" />
-    </Style>
-    <Style
-        x:Key="BatteryBox"
-        BasedOn="{StaticResource BaseBatteryBox}"
         TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#C6C6C6" />
     </Style>

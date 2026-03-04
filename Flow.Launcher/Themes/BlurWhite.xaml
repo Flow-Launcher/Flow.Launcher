@@ -179,13 +179,6 @@
         <Setter Property="Opacity" Value="0.2" />
     </Style>
     <Style
-        x:Key="BatteryBox"
-        BasedOn="{StaticResource BaseBatteryBox}"
-        TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="#000000" />
-        <Setter Property="Opacity" Value="0.2" />
-    </Style>
-    <Style
         x:Key="PreviewBorderStyle"
         BasedOn="{StaticResource BasePreviewBorderStyle}"
         TargetType="{x:Type Border}">

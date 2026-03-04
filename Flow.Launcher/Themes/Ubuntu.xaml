@@ -181,12 +181,6 @@
         <Setter Property="Foreground" Value="#c2c2c2" />
     </Style>
     <Style
-        x:Key="BatteryBox"
-        BasedOn="{StaticResource BaseBatteryBox}"
-        TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="#c2c2c2" />
-    </Style>
-    <Style
         x:Key="PreviewBorderStyle"
         BasedOn="{StaticResource BasePreviewBorderStyle}"
         TargetType="{x:Type Border}">
