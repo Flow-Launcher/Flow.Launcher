@@ -477,11 +477,58 @@ namespace Flow.Launcher.Core.Resource
 
         public void AddDropShadowEffectToCurrentTheme()
         {
-            var dict = GetCurrentResourceDictionary();
+            // Get current theme's WindowBorderStyle
+            var theme = _settings.Theme;
+            var dict = GetThemeResourceDictionary(theme);
+            var windowBorderStyle = dict.Contains("WindowBorderStyle") ? dict["WindowBorderStyle"] as Style : null;
+            if (windowBorderStyle == null) return;
 
-            var windowBorderStyle = dict["WindowBorderStyle"] as Style;
+            // Get a new unsealed style based on the old one, and copy Resources and Triggers
+            var newWindowBorderStyle = new Style(typeof(Border));
+            CopyStyle(windowBorderStyle, newWindowBorderStyle);
 
-            var effectSetter = new Setter
+            // Identify existing Margin to calculate new Margin, and copy other setters
+            Setter existingMarginSetter = null;
+            foreach (var setterBase in windowBorderStyle.Setters)
+            {
+                if (setterBase is Setter setter)
+                {
+                    // Skip existing Margin (we'll replace it)
+                    if (setter.Property == FrameworkElement.MarginProperty)
+                    {
+                        existingMarginSetter = setter;
+                        continue;
+                    }
+
+                    // Skip existing Effect (we'll ensure strictly one is added)
+                    if (setter.Property == UIElement.EffectProperty) continue;
+                }
+
+                // Add other setters (e.g. Background, BorderThickness)
+                newWindowBorderStyle.Setters.Add(setterBase);
+            }
+
+            // Calculate new Margin
+            Thickness newMargin;
+            if (existingMarginSetter == null)
+            {
+                newMargin = new Thickness(ShadowExtraMargin, 12, ShadowExtraMargin, ShadowExtraMargin);
+            }
+            else
+            {
+                var baseMargin = (Thickness)existingMarginSetter.Value;
+                newMargin = new Thickness(
+                    baseMargin.Left + ShadowExtraMargin,
+                    baseMargin.Top + ShadowExtraMargin,
+                    baseMargin.Right + ShadowExtraMargin,
+                    baseMargin.Bottom + ShadowExtraMargin);
+            }
+
+            // Add new Margin Setter
+            newWindowBorderStyle.Setters.Add(new Setter(FrameworkElement.MarginProperty, newMargin));
+
+            // Add Drop Shadow Effect Setter
+            newWindowBorderStyle.Setters.Add(new Setter
             {
                 Property = UIElement.EffectProperty,
                 Value = new DropShadowEffect
@@ -491,62 +538,52 @@ namespace Flow.Launcher.Core.Resource
                     Direction = 270,
                     BlurRadius = 30
                 }
-            };
+            });
 
-            if (windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == FrameworkElement.MarginProperty) is not Setter marginSetter)
-            {
-                var margin = new Thickness(ShadowExtraMargin, 12, ShadowExtraMargin, ShadowExtraMargin);
-                marginSetter = new Setter()
-                {
-                    Property = FrameworkElement.MarginProperty,
-                    Value = margin,
-                };
-                windowBorderStyle.Setters.Add(marginSetter);
+            SetResizeBoarderThickness(newMargin);
 
-                SetResizeBoarderThickness(margin);
-            }
-            else
-            {
-                var baseMargin = (Thickness)marginSetter.Value;
-                var newMargin = new Thickness(
-                    baseMargin.Left + ShadowExtraMargin,
-                    baseMargin.Top + ShadowExtraMargin,
-                    baseMargin.Right + ShadowExtraMargin,
-                    baseMargin.Bottom + ShadowExtraMargin);
-                marginSetter.Value = newMargin;
-
-                SetResizeBoarderThickness(newMargin);
-            }
-
-            windowBorderStyle.Setters.Add(effectSetter);
-
-            UpdateResourceDictionary(dict);
+            Application.Current.Resources["WindowBorderStyle"] = newWindowBorderStyle;
         }
 
         public void RemoveDropShadowEffectFromCurrentTheme()
         {
-            var dict = GetCurrentResourceDictionary();
-            var windowBorderStyle = dict["WindowBorderStyle"] as Style;
+            // Get current theme's WindowBorderStyle
+            var theme = _settings.Theme;
+            var dict = GetThemeResourceDictionary(theme);
+            var windowBorderStyle = dict.Contains("WindowBorderStyle") ? dict["WindowBorderStyle"] as Style : null;
+            if (windowBorderStyle == null) return;
 
-            if (windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == UIElement.EffectProperty) is Setter effectSetter)
-            {
-                windowBorderStyle.Setters.Remove(effectSetter);
-            }
+            // Get a new unsealed style based on the old one, and copy Resources and Triggers
+            var newWindowBorderStyle = new Style(typeof(Border));
+            CopyStyle(windowBorderStyle, newWindowBorderStyle);
 
-            if (windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == FrameworkElement.MarginProperty) is Setter marginSetter)
+            // Copy Setters, excluding the Effect setter and updating the Margin setter
+            foreach (var setterBase in windowBorderStyle.Setters)
             {
-                var currentMargin = (Thickness)marginSetter.Value;
-                var newMargin = new Thickness(
-                    currentMargin.Left - ShadowExtraMargin,
-                    currentMargin.Top - ShadowExtraMargin,
-                    currentMargin.Right - ShadowExtraMargin,
-                    currentMargin.Bottom - ShadowExtraMargin);
-                marginSetter.Value = newMargin;
+                if (setterBase is Setter setter)
+                {
+                    // Skip existing Effect (We'll remove it)
+                    if (setter.Property == UIElement.EffectProperty) continue;
+
+                    // Update Margin by subtracting the extra margin we added for the shadow
+                    if (setter.Property == FrameworkElement.MarginProperty)
+                    {
+                        var currentMargin = (Thickness)setter.Value;
+                        var newMargin = new Thickness(
+                            currentMargin.Left - ShadowExtraMargin,
+                            currentMargin.Top - ShadowExtraMargin,
+                            currentMargin.Right - ShadowExtraMargin,
+                            currentMargin.Bottom - ShadowExtraMargin);
+                        newWindowBorderStyle.Setters.Add(new Setter(FrameworkElement.MarginProperty, newMargin));
+                        continue;
+                    }
+                }
+                newWindowBorderStyle.Setters.Add(setterBase);
             }
 
             SetResizeBoarderThickness(null);
 
-            UpdateResourceDictionary(dict);
+            Application.Current.Resources["WindowBorderStyle"] = newWindowBorderStyle;
         }
 
         public void SetResizeBorderThickness(WindowChrome windowChrome, bool fixedWindowSize)
