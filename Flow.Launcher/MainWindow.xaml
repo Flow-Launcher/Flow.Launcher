@@ -311,6 +311,11 @@
                         Style="{DynamicResource DateBox}"
                         Text="{Binding DateText}"
                         Visibility="{Binding Settings.UseDate, Converter={StaticResource BoolToVisibilityConverter}}" />
+                    <TextBlock
+                        x:Name="BatteryBox"
+                        Style="{DynamicResource BatteryBox}"
+                        Text="{Binding BatteryText}"
+                        Visibility="{Binding Settings.UseBattery, Converter={StaticResource BoolToVisibilityConverter}}" />
                 </StackPanel>
                 <Border>
                     <Grid WindowChrome.IsHitTestVisibleInChrome="True">

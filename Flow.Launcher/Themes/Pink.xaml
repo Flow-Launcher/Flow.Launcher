@@ -138,6 +138,13 @@
         <Setter Property="Foreground" Value="#71114b" />
     </Style>
     <Style
+        x:Key="BatteryBox"
+        BasedOn="{StaticResource BaseBatteryBox}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Foreground" Value="#71114b" />
+    </Style>
+    <Style
         x:Key="PreviewBorderStyle"
         BasedOn="{StaticResource BasePreviewBorderStyle}"
         TargetType="{x:Type Border}">

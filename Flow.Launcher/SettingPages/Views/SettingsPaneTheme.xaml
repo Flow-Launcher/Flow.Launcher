@@ -348,6 +348,12 @@
                                                 Style="{DynamicResource DateBox}"
                                                 Text="{Binding DateText}"
                                                 Visibility="{Binding UseDate, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                            <TextBlock
+                                                x:Name="BatteryBox"
+                                                FontFamily="{Binding ClockPanelFont, Mode=OneTime}"
+                                                Style="{DynamicResource BatteryBox}"
+                                                Text="{Binding BatteryText}"
+                                                Visibility="{Binding UseBattery, Converter={StaticResource BoolToVisibilityConverter}}" />
                                         </StackPanel>
                                         <Canvas Style="{DynamicResource SearchIconPosition}">
                                             <Path
@@ -610,6 +616,17 @@
                         OffContent="{DynamicResource disable}"
                         OnContent="{DynamicResource enable}" />
                 </StackPanel>
+            </ui:SettingsCard>
+
+            <ui:SettingsCard Margin="0 4 0 0" Header="{DynamicResource Battery}">
+                <ui:SettingsCard.HeaderIcon>
+                    <ui:FontIcon Glyph="&#xec02;" />
+                </ui:SettingsCard.HeaderIcon>
+
+                <ui:ToggleSwitch
+                    IsOn="{Binding UseBattery}"
+                    OffContent="{DynamicResource disable}"
+                    OnContent="{DynamicResource enable}" />
             </ui:SettingsCard>
 
             <!--  Placeholder text  -->

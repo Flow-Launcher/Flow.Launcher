@@ -223,6 +223,19 @@
         </Style.Triggers>
     </Style>
     <Style
+        x:Key="BatteryBox"
+        BasedOn="{StaticResource BaseBatteryBox}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Foreground" Value="#bebebe" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=ClockBox, Path=Visibility}" Value="Visible">
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="Margin" Value="0 0 0 3" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style
         x:Key="PreviewBorderStyle"
         BasedOn="{StaticResource BasePreviewBorderStyle}"
         TargetType="{x:Type Border}">

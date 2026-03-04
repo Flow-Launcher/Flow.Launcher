@@ -27,6 +27,7 @@ using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Storage;
 using iNKORE.UI.WPF.Modern;
 using Microsoft.VisualStudio.Threading;
+using PowerStatus;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -66,6 +67,8 @@ namespace Flow.Launcher.ViewModel
         };
 
         private bool _taskbarShownByFlow = false;
+
+        private readonly PowerStatusProvider _powerStatusProvider = new();
 
         #endregion
 
@@ -336,6 +339,13 @@ namespace Flow.Launcher.ViewModel
                     ClockText = DateTime.Now.ToString(Settings.TimeFormat, CultureInfo.CurrentCulture);
                 if (Settings.UseDate)
                     DateText = DateTime.Now.ToString(Settings.DateFormat, CultureInfo.CurrentCulture);
+                if (Settings.UseBattery)
+                {
+                    var status = _powerStatusProvider.GetStatus();
+                    BatteryText = status.BatteryLifeProportion.HasValue
+                        ? $"{(int)(status.BatteryLifeProportion.Value * 100)}%"
+                        : string.Empty;
+                }
             }
         }
 
@@ -692,6 +702,7 @@ namespace Flow.Launcher.ViewModel
         public Settings Settings { get; }
         public string ClockText { get; private set; }
         public string DateText { get; private set; }
+        public string BatteryText { get; private set; }
 
         public ResultsViewModel Results { get; private set; }
 
