@@ -152,6 +152,7 @@
             </DataTrigger>
         </Style.Triggers>
     </Style>
+
     <Style
         x:Key="ClockBox"
         BasedOn="{StaticResource BaseClockBox}"
