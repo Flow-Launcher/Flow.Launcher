@@ -299,23 +299,28 @@
                     x:Name="ClockPanel"
                     IsHitTestVisible="False"
                     Opacity="{Binding ClockPanelOpacity}"
+                    Orientation="Horizontal"
                     Style="{DynamicResource ClockPanel}"
                     Visibility="{Binding ClockPanelVisibility}">
-                    <TextBlock
-                        x:Name="ClockBox"
-                        Style="{DynamicResource ClockBox}"
-                        Text="{Binding ClockText}"
-                        Visibility="{Binding Settings.UseClock, Converter={StaticResource BoolToVisibilityConverter}}" />
-                    <TextBlock
-                        x:Name="DateBox"
-                        Style="{DynamicResource DateBox}"
-                        Text="{Binding DateText}"
-                        Visibility="{Binding Settings.UseDate, Converter={StaticResource BoolToVisibilityConverter}}" />
-                    <TextBlock
-                        x:Name="BatteryBox"
-                        Style="{DynamicResource ClockBox}"
-                        Text="{Binding BatteryText}"
-                        Visibility="{Binding Settings.UseBattery, Converter={StaticResource BoolToVisibilityConverter}}" />
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock
+                            x:Name="ClockBox"
+                            Style="{DynamicResource ClockBox}"
+                            Text="{Binding ClockText}"
+                            Visibility="{Binding Settings.UseClock, Converter={StaticResource BoolToVisibilityConverter}}" />
+                        <TextBlock
+                            x:Name="DateBox"
+                            Style="{DynamicResource DateBox}"
+                            Text="{Binding DateText}"
+                            Visibility="{Binding Settings.UseDate, Converter={StaticResource BoolToVisibilityConverter}}" />
+                    </StackPanel>
+                    <StackPanel Margin="8 0 0 0" VerticalAlignment="Center">
+                        <TextBlock
+                            x:Name="BatteryBox"
+                            Style="{DynamicResource ClockBox}"
+                            Text="{Binding BatteryText}"
+                            Visibility="{Binding Settings.UseBattery, Converter={StaticResource BoolToVisibilityConverter}}" />
+                    </StackPanel>
                 </StackPanel>
                 <Border>
                     <Grid WindowChrome.IsHitTestVisibleInChrome="True">
