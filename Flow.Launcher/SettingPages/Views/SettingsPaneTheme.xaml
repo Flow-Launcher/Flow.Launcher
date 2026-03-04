@@ -333,27 +333,33 @@
                                         <StackPanel
                                             x:Name="ClockPanel"
                                             IsHitTestVisible="False"
+                                            Orientation="Horizontal"
                                             Style="{DynamicResource ClockPanel}"
                                             Visibility="Visible">
                                             <!--  Because these two textblock follow SettingWindowFont, we need to revert their font family explictly  -->
-                                            <TextBlock
-                                                x:Name="ClockBox"
-                                                FontFamily="{Binding ClockPanelFont, Mode=OneTime}"
-                                                Style="{DynamicResource ClockBox}"
-                                                Text="{Binding ClockText}"
-                                                Visibility="{Binding UseClock, Converter={StaticResource BoolToVisibilityConverter}}" />
-                                            <TextBlock
-                                                x:Name="DateBox"
-                                                FontFamily="{Binding ClockPanelFont, Mode=OneTime}"
-                                                Style="{DynamicResource DateBox}"
-                                                Text="{Binding DateText}"
-                                                Visibility="{Binding UseDate, Converter={StaticResource BoolToVisibilityConverter}}" />
-                                            <TextBlock
-                                                x:Name="BatteryBox"
-                                                FontFamily="{Binding ClockPanelFont, Mode=OneTime}"
-                                                Style="{DynamicResource ClockBox}"
-                                                Text="{Binding BatteryText}"
-                                                Visibility="{Binding UseBattery, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                            <StackPanel VerticalAlignment="Center">
+                                                <TextBlock
+                                                    x:Name="ClockBox"
+                                                    FontFamily="{Binding ClockPanelFont, Mode=OneTime}"
+                                                    Style="{DynamicResource ClockBox}"
+                                                    Text="{Binding ClockText}"
+                                                    Visibility="{Binding UseClock, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                                <TextBlock
+                                                    x:Name="DateBox"
+                                                    FontFamily="{Binding ClockPanelFont, Mode=OneTime}"
+                                                    Style="{DynamicResource DateBox}"
+                                                    Text="{Binding DateText}"
+                                                    Visibility="{Binding UseDate, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                            </StackPanel>
+                                            <StackPanel VerticalAlignment="Center">
+                                                <TextBlock
+                                                    x:Name="BatteryBox"
+                                                    Margin="8 0 0 0"
+                                                    FontFamily="{Binding ClockPanelFont, Mode=OneTime}"
+                                                    Style="{DynamicResource ClockBox}"
+                                                    Text="{Binding BatteryText}"
+                                                    Visibility="{Binding UseBattery, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                            </StackPanel>
                                         </StackPanel>
                                         <Canvas Style="{DynamicResource SearchIconPosition}">
                                             <Path
@@ -620,7 +626,7 @@
 
             <ui:SettingsCard Margin="0 4 0 0" Header="{DynamicResource Battery}">
                 <ui:SettingsCard.HeaderIcon>
-                    <ui:FontIcon Glyph="&#xec02;" />
+                    <ui:FontIcon Glyph="&#xEBA7;" />
                 </ui:SettingsCard.HeaderIcon>
 
                 <ui:ToggleSwitch

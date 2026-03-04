@@ -314,9 +314,10 @@
                             Text="{Binding DateText}"
                             Visibility="{Binding Settings.UseDate, Converter={StaticResource BoolToVisibilityConverter}}" />
                     </StackPanel>
-                    <StackPanel Margin="8 0 0 0" VerticalAlignment="Center">
+                    <StackPanel VerticalAlignment="Center">
                         <TextBlock
                             x:Name="BatteryBox"
+                            Margin="8 0 0 0"
                             Style="{DynamicResource ClockBox}"
                             Text="{Binding BatteryText}"
                             Visibility="{Binding Settings.UseBattery, Converter={StaticResource BoolToVisibilityConverter}}" />
