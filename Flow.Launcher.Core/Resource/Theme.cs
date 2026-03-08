@@ -798,7 +798,7 @@ namespace Flow.Launcher.Core.Resource
                 Application.Current.Resources["WindowBorderStyle"] is Style originalStyle)
             {
                 // Copy the original style, including the base style if it exists
-                CopyStyle(originalStyle, previewStyle);
+                ThemeHelper.CopyStyle(originalStyle, previewStyle);
             }
 
             // Apply background color (remove transparency in color)
@@ -815,21 +815,6 @@ namespace Flow.Launcher.Core.Resource
 
             // Set the new style to the resource
             Application.Current.Resources["PreviewWindowBorderStyle"] = previewStyle;
-        }
-
-        private void CopyStyle(Style originalStyle, Style targetStyle)
-        {
-            // If the style is based on another style, copy the base style first
-            if (originalStyle.BasedOn != null)
-            {
-                CopyStyle(originalStyle.BasedOn, targetStyle);
-            }
-
-            // Copy the setters from the original style
-            foreach (var setter in originalStyle.Setters.OfType<Setter>())
-            {
-                targetStyle.Setters.Add(new Setter(setter.Property, setter.Value));
-            }
         }
 
         private void ColorizeWindow(string theme, BackdropTypes backdropType)
