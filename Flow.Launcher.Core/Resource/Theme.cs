@@ -674,7 +674,7 @@ namespace Flow.Launcher.Core.Resource
                 if (backdropType == BackdropTypes.Mica || backdropType == BackdropTypes.MicaAlt)
                 {
                     windowBorderStyle.Setters.Remove(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property == Control.BackgroundProperty));
-                    windowBorderStyle.Setters.Add(new Setter(Border.BackgroundProperty, ThemeHelper.GetFreezeSolidColorBrush(Color.FromArgb(1, 0, 0, 0))));
+                    windowBorderStyle.Setters.Add(new Setter(Border.BackgroundProperty, ThemeHelper.GetFrozenSolidColorBrush(Color.FromArgb(1, 0, 0, 0))));
                 }
                 else if (backdropType == BackdropTypes.Acrylic)
                 {
@@ -803,7 +803,7 @@ namespace Flow.Launcher.Core.Resource
 
             // Apply background color (remove transparency in color)
             var backgroundColor = Color.FromRgb(bgColor.Value.R, bgColor.Value.G, bgColor.Value.B);
-            previewStyle.Setters.Add(new Setter(Border.BackgroundProperty, ThemeHelper.GetFreezeSolidColorBrush(backgroundColor)));
+            previewStyle.Setters.Add(new Setter(Border.BackgroundProperty, ThemeHelper.GetFrozenSolidColorBrush(backgroundColor)));
 
             // The blur theme keeps the corner round fixed (applying DWM code to modify it causes rendering issues).
             // The non-blur theme retains the previously set WindowBorderStyle.
@@ -902,11 +902,11 @@ namespace Flow.Launcher.Core.Resource
                 // Only set the background to transparent if the theme supports blur
                 if (backdropType == BackdropTypes.Mica || backdropType == BackdropTypes.MicaAlt)
                 {
-                    mainWindow.Background = ThemeHelper.GetFreezeSolidColorBrush(Color.FromArgb(1, 0, 0, 0));
+                    mainWindow.Background = ThemeHelper.GetFrozenSolidColorBrush(Color.FromArgb(1, 0, 0, 0));
                 }
                 else
                 {
-                    mainWindow.Background = ThemeHelper.GetFreezeSolidColorBrush(selectedBG);
+                    mainWindow.Background = ThemeHelper.GetFrozenSolidColorBrush(selectedBG);
                 }
             }
         }

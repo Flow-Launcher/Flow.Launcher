@@ -21,7 +21,7 @@ public static class ThemeHelper
         }
     }
 
-    public static SolidColorBrush GetFreezeSolidColorBrush(Color color)
+    public static SolidColorBrush GetFrozenSolidColorBrush(Color color)
     {
         var brush = new SolidColorBrush(color);
         brush.Freeze();
