@@ -8,6 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
     xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
+    xmlns:userSettings="clr-namespace:Flow.Launcher.Infrastructure.UserSettings;assembly=Flow.Launcher.Infrastructure"
     Name="FlowMainWindow"
     Title="Flow Launcher"
     Width="{Binding MainWindowWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -410,6 +411,60 @@
                         x:Name="ResultArea"
                         Grid.Column="0"
                         Grid.ColumnSpan="{Binding ResultAreaColumn}">
+
+                        <!-- Layout Grade para Itens Fixados (Apenas modo Grid) -->
+                        <Border Background="#0FFFFFFF" 
+                                CornerRadius="8" 
+                                Margin="10,10,10,5" 
+                                Padding="12">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Settings.EnablePinnedResults}" Value="True" />
+                                                <Condition Binding="{Binding Settings.PinnedResultsLayout}" Value="Grid" />
+                                                <Condition Binding="{Binding QueryText.Length}" Value="0" />
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <StackPanel>
+                                <TextBlock Text="Pinned Results" 
+                                           FontWeight="SemiBold" 
+                                           FontSize="11" 
+                                           Foreground="White"
+                                           Opacity="0.8" 
+                                           Margin="5,0,0,12"/>
+                                
+                                <ItemsControl ItemsSource="{Binding PinnedResults.Results}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <UniformGrid Columns="5" IsItemsHost="True" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Cursor="Hand" Margin="0,5">
+                                                <Border Background="#1FFFFFFF" Width="44" Height="44" CornerRadius="8" Margin="0,0,0,5">
+                                                    <Image Source="{Binding Result.IcoPath}" Width="24" Height="24" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                                </Border>
+                                                <TextBlock Text="{Binding Result.Title}" 
+                                                           HorizontalAlignment="Center" 
+                                                           FontSize="10" 
+                                                           Foreground="White"
+                                                           Opacity="0.9" 
+                                                           TextTrimming="CharacterEllipsis"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </Border>
+
                         <ContentControl>
                             <flowlauncher:ResultListBox
                                 x:Name="ResultListBox"

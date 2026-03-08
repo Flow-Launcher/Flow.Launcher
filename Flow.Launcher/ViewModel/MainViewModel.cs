@@ -49,10 +49,11 @@ namespace Flow.Launcher.ViewModel
         private readonly FlowLauncherJsonStorage<UserSelectedRecord> _userSelectedRecordStorage;
         private readonly FlowLauncherJsonStorageTopMostRecord _topMostRecord;
         private readonly UserSelectedRecord _userSelectedRecord;
-
+        private readonly FlowLauncherJsonStorage<PinnedResult> _pinnedResultStorage;
+        private readonly PinnedResult _pinnedResult;
         private CancellationTokenSource _updateSource; // Used to cancel old query flows
         private CancellationToken _updateToken; // Used to avoid ObjectDisposedException of _updateSource.Token
-
+        
         private ChannelWriter<ResultsForUpdate> _resultsUpdateChannelWriter;
         private Task _resultsViewUpdateTask;
 
@@ -65,8 +66,14 @@ namespace Flow.Launcher.ViewModel
             Priority = 0 // Priority is for calculating scores in UpdateResultView
         };
 
-        private bool _taskbarShownByFlow = false;
+        private readonly PluginMetadata _pinnedMetadata = new()
+        {
+            ID = "F8D7B8E9D0C14B2A8A7B6C5D4E3F2G1H", // Custom ID for Pinned Results
+            Priority = 100 // Higher priority to stay on top
+        };
 
+        private bool _taskbarShownByFlow = false;
+        
         #endregion
 
         #region Constructor
@@ -157,7 +164,8 @@ namespace Flow.Launcher.ViewModel
             _userSelectedRecordStorage = new FlowLauncherJsonStorage<UserSelectedRecord>();
             _userSelectedRecord = _userSelectedRecordStorage.Load();
             _topMostRecord = new FlowLauncherJsonStorageTopMostRecord();
-
+            _pinnedResultStorage = new FlowLauncherJsonStorage<PinnedResult>();
+            _pinnedResult = _pinnedResultStorage.Load();
             ContextMenu = new ResultsViewModel(Settings, this)
             {
                 LeftClickResultCommand = OpenResultCommand,
@@ -171,6 +179,12 @@ namespace Flow.Launcher.ViewModel
                 IsPreviewOn = Settings.AlwaysPreview
             };
             History = new ResultsViewModel(Settings, this)
+            {
+                LeftClickResultCommand = OpenResultCommand,
+                RightClickResultCommand = LoadContextMenuCommand,
+                IsPreviewOn = Settings.AlwaysPreview
+            };
+            PinnedResults = new ResultsViewModel(Settings, this)
             {
                 LeftClickResultCommand = OpenResultCommand,
                 RightClickResultCommand = LoadContextMenuCommand,
@@ -551,6 +565,12 @@ namespace Flow.Launcher.ViewModel
                 _history.Add(result);
                 lastHistoryIndex = 1;
             }
+
+            // test
+            if (Settings.EnablePinnedResults)
+            {
+                _pinnedResult.Items.Add(new PinnedResultItem(result));
+            }
         }
 
         private static IReadOnlyList<Result> DeepCloneResults(IReadOnlyList<Result> results, bool isDialogJump, CancellationToken token = default)
@@ -695,13 +715,15 @@ namespace Flow.Launcher.ViewModel
 
         public ResultsViewModel Results { get; private set; }
 
+        public ResultsViewModel PinnedResults { get; private set; }
+
         public ResultsViewModel ContextMenu { get; private set; }
 
         public ResultsViewModel History { get; private set; }
 
         public bool GameModeStatus { get; set; } = false;
 
-        private string _queryText;
+        private string _queryText; 
         public string QueryText
         {
             get => _queryText;
@@ -1518,6 +1540,12 @@ namespace Flow.Launcher.ViewModel
                     {
                         QueryHistoryTask(currentCancellationToken);
                     }
+
+                    // Query pinned results for home page (only if layout is List)
+                    if (Settings.EnablePinnedResults)
+                    {
+                        QueryPinnedTask(Settings.PinnedResultsLayout,currentCancellationToken);
+                    }
                 }
                 else
                 {
@@ -1644,6 +1672,29 @@ namespace Flow.Launcher.ViewModel
                     App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
                 }
             }
+
+            void QueryPinnedTask(PinnedLayoutOptions layout,CancellationToken token)
+            {
+                if (token.IsCancellationRequested) return;
+
+                // Converte os itens persistidos para o tipo Result através de casting
+                var results = _pinnedResult.Items.Cast<Result>().ToList();
+                App.API.LogDebug(ClassName, $"Update results for pinned items in {layout} mode");
+
+                if (layout == PinnedLayoutOptions.Grid)
+                {
+                    PinnedResults.Clear();
+                    PinnedResults.AddResults(results, "PinnedGrid");
+                }
+                else
+                {
+                    if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(results, _pinnedMetadata, query,
+                        token, reSelect)))
+                    {
+                        App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
+                    }
+                }
+            }
         }
 
         private async Task<Query> ConstructQueryAsync(string queryText, IEnumerable<CustomShortcutModel> customShortcuts,
@@ -1768,7 +1819,7 @@ namespace Flow.Launcher.ViewModel
         /// <returns>True if existing results should be cleared, false otherwise.</returns>
         private bool ShouldClearExistingResultsForNonQuery(ICollection<PluginPair> plugins)
         {
-            if (!Settings.ShowHistoryResultsForHomePage && (plugins.Count == 0 || plugins.All(x => x.Metadata.HomeDisabled == true)))
+            if (!Settings.ShowHistoryResultsForHomePage && !Settings.EnablePinnedResults && (plugins.Count == 0 || plugins.All(x => x.Metadata.HomeDisabled == true)))
             {
                 App.API.LogDebug(ClassName, $"Existing results should be cleared for non-query");
                 return true;
