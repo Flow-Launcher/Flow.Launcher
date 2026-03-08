@@ -189,6 +189,10 @@
     <system:String x:Key="pinnedResults">Pinned Results</system:String>
     <system:String x:Key="showPinnedResultsOnHomePage">Show pinned results on home page</system:String>
     <system:String x:Key="pinnedResultsLayout">Pinned Results Layout</system:String>
+    <system:String x:Key="pinToFlow">Pin to Flow</system:String>
+    <system:String x:Key="unpinFromFlow">Unpin from Flow</system:String>
+    <system:String x:Key="pinResult">Pin Result</system:String>
+    <system:String x:Key="pinQuery">Pin Query</system:String>
     <system:String x:Key="PinnedLayoutList">List</system:String>
     <system:String x:Key="PinnedLayoutGrid">Grid</system:String>
 
