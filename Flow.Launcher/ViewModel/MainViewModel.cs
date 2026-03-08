@@ -2358,6 +2358,7 @@ namespace Flow.Launcher.ViewModel
             _historyItemsStorage.Save();
             _userSelectedRecordStorage.Save();
             _topMostRecord.Save();
+            _pinnedResultStorage.Save();
         }
 
         /// <summary>

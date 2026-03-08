@@ -20,7 +20,7 @@ namespace Flow.Launcher.Storage
             }
 
             if (Items.Count > 0 &&
-            TryGetPinnedResult(result, out var existingPinnedResult))
+            TryGetPinnedResult(result, query,out var existingPinnedResult))
             {
                 existingPinnedResult.AddAt = DateTime.Now;
 
@@ -64,9 +64,10 @@ namespace Flow.Launcher.Storage
             return Items.Any(x => x.Equals(result, query));
         }
 
-        private bool TryGetPinnedResult(Result result, out PinnedResultItem item)
+        private bool TryGetPinnedResult(Result result, string query, out PinnedResultItem item)
         {
-            item = Items.FirstOrDefault(x => x.Equals(result));
+            if (!string.IsNullOrEmpty(query)) item =  Items.FirstOrDefault(x => x.Equals(result, query));
+            else item = Items.FirstOrDefault(x => x.Equals(result));
             return item is not null;
         }
     } 
