@@ -1316,40 +1316,25 @@ namespace Flow.Launcher.ViewModel
             
         private IEnumerable<Result> ContextMenuPinActions(Result selected)
         {
-           var isResultPinned = _pinnedResult.Items.Any(x => !x.IsQuery && x.Title == selected.Title && x.PluginID == selected.PluginID);
-            
-            // Usa OriginQuery ou o texto atual da busca
-            var queryToPin = selected.OriginQuery?.RawQuery ?? QueryText;
-            var isQueryPinned = _pinnedResult.Items.Any(x => x.IsQuery && x.OriginQuery?.RawQuery == queryToPin);
+            var queryToPin = selected.OriginQuery?.TrimmedQuery ?? QueryText;
+            var isQueryPinned = _pinnedResult.Exists(selected, queryToPin);
+            var isResultPinned = _pinnedResult.Exists(selected);
 
-            var actions = new List<Result>();
-
-            // Pin Result Action
-            actions.Add(new Result
+            var actions = new List<Result>
             {
-                Title = isResultPinned ? Localize.unpinFromFlow() : Localize.pinResult(),
-                SubTitle = selected.Title,
-                IcoPath = "Images/app.png",
-                Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xE718"),
-                Action = _ =>
+                new Result
                 {
-                    if (isResultPinned)
+                    Title = isResultPinned ? Localize.unpinFromFlow() : Localize.pinResult(),
+                    SubTitle = selected.Title,
+                    IcoPath = "Images/app.png",
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xE718"),
+                    Action = _ =>
                     {
-                        var itemToRemove = _pinnedResult.Items.FirstOrDefault(x => !x.IsQuery && x.Title == selected.Title && x.PluginID == selected.PluginID);
-                        if (itemToRemove != null) _pinnedResult.Items.Remove(itemToRemove);
+                        _pinnedResult.AddOrRemove(selected, "", isResultPinned);
+                        return true;
                     }
-                    else
-                    {
-                        _pinnedResult.Items.Add(new PinnedResultItem(selected, ""));
-                    }
-                    return true;
-                }
-            });
-
-            // Pin Query Action
-            if (!string.IsNullOrEmpty(queryToPin))
-            {
-                actions.Add(new Result
+                },
+                new Result
                 {
                     Title = isQueryPinned ? Localize.unpinFromFlow() : Localize.pinQuery(),
                     SubTitle = queryToPin,
@@ -1357,19 +1342,11 @@ namespace Flow.Launcher.ViewModel
                     Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xE773"),
                     Action = _ =>
                     {
-                        if (isQueryPinned)
-                        {
-                            var itemToRemove = _pinnedResult.Items.FirstOrDefault(x => x.IsQuery && x.OriginQuery?.RawQuery == queryToPin);
-                            if (itemToRemove != null) _pinnedResult.Items.Remove(itemToRemove);
-                        }
-                        else
-                        {
-                            _pinnedResult.Items.Add(new PinnedResultItem(selected, queryToPin));
-                        }
+                        _pinnedResult.AddOrRemove(selected, queryToPin, isQueryPinned);
                         return true;
                     }
-                });
-            }
+                }
+            };
 
             return actions;
         }

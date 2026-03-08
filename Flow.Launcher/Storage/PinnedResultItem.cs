@@ -17,7 +17,7 @@ namespace Flow.Launcher.Storage
         public string Query { get; set;  }
         public PinnedResultItem() { }
 
-        public PinnedResultItem(Result result, string query = "")
+        public PinnedResultItem(Result result, string query)
         {
            Title = result.Title;
             SubTitle = result.SubTitle;
@@ -28,7 +28,7 @@ namespace Flow.Launcher.Storage
             PluginDirectory = result.PluginDirectory;
             Glyph = result.Glyph;
             AddAt = DateTime.Now;
-            Query = query;
+            Query = query ?? string.Empty;
             IsQuery = !string.IsNullOrEmpty(query);
             AsyncAction = null;
         }
@@ -84,6 +84,40 @@ namespace Flow.Launcher.Storage
                 Glyph = glyph,
                 AddAt = AddAt
             };
+        }
+
+        public bool Equals(Result r)
+        {
+            if (string.IsNullOrEmpty(RecordKey) || string.IsNullOrEmpty(r.RecordKey))
+            {
+                return Title == r.Title
+                    && SubTitle == r.SubTitle
+                    && PluginID == r.PluginID;
+                    //&& Query == r.OriginQuery.TrimmedQuery;
+            }
+            else
+            {
+                return RecordKey == r.RecordKey
+                    && PluginID == r.PluginID;
+                    //&& Query == r.OriginQuery.TrimmedQuery;
+            }
+        }
+
+        public bool Equals(Result r, string query)
+        {
+            if (string.IsNullOrEmpty(RecordKey) || string.IsNullOrEmpty(r.RecordKey))
+            {
+                return Title == r.Title
+                    && SubTitle == r.SubTitle
+                    && PluginID == r.PluginID
+                    && Query == query;
+            }
+            else
+            {
+                return RecordKey == r.RecordKey
+                    && PluginID == r.PluginID
+                    && Query == query;
+            }
         }
     }
 }
