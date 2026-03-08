@@ -199,9 +199,6 @@ namespace Flow.Launcher
                 ThemeManager.Current.ApplicationTheme = ApplicationTheme.Dark;
             }
 
-            // Initialize position
-            InitProgressbarAnimation();
-
             // Force update position
             UpdatePosition();
 
@@ -351,6 +348,11 @@ namespace Flow.Launcher
             {
                 _viewModel.QueryResults();
             }
+        }
+
+        private void ProgressBar_Loaded(object sender, RoutedEventArgs e)
+        {
+            InitProgressbarAnimation();
         }
 
         private async void OnClosing(object sender, CancelEventArgs e)
