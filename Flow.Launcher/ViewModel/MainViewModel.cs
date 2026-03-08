@@ -49,8 +49,8 @@ namespace Flow.Launcher.ViewModel
         private readonly FlowLauncherJsonStorage<UserSelectedRecord> _userSelectedRecordStorage;
         private readonly FlowLauncherJsonStorageTopMostRecord _topMostRecord;
         private readonly UserSelectedRecord _userSelectedRecord;
-        private readonly FlowLauncherJsonStorage<PinnedResult> _pinnedResultStorage;
-        private readonly PinnedResult _pinnedResult;
+        private readonly FlowLauncherJsonStorage<Pinned> _pinnedStorage;
+        private readonly Pinned _pinned;
         private CancellationTokenSource _updateSource; // Used to cancel old query flows
         private CancellationToken _updateToken; // Used to avoid ObjectDisposedException of _updateSource.Token
         
@@ -164,8 +164,8 @@ namespace Flow.Launcher.ViewModel
             _userSelectedRecordStorage = new FlowLauncherJsonStorage<UserSelectedRecord>();
             _userSelectedRecord = _userSelectedRecordStorage.Load();
             _topMostRecord = new FlowLauncherJsonStorageTopMostRecord();
-            _pinnedResultStorage = new FlowLauncherJsonStorage<PinnedResult>();
-            _pinnedResult = _pinnedResultStorage.Load();
+            _pinnedStorage = new FlowLauncherJsonStorage<Pinned>();
+            _pinned = _pinnedStorage.Load();
             ContextMenu = new ResultsViewModel(Settings, this)
             {
                 LeftClickResultCommand = OpenResultCommand,
@@ -1317,8 +1317,8 @@ namespace Flow.Launcher.ViewModel
         private IEnumerable<Result> ContextMenuPinActions(Result selected)
         {
             var queryToPin = selected.OriginQuery?.TrimmedQuery ?? QueryText;
-            var isQueryPinned = _pinnedResult.Exists(selected, queryToPin);
-            var isResultPinned = _pinnedResult.Exists(selected);
+            var isQueryPinned = _pinned.Exists(selected, queryToPin);
+            var isResultPinned = _pinned.Exists(selected);
 
             var actions = new List<Result>
             {
@@ -1330,7 +1330,7 @@ namespace Flow.Launcher.ViewModel
                     Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xE718"),
                     Action = _ =>
                     {
-                        _pinnedResult.AddOrRemove(selected, "", isResultPinned);
+                        _pinned.AddOrRemove(selected, "", isResultPinned);
                         return true;
                     }
                 },
@@ -1342,7 +1342,7 @@ namespace Flow.Launcher.ViewModel
                     Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xE773"),
                     Action = _ =>
                     {
-                        _pinnedResult.AddOrRemove(selected, queryToPin, isQueryPinned);
+                        _pinned.AddOrRemove(selected, queryToPin, isQueryPinned);
                         return true;
                     }
                 }
@@ -1468,8 +1468,12 @@ namespace Flow.Launcher.ViewModel
         internal void RefreshLastOpenedHistoryResults()
         {
             _history.PopulateHistoryFromLegacyHistory();
-
             _history.UpdateIcoPathAbsolute();
+        }
+
+        internal void RefreshPinnedResults()
+        {
+            _pinned.UpdateIcoPathAbsolute();
         }
 
         private async Task QueryResultsAsync(bool searchDelay, bool isReQuery = false, bool reSelect = true)
@@ -1736,7 +1740,7 @@ namespace Flow.Launcher.ViewModel
             {
                 if (token.IsCancellationRequested) return;
 
-                var results = GetPinnedResultItems(_pinnedResult.Items);
+                var results = GetPinnedResultItems(_pinned.Items);
                 App.API.LogDebug(ClassName, $"Update results for pinned items in {layout} mode");
 
                 if (layout == PinnedLayoutOptions.Grid)
@@ -2358,7 +2362,7 @@ namespace Flow.Launcher.ViewModel
             _historyItemsStorage.Save();
             _userSelectedRecordStorage.Save();
             _topMostRecord.Save();
-            _pinnedResultStorage.Save();
+            _pinnedStorage.Save();
         }
 
         /// <summary>
