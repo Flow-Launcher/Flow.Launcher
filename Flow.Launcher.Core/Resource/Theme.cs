@@ -674,16 +674,12 @@ namespace Flow.Launcher.Core.Resource
                 if (backdropType == BackdropTypes.Mica || backdropType == BackdropTypes.MicaAlt)
                 {
                     windowBorderStyle.Setters.Remove(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property == Control.BackgroundProperty));
-                    var brush = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0));
-                    brush.Freeze();
-                    windowBorderStyle.Setters.Add(new Setter(Border.BackgroundProperty, brush));
+                    windowBorderStyle.Setters.Add(new Setter(Border.BackgroundProperty, ThemeHelper.GetFreezeSolidColorBrush(Color.FromArgb(1, 0, 0, 0))));
                 }
                 else if (backdropType == BackdropTypes.Acrylic)
                 {
                     windowBorderStyle.Setters.Remove(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property == Control.BackgroundProperty));
-                    var brush = new SolidColorBrush(Colors.Transparent);
-                    brush.Freeze();
-                    windowBorderStyle.Setters.Add(new Setter(Border.BackgroundProperty, brush));
+                    windowBorderStyle.Setters.Add(new Setter(Border.BackgroundProperty, Brushes.Transparent));
                 }
                 
                 // For themes with blur enabled, the window border is rendered by the system, so it's treated as a simple rectangle regardless of thickness.
@@ -806,10 +802,8 @@ namespace Flow.Launcher.Core.Resource
             }
 
             // Apply background color (remove transparency in color)
-            Color backgroundColor = Color.FromRgb(bgColor.Value.R, bgColor.Value.G, bgColor.Value.B);
-            var brush = new SolidColorBrush(backgroundColor);
-            brush.Freeze();
-            previewStyle.Setters.Add(new Setter(Border.BackgroundProperty, brush));
+            var backgroundColor = Color.FromRgb(bgColor.Value.R, bgColor.Value.G, bgColor.Value.B);
+            previewStyle.Setters.Add(new Setter(Border.BackgroundProperty, ThemeHelper.GetFreezeSolidColorBrush(backgroundColor)));
 
             // The blur theme keeps the corner round fixed (applying DWM code to modify it causes rendering issues).
             // The non-blur theme retains the previously set WindowBorderStyle.
@@ -923,15 +917,11 @@ namespace Flow.Launcher.Core.Resource
                 // Only set the background to transparent if the theme supports blur
                 if (backdropType == BackdropTypes.Mica || backdropType == BackdropTypes.MicaAlt)
                 {
-                    var backgroundBrush = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0));
-                    backgroundBrush.Freeze();
-                    mainWindow.Background = backgroundBrush;
+                    mainWindow.Background = ThemeHelper.GetFreezeSolidColorBrush(Color.FromArgb(1, 0, 0, 0));
                 }
                 else
                 {
-                    var backgroundBrush = new SolidColorBrush(selectedBG);
-                    backgroundBrush.Freeze();
-                    mainWindow.Background = backgroundBrush;
+                    mainWindow.Background = ThemeHelper.GetFreezeSolidColorBrush(selectedBG);
                 }
             }
         }
