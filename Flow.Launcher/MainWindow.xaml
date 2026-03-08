@@ -440,28 +440,67 @@
                                            Opacity="0.8" 
                                            Margin="5,0,0,12"/>
                                 
-                                <ItemsControl ItemsSource="{Binding PinnedResults.Results}">
-                                    <ItemsControl.ItemsPanel>
+                                <ListBox x:Name="PinnedResultListBox"
+                                         ItemsSource="{Binding PinnedResults.Results}"
+                                         SelectedItem="{Binding PinnedResults.SelectedItem, Mode=TwoWay}"
+                                         Background="Transparent"
+                                         BorderThickness="0"
+                                         KeyboardNavigation.TabNavigation="Continue"
+                                         KeyboardNavigation.DirectionalNavigation="Cycle"
+                                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                         ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                         PreviewMouseLeftButtonUp="OnPinnedItemClick">
+                                    <ListBox.ItemsPanel>
                                         <ItemsPanelTemplate>
                                             <UniformGrid Columns="5" IsItemsHost="True" />
                                         </ItemsPanelTemplate>
-                                    </ItemsControl.ItemsPanel>
-                                    <ItemsControl.ItemTemplate>
+                                    </ListBox.ItemsPanel>
+                                    <ListBox.ItemContainerStyle>
+                                        <Style TargetType="ListBoxItem">
+                                            <Setter Property="Background" Value="Transparent" />
+                                            <Setter Property="BorderThickness" Value="0" />
+                                            <Setter Property="Padding" Value="0" />
+                                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="ListBoxItem">
+                                                        <Border x:Name="ItemBorder" 
+                                                                Background="Transparent" 
+                                                                CornerRadius="4"
+                                                                Margin="0"
+                                                                Padding="2">
+                                                            <ContentPresenter />
+                                                        </Border>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsSelected" Value="True">
+                                                                <Setter TargetName="ItemBorder" Property="Background" Value="#3FFFFFFF" />
+                                                            </Trigger>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter TargetName="ItemBorder" Property="Background" Value="#1FFFFFFF" />
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </ListBox.ItemContainerStyle>
+                                    <ListBox.ItemTemplate>
                                         <DataTemplate>
-                                            <StackPanel Cursor="Hand" Margin="0,5">
-                                                <Border Background="#1FFFFFFF" Width="44" Height="44" CornerRadius="8" Margin="0,0,0,5">
-                                                    <Image Source="{Binding Result.IcoPath}" Width="24" Height="24" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                            <StackPanel Cursor="Hand" VerticalAlignment="Center" MouseLeftButtonUp="OnPinnedItemClick">
+                                                <Border Width="36" Height="36" CornerRadius="4" Margin="0,1,0,2" HorizontalAlignment="Center">
+                                                    <Image Source="{Binding Result.IcoPath}" Width="22" Height="22" RenderOptions.BitmapScalingMode="HighQuality"/>
                                                 </Border>
                                                 <TextBlock Text="{Binding Result.Title}" 
                                                            HorizontalAlignment="Center" 
-                                                           FontSize="10" 
+                                                           FontSize="9" 
                                                            Foreground="White"
                                                            Opacity="0.9" 
-                                                           TextTrimming="CharacterEllipsis"/>
+                                                           TextTrimming="CharacterEllipsis"
+                                                           Margin="1,0,1,1"/>
                                             </StackPanel>
                                         </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
                             </StackPanel>
                         </Border>
 

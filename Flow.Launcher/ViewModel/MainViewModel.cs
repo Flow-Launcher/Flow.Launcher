@@ -556,7 +556,7 @@ namespace Flow.Launcher.ViewModel
                     Hide();
                 }
             }
-
+            
             // Record user selected result for result ranking
             _userSelectedRecord.Add(result);
             // Add item to history only if it is from results but not context menu or history
@@ -566,11 +566,6 @@ namespace Flow.Launcher.ViewModel
                 lastHistoryIndex = 1;
             }
 
-            // test
-            if (Settings.EnablePinnedResults)
-            {
-                _pinnedResult.Items.Add(new PinnedResultItem(result));
-            }
         }
 
         private static IReadOnlyList<Result> DeepCloneResults(IReadOnlyList<Result> results, bool isDialogJump, CancellationToken token = default)
@@ -1291,6 +1286,7 @@ namespace Flow.Launcher.ViewModel
                 List<Result> results = PluginManager.GetContextMenusForPlugin(selected);
                 results.Add(ContextMenuTopMost(selected));
                 results.Add(ContextMenuPluginInfo(selected));
+                results.AddRange(ContextMenuPinActions(selected));
 
                 if (!string.IsNullOrEmpty(query))
                 {
@@ -1317,6 +1313,66 @@ namespace Flow.Launcher.ViewModel
                 }
             }
         }
+            
+        private IEnumerable<Result> ContextMenuPinActions(Result selected)
+        {
+           var isResultPinned = _pinnedResult.Items.Any(x => !x.IsQuery && x.Title == selected.Title && x.PluginID == selected.PluginID);
+            
+            // Usa OriginQuery ou o texto atual da busca
+            var queryToPin = selected.OriginQuery?.RawQuery ?? QueryText;
+            var isQueryPinned = _pinnedResult.Items.Any(x => x.IsQuery && x.OriginQuery?.RawQuery == queryToPin);
+
+            var actions = new List<Result>();
+
+            // Pin Result Action
+            actions.Add(new Result
+            {
+                Title = isResultPinned ? Localize.unpinFromFlow() : Localize.pinResult(),
+                SubTitle = selected.Title,
+                IcoPath = "Images/app.png",
+                Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xE718"),
+                Action = _ =>
+                {
+                    if (isResultPinned)
+                    {
+                        var itemToRemove = _pinnedResult.Items.FirstOrDefault(x => !x.IsQuery && x.Title == selected.Title && x.PluginID == selected.PluginID);
+                        if (itemToRemove != null) _pinnedResult.Items.Remove(itemToRemove);
+                    }
+                    else
+                    {
+                        _pinnedResult.Items.Add(new PinnedResultItem(selected, ""));
+                    }
+                    return true;
+                }
+            });
+
+            // Pin Query Action
+            if (!string.IsNullOrEmpty(queryToPin))
+            {
+                actions.Add(new Result
+                {
+                    Title = isQueryPinned ? Localize.unpinFromFlow() : Localize.pinQuery(),
+                    SubTitle = queryToPin,
+                    IcoPath = "Images/search.png",
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xE773"),
+                    Action = _ =>
+                    {
+                        if (isQueryPinned)
+                        {
+                            var itemToRemove = _pinnedResult.Items.FirstOrDefault(x => x.IsQuery && x.OriginQuery?.RawQuery == queryToPin);
+                            if (itemToRemove != null) _pinnedResult.Items.Remove(itemToRemove);
+                        }
+                        else
+                        {
+                            _pinnedResult.Items.Add(new PinnedResultItem(selected, queryToPin));
+                        }
+                        return true;
+                    }
+                });
+            }
+
+            return actions;
+        }
 
         private void QueryHistory()
         {
@@ -1339,6 +1395,32 @@ namespace Flow.Launcher.ViewModel
             {
                 History.AddResults(results, id);
             }
+        }
+
+        private List<Result> GetPinnedResultItems(IEnumerable<PinnedResultItem> items)
+        {
+            var results = new List<Result>();
+            items = items.OrderByDescending(x => x.AddAt);
+            foreach (var item in items) 
+            {
+                var itemCopy = item.DeepCopy();
+                if (!itemCopy.IsQuery)
+                {
+                    itemCopy.AsyncAction = async c =>
+                    {
+                        var reflectResult = await ResultHelper.PopulateResultsAsync(item, itemCopy.Query);
+                        if (reflectResult != null)
+                        {
+                            return await reflectResult.ExecuteAsync(c);
+                        }
+                        return false;
+                    };
+                }
+                results.Add(itemCopy);
+
+            }
+            return results;
+
         }
 
         private List<Result> GetHistoryItems(IEnumerable<LastOpenedHistoryResult> historyItems, int? maxResult = null)
@@ -1370,8 +1452,9 @@ namespace Flow.Launcher.ViewModel
                 {
                     copiedItem.AsyncAction = async c =>
                     {
+
                         // Use original history item to reflect correct result because properties like subtitle have been modified in copiedItem
-                        var reflectResult = await ResultHelper.PopulateResultsAsync(item);
+                        var reflectResult = await ResultHelper.PopulateResultsAsync(item, item.Query);
                         if (reflectResult != null)
                         {
                             // Since some actions may need to hide the Flow window to execute
@@ -1541,11 +1624,10 @@ namespace Flow.Launcher.ViewModel
                         QueryHistoryTask(currentCancellationToken);
                     }
 
-                    // Query pinned results for home page (only if layout is List)
                     if (Settings.EnablePinnedResults)
                     {
                         QueryPinnedTask(Settings.PinnedResultsLayout,currentCancellationToken);
-                    }
+                    } 
                 }
                 else
                 {
@@ -1677,8 +1759,7 @@ namespace Flow.Launcher.ViewModel
             {
                 if (token.IsCancellationRequested) return;
 
-                // Converte os itens persistidos para o tipo Result através de casting
-                var results = _pinnedResult.Items.Cast<Result>().ToList();
+                var results = GetPinnedResultItems(_pinnedResult.Items);
                 App.API.LogDebug(ClassName, $"Update results for pinned items in {layout} mode");
 
                 if (layout == PinnedLayoutOptions.Grid)

@@ -492,6 +492,32 @@ namespace Flow.Launcher
             }
         }
 
+        private void OnPinnedItemClick(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is FrameworkElement element && element.DataContext is ResultViewModel resultVM)
+            {
+                _viewModel.PinnedResults.SelectedItem = resultVM;
+                _ = ExecutePinnedResult(resultVM);
+            }
+        }
+
+        private async Task ExecutePinnedResult(ResultViewModel selectedItem)
+        {
+            if (selectedItem?.Result != null)
+            {
+                var result = selectedItem.Result;
+                var hideWindow = await result.ExecuteAsync(new ActionContext
+                {
+                    SpecialKeyState = GlobalHotkey.CheckModifiers()
+                }).ConfigureAwait(false);
+
+                if (hideWindow)
+                {
+                    _viewModel.Hide();
+                }
+            }
+        }
+
         private void OnKeyUp(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Up || e.Key == Key.Down)
