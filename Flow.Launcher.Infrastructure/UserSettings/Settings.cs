@@ -389,6 +389,11 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
 
+        public bool EnablePinnedResults { get; set; } = true;
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public PinnedLayoutOptions PinnedResultsLayout { get; set; } = PinnedLayoutOptions.List;
+
         public bool AlwaysPreview { get; set; } = false;
 
         public bool AlwaysStartEn { get; set; } = false;
@@ -721,5 +726,11 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         [EnumLocalizeKey(nameof(Localize.executedHistory))]
         LastOpened
+    }
+
+    public enum PinnedLayoutOptions
+    {
+        List,
+        Grid
     }
 }

@@ -186,6 +186,12 @@
     <system:String x:Key="autoUpdatePlugins">Auto update plugins</system:String>
     <system:String x:Key="autoUpdatePluginsToolTip">Automatically check plugin updates and notify if there are any updates available</system:String>
 
+    <system:String x:Key="pinnedResults">Pinned Results</system:String>
+    <system:String x:Key="showPinnedResultsOnHomePage">Show pinned results on home page</system:String>
+    <system:String x:Key="pinnedResultsLayout">Pinned Results Layout</system:String>
+    <system:String x:Key="PinnedLayoutList">List</system:String>
+    <system:String x:Key="PinnedLayoutGrid">Grid</system:String>
+
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Search Plugin</system:String>
     <system:String x:Key="searchpluginToolTip">Ctrl+F to search plugins</system:String>
