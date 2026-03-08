@@ -37,6 +37,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     public class SearchPrecisionData : DropdownDataGeneric<SearchPrecisionScore> { }
     public class LastQueryModeData : DropdownDataGeneric<LastQueryMode> { }
     public class DoublePinyinSchemaData : DropdownDataGeneric<DoublePinyinSchemas> { }
+    public class PinnedLayoutData : DropdownDataGeneric<PinnedLayoutOptions> { }
 
     public bool StartFlowLauncherOnSystemStartup
     {
@@ -146,6 +147,9 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
 
     public List<LastQueryModeData> LastQueryModes { get; } =
         DropdownDataGeneric<LastQueryMode>.GetValues<LastQueryModeData>("LastQuery");
+
+    public List<PinnedLayoutData> PinnedLayouts { get; } =
+        DropdownDataGeneric<PinnedLayoutOptions>.GetValues<PinnedLayoutData>("PinnedLayout");
 
     public List<HistoryStyleLocalized> HistoryStyles { get; } = HistoryStyleLocalized.GetValues();
 
