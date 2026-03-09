@@ -12,7 +12,7 @@
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_comma">Coma (,)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_dot">Punto (.)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_max_decimal_places">Número máximo de decimales</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_use_thousands_separator">Show thousands separator in results</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_use_thousands_separator">Mostrar separador de miles en los resultados</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_failed_to_copy">Ha fallado la copia, inténtelo más tarde</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_show_error_message">Mostrar mensaje de error cuando falle el cálculo</system:String>
 </ResourceDictionary>
