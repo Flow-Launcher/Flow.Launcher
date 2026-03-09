@@ -238,6 +238,9 @@ Nevykonali sa žiadne zmeny.</system:String>
     <system:String x:Key="fileNotFoundMessage">Súbor plugin.json sa nenašiel v rozbalenom zip súbore, alebo táto cesta {0} neexistuje</system:String>
     <system:String x:Key="pluginExistAlreadyMessage">Plugin s rovnakým ID už existuje, alebo ide o vyššiu verziu ako stiahnutý plugin</system:String>
     <system:String x:Key="errorCreatingSettingPanel">Chyba pri vytváraní panelu nastavení pre plugin {0}:{1}{2}</system:String>
+    <system:String x:Key="pluginMinimumAppVersionUnsatisfiedTitle">Plugin {0} vyžaduje na spustenie minimálnu verziu Flow Launcheru {1}</system:String>
+    <system:String x:Key="pluginMinimumAppVersionUnsatisfiedMessage">Flow Launcher nespĺňa minimálne požiadavky na verziu na spustenie {0}. Chcete pokračovať v inštalácii?{1}{1}Odporúčame aktualizovať Flow Launcher na najnovšiu verziu, aby {0} fungoval bez problémov.</system:String>
+    <system:String x:Key="pluginJsonInvalidOrCorrupted">Inštalácia pluginu zlyhala z dôvodu neplatného alebo poškodeného súboru plugin.json</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Repozitár pluginov</system:String>
