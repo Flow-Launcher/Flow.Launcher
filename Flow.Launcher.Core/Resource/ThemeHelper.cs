@@ -8,10 +8,10 @@ public static class ThemeHelper
 {
     public static void CopyStyle(Style originalStyle, Style targetStyle)
     {
-        // If the style is based on another style, copy the base style first
+        // If the style is based on another style, use the same base style for the target style
         if (originalStyle.BasedOn != null)
         {
-            CopyStyle(originalStyle.BasedOn, targetStyle);
+            targetStyle.BasedOn = originalStyle.BasedOn;
         }
 
         // Copy the setters from the original style
