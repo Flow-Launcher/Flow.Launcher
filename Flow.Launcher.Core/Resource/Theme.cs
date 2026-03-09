@@ -636,13 +636,13 @@ namespace Flow.Launcher.Core.Resource
                 // If the BackdropType is Mica or MicaAlt, set the windowborderstyle's background to transparent
                 if (backdropType == BackdropTypes.Mica || backdropType == BackdropTypes.MicaAlt)
                 {
-                    windowBorderStyle.Setters.Remove(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background"));
-                    windowBorderStyle.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(Color.FromArgb(1, 0, 0, 0))));
+                    windowBorderStyle.Setters.Remove(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property == Control.BackgroundProperty));
+                    windowBorderStyle.Setters.Add(new Setter(Border.BackgroundProperty, ThemeHelper.GetFrozenSolidColorBrush(Color.FromArgb(1, 0, 0, 0))));
                 }
                 else if (backdropType == BackdropTypes.Acrylic)
                 {
-                    windowBorderStyle.Setters.Remove(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background"));
-                    windowBorderStyle.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(Colors.Transparent)));
+                    windowBorderStyle.Setters.Remove(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property == Control.BackgroundProperty));
+                    windowBorderStyle.Setters.Add(new Setter(Border.BackgroundProperty, Brushes.Transparent));
                 }
                 
                 // For themes with blur enabled, the window border is rendered by the system, so it's treated as a simple rectangle regardless of thickness.
@@ -761,12 +761,12 @@ namespace Flow.Launcher.Core.Resource
                 Application.Current.Resources["WindowBorderStyle"] is Style originalStyle)
             {
                 // Copy the original style, including the base style if it exists
-                CopyStyle(originalStyle, previewStyle);
+                ThemeHelper.CopyStyle(originalStyle, previewStyle);
             }
 
             // Apply background color (remove transparency in color)
-            Color backgroundColor = Color.FromRgb(bgColor.Value.R, bgColor.Value.G, bgColor.Value.B);
-            previewStyle.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(backgroundColor)));
+            var backgroundColor = Color.FromRgb(bgColor.Value.R, bgColor.Value.G, bgColor.Value.B);
+            previewStyle.Setters.Add(new Setter(Border.BackgroundProperty, ThemeHelper.GetFrozenSolidColorBrush(backgroundColor)));
 
             // The blur theme keeps the corner round fixed (applying DWM code to modify it causes rendering issues).
             // The non-blur theme retains the previously set WindowBorderStyle.
@@ -778,21 +778,6 @@ namespace Flow.Launcher.Core.Resource
 
             // Set the new style to the resource
             Application.Current.Resources["PreviewWindowBorderStyle"] = previewStyle;
-        }
-
-        private void CopyStyle(Style originalStyle, Style targetStyle)
-        {
-            // If the style is based on another style, copy the base style first
-            if (originalStyle.BasedOn != null)
-            {
-                CopyStyle(originalStyle.BasedOn, targetStyle);
-            }
-
-            // Copy the setters from the original style
-            foreach (var setter in originalStyle.Setters.OfType<Setter>())
-            {
-                targetStyle.Setters.Add(new Setter(setter.Property, setter.Value));
-            }
         }
 
         private void ColorizeWindow(string theme, BackdropTypes backdropType)
@@ -880,11 +865,11 @@ namespace Flow.Launcher.Core.Resource
                 // Only set the background to transparent if the theme supports blur
                 if (backdropType == BackdropTypes.Mica || backdropType == BackdropTypes.MicaAlt)
                 {
-                    mainWindow.Background = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0));
+                    mainWindow.Background = ThemeHelper.GetFrozenSolidColorBrush(Color.FromArgb(1, 0, 0, 0));
                 }
                 else
                 {
-                    mainWindow.Background = new SolidColorBrush(selectedBG);
+                    mainWindow.Background = ThemeHelper.GetFrozenSolidColorBrush(selectedBG);
                 }
             }
         }
