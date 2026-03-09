@@ -21,6 +21,15 @@ public static class ThemeHelper
         }
     }
 
+    public static void ReplaceSetter(Style style, Setter setter)
+    {
+        var existingSetter = style.Setters.OfType<Setter>().FirstOrDefault(s => s.Property == setter.Property);
+        if (existingSetter != null)
+            style.Setters.Remove(existingSetter);
+
+        style.Setters.Add(setter);
+    }
+
     public static SolidColorBrush GetFrozenSolidColorBrush(Color color)
     {
         var brush = new SolidColorBrush(color);

@@ -525,10 +525,10 @@ namespace Flow.Launcher.Core.Resource
             }
 
             // Add new Margin Setter
-            newWindowBorderStyle.Setters.Add(new Setter(FrameworkElement.MarginProperty, newMargin));
+            ThemeHelper.ReplaceSetter(newWindowBorderStyle, new Setter(FrameworkElement.MarginProperty, newMargin));
 
             // Add Drop Shadow Effect Setter
-            newWindowBorderStyle.Setters.Add(new Setter
+            ThemeHelper.ReplaceSetter(newWindowBorderStyle, new Setter
             {
                 Property = UIElement.EffectProperty,
                 Value = new DropShadowEffect
@@ -574,10 +574,11 @@ namespace Flow.Launcher.Core.Resource
                             currentMargin.Top - ShadowExtraMargin,
                             currentMargin.Right - ShadowExtraMargin,
                             currentMargin.Bottom - ShadowExtraMargin);
-                        newWindowBorderStyle.Setters.Add(new Setter(FrameworkElement.MarginProperty, newMargin));
+                        ThemeHelper.ReplaceSetter(newWindowBorderStyle, new Setter(FrameworkElement.MarginProperty, newMargin));
                         continue;
                     }
                 }
+
                 newWindowBorderStyle.Setters.Add(setterBase);
             }
 
@@ -710,13 +711,11 @@ namespace Flow.Launcher.Core.Resource
                 // If the BackdropType is Mica or MicaAlt, set the windowborderstyle's background to transparent
                 if (backdropType is BackdropTypes.Mica or BackdropTypes.MicaAlt)
                 {
-                    windowBorderStyle.Setters.Remove(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property == Control.BackgroundProperty));
-                    windowBorderStyle.Setters.Add(new Setter(Border.BackgroundProperty, ThemeHelper.GetFrozenSolidColorBrush(Color.FromArgb(1, 0, 0, 0))));
+                    ThemeHelper.ReplaceSetter(windowBorderStyle, new Setter(Border.BackgroundProperty, ThemeHelper.GetFrozenSolidColorBrush(Color.FromArgb(1, 0, 0, 0))));
                 }
                 else if (backdropType == BackdropTypes.Acrylic)
                 {
-                    windowBorderStyle.Setters.Remove(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property == Control.BackgroundProperty));
-                    windowBorderStyle.Setters.Add(new Setter(Border.BackgroundProperty, Brushes.Transparent));
+                    ThemeHelper.ReplaceSetter(windowBorderStyle, new Setter(Border.BackgroundProperty, Brushes.Transparent));
                 }
 
                 // For themes with blur enabled, the window border is rendered by the system, so it's treated as a simple rectangle regardless of thickness.
