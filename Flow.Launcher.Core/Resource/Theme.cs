@@ -485,7 +485,7 @@ namespace Flow.Launcher.Core.Resource
 
             // Get a new unsealed style based on the old one, and copy Resources and Triggers
             var newWindowBorderStyle = new Style(typeof(Border));
-            CopyStyle(windowBorderStyle, newWindowBorderStyle);
+            ThemeHelper.CopyStyle(windowBorderStyle, newWindowBorderStyle);
 
             // Identify existing Margin to calculate new Margin, and copy other setters
             Setter existingMarginSetter = null;
@@ -555,7 +555,7 @@ namespace Flow.Launcher.Core.Resource
 
             // Get a new unsealed style based on the old one, and copy Resources and Triggers
             var newWindowBorderStyle = new Style(typeof(Border));
-            CopyStyle(windowBorderStyle, newWindowBorderStyle);
+            ThemeHelper.CopyStyle(windowBorderStyle, newWindowBorderStyle);
 
             // Copy Setters, excluding the Effect setter and updating the Margin setter
             foreach (var setterBase in windowBorderStyle.Setters)
