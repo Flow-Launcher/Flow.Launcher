@@ -319,6 +319,7 @@ namespace Flow.Launcher
                         break;
                     case nameof(Settings.ShowHomePage):
                     case nameof(Settings.ShowHistoryResultsForHomePage):
+                    case nameof(Settings.HistoryStyle):
                         if (_viewModel.QueryResultsSelected() && string.IsNullOrEmpty(_viewModel.QueryText))
                         {
                             _viewModel.QueryResults();
@@ -861,7 +862,7 @@ namespace Flow.Launcher
 
         public void UpdatePosition()
         {
-            // Initialize call twice to work around multi-display alignment issue- https://github.com/Flow-Launcher/Flow.Launcher/issues/2910
+            // Initialize call twice to workaround multi-display alignment issue- https://github.com/Flow-Launcher/Flow.Launcher/issues/2910
             if (_viewModel.IsDialogJumpWindowUnderDialog())
             {
                 InitializeDialogJumpPosition();
@@ -885,7 +886,7 @@ namespace Flow.Launcher
 
         private void InitializePosition()
         {
-            // Initialize call twice to work around multi-display alignment issue- https://github.com/Flow-Launcher/Flow.Launcher/issues/2910
+            // Initialize call twice to workaround multi-display alignment issue- https://github.com/Flow-Launcher/Flow.Launcher/issues/2910
             InitializePositionInner();
             InitializePositionInner();
             return;
