@@ -298,9 +298,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         private List<Result> GetQuickAccessResultsFilteredByActionKeyword(Query query, List<ActionKeyword> actions)
         {
-            if (!Settings.QuickAccessKeywordEnabled)
-                return [];
-
             var results = QuickAccess.AccessLinkListMatched(query, Settings.QuickAccessLinks);
             if (results.Count == 0)
                 return [];
