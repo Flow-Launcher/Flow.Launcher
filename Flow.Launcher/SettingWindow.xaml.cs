@@ -169,7 +169,9 @@ public partial class SettingWindow
             SetWindowPosition(top, left);
         }
 
-        WindowState = _settings.SettingWindowState;
+        WindowState = _settings.SettingWindowState == WindowState.Minimized
+            ? WindowState.Normal
+            : _settings.SettingWindowState;
     }
 
     private void SetWindowPosition(double top, double left)
