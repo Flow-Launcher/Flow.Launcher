@@ -95,7 +95,7 @@ public static class DispatcherHelper
         }
         else
         {
-            await dispatcher.InvokeAsync(func, priority);
+            await await dispatcher.InvokeAsync(func, priority);
         }
     }
 }
