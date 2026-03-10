@@ -50,7 +50,7 @@ namespace Flow.Launcher
             }
             catch (Exception)
             {
-                // Ignore IO errors when trying to find the log file
+                // Intentionally ignore all errors when trying to find the log file to avoid secondary crashes
             }
 
             var websiteUrl = exception switch
