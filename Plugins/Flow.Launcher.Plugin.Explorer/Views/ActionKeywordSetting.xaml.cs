@@ -16,9 +16,9 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             get => actionKeyword;
             set
             {
-                // Set Enable to be true if user change ActionKeyword
-                KeywordEnabled = true;
-                _ = SetProperty(ref actionKeyword, value);
+                // Set Enable to be true only when the ActionKeyword value actually changes
+                if (SetProperty(ref actionKeyword, value))
+                    KeywordEnabled = true;
             }
         }
 
@@ -34,8 +34,9 @@ namespace Flow.Launcher.Plugin.Explorer.Views
         public ActionKeywordSetting(ActionKeywordModel selectedActionKeyword)
         {
             CurrentActionKeyword = selectedActionKeyword;
-            ActionKeyword = selectedActionKeyword.Keyword;
-            KeywordEnabled = selectedActionKeyword.Enabled;
+            // Initialize backing fields directly to avoid triggering the auto-enable side-effect
+            actionKeyword = selectedActionKeyword.Keyword;
+            _keywordEnabled = selectedActionKeyword.Enabled;
 
             InitializeComponent();
 
