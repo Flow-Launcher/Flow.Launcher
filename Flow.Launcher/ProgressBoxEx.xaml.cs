@@ -52,10 +52,10 @@ namespace Flow.Launcher
 
         private void ReportProgress(double progress)
         {
-            DispatcherHelper.Invoke(() => ReportProgress1(progress));
+            DispatcherHelper.Invoke(() => ReportProgressCore(progress));
         }
 
-        private void ReportProgress1(double progress)
+        private void ReportProgressCore(double progress)
         {
             if (progress < 0)
             {

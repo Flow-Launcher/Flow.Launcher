@@ -30,10 +30,10 @@ namespace Flow.Launcher
             MessageBoxImage icon = MessageBoxImage.None,
             MessageBoxResult defaultResult = MessageBoxResult.OK)
         {
-            return DispatcherHelper.Invoke(() => Show1(messageBoxText, caption, button, icon, defaultResult));
+            return DispatcherHelper.Invoke(() => ShowCore(messageBoxText, caption, button, icon, defaultResult));
         }
 
-        private static MessageBoxResult Show1(
+        private static MessageBoxResult ShowCore(
             string messageBoxText,
             string caption = "",
             MessageBoxButton button = MessageBoxButton.OK,

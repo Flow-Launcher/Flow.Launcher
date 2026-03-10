@@ -22,10 +22,10 @@ public static class WallpaperPathRetrieval
     public static Brush GetWallpaperBrush()
     {
         // Invoke the method on the UI thread
-        return DispatcherHelper.Invoke(GetWallpaperBrush1);
+        return DispatcherHelper.Invoke(GetWallpaperBrushCore);
     }
 
-    private static Brush GetWallpaperBrush1()
+    private static Brush GetWallpaperBrushCore()
     {
         try
         {
