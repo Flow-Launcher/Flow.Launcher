@@ -795,10 +795,10 @@ namespace Flow.Launcher.ViewModel
         private async Task ChangeQueryTextAsync(string queryText, bool isReQuery = false)
         {
             // Must check access so that we will not block the UI thread which causes window visibility issue
-            await DispatcherHelper.InvokeAsync(() => ChangeQueryText1Async(queryText, isReQuery));
+            await DispatcherHelper.InvokeAsync(() => ChangeQueryTextCoreAsync(queryText, isReQuery));
         }
 
-        private async Task ChangeQueryText1Async(string queryText, bool isReQuery = false)
+        private async Task ChangeQueryTextCoreAsync(string queryText, bool isReQuery = false)
         {
             if (QueryText != queryText)
             {
