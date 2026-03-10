@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure;
 using Microsoft.Win32;
 
@@ -22,11 +22,11 @@ public static class WallpaperPathRetrieval
     public static Brush GetWallpaperBrush()
     {
         // Invoke the method on the UI thread
-        if (!Application.Current.Dispatcher.CheckAccess())
-        {
-            return Application.Current.Dispatcher.Invoke(GetWallpaperBrush);
-        }
+        return DispatcherHelper.Invoke(GetWallpaperBrush1);
+    }
 
+    private static Brush GetWallpaperBrush1()
+    {
         try
         {
             var wallpaperPath = Win32Helper.GetWallpaperPath();

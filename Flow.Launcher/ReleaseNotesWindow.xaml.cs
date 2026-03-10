@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure.Http;
 using iNKORE.UI.WPF.Modern;
 
@@ -28,7 +29,7 @@ namespace Flow.Launcher
 
         private void ThemeManager_ActualApplicationThemeChanged(ThemeManager sender, object args)
         {
-            Application.Current.Dispatcher.Invoke(() =>
+            DispatcherHelper.Invoke(() =>
             {
                 if (ThemeManager.Current.ActualApplicationTheme == ApplicationTheme.Light)
                 {
@@ -124,7 +125,7 @@ namespace Flow.Launcher
         {
             var output = await GetReleaseNotesMarkdownAsync().ConfigureAwait(false);
 
-            Application.Current.Dispatcher.Invoke(() =>
+            DispatcherHelper.Invoke(() =>
             {
                 RefreshProgressRing.Visibility = Visibility.Collapsed;
                 if (string.IsNullOrEmpty(output))
