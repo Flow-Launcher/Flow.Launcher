@@ -38,9 +38,20 @@ namespace Flow.Launcher
 
         private void SetException(Exception exception)
         {
-            var path = DataLocation.VersionLogDirectory;
-            var directory = new DirectoryInfo(path);
-            var log = directory.GetFiles().OrderByDescending(f => f.LastWriteTime).First();
+            FileInfo log = null;
+            try
+            {
+                var path = DataLocation.VersionLogDirectory;
+                var directory = new DirectoryInfo(path);
+                if (directory.Exists)
+                {
+                    log = directory.GetFiles().OrderByDescending(f => f.LastWriteTime).FirstOrDefault();
+                }
+            }
+            catch (Exception)
+            {
+                // Intentionally ignore all errors when trying to find the log file to avoid secondary crashes
+            }
 
             var websiteUrl = exception switch
             {
@@ -49,8 +60,11 @@ namespace Flow.Launcher
             };
 
             var paragraph = Hyperlink(Localize.reportWindow_please_open_issue(), websiteUrl);
-            paragraph.Inlines.Add(Localize.reportWindow_upload_log(log.FullName));
-            paragraph.Inlines.Add("\n");
+            if (log is not null)
+            {
+                paragraph.Inlines.Add(Localize.reportWindow_upload_log(log.FullName));
+                paragraph.Inlines.Add("\n");
+            }
             paragraph.Inlines.Add(Localize.reportWindow_copy_below());
             ErrorTextbox.Document.Blocks.Add(paragraph);
 
