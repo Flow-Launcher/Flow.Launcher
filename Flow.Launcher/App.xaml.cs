@@ -249,8 +249,8 @@ namespace Flow.Launcher
                 API.SaveAppAllSettings();
                 API.LogInfo(ClassName, "End Flow Launcher startup ------------------------------------------------------");
 
-                // Show GRID Pinned results on start flow
-                if (_settings.EnablePinnedResults && _settings.PinnedResultsLayout == PinnedLayoutOptions.Grid)
+                // Show pínned results on start flow
+                if (_settings.EnablePinnedResults && _settings.EnablePinnedResults)
                 {
                     _mainVM.RefreshPinnedResults();
                     _mainVM.QueryResults();
