@@ -156,6 +156,10 @@ namespace Flow.Launcher.ViewModel
                     case nameof(Settings.OpenHistoryHotkey):
                         OnPropertyChanged(nameof(OpenHistoryHotkey));
                         break;
+                    case nameof(Settings.EnablePinnedResults):
+                    case nameof(Settings.PinnedResultsLayout):
+                        QueryResults();
+                        break;
                 }
             };
 
@@ -844,6 +848,8 @@ namespace Flow.Launcher.ViewModel
         // This is not a reliable indicator of the cursor's position, it is manually set for a specific purpose.
         public bool QueryTextCursorMovedToEnd { get; set; }
 
+        public bool IsContextMenuVisible => ContextMenuSelected();
+
         private ResultsViewModel _selectedResults;
 
         private ResultsViewModel SelectedResults
@@ -855,6 +861,9 @@ namespace Flow.Launcher.ViewModel
                 var isReturningFromContextMenu = ContextMenuSelected();
                 var isReturningFromHistory = HistorySelected();
                 _selectedResults = value;
+                
+                OnPropertyChanged(nameof(IsContextMenuVisible));
+
                 if (QueryResultsSelected())
                 {
                     Results.Visibility = Visibility.Visible;
@@ -1614,7 +1623,8 @@ namespace Flow.Launcher.ViewModel
 
                     if (Settings.EnablePinnedResults)
                     {
-                        QueryPinnedTask(Settings.PinnedResultsLayout,currentCancellationToken);
+                        Results.Visibility = Visibility.Visible;
+                        QueryPinnedTask(Settings.PinnedResultsLayout, currentCancellationToken);
                     } 
                 }
                 else
@@ -1743,7 +1753,7 @@ namespace Flow.Launcher.ViewModel
                 }
             }
 
-            void QueryPinnedTask(PinnedLayoutOptions layout,CancellationToken token)
+            void QueryPinnedTask(PinnedLayoutOptions layout, CancellationToken token)
             {
                 if (token.IsCancellationRequested) return;
 
@@ -1752,11 +1762,22 @@ namespace Flow.Launcher.ViewModel
 
                 if (layout == PinnedLayoutOptions.Grid)
                 {
+                    // If switching from List to Grid, we should clear the pinned results from the main list
+                    // By sending an empty list with the pinned metadata
+                    if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(new List<Result>(), _pinnedMetadata, query,
+                            token, reSelect)))
+                    {
+                        App.API.LogError(ClassName, "Unable to clear pinned results from main list");
+                    }
+
                     PinnedResults.Clear();
                     PinnedResults.AddResults(results, "PinnedGrid");
                 }
                 else
                 {
+                    // If switching from Grid to List, we should clear the Grid
+                    PinnedResults.Clear();
+
                     if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(results, _pinnedMetadata, query,
                         token, reSelect)))
                     {
