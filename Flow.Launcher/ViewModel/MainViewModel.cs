@@ -191,6 +191,7 @@ namespace Flow.Launcher.ViewModel
                 IsPreviewOn = Settings.AlwaysPreview
             };
             _selectedResults = Results;
+            Results.Visibility = Visibility.Visible;
 
             Results.PropertyChanged += (o, args) =>
             {

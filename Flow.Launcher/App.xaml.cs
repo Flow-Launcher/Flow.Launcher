@@ -249,6 +249,13 @@ namespace Flow.Launcher
                 API.SaveAppAllSettings();
                 API.LogInfo(ClassName, "End Flow Launcher startup ------------------------------------------------------");
 
+                // Show GRID Pinned results on start flow
+                if (_settings.EnablePinnedResults && _settings.PinnedResultsLayout == PinnedLayoutOptions.Grid)
+                {
+                    _mainVM.RefreshPinnedResults();
+                    _mainVM.QueryResults();
+                }
+
                 _ = API.StopwatchLogInfoAsync(ClassName, "Startup cost", async () =>
                 {
                     API.LogInfo(ClassName, "Begin plugin initialization ----------------------------------------------------");

@@ -412,7 +412,7 @@
                         Grid.Column="0"
                         Grid.ColumnSpan="{Binding ResultAreaColumn}">
 
-                        <!-- Layout Grade para Itens Fixados (Apenas modo Grid) -->
+                        <!-- Pinned Results Grid -->
                         <Border Background="#0FFFFFFF" 
                                 CornerRadius="8" 
                                 Margin="10,10,10,5" 
@@ -426,6 +426,7 @@
                                                 <Condition Binding="{Binding Settings.EnablePinnedResults}" Value="True" />
                                                 <Condition Binding="{Binding Settings.PinnedResultsLayout}" Value="Grid" />
                                                 <Condition Binding="{Binding QueryText.Length}" Value="0" />
+                                                <Condition Binding="{Binding Results.Visibility}" Value="Visible" />
                                             </MultiDataTrigger.Conditions>
                                             <Setter Property="Visibility" Value="Visible" />
                                         </MultiDataTrigger>
@@ -443,6 +444,7 @@
                                 <ListBox x:Name="PinnedResultListBox"
                                          ItemsSource="{Binding PinnedResults.Results}"
                                          SelectedItem="{Binding PinnedResults.SelectedItem, Mode=TwoWay}"
+                                         SelectedIndex="{Binding PinnedResults.SelectedIndex, Mode=TwoWay}"
                                          Background="Transparent"
                                          BorderThickness="0"
                                          KeyboardNavigation.TabNavigation="Continue"
