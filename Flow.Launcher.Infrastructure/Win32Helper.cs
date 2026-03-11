@@ -303,13 +303,15 @@ namespace Flow.Launcher.Infrastructure
 
         #region Pixel to DIP
 
+        private const double DefaultDpi = 96d;
+
         /// <summary>
-        /// Transforms pixels to Device Independent Pixels used by WPF
+        /// Transforms pixels to Device Independent Pixels used by WPF.
         /// </summary>
-        /// <param name="visual">current window, required to get presentation source</param>
-        /// <param name="unitX">horizontal position in pixels</param>
-        /// <param name="unitY">vertical position in pixels</param>
-        /// <returns>point containing device independent pixels</returns>
+        /// <param name="visual">Current window, required to get presentation source.</param>
+        /// <param name="unitX">Horizontal position in pixels.</param>
+        /// <param name="unitY">Vertical position in pixels.</param>
+        /// <returns>Point containing device independent pixels.</returns>
         public static Point TransformPixelsToDIP(Visual visual, double unitX, double unitY)
         {
             Matrix matrix;
@@ -324,7 +326,7 @@ namespace Flow.Launcher.Infrastructure
                 matrix = src.CompositionTarget.TransformFromDevice;
             }
 
-            return new Point((int)(matrix.M11 * unitX), (int)(matrix.M22 * unitY));
+            return new Point(matrix.M11 * unitX, matrix.M22 * unitY);
         }
 
         #endregion
