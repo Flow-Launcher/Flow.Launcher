@@ -486,9 +486,33 @@
                                     </ListBox.ItemContainerStyle>
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
-                                            <StackPanel Cursor="Hand" VerticalAlignment="Center" MouseLeftButtonUp="OnPinnedItemClick">
-                                                <Border Width="36" Height="36" CornerRadius="4" Margin="0,1,0,2" HorizontalAlignment="Center">
-                                                    <Image Source="{Binding Result.IcoPath}" Width="22" Height="22" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                            <StackPanel Cursor="Hand" 
+                                                        VerticalAlignment="Center" 
+                                                        MouseLeftButtonUp="OnPinnedItemClick"
+                                                        ToolTip="{Binding ShowSubTitleToolTip}">
+                                                <Border Width="42" Height="42" CornerRadius="4" Margin="0,1,0,2" HorizontalAlignment="Center">
+                                                    <Grid>
+                                                        <Image Source="{Binding Image}" 
+                                                               Width="32" 
+                                                               Height="32" 
+                                                               RenderOptions.BitmapScalingMode="HighQuality"
+                                                               Visibility="{Binding ShowIcon}"/>
+                                                        <TextBlock FontFamily="{Binding Glyph.FontFamily}"
+                                                                   Text="{Binding Glyph.Glyph}"
+                                                                   FontSize="24"
+                                                                   HorizontalAlignment="Center"
+                                                                   VerticalAlignment="Center"
+                                                                   Style="{DynamicResource ItemGlyph}"
+                                                                   Width="Auto"
+                                                                   Height="Auto"
+                                                                   Visibility="{Binding ShowGlyph}"/>
+                                                        <Image Source="{Binding BadgeImage}"
+                                                               Width="16"
+                                                               Height="16"
+                                                               HorizontalAlignment="Right"
+                                                               VerticalAlignment="Bottom"
+                                                               Visibility="{Binding ShowBadge}"/>
+                                                    </Grid>
                                                 </Border>
                                                 <TextBlock Text="{Binding Result.Title}" 
                                                            HorizontalAlignment="Center" 
@@ -496,7 +520,8 @@
                                                            Foreground="White"
                                                            Opacity="0.9" 
                                                            TextTrimming="CharacterEllipsis"
-                                                           Margin="1,0,1,1"/>
+                                                           ToolTip="{Binding ShowTitleToolTip}"
+                                                           Margin="2,0,2,1"/>
                                             </StackPanel>
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>

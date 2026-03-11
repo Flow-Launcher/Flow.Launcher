@@ -1376,16 +1376,22 @@ namespace Flow.Launcher.ViewModel
 
         private List<Result> GetPinnedResultItems(IEnumerable<PinnedResultItem> items)
         {
+            if (!items.Any()) return [];
             var results = new List<Result>();
-            items = items.OrderByDescending(x => x.AddAt);
-            foreach (var item in items) 
+            var itemsCopy = items.Select(x => x.DeepCopy()).OrderByDescending(x => x.AddAt);
+            var pluginsIds = PluginManager.GetAllPluginsIds();
+            if (pluginsIds.Any())
             {
-                var itemCopy = item.DeepCopy();
-                if (!itemCopy.IsQuery)
+                var pluginsIdsToRemove = items.Where(x => !pluginsIds.Contains(x.PluginID)).Select(x => x.PluginID);
+                if (pluginsIdsToRemove.Any()) _pinned.RemoveItemsByPluginIds(pluginsIdsToRemove);
+            }
+            foreach (var item in itemsCopy) 
+            {
+                if (!item.IsQuery)
                 {
-                    itemCopy.AsyncAction = async c =>
+                    item.AsyncAction = async c =>
                     {
-                        var reflectResult = await ResultHelper.PopulateResultsAsync(item, itemCopy.Query);
+                        var reflectResult = await ResultHelper.PopulateResultsAsync(item, item.Query);
                         if (reflectResult != null)
                         {
                             return await reflectResult.ExecuteAsync(c);
@@ -1393,7 +1399,7 @@ namespace Flow.Launcher.ViewModel
                         return false;
                     };
                 }
-                results.Add(itemCopy);
+                results.Add(item);
 
             }
             return results;

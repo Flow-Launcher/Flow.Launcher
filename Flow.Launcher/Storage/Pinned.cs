@@ -65,12 +65,20 @@ namespace Flow.Launcher.Storage
             return Items.Any(x => x.Equals(result, query));
         }
 
+        public void RemoveItemsByPluginIds(IEnumerable<string> pluginsIds)
+        {
+            Items.RemoveAll(x => pluginsIds.Contains(x.PluginID));
+        }
+
+
         private bool TryGetPinnedResult(Result result, string query, out PinnedResultItem item)
         {
             if (!string.IsNullOrEmpty(query)) item =  Items.FirstOrDefault(x => x.Equals(result, query));
             else item = Items.FirstOrDefault(x => x.Equals(result));
             return item is not null;
         }
+
+
 
         public void UpdateIcoPathAbsolute()
         {
