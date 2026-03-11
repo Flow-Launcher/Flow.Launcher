@@ -8,14 +8,14 @@ namespace Flow.Launcher.Storage
 {
     public class Pinned
     {
-        private readonly int _maxPinned = 5;
+        private readonly int _maxPinned = 10;
         public List<PinnedResultItem> Items { set; get; } = [];
 
 
         public void Add(Result result, string query = "")
         {
             if (string.IsNullOrEmpty(result.PluginID)) return;
-            if (Items.Count > _maxPinned)
+            if (Items.Count >= _maxPinned)
             {
                 Items.RemoveAt(0);
             }
@@ -23,7 +23,7 @@ namespace Flow.Launcher.Storage
             if (Items.Count > 0 &&
             TryGetPinnedResult(result, query,out var existingPinnedResult))
             {
-                existingPinnedResult.AddAt = DateTime.Now;
+                existingPinnedResult.AddAt = DateTime.Now; 
 
                 if (existingPinnedResult.IcoPath != result.IcoPath)
                     existingPinnedResult.IcoPath = result.IcoPath;
@@ -32,7 +32,7 @@ namespace Flow.Launcher.Storage
                     || existingPinnedResult.Glyph?.FontFamily != result.Glyph?.FontFamily)
                     existingPinnedResult.SetGlyph(result.Glyph);
             }
-            else
+            else 
             {
                 Items.Add(new PinnedResultItem(result, query));
             }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text.Json.Serialization;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin;
 
@@ -7,19 +6,15 @@ namespace Flow.Launcher.Storage
 {
     public class PinnedResultItem : Result
     {
-        [JsonInclude]
         public DateTime AddAt { get; set; }
 
-        [JsonInclude]
         public bool IsQuery { get; set; }
-        [JsonInclude]
-
         public string Query { get; set;  }
         public PinnedResultItem() { }
 
         public PinnedResultItem(Result result, string query)
         {
-           Title = result.Title;
+            Title = result.Title;
             SubTitle = result.SubTitle;
             PluginID = result.PluginID;
             OriginQuery = result.OriginQuery;
@@ -27,6 +22,13 @@ namespace Flow.Launcher.Storage
             IcoPath = result.IcoPath;
             PluginDirectory = result.PluginDirectory;
             Glyph = result.Glyph;
+            ShowBadge = result.ShowBadge;
+            BadgeIcoPath = result.BadgeIcoPath;
+            RoundedIcon = result.RoundedIcon;
+            Score = result.Score;
+            TitleHighlightData = result.TitleHighlightData;
+            CopyText = result.CopyText;
+            AutoCompleteText = result.AutoCompleteText;
             AddAt = DateTime.Now;
             Query = query ?? string.Empty;
             IsQuery = !string.IsNullOrEmpty(query);
@@ -40,39 +42,42 @@ namespace Flow.Launcher.Storage
             var glyphValue = Glyph;
 
             var title = string.Empty;
-            var showBadge = false;
-            var badgeIcoPath = string.Empty;
+            var subtitle = string.Empty;
             var icoPath = string.Empty;
             var glyph = null as GlyphInfo;
 
             if (IsQuery)
             {
                 title = Localize.executeQuery(Query);
+                subtitle = Localize.lastExecuteTime(AddAt);
                 icoPath = Constant.HistoryIcon;
                 glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE81C");
-                showBadge = false;
             } else
             {
                 title = Title;
+                subtitle = SubTitle;
                 icoPath = IcoPath;
                 glyph = glyphValue != null
                             ? new GlyphInfo(glyphValue.FontFamily, glyphValue.Glyph)
                             : null;
-                showBadge = true;
-                badgeIcoPath = Constant.HistoryIcon;
             }
             return new PinnedResultItem()
             {
                 Title = title,
-                SubTitle = Localize.lastExecuteTime(AddAt),
-                PluginID = string.Empty,
+                SubTitle = subtitle,
+                PluginID = PluginID,
                 Query = Query,
                 OriginQuery = new Query { TrimmedQuery = Query },
                 RecordKey = RecordKey,
                 IcoPath = icoPath,
-                ShowBadge = showBadge,
-                BadgeIcoPath = badgeIcoPath,
+                ShowBadge = ShowBadge,
+                BadgeIcoPath = BadgeIcoPath,
                 PluginDirectory = PluginDirectory,
+                RoundedIcon = RoundedIcon,
+                Score = Score,
+                TitleHighlightData = TitleHighlightData,
+                CopyText = CopyText,
+                AutoCompleteText = AutoCompleteText,
                 Action = _ =>
                 {
                     App.API.BackToQueryResults();
