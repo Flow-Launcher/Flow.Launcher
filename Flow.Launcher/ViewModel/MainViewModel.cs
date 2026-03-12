@@ -1390,7 +1390,7 @@ namespace Flow.Launcher.ViewModel
             var results = new List<Result>();
             var itemsCopy = items.Select(x => x.DeepCopy()).OrderByDescending(x => x.LastPinnedAt);
 
-            if (Settings.ShouldCleanResultsFromUninstalledPlugins)
+            if (Settings.ShouldCleanPinnedResultsFromUninstalledPlugins)
                 RemovePinnedResultsWithPluginsUninstalled(items);
 
             foreach (var item in itemsCopy) 
@@ -1424,7 +1424,7 @@ namespace Flow.Launcher.ViewModel
                 if (pluginsIdsToRemove.Any())
                 {
                     _pinned.RemoveItemsByPluginIds(pluginsIdsToRemove);
-                    Settings.ShouldCleanResultsFromUninstalledPlugins = false;
+                    Settings.ShouldCleanPinnedResultsFromUninstalledPlugins = false;
                 }
             }
         }

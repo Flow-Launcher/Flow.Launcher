@@ -193,7 +193,7 @@
     <system:String x:Key="unpinFromFlow">Unpin from Flow</system:String>
     <system:String x:Key="pinResult">Pin Result</system:String>
     <system:String x:Key="pinQuery">Pin Query</system:String>
-    <system:String x:Key="PinnedLayoutList">List</system:String>
+    <system:String x:Key="PinnedLayoutDefault">Default</system:String>
     <system:String x:Key="PinnedLayoutGrid">Grid</system:String>
     <system:String x:Key="lastPinnedAt">Added to pinned: {0}</system:String>
     <!--  Setting Plugin  -->

@@ -390,15 +390,15 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         }
 
         public bool EnablePinnedResults { get; set; } = false;
-        public bool _shouldCleanResultsFromUninstalledPlugins {  get; set; } = false;
-        public bool ShouldCleanResultsFromUninstalledPlugins
+        public bool _shouldCleanPinnedResultsFromUninstalledPlugins {  get; set; } = false;
+        public bool ShouldCleanPinnedResultsFromUninstalledPlugins
         {
-            get => _shouldCleanResultsFromUninstalledPlugins;
+            get => _shouldCleanPinnedResultsFromUninstalledPlugins;
             set
             {
-                if (_shouldCleanResultsFromUninstalledPlugins != value)
+                if (_shouldCleanPinnedResultsFromUninstalledPlugins != value)
                 {
-                    _shouldCleanResultsFromUninstalledPlugins = value;
+                    _shouldCleanPinnedResultsFromUninstalledPlugins = value;
                     OnPropertyChanged();
                 }
 
@@ -406,7 +406,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         }
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public PinnedLayoutOptions PinnedResultsLayout { get; set; } = PinnedLayoutOptions.List;
+        public PinnedLayoutOptions PinnedResultsLayout { get; set; } = PinnedLayoutOptions.Default;
 
         public bool AlwaysPreview { get; set; } = false;
 
@@ -744,7 +744,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
     public enum PinnedLayoutOptions
     {
-        List,
+        Default,
         Grid
     }
 }
