@@ -239,7 +239,7 @@
     <system:String x:Key="errorCreatingSettingPanel">Error al crear el panel de configuración para el complemento {0}:{1}{2}</system:String>
     <system:String x:Key="pluginMinimumAppVersionUnsatisfiedTitle">{0} requiere la versión {1} de Flow para ejecutarse</system:String>
     <system:String x:Key="pluginMinimumAppVersionUnsatisfiedMessage">Flow no cumple los requisitos mínimos de versión para ejecutar {0}. ¿Desea continuar con la instalación?{1}{1}Recomendamos actualizar Flow a la última versión para garantizar que {0} funcione sin problemas.</system:String>
-    <system:String x:Key="pluginJsonInvalidOrCorrupted">No se pudo instalar el plugin porque plugin.json no es válido o está dañado</system:String>
+    <system:String x:Key="pluginJsonInvalidOrCorrupted">No se pudo instalar el complemento porque plugin.json no es válido o está dañado</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Tienda complementos</system:String>
