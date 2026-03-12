@@ -160,6 +160,12 @@ namespace Flow.Launcher.ViewModel
                     case nameof(Settings.PinnedResultsLayout):
                         QueryResults();
                         break;
+                    case nameof(Settings.ShouldCleanPinnedResultsFromUninstalledPlugins):
+                        if (Settings.ShouldCleanPinnedResultsFromUninstalledPlugins)
+                        {
+                            QueryResults();
+                        }
+                        break;
                 }
             };
 
@@ -1424,9 +1430,9 @@ namespace Flow.Launcher.ViewModel
                 if (pluginsIdsToRemove.Any())
                 {
                     _pinned.RemoveItemsByPluginIds(pluginsIdsToRemove);
-                    Settings.ShouldCleanPinnedResultsFromUninstalledPlugins = false;
                 }
             }
+            Settings.ShouldCleanPinnedResultsFromUninstalledPlugins = false;
         }
         private List<Result> GetHistoryItems(IEnumerable<LastOpenedHistoryResult> historyItems, int? maxResult = null)
         {
