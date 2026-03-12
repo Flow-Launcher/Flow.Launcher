@@ -6,8 +6,7 @@ namespace Flow.Launcher.Storage
 {
     public class PinnedResultItem : Result
     {
-        public DateTime AddAt { get; set; }
-
+        public DateTime LastPinnedAt { get; set; }
         public bool IsQuery { get; set; }
         public string Query { get; set;  }
         public PinnedResultItem() { }
@@ -29,7 +28,7 @@ namespace Flow.Launcher.Storage
             TitleHighlightData = result.TitleHighlightData;
             CopyText = result.CopyText;
             AutoCompleteText = result.AutoCompleteText;
-            AddAt = DateTime.Now;
+            LastPinnedAt = DateTime.Now;
             Query = query ?? string.Empty;
             IsQuery = !string.IsNullOrEmpty(query);
             AsyncAction = null;
@@ -49,7 +48,7 @@ namespace Flow.Launcher.Storage
             if (IsQuery)
             {
                 title = Localize.executeQuery(Query);
-                subtitle = Localize.lastExecuteTime(AddAt);
+                subtitle = Localize.lastPinnedAt(LastPinnedAt);
                 icoPath = Constant.HistoryIcon;
                 glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE81C");
             } else
@@ -87,7 +86,7 @@ namespace Flow.Launcher.Storage
                 IsQuery = IsQuery,
                 AsyncAction = null,
                 Glyph = glyph,
-                AddAt = AddAt
+                LastPinnedAt = LastPinnedAt
             };
         }
 

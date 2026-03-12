@@ -23,7 +23,7 @@ namespace Flow.Launcher.Storage
             if (Items.Count > 0 &&
             TryGetPinnedResult(result, query,out var existingPinnedResult))
             {
-                existingPinnedResult.AddAt = DateTime.Now; 
+                existingPinnedResult.LastPinnedAt = DateTime.Now; 
 
                 if (existingPinnedResult.IcoPath != result.IcoPath)
                     existingPinnedResult.IcoPath = result.IcoPath;
