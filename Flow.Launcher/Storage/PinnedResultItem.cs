@@ -96,13 +96,15 @@ namespace Flow.Launcher.Storage
             {
                 return Title == r.Title
                     && SubTitle == r.SubTitle
-                    && PluginID == r.PluginID;
+                    && PluginID == r.PluginID
+                    && IsQuery == false;
                     //&& Query == r.OriginQuery.TrimmedQuery;
             }
             else
             {
                 return RecordKey == r.RecordKey
-                    && PluginID == r.PluginID;
+                    && PluginID == r.PluginID
+                     && IsQuery == false;
                     //&& Query == r.OriginQuery.TrimmedQuery;
             }
         }
@@ -114,12 +116,14 @@ namespace Flow.Launcher.Storage
                 return Title == r.Title
                     && SubTitle == r.SubTitle
                     && PluginID == r.PluginID
+                    && IsQuery == true
                     && Query == query;
             }
             else
             {
                 return RecordKey == r.RecordKey
                     && PluginID == r.PluginID
+                    && IsQuery == true
                     && Query == query;
             }
         }
