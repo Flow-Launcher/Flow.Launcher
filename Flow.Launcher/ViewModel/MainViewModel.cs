@@ -156,10 +156,14 @@ namespace Flow.Launcher.ViewModel
                     case nameof(Settings.OpenHistoryHotkey):
                         OnPropertyChanged(nameof(OpenHistoryHotkey));
                         break;
+
+                    //Force update pinned results before change style 
                     case nameof(Settings.EnablePinnedResults):
                     case nameof(Settings.PinnedResultsLayout):
                         QueryResults();
                         break;
+
+                        // Force clean results after uninstall plugin
                     case nameof(Settings.ShouldCleanPinnedResultsFromUninstalledPlugins):
                         if (Settings.ShouldCleanPinnedResultsFromUninstalledPlugins)
                         {
