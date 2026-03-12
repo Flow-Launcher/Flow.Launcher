@@ -1388,13 +1388,11 @@ namespace Flow.Launcher.ViewModel
         {
             if (!items.Any()) return [];
             var results = new List<Result>();
-            var itemsCopy = items.Select(x => x.DeepCopy()).OrderByDescending(x => x.AddAt);
-            var pluginsIds = PluginManager.GetAllPluginsIds();
-            if (pluginsIds.Any())
-            {
-                var pluginsIdsToRemove = items.Where(x => !pluginsIds.Contains(x.PluginID)).Select(x => x.PluginID);
-                if (pluginsIdsToRemove.Any()) _pinned.RemoveItemsByPluginIds(pluginsIdsToRemove);
-            }
+            var itemsCopy = items.Select(x => x.DeepCopy()).OrderByDescending(x => x.LastPinnedAt);
+
+            if (Settings.ShouldCleanResultsFromUninstalledPlugins)
+                RemovePinnedResultsWithPluginsUninstalled(items);
+
             foreach (var item in itemsCopy) 
             {
                 if (!item.IsQuery)
@@ -1406,7 +1404,7 @@ namespace Flow.Launcher.ViewModel
                         {
                             return await reflectResult.ExecuteAsync(c);
                         }
-                        return false;
+                        return false; 
                     };
                 }
                 results.Add(item);
@@ -1416,6 +1414,20 @@ namespace Flow.Launcher.ViewModel
 
         }
 
+
+        private void RemovePinnedResultsWithPluginsUninstalled(IEnumerable<PinnedResultItem> items)
+        {
+            var pluginsIds = PluginManager.GetAllPluginsIds();
+            if (pluginsIds.Count > 0)
+            {
+                var pluginsIdsToRemove = items.Where(x => !pluginsIds.Contains(x.PluginID)).Select(x => x.PluginID);
+                if (pluginsIdsToRemove.Any())
+                {
+                    _pinned.RemoveItemsByPluginIds(pluginsIdsToRemove);
+                    Settings.ShouldCleanResultsFromUninstalledPlugins = false;
+                }
+            }
+        }
         private List<Result> GetHistoryItems(IEnumerable<LastOpenedHistoryResult> historyItems, int? maxResult = null)
         {
             var results = new List<Result>();

@@ -389,7 +389,21 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
 
-        public bool EnablePinnedResults { get; set; } = true;
+        public bool EnablePinnedResults { get; set; } = false;
+        public bool _shouldCleanResultsFromUninstalledPlugins {  get; set; } = false;
+        public bool ShouldCleanResultsFromUninstalledPlugins
+        {
+            get => _shouldCleanResultsFromUninstalledPlugins;
+            set
+            {
+                if (_shouldCleanResultsFromUninstalledPlugins != value)
+                {
+                    _shouldCleanResultsFromUninstalledPlugins = value;
+                    OnPropertyChanged();
+                }
+
+            }
+        }
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public PinnedLayoutOptions PinnedResultsLayout { get; set; } = PinnedLayoutOptions.List;

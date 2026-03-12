@@ -174,7 +174,9 @@ public static class PluginInstaller
 
         try
         {
-            if (!await PublicApi.Instance.UninstallPluginAsync(oldPlugin, removePluginSettings))
+            var isUninstalled = await PublicApi.Instance.UninstallPluginAsync(oldPlugin, removePluginSettings);
+            Settings.ShouldCleanResultsFromUninstalledPlugins = isUninstalled;
+            if (!isUninstalled)
             {
                 return;
             }
