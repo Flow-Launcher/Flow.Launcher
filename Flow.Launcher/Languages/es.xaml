@@ -369,14 +369,14 @@
     <system:String x:Key="SelectPrevItemHotkey">Seleccionar elemento anterior</system:String>
     <system:String x:Key="SelectNextPageHotkey">Seleccionar siguiente página</system:String>
     <system:String x:Key="SelectPrevPageHotkey">Seleccionar página anterior</system:String>
-    <system:String x:Key="CycleHistoryUpHotkey">Recuperar una tras otra la consulta anterior</system:String>
-    <system:String x:Key="CycleHistoryDownHotkey">Recuperar una tras otra la siguiente consulta</system:String>
+    <system:String x:Key="CycleHistoryUpHotkey">Recuperar una tras otra las consultas anteriores</system:String>
+    <system:String x:Key="CycleHistoryDownHotkey">Recuperar una tras otra las consultas siguientes</system:String>
     <system:String x:Key="OpenContextMenuHotkey">Abrir menú contextual</system:String>
     <system:String x:Key="OpenNativeContextMenuHotkey">Abrir menú contextual nativo</system:String>
     <system:String x:Key="SettingWindowHotkey">Abrir ventana de configuración</system:String>
     <system:String x:Key="CopyFilePathHotkey">Copiar ruta del archivo</system:String>
     <system:String x:Key="ToggleGameModeHotkey">Cambiar a Modo Juego</system:String>
-    <system:String x:Key="ToggleHistoryHotkey">Cambiar historial</system:String>
+    <system:String x:Key="ToggleHistoryHotkey">Mostrar/Ocultar historial</system:String>
     <system:String x:Key="OpenContainFolderHotkey">Abrir carpeta contenedora</system:String>
     <system:String x:Key="RunAsAdminHotkey">Ejecutar como administrador</system:String>
     <system:String x:Key="RequeryHotkey">Actualizar resultados de búsqueda</system:String>
