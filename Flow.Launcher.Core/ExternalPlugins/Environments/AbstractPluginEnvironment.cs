@@ -40,6 +40,12 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
             PluginSettings = pluginSettings;
         }
 
+        /// <summary>
+        /// Resolves the configured runtime executable path to an absolute path.
+        /// Supports both absolute paths and relative paths (relative to ProgramDirectory).
+        /// </summary>
+        private string ResolvedPluginsSettingsFilePath => DataLocation.ResolveAbsolutePath(PluginsSettingsFilePath);
+
         internal IEnumerable<PluginPair> Setup()
         {
             // If no plugin is using the language, return empty list
@@ -48,13 +54,16 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
                 return new List<PluginPair>();
             }
 
-            if (!string.IsNullOrEmpty(PluginsSettingsFilePath) && FilesFolders.FileExists(PluginsSettingsFilePath))
+            var resolvedPath = ResolvedPluginsSettingsFilePath;
+            if (!string.IsNullOrEmpty(resolvedPath) && FilesFolders.FileExists(resolvedPath))
             {
                 // Ensure latest only if user is using Flow's environment setup.
-                if (PluginsSettingsFilePath.StartsWith(EnvPath, StringComparison.OrdinalIgnoreCase))
-                    EnsureLatestInstalled(ExecutablePath, PluginsSettingsFilePath, EnvPath);
+                if (resolvedPath.StartsWith(EnvPath, StringComparison.OrdinalIgnoreCase))
+                    EnsureLatestInstalled(ExecutablePath, resolvedPath, EnvPath);
 
-                return SetPathForPluginPairs(PluginsSettingsFilePath, Language);
+                // Ensure the path is updated in settings in case environment was updated
+                resolvedPath = ResolvedPluginsSettingsFilePath;
+                return SetPathForPluginPairs(resolvedPath, Language);
             }
 
             var noRuntimeMessage = Localize.runtimePluginInstalledChooseRuntimePrompt(Language, EnvName, Environment.NewLine);
@@ -103,9 +112,11 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
                 InstallEnvironment();
             }
 
-            if (FilesFolders.FileExists(PluginsSettingsFilePath))
+            // Ensure the path is updated when user has chosen to install or select environment executable
+            resolvedPath = ResolvedPluginsSettingsFilePath;
+            if (FilesFolders.FileExists(resolvedPath))
             {
-                return SetPathForPluginPairs(PluginsSettingsFilePath, Language);
+                return SetPathForPluginPairs(resolvedPath, Language);
             }
             else
             {

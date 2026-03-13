@@ -42,5 +42,34 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public const string PluginEnvironments = "Environments";
         public const string PluginDeleteFile = "NeedDelete.txt";
         public static readonly string PluginEnvironmentsPath = Path.Combine(DataDirectory(), PluginEnvironments);
+
+        /// <summary>
+        /// Resolves a path that may be relative to an absolute path.
+        /// If the path is already absolute, returns it as-is.
+        /// If the path is not rooted (as determined by <see cref="Path.IsPathRooted(string)"/>), resolves it relative to ProgramDirectory.
+        /// </summary>
+        /// <param name="path">The path to resolve</param>
+        /// <returns>An absolute path</returns>
+        public static string ResolveAbsolutePath(string path)
+        {
+            if (string.IsNullOrEmpty(path))
+                return path;
+
+            // If already absolute, return as-is
+            if (Path.IsPathFullyQualified(path))
+                return path;
+
+            // Resolve relative to ProgramDirectory, handling invalid path formats gracefully
+            try
+            {
+                return Path.GetFullPath(Path.Combine(Constant.ProgramDirectory, path));
+            }
+            catch (System.Exception)
+            {
+                // If the path cannot be resolved (invalid characters, format, or too long),
+                // return the original path to avoid crashing the application.
+                return path;
+            }
+        }
     }
 }
