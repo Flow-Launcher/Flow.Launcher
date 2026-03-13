@@ -1,6 +1,7 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
+using System.Linq;
+using System.Net;
 using System.Windows.Controls;
 using Flow.Launcher.Plugin.SharedCommands;
 
@@ -8,49 +9,29 @@ namespace Flow.Launcher.Plugin.Url
 {
     public class Main : IPlugin, IPluginI18n, ISettingProvider
     {
-        //based on https://gist.github.com/dperini/729294
-        private const string UrlPattern = "^" +
-            // protocol identifier
-            "(?:(?:https?|ftp)://|)" +
-            // user:pass authentication
-            "(?:\\S+(?::\\S*)?@)?" +
-            "(?:" +
-            // IP address exclusion
-            // private & local networks
-            "(?!(?:10|127)(?:\\.\\d{1,3}){3})" +
-            "(?!(?:169\\.254|192\\.168)(?:\\.\\d{1,3}){2})" +
-            "(?!172\\.(?:1[6-9]|2\\d|3[0-1])(?:\\.\\d{1,3}){2})" +
-            // IP address dotted notation octets
-            // excludes loopback network 0.0.0.0
-            // excludes reserved space >= 224.0.0.0
-            // excludes network & broacast addresses
-            // (first & last IP address of each class)
-            "(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])" +
-            "(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}" +
-            "(?:\\.(?:[1-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))" +
-            "|" +
-            // host name
-            "(?:(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)" +
-            // domain name
-            "(?:\\.(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)*" +
-            // TLD identifier
-            "(?:\\.(?:[a-z\\u00a1-\\uffff]{2,}))" +
-            ")" +
-            // port number
-            "(?::\\d{2,5})?" +
-            // resource path
-            "(?:/\\S*)?" +
-            "$";
-        private readonly Regex UrlRegex = new(UrlPattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
         internal static PluginInitContext Context { get; private set; }
         internal static Settings Settings { get; private set; }
+
+        private static readonly string[] UrlSchemes = ["http://", "https://", "ftp://"];
 
         public List<Result> Query(Query query)
         {
             var raw = query.Search;
-            if (IsURL(raw))
+            if (!IsURL(raw))
             {
-                return
+                return [];
+            }
+
+            if (IPEndPoint.TryParse(raw, out var endpoint))
+            {
+                if (endpoint.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6 && raw[0] != '[' && raw[^1] != ']')
+                {
+                    // Enclose IPv6 addresses in brackets for URL formatting
+                    raw = $"[{raw}]";
+                }
+            }
+
+            return
                 [
                     new()
                     {
@@ -60,7 +41,8 @@ namespace Flow.Launcher.Plugin.Url
                         Score = 8,
                         Action = _ =>
                         {
-                            if (!raw.StartsWith("http://", StringComparison.OrdinalIgnoreCase) && !raw.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
+                            // not a recognized scheme, add preferred http scheme
+                            if (!UrlSchemes.Any(scheme => raw.StartsWith(scheme, StringComparison.OrdinalIgnoreCase)))
                             {
                                 raw = GetHttpPreference() + "://" + raw;
                             }
@@ -92,9 +74,6 @@ namespace Flow.Launcher.Plugin.Url
                         }
                     }
                 ];
-            }
-
-            return [];
         }
 
         private static string GetHttpPreference()
@@ -104,19 +83,68 @@ namespace Flow.Launcher.Plugin.Url
 
         public bool IsURL(string raw)
         {
-            raw = raw.ToLower();
+            if (string.IsNullOrWhiteSpace(raw))
+                return false;
 
-            if (UrlRegex.Match(raw).Value == raw) return true;
+            var input = raw.Trim();
 
-            if (raw == "localhost" || raw.StartsWith("localhost:") ||
-                raw == "http://localhost" || raw.StartsWith("http://localhost:") ||
-                raw == "https://localhost" || raw.StartsWith("https://localhost:")
-                )
+            // Exclude numbers (e.g. 1.2345)
+            if (decimal.TryParse(input, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out _))
+                return false;
+
+            // Check if it's a bare IP address with optional port, path, query, or fragment
+            var ipPart = input.Split('/', '?', '#')[0]; // Remove path, query, and fragment
+            if (IPEndPoint.TryParse(ipPart, out var endpoint))
             {
+                switch (endpoint.AddressFamily)
+                {
+                    case System.Net.Sockets.AddressFamily.InterNetwork:
+                        return !endpoint.Address.Equals(IPAddress.Any);
+                    case System.Net.Sockets.AddressFamily.InterNetworkV6:
+                        if (input.Contains('/') || input.Contains('?') || input.Contains('#'))
+                        {
+                            // Check if IPv6 address is properly bracketed
+                            var bracketStart = input.IndexOf('[');
+                            var bracketEnd = input.IndexOf(']');
+                            if (bracketStart == -1 || bracketEnd == -1 || bracketStart > bracketEnd)
+                                return false;
+                        }
+                        return !endpoint.Address.Equals(IPAddress.IPv6Any);
+                }
                 return true;
             }
 
-            return false;
+            // Add protocol if missing for Uri validation
+            var urlToValidate = UrlSchemes.Any(s => input.StartsWith(s, StringComparison.OrdinalIgnoreCase))
+                ? input
+                : GetHttpPreference() + "://" + input;
+
+            if (!Uri.TryCreate(urlToValidate, UriKind.Absolute, out var uri))
+                return false;
+            
+
+            // Validate protocol
+            if (uri.Scheme != Uri.UriSchemeHttp && uri.Scheme != Uri.UriSchemeHttps && uri.Scheme != Uri.UriSchemeFtp)
+                return false;
+
+            var host = uri.Host;
+
+            // localhost is valid
+            if (host.Equals("localhost", StringComparison.OrdinalIgnoreCase))
+                return true;
+
+            // Valid IP address (excluding 0.0.0.0)
+            if (IPEndPoint.TryParse(host, out endpoint))
+                return !endpoint.Address.Equals(IPAddress.Any) && !endpoint.Address.Equals(IPAddress.IPv6Any);
+
+            // Domain must have valid format with TLD
+            var parts = host.Split('.');
+            if (parts.Length < 2 || parts.Any(string.IsNullOrEmpty))
+                return false;
+
+            // TLD must be at least 2 characters, allowing letters and digits
+            var tld = parts[^1];
+            return tld.Length >= 2 && tld.All(char.IsLetterOrDigit);
         }
 
         public void Init(PluginInitContext context)
