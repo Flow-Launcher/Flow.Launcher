@@ -1,0 +1,104 @@
+[
+  {
+    "PackageName": "BrowserTabs",
+    "PackageVersion": "0.2.0",
+    "PackageUrl": "https://github.com/jjw24/BrowserTabs",
+    "Copyright": "Jeremy Wu",
+    "Authors": [
+      "Jeremy Wu"
+    ],
+    "Description": "Library for retrieving all opened browser tabs in Chromium-based and Firefox-based browsers",
+    "LicenseUrl": "https://licenses.nuget.org/Apache-2.0",
+    "LicenseType": "Apache-2.0",
+    "Repository": {
+      "Type": "git",
+      "Url": "https://github.com/jjw24/BrowserTabs",
+      "Commit": "8d81f8f686e82ddceb3e1a8a49e698cec56b5e3d"
+    }
+  },
+  {
+    "PackageName": "CommunityToolkit.Mvvm",
+    "PackageVersion": "8.4.0",
+    "PackageUrl": "https://github.com/CommunityToolkit/dotnet",
+    "Copyright": "(c) .NET Foundation and Contributors. All rights reserved.",
+    "Authors": [
+      "Microsoft"
+    ],
+    "Description": "This package includes a .NET MVVM library with helpers such as:\r\n      - ObservableObject: a base class for objects implementing the INotifyPropertyChanged interface.\r\n      - ObservableRecipient: a base class for observable objects with support for the IMessenger service.\r\n      - ObservableValidator: a base class for objects implementing the INotifyDataErrorInfo interface.\r\n      - RelayCommand: a simple delegate command implementing the ICommand interface.\r\n      - AsyncRelayCommand: a delegate command supporting asynchronous operations and cancellation.\r\n      - WeakReferenceMessenger: a messaging system to exchange messages through different loosely-coupled objects.\r\n      - StrongReferenceMessenger: a high-performance messaging system that trades weak references for speed.\r\n      - Ioc: a helper class to configure dependency injection service containers.",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseType": "MIT",
+    "Repository": {
+      "Type": "git",
+      "Url": "https://github.com/CommunityToolkit/dotnet",
+      "Commit": "638b41dad30dffabb123a39aa38eabc7e3721371"
+    }
+  },
+  {
+    "PackageName": "Flow.Launcher.Localization",
+    "PackageVersion": "0.0.6",
+    "PackageUrl": "https://github.com/Flow-Launcher/Flow.Launcher.Localization",
+    "Copyright": "Flow-Launcher",
+    "Authors": [
+      "Flow-Launcher"
+    ],
+    "Description": "Localization toolkit for Flow Launcher and its plugins",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseType": "MIT",
+    "Repository": {
+      "Type": "git",
+      "Url": "https://github.com/Flow-Launcher/Flow.Launcher.Localization",
+      "Commit": "456bdc7a986487d691a3ae8d36f8bce7b88b9bc7"
+    }
+  },
+  {
+    "PackageName": "Microsoft.Data.Sqlite",
+    "PackageVersion": "10.0.1",
+    "PackageUrl": "https://docs.microsoft.com/dotnet/standard/data/sqlite/",
+    "Copyright": "© Microsoft Corporation. All rights reserved.",
+    "Authors": [
+      "Microsoft"
+    ],
+    "Description": "Microsoft.Data.Sqlite is a lightweight ADO.NET provider for SQLite.\r\n\r\nCommonly Used Types:\r\nMicrosoft.Data.Sqlite.SqliteCommand\r\nMicrosoft.Data.Sqlite.SqliteConnection\r\nMicrosoft.Data.Sqlite.SqliteConnectionStringBuilder\r\nMicrosoft.Data.Sqlite.SqliteDataReader\r\nMicrosoft.Data.Sqlite.SqliteException\r\nMicrosoft.Data.Sqlite.SqliteFactory\r\nMicrosoft.Data.Sqlite.SqliteParameter\r\nMicrosoft.Data.Sqlite.SqliteTransaction",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseType": "MIT",
+    "Repository": {
+      "Type": "git",
+      "Url": "https://github.com/dotnet/dotnet",
+      "Commit": "fad253f51b461736dfd3cd9c15977bb7493becef"
+    }
+  },
+  {
+    "PackageName": "SkiaSharp",
+    "PackageVersion": "3.119.1",
+    "PackageUrl": "https://go.microsoft.com/fwlink/?linkid=868515",
+    "Copyright": "© Microsoft Corporation. All rights reserved.",
+    "Authors": [
+      "Microsoft"
+    ],
+    "Description": "SkiaSharp is a cross-platform 2D graphics API for .NET platforms based on Google's Skia Graphics Library.\r\nIt provides a comprehensive 2D API that can be used across mobile, server and desktop models to render images.",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseType": "MIT",
+    "Repository": {
+      "Type": "git",
+      "Url": "https://go.microsoft.com/fwlink/?linkid=868515",
+      "Commit": "cc78b5933d23e6383db5d246e70db915770d55d6"
+    }
+  },
+  {
+    "PackageName": "Svg.Skia",
+    "PackageVersion": "3.2.1",
+    "PackageUrl": "https://github.com/wieslawsoltes/Svg.Skia",
+    "Copyright": "Copyright © Wiesław Šoltés 2025",
+    "Authors": [
+      "Wiesław Šoltés"
+    ],
+    "Description": "An SVG rendering library.",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseType": "MIT",
+    "Repository": {
+      "Type": "git",
+      "Url": "https://github.com/wieslawsoltes/Svg.Skia",
+      "Commit": "0164d01769a8b577f6dcc678f25d4802a06ff8c0"
+    }
+  }
+]
