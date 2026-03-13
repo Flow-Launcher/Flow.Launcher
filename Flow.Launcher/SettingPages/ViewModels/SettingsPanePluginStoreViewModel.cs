@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core.Plugin;
+using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.ViewModel;
 
@@ -115,7 +116,7 @@ public partial class SettingsPanePluginStoreViewModel : BaseModel
     {
         await PluginInstaller.CheckForPluginUpdatesAsync((plugins) =>
         {
-            Application.Current.Dispatcher.Invoke(() =>
+            DispatcherHelper.Invoke(() =>
             {
                 var pluginUpdateWindow = new PluginUpdateWindow(plugins);
                 pluginUpdateWindow.ShowDialog();

@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure;
 
 namespace Flow.Launcher
@@ -29,11 +30,16 @@ namespace Flow.Launcher
             MessageBoxImage icon = MessageBoxImage.None,
             MessageBoxResult defaultResult = MessageBoxResult.OK)
         {
-            if (!Application.Current.Dispatcher.CheckAccess())
-            {
-                return Application.Current.Dispatcher.Invoke(() => Show(messageBoxText, caption, button, icon, defaultResult));
-            }
+            return DispatcherHelper.Invoke(() => ShowCore(messageBoxText, caption, button, icon, defaultResult));
+        }
 
+        private static MessageBoxResult ShowCore(
+            string messageBoxText,
+            string caption = "",
+            MessageBoxButton button = MessageBoxButton.OK,
+            MessageBoxImage icon = MessageBoxImage.None,
+            MessageBoxResult defaultResult = MessageBoxResult.OK)
+        {
             try
             {
                 msgBox = new MessageBoxEx(button);

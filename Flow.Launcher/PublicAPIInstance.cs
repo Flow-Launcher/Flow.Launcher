@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -141,7 +141,7 @@ namespace Flow.Launcher
 
         public void OpenSettingDialog()
         {
-            Application.Current.Dispatcher.Invoke(() =>
+            DispatcherHelper.Invoke(() =>
             {
                 SettingWindow sw = SingletonWindowOpener.Open<SettingWindow>();
             });

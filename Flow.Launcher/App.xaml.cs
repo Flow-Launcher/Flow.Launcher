@@ -334,7 +334,7 @@ namespace Flow.Launcher
                     var timer = new PeriodicTimer(TimeSpan.FromHours(5));
                     await PluginInstaller.CheckForPluginUpdatesAsync((plugins) =>
                     {
-                        Current.Dispatcher.Invoke(() =>
+                        DispatcherHelper.Invoke(() =>
                         {
                             var pluginUpdateWindow = new PluginUpdateWindow(plugins);
                             pluginUpdateWindow.ShowDialog();
@@ -345,7 +345,7 @@ namespace Flow.Launcher
                         // check updates on startup
                         await PluginInstaller.CheckForPluginUpdatesAsync((plugins) =>
                         {
-                            Current.Dispatcher.Invoke(() =>
+                            DispatcherHelper.Invoke(() =>
                             {
                                 var pluginUpdateWindow = new PluginUpdateWindow(plugins);
                                 pluginUpdateWindow.ShowDialog();
@@ -444,7 +444,7 @@ namespace Flow.Launcher
                 {
                     // Dispose needs to be called on the main Windows thread,
                     // since some resources owned by the thread need to be disposed.
-                    _mainWindow?.Dispatcher.Invoke(_mainWindow.Dispose);
+                    DispatcherHelper.Invoke(_mainWindow?.Dispatcher, _mainWindow.Dispose);
                     _mainVM?.Dispose();
                     DialogJump.Dispose();
                     _internationalization.Dispose();

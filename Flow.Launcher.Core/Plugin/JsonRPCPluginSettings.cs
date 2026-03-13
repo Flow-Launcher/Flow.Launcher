@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin;
 
@@ -99,14 +100,14 @@ namespace Flow.Launcher.Core.Plugin
                     {
                         case TextBox textBox:
                             var text = value as string ?? string.Empty;
-                            textBox.Dispatcher.Invoke(() => textBox.Text = text);
+                            DispatcherHelper.Invoke(() => textBox.Text = text);
                             break;
                         case PasswordBox passwordBox:
                             var password = value as string ?? string.Empty;
-                            passwordBox.Dispatcher.Invoke(() => passwordBox.Password = password);
+                            DispatcherHelper.Invoke(() => passwordBox.Password = password);
                             break;
                         case ComboBox comboBox:
-                            comboBox.Dispatcher.Invoke(() => comboBox.SelectedItem = value);
+                            DispatcherHelper.Invoke(() => comboBox.SelectedItem = value);
                             break;
                         case CheckBox checkBox:
                             var isChecked = value is bool boolValue
@@ -114,7 +115,7 @@ namespace Flow.Launcher.Core.Plugin
                                 // If can parse the default value to bool, use it, otherwise use false
                                 : value is string stringValue && bool.TryParse(stringValue, out var boolValueFromString)
                                     && boolValueFromString;
-                            checkBox.Dispatcher.Invoke(() => checkBox.IsChecked = isChecked);
+                            DispatcherHelper.Invoke(() => checkBox.IsChecked = isChecked);
                             break;
                     }
                 }

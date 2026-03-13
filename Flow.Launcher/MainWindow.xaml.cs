@@ -153,7 +153,7 @@ namespace Flow.Launcher
                     Localize.appUpdateButtonContent(),
                     () =>
                     {
-                        Application.Current.Dispatcher.Invoke(() =>
+                        DispatcherHelper.Invoke(() =>
                         {
                             var releaseNotesWindow = new ReleaseNotesWindow();
                             releaseNotesWindow.Show();
@@ -225,7 +225,7 @@ namespace Flow.Launcher
                 {
                     case nameof(MainViewModel.MainWindowVisibilityStatus):
                         {
-                            Dispatcher.Invoke(() =>
+                            DispatcherHelper.Invoke(() =>
                             {
                                 if (_viewModel.MainWindowVisibilityStatus)
                                 {
@@ -269,7 +269,7 @@ namespace Flow.Launcher
                         {
                             // QueryTextBox seems to be update with a DispatcherPriority as low as ContextIdle.
                             // To ensure QueryTextBox is up to date with QueryText from the View, we need to Dispatch with such a priority
-                            Dispatcher.Invoke(() => QueryTextBox.CaretIndex = QueryTextBox.Text.Length);
+                            DispatcherHelper.Invoke(() => QueryTextBox.CaretIndex = QueryTextBox.Text.Length);
                             _viewModel.QueryTextCursorMovedToEnd = false;
                         }
                         break;
@@ -542,7 +542,7 @@ namespace Flow.Launcher
                         // Switch to Normal state
                         WindowState = WindowState.Normal;
 
-                        Application.Current?.Dispatcher.Invoke(new Action(() =>
+                        DispatcherHelper.Invoke(() =>
                         {
                             double normalWidth = Width;
                             double normalHeight = Height;
@@ -555,7 +555,7 @@ namespace Flow.Launcher
                             {
                                 DragMove();
                             }
-                        }), DispatcherPriority.ApplicationIdle);
+                        }, DispatcherPriority.ApplicationIdle);
                     }
                     else
                     {
@@ -726,19 +726,8 @@ namespace Flow.Launcher
             {
                 Win32Helper.RegisterSleepModeListener(() =>
                 {
-                    if (Application.Current == null)
-                    {
-                        return;
-                    }
-
                     // We must run InitSoundEffects on UI thread because MediaPlayer is a DispatcherObject
-                    if (!Application.Current.Dispatcher.CheckAccess())
-                    {
-                        Application.Current.Dispatcher.Invoke(InitSoundEffects);
-                        return;
-                    }
-
-                    InitSoundEffects();
+                    DispatcherHelper.Invoke(InitSoundEffects);
                 });
             }
             catch (Exception e)

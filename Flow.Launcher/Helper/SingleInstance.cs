@@ -3,6 +3,7 @@ using System.IO.Pipes;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using Flow.Launcher.Core.Resource;
 
 // http://blogs.microsoft.co.il/arik/2010/05/28/wpf-single-instance-application/
 // modified to allow single instace restart
@@ -100,7 +101,9 @@ namespace Flow.Launcher.Helper
                 await pipeServer.WaitForConnectionAsync();
 
                 // Do an asynchronous call to ActivateFirstInstance function
-                Application.Current?.Dispatcher.Invoke(ActivateFirstInstance);
+#pragma warning disable VSTHRD103 // Call async methods when in an async method
+                DispatcherHelper.Invoke(ActivateFirstInstance);
+#pragma warning restore VSTHRD103 // Call async methods when in an async method
 
                 // Disconect client
                 pipeServer.Disconnect();
