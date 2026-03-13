@@ -14,6 +14,12 @@ init:
 - sc config WSearch start= auto # Starts Windows Search service- Needed for running ExplorerTest
 - net start WSearch
 
+# As a workaround for net10 SDK not being available in Visual Studio 2022 image: https://github.com/appveyor/ci/issues/3984
+install:
+- ps: |
+    Invoke-WebRequest -Uri 'https://dot.net/v1/dotnet-install.ps1' -UseBasicParsing -OutFile "$env:temp\dotnet-install.ps1"
+    & $env:temp\dotnet-install.ps1 -Architecture x64 -Version '10.0.100' -InstallDir "$env:ProgramFiles\dotnet"
+
 cache:
   - '%USERPROFILE%\.nuget\packages -> **.sln, **.csproj'  # preserve nuget folder (packages) unless the solution or projects change
 

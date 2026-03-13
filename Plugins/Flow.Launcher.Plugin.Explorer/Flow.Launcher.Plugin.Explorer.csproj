@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>net9.0-windows</TargetFramework>
+    <TargetFramework>net10.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
@@ -50,7 +50,6 @@
     <PackageReference Include="Droplex" Version="1.7.0" />
     <PackageReference Include="Flow.Launcher.Localization" Version="0.0.6" />
     <PackageReference Include="System.Data.OleDb" Version="9.0.9" />
-    <PackageReference Include="System.Linq.Async" Version="6.0.3" />
     <PackageReference Include="tlbimp-Microsoft.Search.Interop" Version="1.0.0" />
   </ItemGroup>
 
