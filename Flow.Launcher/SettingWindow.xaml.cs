@@ -179,8 +179,8 @@ public partial class SettingWindow
         // Ensure window does not exceed screen boundaries
         top = Math.Max(top, SystemParameters.VirtualScreenTop);
         left = Math.Max(left, SystemParameters.VirtualScreenLeft);
-        top = Math.Min(top, SystemParameters.VirtualScreenHeight - ActualHeight);
-        left = Math.Min(left, SystemParameters.VirtualScreenWidth - ActualWidth);
+        top = Math.Min(top, SystemParameters.VirtualScreenTop + SystemParameters.VirtualScreenHeight - ActualHeight);
+        left = Math.Min(left, SystemParameters.VirtualScreenLeft + SystemParameters.VirtualScreenWidth - ActualWidth);
 
         Top = top;
         Left = left;
@@ -191,30 +191,26 @@ public partial class SettingWindow
         // Adjust window position if it exceeds screen boundaries
         top = Math.Max(top, SystemParameters.VirtualScreenTop);
         left = Math.Max(left, SystemParameters.VirtualScreenLeft);
-        top = Math.Min(top, SystemParameters.VirtualScreenHeight - ActualHeight);
-        left = Math.Min(left, SystemParameters.VirtualScreenWidth - ActualWidth);
+        top = Math.Min(top, SystemParameters.VirtualScreenTop + SystemParameters.VirtualScreenHeight - ActualHeight);
+        left = Math.Min(left, SystemParameters.VirtualScreenLeft + SystemParameters.VirtualScreenWidth - ActualWidth);
     }
 
     private static bool IsPositionValid(double top, double left)
     {
-        foreach (var screen in MonitorInfo.GetDisplayMonitors())
-        {
-            var workingArea = screen.WorkingArea;
-
-            if (left >= workingArea.Left && left < workingArea.Right &&
-                top >= workingArea.Top && top < workingArea.Bottom)
-            {
-                return true;
-            }
-        }
-        return false;
+        // Use SystemParameters (DIP units) to match the coordinate system of Window.Top/Left.
+        // MonitorInfo.WorkingArea uses physical pixels which can differ from DIP units when DPI
+        // scaling is active, leading to incorrect results on high-DPI or mixed-DPI setups.
+        return left >= SystemParameters.VirtualScreenLeft &&
+               left < SystemParameters.VirtualScreenLeft + SystemParameters.VirtualScreenWidth &&
+               top >= SystemParameters.VirtualScreenTop &&
+               top < SystemParameters.VirtualScreenTop + SystemParameters.VirtualScreenHeight;
     }
 
     private double WindowLeft()
     {
         var screen = MonitorInfo.GetCursorDisplayMonitor();
-        var dip1 = Win32Helper.TransformPixelsToDIP(this, screen.WorkingArea.X, 0);
-        var dip2 = Win32Helper.TransformPixelsToDIP(this, screen.WorkingArea.Width, 0);
+        var dip1 = screen.TransformPixelsToDIP(screen.WorkingArea.X, 0);
+        var dip2 = screen.TransformPixelsToDIP(screen.WorkingArea.Width, 0);
         var left = (dip2.X - ActualWidth) / 2 + dip1.X;
         return left;
     }
@@ -222,8 +218,8 @@ public partial class SettingWindow
     private double WindowTop()
     {
         var screen = MonitorInfo.GetCursorDisplayMonitor();
-        var dip1 = Win32Helper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Y);
-        var dip2 = Win32Helper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Height);
+        var dip1 = screen.TransformPixelsToDIP(0, screen.WorkingArea.Y);
+        var dip2 = screen.TransformPixelsToDIP(0, screen.WorkingArea.Height);
         var top = (dip2.Y - ActualHeight) / 2 + dip1.Y - 20;
         return top;
     }

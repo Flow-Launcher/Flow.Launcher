@@ -148,7 +148,7 @@ public class MonitorInfo
     public string Name { get; }
 
     /// <summary>
-    /// Gets the display monitor rectangle, expressed in virtual-screen coordinates.
+    /// Gets the display monitor rectangle, expressed in virtual-screen coordinates and physical pixels.
     /// </summary>
     /// <remarks>
     /// <note>If the monitor is not the primary display monitor, some of the rectangle's coordinates may be negative values.</note>
@@ -156,12 +156,31 @@ public class MonitorInfo
     public Rect Bounds { get; }
 
     /// <summary>
-    /// Gets the work area rectangle of the display monitor, expressed in virtual-screen coordinates.
+    /// Gets the work area rectangle of the display monitor, expressed in virtual-screen coordinates and physical pixels.
     /// </summary>
     /// <remarks>
     /// <note>If the monitor is not the primary display monitor, some of the rectangle's coordinates may be negative values.</note>
     /// </remarks>
     public Rect WorkingArea { get; }
+
+    /// <summary>
+    /// Transforms physical pixel coordinates on this monitor to WPF device-independent pixels.
+    /// </summary>
+    public Point TransformPixelsToDIP(double unitX, double unitY)
+    {
+        var (scaleX, scaleY) = GetDipScale();
+        return new Point(unitX / scaleX, unitY / scaleY);
+    }
+
+    /// <summary>
+    /// Transforms a physical pixel rectangle on this monitor to WPF device-independent pixels.
+    /// </summary>
+    public Rect TransformPixelsToDIP(Rect rect)
+    {
+        var topLeft = TransformPixelsToDIP(rect.Left, rect.Top);
+        var bottomRight = TransformPixelsToDIP(rect.Right, rect.Bottom);
+        return new Rect(topLeft, bottomRight);
+    }
 
     /// <summary>
     /// Gets if the monitor is the primary display monitor.
@@ -170,6 +189,24 @@ public class MonitorInfo
 
     /// <inheritdoc />
     public override string ToString() => $"{Name} {Bounds.Width}x{Bounds.Height}";
+
+    private (double ScaleX, double ScaleY) GetDipScale()
+    {
+        if (GetDpiForMonitor(_monitor, MonitorDpiType.EffectiveDpi, out var dpiX, out var dpiY) == 0 && dpiX != 0 && dpiY != 0)
+        {
+            return (dpiX / 96, dpiY / 96);
+        }
+
+        return (1d, 1d);
+    }
+
+    [DllImport("Shcore.dll")]
+    private static extern int GetDpiForMonitor(HMONITOR hmonitor, MonitorDpiType dpiType, out uint dpiX, out uint dpiY);
+
+    private enum MonitorDpiType
+    {
+        EffectiveDpi = 0,
+    }
 
     private static unsafe bool GetMonitorInfo(HMONITOR hMonitor, ref MONITORINFOEXW lpmi)
     {

@@ -395,8 +395,7 @@ namespace Flow.Launcher
 
             if (IsLoaded)
             {
-                _settings.WindowLeft = Left;
-                _settings.WindowTop = Top;
+                SaveWindowPositionAndDisplayMetrics();
             }
         }
 
@@ -407,8 +406,7 @@ namespace Flow.Launcher
                 return;
             }
 
-            _settings.WindowLeft = Left;
-            _settings.WindowTop = Top;
+            SaveWindowPositionAndDisplayMetrics();
 
             _viewModel.ClockPanelOpacity = 0.0;
             _viewModel.SearchIconOpacity = 0.0;
@@ -537,7 +535,7 @@ namespace Flow.Launcher
                         // Current monitor information
                         var screen = MonitorInfo.GetNearestDisplayMonitor(new WindowInteropHelper(this).Handle);
                         var workingArea = screen.WorkingArea;
-                        var screenLeftTop = Win32Helper.TransformPixelsToDIP(this, workingArea.X, workingArea.Y);
+                        var screenLeftTop = screen.TransformPixelsToDIP(workingArea.X, workingArea.Y);
 
                         // Switch to Normal state
                         WindowState = WindowState.Normal;
@@ -897,10 +895,8 @@ namespace Flow.Launcher
                 {
                     var previousScreenWidth = _settings.PreviousScreenWidth;
                     var previousScreenHeight = _settings.PreviousScreenHeight;
-                    GetDpi(out var previousDpiX, out var previousDpiY);
-
-                    _settings.PreviousScreenWidth = SystemParameters.VirtualScreenWidth;
-                    _settings.PreviousScreenHeight = SystemParameters.VirtualScreenHeight;
+                    var previousDpiX = _settings.PreviousDpiX;
+                    var previousDpiY = _settings.PreviousDpiY;
                     GetDpi(out var currentDpiX, out var currentDpiY);
 
                     if (previousScreenWidth != 0 && previousScreenHeight != 0 &&
@@ -910,11 +906,13 @@ namespace Flow.Launcher
                          previousDpiX != currentDpiX || previousDpiY != currentDpiY))
                     {
                         AdjustPositionForResolutionChange();
-                        return;
                     }
-
-                    Left = _settings.WindowLeft;
-                    Top = _settings.WindowTop;
+                    else
+                    {
+                        Left = _settings.WindowLeft;
+                        Top = _settings.WindowTop;
+                    }
+                    SaveCurrentDisplayMetrics(currentDpiX, currentDpiY);
                 }
                 else
                 {
@@ -938,12 +936,11 @@ namespace Flow.Launcher
                             Top = VerticalTop(screen);
                             break;
                         case SearchWindowAligns.Custom:
-                            var customLeft = Win32Helper.TransformPixelsToDIP(this,
-                                screen.WorkingArea.X + _settings.CustomWindowLeft, 0);
-                            var customTop = Win32Helper.TransformPixelsToDIP(this, 0,
+                            var customPosition = screen.TransformPixelsToDIP(
+                                screen.WorkingArea.X + _settings.CustomWindowLeft,
                                 screen.WorkingArea.Y + _settings.CustomWindowTop);
-                            Left = customLeft.X;
-                            Top = customTop.Y;
+                            Left = customPosition.X;
+                            Top = customPosition.Y;
                             break;
                     }
                 }
@@ -954,19 +951,15 @@ namespace Flow.Launcher
         {
             var screenWidth = SystemParameters.VirtualScreenWidth;
             var screenHeight = SystemParameters.VirtualScreenHeight;
-            GetDpi(out var currentDpiX, out var currentDpiY);
 
             var previousLeft = _settings.WindowLeft;
             var previousTop = _settings.WindowTop;
-            GetDpi(out var previousDpiX, out var previousDpiY);
 
             var widthRatio = screenWidth / _settings.PreviousScreenWidth;
             var heightRatio = screenHeight / _settings.PreviousScreenHeight;
-            var dpiXRatio = currentDpiX / previousDpiX;
-            var dpiYRatio = currentDpiY / previousDpiY;
 
-            var newLeft = previousLeft * widthRatio * dpiXRatio;
-            var newTop = previousTop * heightRatio * dpiYRatio;
+            var newLeft = previousLeft * widthRatio;
+            var newTop = previousTop * heightRatio;
 
             var screenLeft = SystemParameters.VirtualScreenLeft;
             var screenTop = SystemParameters.VirtualScreenTop;
@@ -992,6 +985,22 @@ namespace Flow.Launcher
                 dpiX = 96;
                 dpiY = 96;
             }
+        }
+
+        private void SaveWindowPositionAndDisplayMetrics()
+        {
+            _settings.WindowLeft = Left;
+            _settings.WindowTop = Top;
+            GetDpi(out var dpiX, out var dpiY);
+            SaveCurrentDisplayMetrics(dpiX, dpiY);
+        }
+
+        private void SaveCurrentDisplayMetrics(double dpiX, double dpiY)
+        {
+            _settings.PreviousScreenWidth = SystemParameters.VirtualScreenWidth;
+            _settings.PreviousScreenHeight = SystemParameters.VirtualScreenHeight;
+            _settings.PreviousDpiX = dpiX;
+            _settings.PreviousDpiY = dpiY;
         }
 
         private MonitorInfo SelectedScreen()
@@ -1025,38 +1034,38 @@ namespace Flow.Launcher
 
         private double HorizonCenter(MonitorInfo screen)
         {
-            var dip1 = Win32Helper.TransformPixelsToDIP(this, screen.WorkingArea.X, 0);
-            var dip2 = Win32Helper.TransformPixelsToDIP(this, screen.WorkingArea.Width, 0);
+            var dip1 = screen.TransformPixelsToDIP(screen.WorkingArea.X, 0);
+            var dip2 = screen.TransformPixelsToDIP(screen.WorkingArea.Width, 0);
             var left = (dip2.X - ActualWidth) / 2 + dip1.X;
             return left;
         }
 
         private double VerticalCenter(MonitorInfo screen)
         {
-            var dip1 = Win32Helper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Y);
-            var dip2 = Win32Helper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Height);
+            var dip1 = screen.TransformPixelsToDIP(0, screen.WorkingArea.Y);
+            var dip2 = screen.TransformPixelsToDIP(0, screen.WorkingArea.Height);
             var top = (dip2.Y - QueryTextBox.ActualHeight) / 4 + dip1.Y;
             return top;
         }
 
         private double HorizonRight(MonitorInfo screen)
         {
-            var dip1 = Win32Helper.TransformPixelsToDIP(this, screen.WorkingArea.X, 0);
-            var dip2 = Win32Helper.TransformPixelsToDIP(this, screen.WorkingArea.Width, 0);
+            var dip1 = screen.TransformPixelsToDIP(screen.WorkingArea.X, 0);
+            var dip2 = screen.TransformPixelsToDIP(screen.WorkingArea.Width, 0);
             var left = (dip1.X + dip2.X - ActualWidth) - 10;
             return left;
         }
 
         private double HorizonLeft(MonitorInfo screen)
         {
-            var dip1 = Win32Helper.TransformPixelsToDIP(this, screen.WorkingArea.X, 0);
+            var dip1 = screen.TransformPixelsToDIP(screen.WorkingArea.X, 0);
             var left = dip1.X + 10;
             return left;
         }
 
         private double VerticalTop(MonitorInfo screen)
         {
-            var dip1 = Win32Helper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Y);
+            var dip1 = screen.TransformPixelsToDIP(0, screen.WorkingArea.Y);
             var top = dip1.Y + 10;
             return top;
         }
@@ -1185,7 +1194,7 @@ namespace Flow.Launcher
             iconsb.Children.Add(IconMotion);
             iconsb.Children.Add(IconOpacity);
 
-            _settings.WindowLeft = Left;
+            SaveWindowPositionAndDisplayMetrics();
             _isArrowKeyPressed = false;
 
             clocksb.Begin(ClockPanel);
@@ -1449,23 +1458,23 @@ namespace Flow.Launcher
             var result = Win32Helper.GetWindowRect(_viewModel.DialogWindowHandle, out var window);
             if (!result) return;
 
+            var monitor = MonitorInfo.GetNearestDisplayMonitor(_viewModel.DialogWindowHandle);
+            var dipWindow = monitor.TransformPixelsToDIP(window);
+
             // Move window below the bottom of the dialog and keep it center
-            Top = VerticalBottom(window);
-            Left = HorizonCenter(window);
+            Top = VerticalBottom(dipWindow);
+            Left = HorizonCenter(dipWindow);
         }
 
         private double HorizonCenter(Rect window)
         {
-            var dip1 = Win32Helper.TransformPixelsToDIP(this, window.X, 0);
-            var dip2 = Win32Helper.TransformPixelsToDIP(this, window.Width, 0);
-            var left = (dip2.X - ActualWidth) / 2 + dip1.X;
+            var left = (window.Width - ActualWidth) / 2 + window.X;
             return left;
         }
 
         private double VerticalBottom(Rect window)
         {
-            var dip1 = Win32Helper.TransformPixelsToDIP(this, 0, window.Bottom);
-            return dip1.Y;
+            return window.Bottom;
         }
 
         #endregion
