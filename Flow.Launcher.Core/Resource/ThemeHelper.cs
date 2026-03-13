@@ -8,10 +8,10 @@ public static class ThemeHelper
 {
     public static void CopyStyle(Style originalStyle, Style targetStyle)
     {
-        // If the style is based on another style, copy the base style first
+        // If the style is based on another style, use the same base style for the target style
         if (originalStyle.BasedOn != null)
         {
-            CopyStyle(originalStyle.BasedOn, targetStyle);
+            targetStyle.BasedOn = originalStyle.BasedOn;
         }
 
         // Copy the setters from the original style
@@ -19,6 +19,15 @@ public static class ThemeHelper
         {
             targetStyle.Setters.Add(new Setter(setter.Property, setter.Value));
         }
+    }
+
+    public static void ReplaceSetter(Style style, Setter setter)
+    {
+        var existingSetter = style.Setters.OfType<Setter>().FirstOrDefault(s => s.Property == setter.Property);
+        if (existingSetter != null)
+            style.Setters.Remove(existingSetter);
+
+        style.Setters.Add(setter);
     }
 
     public static SolidColorBrush GetFrozenSolidColorBrush(Color color)
