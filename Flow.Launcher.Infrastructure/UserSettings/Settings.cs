@@ -165,6 +165,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         public bool UseClock { get; set; } = true;
         public bool UseDate { get; set; } = false;
+        public bool UseBattery { get; set; } = false;
         public string TimeFormat { get; set; } = "hh:mm tt";
         public string DateFormat { get; set; } = "MM'/'dd ddd";
         public bool FirstLaunch { get; set; } = true;
