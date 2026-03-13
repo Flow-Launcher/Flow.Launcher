@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Sockets;
-using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Http;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
+using Flow.Launcher.Plugin.SharedCommands;
 using JetBrains.Annotations;
 using Squirrel;
 
@@ -91,7 +91,7 @@ namespace Flow.Launcher.Core
                 if (_api.ShowMsgBox(newVersionTips, Localize.update_flowlauncher_new_update(),
                         MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
-                    UpdateManager.RestartApp(Constant.ApplicationFileName);
+                    _api.RestartApp();
                 }
             }
             catch (Exception e)

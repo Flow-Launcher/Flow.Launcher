@@ -6,6 +6,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -19,6 +20,7 @@ using Microsoft.Win32.SafeHandles;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.Graphics.Dwm;
+using Windows.Win32.Security;
 using Windows.Win32.System.Power;
 using Windows.Win32.System.Threading;
 using Windows.Win32.UI.Input.KeyboardAndMouse;
@@ -690,6 +692,7 @@ namespace Flow.Launcher.Infrastructure
         {
             try
             {
+                // No need to de-elevate since we are opening windows settings which cannot bring security risks
                 Process.Start(new ProcessStartInfo("ms-settings:regionlanguage") { UseShellExecute = true });
             }
             catch (System.Exception)
@@ -1013,6 +1016,164 @@ namespace Flow.Launcher.Infrastructure
                 Marshal.FreeHGlobal(_ptr);
                 return true;
             }
+        }
+
+        #endregion
+
+        #region Administrator Mode
+
+        public static bool IsAdministrator()
+        {
+            using var identity = WindowsIdentity.GetCurrent();
+            var principal = new WindowsPrincipal(identity);
+            return principal.IsInRole(WindowsBuiltInRole.Administrator);
+        }
+
+        /// <summary>
+        /// Inspired by <see href="https://github.com/jay/RunAsDesktopUser">
+        /// Document: <see href="https://learn.microsoft.com/en-us/archive/blogs/aaron_margosis/faq-how-do-i-start-a-program-as-the-desktop-user-from-an-elevated-app">
+        /// </summary>
+        public static unsafe bool RunAsDesktopUser(string app, string currentDir, string cmdLine, bool loadProfile, bool createNoWindow, out string errorInfo)
+        {
+            STARTUPINFOW si = new()
+            {
+                cb = (uint)Marshal.SizeOf<STARTUPINFOW>()
+            };
+            PROCESS_INFORMATION pi = new();
+            errorInfo = string.Empty;
+            HANDLE hShellProcess = HANDLE.Null, hShellProcessToken = HANDLE.Null, hPrimaryToken = HANDLE.Null;
+            HWND hwnd;
+            uint dwPID;
+
+            // 1. Enable the SeIncreaseQuotaPrivilege in your current token
+            if (!PInvoke.OpenProcessToken(PInvoke.GetCurrentProcess_SafeHandle(), TOKEN_ACCESS_MASK.TOKEN_ADJUST_PRIVILEGES, out var hProcessToken))
+            {
+                errorInfo = $"OpenProcessToken failed: {Marshal.GetLastWin32Error()}";
+                return false;
+            }
+
+            if (!PInvoke.LookupPrivilegeValue(null, PInvoke.SE_INCREASE_QUOTA_NAME, out var luid))
+            {
+                errorInfo = $"LookupPrivilegeValue failed: {Marshal.GetLastWin32Error()}";
+                hProcessToken.Dispose();
+                return false;
+            }
+
+            var tp = new TOKEN_PRIVILEGES
+            {
+                PrivilegeCount = 1,
+                Privileges = new()
+                {
+                    e0 = new LUID_AND_ATTRIBUTES
+                    {
+                        Luid = luid,
+                        Attributes = TOKEN_PRIVILEGES_ATTRIBUTES.SE_PRIVILEGE_ENABLED
+                    }
+                }
+            };
+
+            PInvoke.AdjustTokenPrivileges(hProcessToken, false, &tp, 0, null, null);
+            var lastError = Marshal.GetLastWin32Error();
+            hProcessToken.Dispose();
+
+            if (lastError != 0)
+            {
+                errorInfo = $"AdjustTokenPrivileges failed: {lastError}";
+                return false;
+            }
+
+retry:
+            // 2. Get an HWND representing the desktop shell 
+            hwnd = PInvoke.GetShellWindow();
+            if (hwnd == HWND.Null)
+            {
+                errorInfo = "No desktop shell is present.";
+                return false;
+            }
+
+            // 3. Get the Process ID (PID) of the process associated with that window
+            _ = PInvoke.GetWindowThreadProcessId(hwnd, &dwPID);
+            if (dwPID == 0)
+            {
+                errorInfo = "Unable to get PID of desktop shell.";
+                return false;
+            }
+
+            // 4. Open that process
+            hShellProcess = PInvoke.OpenProcess(PROCESS_ACCESS_RIGHTS.PROCESS_QUERY_INFORMATION, false, dwPID);
+            if (hShellProcess == HANDLE.Null)
+            {
+                errorInfo = $"Can't open desktop shell process: {Marshal.GetLastWin32Error()}";
+                return false;
+            }
+
+            if (hwnd != PInvoke.GetShellWindow())
+            {
+                PInvoke.CloseHandle(hShellProcess);
+                goto retry;
+            }
+
+            _ = PInvoke.GetWindowThreadProcessId(hwnd, &dwPID);
+            if (dwPID != PInvoke.GetProcessId(hShellProcess))
+            {
+                PInvoke.CloseHandle(hShellProcess);
+                goto retry;
+            }
+
+            // 5. Get the access token from that process
+            if (!PInvoke.OpenProcessToken(hShellProcess, TOKEN_ACCESS_MASK.TOKEN_DUPLICATE, &hShellProcessToken))
+            {
+                errorInfo = $"Can't get process token of desktop shell: {Marshal.GetLastWin32Error()}";
+                goto cleanup;
+            }
+
+            // 6. Make a primary token with that token
+            var tokenRights = TOKEN_ACCESS_MASK.TOKEN_QUERY | TOKEN_ACCESS_MASK.TOKEN_ASSIGN_PRIMARY |
+                TOKEN_ACCESS_MASK.TOKEN_DUPLICATE | TOKEN_ACCESS_MASK.TOKEN_ADJUST_DEFAULT |
+                TOKEN_ACCESS_MASK.TOKEN_ADJUST_SESSIONID;
+            if (!PInvoke.DuplicateTokenEx(hShellProcessToken, tokenRights, null, SECURITY_IMPERSONATION_LEVEL.SecurityImpersonation, TOKEN_TYPE.TokenPrimary, &hPrimaryToken))
+            {
+                errorInfo = $"Can't get primary token: {Marshal.GetLastWin32Error()}";
+                goto cleanup;
+            }
+
+            // 7. Start the new process with that primary token
+            fixed (char* appPtr = app)
+            // Because argv[0] is the module name, C programmers generally repeat the module name as the first token in the command line
+            // So we add one more dash before the command line to make command line work correctly
+            fixed (char* cmdLinePtr = $"- {cmdLine}")
+            fixed (char* currentDirPtr = currentDir)
+            {
+                if (!PInvoke.CreateProcessWithToken(
+                    hPrimaryToken,
+                    // If you need to access content in HKEY_CURRENT_USER, please set loadProfile to true
+                    loadProfile ? CREATE_PROCESS_LOGON_FLAGS.LOGON_WITH_PROFILE : 0,
+                    appPtr,
+                    cmdLinePtr,
+                    // If you do not want to create a window for console app, please set createNoWindow to true
+                    createNoWindow ? PROCESS_CREATION_FLAGS.CREATE_NO_WINDOW : 0,
+                    null,
+                    currentDirPtr,
+                    &si,
+                    &pi))
+                {
+                    errorInfo = $"CreateProcessWithTokenW failed: {Marshal.GetLastWin32Error()}";
+                    goto cleanup;
+                }
+            }
+
+            if (pi.hProcess != HANDLE.Null) PInvoke.CloseHandle(pi.hProcess);
+            if (pi.hThread != HANDLE.Null) PInvoke.CloseHandle(pi.hThread);
+            if (hShellProcessToken != HANDLE.Null) PInvoke.CloseHandle(hShellProcessToken);
+            if (hPrimaryToken != HANDLE.Null) PInvoke.CloseHandle(hPrimaryToken);
+            if (hShellProcess != HANDLE.Null) PInvoke.CloseHandle(hShellProcess);
+            return true;
+
+cleanup:
+            if (hShellProcessToken != HANDLE.Null) PInvoke.CloseHandle(hShellProcessToken);
+            if (hPrimaryToken != HANDLE.Null) PInvoke.CloseHandle(hPrimaryToken);
+            if (hShellProcess != HANDLE.Null) PInvoke.CloseHandle(hShellProcess);
+            return false;
         }
 
         #endregion

@@ -57,7 +57,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 }
 
                 Settings.EverythingInstalledPath = installedPath;
-                Process.Start(installedPath, "-startup");
+                Main.Context.API.StartProcess(installedPath, arguments: "-startup");
 
                 return true;
             }
