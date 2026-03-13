@@ -4,6 +4,11 @@ param(
 )
 Write-Host "Config: $config"
 
+# Constants for build configurations
+$RELEASE_CONFIG = "Release"
+$RELEASE_FD_CONFIG = "Release-FD"
+$FD_SUFFIX = "-FD"
+
 function Build-Version {
     if ([string]::IsNullOrEmpty($env:flowVersion)) {
         $targetPath = Join-Path $solution "Output/Release/Flow.Launcher.dll" -Resolve
@@ -61,20 +66,27 @@ function Validate-Directory ($output) {
 }
 
 
-function Pack-Squirrel-Installer ($path, $version, $output) {
+function Pack-Squirrel-Installer ($path, $version, $output, $inputPath = "$path\Output\Release", $suffix = "") {
     # msbuild based installer generation is not working in appveyor, not sure why
     Write-Host "Begin pack squirrel installer"
 
     $spec = "$path\Scripts\flowlauncher.nuspec"
-    $input = "$path\Output\Release"
 
     Write-Host "Packing: $spec"
-    Write-Host "Input path:  $input"
+    Write-Host "Input path:  $inputPath"
 
     # dotnet pack is not used because ran into issues, need to test installation and starting up if to use it.
-    nuget pack $spec -Version $version -BasePath $input -OutputDirectory $output -Properties Configuration=Release
+    nuget pack $spec -Version $version -BasePath $inputPath -OutputDirectory $output -Properties Configuration=Release
 
     $nupkg = "$output\FlowLauncher.$version.nupkg"
+    
+    # Rename the nupkg file if this is the framework-dependent version to avoid conflicts
+    if ($suffix -ne "") {
+        $nupkgRenamed = "$output\FlowLauncher$suffix.$version.nupkg"
+        Move-Item $nupkg $nupkgRenamed -Force
+        $nupkg = $nupkgRenamed
+    }
+    
     Write-Host "nupkg path: $nupkg"
     $icon = "$path\Flow.Launcher\Resources\app.ico"
     Write-Host "icon: $icon"
@@ -82,13 +94,13 @@ function Pack-Squirrel-Installer ($path, $version, $output) {
     New-Alias Squirrel $env:USERPROFILE\.nuget\packages\squirrel.windows\1.9.0\tools\Squirrel.exe -Force
     # why we need Write-Output: https://github.com/Squirrel/Squirrel.Windows/issues/489#issuecomment-156039327
     # directory of releaseDir in squirrel can't be same as directory ($nupkg) in releasify
-    $temp = "$output\Temp"
+    $temp = "$output\Temp$suffix"
 
     Squirrel --releasify $nupkg --releaseDir $temp --setupIcon $icon --no-msi | Write-Output
     Move-Item $temp\* $output -Force
     Remove-Item $temp
 
-    $file = "$output\Flow-Launcher-Setup.exe"
+    $file = "$output\Flow-Launcher-Setup$suffix.exe"
     Write-Host "Filename: $file"
 
     Move-Item "$output\Setup.exe" $file -Force
@@ -106,11 +118,22 @@ function Publish-Self-Contained ($p) {
     dotnet publish -c Release $csproj /p:PublishProfile=$profile
 }
 
-function Publish-Portable ($outputLocation, $version) {
+function Publish-Framework-Dependent ($p) {
 
-    & $outputLocation\Flow-Launcher-Setup.exe --silent | Out-Null
+    $csproj  = Join-Path "$p" "Flow.Launcher/Flow.Launcher.csproj" -Resolve
+    $profile = Join-Path "$p" "Flow.Launcher/Properties/PublishProfiles/Net9.0-FrameworkDependent.pubxml" -Resolve
+
+    # we call dotnet publish on the main project. 
+    # The other projects should have been built in Release at this point.
+    dotnet publish -c Release $csproj /p:PublishProfile=$profile
+}
+
+function Publish-Portable ($outputLocation, $version, $suffix = "") {
+
+    & "$outputLocation\Flow-Launcher-Setup$suffix.exe" --silent | Out-Null
     mkdir "$env:LocalAppData\FlowLauncher\app-$version\UserData"
-    Compress-Archive -Path $env:LocalAppData\FlowLauncher -DestinationPath $outputLocation\Flow-Launcher-Portable.zip
+    Compress-Archive -Path $env:LocalAppData\FlowLauncher -DestinationPath "$outputLocation\Flow-Launcher-Portable$suffix.zip" -Force
+    Remove-Item "$env:LocalAppData\FlowLauncher" -Recurse -Force
 }
 
 function Main {
@@ -118,19 +141,26 @@ function Main {
     $v = Build-Version
     Copy-Resources $p
 
-    if ($config -eq "Release"){
+    if ($config -eq $RELEASE_CONFIG){
 
         Delete-Unused $p $config
 
+        # Build self-contained version (includes .NET runtime)
+        Write-Host "Building self-contained version..."
         Publish-Self-Contained $p
-
         Remove-CreateDumpExe $p $config
 
         $o = "$p\Output\Packages"
         Validate-Directory $o
         Pack-Squirrel-Installer $p $v $o
-
         Publish-Portable $o $v
+
+        # Build framework-dependent version (requires .NET runtime to be installed)
+        Write-Host "Building framework-dependent version..."
+        Publish-Framework-Dependent $p
+        Remove-CreateDumpExe $p $RELEASE_FD_CONFIG
+        Pack-Squirrel-Installer $p $v $o "$p\Output\$RELEASE_FD_CONFIG" $FD_SUFFIX
+        Publish-Portable $o $v $FD_SUFFIX
     }
 }
 
