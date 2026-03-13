@@ -62,6 +62,7 @@
   </ItemGroup>
   
   <ItemGroup>
+    <PackageReference Include="FuzzySharp" Version="2.0.2" />
     <PackageReference Include="ini-parser" Version="2.5.2" />
     <PackageReference Include="MemoryPack" Version="1.21.4" />
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="9.0.9" />
