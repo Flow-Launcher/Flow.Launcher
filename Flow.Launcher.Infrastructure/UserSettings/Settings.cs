@@ -497,6 +497,21 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
 
+        private bool _autoTopmostLastOpenedResults = false;
+        public bool AutoTopmostLastOpenedResult
+        {
+            get => _autoTopmostLastOpenedResults;
+            set
+            {
+                if (_autoTopmostLastOpenedResults != value)
+                {
+                    _autoTopmostLastOpenedResults = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+
         public bool SearchQueryResultsWithDelay { get; set; }
         public int SearchDelayTime { get; set; } = 150;
 

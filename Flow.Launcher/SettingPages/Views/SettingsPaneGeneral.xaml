@@ -106,6 +106,20 @@
                     OnContent="{DynamicResource enable}" />
             </ui:SettingsCard>
 
+            <ui:SettingsCard
+                Margin="0 4 0 0"
+                Description="{DynamicResource autoTopmostLastOpenedResultToolTip}"
+                Header="{DynamicResource autoTopmostLastOpenedResult}">
+                <ui:SettingsCard.HeaderIcon>
+                    <ui:FontIcon Glyph="&#xf5ed;" />
+                </ui:SettingsCard.HeaderIcon>
+
+                <ui:ToggleSwitch
+                    IsOn="{Binding Settings.AutoTopmostLastOpenedResult}"
+                    OffContent="{DynamicResource disable}"
+                    OnContent="{DynamicResource enable}" />
+            </ui:SettingsCard>
+
             <ui:SettingsCard Margin="0 4 0 0" Header="{DynamicResource SearchWindowPosition}">
                 <ui:SettingsCard.HeaderIcon>
                     <ui:FontIcon Glyph="&#xe7f4;" />
