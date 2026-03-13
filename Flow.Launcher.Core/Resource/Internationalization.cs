@@ -368,6 +368,11 @@ namespace Flow.Launcher.Core.Resource
                 {
                     p.Metadata.Name = pluginI18N.GetTranslatedPluginTitle();
                     p.Metadata.Description = pluginI18N.GetTranslatedPluginDescription();
+                    if (p.Plugin is IPluginHotkey)
+                    {
+                        // Update plugin hotkey name & description
+                        PluginManager.UpdatePluginHotkeyInfoTranslations(p);
+                    }
                     pluginI18N.OnCultureInfoChanged(CultureInfo.CurrentCulture);
                 }
                 catch (Exception e)
@@ -385,6 +390,11 @@ namespace Flow.Launcher.Core.Resource
             {
                 p.Metadata.Name = pluginI18N.GetTranslatedPluginTitle();
                 p.Metadata.Description = pluginI18N.GetTranslatedPluginDescription();
+                if (p.Plugin is IPluginHotkey)
+                {
+                    // Update plugin hotkey name & description
+                    PluginManager.UpdatePluginHotkeyInfoTranslations(p);
+                }
                 pluginI18N.OnCultureInfoChanged(CultureInfo.CurrentCulture);
             }
             catch (Exception e)

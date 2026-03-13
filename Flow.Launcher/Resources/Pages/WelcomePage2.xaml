@@ -113,13 +113,11 @@
                         Text="{DynamicResource flowlauncherHotkey}" />
                     <flowlauncher:HotkeyControl
                         Margin="0 8 0 0"
-                        ChangeHotkey="{Binding SetTogglingHotkeyCommand}"
                         DefaultHotkey="Alt+Space"
                         Type="Hotkey"
                         ValidateKeyGesture="True"
                         WindowTitle="{DynamicResource flowlauncherHotkey}" />
                 </StackPanel>
-
             </Grid>
         </Grid>
     </ui:ScrollViewerEx>

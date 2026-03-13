@@ -1,25 +1,27 @@
-﻿using Flow.Launcher.Plugin.Explorer.Helper;
-using Flow.Launcher.Plugin.Explorer.Search;
-using Flow.Launcher.Plugin.Explorer.Search.Everything;
-using Flow.Launcher.Plugin.Explorer.ViewModels;
-using Flow.Launcher.Plugin.Explorer.Views;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using Flow.Launcher.Plugin.Explorer.Exceptions;
-using System.Linq;
-using System.Globalization;
+using Flow.Launcher.Plugin.Explorer.Helper;
+using Flow.Launcher.Plugin.Explorer.Search;
+using Flow.Launcher.Plugin.Explorer.Search.Everything;
+using Flow.Launcher.Plugin.Explorer.ViewModels;
+using Flow.Launcher.Plugin.Explorer.Views;
 
 namespace Flow.Launcher.Plugin.Explorer
 {
-    public class Main : ISettingProvider, IAsyncPlugin, IContextMenu, IPluginI18n, IAsyncDialogJump
+    public class Main : ISettingProvider, IAsyncPlugin, IContextMenu, IPluginI18n, IAsyncDialogJump, IPluginHotkey
     {
         internal static PluginInitContext Context { get; set; }
 
         internal static Settings Settings { get; set; }
+
+        private static readonly string ClassName = nameof(Main);
 
         private SettingsViewModel viewModel;
 
@@ -48,6 +50,7 @@ namespace Flow.Launcher.Plugin.Explorer
 
             EverythingApiDllImport.Load(Path.Combine(Context.CurrentPluginMetadata.PluginDirectory, "EverythingSDK",
                 Environment.Is64BitProcess ? "x64" : "x86"));
+
             return Task.CompletedTask;
         }
 
@@ -127,6 +130,149 @@ namespace Flow.Launcher.Plugin.Explorer
             {
                 return _emptyDialogJumpResultList;
             }
+        }
+
+        public List<BasePluginHotkey> GetPluginHotkeys()
+        {
+            return new List<BasePluginHotkey>
+            {
+                new SearchWindowPluginHotkey()
+                {
+                    Id = 0,
+                    Name = Localize.plugin_explorer_opencontainingfolder(),
+                    Description = Localize.plugin_explorer_opencontainingfolder_subtitle(),
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\ue838"),
+                    DefaultHotkey = "Ctrl+Enter",
+                    Editable = false,
+                    Visible = true,
+                    Action = (r) =>
+                    {
+                        if (r.ContextData is SearchResult record)
+                        {
+                            if (record.Type is ResultType.File)
+                            {
+                                ResultManager.OpenFolder(record.FullPath, record.FullPath);
+                            }
+                            else
+                            {
+                                try
+                                {
+                                    Context.API.OpenDirectory(Path.GetDirectoryName(record.FullPath), record.FullPath);
+                                }
+                                catch (Exception e)
+                                {
+                                    var message = $"Fail to open file at {record.FullPath}";
+                                    Context.API.LogException(ClassName, message, e);
+                                    Context.API.ShowMsgBox(e.Message, Localize.plugin_explorer_opendir_error());
+                                    return false;
+                                }
+
+                                return true;
+                            }
+                        }
+
+                        return false;
+                    }
+                },
+                new SearchWindowPluginHotkey()
+                {
+                    Id = 1,
+                    Name = Localize.plugin_explorer_show_contextmenu_title(),
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\ue700"),
+                    DefaultHotkey = "Alt+Enter",
+                    Editable = false,
+                    Visible = true,
+                    Action = (r) =>
+                    {
+                        if (r.ContextData is SearchResult record && record.Type is not ResultType.Volume)
+                        {
+                            try
+                            {
+                                ResultManager.ShowNativeContextMenu(record.FullPath, record.Type);
+                            }
+                            catch (Exception e)
+                            {
+                                var message = $"Fail to show context menu for {record.FullPath}";
+                                Context.API.LogException(ClassName, message, e);
+                            }
+                        }
+
+                        return false;
+                    }
+                },
+                new SearchWindowPluginHotkey()
+                {
+                    Id = 2,
+                    Name = Localize.plugin_explorer_run_as_administrator(),
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE7EF"),
+                    DefaultHotkey = "Ctrl+Shift+Enter",
+                    Editable = false,
+                    Visible = true,
+                    Action = (r) =>
+                    {
+                        if (r.ContextData is SearchResult record)
+                        {
+                            if (record.Type is ResultType.File)
+                            {
+                                var filePath = record.FullPath;
+                                ResultManager.OpenFile(filePath, Settings.UseLocationAsWorkingDir ? Path.GetDirectoryName(filePath) : string.Empty, true);
+                            }
+                            else
+                            {
+                                try
+                                {
+                                    ResultManager.OpenFolder(record.FullPath);
+                                    return true;
+                                }
+                                catch (Exception ex)
+                                {
+                                    var message = $"Fail to open file at {record.FullPath}";
+                                    Context.API.LogException(ClassName, message, ex);
+                                    Context.API.ShowMsgBox(ex.Message, Localize.plugin_explorer_opendir_error());
+                                    return false;
+                                }
+                            }
+                            return true;
+                        }
+
+                        return false;
+                    }
+                },
+                new SearchWindowPluginHotkey()
+                {
+                    Id = 3,
+                    Name = Localize.plugin_explorer_rename_a_file(),
+                    Description = Localize.plugin_explorer_rename_subtitle(),
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\ue8ac"),
+                    DefaultHotkey = "F2",
+                    Editable = true,
+                    Visible = true,
+                    Action = (r) =>
+                    {
+                        if (r.ContextData is SearchResult record)
+                        {
+                            RenameFile window;
+                            switch (record.Type)
+                            {
+                                case ResultType.Folder:
+                                    window = new RenameFile(new DirectoryInfo(record.FullPath));
+                                    break;
+                                case ResultType.File:
+                                    window = new RenameFile(new FileInfo(record.FullPath));
+                                    break;
+                                default:
+                                    Context.API.ShowMsgError(Localize.plugin_explorer_cannot_rename());
+                                    return false;
+                            }
+                            window.ShowDialog();
+
+                            return false;
+                        }
+
+                        return false;
+                    }
+                }
+            };
         }
     }
 }

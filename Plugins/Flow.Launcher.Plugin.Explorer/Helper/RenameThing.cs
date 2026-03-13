@@ -1,0 +1,137 @@
+﻿using System;
+using System.IO;
+using System.Runtime.Serialization;
+
+namespace Flow.Launcher.Plugin.Explorer.Helper;
+
+public static class RenameThing
+{
+    private static void Rename(this FileSystemInfo info, string newName)
+    {
+        if (info is FileInfo file)
+        {
+            if (!SharedCommands.FilesFolders.IsValidFileName(newName))
+            {
+                throw new InvalidNameException();
+            }
+            DirectoryInfo directory;
+            var rootPath = Path.GetPathRoot(file.FullName);
+            if (string.IsNullOrEmpty(rootPath)) return;
+            directory = file.Directory ?? new DirectoryInfo(rootPath);
+            string newPath = Path.Join(directory.FullName, newName);
+            if (info.FullName == newPath)
+            {
+                throw new NotANewNameException("New name was the same as the old name");
+            }
+            if (File.Exists(newPath)) throw new ElementAlreadyExistsException();
+            File.Move(info.FullName, newPath);
+            return;
+        }
+        else if (info is DirectoryInfo directory)
+        {
+            if (!SharedCommands.FilesFolders.IsValidDirectoryName(newName))
+            {
+                throw new InvalidNameException();
+            }
+            DirectoryInfo parent;
+            var rootPath = Path.GetPathRoot(directory.FullName);
+            if (string.IsNullOrEmpty(rootPath)) return;
+            parent = directory.Parent ?? new DirectoryInfo(rootPath);
+            string newPath = Path.Join(parent.FullName, newName);
+            if (info.FullName == newPath)
+            {
+                throw new NotANewNameException("New name was the same as the old name");
+            }
+            if (Directory.Exists(newPath)) throw new ElementAlreadyExistsException();
+                
+            Directory.Move(info.FullName, newPath);
+
+        }
+        else
+        {
+            throw new ArgumentException($"{nameof(info)} must be either, {nameof(FileInfo)} or {nameof(DirectoryInfo)}");
+        }
+    }
+
+    /// <summary>
+    /// Renames a file system element (directory or file)
+    /// </summary>
+    /// <param name="NewFileName">The requested new name</param>
+    /// <param name="oldInfo"> The <see cref="FileInfo"/> or <see cref="DirectoryInfo"/> representing the old file</param>
+    /// <param name="api">An instance of <see cref="IPublicAPI"/>so this can create msgboxes</param>
+    public static void Rename(string NewFileName, FileSystemInfo oldInfo)
+    {
+        // if it's just whitespace and nothing else
+        if (string.IsNullOrWhiteSpace(NewFileName))
+        {
+            Main.Context.API.ShowMsgError(Localize.plugin_explorer_field_may_not_be_empty());
+            return;
+        }
+
+        try
+        {
+            oldInfo.Rename(NewFileName);
+        }
+        catch (Exception exception)
+        {
+            switch (exception)
+            {
+                case FileNotFoundException:
+                    Main.Context.API.ShowMsgError(Localize.plugin_explorer_item_not_found(oldInfo.FullName));
+                    return;
+                case NotANewNameException:
+                    Main.Context.API.ShowMsgError(Localize.plugin_explorer_not_a_new_name(NewFileName));
+                    return;
+                case InvalidNameException:
+                    Main.Context.API.ShowMsgError(Localize.plugin_explorer_invalid_name(NewFileName));
+                    return;
+                case ElementAlreadyExistsException:
+                    Main.Context.API.ShowMsgError(Localize.plugin_explorer_element_already_exists(NewFileName));
+                    return;
+                default:
+                    string msg = exception.Message;
+                    if (!string.IsNullOrEmpty(msg))
+                    {
+                        Main.Context.API.ShowMsgError(Localize.plugin_explorer_exception(exception.Message));
+                        return;
+                    }
+                    else
+                    {
+                        Main.Context.API.ShowMsgError(Localize.plugin_explorer_no_reason_given_exception());
+                    }
+                        
+                    return;
+            }
+        }
+
+        Main.Context.API.ShowMsg(Localize.plugin_explorer_successful_rename(NewFileName));
+    }
+}
+
+internal class NotANewNameException : IOException
+{
+    public NotANewNameException() { }
+    public NotANewNameException(string message) : base(message) { }
+    public NotANewNameException(string message, Exception inner) : base(message, inner) { }
+    protected NotANewNameException(
+        SerializationInfo info,
+        StreamingContext context) : base(info, context) { }
+}
+    internal class ElementAlreadyExistsException : IOException {
+    public ElementAlreadyExistsException() { }
+    public ElementAlreadyExistsException(string message) : base(message) { }
+    public ElementAlreadyExistsException(string message, Exception inner) : base(message, inner) { }
+    protected ElementAlreadyExistsException(
+        SerializationInfo info,
+        StreamingContext context) : base(info, context) { }
+}
+
+internal class InvalidNameException : Exception
+{
+    public InvalidNameException() { }
+    public InvalidNameException(string message) : base(message) { }
+    public InvalidNameException(string message, Exception inner) : base(message, inner) { }
+    protected InvalidNameException(
+        SerializationInfo info,
+        StreamingContext context) : base(info, context) { }
+}

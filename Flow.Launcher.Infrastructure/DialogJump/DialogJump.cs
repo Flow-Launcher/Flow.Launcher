@@ -1,19 +1,19 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.DialogJump.Models;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
-using NHotkey;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.UI.Accessibility;
-using System.Collections.Concurrent;
 
 namespace Flow.Launcher.Infrastructure.DialogJump
 {
@@ -464,10 +464,15 @@ namespace Flow.Launcher.Infrastructure.DialogJump
 
         #endregion
 
-        #region Hotkey
+        #region Hotkey Command
 
-        public static void OnToggleHotkey(object sender, HotkeyEventArgs args)
+        private static RelayCommand _dialogJumpCommand;
+        public static IRelayCommand DialogJumpCommand => _dialogJumpCommand ??= new RelayCommand(OnToggleHotkey);
+
+        private static void OnToggleHotkey()
         {
+            if (!_settings.EnableDialogJump) return;
+
             _ = Task.Run(async () =>
             {
                 try
