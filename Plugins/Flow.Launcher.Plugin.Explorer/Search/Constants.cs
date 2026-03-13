@@ -36,6 +36,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         internal const string WindowsIndexingOptions = "srchadmin.dll";
 
+        internal const string ExcludedFileTypesSeparator = ",";
+
         internal static string ExplorerIconImageFullPath 
             => Directory.GetParent(Assembly.GetExecutingAssembly().Location.ToString()) + "\\" + ExplorerIconImagePath;
     }

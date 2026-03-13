@@ -45,13 +45,14 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 
         private IAsyncEnumerable<SearchResult> WindowsIndexFilesAndFoldersSearchAsync(
             ReadOnlySpan<char> querySearchString,
+            IEnumerable<ResultType> allowedResultTypes = null,
             CancellationToken token = default)
         {
             try
             {
                 return WindowsIndex.WindowsIndexSearchAsync(
                     QueryConstructor.CreateQueryHelper().ConnectionString,
-                    QueryConstructor.FilesAndFolders(querySearchString),
+                    QueryConstructor.FilesAndFolders(querySearchString, allowedResultTypes),
                     token);
             }
             catch (COMException)
@@ -83,9 +84,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             }
         }
 
-        public IAsyncEnumerable<SearchResult> SearchAsync(string search, CancellationToken token)
+        public IAsyncEnumerable<SearchResult> SearchAsync(string search, CancellationToken token, IEnumerable<ResultType> allowedResultTypes = null)
         {
-            return WindowsIndexFilesAndFoldersSearchAsync(search, token: token);
+            return WindowsIndexFilesAndFoldersSearchAsync(search, allowedResultTypes, token);
         }
 
         public IAsyncEnumerable<SearchResult> ContentSearchAsync(string plainSearch, string contentSearch, CancellationToken token)

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Microsoft.Search.Interop;
 
@@ -32,7 +34,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             baseQuery.QueryContentProperties = "System.FileName";
 
             // Set sorting order 
-            //baseQuery.QuerySorting = "System.ItemType DESC";
+            baseQuery.QuerySorting = OrderIdentifier;
 
             return baseQuery;
         }
@@ -60,21 +62,21 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         ///</summary>
         public string Directory(ReadOnlySpan<char> path, ReadOnlySpan<char> searchString = default, bool recursive = false)
         {
-            var queryConstraint = searchString.IsWhiteSpace() ? "" : $"AND (System.FileName LIKE '{searchString}%' OR CONTAINS(System.FileName,'\"{searchString}*\"'))";
+            var queryConstraint = searchString.IsWhiteSpace() ? "" : $" AND (System.FileName LIKE '{searchString}%' OR CONTAINS(System.FileName,'\"{searchString}*\"'))";
 
             var scopeConstraint = recursive
                 ? RecursiveDirectoryConstraint(path)
                 : TopLevelDirectoryConstraint(path);
 
-            var query = $"SELECT TOP {Settings.MaxResult} {CreateBaseQuery().QuerySelectColumns} FROM {SystemIndex} WHERE {scopeConstraint} {queryConstraint} ORDER BY {OrderIdentifier}";
-
-            return query;
+            var baseQueryHelper = CreateBaseQuery();
+            baseQueryHelper.QueryWhereRestrictions = $"AND {scopeConstraint}{queryConstraint}";
+            return baseQueryHelper.GenerateSQLFromUserQuery("*");
         }
 
         ///<summary>
         /// Search will be performed on all folders and files based on user's search keywords.
         ///</summary>
-        public string FilesAndFolders(ReadOnlySpan<char> userSearchString)
+        public string FilesAndFolders(ReadOnlySpan<char> userSearchString, IEnumerable<ResultType> allowedResultTypes = null)
         {
             if (userSearchString.IsWhiteSpace())
                 userSearchString = "*";
@@ -82,8 +84,69 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             // Remove any special characters that might cause issues with the query
             var replacedSearchString = ReplaceSpecialCharacterWithTwoSideWhiteSpace(userSearchString);
 
-            // Generate SQL from constructed parameters, converting the userSearchString from AQS->WHERE clause
-            return $"{CreateBaseQuery().GenerateSQLFromUserQuery(replacedSearchString)} AND {RestrictionsForAllFilesAndFoldersSearch} ORDER BY {OrderIdentifier}";
+            var constraints = new List<string>
+            {
+                RestrictionsForAllFilesAndFoldersSearch
+            };
+
+            var typeConstraint = BuildTypeFilterConstraint(allowedResultTypes);
+            if (!string.IsNullOrEmpty(typeConstraint))
+                constraints.Add(typeConstraint);
+
+            var extensionConstraint = BuildExtensionExclusionConstraint();
+            if (!string.IsNullOrEmpty(extensionConstraint))
+                constraints.Add(extensionConstraint);
+
+            var queryHelper = CreateBaseQuery();
+            queryHelper.QueryWhereRestrictions = $"AND {string.Join(" AND ", constraints)}";
+            return queryHelper.GenerateSQLFromUserQuery(replacedSearchString);
+        }
+
+        /// <summary>
+        /// Build WHERE clause constraint to filter by result types (File, Folder, Volume).
+        /// </summary>
+        /// <remarks>
+        /// System.ItemType values:
+        /// - ".directory" for folders
+        /// - Specific file extensions (e.g., ".txt", ".pdf") for files
+        /// - Drive volumes are identified by their path structure
+        /// </remarks>
+        private static string BuildTypeFilterConstraint(IEnumerable<ResultType> allowedResultTypes)
+        {
+            if (allowedResultTypes == null)
+                return null;
+
+            var typesList = allowedResultTypes as IList<ResultType> ?? allowedResultTypes.ToList();
+            var hasFile = typesList.Contains(ResultType.File);
+            var hasFolder = typesList.Contains(ResultType.Folder) || typesList.Contains(ResultType.Volume); // Folder and volume are merged in Folder action keyword so treat them as same
+
+            // No filtering needed if empty or all types are allowed
+            if (hasFile && hasFolder || !hasFile && !hasFolder)
+                return null;
+
+            if (hasFolder)
+                return "System.ItemType = '.directory'";
+
+            if (hasFile)
+                return "System.ItemType <> '.directory'";
+
+            return null;
+        }
+
+        /// <summary>
+        /// Build WHERE clause constraint to exclude specific file extensions.
+        /// </summary>
+        /// <param name="excludedFileTypes">Comma or semicolon separated file extensions without dots (e.g., "queryHelper,log,bak")</param>
+        private string BuildExtensionExclusionConstraint()
+        {
+            var extensions = Settings.ExcludedFileTypeList
+                .Select(ext => $"System.FileExtension NOT LIKE '.{ext}'")
+                .ToArray();
+
+            if (extensions.Length == 0)
+                return "";
+
+            return string.Join(" AND ", extensions);
         }
 
         /// <summary>
@@ -132,10 +195,19 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         ///</summary>
         public string FileContent(ReadOnlySpan<char> userSearchString)
         {
-            string query =
-                $"SELECT TOP {Settings.MaxResult} {CreateBaseQuery().QuerySelectColumns} FROM {SystemIndex} WHERE {RestrictionsForFileContentSearch(userSearchString)} AND {RestrictionsForAllFilesAndFoldersSearch} ORDER BY {OrderIdentifier}";
+            var constraints = new List<string>
+            {
+                RestrictionsForFileContentSearch(userSearchString),
+                RestrictionsForAllFilesAndFoldersSearch
+            };
 
-            return query;
+            var extensionConstraint = BuildExtensionExclusionConstraint();
+            if (!string.IsNullOrEmpty(extensionConstraint))
+                constraints.Add(extensionConstraint);
+
+            var queryHelper = CreateBaseQuery();
+            queryHelper.QueryWhereRestrictions = $"AND {string.Join(" AND ", constraints)}";
+            return queryHelper.GenerateSQLFromUserQuery("*");
         }
 
         ///<summary>
