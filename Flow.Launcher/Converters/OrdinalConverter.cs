@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Globalization;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -15,9 +15,20 @@ public class OrdinalConverter : IValueConverter
             return 0;
         }
 
-        var res = listBox.ItemContainerGenerator.IndexFromContainer(listBoxItem) + 1;
-        return res == 10 ? 0 : res;  // 10th item => HOTKEY+0
+        var dataItem = listBoxItem.DataContext;
+        if (dataItem == null)
+        {
+            return 0;
+        }
 
+        var index = listBox.Items.IndexOf(dataItem);
+        if (index < 0)
+        {
+            return 0;
+        }
+
+        var res = index + 1;
+        return res == 10 ? 0 : res;  // 10th item => HOTKEY+0
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new InvalidOperationException();
