@@ -706,30 +706,27 @@ namespace Flow.Launcher.Core.Resource
 
         private void AutoDropShadow(bool useDropShadowEffect)
         {
-            SetWindowCornerPreference("Default");
-            RemoveDropShadowEffectFromCurrentTheme();
             if (useDropShadowEffect)
             {
                 if (BlurEnabled && Win32Helper.IsBackdropSupported())
                 {
+                    // For themes with blur enabled, the window border is rendered by the system,
+                    // so we set corner preference to round and remove drop shadow effect to avoid rendering issues.
                     SetWindowCornerPreference("Round");
+                    RemoveDropShadowEffectFromCurrentTheme();
                 }
                 else
                 {
+                    // For themes without blur, we set corner preference to default and add drop shadow effect.
                     SetWindowCornerPreference("Default");
                     AddDropShadowEffectToCurrentTheme();
                 }
             }
             else
             {
-                if (BlurEnabled && Win32Helper.IsBackdropSupported())
-                {
-                    SetWindowCornerPreference("Default");
-                }
-                else
-                {
-                    RemoveDropShadowEffectFromCurrentTheme();
-                }
+                // When drop shadow effect is disabled, we set corner preference to default and remove drop shadow effect.
+                SetWindowCornerPreference("Default");
+                RemoveDropShadowEffectFromCurrentTheme();
             }
         }
 
