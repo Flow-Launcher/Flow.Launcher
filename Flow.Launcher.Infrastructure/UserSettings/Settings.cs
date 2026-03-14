@@ -389,6 +389,25 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
 
+        public bool EnablePinnedResults { get; set; } = false;
+        private bool _shouldCleanPinnedResultsFromUninstalledPlugins = false;
+        public bool ShouldCleanPinnedResultsFromUninstalledPlugins
+        {
+            get => _shouldCleanPinnedResultsFromUninstalledPlugins;
+            set
+            {
+                if (_shouldCleanPinnedResultsFromUninstalledPlugins != value)
+                {
+                    _shouldCleanPinnedResultsFromUninstalledPlugins = value;
+                    OnPropertyChanged();
+                }
+
+            }
+        }
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public PinnedLayoutOptions PinnedResultsLayout { get; set; } = PinnedLayoutOptions.Default;
+
         public bool AlwaysPreview { get; set; } = false;
 
         public bool AlwaysStartEn { get; set; } = false;
@@ -721,5 +740,11 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         [EnumLocalizeKey(nameof(Localize.executedHistory))]
         LastOpened
+    }
+
+    public enum PinnedLayoutOptions
+    {
+        Default,
+        Grid
     }
 }

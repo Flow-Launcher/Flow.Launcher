@@ -8,6 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
     xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
+    xmlns:userSettings="clr-namespace:Flow.Launcher.Infrastructure.UserSettings;assembly=Flow.Launcher.Infrastructure"
     Name="FlowMainWindow"
     Title="Flow Launcher"
     Width="{Binding MainWindowWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -411,6 +412,126 @@
                         x:Name="ResultArea"
                         Grid.Column="0"
                         Grid.ColumnSpan="{Binding ResultAreaColumn}">
+
+                        <!-- Pinned Results Grid -->
+                        <Border Background="#0FFFFFFF" 
+                                CornerRadius="8" 
+                                Margin="10,10,10,5" 
+                                Padding="12">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Settings.EnablePinnedResults}" Value="True" />
+                                                <Condition Binding="{Binding Settings.PinnedResultsLayout}" Value="Grid" />
+                                                <Condition Binding="{Binding QueryText.Length}" Value="0" />
+                                                <Condition Binding="{Binding IsContextMenuVisible}" Value="False" />
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <StackPanel>
+                                <TextBlock Text="Pinned Results" 
+                                           FontWeight="SemiBold" 
+                                           FontSize="11" 
+                                           Foreground="White"
+                                           Opacity="0.8" 
+                                           Margin="5,0,0,12"/>
+                                
+                                <ListBox x:Name="PinnedResultListBox"
+                                         ItemsSource="{Binding PinnedResults.Results}"
+                                         SelectedItem="{Binding PinnedResults.SelectedItem, Mode=TwoWay}"
+                                         SelectedIndex="{Binding PinnedResults.SelectedIndex, Mode=TwoWay}"
+                                         Background="Transparent"
+                                         BorderThickness="0"
+                                         KeyboardNavigation.TabNavigation="Continue"
+                                         KeyboardNavigation.DirectionalNavigation="Cycle"
+                                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                         ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                         PreviewMouseLeftButtonUp="OnPinnedItemClick">
+                                    <ListBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <UniformGrid Columns="5" IsItemsHost="True" />
+                                        </ItemsPanelTemplate>
+                                    </ListBox.ItemsPanel>
+                                    <ListBox.ItemContainerStyle>
+                                        <Style TargetType="ListBoxItem">
+                                            <Setter Property="Background" Value="Transparent" />
+                                            <Setter Property="BorderThickness" Value="0" />
+                                            <Setter Property="Padding" Value="0" />
+                                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="ListBoxItem">
+                                                        <Border x:Name="ItemBorder" 
+                                                                Background="Transparent" 
+                                                                CornerRadius="4"
+                                                                Margin="0"
+                                                                Padding="2">
+                                                            <ContentPresenter />
+                                                        </Border>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsSelected" Value="True">
+                                                                <Setter TargetName="ItemBorder" Property="Background" Value="#3FFFFFFF" />
+                                                            </Trigger>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter TargetName="ItemBorder" Property="Background" Value="#1FFFFFFF" />
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </ListBox.ItemContainerStyle>
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Cursor="Hand" 
+                                                        VerticalAlignment="Center" 
+                                                        MouseLeftButtonUp="OnPinnedItemClick"
+                                                        ToolTip="{Binding ShowSubTitleToolTip}">
+                                                <Border Width="42" Height="42" CornerRadius="4" Margin="0,1,0,2" HorizontalAlignment="Center">
+                                                    <Grid>
+                                                        <Image Source="{Binding Image}" 
+                                                               Width="32" 
+                                                               Height="32" 
+                                                               RenderOptions.BitmapScalingMode="HighQuality"
+                                                               Visibility="{Binding ShowIcon}"/>
+                                                        <TextBlock FontFamily="{Binding Glyph.FontFamily}"
+                                                                   Text="{Binding Glyph.Glyph}"
+                                                                   FontSize="24"
+                                                                   HorizontalAlignment="Center"
+                                                                   VerticalAlignment="Center"
+                                                                   Style="{DynamicResource ItemGlyph}"
+                                                                   Width="Auto"
+                                                                   Height="Auto"
+                                                                   Visibility="{Binding ShowGlyph}"/>
+                                                        <Image Source="{Binding BadgeImage}"
+                                                               Width="16"
+                                                               Height="16"
+                                                               HorizontalAlignment="Right"
+                                                               VerticalAlignment="Bottom"
+                                                               Visibility="{Binding ShowBadge}"/>
+                                                    </Grid>
+                                                </Border>
+                                                <TextBlock Text="{Binding Result.Title}" 
+                                                           HorizontalAlignment="Center" 
+                                                           FontSize="9" 
+                                                           Foreground="White"
+                                                           Opacity="0.9" 
+                                                           TextTrimming="CharacterEllipsis"
+                                                           ToolTip="{Binding ShowTitleToolTip}"
+                                                           Margin="2,0,2,1"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </StackPanel>
+                        </Border>
+
                         <ContentControl>
                             <flowlauncher:ResultListBox
                                 x:Name="ResultListBox"
