@@ -438,5 +438,56 @@ namespace Flow.Launcher.Test.Plugins
             // Then
             ClassicAssert.AreEqual(result, expectedResult);
         }
+
+        [Test]
+        public void GivenHomeFolderPaths_WhenCheckedWithIsHomeFolderPath_ThenShouldReturnTrue()
+        {
+            // Given
+            var homeFolders = new[]
+            {
+                Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                Environment.GetFolderPath(Environment.SpecialFolder.MyPictures),
+                Environment.GetFolderPath(Environment.SpecialFolder.MyMusic),
+                Environment.GetFolderPath(Environment.SpecialFolder.MyVideos),
+                Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+                Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads"),
+            };
+
+            // When, Then
+            foreach (var folder in homeFolders)
+            {
+                if (string.IsNullOrEmpty(folder))
+                    continue;
+
+                ClassicAssert.IsTrue(ResultManager.IsHomeFolderPath(folder),
+                    $"Expected '{folder}' to be recognized as a home folder");
+                ClassicAssert.IsTrue(ResultManager.IsHomeFolderPath(folder + Path.DirectorySeparatorChar),
+                    $"Expected '{folder}\\' (with trailing separator) to be recognized as a home folder");
+            }
+        }
+
+        [Test]
+        public void GivenNonHomeFolderPaths_WhenCheckedWithIsHomeFolderPath_ThenShouldReturnFalse()
+        {
+            // Given
+            var nonHomeFolders = new[]
+            {
+                @"C:\SomeRandomFolder",
+                @"C:\Windows\System32",
+                @"C:\Program Files",
+                // Subfolders of home directories should not be recognized as home folders
+                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "SubFolder"),
+                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "SubFolder"),
+                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads", "SubFolder"),
+            };
+
+            // When, Then
+            foreach (var folder in nonHomeFolders)
+            {
+                ClassicAssert.IsFalse(ResultManager.IsHomeFolderPath(folder),
+                    $"Expected '{folder}' to NOT be recognized as a home folder");
+            }
+        }
     }
 }
