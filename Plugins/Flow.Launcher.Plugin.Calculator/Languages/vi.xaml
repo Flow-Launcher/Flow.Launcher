@@ -2,7 +2,7 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <system:String x:Key="flowlauncher_plugin_calculator_plugin_name">Máy tính</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_plugin_description">Perform mathematical calculations, including hex values and advanced functions such as 'min(1,2,3)', 'sqrt(123)' and 'cos(123)'.</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_plugin_description">Thực hiện các phép tính toán học, bao gồm cả các số thuộc hệ thập lục phân và các hàm nâng cao như 'min(1,2,3)', 'sqrt(123)' và 'cos(123)'.</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_not_a_number">Không phải là số (NaN)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_expression_not_complete">Biểu thức sai hoặc không đầy đủ (Bạn có quên một số dấu ngoặc đơn không?)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_copy_number_to_clipboard">Sao chép số này vào clipboard</system:String>
@@ -12,7 +12,7 @@
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_comma">Dấu phẩy (,)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_dot">dấu chấm (.)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_max_decimal_places">Tối đa. chữ số thập phân</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_use_thousands_separator">Show thousands separator in results</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_failed_to_copy">Copy failed, please try later</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_show_error_message">Show error message when calculation fails</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_use_thousands_separator">Hiển thị dấu phân cách hàng nghìn trong kết quả</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_failed_to_copy">Sao chép thất bại, xin vui lòng thử lại sau</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_show_error_message">Hiển thị thông báo lỗi khi tính toán thất bại</system:String>
 </ResourceDictionary>

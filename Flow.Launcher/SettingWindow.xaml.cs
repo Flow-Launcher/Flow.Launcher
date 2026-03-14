@@ -96,7 +96,7 @@ public partial class SettingWindow
     private void Window_StateChanged(object sender, EventArgs e)
     {
         RefreshMaximizeRestoreButton();
-        if (IsLoaded)
+        if (IsLoaded && WindowState != WindowState.Minimized)
         {
             _settings.SettingWindowState = WindowState;
         }
@@ -169,7 +169,9 @@ public partial class SettingWindow
             SetWindowPosition(top, left);
         }
 
-        WindowState = _settings.SettingWindowState;
+        WindowState = _settings.SettingWindowState == WindowState.Minimized
+            ? WindowState.Normal
+            : _settings.SettingWindowState;
     }
 
     private void SetWindowPosition(double top, double left)

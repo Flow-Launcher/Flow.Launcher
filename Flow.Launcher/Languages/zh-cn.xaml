@@ -237,6 +237,9 @@
     <system:String x:Key="fileNotFoundMessage">无法从提取的zip文件中找到plugin.json，或者此路径 {0} 不存在</system:String>
     <system:String x:Key="pluginExistAlreadyMessage">已存在相同ID和版本的插件，或者存在版本大于此下载的插件</system:String>
     <system:String x:Key="errorCreatingSettingPanel">为插件 {0} 创建设置面板时出错：{1}{2}</system:String>
+    <system:String x:Key="pluginMinimumAppVersionUnsatisfiedTitle">{0} requires Flow version {1} to run</system:String>
+    <system:String x:Key="pluginMinimumAppVersionUnsatisfiedMessage">Flow does not meet the minimum version requirements for {0} to run. Do you want to continue installing it?{1}{1}We recommend updating Flow to the latest version to ensure that {0} works without issues.</system:String>
+    <system:String x:Key="pluginJsonInvalidOrCorrupted">Failed to install plugin because plugin.json is invalid or corrupted</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">插件商店</system:String>
