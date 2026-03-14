@@ -535,9 +535,6 @@ namespace Flow.Launcher.Plugin
         /// <summary>
         /// Get the plugin manifest.
         /// </summary>
-        /// <remarks>
-        /// If Flow cannot get manifest data, this could be null
-        /// </remarks>
         /// <returns></returns>
         public IReadOnlyList<UserPlugin> GetPluginManifest();
 
