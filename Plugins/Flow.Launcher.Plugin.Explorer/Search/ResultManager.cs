@@ -130,7 +130,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         internal static Result CreateFolderResult(string title, string subtitle, string path, Query query, int score = 0, bool windowsIndexed = false)
         {
-            if (IsHomeFolderPath(path))
+            if (IsHomeFolderPath(path) && score > 0)
                 score += HomeFolderScoreBoost;
 
             return new Result
