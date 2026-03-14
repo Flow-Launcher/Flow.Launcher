@@ -533,9 +533,12 @@ namespace Flow.Launcher.Plugin
         public Task<bool> UpdatePluginManifestAsync(bool usePrimaryUrlOnly = false, CancellationToken token = default);
 
         /// <summary>
-        /// Get the plugin manifest.
+        /// Get the current plugin manifest entries known to Flow Launcher.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        /// A non-null read-only list of <see cref="UserPlugin"/> entries. The list may be empty if the
+        /// manifest has not been loaded/updated yet, or if the most recent manifest fetch failed.
+        /// </returns>
         public IReadOnlyList<UserPlugin> GetPluginManifest();
 
         /// <summary>
