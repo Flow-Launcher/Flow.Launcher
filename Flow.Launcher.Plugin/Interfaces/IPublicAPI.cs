@@ -537,7 +537,7 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         /// <returns>
         /// A non-null read-only list of <see cref="UserPlugin"/> entries. The list may be empty if the
-        /// manifest has not been loaded/updated yet, or if the most recent manifest fetch failed.
+        /// manifest has not been loaded yet, or if no successful manifest fetch has completed in the current session.
         /// </returns>
         public IReadOnlyList<UserPlugin> GetPluginManifest();
 
