@@ -53,7 +53,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             return paths;
         });
 
-        internal static bool IsHomeFolderPath(string path) =>
+        public static bool IsHomeFolderPath(string path) =>
             !string.IsNullOrEmpty(path) &&
             HomeFolderPaths.Value.Contains(path.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar));
 
