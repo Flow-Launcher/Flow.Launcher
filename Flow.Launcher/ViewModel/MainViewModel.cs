@@ -1460,7 +1460,6 @@ namespace Flow.Launcher.ViewModel
                 {
                     copiedItem.AsyncAction = async c =>
                     {
-
                         // Use original history item to reflect correct result because properties like subtitle have been modified in copiedItem
                         var reflectResult = await ResultHelper.PopulateResultsAsync(item, item.Query);
                         if (reflectResult != null)
@@ -1630,17 +1629,17 @@ namespace Flow.Launcher.ViewModel
                         true => Task.CompletedTask
                     }).ToArray();
 
-                    // Query history results for home page firstly so it will be put on top of the results
+                    // Query pinned results for home page before history results so it will be put on top of the results
+                    if (Settings.EnablePinnedResults)
+                    {
+                        QueryPinnedTask(Settings.PinnedResultsLayout, currentCancellationToken);
+                    }
+
+                    // Query history results for home page firstly so it will be put before other plugin results
                     if (Settings.ShowHistoryResultsForHomePage)
                     {
                         QueryHistoryTask(currentCancellationToken);
                     }
-
-                    if (Settings.EnablePinnedResults)
-                    {
-                        Results.Visibility = Visibility.Visible;
-                        QueryPinnedTask(Settings.PinnedResultsLayout, currentCancellationToken);
-                    } 
                 }
                 else
                 {
@@ -1770,21 +1769,15 @@ namespace Flow.Launcher.ViewModel
 
             void QueryPinnedTask(PinnedLayoutOptions layout, CancellationToken token)
             {
+                var results = GetPinnedResultItems(_pinned.Items);
+
                 if (token.IsCancellationRequested) return;
 
-                var results = GetPinnedResultItems(_pinned.Items);
                 App.API.LogDebug(ClassName, $"Update results for pinned items in {layout} mode");
 
                 if (layout == PinnedLayoutOptions.Grid)
                 {
-                    // If switching from List to Grid, we should clear the pinned results from the main list
-                    // By sending an empty list with the pinned metadata
-                    if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(new List<Result>(), _pinnedMetadata, query,
-                            token, reSelect)))
-                    {
-                        App.API.LogError(ClassName, "Unable to clear pinned results from main list");
-                    }
-
+                    // If switching from List to Grid, we should clear and add the results
                     PinnedResults.Clear();
                     PinnedResults.AddResults(results, "PinnedGrid");
                 }
