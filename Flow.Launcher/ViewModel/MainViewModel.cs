@@ -53,7 +53,7 @@ namespace Flow.Launcher.ViewModel
         private readonly Pinned _pinned;
         private CancellationTokenSource _updateSource; // Used to cancel old query flows
         private CancellationToken _updateToken; // Used to avoid ObjectDisposedException of _updateSource.Token
-        
+
         private ChannelWriter<ResultsForUpdate> _resultsUpdateChannelWriter;
         private Task _resultsViewUpdateTask;
 
@@ -1423,7 +1423,6 @@ namespace Flow.Launcher.ViewModel
             return results;
         }
 
-
         private void RemovePinnedResultsWithPluginsUninstalled(IEnumerable<PinnedResultItem> items)
         {
             var pluginsIds = PluginManager.GetAllPluginsIds();
@@ -1437,6 +1436,7 @@ namespace Flow.Launcher.ViewModel
             }
             Settings.ShouldCleanPinnedResultsFromUninstalledPlugins = false;
         }
+
         private List<Result> GetHistoryItems(IEnumerable<LastOpenedHistoryResult> historyItems, int? maxResult = null)
         {
             var results = new List<Result>();

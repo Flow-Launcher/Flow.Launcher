@@ -249,13 +249,6 @@ namespace Flow.Launcher
                 API.SaveAppAllSettings();
                 API.LogInfo(ClassName, "End Flow Launcher startup ------------------------------------------------------");
 
-                // Show pínned results on start flow
-                if (_settings.EnablePinnedResults && _settings.EnablePinnedResults)
-                {
-                    _mainVM.RefreshPinnedResults();
-                    _mainVM.QueryResults();
-                }
-
                 _ = API.StopwatchLogInfoAsync(ClassName, "Startup cost", async () =>
                 {
                     API.LogInfo(ClassName, "Begin plugin initialization ----------------------------------------------------");
@@ -266,7 +259,8 @@ namespace Flow.Launcher
 
                     await PluginManager.InitializePluginsAsync(_mainVM);
 
-                    // Refresh the history results after plugins are initialized so that we can parse the absolute icon paths
+                    // Refresh the history results & pinned results after plugins are initialized
+                    // so that we can parse the absolute icon paths
                     _mainVM.RefreshLastOpenedHistoryResults();
                     _mainVM.RefreshPinnedResults();
 
