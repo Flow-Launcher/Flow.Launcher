@@ -1341,7 +1341,7 @@ namespace Flow.Launcher.ViewModel
                     Title = isResultPinned ? Localize.unpinFromFlow() : Localize.pinResult(),
                     SubTitle = selected.Title,
                     IcoPath = Constant.ResultsIcon,
-                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xE718"),
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE8BC"),
                     Action = _ =>
                     {
                         _pinned.AddOrRemove(selected, string.Empty, isResultPinned);
@@ -1353,7 +1353,7 @@ namespace Flow.Launcher.ViewModel
                     Title = isQueryPinned ? Localize.unpinFromFlow() : Localize.pinQuery(),
                     SubTitle = queryToPin,
                     IcoPath = Constant.SearchIcon,
-                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xE773"),
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE721"),
                     Action = _ =>
                     {
                         _pinned.AddOrRemove(selected, queryToPin, isQueryPinned);
