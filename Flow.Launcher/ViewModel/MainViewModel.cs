@@ -166,6 +166,7 @@ namespace Flow.Launcher.ViewModel
                     case nameof(Settings.ShouldCleanPinnedResultsFromUninstalledPlugins):
                         if (Settings.ShouldCleanPinnedResultsFromUninstalledPlugins)
                         {
+                            Settings.ShouldCleanPinnedResultsFromUninstalledPlugins = false;
                             QueryResults();
                         }
                         break;
