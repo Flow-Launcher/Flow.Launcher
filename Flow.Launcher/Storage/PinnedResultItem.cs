@@ -150,14 +150,12 @@ public class PinnedResultItem : Result
                 && SubTitle == r.SubTitle
                 && PluginID == r.PluginID
                 && IsQuery == false;
-                //&& Query == r.OriginQuery.TrimmedQuery;
         }
         else
         {
             return RecordKey == r.RecordKey
                 && PluginID == r.PluginID
                 && IsQuery == false;
-                //&& Query == r.OriginQuery.TrimmedQuery;
         }
     }
 
