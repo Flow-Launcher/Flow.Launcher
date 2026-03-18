@@ -18,6 +18,13 @@ public class PinnedResultItem : Result
     /// <summary>
     /// Gets or sets a value indicating whether the current operation is a query.
     /// </summary>
+    /// <remarks>
+    /// Flow has two types of pinned items: pinned results and pinned queries.
+    /// A pinned result is a specific result from a plugin that the user has chosen to pin,
+    /// while a pinned query represents an entire search query that the user has pinned for quick access.
+    /// The IsQuery property helps to differentiate between these two types of pinned items,
+    /// allowing the application to handle them appropriately based on their nature.
+    /// </remarks>
     public bool IsQuery { get; set; }
 
     /// <summary>
