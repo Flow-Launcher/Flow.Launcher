@@ -389,7 +389,20 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
 
-        public bool EnablePinnedResults { get; set; } = false;
+        private bool _enablePinnedResults = false;
+        public bool EnablePinnedResults
+        {
+            get => _enablePinnedResults;
+            set
+            {
+                if (!_enablePinnedResults != value)
+                {
+                    _enablePinnedResults = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         private bool _shouldCleanPinnedResultsFromUninstalledPlugins = false;
         public bool ShouldCleanPinnedResultsFromUninstalledPlugins
         {
