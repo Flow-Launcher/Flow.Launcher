@@ -436,14 +436,6 @@
                                 </Style>
                             </Border.Style>
                             <StackPanel>
-                                <TextBlock
-                                    Margin="5 0 0 12"
-                                    FontSize="11"
-                                    FontWeight="SemiBold"
-                                    Foreground="White"
-                                    Opacity="0.8"
-                                    Text="{DynamicResource pinnedResults}" />
-
                                 <ListBox
                                     x:Name="PinnedResultListBox"
                                     Background="Transparent"
