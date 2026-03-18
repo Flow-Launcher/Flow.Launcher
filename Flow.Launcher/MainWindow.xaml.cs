@@ -499,11 +499,11 @@ namespace Flow.Launcher
             if (sender is FrameworkElement element && element.DataContext is ResultViewModel resultVM)
             {
                 _viewModel.PinnedResults.SelectedItem = resultVM;
-                _ = ExecutePinnedResult(resultVM);
+                _ = ExecutePinnedResultAsync(resultVM);
             }
         }
 
-        private async Task ExecutePinnedResult(ResultViewModel selectedItem)
+        private async Task ExecutePinnedResultAsync(ResultViewModel selectedItem)
         {
             if (selectedItem?.Result != null)
             {

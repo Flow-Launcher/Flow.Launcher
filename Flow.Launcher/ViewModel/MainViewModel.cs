@@ -1421,7 +1421,6 @@ namespace Flow.Launcher.ViewModel
 
             }
             return results;
-
         }
 
 
