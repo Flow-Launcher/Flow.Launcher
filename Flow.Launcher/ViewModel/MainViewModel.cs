@@ -156,14 +156,10 @@ namespace Flow.Launcher.ViewModel
                     case nameof(Settings.OpenHistoryHotkey):
                         OnPropertyChanged(nameof(OpenHistoryHotkey));
                         break;
-
-                    //Force update pinned results before change style 
                     case nameof(Settings.EnablePinnedResults):
                     case nameof(Settings.PinnedResultsLayout):
                         QueryResults();
                         break;
-
-                        // Force clean results after uninstall plugin
                     case nameof(Settings.ShouldCleanPinnedResultsFromUninstalledPlugins):
                         if (Settings.ShouldCleanPinnedResultsFromUninstalledPlugins)
                         {
@@ -205,7 +201,6 @@ namespace Flow.Launcher.ViewModel
                 IsPreviewOn = Settings.AlwaysPreview
             };
             _selectedResults = Results;
-            Results.Visibility = Visibility.Visible;
 
             Results.PropertyChanged += (o, args) =>
             {
@@ -571,7 +566,7 @@ namespace Flow.Launcher.ViewModel
                     Hide();
                 }
             }
-            
+
             // Record user selected result for result ranking
             _userSelectedRecord.Add(result);
             // Add item to history only if it is from results but not context menu or history
@@ -580,7 +575,6 @@ namespace Flow.Launcher.ViewModel
                 _history.Add(result);
                 lastHistoryIndex = 1;
             }
-
         }
 
         private static IReadOnlyList<Result> DeepCloneResults(IReadOnlyList<Result> results, bool isDialogJump, CancellationToken token = default)
@@ -733,7 +727,7 @@ namespace Flow.Launcher.ViewModel
 
         public bool GameModeStatus { get; set; } = false;
 
-        private string _queryText; 
+        private string _queryText;
         public string QueryText
         {
             get => _queryText;
@@ -871,7 +865,8 @@ namespace Flow.Launcher.ViewModel
                 var isReturningFromContextMenu = ContextMenuSelected();
                 var isReturningFromHistory = HistorySelected();
                 _selectedResults = value;
-                
+
+                // Invoke property changed event for IsContextMenuVisible so that Pinned Results Grid can update its visibility
                 OnPropertyChanged(nameof(IsContextMenuVisible));
 
                 if (QueryResultsSelected())
