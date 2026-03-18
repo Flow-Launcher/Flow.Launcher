@@ -405,8 +405,20 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
 
+        private PinnedLayoutOptions _pinnedResultsLayout = PinnedLayoutOptions.List;
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public PinnedLayoutOptions PinnedResultsLayout { get; set; } = PinnedLayoutOptions.List;
+        public PinnedLayoutOptions PinnedResultsLayout
+        {
+            get => _pinnedResultsLayout;
+            set
+            {
+                if (_pinnedResultsLayout != value)
+                {
+                    _pinnedResultsLayout = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public bool AlwaysPreview { get; set; } = false;
 
