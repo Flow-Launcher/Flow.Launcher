@@ -395,7 +395,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             get => _enablePinnedResults;
             set
             {
-                if (!_enablePinnedResults != value)
+                if (_enablePinnedResults != value)
                 {
                     _enablePinnedResults = value;
                     OnPropertyChanged();
