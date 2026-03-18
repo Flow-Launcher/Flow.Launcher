@@ -448,10 +448,6 @@ namespace Flow.Launcher.Test.Plugins
                 @"C:\SomeRandomFolder",
                 @"C:\Windows\System32",
                 @"C:\Program Files",
-                // Subfolders of home directories should not be recognized as home folders
-                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "SubFolder"),
-                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "SubFolder"),
-                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads", "SubFolder"),
             };
 
             // When, Then
@@ -459,6 +455,28 @@ namespace Flow.Launcher.Test.Plugins
             {
                 ClassicAssert.IsFalse(ResultManager.IsHomeFolderPath(folder),
                     $"Expected '{folder}' to NOT be recognized as a home folder");
+            }
+        }
+
+        [Test]
+        public void GivenPathsInsideHomeDirectories_WhenCheckedWithIsHomeFolderPath_ThenShouldReturnTrue()
+        {
+            // Given
+            var desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            var homeSubPaths = new[]
+            {
+                Path.Combine(desktopPath, "dummy_desktop_file"),
+                Path.Combine(desktopPath, "dummy_desktop_folder"),
+                Path.Combine(desktopPath, "dummy_desktop_folder"),
+                Path.Combine(desktopPath, "dummy_desktop_folder"),
+                Path.Combine(desktopPath, "dummy_desktop_file", "dummy_file"),
+            };
+
+            // When, Then
+            foreach (var path in homeSubPaths)
+            {
+                ClassicAssert.IsTrue(ResultManager.IsHomeFolderPath(path),
+                    $"Expected '{path}' to be recognized as inside a home folder");
             }
         }
     }
