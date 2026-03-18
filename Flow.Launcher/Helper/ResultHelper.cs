@@ -10,7 +10,7 @@ namespace Flow.Launcher.Helper;
 
 public static class ResultHelper
 {
-    public static async Task<Result?> PopulateResultsAsync<T>(T item, string query = "") where T : Result
+    public static async Task<Result?> PopulateResultsAsync<T>(T item, string query) where T : Result
     {
         return await PopulateResultsAsync(item.PluginID, query, item.Title, item.SubTitle, item.RecordKey);
     }
