@@ -1300,8 +1300,8 @@ namespace Flow.Launcher.ViewModel
             {
                 List<Result> results = PluginManager.GetContextMenusForPlugin(selected);
                 results.Add(ContextMenuTopMost(selected));
-                results.Add(ContextMenuPluginInfo(selected));
                 results.AddRange(ContextMenuPinActions(selected));
+                results.Add(ContextMenuPluginInfo(selected));
 
                 if (!string.IsNullOrEmpty(query))
                 {
