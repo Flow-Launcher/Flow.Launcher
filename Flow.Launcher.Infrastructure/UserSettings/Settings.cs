@@ -406,7 +406,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         }
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public PinnedLayoutOptions PinnedResultsLayout { get; set; } = PinnedLayoutOptions.Default;
+        public PinnedLayoutOptions PinnedResultsLayout { get; set; } = PinnedLayoutOptions.List;
 
         public bool AlwaysPreview { get; set; } = false;
 
@@ -744,7 +744,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
     public enum PinnedLayoutOptions
     {
-        Default,
+        List,
         Grid
     }
 }
