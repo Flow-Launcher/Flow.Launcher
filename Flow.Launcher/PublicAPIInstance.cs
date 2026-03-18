@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -583,7 +583,7 @@ namespace Flow.Launcher
         public Task<bool> UpdatePluginManifestAsync(bool usePrimaryUrlOnly = false, CancellationToken token = default) =>
             PluginsManifest.UpdateManifestAsync(usePrimaryUrlOnly, token);
 
-        public IReadOnlyList<UserPlugin> GetPluginManifest() => PluginsManifest.UserPlugins;
+        public IReadOnlyList<UserPlugin> GetPluginManifest() => PluginsManifest.UserPlugins ?? [];
 
         public bool PluginModified(string id) => PluginManager.PluginModified(id);
 
