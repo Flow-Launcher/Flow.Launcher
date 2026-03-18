@@ -203,12 +203,6 @@ public partial class SettingsPaneThemeViewModel : BaseModel
 
     public string DateText => DateTime.Now.ToString(DateFormat, CultureInfo.CurrentUICulture);
 
-    public bool UseGlyphIcons
-    {
-        get => Settings.UseGlyphIcons;
-        set => Settings.UseGlyphIcons = value;
-    }
-
     public bool UseAnimation
     {
         get => Settings.UseAnimation;

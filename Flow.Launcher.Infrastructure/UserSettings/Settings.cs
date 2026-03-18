@@ -137,12 +137,52 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string ResultSubFontStyle { get; set; }
         public string ResultSubFontWeight { get; set; }
         public string ResultSubFontStretch { get; set; }
-        public bool UseGlyphIcons { get; set; } = true;
+
+        private bool _useGlyphIcons = true;
+        public bool UseGlyphIcons
+        {
+            get => _useGlyphIcons;
+            set
+            {
+                if (_useGlyphIcons != value)
+                {
+                    _useGlyphIcons = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public bool UseAnimation { get; set; } = true;
         public bool UseSound { get; set; } = true;
         public double SoundVolume { get; set; } = 50;
-        public bool ShowBadges { get; set; } = false;
-        public bool ShowBadgesGlobalOnly { get; set; } = false;
+
+        private bool _showBadges = false;
+        public bool ShowBadges
+        {
+            get => _showBadges;
+            set
+            {
+                if (_showBadges != value)
+                {
+                    _showBadges = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private bool _showBadgesGlobalOnly = false;
+        public bool ShowBadgesGlobalOnly
+        {
+            get => _showBadgesGlobalOnly;
+            set
+            {
+                if (_showBadgesGlobalOnly != value)
+                {
+                    _showBadgesGlobalOnly = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         private string _settingWindowFont { get; set; } = Win32Helper.GetSystemDefaultFont(false);
         public string SettingWindowFont

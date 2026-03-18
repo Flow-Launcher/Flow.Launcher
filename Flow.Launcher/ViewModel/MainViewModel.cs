@@ -156,6 +156,9 @@ namespace Flow.Launcher.ViewModel
                     case nameof(Settings.OpenHistoryHotkey):
                         OnPropertyChanged(nameof(OpenHistoryHotkey));
                         break;
+                    case nameof(Settings.UseGlyphIcons):
+                    case nameof(Settings.ShowBadges):
+                    case nameof(Settings.ShowBadgesGlobalOnly):
                     case nameof(Settings.EnablePinnedResults):
                     case nameof(Settings.PinnedResultsLayout):
                         QueryResults();

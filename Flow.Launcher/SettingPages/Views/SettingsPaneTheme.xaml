@@ -756,7 +756,7 @@
                 </ui:SettingsCard.HeaderIcon>
 
                 <ui:ToggleSwitch
-                    IsOn="{Binding UseGlyphIcons}"
+                    IsOn="{Binding Settings.UseGlyphIcons}"
                     OffContent="{DynamicResource disable}"
                     OnContent="{DynamicResource enable}" />
             </ui:SettingsCard>
