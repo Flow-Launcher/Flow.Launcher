@@ -559,11 +559,6 @@ namespace Flow.Launcher.Core.Plugin
             return [.. _allLoadedPlugins.Values];
         }
 
-        public static List<string> GetAllPluginsIds()
-        {
-            return [.. _allLoadedPlugins.Values.Select(x => x.Metadata.ID)];
-        }
-
         public static List<PluginPair> GetAllInitializedPlugins(bool includeFailed)
         {
             if (includeFailed)

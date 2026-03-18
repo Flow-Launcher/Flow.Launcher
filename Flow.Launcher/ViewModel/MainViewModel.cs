@@ -1388,14 +1388,13 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private List<Result> GetPinnedResultItems(IEnumerable<PinnedResultItem> items)
+        private static List<Result> GetPinnedResultItems(IEnumerable<PinnedResultItem> items)
         {
             if (!items.Any()) return [];
-            var results = new List<Result>();
-            var itemsCopy = items.Select(x => x.DeepCopy()).OrderByDescending(x => x.LastPinnedAt);
 
-            if (Settings.ShouldCleanPinnedResultsFromUninstalledPlugins)
-                RemovePinnedResultsWithPluginsUninstalled(items);
+            var results = new List<Result>();
+
+            var itemsCopy = items.Select(x => x.DeepCopy()).OrderByDescending(x => x.LastPinnedAt);
 
             foreach (var item in itemsCopy) 
             {
@@ -1415,20 +1414,6 @@ namespace Flow.Launcher.ViewModel
 
             }
             return results;
-        }
-
-        private void RemovePinnedResultsWithPluginsUninstalled(IEnumerable<PinnedResultItem> items)
-        {
-            var pluginsIds = PluginManager.GetAllPluginsIds();
-            if (pluginsIds.Count > 0)
-            {
-                var pluginsIdsToRemove = items.Where(x => !pluginsIds.Contains(x.PluginID)).Select(x => x.PluginID);
-                if (pluginsIdsToRemove.Any())
-                {
-                    _pinned.RemoveItemsByPluginIds(pluginsIdsToRemove);
-                }
-            }
-            Settings.ShouldCleanPinnedResultsFromUninstalledPlugins = false;
         }
 
         private List<Result> GetHistoryItems(IEnumerable<LastOpenedHistoryResult> historyItems, int? maxResult = null)

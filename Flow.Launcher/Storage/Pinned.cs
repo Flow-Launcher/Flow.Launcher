@@ -99,15 +99,6 @@ namespace Flow.Launcher.Storage
         }
 
         /// <summary>
-        /// Removes all items associated with the specified plugin identifiers from the collection.
-        /// </summary>
-        /// <param name="pluginsIds">A collection of plugin identifiers. Items with matching identifiers will be removed. Cannot be null.</param>
-        public void RemoveItemsByPluginIds(IEnumerable<string> pluginsIds)
-        {
-            Items.RemoveAll(x => pluginsIds.Contains(x.PluginID));
-        }
-
-        /// <summary>
         /// Attempts to retrieve a pinned result item that matches the specified result and query.
         /// </summary>
         /// <remarks>Use this method to efficiently check for and retrieve a pinned result item based on a
