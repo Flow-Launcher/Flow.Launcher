@@ -442,7 +442,6 @@
                                     ItemsSource="{Binding PinnedResults.Results}"
                                     KeyboardNavigation.DirectionalNavigation="Cycle"
                                     KeyboardNavigation.TabNavigation="Continue"
-                                    PreviewMouseLeftButtonUp="OnPinnedItemClick"
                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                     ScrollViewer.VerticalScrollBarVisibility="Disabled"
                                     SelectedIndex="{Binding PinnedResults.SelectedIndex, Mode=TwoWay}"
