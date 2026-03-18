@@ -404,6 +404,16 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         }
 
         private bool _shouldCleanPinnedResultsFromUninstalledPlugins = false;
+        /// <summary>
+        /// Flag that indicates whether to automatically clean pinned results that belong to uninstalled plugins.
+        /// When it is true, it means some plugins are uninstalled.
+        /// And we need to clean results of any pinned results associated with plugins that have been uninstalled.
+        /// </summary>
+        /// <remarks>
+        /// It does not need to be included in the settings since after restarting,
+        /// the results of uninstalled plugins cannot be constructed.
+        /// </remarks>
+        [JsonIgnore]
         public bool ShouldCleanPinnedResultsFromUninstalledPlugins
         {
             get => _shouldCleanPinnedResultsFromUninstalledPlugins;
@@ -414,7 +424,6 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                     _shouldCleanPinnedResultsFromUninstalledPlugins = value;
                     OnPropertyChanged();
                 }
-
             }
         }
 
