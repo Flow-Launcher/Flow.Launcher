@@ -1405,12 +1405,17 @@ namespace Flow.Launcher.ViewModel
                 {
                     item.AsyncAction = async c =>
                     {
+                        // Use original pinned item to reflect correct result because properties like subtitle have been modified in copiedItem
                         var reflectResult = await ResultHelper.PopulateResultsAsync(item, item.Query);
                         if (reflectResult != null)
                         {
+                            // Since some actions may need to hide the Flow window to execute
+                            // So let us populate the results of them
                             return await reflectResult.ExecuteAsync(c);
                         }
-                        return false; 
+
+                        // If we cannot get the result, do nothing
+                        return false;
                     };
                 }
                 results.Add(item);
