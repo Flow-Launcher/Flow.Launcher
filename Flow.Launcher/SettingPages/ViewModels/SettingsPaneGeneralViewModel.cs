@@ -224,6 +224,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         DropdownDataGeneric<DialogJumpWindowPositions>.UpdateLabels(DialogJumpWindowPositions);
         DropdownDataGeneric<DialogJumpResultBehaviours>.UpdateLabels(DialogJumpResultBehaviours);
         DropdownDataGeneric<DialogJumpFileResultBehaviours>.UpdateLabels(DialogJumpFileResultBehaviours);
+        DropdownDataGeneric<PinnedLayoutOptions>.UpdateLabels(PinnedLayouts);
         // Since we are using Binding instead of DynamicResource, we need to manually trigger the update
         OnPropertyChanged(nameof(AlwaysPreviewToolTip));
         Settings.CustomExplorer.OnDisplayNameChanged();
