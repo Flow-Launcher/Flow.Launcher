@@ -175,11 +175,15 @@ public static class PluginInstaller
         try
         {
             var isUninstalled = await PublicApi.Instance.UninstallPluginAsync(oldPlugin, removePluginSettings);
-            Settings.ShouldCleanPinnedResultsFromUninstalledPlugins = isUninstalled;
             if (!isUninstalled)
             {
                 return;
             }
+
+            // Ensure PropertyChanged is raised even if the flag was already true,
+            // so pinned-results cleanup is triggered on every successful uninstall.
+            Settings.ShouldCleanPinnedResultsFromUninstalledPlugins = false;
+            Settings.ShouldCleanPinnedResultsFromUninstalledPlugins = true;
         }
         catch (Exception e)
         {
