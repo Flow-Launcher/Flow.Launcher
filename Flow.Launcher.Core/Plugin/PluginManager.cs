@@ -829,6 +829,11 @@ namespace Flow.Launcher.Core.Plugin
 
         #region Public Functions
 
+        public static bool PluginInitializedAndUnmodified(string id)
+        {
+            return GetAllInitializedPlugins(includeFailed: false).Any(p => p.Metadata.ID == id) && !PluginModified(id);
+        }
+
         public static bool PluginModified(string id)
         {
             return ModifiedPlugins.Contains(id);

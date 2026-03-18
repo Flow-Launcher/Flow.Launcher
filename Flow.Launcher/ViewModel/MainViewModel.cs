@@ -1401,6 +1401,10 @@ namespace Flow.Launcher.ViewModel
 
             foreach (var item in itemsCopy) 
             {
+                // Only keep the results from the plugin that is initialized and unmodified
+                if (!PluginManager.PluginInitializedAndUnmodified(item.PluginID))
+                    continue;
+                
                 if (!item.IsQuery)
                 {
                     item.AsyncAction = async c =>
