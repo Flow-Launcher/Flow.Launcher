@@ -1328,32 +1328,31 @@ namespace Flow.Launcher.ViewModel
                 }
             }
         }
-            
-        private IEnumerable<Result> ContextMenuPinActions(Result selected)
+
+        private List<Result> ContextMenuPinActions(Result selected)
         {
             var queryToPin = selected.OriginQuery?.TrimmedQuery ?? QueryText;
             var isQueryPinned = _pinned.Exists(selected, queryToPin);
             var isResultPinned = _pinned.Exists(selected);
-
             var actions = new List<Result>
             {
-                new Result
+                new()
                 {
                     Title = isResultPinned ? Localize.unpinFromFlow() : Localize.pinResult(),
                     SubTitle = selected.Title,
-                    IcoPath = "Images/app.png",
+                    IcoPath = Constant.ResultsIcon,
                     Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xE718"),
                     Action = _ =>
                     {
-                        _pinned.AddOrRemove(selected, "", isResultPinned);
+                        _pinned.AddOrRemove(selected, string.Empty, isResultPinned);
                         return true;
                     }
                 },
-                new Result
+                new()
                 {
                     Title = isQueryPinned ? Localize.unpinFromFlow() : Localize.pinQuery(),
                     SubTitle = queryToPin,
-                    IcoPath = "Images/search.png",
+                    IcoPath = Constant.SearchIcon,
                     Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xE773"),
                     Action = _ =>
                     {
