@@ -34,8 +34,7 @@ namespace Flow.Launcher.Storage
             }
 
             // If the last item is the same as the current result, just update the timestamp and the icon path
-            if (Items.Count > 0 &&
-                TryGetPinnedResult(result, query,out var existingPinnedResult))
+            if (Items.Count > 0 && TryGetPinnedResult(result, query, out var existingPinnedResult))
             {
                 existingPinnedResult.LastPinnedAt = DateTime.Now; 
 
@@ -63,14 +62,15 @@ namespace Flow.Launcher.Storage
         /// automatically.</param>
         public void AddOrRemove(Result result, string query, bool? exist = null)
         {
-            exist ??= Exists(result, query); 
-
+            exist ??= Exists(result, query);
             if (!exist.Value)
             {
                 Add(result, query);
-                return;
             }
-            Remove(result);
+            else
+            {
+                Remove(result, query);
+            }
         }
 
         /// <summary>
@@ -78,10 +78,12 @@ namespace Flow.Launcher.Storage
         /// </summary>
         /// <remarks>If the specified result is not found in the collection, no action is taken.</remarks>
         /// <param name="result">The result to remove from the collection. Must not be null.</param>
-        public void Remove(Result result)
+        private void Remove(Result result, string query)
         {
-            var itemToRemove = Items.FirstOrDefault(x => x.Equals(result));
-            if (itemToRemove != null) Items.Remove(itemToRemove);
+            if (TryGetPinnedResult(result, query, out var existingPinnedResult))
+            {
+                Items.Remove(existingPinnedResult);
+            }
         }
 
         /// <summary>
@@ -110,8 +112,14 @@ namespace Flow.Launcher.Storage
         /// <returns>true if a matching pinned result item is found; otherwise, false.</returns>
         private bool TryGetPinnedResult(Result result, string query, out PinnedResultItem item)
         {
-            if (!string.IsNullOrEmpty(query)) item =  Items.FirstOrDefault(x => x.Equals(result, query));
-            else item = Items.FirstOrDefault(x => x.Equals(result));
+            if (!string.IsNullOrEmpty(query))
+            {
+                item = Items.FirstOrDefault(x => x.Equals(result, query));
+            }
+            else
+            {
+                item = Items.FirstOrDefault(x => x.Equals(result));
+            }
             return item is not null;
         }
 
