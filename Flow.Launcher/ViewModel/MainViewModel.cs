@@ -885,8 +885,6 @@ namespace Flow.Launcher.ViewModel
         // This is not a reliable indicator of the cursor's position, it is manually set for a specific purpose.
         public bool QueryTextCursorMovedToEnd { get; set; }
 
-        public bool IsContextMenuVisible => ContextMenuSelected();
-
         private ResultsViewModel _selectedResults;
 
         private ResultsViewModel SelectedResults
@@ -898,9 +896,6 @@ namespace Flow.Launcher.ViewModel
                 var isReturningFromContextMenu = ContextMenuSelected();
                 var isReturningFromHistory = HistorySelected();
                 _selectedResults = value;
-
-                // Invoke property changed event for IsContextMenuVisible so that Pinned Results Grid can update its visibility
-                OnPropertyChanged(nameof(IsContextMenuVisible));
 
                 if (QueryResultsSelected())
                 {
