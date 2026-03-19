@@ -435,6 +435,34 @@ namespace Flow.Launcher
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
             var specialKeyState = GlobalHotkey.CheckModifiers();
+
+            if (_viewModel.IsGridMode)
+            {
+                switch (e.Key)
+                {
+                    case Key.Down:
+                        _viewModel.PinnedResults.SelectNextRow(5);
+                        e.Handled = true;
+                        return;
+                    case Key.Up:
+                        _viewModel.PinnedResults.SelectPrevRow(5);
+                        e.Handled = true;
+                        return;
+                    case Key.Right:
+                        _viewModel.PinnedResults.SelectNextColumn();
+                        e.Handled = true;
+                        return;
+                    case Key.Left:
+                        _viewModel.PinnedResults.SelectPrevColumn();
+                        e.Handled = true;
+                        return;
+                    case Key.Enter:
+                        _ = ExecutePinnedResultAsync(_viewModel.PinnedResults.SelectedItem);
+                        e.Handled = true;
+                        return;
+                }
+            }
+
             switch (e.Key)
             {
                 case Key.Down:

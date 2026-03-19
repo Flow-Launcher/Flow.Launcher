@@ -208,6 +208,10 @@
             Command="{Binding ReverseHistoryCommand}"
             Modifiers="{Binding CycleHistoryUpHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
         <KeyBinding
+            Key="{Binding Settings.GridModeHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
+            Command="{Binding ToggleGridModeCommand}"
+            Modifiers="{Binding Settings.GridModeHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
+        <KeyBinding
             Key="{Binding CycleHistoryDownHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
             Command="{Binding ForwardHistoryCommand}"
             Modifiers="{Binding CycleHistoryDownHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
@@ -421,6 +425,8 @@
                             <Border.Style>
                                 <Style TargetType="Border">
                                     <Setter Property="Visibility" Value="Collapsed" />
+                                    <Setter Property="BorderBrush" Value="Transparent" />
+                                    <Setter Property="BorderThickness" Value="1.5" />
                                     <Style.Triggers>
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
@@ -431,10 +437,13 @@
                                             </MultiDataTrigger.Conditions>
                                             <Setter Property="Visibility" Value="Visible" />
                                         </MultiDataTrigger>
+                                        <DataTrigger Binding="{Binding IsGridMode}" Value="True">
+                                            <Setter Property="BorderBrush" Value="#44FFFFFF" />
+                                        </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </Border.Style>
-                            <StackPanel>
+                            <Grid>
                                 <ListBox
                                     x:Name="PinnedResultListBox"
                                     Background="Transparent"
@@ -446,6 +455,16 @@
                                     ScrollViewer.VerticalScrollBarVisibility="Disabled"
                                     SelectedIndex="{Binding PinnedResults.SelectedIndex, Mode=TwoWay}"
                                     SelectedItem="{Binding PinnedResults.SelectedItem, Mode=TwoWay}">
+                                    <ListBox.Style>
+                                        <Style TargetType="ListBox">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding PinnedResults.IsEmpty}" Value="True">
+                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ListBox.Style>
                                     <ListBox.ItemsPanel>
                                         <ItemsPanelTemplate>
                                             <UniformGrid Columns="5" IsItemsHost="True" />
@@ -469,12 +488,20 @@
                                                             <ContentPresenter />
                                                         </Border>
                                                         <ControlTemplate.Triggers>
-                                                            <Trigger Property="IsSelected" Value="True">
+                                                            <MultiDataTrigger>
+                                                                <MultiDataTrigger.Conditions>
+                                                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="True" />
+                                                                    <Condition Binding="{Binding DataContext.IsGridMode, RelativeSource={RelativeSource AncestorType=Window}}" Value="True" />
+                                                                </MultiDataTrigger.Conditions>
                                                                 <Setter TargetName="ItemBorder" Property="Background" Value="#3FFFFFFF" />
-                                                            </Trigger>
-                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                            </MultiDataTrigger>
+                                                            <MultiDataTrigger>
+                                                                <MultiDataTrigger.Conditions>
+                                                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True" />
+                                                                    <Condition Binding="{Binding DataContext.IsGridMode, RelativeSource={RelativeSource AncestorType=Window}}" Value="True" />
+                                                                </MultiDataTrigger.Conditions>
                                                                 <Setter TargetName="ItemBorder" Property="Background" Value="#1FFFFFFF" />
-                                                            </Trigger>
+                                                            </MultiDataTrigger>
                                                         </ControlTemplate.Triggers>
                                                     </ControlTemplate>
                                                 </Setter.Value>
@@ -533,7 +560,31 @@
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>
                                 </ListBox>
-                            </StackPanel>
+                                <TextBlock
+                                    x:Name="EmptyPinnedResultsTextBlock"
+                                    Margin="0 10"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    Foreground="White"
+                                    Opacity="0.6"
+                                    Text="{DynamicResource pinnedResultsEmpty}">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding PinnedResults.IsEmpty}" Value="True">
+                                                    <Setter Property="Visibility" Value="Visible" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                            <Border.Triggers>
+                                <!--  Wait, Triggers are for properties of the element itself. Use Style.Triggers instead  -->
+                            </Border.Triggers>
+                            <!--  Moved triggers to Style to use DataTriggers  -->
                         </Border>
 
                         <ContentControl>
