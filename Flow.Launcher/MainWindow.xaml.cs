@@ -440,19 +440,13 @@ namespace Flow.Launcher
             {
                 switch (e.Key)
                 {
-                    case Key.Down:
-                        _viewModel.PinnedResults.SelectNextRow(5);
-                        e.Handled = true;
-                        return;
-                    case Key.Up:
-                        _viewModel.PinnedResults.SelectPrevRow(5);
-                        e.Handled = true;
-                        return;
                     case Key.Right:
+                    case Key.Down:
                         _viewModel.PinnedResults.SelectNextColumn();
                         e.Handled = true;
                         return;
                     case Key.Left:
+                    case Key.Up:
                         _viewModel.PinnedResults.SelectPrevColumn();
                         e.Handled = true;
                         return;
