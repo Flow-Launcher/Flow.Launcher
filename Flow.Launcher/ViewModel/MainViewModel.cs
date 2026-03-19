@@ -1813,6 +1813,13 @@ namespace Flow.Launcher.ViewModel
                     // If switching from List to Grid, we should clear and add the results
                     PinnedResults.Clear();
                     PinnedResults.AddResults(results, "PinnedGrid");
+
+                    // Ensure results are updated when home page is disabled
+                    if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(_emptyResult, _pinnedMetadata, query,
+                        token, reSelect)))
+                    {
+                        App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
+                    }
                 }
                 else
                 {
