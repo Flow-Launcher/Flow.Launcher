@@ -196,6 +196,7 @@
     <system:String x:Key="PinnedLayoutList">List</system:String>
     <system:String x:Key="PinnedLayoutGrid">Grid</system:String>
     <system:String x:Key="lastPinnedAt">Added to pinned: {0}</system:String>
+    <system:String x:Key="pinnedResultsEmpty">No pinned results yet</system:String>
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Search Plugin</system:String>
     <system:String x:Key="searchpluginToolTip">Ctrl+F to search plugins</system:String>
