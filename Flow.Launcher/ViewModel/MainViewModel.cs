@@ -1647,6 +1647,7 @@ namespace Flow.Launcher.ViewModel
                 // plugins are ICollection, meaning LINQ will get the Count and preallocate Array
 
                 Task[] tasks;
+                var refreshed = false;
                 if (currentIsHomeQuery)
                 {
                     if (ShouldClearExistingResultsForNonQuery(plugins))
@@ -1666,12 +1667,14 @@ namespace Flow.Launcher.ViewModel
                     if (Settings.EnablePinnedResults)
                     {
                         QueryPinnedTask(Settings.PinnedResultsLayout, currentCancellationToken);
+                        refreshed = true;
                     }
 
                     // Query history results for home page firstly so it will be put before other plugin results
-                    if (Settings.ShowHistoryResultsForHomePage)
+                    if (Settings.ShowHomePage && Settings.ShowHistoryResultsForHomePage)
                     {
                         QueryHistoryTask(currentCancellationToken);
+                        refreshed = true;
                     }
                 }
                 else
@@ -1683,14 +1686,22 @@ namespace Flow.Launcher.ViewModel
                     }).ToArray();
                 }
 
-                try
+                if (tasks.Length > 0)
                 {
-                    // Check the code, WhenAll will translate all type of IEnumerable or Collection to Array, so make an array at first
-                    await Task.WhenAll(tasks);
+                    try
+                    {
+                        // Check the code, WhenAll will translate all type of IEnumerable or Collection to Array, so make an array at first
+                        await Task.WhenAll(tasks);
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        // nothing to do here
+                    }
                 }
-                catch (OperationCanceledException)
+                else if (!refreshed)
                 {
-                    // nothing to do here
+                    // Force a refresh when no tasks are executed
+                    QueryEmptyTask(currentCancellationToken);
                 }
 
                 if (currentCancellationToken.IsCancellationRequested) return;
@@ -1814,7 +1825,7 @@ namespace Flow.Launcher.ViewModel
                     PinnedResults.Clear();
                     PinnedResults.AddResults(results, "PinnedGrid");
 
-                    // Ensure results are updated when home page is disabled
+                    // Force a refresh so that results will be updated when home page is disabled
                     if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(_emptyResult, _pinnedMetadata, query,
                         token, reSelect)))
                     {
@@ -1831,6 +1842,17 @@ namespace Flow.Launcher.ViewModel
                     {
                         App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
                     }
+                }
+            }
+
+            void QueryEmptyTask(CancellationToken token)
+            {
+                if (token.IsCancellationRequested) return;
+
+                if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(_emptyResult, _pinnedMetadata, query,
+                        token, reSelect)))
+                {
+                    App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
                 }
             }
         }
