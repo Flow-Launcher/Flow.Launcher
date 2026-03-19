@@ -684,9 +684,18 @@ namespace Flow.Launcher.ViewModel
                 IsGridMode = !IsGridMode;
                 if (IsGridMode)
                 {
+                    SelectedResults.SelectedIndex = -1;
                     if (PinnedResults.Results.Count > 0 && PinnedResults.SelectedIndex == -1)
                     {
                         PinnedResults.SelectedIndex = 0;
+                    }
+                }
+                else
+                {
+                    PinnedResults.SelectedIndex = -1;
+                    if (SelectedResults.Results.Count > 0 && SelectedResults.SelectedIndex == -1)
+                    {
+                        SelectedResults.SelectedIndex = 0;
                     }
                 }
             }
@@ -2333,6 +2342,7 @@ namespace Flow.Launcher.ViewModel
         public async void Hide(bool reset = true)
         {
             IsGridMode = false;
+
             if (reset)
             {
                 lastHistoryIndex = 1;
