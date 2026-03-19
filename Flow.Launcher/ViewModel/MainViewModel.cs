@@ -531,7 +531,10 @@ namespace Flow.Launcher.ViewModel
         {
             // Must check query results selected before executing the action
             var queryResultsSelected = QueryResultsSelected();
-            var results = SelectedResults;
+            
+            // If we are in grid mode, we should use PinnedResults instead of SelectedResults
+            var results = IsGridMode ? PinnedResults : SelectedResults;
+            
             if (index is not null)
             {
                 results.SelectedIndex = int.Parse(index);
@@ -674,8 +677,30 @@ namespace Flow.Launcher.ViewModel
         }
 
         [RelayCommand]
+        public void ToggleGridMode()
+        {
+            if (Settings.EnablePinnedResults && Settings.PinnedResultsLayout == PinnedLayoutOptions.Grid && string.IsNullOrEmpty(QueryText))
+            {
+                IsGridMode = !IsGridMode;
+                if (IsGridMode)
+                {
+                    if (PinnedResults.Results.Count > 0 && PinnedResults.SelectedIndex == -1)
+                    {
+                        PinnedResults.SelectedIndex = 0;
+                    }
+                }
+            }
+        }
+
+        [RelayCommand]
         private void Esc()
         {
+            if (IsGridMode)
+            {
+                IsGridMode = false;
+                return;
+            }
+
             if (!QueryResultsSelected())
             {
                 SelectedResults = Results;
@@ -738,6 +763,10 @@ namespace Flow.Launcher.ViewModel
             set
             {
                 _queryText = value;
+                if (!string.IsNullOrEmpty(value))
+                {
+                    IsGridMode = false;
+                }
                 OnPropertyChanged();
             }
         }
@@ -953,6 +982,8 @@ namespace Flow.Launcher.ViewModel
         // This is to be used for determining the visibility status of the main window instead of MainWindowVisibility
         // because it is more accurate and reliable representation than using Visibility as a condition check
         public bool MainWindowVisibilityStatus { get; set; } = true;
+
+        public bool IsGridMode { get; set; }
 
         public event VisibilityChangedEventHandler VisibilityChanged;
         public event ActualApplicationThemeChangedEventHandler ActualApplicationThemeChanged;
@@ -2306,6 +2337,7 @@ namespace Flow.Launcher.ViewModel
 
         public async void Hide(bool reset = true)
         {
+            IsGridMode = false;
             if (reset)
             {
                 lastHistoryIndex = 1;

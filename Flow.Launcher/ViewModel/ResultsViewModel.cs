@@ -21,6 +21,8 @@ namespace Flow.Launcher.ViewModel
 
         public ResultCollection Results { get; }
 
+        public bool IsEmpty => Results.Count == 0;
+
         private readonly object _collectionLock = new();
         private readonly Settings _settings;
         private readonly MainViewModel _mainVM;
@@ -136,6 +138,26 @@ namespace Flow.Launcher.ViewModel
             SelectedIndex = NewIndex(SelectedIndex - 1);
         }
 
+        public void SelectNextRow(int columns)
+        {
+            SelectedIndex = NewIndex(SelectedIndex + columns);
+        }
+
+        public void SelectPrevRow(int columns)
+        {
+            SelectedIndex = NewIndex(SelectedIndex - columns);
+        }
+
+        public void SelectNextColumn()
+        {
+            SelectedIndex = NewIndex(SelectedIndex + 1);
+        }
+
+        public void SelectPrevColumn()
+        {
+            SelectedIndex = NewIndex(SelectedIndex - 1);
+        }
+
         public void SelectNextPage()
         {
             SelectedIndex = NewIndex(SelectedIndex + MaxResults);
@@ -204,6 +226,7 @@ namespace Flow.Launcher.ViewModel
                 if (reselect && Results.Any())
                     SelectedItem = Results[0];
             }
+            OnPropertyChanged(nameof(IsEmpty));
 
             if (token.IsCancellationRequested)
                 return;
