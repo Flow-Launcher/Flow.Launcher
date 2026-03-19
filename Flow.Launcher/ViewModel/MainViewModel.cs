@@ -689,6 +689,9 @@ namespace Flow.Launcher.ViewModel
                     {
                         PinnedResults.SelectedIndex = 0;
                     }
+
+                    PreviewSelectedItem = PinnedResults.SelectedItem;
+                    _ = UpdatePreviewAsync();
                 }
                 else
                 {
