@@ -230,6 +230,17 @@ namespace Flow.Launcher.ViewModel
                 }
             };
 
+            PinnedResults.PropertyChanged += (o, args) =>
+            {
+                switch (args.PropertyName)
+                {
+                    case nameof(PinnedResults.SelectedItem):
+                        PreviewSelectedItem = PinnedResults.SelectedItem;
+                        _ = UpdatePreviewAsync();
+                        break;
+                }
+            };
+
             RegisterViewUpdate();
             _ = RegisterClockAndDateUpdateAsync();
 
