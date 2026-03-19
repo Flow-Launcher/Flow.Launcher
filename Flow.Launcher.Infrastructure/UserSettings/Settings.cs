@@ -84,6 +84,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string OpenContextMenuHotkey { get; set; } = $"Ctrl+O";
         public string SettingWindowHotkey { get; set; } = $"Ctrl+I";
         public string OpenHistoryHotkey { get; set; } = $"Ctrl+H";
+        public string GridModeHotkey { get; set; } = $"{KeyConstant.Ctrl} + G";
         public string CycleHistoryUpHotkey { get; set; } = $"{KeyConstant.Alt} + Up";
         public string CycleHistoryDownHotkey { get; set; } = $"{KeyConstant.Alt} + Down";
         public string DialogJumpHotkey { get; set; } = $"{KeyConstant.Alt} + G";
@@ -661,6 +662,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                     list.Add(new(SettingWindowHotkey, "SettingWindowHotkey", () => SettingWindowHotkey = ""));
                 if (!string.IsNullOrEmpty(OpenHistoryHotkey))
                     list.Add(new(OpenHistoryHotkey, "OpenHistoryHotkey", () => OpenHistoryHotkey = ""));
+                if (!string.IsNullOrEmpty(GridModeHotkey))
+                    list.Add(new(GridModeHotkey, "GridModeHotkey", () => GridModeHotkey = ""));
                 if (!string.IsNullOrEmpty(OpenContextMenuHotkey))
                     list.Add(new(OpenContextMenuHotkey, "OpenContextMenuHotkey", () => OpenContextMenuHotkey = ""));
                 if (!string.IsNullOrEmpty(SelectNextPageHotkey))
