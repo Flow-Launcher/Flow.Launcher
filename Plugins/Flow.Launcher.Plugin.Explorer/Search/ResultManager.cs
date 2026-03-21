@@ -67,7 +67,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 ResultType.Folder or ResultType.Volume =>
                     CreateFolderResult(Path.GetFileName(result.FullPath), result.FullPath, result.FullPath, query, result.Score, result.WindowsIndexed, result.HighlightData),
                 ResultType.File =>
-                    CreateFileResult(result.FullPath, query, result.Score, result.WindowsIndexed, result.HighlightData),
+                    CreateFileResult(result.FullPath, query, result.Score, result.WindowsIndexed, name: null, highlightData: result.HighlightData),
                 _ => throw new ArgumentOutOfRangeException(null)
             };
         }
