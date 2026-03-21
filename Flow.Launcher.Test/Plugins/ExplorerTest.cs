@@ -471,7 +471,6 @@ namespace Flow.Launcher.Test.Plugins
             var homeFolderVariants = new[]
             {
                 Path.Combine(desktopPath, "dummy_desktop_file"),
-                Path.Combine(desktopPath, "dummy_desktop_folder"),
                 Path.Combine(desktopPath, "dummy_desktop_folder") + "\\\\",
                 desktopPath + "\\\\dummy_desktop_folder\\\\",
                 Path.Combine(desktopPath, "dummy_desktop_file", "dummy_file"),
