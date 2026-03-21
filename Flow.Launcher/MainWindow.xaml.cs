@@ -451,13 +451,15 @@ namespace Flow.Launcher
                         e.Handled = true;
                         return;
                     case Key.Enter:
-                        _ = ExecutePinnedResultAsync(_viewModel.PinnedResults.SelectedItem);
+                        if (_viewModel.PinnedResults.LeftClickResultCommand != null && _viewModel.PinnedResults.LeftClickResultCommand.CanExecute(null))
+                        {
                             _viewModel.PinnedResults.LeftClickResultCommand.Execute(null);
+                        }
                         e.Handled = true;
                         return;
                 }
             }
-
+            
             switch (e.Key)
             {
                 case Key.Down:
@@ -514,32 +516,6 @@ namespace Flow.Launcher
                     break;
                 default:
                     break;
-            }
-        }
-
-        private void OnPinnedItemClick(object sender, MouseButtonEventArgs e)
-        {
-            if (sender is FrameworkElement element && element.DataContext is ResultViewModel resultVM)
-            {
-                _viewModel.PinnedResults.SelectedItem = resultVM;
-                _ = ExecutePinnedResultAsync(resultVM);
-            }
-        }
-
-        private async Task ExecutePinnedResultAsync(ResultViewModel selectedItem)
-        {
-            if (selectedItem?.Result != null)
-            {
-                var result = selectedItem.Result;
-                var hideWindow = await result.ExecuteAsync(new ActionContext
-                {
-                    SpecialKeyState = GlobalHotkey.CheckModifiers()
-                }).ConfigureAwait(false);
-
-                if (hideWindow)
-                {
-                    _viewModel.Hide();
-                }
             }
         }
 
