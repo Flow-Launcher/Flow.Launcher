@@ -460,20 +460,24 @@ namespace Flow.Launcher.Test.Plugins
 
         [Test]
         public void GivenPathsInsideHomeDirectories_WhenCheckedWithIsHomeFolderPath_ThenShouldReturnTrue()
-        {
-            // Given
+{
             var desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            var homeSubPaths = new[]
+            
+            if (string.IsNullOrEmpty(desktopPath))
+            {
+                Assert.Ignore("Desktop special folder path is unavailable in this environment.");
+            }
+
+            var homeFolderVariants = new[]
             {
                 Path.Combine(desktopPath, "dummy_desktop_file"),
                 Path.Combine(desktopPath, "dummy_desktop_folder"),
-                Path.Combine(desktopPath, "dummy_desktop_folder"),
-                Path.Combine(desktopPath, "dummy_desktop_folder"),
+                Path.Combine(desktopPath, "dummy_desktop_folder") + "\\\\",
+                desktopPath + "\\\\dummy_desktop_folder\\\\",
                 Path.Combine(desktopPath, "dummy_desktop_file", "dummy_file"),
             };
 
-            // When, Then
-            foreach (var path in homeSubPaths)
+            foreach (var path in homeFolderVariants)
             {
                 ClassicAssert.IsTrue(ResultManager.IsHomeFolderPath(path),
                     $"Expected '{path}' to be recognized as inside a home folder");
