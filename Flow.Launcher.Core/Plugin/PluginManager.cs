@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure;
@@ -813,15 +814,13 @@ namespace Flow.Launcher.Core.Plugin
             return string.Empty;
         }
 
-        private static bool SameOrLesserPluginVersionExists(string metadataPath)
+        private static bool SameOrLesserPluginVersionExists(PluginMetadata metadata)
         {
-            var newMetadata = JsonSerializer.Deserialize<PluginMetadata>(File.ReadAllText(metadataPath));
-
-            if (!Version.TryParse(newMetadata.Version, out var newVersion))
+            if (!Version.TryParse(metadata.Version, out var newVersion))
                 return true; // If version is not valid, we assume it is lesser than any existing version
 
             // Get all plugins even if initialization failed so that we can check if the plugin with the same ID exists
-            return GetAllInitializedPlugins(includeFailed: true).Any(x => x.Metadata.ID == newMetadata.ID
+            return GetAllInitializedPlugins(includeFailed: true).Any(x => x.Metadata.ID == metadata.ID
                 && Version.TryParse(x.Metadata.Version, out var version)
                 && newVersion <= version);
         }
@@ -881,84 +880,116 @@ namespace Flow.Launcher.Core.Plugin
             var tempFolderPluginPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
             System.IO.Compression.ZipFile.ExtractToDirectory(zipFilePath, tempFolderPluginPath);
 
-            if(!plugin.IsFromLocalInstallPath)
-                File.Delete(zipFilePath);
-
-            var pluginFolderPath = GetContainingFolderPathAfterUnzip(tempFolderPluginPath);
-
-            var metadataJsonFilePath = string.Empty;
-            if (File.Exists(Path.Combine(pluginFolderPath, Constant.PluginMetadataFileName)))
-                metadataJsonFilePath = Path.Combine(pluginFolderPath, Constant.PluginMetadataFileName);
-
-            if (string.IsNullOrEmpty(metadataJsonFilePath) || string.IsNullOrEmpty(pluginFolderPath))
+            try
             {
-                PublicApi.Instance.ShowMsgError(Localize.failedToInstallPluginTitle(plugin.Name),
-                    Localize.fileNotFoundMessage(pluginFolderPath));
-                return false;
-            }
+                if (!plugin.IsFromLocalInstallPath)
+                    File.Delete(zipFilePath);
 
-            if (SameOrLesserPluginVersionExists(metadataJsonFilePath))
-            {
-                PublicApi.Instance.ShowMsgError(Localize.failedToInstallPluginTitle(plugin.Name),
-                    Localize.pluginExistAlreadyMessage());
-                return false;
-            }
+                var pluginFolderPath = GetContainingFolderPathAfterUnzip(tempFolderPluginPath);
 
-            var folderName = string.IsNullOrEmpty(plugin.Version) ? $"{plugin.Name}-{Guid.NewGuid()}" : $"{plugin.Name}-{plugin.Version}";
+                var metadataJsonFilePath = string.Empty;
+                if (File.Exists(Path.Combine(pluginFolderPath, Constant.PluginMetadataFileName)))
+                    metadataJsonFilePath = Path.Combine(pluginFolderPath, Constant.PluginMetadataFileName);
 
-            var defaultPluginIDs = new List<string>
+                if (string.IsNullOrEmpty(metadataJsonFilePath) || string.IsNullOrEmpty(pluginFolderPath))
                 {
-                    "0ECADE17459B49F587BF81DC3A125110", // BrowserBookmark
-                    "CEA0FDFC6D3B4085823D60DC76F28855", // Calculator
-                    "572be03c74c642baae319fc283e561a8", // Explorer
-                    "6A122269676E40EB86EB543B945932B9", // PluginIndicator
-                    "9f8f9b14-2518-4907-b211-35ab6290dee7", // PluginsManager
-                    "b64d0a79-329a-48b0-b53f-d658318a1bf6", // ProcessKiller
-                    "791FC278BA414111B8D1886DFE447410", // Program
-                    "D409510CD0D2481F853690A07E6DC426", // Shell
-                    "CEA08895D2544B019B2E9C5009600DF4", // Sys
-                    "0308FD86DE0A4DEE8D62B9B535370992", // URL
-                    "565B73353DBF4806919830B9202EE3BF", // WebSearch
-                    "5043CETYU6A748679OPA02D27D99677A" // WindowsSettings
-                };
+                    PublicApi.Instance.ShowMsgError(Localize.failedToInstallPluginTitle(plugin.Name),
+                        Localize.fileNotFoundMessage(pluginFolderPath));
+                    return false;
+                }
 
-            // Treat default plugin differently, it needs to be removable along with each flow release
-            var installDirectory = !defaultPluginIDs.Any(x => x == plugin.ID)
-                                    ? DataLocation.PluginsDirectory
-                                    : Constant.PreinstalledDirectory;
+                PluginMetadata newMetadata;
+                try
+                {
+                    newMetadata = JsonSerializer.Deserialize<PluginMetadata>(File.ReadAllText(metadataJsonFilePath)) ??
+                        throw new JsonException("Deserialized metadata is null");
+                }
+                catch (Exception ex)
+                {
+                    PublicApi.Instance.ShowMsgError(Localize.failedToInstallPluginTitle(plugin.Name),
+                        Localize.pluginJsonInvalidOrCorrupted());
+                    PublicApi.Instance.LogException(ClassName,
+                        $"Failed to deserialize plugin metadata for plugin {plugin.Name} from file {metadataJsonFilePath}", ex);
+                    return false;
+                }
 
-            var newPluginPath = Path.Combine(installDirectory, folderName);
+                if (SameOrLesserPluginVersionExists(newMetadata))
+                {
+                    PublicApi.Instance.ShowMsgError(Localize.failedToInstallPluginTitle(plugin.Name),
+                        Localize.pluginExistAlreadyMessage());
+                    return false;
+                }
 
-            FilesFolders.CopyAll(pluginFolderPath, newPluginPath, (s) => PublicApi.Instance.ShowMsgBox(s));
+                if (!IsMinimumAppVersionSatisfied(newMetadata.Name, newMetadata.MinimumAppVersion))
+                {
+                    // Ask users if they want to install the plugin that doesn't satisfy the minimum app version requirement
+                    if (PublicApi.Instance.ShowMsgBox(
+                        Localize.pluginMinimumAppVersionUnsatisfiedMessage(newMetadata.Name, Environment.NewLine),
+                        Localize.pluginMinimumAppVersionUnsatisfiedTitle(newMetadata.Name, newMetadata.MinimumAppVersion),
+                        MessageBoxButton.YesNo) == MessageBoxResult.No)
+                    {
+                        return false;
+                    }
+                }
 
-            // Check if marker file exists and delete it
-            try
-            {
-                var markerFilePath = Path.Combine(newPluginPath, DataLocation.PluginDeleteFile);
-                if (File.Exists(markerFilePath))
-                    File.Delete(markerFilePath);
+                var folderName = string.IsNullOrEmpty(plugin.Version) ? $"{plugin.Name}-{Guid.NewGuid()}" : $"{plugin.Name}-{plugin.Version}";
+
+                var defaultPluginIDs = new List<string>
+                    {
+                        "0ECADE17459B49F587BF81DC3A125110", // BrowserBookmark
+                        "CEA0FDFC6D3B4085823D60DC76F28855", // Calculator
+                        "572be03c74c642baae319fc283e561a8", // Explorer
+                        "6A122269676E40EB86EB543B945932B9", // PluginIndicator
+                        "9f8f9b14-2518-4907-b211-35ab6290dee7", // PluginsManager
+                        "b64d0a79-329a-48b0-b53f-d658318a1bf6", // ProcessKiller
+                        "791FC278BA414111B8D1886DFE447410", // Program
+                        "D409510CD0D2481F853690A07E6DC426", // Shell
+                        "CEA08895D2544B019B2E9C5009600DF4", // Sys
+                        "0308FD86DE0A4DEE8D62B9B535370992", // URL
+                        "565B73353DBF4806919830B9202EE3BF", // WebSearch
+                        "5043CETYU6A748679OPA02D27D99677A" // WindowsSettings
+                    };
+
+                // Treat default plugin differently, it needs to be removable along with each flow release
+                var installDirectory = !defaultPluginIDs.Any(x => x == plugin.ID)
+                                        ? DataLocation.PluginsDirectory
+                                        : Constant.PreinstalledDirectory;
+
+                var newPluginPath = Path.Combine(installDirectory, folderName);
+
+                FilesFolders.CopyAll(pluginFolderPath, newPluginPath, (s) => PublicApi.Instance.ShowMsgBox(s));
+
+                // Check if marker file exists and delete it
+                try
+                {
+                    var markerFilePath = Path.Combine(newPluginPath, DataLocation.PluginDeleteFile);
+                    if (File.Exists(markerFilePath))
+                        File.Delete(markerFilePath);
+                }
+                catch (Exception e)
+                {
+                    PublicApi.Instance.LogException(ClassName, $"Failed to delete plugin marker file in {newPluginPath}", e);
+                }
+
+                if (checkModified)
+                {
+                    ModifiedPlugins.Add(plugin.ID);
+                }
+
+                return true;
             }
-            catch (Exception e)
+            finally
             {
-                PublicApi.Instance.LogException(ClassName, $"Failed to delete plugin marker file in {newPluginPath}", e);
+                try
+                {
+                    if (Directory.Exists(tempFolderPluginPath))
+                        Directory.Delete(tempFolderPluginPath, true);
+                }
+                catch (Exception e)
+                {
+                    PublicApi.Instance.LogException(ClassName, $"Failed to delete temp folder {tempFolderPluginPath}", e);
+                }
             }
-
-            try
-            {
-                if (Directory.Exists(tempFolderPluginPath))
-                    Directory.Delete(tempFolderPluginPath, true);
-            }
-            catch (Exception e)
-            {
-                PublicApi.Instance.LogException(ClassName, $"Failed to delete temp folder {tempFolderPluginPath}", e);
-            }
-
-            if (checkModified)
-            {
-                ModifiedPlugins.Add(plugin.ID);
-            }
-
-            return true;
         }
 
         internal static async Task<bool> UninstallPluginAsync(PluginMetadata plugin, bool removePluginFromSettings, bool removePluginSettings, bool checkModified)
@@ -1048,6 +1079,27 @@ namespace Flow.Launcher.Core.Plugin
             }
 
             return true;
+        }
+
+        internal static bool IsMinimumAppVersionSatisfied(string pluginName, string minimumAppVersion)
+        {
+            // If the minimum app version is not specified in plugin.json, this plugin is compatible with all app versions
+            if (string.IsNullOrEmpty(minimumAppVersion))
+                return true;
+
+            var appVersion = Version.Parse(Constant.Version);
+
+            if (!Version.TryParse(minimumAppVersion, out var minimumVersion))
+            {
+                PublicApi.Instance.LogError(ClassName,
+                    $"Failed to parse the minimum app version {minimumAppVersion} for plugin {pluginName}.");
+                return false;  // If the minimum app version specified in plugin.json is invalid, we assume it is not satisfied
+            }
+
+            if (appVersion >= minimumVersion)
+                return true;
+
+            return false;
         }
 
         #endregion

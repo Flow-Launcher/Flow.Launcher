@@ -9,13 +9,13 @@
     <system:String x:Key="flowlauncher_plugin_sys_desc">Mô Tả</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_command">Lệnh</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer_cmd">Shutdown</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_restart_computer_cmd">Restart</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_restart_advanced_cmd">Restart With Advanced Boot Options</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_log_off_cmd">Log Off/Sign Out</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_lock_cmd">Lock</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_sleep_cmd">Sleep</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_hibernate_cmd">Hibernate</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer_cmd">Tắt máy</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_restart_computer_cmd">Khởi động lại</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_restart_advanced_cmd">Khởi động lại với các tùy chọn khởi động nâng cao</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_log_off_cmd">Đăng xuất</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_lock_cmd">Khóa máy</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_sleep_cmd">Chế độ ngủ</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_hibernate_cmd">Chế độ ngủ đông</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_indexoption_cmd">Index Option</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_emptyrecyclebin_cmd">Empty Recycle Bin</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_openrecyclebin_cmd">Open Recycle Bin</system:String>
