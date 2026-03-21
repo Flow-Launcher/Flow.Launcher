@@ -48,6 +48,8 @@ namespace Flow.Launcher.Plugin.Explorer
 
             EverythingApiDllImport.Load(Path.Combine(Context.CurrentPluginMetadata.PluginDirectory, "EverythingSDK",
                 Environment.Is64BitProcess ? "x64" : "x86"));
+            Everything3ApiDllImport.Load(Path.Combine(Context.CurrentPluginMetadata.PluginDirectory, "EverythingSDK",
+                Environment.Is64BitProcess ? "x64" : "x86"));
             return Task.CompletedTask;
         }
 
