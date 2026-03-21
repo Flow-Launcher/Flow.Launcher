@@ -51,6 +51,16 @@ namespace Flow.Launcher.ViewModel
                         break;
                 }
             };
+            if (_mainVM != null)
+            {
+                _mainVM.PropertyChanged += (s, e) =>
+                {
+                    if (e.PropertyName == nameof(_mainVM.IsGridMode))
+                    {
+                        OnPropertyChanged(nameof(IsGridMode));
+                    }
+                };
+            }
         }
 
         #endregion
@@ -83,6 +93,18 @@ namespace Flow.Launcher.ViewModel
         }
 
         public int SelectedIndex { get; set; }
+
+        public bool IsGridMode
+        {
+            get => _mainVM?.IsGridMode ?? false;
+            set
+            {
+                if (_mainVM != null)
+                {
+                    _mainVM.IsGridMode = value;
+                }
+            }
+        }
 
         public ResultViewModel SelectedItem { get; set; }
         public Thickness Margin { get; set; }

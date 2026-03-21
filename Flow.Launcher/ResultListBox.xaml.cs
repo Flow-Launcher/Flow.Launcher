@@ -55,9 +55,13 @@ namespace Flow.Launcher
                 ScrollIntoView(e.AddedItems[0]);
             }
         }
-
+        
         private void OnMouseEnter(object sender, MouseEventArgs e)
         {
+            if (DataContext is ResultsViewModel rv)
+            {
+                rv.IsGridMode = false;
+            }
             lock (_lock)
             {
                 curItem = (ListBoxItem)sender;
@@ -68,6 +72,10 @@ namespace Flow.Launcher
 
         private void OnMouseMove(object sender, MouseEventArgs e)
         {
+            if (DataContext is ResultsViewModel rv)
+            {
+                rv.IsGridMode = false;
+            }
             lock (_lock)
             {
                 var p = e.GetPosition((IInputElement)sender);

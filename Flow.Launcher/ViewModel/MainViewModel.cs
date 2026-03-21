@@ -1001,7 +1001,27 @@ namespace Flow.Launcher.ViewModel
         // because it is more accurate and reliable representation than using Visibility as a condition check
         public bool MainWindowVisibilityStatus { get; set; } = true;
 
-        public bool IsGridMode { get; set; }
+        private bool _isGridMode;
+        public bool IsGridMode
+        {
+            get => _isGridMode;
+            set
+            {
+                if (_isGridMode != value)
+                {
+                    _isGridMode = value;
+                    if (_isGridMode)
+                    {
+                        SelectedResults.SelectedIndex = -1;
+                    }
+                    else
+                    {
+                        PinnedResults.SelectedIndex = -1;
+                    }
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public event VisibilityChangedEventHandler VisibilityChanged;
         public event ActualApplicationThemeChangedEventHandler ActualApplicationThemeChanged;

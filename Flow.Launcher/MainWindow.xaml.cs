@@ -452,6 +452,7 @@ namespace Flow.Launcher
                         return;
                     case Key.Enter:
                         _ = ExecutePinnedResultAsync(_viewModel.PinnedResults.SelectedItem);
+                            _viewModel.PinnedResults.LeftClickResultCommand.Execute(null);
                         e.Handled = true;
                         return;
                 }
