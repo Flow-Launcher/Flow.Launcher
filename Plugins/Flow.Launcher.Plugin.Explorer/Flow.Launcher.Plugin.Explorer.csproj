@@ -32,6 +32,12 @@
     <None Update="EverythingSDK\x86\Everything.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="EverythingSDK\x64\Everything3.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="EverythingSDK\x86\Everything3.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   
   <ItemGroup>
