@@ -58,10 +58,7 @@
         </ListBox.ItemContainerStyle>
         <ListBox.ItemTemplate>
             <DataTemplate DataType="{x:Type vm:ResultViewModel}">
-                <StackPanel
-                    VerticalAlignment="Center"
-                    Cursor="Hand"
-                    ToolTip="{Binding ShowSubTitleToolTip}">
+                <StackPanel VerticalAlignment="Center" Cursor="Hand">
                     <Border
                         Width="42"
                         Height="42"
