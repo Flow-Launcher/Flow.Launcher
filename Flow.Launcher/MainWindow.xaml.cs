@@ -451,10 +451,7 @@ namespace Flow.Launcher
                         e.Handled = true;
                         return;
                     case Key.Enter:
-                        if (_viewModel.PinnedResults.LeftClickResultCommand != null && _viewModel.PinnedResults.LeftClickResultCommand.CanExecute(null))
-                        {
-                            _viewModel.PinnedResults.LeftClickResultCommand.Execute(null);
-                        }
+                        _viewModel.PinnedResults.LeftClickResultCommand?.Execute(null);
                         e.Handled = true;
                         return;
                 }

@@ -17,8 +17,6 @@ namespace Flow.Launcher
             InitializeComponent();
         }
 
-        private ResultsViewModel ViewModel => DataContext as ResultsViewModel;
-
         public static readonly DependencyProperty LeftClickResultCommandProperty =
             DependencyProperty.Register("LeftClickResultCommand", typeof(ICommand), typeof(ResultGrid), new UIPropertyMetadata(null));
 
@@ -81,17 +79,20 @@ namespace Flow.Launcher
             }
         }
 
-        private void OnItemClick(object sender, MouseButtonEventArgs e)
+        private void ResultListBox_OnPreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (ViewModel == null) return;
-            if (sender is FrameworkElement element && element.DataContext is ResultViewModel resultVM)
-            {
-                ViewModel.SelectedItem = resultVM;
-                if (LeftClickResultCommand != null && LeftClickResultCommand.CanExecute(null))
-                {
-                    LeftClickResultCommand.Execute(null);
-                }
-            }
+            if (Mouse.DirectlyOver is not FrameworkElement { DataContext: ResultViewModel result })
+                return;
+
+            RightClickResultCommand?.Execute(result.Result);
+        }
+
+        private void ResultListBox_OnPreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (Mouse.DirectlyOver is not FrameworkElement { DataContext: ResultViewModel result })
+                return;
+
+            LeftClickResultCommand?.Execute(null);
         }
     }
 }
