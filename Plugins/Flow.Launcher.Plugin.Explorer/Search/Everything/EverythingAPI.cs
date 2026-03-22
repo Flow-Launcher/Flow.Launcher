@@ -46,11 +46,13 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         const uint EVERYTHING3_PROPERTY_ID_RUN_COUNT = 10;
         const uint EVERYTHING3_PROPERTY_ID_DATE_RUN = 11;
         const uint EVERYTHING3_PROPERTY_ID_FILE_LIST_NAME = 12;
+        const uint EVERYTHING3_PROPERTY_ID_PATH_AND_NAME = 240;
 
         const uint EVERYTHING3_ERROR_OUT_OF_MEMORY = 0xE0000001;
         const uint EVERYTHING3_ERROR_IPC_PIPE_NOT_FOUND = 0xE0000002;
         const uint EVERYTHING3_ERROR_DISCONNECTED = 0xE0000003;
         const uint EVERYTHING3_ERROR_INVALID_PARAMETER = 0xE0000004;
+        const uint EVERYTHING3_ERROR_PROPERTY_NOT_FOUND = 0xE0000007;
 
         /// <summary>
         /// Checks whether the sort option is Fast Sort.
@@ -211,6 +213,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                     _ = Everything3ApiDllImport.Everything3_AddSearchSort(searchState, sortPropertyId, ascending);
                 }
 
+                _ = Everything3ApiDllImport.Everything3_ClearSearchPropertyRequests(searchState);
+                // TODO somehow error, no result
+                _ = Everything3ApiDllImport.Everything3_AddSearchPropertyRequestHighlighted(searchState, EVERYTHING3_PROPERTY_ID_NAME);
+                // TODO need to check the "IsFullPathSearch"
+                _ = Everything3ApiDllImport.Everything3_AddSearchPropertyRequestHighlighted(searchState, EVERYTHING3_PROPERTY_ID_PATH);
+
                 if (token.IsCancellationRequested)
                     yield break;
 
@@ -233,6 +241,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                     var fullPathLength = Everything3ApiDllImport.Everything3_GetResultFullPathNameW(resultList, idx, buffer, BufferSize);
                     if (fullPathLength == 0)
                     {
+                        CheckAndThrowExceptionOnErrorFromEverything3();
                         continue;
                     }
 
@@ -250,8 +259,32 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                             : Everything3ApiDllImport.Everything3_IsRootResult(resultList, idx)
                                 ? ResultType.Volume
                                 : ResultType.File,
-                        Score = (int)Everything3ApiDllImport.Everything3_GetResultRunCount(resultList, idx)
+                        Score = Convert.ToInt32(Everything3ApiDllImport.Everything3_GetResultRunCount(resultList, idx))
                     };
+
+                    // 0 for the first requested property, which is name in our case.
+                    if (Everything3ApiDllImport.Everything3_GetSearchPropertyRequestHighlight(searchState, 0))
+                    {
+                        buffer.Clear();
+                        var highlightedFileNameLength = Everything3ApiDllImport.Everything3_GetResultPropertyTextHighlightedW(
+                            resultList,
+                            idx,
+                            EVERYTHING3_PROPERTY_ID_NAME,
+                            buffer,
+                            BufferSize);
+
+                        if (highlightedFileNameLength > 0)
+                        {
+                            var highlightData = EverythingHighlightStringToHighlightList(buffer.ToString());
+                            if (highlightData.Count > 0)
+                            {
+                                result = result with
+                                {
+                                    HighlightData = highlightData
+                                };
+                            }
+                        }
+                    }
 
                     yield return result;
                 }
@@ -488,6 +521,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                     throw new IPCErrorException();
                 case EVERYTHING3_ERROR_INVALID_PARAMETER:
                     throw new InvalidCallException();
+                case EVERYTHING3_ERROR_PROPERTY_NOT_FOUND:
+                    throw new ArgumentException("EVERYTHING3_ERROR_PROPERTY_NOT_FOUND");
             }
         }
 

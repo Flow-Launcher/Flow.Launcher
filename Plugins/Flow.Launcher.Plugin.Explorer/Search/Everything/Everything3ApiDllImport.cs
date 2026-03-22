@@ -77,6 +77,14 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         internal static extern bool Everything3_AddSearchPropertyRequest(IntPtr searchState, uint propertyId);
 
         [DllImport(Dll)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool Everything3_AddSearchPropertyRequestHighlighted(IntPtr searchState, uint propertyId);
+
+        [DllImport(Dll)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool Everything3_GetSearchPropertyRequestHighlight(IntPtr searchState, nuint index);
+
+        [DllImport(Dll)]
         internal static extern IntPtr Everything3_Search(IntPtr client, IntPtr searchState);
 
         [DllImport(Dll)]
@@ -96,6 +104,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
         [DllImport(Dll, CharSet = CharSet.Unicode)]
         internal static extern nuint Everything3_GetResultFullPathNameW(IntPtr resultList, nuint resultIndex, StringBuilder buffer, nuint bufferSizeInWChars);
+
+        [DllImport(Dll, CharSet = CharSet.Unicode)]
+        internal static extern nuint Everything3_GetResultPropertyTextHighlightedW(IntPtr resultList, nuint resultIndex, uint propertyId, StringBuilder buffer, nuint bufferSizeInWChars);
+
+        [DllImport(Dll, CharSet = CharSet.Unicode)]
+        internal static extern nuint Everything3_GetResultPropertyTextW(IntPtr resultList, nuint resultIndex, uint propertyId, StringBuilder buffer, nuint bufferSizeInWChars);
 
         [DllImport(Dll)]
         internal static extern uint Everything3_GetResultRunCount(IntPtr resultList, nuint resultIndex);
