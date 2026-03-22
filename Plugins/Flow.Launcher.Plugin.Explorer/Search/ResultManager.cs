@@ -22,6 +22,47 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         private static PluginInitContext Context;
         private static Settings Settings { get; set; }
 
+        private const int HomeFolderScoreBoost = 50;
+
+        private static readonly Lazy<HashSet<string>> HomeFolderPaths = new(() =>
+        {
+            var paths = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+            var specialFolders = new[]
+            {
+                Environment.SpecialFolder.MyDocuments,
+                Environment.SpecialFolder.MyPictures,
+                Environment.SpecialFolder.MyMusic,
+                Environment.SpecialFolder.MyVideos,
+                Environment.SpecialFolder.Desktop,
+                Environment.SpecialFolder.UserProfile,
+            };
+
+            foreach (var folder in specialFolders)
+            {
+                var path = Environment.GetFolderPath(folder);
+                if (!string.IsNullOrEmpty(path))
+                    paths.Add(path);
+            }
+
+            // Downloads has no dedicated SpecialFolder enum value
+            var userProfile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+            if (!string.IsNullOrEmpty(userProfile))
+                paths.Add(Path.Combine(userProfile, "Downloads"));
+
+            return paths;
+        });
+
+        public static bool IsHomeFolderPath(string path)
+        {
+            if (string.IsNullOrEmpty(path))
+                return false;
+
+            var normalizedPath = path.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+            return HomeFolderPaths.Value.Any(homeFolderPath =>
+                FilesFolders.PathContains(homeFolderPath, normalizedPath, allowEqual: true));
+        }
+
         public static void Init(PluginInitContext context, Settings settings)
         {
             Context = context;
@@ -95,6 +136,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         internal static Result CreateFolderResult(string title, string subtitle, string path, Query query, int score = 0, bool windowsIndexed = false, List<int> highlightData = null)
         {
+            if (Settings.BoostHomeFolderScore && IsHomeFolderPath(path))
+                score += HomeFolderScoreBoost;
+
             return new Result
             {
                 Title = title,
