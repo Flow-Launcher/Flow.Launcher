@@ -695,7 +695,6 @@ namespace Flow.Launcher.ViewModel
                 IsGridMode = !IsGridMode;
                 if (IsGridMode)
                 {
-                    SelectedResults.SelectedIndex = -1;
                     if (PinnedResults.Results.Count > 0 && PinnedResults.SelectedIndex == -1)
                     {
                         PinnedResults.SelectedIndex = 0;
@@ -706,7 +705,6 @@ namespace Flow.Launcher.ViewModel
                 }
                 else
                 {
-                    PinnedResults.SelectedIndex = -1;
                     if (SelectedResults.Results.Count > 0 && SelectedResults.SelectedIndex == -1)
                     {
                         SelectedResults.SelectedIndex = 0;
