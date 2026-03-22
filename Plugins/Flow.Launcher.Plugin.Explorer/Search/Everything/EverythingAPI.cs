@@ -15,7 +15,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
         private static readonly SemaphoreSlim _semaphore = new(1, 1);
 
-        // cached buffer to remove redundant allocations.
+        // cached buffer to remove redundant allocations. semaphore is used to make sure the access to the buffer is thread safe.
         private static readonly StringBuilder buffer = new(BufferSize);
 
         public enum StateCode
@@ -57,18 +57,26 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         /// </summary>
         public static bool IsFastSortOption(EverythingSortOption sortOption)
         {
-            try
+            if (TryConnectEverything3(out var client))
             {
-                var client = TryConnectEverything3();
-                if (client != IntPtr.Zero)
+                try
                 {
-                    Everything3ApiDllImport.Everything3_DestroyClient(client);
-                    return true;
+                    if (TryConvertSortOption(sortOption, out var propertyId, out _))
+                    {
+                        var isFastSort = Everything3ApiDllImport.Everything3_IsPropertyFastSort(client, propertyId);
+
+                        // Keep the same behavior as legacy path: throw when engine is not available.
+                        CheckAndThrowExceptionOnErrorFromEverything3();
+
+                        return isFastSort;
+                    }
                 }
-            }
-            catch (DllNotFoundException)
-            {
-                // Fallback to Everything 1.4 SDK.
+                finally
+                {
+                    _ = Everything3ApiDllImport.Everything3_DestroyClient(client);
+                    // Throw again to the caller
+                    CheckAndThrowExceptionOnErrorFromEverything3();
+                }
             }
 
             var fastSortOptionEnabled = EverythingApiDllImport.Everything_IsFastSort(sortOption);
@@ -93,12 +101,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
             try
             {
-                var client = TryConnectEverything3();
-                if (client != IntPtr.Zero)
-                {
-                    Everything3ApiDllImport.Everything3_DestroyClient(client);
+                if (TryUseEverything3Client(static _ => { }))
                     return true;
-                }
 
                 _ = EverythingApiDllImport.Everything_GetMajorVersion();
                 var result = EverythingApiDllImport.Everything_GetLastError() != StateCode.IPCError;
@@ -161,8 +165,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
                 var searchText = builder.ToString();
 
-                var client = TryConnectEverything3();
-                if (client != IntPtr.Zero)
+                if (TryConnectEverything3(out var client))
                 {
                     await foreach (var result in SearchWithEverything3Async(client, option, searchText, useRegex, token))
                         yield return result;
@@ -328,19 +331,37 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             await Task.CompletedTask;
         }
 
-        private static IntPtr TryConnectEverything3()
+        private static bool TryUseEverything3Client(Action<IntPtr> action)
         {
+            if (!TryConnectEverything3(out var client))
+                return false;
+
             try
             {
-                return Everything3ApiDllImport.Everything3_ConnectW(Everything15AlphaInstance);
+                action(client);
+                return true;
+            }
+            finally
+            {
+                _ = Everything3ApiDllImport.Everything3_DestroyClient(client);
+            }
+        }
+
+        private static bool TryConnectEverything3(out IntPtr client)
+        {
+            client = IntPtr.Zero;
+            try
+            {
+                client = Everything3ApiDllImport.Everything3_ConnectW(Everything15AlphaInstance);
+                return client != IntPtr.Zero;
             }
             catch (DllNotFoundException)
             {
-                return IntPtr.Zero;
+                return false;
             }
             catch (EntryPointNotFoundException)
             {
-                return IntPtr.Zero;
+                return false;
             }
         }
 
@@ -499,13 +520,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             await _semaphore.WaitAsync(TimeSpan.FromSeconds(1));
             try
             {
-                var client = TryConnectEverything3();
-                if (client != IntPtr.Zero)
-                {
-                    _ = Everything3ApiDllImport.Everything3_IncRunCountFromFilenameW(client, fileOrFolder);
-                    _ = Everything3ApiDllImport.Everything3_DestroyClient(client);
+                if (TryUseEverything3Client(client =>
+                    _ = Everything3ApiDllImport.Everything3_IncRunCountFromFilenameW(client, fileOrFolder)))
                     return;
-                }
 
                 _ = EverythingApiDllImport.Everything_IncRunCountFromFileName(fileOrFolder);
             }

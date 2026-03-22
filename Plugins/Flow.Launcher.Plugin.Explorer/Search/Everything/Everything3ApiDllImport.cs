@@ -105,5 +105,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
         [DllImport(Dll)]
         internal static extern uint Everything3_GetLastError();
+
+
+        [DllImport(Dll)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool Everything3_IsPropertyFastSort(IntPtr client, uint propertyId);
     }
 }
