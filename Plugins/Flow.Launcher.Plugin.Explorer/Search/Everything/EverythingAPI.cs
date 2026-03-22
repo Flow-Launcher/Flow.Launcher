@@ -203,17 +203,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 _ = Everything3ApiDllImport.Everything3_SetSearchViewportOffset(searchState, (nuint)option.Offset);
                 _ = Everything3ApiDllImport.Everything3_SetSearchViewportCount(searchState, (nuint)option.MaxCount);
 
-                // TODO Something here hides all results. Need to investigate further.
-                //_ = Everything3ApiDllImport.Everything3_ClearSearchSorts(searchState);
-                //if (TryConvertSortOption(option.SortOption, out var sortPropertyId, out var ascending))
-                //{
-                //    _ = Everything3ApiDllImport.Everything3_AddSearchSort(searchState, sortPropertyId, ascending);
-                //}
-
-                //_ = Everything3ApiDllImport.Everything3_ClearSearchPropertyRequests(searchState);
-                //_ = Everything3ApiDllImport.Everything3_AddSearchPropertyRequest(searchState, EVERYTHING3_PROPERTY_ID_NAME);
-                //_ = Everything3ApiDllImport.Everything3_AddSearchPropertyRequest(searchState, EVERYTHING3_PROPERTY_ID_PATH);
-                //_ = Everything3ApiDllImport.Everything3_AddSearchPropertyRequest(searchState, EVERYTHING3_PROPERTY_ID_RUN_COUNT);
+                if (TryConvertSortOption(option.SortOption, out var sortPropertyId, out var ascending))
+                {
+                    _ = Everything3ApiDllImport.Everything3_AddSearchSort(searchState, sortPropertyId, ascending);
+                }
 
                 if (token.IsCancellationRequested)
                     yield break;
