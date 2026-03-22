@@ -417,13 +417,14 @@
                         Grid.ColumnSpan="{Binding ResultAreaColumn}">
 
                         <!--  Pinned Results Grid  -->
-                        <flowlauncher:PinnedResultGrid />
+                        <flowlauncher:PinnedResultGrid x:Name="PinnedResultGrid" />
 
                         <ContentControl>
                             <flowlauncher:ResultListBox
                                 x:Name="ResultListBox"
                                 DataContext="{Binding Results}"
                                 LeftClickResultCommand="{Binding LeftClickResultCommand}"
+                                MouseSelectCommand="{Binding MouseSelectCommand}"
                                 RightClickResultCommand="{Binding RightClickResultCommand}" />
                         </ContentControl>
                         <ContentControl>

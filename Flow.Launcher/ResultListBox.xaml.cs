@@ -13,6 +13,7 @@ namespace Flow.Launcher
         protected Lock _lock = new();
         private Point _lastpos;
         private ListBoxItem curItem = null;
+
         public ResultListBox()
         {
             InitializeComponent();
@@ -23,14 +24,8 @@ namespace Flow.Launcher
 
         public ICommand RightClickResultCommand
         {
-            get
-            {
-                return (ICommand)GetValue(RightClickResultCommandProperty);
-            }
-            set
-            {
-                SetValue(RightClickResultCommandProperty, value);
-            }
+            get => (ICommand)GetValue(RightClickResultCommandProperty);
+            set => SetValue(RightClickResultCommandProperty, value);
         }
 
         public static readonly DependencyProperty LeftClickResultCommandProperty =
@@ -38,14 +33,17 @@ namespace Flow.Launcher
 
         public ICommand LeftClickResultCommand
         {
-            get
-            {
-                return (ICommand)GetValue(LeftClickResultCommandProperty);
-            }
-            set
-            {
-                SetValue(LeftClickResultCommandProperty, value);
-            }
+            get => (ICommand)GetValue(LeftClickResultCommandProperty);
+            set => SetValue(LeftClickResultCommandProperty, value);
+        }
+
+        public static readonly DependencyProperty MouseSelectCommandProperty =
+            DependencyProperty.Register("MouseSelectCommand", typeof(ICommand), typeof(ResultListBox), new UIPropertyMetadata(null));
+
+        public ICommand MouseSelectCommand
+        {
+            get => (ICommand)GetValue(MouseSelectCommandProperty);
+            set => SetValue(MouseSelectCommandProperty, value);
         }
 
         private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -55,13 +53,9 @@ namespace Flow.Launcher
                 ScrollIntoView(e.AddedItems[0]);
             }
         }
-        
+
         private void OnMouseEnter(object sender, MouseEventArgs e)
         {
-            if (DataContext is ResultsViewModel rv)
-            {
-                rv.IsGridMode = false;
-            }
             lock (_lock)
             {
                 curItem = (ListBoxItem)sender;
@@ -72,16 +66,13 @@ namespace Flow.Launcher
 
         private void OnMouseMove(object sender, MouseEventArgs e)
         {
-            if (DataContext is ResultsViewModel rv)
-            {
-                rv.IsGridMode = false;
-            }
             lock (_lock)
             {
                 var p = e.GetPosition((IInputElement)sender);
                 if (_lastpos != p)
                 {
                     ((ListBoxItem)sender).IsSelected = true;
+                    MouseSelectCommand?.Execute(false);
                 }
             }
         }
@@ -93,6 +84,7 @@ namespace Flow.Launcher
                 if (curItem != null)
                 {
                     curItem.IsSelected = true;
+                    MouseSelectCommand?.Execute(false);
                 }
             }
         }

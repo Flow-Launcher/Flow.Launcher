@@ -14,6 +14,7 @@
         ItemsSource="{Binding Results}"
         KeyboardNavigation.DirectionalNavigation="Cycle"
         KeyboardNavigation.TabNavigation="Continue"
+        PreviewMouseDown="ListBox_PreviewMouseDown"
         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
         ScrollViewer.VerticalScrollBarVisibility="Disabled"
         SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
@@ -43,20 +44,10 @@
                                 <ContentPresenter />
                             </Border>
                             <ControlTemplate.Triggers>
-                                <MultiDataTrigger>
-                                    <MultiDataTrigger.Conditions>
-                                        <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="True" />
-                                        <Condition Binding="{Binding DataContext.IsGridMode, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True" />
-                                    </MultiDataTrigger.Conditions>
-                                    <Setter TargetName="ItemBorder" Property="Background" Value="#3FFFFFFF" />
-                                </MultiDataTrigger>
-                                <MultiDataTrigger>
-                                    <MultiDataTrigger.Conditions>
-                                        <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True" />
-                                        <Condition Binding="{Binding DataContext.IsGridMode, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True" />
-                                    </MultiDataTrigger.Conditions>
-                                    <Setter TargetName="ItemBorder" Property="Background" Value="#1FFFFFFF" />
-                                </MultiDataTrigger>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter TargetName="ItemBorder" Property="Background" Value="{DynamicResource ItemSelectedBackgroundColor}" />
+                                    <Setter TargetName="ItemBorder" Property="BorderBrush" Value="{DynamicResource ItemSelectedBackgroundColor}" />
+                                </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Setter.Value>

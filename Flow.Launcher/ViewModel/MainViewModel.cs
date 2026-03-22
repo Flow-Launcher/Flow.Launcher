@@ -184,24 +184,28 @@ namespace Flow.Launcher.ViewModel
             {
                 LeftClickResultCommand = OpenResultCommand,
                 RightClickResultCommand = LoadContextMenuCommand,
+                MouseSelectCommand = MouseSelectCommand,
                 IsPreviewOn = Settings.AlwaysPreview
             };
             Results = new ResultsViewModel(Settings, this)
             {
                 LeftClickResultCommand = OpenResultCommand,
                 RightClickResultCommand = LoadContextMenuCommand,
+                MouseSelectCommand = MouseSelectCommand,
                 IsPreviewOn = Settings.AlwaysPreview
             };
             History = new ResultsViewModel(Settings, this)
             {
                 LeftClickResultCommand = OpenResultCommand,
                 RightClickResultCommand = LoadContextMenuCommand,
+                MouseSelectCommand = MouseSelectCommand,
                 IsPreviewOn = Settings.AlwaysPreview
             };
             PinnedResults = new ResultsViewModel(Settings, this)
             {
                 LeftClickResultCommand = OpenResultCommand,
                 RightClickResultCommand = LoadContextMenuCommand,
+                MouseSelectCommand = MouseSelectCommand,
                 IsPreviewOn = Settings.AlwaysPreview
             };
             _selectedResults = Results;
@@ -593,6 +597,12 @@ namespace Flow.Launcher.ViewModel
                 _history.Add(result);
                 lastHistoryIndex = 1;
             }
+        }
+
+        [RelayCommand]
+        private void MouseSelect(bool isGridMode)
+        {
+            IsGridMode = isGridMode;
         }
 
         private static IReadOnlyList<Result> DeepCloneResults(IReadOnlyList<Result> results, bool isDialogJump, CancellationToken token = default)
@@ -1416,7 +1426,8 @@ namespace Flow.Launcher.ViewModel
                     Action = _ =>
                     {
                         _pinned.AddOrRemove(selected, string.Empty, isResultPinned);
-                        return true;
+                        App.API.ShowMsg(Localize.success());
+                        return false;
                     }
                 },
                 new()
@@ -1428,7 +1439,8 @@ namespace Flow.Launcher.ViewModel
                     Action = _ =>
                     {
                         _pinned.AddOrRemove(selected, queryToPin, isQueryPinned);
-                        return true;
+                        App.API.ShowMsg(Localize.success());
+                        return false;
                     }
                 }
             };
