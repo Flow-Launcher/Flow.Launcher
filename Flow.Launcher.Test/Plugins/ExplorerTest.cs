@@ -438,5 +438,49 @@ namespace Flow.Launcher.Test.Plugins
             // Then
             ClassicAssert.AreEqual(result, expectedResult);
         }
+
+        [Test]
+        public void GivenNonHomeFolderPaths_WhenCheckedWithIsHomeFolderPath_ThenShouldReturnFalse()
+        {
+            // Given
+            var nonHomeFolders = new[]
+            {
+                @"C:\SomeRandomFolder",
+                @"C:\Windows\System32",
+                @"C:\Program Files",
+            };
+
+            // When, Then
+            foreach (var folder in nonHomeFolders)
+            {
+                ClassicAssert.IsFalse(ResultManager.IsHomeFolderPath(folder),
+                    $"Expected '{folder}' to NOT be recognized as a home folder");
+            }
+        }
+
+        [Test]
+        public void GivenPathsInsideHomeDirectories_WhenCheckedWithIsHomeFolderPath_ThenShouldReturnTrue()
+{
+            var desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            
+            if (string.IsNullOrEmpty(desktopPath))
+            {
+                Assert.Ignore("Desktop special folder path is unavailable in this environment.");
+            }
+
+            var homeFolderVariants = new[]
+            {
+                Path.Combine(desktopPath, "dummy_desktop_file"),
+                Path.Combine(desktopPath, "dummy_desktop_folder") + "\\\\",
+                desktopPath + "\\\\dummy_desktop_folder\\\\",
+                Path.Combine(desktopPath, "dummy_desktop_folder", "dummy_desktop_file"),
+            };
+
+            foreach (var path in homeFolderVariants)
+            {
+                ClassicAssert.IsTrue(ResultManager.IsHomeFolderPath(path),
+                    $"Expected '{path}' to be recognized as inside a home folder");
+            }
+        }
     }
 }

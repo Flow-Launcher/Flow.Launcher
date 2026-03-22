@@ -147,7 +147,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         [DllImport(DLL)]
         public static extern bool Everything_GetResultDateRecentlyChanged(uint nIndex, out long lpFileTime);
         [DllImport(DLL, CharSet = CharSet.Unicode)]
-        public static extern IntPtr Everything_GetResultHighlightedFileName(uint nIndex);
+        public static extern string Everything_GetResultHighlightedFileName(uint nIndex);
         [DllImport(DLL, CharSet = CharSet.Unicode)]
         public static extern IntPtr Everything_GetResultHighlightedPath(uint nIndex);
         [DllImport(DLL, CharSet = CharSet.Unicode)]
