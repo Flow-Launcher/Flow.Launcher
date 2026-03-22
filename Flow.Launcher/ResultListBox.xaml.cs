@@ -71,6 +71,7 @@ namespace Flow.Launcher
                 var p = e.GetPosition((IInputElement)sender);
                 if (_lastpos != p)
                 {
+                    _lastpos = p;
                     ((ListBoxItem)sender).IsSelected = true;
                     MouseSelectCommand?.Execute(false);
                 }
