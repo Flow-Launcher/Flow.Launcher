@@ -550,7 +550,7 @@ namespace Flow.Launcher.ViewModel
                 lastHistoryIndex = 1;
             }
 
-            // Only hide for query results (not Dialog Jump)
+            // Only hide for query results (not Dialog Jump left-click mode)
             if (!isDialogJumpLeftClick && hideWindow)
             {
                 Hide();
