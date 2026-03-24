@@ -542,7 +542,7 @@ namespace Flow.Launcher.ViewModel
             }
 
             // New history result must be recorded before Hide() is called, otherwise when in 'Empty Last Query' query style mode
-            // the QueryAsync call will reconstuct the result list without the new item.
+            // the QueryAsync call will reconstruct the result list without the new item.
             // Also, add item to history only if it is from results but not context menu or history.
             if (queryResultsSelected)
             {
