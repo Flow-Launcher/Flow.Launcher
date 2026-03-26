@@ -1,175 +1,76 @@
-# AGENTS.md - Flow.Launcher
+# PROJECT KNOWLEDGE BASE
 
-Windows productivity launcher (like Alfred/Raycast) with dual UI frameworks:
-- **WPF**: `Flow.Launcher/` (original)
-- **Avalonia**: `Flow.Launcher.Avalonia/` (migration ~35-40%)
-- **.NET 9.0** targeting `net9.0-windows10.0.19041.0`
-- **CommunityToolkit.Mvvm** for MVVM
+Windows launcher for search, commands, and plugins. Repo currently carries two app hosts: legacy WPF in `Flow.Launcher/` and the newer Avalonia host in `Flow.Launcher.Avalonia/`.
 
-See `AVALONIA_MIGRATION_CHECKLIST.md` for migration progress.
+## WHERE TO LOOK
+| Task | Location | Notes |
+|------|----------|-------|
+| WPF app behavior | `Flow.Launcher/` | Main host, windows, settings shell, WPF-only UI rules |
+| Avalonia app behavior | `Flow.Launcher.Avalonia/` | Avalonia host, WPF compatibility shim, migrated settings pages |
+| Plugin lifecycle | `Flow.Launcher.Core/` | `PluginManager`, plugin loading, updates, manifest integration |
+| Shared infra | `Flow.Launcher.Infrastructure/` | settings, storage, hotkeys, logging, fuzzy matching |
+| Plugin SDK contract | `Flow.Launcher.Plugin/` | interfaces/models consumed by built-in and external plugins |
+| Built-in plugins | `Plugins/` | 12 plugin projects, shared `Main.cs` + `plugin.json` structure |
+| Test project | `Flow.Launcher.Test/` | NUnit 4 tests; some Explorer tests need Windows Search |
+| CI / release process | `.github/` | workflow automation, release PRs, plugin publishing, issue templates |
 
-## Commands
+## CHILD AGENTS
+- `.github/AGENTS.md` — workflow and release automation only
+- `Flow.Launcher/AGENTS.md` — WPF host-only rules
+- `Flow.Launcher.Avalonia/AGENTS.md` — Avalonia host-only rules
+- `Flow.Launcher.Core/AGENTS.md` — orchestration/update/plugin loading
+- `Flow.Launcher.Infrastructure/AGENTS.md` — settings/storage/system helpers
+- `Flow.Launcher.Plugin/AGENTS.md` — SDK contract guidance
+- `Plugins/AGENTS.md` — shared built-in plugin conventions
 
+## COMMANDS
 ```bash
-# Build
+nuget restore
 dotnet build
 dotnet build -c Release
-nuget restore
-
-# Test (NUnit 4.x)
 dotnet test
 dotnet test --filter "FullyQualifiedName~FuzzyMatcherTest"
-dotnet test --filter "Name~WhenSearching"
-
-# Run
-./Output/Debug/Flow.Launcher.exe              # WPF
-./Output/Debug/Avalonia/Flow.Launcher.Avalonia.exe  # Avalonia
 ```
 
-## Code Style
+Run outputs:
+- `Output/Debug/Flow.Launcher.exe` — WPF
+- `Output/Debug/Avalonia/Flow.Launcher.Avalonia.exe` — Avalonia
 
-### Naming
-- **PascalCase**: types, public members, methods, properties
-- **camelCase**: locals, parameters
-- **_camelCase**: private fields (underscore prefix)
-- **PascalCase**: constants (per `.editorconfig`)
-- No `this.` qualifier
+## REPO CONVENTIONS
+- C#: PascalCase for types/members/constants, camelCase locals/parameters, `_camelCase` private fields.
+- No `this.` qualifier.
+- File-scoped namespaces preferred.
+- `var` when type is obvious.
+- Allman braces always.
+- Using directives outside namespace; system usings first.
+- Prefer `is null`, null-propagation, null-coalescing.
 
-### C# Conventions
-```csharp
-// File-scoped namespaces
-namespace Flow.Launcher.ViewModel;
+## UI CONVENTIONS
+- WPF uses `.xaml`; Avalonia uses `.axaml`.
+- XAML/AXAML formatting: one attribute per line unless tiny, space before `/>`.
+- Attribute order: `x:Class` → `xmlns` → key/name → layout → size → margin/padding → rest.
+- Do not assume WPF and Avalonia pages are parity-complete; check `AVALONIA_MIGRATION_CHECKLIST.md` before porting behavior.
 
-// Prefer var when type is apparent
-var results = new List<Result>();
+## MVVM SPLIT
+- WPF commonly uses `BaseModel` and manual `OnPropertyChanged()`.
+- Avalonia uses CommunityToolkit.Mvvm patterns such as `ObservableObject`, `[ObservableProperty]`, `[RelayCommand]`.
+- Match the local host's pattern; do not “modernize” one host to the other in incidental changes.
 
-// Allman braces, always required
-if (condition)
-{
-    DoSomething();
-}
+## PLUGIN BASICS
+- `Flow.Launcher.Plugin/` defines the contract; `Flow.Launcher.Core/PluginManager` owns discovery/load/init.
+- Built-in plugin projects live in `Plugins/Flow.Launcher.Plugin.*`.
+- Plugin metadata comes from `plugin.json`; user/community plugins also use `%AppData%/FlowLauncher/Plugins` style roots.
 
-// 4-space indent (code), 2-space (XML/XAML)
-```
+## GOTCHAS
+- Build order matters: plugins before host outputs.
+- Building can kill a running Flow Launcher process.
+- Avalonia host still carries a WPF resource shim for plugin compatibility.
+- Some tests require Windows Search service (`WSearch`).
+- `Flow.Launcher.Test` includes real filesystem and slower perf-style tests; avoid assuming all tests are pure unit tests.
 
-### Imports
-- Sort system directives first (`dotnet_sort_system_directives_first = true`)
-- Using placement: outside namespace
-
-### Error Handling
-- Use nullable reference types (enabled in Avalonia project)
-- Prefer `is null` checks over reference equality
-- Use null propagation and coalesce expressions
-
-### XAML (XamlStyler)
-- One attribute per line (except ≤2)
-- Space before closing slash: `<Element />`
-- Attribute order: `x:Class` → `xmlns` → `x:Key/Name` → layout → size → margin/padding → others
-
-**WPF**: `.xaml` with `xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"`
-**Avalonia**: `.axaml` with `xmlns="https://github.com/avaloniaui"`
-
-## MVVM Patterns
-
-```csharp
-// Avalonia: CommunityToolkit.Mvvm
-public partial class MainViewModel : ObservableObject
-{
-    [ObservableProperty]
-    private string _queryText = string.Empty;
-    
-    [RelayCommand]
-    private void Search() { }
-}
-
-// WPF: BaseModel with manual INPC
-public class MainViewModel : BaseModel
-{
-    public string QueryText
-    {
-        get => _queryText;
-        set
-        {
-            if (_queryText != value)
-            {
-                _queryText = value;
-                OnPropertyChanged();
-            }
-        }
-    }
-}
-```
-
-## Plugin Architecture
-
-```csharp
-public interface IAsyncPlugin
-{
-    Task<List<Result>> QueryAsync(Query query, CancellationToken token);
-    Task InitAsync(PluginInitContext context);
-}
-
-// Result creation
-new Result
-{
-    Title = "Title",
-    SubTitle = "Subtitle",
-    IcoPath = "Images/icon.png",
-    Score = 100,
-    Action = context => true  // return true to hide window
-};
-```
-
-## Avalonia Migration Notes
-
-| WPF | Avalonia |
-|-----|----------|
-| `.xaml` | `.axaml` |
-| `Visibility` | `IsVisible` |
-| `Collapsed` | Not available |
-| `BoolToVisibilityConverter` | Direct bool binding |
-| `xmlns:microsoft` | `xmlns:avaloniaui` |
-
-Use `#if AVALONIA` for conditional compilation.
-
-## Testing
-
-```csharp
-[TestFixture]
-public class FuzzyMatcherTest
-{
-    [Test]
-    public void WhenSearching_ThenReturnsExpectedResults()
-    {
-        var matcher = new StringMatcher(null);
-        var result = matcher.FuzzyMatch("chr", "Chrome");
-        ClassicAssert.IsTrue(result.RawScore > 0);
-    }
-}
-```
-
-## Key Files
-
-| File | Purpose |
-|------|---------|
-| `MainViewModel.cs` | Search window logic |
-| `ResultsViewModel.cs` | Results management |
-| `Settings.cs` | User settings |
-| `PluginManager.cs` | Plugin lifecycle |
-| `StringMatcher.cs` | Fuzzy search |
-| `IPublicAPI.cs` | Plugin API |
-
-## Gotchas
-
-1. Build order matters - plugins must build before WPF
-2. Build kills running `Flow.Launcher.exe` automatically
-3. Plugins run in separate app domains
-4. Settings auto-save via Fody PropertyChanged
-5. Some tests require Windows Search service (`WSearch`)
-6. Avalonia has `<Nullable>enable</Nullable>`, WPF does not
-
-## Resources
-
-- `.editorconfig` - C#/VB style rules
-- `Settings.XamlStyler` - XAML formatting
-- `Flow.Launcher.Plugin/README.md` - Plugin SDK docs
+## KEY FILES
+- `AVALONIA_MIGRATION_CHECKLIST.md` — migration status and missing parity
+- `.editorconfig` — C#/VB style rules
+- `Settings.XamlStyler` — XAML formatting rules
+- `Directory.Build.props`, `Directory.Build.targets` — repo-wide build behavior
+- `Flow.Launcher.Plugin/README.md` — SDK-facing docs
