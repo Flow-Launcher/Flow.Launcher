@@ -32,6 +32,19 @@ namespace Flow.Launcher.Avalonia.Views.Controls
 
         public ObservableCollection<string> KeysToDisplay { get; } = new();
 
+        public static readonly DirectProperty<HotkeyControl, bool> UnregisterToggleHotkeyWhileRecordingProperty =
+            AvaloniaProperty.RegisterDirect<HotkeyControl, bool>(
+                nameof(UnregisterToggleHotkeyWhileRecording),
+                o => o.UnregisterToggleHotkeyWhileRecording,
+                (o, v) => o.UnregisterToggleHotkeyWhileRecording = v);
+
+        private bool _unregisterToggleHotkeyWhileRecording;
+        public bool UnregisterToggleHotkeyWhileRecording
+        {
+            get => _unregisterToggleHotkeyWhileRecording;
+            set => SetAndRaise(UnregisterToggleHotkeyWhileRecordingProperty, ref _unregisterToggleHotkeyWhileRecording, value);
+        }
+
         public IAsyncRelayCommand RecordHotkeyCommand { get; }
 
         public HotkeyControl()
@@ -64,9 +77,12 @@ namespace Flow.Launcher.Avalonia.Views.Controls
         private async Task OpenHotkeyRecorderDialog()
         {
             var originalHotkey = Hotkey;
-            
-            // Temporarily unregister so it doesn't conflict with availability check
-            HotKeyMapper.RemoveToggleHotkey();
+            var shouldUnregisterToggle = UnregisterToggleHotkeyWhileRecording;
+
+            if (shouldUnregisterToggle)
+            {
+                HotKeyMapper.RemoveToggleHotkey();
+            }
 
             var dialog = new HotkeyRecorderDialog(Hotkey);
             var result = await dialog.ShowAsync();
@@ -74,6 +90,11 @@ namespace Flow.Launcher.Avalonia.Views.Controls
             if (result == HotkeyRecorderDialog.EResultType.Save)
             {
                 Hotkey = dialog.ResultValue;
+
+                if (shouldUnregisterToggle && string.Equals(dialog.ResultValue, originalHotkey, System.StringComparison.Ordinal))
+                {
+                    HotKeyMapper.SetToggleHotkey(originalHotkey);
+                }
             }
             else if (result == HotkeyRecorderDialog.EResultType.Delete)
             {
@@ -81,8 +102,10 @@ namespace Flow.Launcher.Avalonia.Views.Controls
             }
             else
             {
-                // Restore original hotkey if cancelled
-                HotKeyMapper.SetToggleHotkey(originalHotkey);
+                if (shouldUnregisterToggle)
+                {
+                    HotKeyMapper.SetToggleHotkey(originalHotkey);
+                }
             }
         }
     }

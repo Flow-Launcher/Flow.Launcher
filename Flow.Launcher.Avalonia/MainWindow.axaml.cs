@@ -25,10 +25,12 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
 
-        // Get the ViewModel from DI (same instance that App uses)
+        // Get the ViewModel and Settings from DI
         _viewModel = Ioc.Default.GetRequiredService<MainViewModel>();
+        _settings = Ioc.Default.GetRequiredService<Settings>();
         _viewModel.HideRequested += () => Hide();
-        _viewModel.ShowRequested += () => ShowAndFocus();
+        _viewModel.ShowRequested += HandleShowRequested;
+        _viewModel.QueryTextFocusRequested += HandleQueryTextFocusRequest;
         DataContext = _viewModel;
 
         // Get settings for hotkey configuration
@@ -113,11 +115,7 @@ public partial class MainWindow : Window
         CenterOnScreen();
 
         // Focus and select all text
-        if (_queryTextBox != null)
-        {
-            _queryTextBox.Focus();
-            _queryTextBox.SelectAll();
-        }
+        ApplyQueryTextBoxFocus(QueryTextFocusMode.SelectAll);
     }
 
     private void CenterOnScreen()
@@ -194,19 +192,60 @@ public partial class MainWindow : Window
     // Subscribe in constructor: this.Deactivated += OnWindowDeactivated;
     private void OnWindowDeactivated(object? sender, EventArgs e)
     {
-        // Optionally hide window when it loses focus (like original Flow Launcher)
-        // Uncomment if desired:
-        // Hide();
+        // Hide window when it loses focus if the setting is enabled
+        if (_settings?.HideWhenDeactivated == true)
+        {
+            Hide();
+        }
     }
 
     /// <summary>
-    /// Shows the window and focuses the query text box
+    /// Shows and activates the window. Focus/caret behavior is handled by QueryTextFocusRequested.
     /// </summary>
-    public void ShowAndFocus()
+    private void HandleShowRequested()
     {
         Show();
         Activate();
-        _queryTextBox?.Focus();
-        _queryTextBox?.SelectAll();
+    }
+
+    private void HandleQueryTextFocusRequest(QueryTextFocusRequest request)
+    {
+        if (!request.ShowWindow && (!IsVisible || _queryTextBox?.IsVisible != true))
+        {
+            return;
+        }
+
+        if (request.ShowWindow)
+        {
+            Show();
+        }
+
+        if (request.ActivateWindow)
+        {
+            Activate();
+        }
+
+        ApplyQueryTextBoxFocus(request.Mode);
+    }
+
+    private void ApplyQueryTextBoxFocus(QueryTextFocusMode mode)
+    {
+        if (_queryTextBox == null)
+        {
+            return;
+        }
+
+        _queryTextBox.Focus();
+
+        if (mode == QueryTextFocusMode.SelectAll)
+        {
+            _queryTextBox.SelectAll();
+            return;
+        }
+
+        var textLength = _queryTextBox.Text?.Length ?? 0;
+        _queryTextBox.SelectionStart = textLength;
+        _queryTextBox.SelectionEnd = textLength;
+        _queryTextBox.CaretIndex = textLength;
     }
 }

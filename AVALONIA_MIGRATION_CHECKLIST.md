@@ -131,24 +131,38 @@
 | Double-click icon action | :x: Missing | `Settings.DoubleClickIconAction` |
 
 ### 2.3 Hotkey Settings (`SettingsPaneHotkey.xaml` - 463 lines)
-**Avalonia: ~26 lines (~10% DONE)**
+**Avalonia: ~310 lines (~67%)**
 
 | Hotkey | Status | Setting Property |
 |--------|--------|------------------|
 | Toggle Flow Launcher | :white_check_mark: Done | `Settings.Hotkey` |
-| Preview hotkey | :x: Missing | `Settings.PreviewHotkey` |
-| Auto-complete hotkey | :x: Missing | `Settings.AutoCompleteHotkey` |
-| Select next item | :x: Missing | `Settings.SelectNextItemHotkey` |
-| Select prev item | :x: Missing | `Settings.SelectPrevItemHotkey` |
-| Select next page | :x: Missing | `Settings.SelectNextPageHotkey` |
-| Select prev page | :x: Missing | `Settings.SelectPrevPageHotkey` |
-| Open result hotkeys (1-9) | :x: Missing | `Settings.OpenResultHotkey[1-9]` |
-| Open context menu | :x: Missing | `Settings.OpenContextMenuHotkey` |
-| Cycle history up | :x: Missing | `Settings.CycleHistoryUpHotkey` |
-| Cycle history down | :x: Missing | `Settings.CycleHistoryDownHotkey` |
+| Preview hotkey | :white_check_mark: Done | `Settings.PreviewHotkey` |
+| Auto-complete hotkey | :white_check_mark: Done | `Settings.AutoCompleteHotkey` |
+| Auto-complete hotkey 2 | :white_check_mark: Done | `Settings.AutoCompleteHotkey2` |
+| Select next item | :white_check_mark: Done | `Settings.SelectNextItemHotkey` |
+| Select prev item | :white_check_mark: Done | `Settings.SelectPrevItemHotkey` |
+| Select next page | :white_check_mark: Done | `Settings.SelectNextPageHotkey` |
+| Select prev page | :white_check_mark: Done | `Settings.SelectPrevPageHotkey` |
+| Open result hotkeys (1-9) | :white_check_mark: Done | Open result modifiers + Show toggle |
+| Open context menu | :white_check_mark: Done | `Settings.OpenContextMenuHotkey` |
+| Cycle history up | :white_check_mark: Done | `Settings.CycleHistoryUpHotkey` |
+| Cycle history down | :white_check_mark: Done | `Settings.CycleHistoryDownHotkey` |
+| Dialog jump hotkey | :white_check_mark: Done | `Settings.DialogJumpHotkey` |
+| Setting window hotkey | :white_check_mark: Done | `Settings.SettingWindowHotkey` |
+| Open history hotkey | :white_check_mark: Done | `Settings.OpenHistoryHotkey` |
+| **Fixed Hotkey Presets** | :white_check_mark: Done | Read-only display with HotkeyDisplay |
 | **Custom Query Hotkeys** |
-| Custom query list | :x: Missing | List of user-defined hotkeys |
-| Add custom hotkey | :x: Missing | Opens editor dialog |
+| Custom query list | :white_check_mark: Done | DataGrid with hotkey/action columns |
+| Add custom hotkey | :yellow_circle: Stub | Button present, dialog TODO |
+| Edit custom hotkey | :yellow_circle: Stub | Button present, dialog TODO |
+| Delete custom hotkey | :white_check_mark: Done | Removes from collection |
+| **Custom Shortcuts** |
+| Custom shortcuts list | :white_check_mark: Done | DataGrid with key/value columns |
+| Add custom shortcut | :yellow_circle: Stub | Button present, dialog TODO |
+| Edit custom shortcut | :yellow_circle: Stub | Button present, dialog TODO |
+| Delete custom shortcut | :white_check_mark: Done | Removes from collection |
+| **Builtin Shortcuts** |
+| Builtin shortcuts list | :white_check_mark: Done | Read-only DataGrid |
 
 ### 2.4 Plugin Settings (`SettingsPanePlugins.xaml` - 141 lines)
 **Avalonia: ~170 lines (~90% DONE)**
@@ -231,7 +245,7 @@
 | HotkeyRecorderDialog | `HotkeyControlDialog.xaml` | :white_check_mark: Done | Dialog for recording hotkeys |
 | InfoBar | `InfoBar.xaml.cs` | :x: Missing | Information/warning banner |
 | HyperLink | `HyperLink.xaml.cs` | :x: Missing | Clickable link control |
-| HotkeyDisplay | `HotkeyDisplay.xaml.cs` | :x: Missing | Displays hotkey as key badges |
+| HotkeyDisplay | `HotkeyDisplay.xaml.cs` | :white_check_mark: Done | Read-only hotkey badge display |
 | InstalledPluginDisplay | `InstalledPluginDisplay.xaml.cs` | :x: Missing | Plugin info card (replaced by Expander) |
 | InstalledPluginDisplayKeyword | `InstalledPluginDisplayKeyword.xaml.cs` | :x: Missing | Keyword badge (integrated) |
 | InstalledPluginDisplayBottomData | `InstalledPluginDisplayBottomData.xaml.cs` | :x: Missing | Plugin metadata footer (integrated) |
@@ -252,7 +266,7 @@
 | SettingWindowViewModel | ~100 | ~50 | :yellow_circle: 50% | Navigation works |
 | GeneralSettingsViewModel | ~100 | ~390 | :white_check_mark: 95% | Most settings implemented |
 | ThemeSettingsViewModel | ~150 | ~116 | :yellow_circle: 77% | Basic theme + fonts done |
-| HotkeySettingsViewModel | ~200 | ~31 | :yellow_circle: 15% | Only toggle hotkey done |
+| HotkeySettingsViewModel | ~200 | ~350 | :yellow_circle: 67% | Most hotkeys and shortcut lists implemented; add/edit dialogs still pending |
 | PluginsSettingsViewModel | ~300 | ~220 | :white_check_mark: 73% | Full plugin management |
 | PluginStoreSettingsViewModel | ~250 | ~200 | :white_check_mark: 80% | Store functionality complete |
 | PluginStoreItemViewModel | ~100 | ~113 | :white_check_mark: 95% | Item display + actions |
@@ -419,11 +433,13 @@
 5. [x] **Hide on focus loss** - Expected behavior - DONE
 
 ### Medium Priority (Feature Completeness)
-6. [ ] **HotkeySettingsPage** - All keyboard shortcuts (only toggle done)
+6. [x] **HotkeySettingsPage** - Most keyboard shortcuts + preset display - DONE except add/edit dialogs
 7. [ ] **ThemeSettingsPage** - Theme selection and customization (partial)
 8. [x] **Plugin settings UI** - IPluginSettingProvider integration - DONE
 9. [x] **Plugin Store** - Install/update plugins - DONE
 10. [ ] **Auto-start** - Windows startup registration
+11. [ ] **CustomQueryHotkeySetting dialog** - Add/Edit custom query hotkeys
+12. [ ] **CustomShortcutSetting dialog** - Add/Edit custom shortcuts
 
 ### Lower Priority (Polish)
 11. [ ] **WelcomeWindow** - First-run experience

@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Generic;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Avalonia.ViewModel;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
+using System.Windows.Input;
 
 namespace Flow.Launcher.Avalonia.Helper;
 
@@ -17,6 +19,7 @@ internal static class HotKeyMapper
     private static Settings? _settings;
     private static MainViewModel? _mainViewModel;
     private static int _toggleHotkeyId = -1;
+    private static readonly Dictionary<string, int> _customQueryHotkeyIds = new(StringComparer.Ordinal);
 
     /// <summary>
     /// Initialize the hotkey system and register configured hotkeys.
@@ -37,6 +40,8 @@ internal static class HotKeyMapper
 
         // Register the main toggle hotkey
         SetToggleHotkey(_settings.Hotkey);
+
+        LoadCustomPluginHotkeys();
 
         Log.Info(ClassName, $"HotKeyMapper initialized with hotkey: {_settings.Hotkey}");
     }
@@ -86,6 +91,57 @@ internal static class HotKeyMapper
         }
     }
 
+    internal static void LoadCustomPluginHotkeys()
+    {
+        if (_settings?.CustomPluginHotkeys is null)
+        {
+            return;
+        }
+
+        foreach (var customHotkey in _settings.CustomPluginHotkeys)
+        {
+            if (!SetCustomQueryHotkey(customHotkey))
+            {
+                Log.Warn(ClassName, $"Failed to load custom query hotkey '{customHotkey.Hotkey}' for query '{customHotkey.ActionKeyword}'");
+            }
+        }
+    }
+
+    internal static bool SetCustomQueryHotkey(CustomPluginHotkey hotkey)
+    {
+        if (string.IsNullOrWhiteSpace(hotkey.Hotkey) || string.IsNullOrWhiteSpace(hotkey.ActionKeyword))
+        {
+            return false;
+        }
+
+        RemoveHotkey(hotkey.Hotkey);
+
+        if (!TryRegisterHotkey(hotkey.Hotkey, () =>
+            {
+                _mainViewModel?.ShowWithInjectedQuery(hotkey.ActionKeyword);
+            }, out var hotkeyId))
+        {
+            return false;
+        }
+
+        _customQueryHotkeyIds[hotkey.Hotkey] = hotkeyId;
+        return true;
+    }
+
+    internal static void RemoveHotkey(string hotkeyString)
+    {
+        if (string.IsNullOrWhiteSpace(hotkeyString))
+        {
+            return;
+        }
+
+        if (_customQueryHotkeyIds.TryGetValue(hotkeyString, out var hotkeyId))
+        {
+            GlobalHotkey.Unregister(hotkeyId);
+            _customQueryHotkeyIds.Remove(hotkeyString);
+        }
+    }
+
     private static void OnToggleHotkey()
     {
         Log.Info(ClassName, "Toggle hotkey triggered");
@@ -97,10 +153,7 @@ internal static class HotKeyMapper
     /// </summary>
     internal static bool CheckAvailability(HotkeyModel hotkey)
     {
-        var hotkeyString = hotkey.ToString();
-        var (mods, key) = GlobalHotkey.ParseHotkeyString(hotkeyString);
-
-        if (key == 0)
+        if (!TryGetRegistrationParts(hotkey, out var mods, out var key))
             return false;
 
         // Try to register and immediately unregister
@@ -114,11 +167,74 @@ internal static class HotKeyMapper
         return false;
     }
 
+    private static bool TryRegisterHotkey(string hotkeyString, Action callback, out int hotkeyId)
+    {
+        hotkeyId = -1;
+
+        if (!TryGetRegistrationParts(new HotkeyModel(hotkeyString), out var modifiers, out var key))
+        {
+            Log.Error(ClassName, $"Failed to parse hotkey: {hotkeyString}");
+            return false;
+        }
+
+        hotkeyId = GlobalHotkey.Register(modifiers, key, callback);
+
+        if (hotkeyId < 0)
+        {
+            Log.Error(ClassName, $"Failed to register hotkey: {hotkeyString}");
+            return false;
+        }
+
+        return true;
+    }
+
+    private static bool TryGetRegistrationParts(HotkeyModel hotkey, out GlobalHotkey.Modifiers modifiers, out uint key)
+    {
+        modifiers = GlobalHotkey.Modifiers.None;
+        key = 0;
+
+        if (!hotkey.Validate(true))
+        {
+            return false;
+        }
+
+        if (hotkey.Alt)
+        {
+            modifiers |= GlobalHotkey.Modifiers.Alt;
+        }
+
+        if (hotkey.Ctrl)
+        {
+            modifiers |= GlobalHotkey.Modifiers.Control;
+        }
+
+        if (hotkey.Shift)
+        {
+            modifiers |= GlobalHotkey.Modifiers.Shift;
+        }
+
+        if (hotkey.Win)
+        {
+            modifiers |= GlobalHotkey.Modifiers.Win;
+        }
+
+        key = (uint)KeyInterop.VirtualKeyFromKey(hotkey.CharKey);
+        return key != 0;
+    }
+
     /// <summary>
     /// Cleanup and unregister all hotkeys.
     /// </summary>
     internal static void Shutdown()
     {
+        RemoveToggleHotkey();
+
+        foreach (var hotkeyId in _customQueryHotkeyIds.Values)
+        {
+            GlobalHotkey.Unregister(hotkeyId);
+        }
+
+        _customQueryHotkeyIds.Clear();
         GlobalHotkey.Shutdown();
         Log.Info(ClassName, "HotKeyMapper shutdown");
     }

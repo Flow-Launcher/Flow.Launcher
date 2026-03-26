@@ -40,9 +40,10 @@
   
   <ItemGroup>
     <ProjectReference Include="..\Plugins\Flow.Launcher.Plugin.Calculator\Flow.Launcher.Plugin.Calculator.csproj" />
-    <ProjectReference Include="..\Plugins\Flow.Launcher.Plugin.Explorer\Flow.Launcher.Plugin.Explorer.csproj" />
+    <ProjectReference Include="..\Plugins\Flow.Launcher.Plugin.Explorer\Flow.Launcher.Plugin.Explorer.csproj" AdditionalProperties="SkipAvaloniaPluginCopy=true" />
     <ProjectReference Include="..\Plugins\Flow.Launcher.Plugin.Program\Flow.Launcher.Plugin.Program.csproj" />
     <ProjectReference Include="..\Plugins\Flow.Launcher.Plugin.Url\Flow.Launcher.Plugin.Url.csproj" />
+    <ProjectReference Include="..\Flow.Launcher.Avalonia\Flow.Launcher.Avalonia.csproj" />
     <ProjectReference Include="..\Flow.Launcher.Core\Flow.Launcher.Core.csproj" />
     <ProjectReference Include="..\Flow.Launcher.Infrastructure\Flow.Launcher.Infrastructure.csproj" />
     <ProjectReference Include="..\Flow.Launcher.Plugin\Flow.Launcher.Plugin.csproj" />

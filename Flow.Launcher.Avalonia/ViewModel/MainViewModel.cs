@@ -2,6 +2,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
@@ -25,6 +26,14 @@ public enum ActiveView
     ContextMenu
 }
 
+public enum QueryTextFocusMode
+{
+    SelectAll,
+    CaretAtEnd
+}
+
+public readonly record struct QueryTextFocusRequest(bool ShowWindow, bool ActivateWindow, QueryTextFocusMode Mode);
+
 /// <summary>
 /// MainViewModel for Avalonia - minimal implementation for plugin queries.
 /// </summary>
@@ -33,6 +42,7 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
     private static readonly string ClassName = nameof(MainViewModel);
     private readonly Settings _settings;
     private CancellationTokenSource? _queryTokenSource;
+    private string? _ignoredQueryText;
     private bool _pluginsReady;
 
     // Channel-based debouncing for result updates (matches WPF approach)
@@ -42,6 +52,7 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
 
     public event Action? HideRequested;
     public event Action? ShowRequested;
+    public event Action<QueryTextFocusRequest>? QueryTextFocusRequested;
 
     [ObservableProperty]
     private bool _mainWindowVisibility = false;
@@ -203,6 +214,11 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
 
     public void RequestHide() => HideRequested?.Invoke();
 
+    public void RequestQueryTextFocus(QueryTextFocusRequest request)
+    {
+        QueryTextFocusRequested?.Invoke(request);
+    }
+
     /// <summary>
     /// Toggle the main window visibility. Called by global hotkey.
     /// </summary>
@@ -242,7 +258,22 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
         ActiveView = ActiveView.Results;
         ContextMenu.Clear();
         ShowRequested?.Invoke();
+        RequestQueryTextFocus(new QueryTextFocusRequest(true, true, QueryTextFocusMode.SelectAll));
         Log.Info(ClassName, "Show requested");
+    }
+
+    /// <summary>
+    /// Show the main window with an injected query.
+    /// </summary>
+    public void ShowWithInjectedQuery(string queryText)
+    {
+        MainWindowVisibility = true;
+        ActiveView = ActiveView.Results;
+        ContextMenu.Clear();
+        QueryText = queryText;
+        ShowRequested?.Invoke();
+        RequestQueryTextFocus(new QueryTextFocusRequest(true, true, QueryTextFocusMode.CaretAtEnd));
+        Log.Info(ClassName, "Show with injected query requested");
     }
 
     /// <summary>
@@ -257,6 +288,17 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
 
     partial void OnQueryTextChanged(string value)
     {
+        if (_ignoredQueryText is not null)
+        {
+            if (_ignoredQueryText == value)
+            {
+                _ignoredQueryText = null;
+                return;
+            }
+
+            _ignoredQueryText = null;
+        }
+
         // Notify ShowResultsArea when query text changes (it depends on QueryText)
         OnPropertyChanged(nameof(ShowResultsArea));
         _ = QueryAsync();
@@ -288,7 +330,7 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
 
         try
         {
-            var query = QueryBuilder.Build(QueryText, queryText, PluginManager.GetNonGlobalPlugins());
+            var query = await ConstructQueryAsync(QueryText, _settings.CustomShortcuts, _settings.BuiltinShortcuts);
             if (query == null)
             {
                 Results.Clear();
@@ -376,6 +418,84 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
 
             return resultList;
         }, token);
+    }
+
+    private async Task<Query?> ConstructQueryAsync(string queryText, IEnumerable<CustomShortcutModel> customShortcuts,
+        IEnumerable<BaseBuiltinShortcutModel> builtInShortcuts)
+    {
+        if (string.IsNullOrWhiteSpace(queryText))
+        {
+            return QueryBuilder.Build(string.Empty, string.Empty, PluginManager.GetNonGlobalPlugins());
+        }
+
+        var queryBuilder = new StringBuilder(queryText);
+        var queryBuilderTmp = new StringBuilder(queryText);
+
+        foreach (var shortcut in customShortcuts.OrderByDescending(x => x.Key.Length))
+        {
+            if (queryBuilder.ToString() == shortcut.Key)
+            {
+                queryBuilder.Replace(shortcut.Key, shortcut.Expand());
+            }
+
+            queryBuilder.Replace('@' + shortcut.Key, shortcut.Expand());
+        }
+
+        await BuildQueryAsync(builtInShortcuts, queryBuilder, queryBuilderTmp);
+
+        return QueryBuilder.Build(queryText, queryBuilder.ToString().Trim(), PluginManager.GetNonGlobalPlugins());
+    }
+
+    private async Task BuildQueryAsync(IEnumerable<BaseBuiltinShortcutModel> builtInShortcuts,
+        StringBuilder queryBuilder, StringBuilder queryBuilderTmp)
+    {
+        var customExpanded = queryBuilder.ToString();
+        var queryChanged = false;
+
+        foreach (var shortcut in builtInShortcuts)
+        {
+            try
+            {
+                if (!customExpanded.Contains(shortcut.Key, StringComparison.Ordinal))
+                {
+                    continue;
+                }
+
+                string expansion;
+                if (shortcut is BuiltinShortcutModel syncShortcut)
+                {
+                    expansion = syncShortcut.Expand();
+                }
+                else if (shortcut is AsyncBuiltinShortcutModel asyncShortcut)
+                {
+                    expansion = await asyncShortcut.ExpandAsync();
+                }
+                else
+                {
+                    continue;
+                }
+
+                queryBuilder.Replace(shortcut.Key, expansion);
+                queryBuilderTmp.Replace(shortcut.Key, expansion);
+                queryChanged = true;
+            }
+            catch (Exception e)
+            {
+                Log.Exception(ClassName, $"Error when expanding shortcut {shortcut.Key}", e);
+            }
+        }
+
+        if (queryChanged)
+        {
+            ApplyExpandedQueryText(queryBuilderTmp.ToString());
+        }
+    }
+
+    private void ApplyExpandedQueryText(string expandedQueryText)
+    {
+        _ignoredQueryText = expandedQueryText;
+        QueryText = expandedQueryText;
+        RequestQueryTextFocus(new QueryTextFocusRequest(false, false, QueryTextFocusMode.CaretAtEnd));
     }
 
     [RelayCommand]

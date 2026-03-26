@@ -6,29 +6,341 @@
              xmlns:vm="using:Flow.Launcher.Avalonia.ViewModel.SettingPages"
              xmlns:i18n="using:Flow.Launcher.Avalonia.Resource"
              xmlns:controls="using:Flow.Launcher.Avalonia.Views.Controls"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:userSettings="using:Flow.Launcher.Infrastructure.UserSettings"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="1200"
              x:Class="Flow.Launcher.Avalonia.Views.SettingPages.HotkeySettingsPage"
              x:DataType="vm:HotkeySettingsViewModel">
 
-    <StackPanel Spacing="20">
-        <TextBlock Text="{i18n:Localize hotkey}" FontSize="28" FontWeight="SemiBold" />
+    <ScrollViewer Padding="0,0,16,0">
+        <StackPanel Spacing="8" Margin="0,0,0,20">
+            <!-- Page Title -->
+            <TextBlock Text="{i18n:Localize hotkey}" 
+                       FontSize="28" 
+                       FontWeight="SemiBold" 
+                       Margin="0,0,0,12" />
 
-        <ui:SettingsExpander Header="{i18n:Localize flowlauncherHotkey}"
-                            Description="{i18n:Localize flowlauncherHotkeyToolTip}"
-                            IconSource="Keyboard">
-            <ui:SettingsExpander.Footer>
-                <controls:HotkeyControl Hotkey="{Binding ToggleHotkey, Mode=TwoWay}" MinWidth="150" />
-            </ui:SettingsExpander.Footer>
-        </ui:SettingsExpander>
+            <!-- Toggle Flow Launcher Hotkey -->
+            <ui:SettingsExpander Header="{i18n:Localize flowlauncherHotkey}"
+                                Description="{i18n:Localize flowlauncherHotkeyToolTip}"
+                                IconSource="Keyboard">
+                <ui:SettingsExpander.Footer>
+                    <controls:HotkeyControl Hotkey="{Binding ToggleHotkey, Mode=TwoWay}"
+                                            MinWidth="150"
+                                            UnregisterToggleHotkeyWhileRecording="True" />
+                </ui:SettingsExpander.Footer>
+            </ui:SettingsExpander>
 
-        <ui:SettingsExpander Header="{i18n:Localize previewHotkey}"
-                            Description="{i18n:Localize previewHotkeyToolTip}"
-                            IconSource="PreviewLink">
-            <ui:SettingsExpander.Footer>
-                <controls:HotkeyControl Hotkey="{Binding PreviewHotkey, Mode=TwoWay}" MinWidth="150" />
-            </ui:SettingsExpander.Footer>
-        </ui:SettingsExpander>
-        
-        <TextBlock Text="{i18n:Localize hotkeyFormatTip}" Foreground="Gray" FontSize="12" />
-    </StackPanel>
+            <!-- Preview Hotkey -->
+            <ui:SettingsExpander Header="{i18n:Localize previewHotkey}"
+                                Description="{i18n:Localize previewHotkeyToolTip}"
+                                IconSource="View">
+                <ui:SettingsExpander.Footer>
+                    <controls:HotkeyControl Hotkey="{Binding PreviewHotkey, Mode=TwoWay}" MinWidth="150" />
+                </ui:SettingsExpander.Footer>
+            </ui:SettingsExpander>
+
+            <!-- Open Result Modifiers -->
+            <ui:SettingsExpander Header="{i18n:Localize openResultModifiers}"
+                                Description="{i18n:Localize openResultModifiersToolTip}"
+                                IconSource="Keyboard">
+                <ui:SettingsExpander.Footer>
+                    <ComboBox Width="140"
+                              ItemsSource="{Binding OpenResultModifiersList}"
+                              SelectedItem="{Binding OpenResultModifiers}" />
+                </ui:SettingsExpander.Footer>
+                <ui:SettingsExpanderItem Content="{i18n:Localize showOpenResultHotkey}"
+                                         Description="{i18n:Localize showOpenResultHotkeyToolTip}">
+                    <ui:SettingsExpanderItem.Footer>
+                        <ToggleSwitch IsChecked="{Binding ShowOpenResultHotkey}" />
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+            </ui:SettingsExpander>
+
+            <!-- Dialog Jump Hotkey -->
+            <ui:SettingsExpander Header="{i18n:Localize dialogJumpHotkey}"
+                                Description="{i18n:Localize dialogJumpHotkeyToolTip}"
+                                IconSource="Target">
+                <ui:SettingsExpander.Footer>
+                    <controls:HotkeyControl Hotkey="{Binding DialogJumpHotkey, Mode=TwoWay}" MinWidth="150" />
+                </ui:SettingsExpander.Footer>
+            </ui:SettingsExpander>
+
+            <!-- Hotkey Presets (expandable group with fixed hotkeys) -->
+            <ui:SettingsExpander Header="{i18n:Localize hotkeyPresets}"
+                                Description="{i18n:Localize hotkeyPresetsToolTip}"
+                                IconSource="Keyboard"
+                                IsExpanded="False">
+                
+                <!-- Open Containing Folder -->
+                <ui:SettingsExpanderItem Content="{i18n:Localize OpenContainFolderHotkey}">
+                    <ui:SettingsExpanderItem.Footer>
+                        <controls:HotkeyDisplay Keys="Ctrl+Enter" />
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+
+                <!-- Run as Admin -->
+                <ui:SettingsExpanderItem Content="{i18n:Localize RunAsAdminHotkey}">
+                    <ui:SettingsExpanderItem.Footer>
+                        <controls:HotkeyDisplay Keys="Ctrl+Shift+Enter" />
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+
+                <!-- Toggle History -->
+                <ui:SettingsExpanderItem Content="{i18n:Localize ToggleHistoryHotkey}">
+                    <ui:SettingsExpanderItem.Footer>
+                        <controls:HotkeyControl Hotkey="{Binding OpenHistoryHotkey, Mode=TwoWay}" MinWidth="120" />
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+
+                <!-- Copy File Path -->
+                <ui:SettingsExpanderItem Content="{i18n:Localize CopyFilePathHotkey}">
+                    <ui:SettingsExpanderItem.Footer>
+                        <controls:HotkeyDisplay Keys="Ctrl+Shift+C" />
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+
+                <!-- Open Context Menu (customizable) -->
+                <ui:SettingsExpanderItem Content="{i18n:Localize OpenContextMenuHotkey}">
+                    <ui:SettingsExpanderItem.Footer>
+                        <controls:HotkeyControl Hotkey="{Binding OpenContextMenuHotkey, Mode=TwoWay}" MinWidth="120" />
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+
+                <!-- Open Context Menu (fixed Shift+Enter) -->
+                <ui:SettingsExpanderItem Content="{i18n:Localize OpenContextMenuHotkey}">
+                    <ui:SettingsExpanderItem.Footer>
+                        <controls:HotkeyDisplay Keys="Shift+Enter" />
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+
+                <!-- Open Native Context Menu -->
+                <ui:SettingsExpanderItem Content="{i18n:Localize OpenNativeContextMenuHotkey}">
+                    <ui:SettingsExpanderItem.Footer>
+                        <controls:HotkeyDisplay Keys="Alt+Enter" />
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+
+                <!-- Settings Window -->
+                <ui:SettingsExpanderItem Content="{i18n:Localize SettingWindowHotkey}">
+                    <ui:SettingsExpanderItem.Footer>
+                        <controls:HotkeyControl Hotkey="{Binding SettingWindowHotkey, Mode=TwoWay}" MinWidth="120" />
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+
+                <!-- Toggle Game Mode -->
+                <ui:SettingsExpanderItem Content="{i18n:Localize ToggleGameModeHotkey}">
+                    <ui:SettingsExpanderItem.Footer>
+                        <controls:HotkeyDisplay Keys="Ctrl+F12" />
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+
+                <!-- Requery -->
+                <ui:SettingsExpanderItem Content="{i18n:Localize RequeryHotkey}">
+                    <ui:SettingsExpanderItem.Footer>
+                        <controls:HotkeyDisplay Keys="Ctrl+R" />
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+
+                <!-- Cycle History Up -->
+                <ui:SettingsExpanderItem Content="{i18n:Localize CycleHistoryUpHotkey}">
+                    <ui:SettingsExpanderItem.Footer>
+                        <controls:HotkeyControl Hotkey="{Binding CycleHistoryUpHotkey, Mode=TwoWay}" MinWidth="120" />
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+
+                <!-- Cycle History Down -->
+                <ui:SettingsExpanderItem Content="{i18n:Localize CycleHistoryDownHotkey}">
+                    <ui:SettingsExpanderItem.Footer>
+                        <controls:HotkeyControl Hotkey="{Binding CycleHistoryDownHotkey, Mode=TwoWay}" MinWidth="120" />
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+
+                <!-- Reload Plugin -->
+                <ui:SettingsExpanderItem Content="{i18n:Localize ReloadPluginHotkey}"
+                                         Description="{i18n:Localize ReloadPluginHotkeyToolTip}">
+                    <ui:SettingsExpanderItem.Footer>
+                        <controls:HotkeyDisplay Keys="F5" />
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+
+                <!-- Select Prev Page -->
+                <ui:SettingsExpanderItem Content="{i18n:Localize SelectPrevPageHotkey}">
+                    <ui:SettingsExpanderItem.Footer>
+                        <controls:HotkeyControl Hotkey="{Binding SelectPrevPageHotkey, Mode=TwoWay}" MinWidth="120" />
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+
+                <!-- Select Next Page -->
+                <ui:SettingsExpanderItem Content="{i18n:Localize SelectNextPageHotkey}">
+                    <ui:SettingsExpanderItem.Footer>
+                        <controls:HotkeyControl Hotkey="{Binding SelectNextPageHotkey, Mode=TwoWay}" MinWidth="120" />
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+
+                <!-- Quick Width -->
+                <ui:SettingsExpanderItem Content="{i18n:Localize QuickWidthHotkey}">
+                    <ui:SettingsExpanderItem.Footer>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <controls:HotkeyDisplay Keys="Ctrl+[" />
+                            <controls:HotkeyDisplay Keys="Ctrl+]" />
+                        </StackPanel>
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+
+                <!-- Quick Height -->
+                <ui:SettingsExpanderItem Content="{i18n:Localize QuickHeightHotkey}">
+                    <ui:SettingsExpanderItem.Footer>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <controls:HotkeyDisplay Keys="Ctrl+Plus" />
+                            <controls:HotkeyDisplay Keys="Ctrl+Minus" />
+                        </StackPanel>
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+            </ui:SettingsExpander>
+
+            <!-- Auto-complete Hotkey -->
+            <ui:SettingsExpander Header="{i18n:Localize autoCompleteHotkey}"
+                                Description="{i18n:Localize autoCompleteHotkeyToolTip}"
+                                IconSource="Accept">
+                <ui:SettingsExpander.Footer>
+                    <controls:HotkeyControl Hotkey="{Binding AutoCompleteHotkey, Mode=TwoWay}" MinWidth="150" />
+                </ui:SettingsExpander.Footer>
+                <ui:SettingsExpanderItem Content="{i18n:Localize autoCompleteHotkey}"
+                                         Description="{i18n:Localize AdditionalHotkeyToolTip}">
+                    <ui:SettingsExpanderItem.Footer>
+                        <controls:HotkeyControl Hotkey="{Binding AutoCompleteHotkey2, Mode=TwoWay}" MinWidth="120" />
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+            </ui:SettingsExpander>
+
+            <!-- Select Previous Item -->
+            <ui:SettingsExpander Header="{i18n:Localize SelectPrevItemHotkey}"
+                                IconSource="Up">
+                <ui:SettingsExpander.Footer>
+                    <controls:HotkeyControl Hotkey="{Binding SelectPrevItemHotkey, Mode=TwoWay}" MinWidth="150" />
+                </ui:SettingsExpander.Footer>
+                <ui:SettingsExpanderItem Content="{i18n:Localize SelectPrevItemHotkey}"
+                                         Description="{i18n:Localize AdditionalHotkeyToolTip}">
+                    <ui:SettingsExpanderItem.Footer>
+                        <controls:HotkeyControl Hotkey="{Binding SelectPrevItemHotkey2, Mode=TwoWay}" MinWidth="120" />
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+            </ui:SettingsExpander>
+
+            <!-- Select Next Item -->
+            <ui:SettingsExpander Header="{i18n:Localize SelectNextItemHotkey}"
+                                IconSource="Down">
+                <ui:SettingsExpander.Footer>
+                    <controls:HotkeyControl Hotkey="{Binding SelectNextItemHotkey, Mode=TwoWay}" MinWidth="150" />
+                </ui:SettingsExpander.Footer>
+                <ui:SettingsExpanderItem Content="{i18n:Localize SelectNextItemHotkey}"
+                                         Description="{i18n:Localize AdditionalHotkeyToolTip}">
+                    <ui:SettingsExpanderItem.Footer>
+                        <controls:HotkeyControl Hotkey="{Binding SelectNextItemHotkey2, Mode=TwoWay}" MinWidth="120" />
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+            </ui:SettingsExpander>
+
+            <!-- Custom Query Hotkeys -->
+            <ui:SettingsExpander Header="{i18n:Localize customQueryHotkey}"
+                                IconSource="Keyboard"
+                                IsExpanded="False">
+                <StackPanel Spacing="8" Margin="0,8">
+                    <DataGrid ItemsSource="{Binding CustomPluginHotkeys}"
+                              SelectedItem="{Binding SelectedCustomPluginHotkey}"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True"
+                              CanUserResizeColumns="True"
+                              GridLinesVisibility="Horizontal"
+                              MinHeight="150"
+                              MaxHeight="300">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="{i18n:Localize hotkey}" 
+                                               Binding="{Binding Hotkey}" 
+                                               Width="180" />
+                            <DataGridTextColumn Header="{i18n:Localize customQuery}" 
+                                               Binding="{Binding ActionKeyword}" 
+                                               Width="*" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+                        <Button Content="{i18n:Localize delete}" 
+                                Command="{Binding CustomHotkeyDeleteCommand}"
+                                MinWidth="80" />
+                        <Button Content="{i18n:Localize edit}" 
+                                Command="{Binding CustomHotkeyEditCommand}"
+                                MinWidth="80" />
+                        <Button Content="{i18n:Localize add}" 
+                                Command="{Binding CustomHotkeyAddCommand}"
+                                MinWidth="80" />
+                    </StackPanel>
+                </StackPanel>
+            </ui:SettingsExpander>
+
+            <!-- Custom Shortcuts -->
+            <ui:SettingsExpander Header="{i18n:Localize customQueryShortcut}"
+                                IconSource="Edit"
+                                IsExpanded="False">
+                <StackPanel Spacing="8" Margin="0,8">
+                    <DataGrid ItemsSource="{Binding CustomShortcuts}"
+                              SelectedItem="{Binding SelectedCustomShortcut}"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True"
+                              CanUserResizeColumns="True"
+                              GridLinesVisibility="Horizontal"
+                              MinHeight="150"
+                              MaxHeight="300">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="{i18n:Localize customShortcut}" 
+                                               Binding="{Binding Key}" 
+                                               Width="180" />
+                            <DataGridTextColumn Header="{i18n:Localize customShortcutExpansion}" 
+                                               Binding="{Binding Value}" 
+                                               Width="*" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+                        <Button Content="{i18n:Localize delete}" 
+                                Command="{Binding CustomShortcutDeleteCommand}"
+                                MinWidth="80" />
+                        <Button Content="{i18n:Localize edit}" 
+                                Command="{Binding CustomShortcutEditCommand}"
+                                MinWidth="80" />
+                        <Button Content="{i18n:Localize add}" 
+                                Command="{Binding CustomShortcutAddCommand}"
+                                MinWidth="80" />
+                    </StackPanel>
+                </StackPanel>
+            </ui:SettingsExpander>
+
+            <!-- Builtin Shortcuts -->
+            <ui:SettingsExpander Header="{i18n:Localize builtinShortcuts}"
+                                IconSource="Library"
+                                IsExpanded="False">
+                <DataGrid ItemsSource="{Binding BuiltinShortcuts}"
+                          AutoGenerateColumns="False"
+                          IsReadOnly="True"
+                          CanUserResizeColumns="True"
+                          GridLinesVisibility="Horizontal"
+                          MinHeight="100"
+                          MaxHeight="200"
+                          Margin="0,8">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="{i18n:Localize customShortcut}" 
+                                           Binding="{Binding Key}" 
+                                           Width="180" />
+                        <DataGridTextColumn Header="{i18n:Localize builtinShortcutDescription}" 
+                                           Binding="{Binding LocalizedDescription}" 
+                                           Width="*" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </ui:SettingsExpander>
+
+            <!-- Hotkey format tip -->
+            <TextBlock Text="{i18n:Localize hotkeyFormatTip}" 
+                       Foreground="{DynamicResource TextFillColorSecondaryBrush}" 
+                       FontSize="12"
+                       Margin="0,8,0,0" />
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>

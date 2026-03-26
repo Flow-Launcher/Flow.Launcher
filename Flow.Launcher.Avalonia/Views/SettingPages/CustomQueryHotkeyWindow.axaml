@@ -1,0 +1,67 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i18n="using:Flow.Launcher.Avalonia.Resource"
+        xmlns:controls="using:Flow.Launcher.Avalonia.Views.Controls"
+        mc:Ignorable="d"
+        d:DesignWidth="520"
+        d:DesignHeight="320"
+        x:Class="Flow.Launcher.Avalonia.Views.SettingPages.CustomQueryHotkeyWindow"
+        x:DataType="views:CustomQueryHotkeyWindow"
+        xmlns:views="using:Flow.Launcher.Avalonia.Views.SettingPages"
+        Title="{i18n:Localize customQueryHotkey}"
+        Width="520"
+        SizeToContent="Height"
+        CanResize="False"
+        WindowStartupLocation="CenterOwner">
+
+    <Grid RowDefinitions="*,Auto" Margin="20">
+        <StackPanel Grid.Row="0" Spacing="16">
+            <TextBlock Text="{i18n:Localize customQueryHotkey}"
+                       FontSize="20"
+                       FontWeight="SemiBold" />
+
+            <TextBlock Text="Choose a hotkey and the query text to insert when it is pressed."
+                       TextWrapping="Wrap" />
+
+            <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto" Margin="0,4,0,0">
+                <TextBlock Grid.Row="0"
+                           Grid.Column="0"
+                           Margin="0,0,12,12"
+                           VerticalAlignment="Center"
+                           Text="{i18n:Localize hotkey}" />
+                <controls:HotkeyControl Grid.Row="0"
+                                        Grid.Column="1"
+                                        Hotkey="{Binding Hotkey, Mode=TwoWay}"
+                                        MinWidth="180" />
+
+                <TextBlock Grid.Row="1"
+                           Grid.Column="0"
+                           Margin="0,0,12,0"
+                           VerticalAlignment="Center"
+                           Text="{i18n:Localize customQuery}" />
+                <Grid Grid.Row="1" Grid.Column="1" ColumnDefinitions="*,Auto">
+                    <TextBox x:Name="ActionKeywordTextBox"
+                             Grid.Column="0"
+                             Margin="0,0,8,0"
+                             Text="{Binding ActionKeyword, Mode=TwoWay}" />
+                    <Button Grid.Column="1"
+                            Content="{i18n:Localize preview}"
+                            Click="OnPreviewClick" />
+                </Grid>
+            </Grid>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Spacing="10"
+                    Margin="0,20,0,0">
+            <Button Content="{i18n:Localize cancel}" Click="OnCancelClick" />
+            <Button Content="{Binding ConfirmButtonText}"
+                    Classes="accent"
+                    Click="OnDoneClick" />
+        </StackPanel>
+    </Grid>
+</Window>
