@@ -12,13 +12,20 @@
 
     <Grid Margin="{StaticResource SettingPanelMargin}">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-
+        <StackPanel
+            Grid.Row="0"
+            Margin="0 0 0 6"
+            HorizontalAlignment="Left"
+            Orientation="Horizontal">
+            <CheckBox Content="{DynamicResource flowlauncher_plugin_sys_skip_confirm}" IsChecked="{Binding Settings.SkipPowerActionConfirmation}" />
+        </StackPanel>
         <ListView
             x:Name="lbxCommands"
-            Grid.Row="0"
+            Grid.Row="1"
             Margin="{StaticResource SettingPanelItemTopBottomMargin}"
             BorderBrush="DarkGray"
             BorderThickness="1"
@@ -57,7 +64,7 @@
         </ListView>
 
         <StackPanel
-            Grid.Row="1"
+            Grid.Row="2"
             Margin="{StaticResource SettingPanelItemTopBottomMargin}"
             HorizontalAlignment="Right"
             Orientation="Horizontal">

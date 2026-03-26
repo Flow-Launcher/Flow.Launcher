@@ -131,6 +131,119 @@ namespace Flow.Launcher.Plugin.SharedCommands
         }
 
         /// <summary>
+        /// Attempts to delete a directory robustly with retry logic for locked files.
+        /// This method tries to delete files individually with retries, then removes empty directories.
+        /// Returns true if the directory was completely deleted, false if some files/folders remain.
+        /// </summary>
+        /// <param name="path">The directory path to delete</param>
+        /// <param name="maxRetries">Maximum number of retry attempts for locked files (default: 3)</param>
+        /// <param name="retryDelayMs">Delay in milliseconds between retries (default: 100ms)</param>
+        /// <returns>True if directory was fully deleted, false if some items remain</returns>
+        public static bool TryDeleteDirectoryRobust(string path, int maxRetries = 3, int retryDelayMs = 100)
+        {
+            if (!Directory.Exists(path))
+                return true;
+
+            bool fullyDeleted = true;
+
+            try
+            {
+                // First, try to delete all files in the directory tree
+                var files = Directory.GetFiles(path, "*", SearchOption.AllDirectories);
+                foreach (var file in files)
+                {
+                    bool fileDeleted = false;
+                    for (int attempt = 0; attempt <= maxRetries; attempt++)
+                    {
+                        try
+                        {
+                            // Remove read-only attribute if present
+                            var fileInfo = new FileInfo(file);
+                            if (fileInfo.Exists && fileInfo.IsReadOnly)
+                            {
+                                fileInfo.IsReadOnly = false;
+                            }
+
+                            File.Delete(file);
+                            fileDeleted = true;
+                            break;
+                        }
+                        catch (UnauthorizedAccessException)
+                        {
+                            // File is in use or access denied, wait and retry
+                            if (attempt < maxRetries)
+                            {
+                                System.Threading.Thread.Sleep(retryDelayMs);
+                            }
+                        }
+                        catch (IOException)
+                        {
+                            // File is in use, wait and retry
+                            if (attempt < maxRetries)
+                            {
+                                System.Threading.Thread.Sleep(retryDelayMs);
+                            }
+                        }
+                        catch
+                        {
+                            // Other exceptions, don't retry
+                            break;
+                        }
+                    }
+
+                    if (!fileDeleted)
+                    {
+                        fullyDeleted = false;
+                    }
+                }
+
+                // Then, try to delete all empty directories (from deepest to shallowest)
+                var directories = Directory.GetDirectories(path, "*", SearchOption.AllDirectories)
+                    .OrderByDescending(d => d.Length) // Delete deeper directories first
+                    .ToArray();
+
+                foreach (var directory in directories)
+                {
+                    try
+                    {
+                        if (Directory.Exists(directory) && !Directory.EnumerateFileSystemEntries(directory).Any())
+                        {
+                            Directory.Delete(directory, false);
+                        }
+                    }
+                    catch
+                    {
+                        // If we can't delete an empty directory, mark as not fully deleted
+                        fullyDeleted = false;
+                    }
+                }
+
+                // Finally, try to delete the root directory itself
+                try
+                {
+                    if (Directory.Exists(path) && !Directory.EnumerateFileSystemEntries(path).Any())
+                    {
+                        Directory.Delete(path, false);
+                    }
+                    else if (Directory.Exists(path))
+                    {
+                        fullyDeleted = false;
+                    }
+                }
+                catch
+                {
+                    fullyDeleted = false;
+                }
+            }
+            catch
+            {
+                fullyDeleted = false;
+            }
+
+            return fullyDeleted;
+        }
+
+        /// <summary>
         /// Checks if a directory exists
         /// </summary>
         /// <param name="path"></param>

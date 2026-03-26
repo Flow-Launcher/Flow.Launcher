@@ -342,6 +342,7 @@
                     Margin="12 0 12 0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Bottom"
+                    Loaded="ProgressBar_Loaded"
                     StrokeThickness="2"
                     Visibility="{Binding ProgressBarVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     X1="-100"

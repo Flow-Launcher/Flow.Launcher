@@ -19,6 +19,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_url">Địa chỉ URL</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_search">Tìm kiếm</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Use Search Query Autocomplete</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_max_suggestions">Max Suggestions</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">Tự động hoàn thành dữ liệu từ:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">Vui lòng chọn tìm kiếm trên web</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">Bạn có chắc chắn muốn xóa {0} không?</system:String>

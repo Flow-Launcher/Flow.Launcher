@@ -12,6 +12,7 @@
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_comma">Virgule (,)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_dot">Point (.)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_max_decimal_places">Décimales max.</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_use_thousands_separator">Afficher le séparateur de milliers dans les résultats</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_failed_to_copy">Échec de la copie, réessayer plus tard</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_show_error_message">Afficher le message d'erreur lorsque le calcul échoue</system:String>
 </ResourceDictionary>

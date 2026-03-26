@@ -80,6 +80,8 @@ Nevykonali sa žiadne zmeny.</system:String>
     <system:String x:Key="useLogonTaskForStartupTooltip">Po odinštalovaní musíte úlohu manuálne odstrániť (Flow.Launcher Startup) cez Plánovač úloh</system:String>
     <system:String x:Key="setAutoStartFailed">Chybné nastavenie spustenia pri spustení</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Schovať Flow Launcher po strate fokusu</system:String>
+    <system:String x:Key="showTaskbarWhenOpened">Zobraziť panel úloh, keď je Flow Launcher otvorený</system:String>
+    <system:String x:Key="showTaskbarWhenOpenedToolTip">Dočasne zobraziť panel úloh pri otvorení Flow Launchera, užitočné pri automatickom skrývaní panela úloh.</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Nezobrazovať upozornenia na novú verziu</system:String>
     <system:String x:Key="SearchWindowPosition">Poloha vyhľadávacieho okna</system:String>
     <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Zapamätať si poslednú pozíciu</system:String>
@@ -236,6 +238,9 @@ Nevykonali sa žiadne zmeny.</system:String>
     <system:String x:Key="fileNotFoundMessage">Súbor plugin.json sa nenašiel v rozbalenom zip súbore, alebo táto cesta {0} neexistuje</system:String>
     <system:String x:Key="pluginExistAlreadyMessage">Plugin s rovnakým ID už existuje, alebo ide o vyššiu verziu ako stiahnutý plugin</system:String>
     <system:String x:Key="errorCreatingSettingPanel">Chyba pri vytváraní panelu nastavení pre plugin {0}:{1}{2}</system:String>
+    <system:String x:Key="pluginMinimumAppVersionUnsatisfiedTitle">Plugin {0} vyžaduje na spustenie minimálnu verziu Flow Launcheru {1}</system:String>
+    <system:String x:Key="pluginMinimumAppVersionUnsatisfiedMessage">Flow Launcher nespĺňa minimálne požiadavky na verziu na spustenie {0}. Chcete pokračovať v inštalácii?{1}{1}Odporúčame aktualizovať Flow Launcher na najnovšiu verziu, aby {0} fungoval bez problémov.</system:String>
+    <system:String x:Key="pluginJsonInvalidOrCorrupted">Inštalácia pluginu zlyhala z dôvodu neplatného alebo poškodeného súboru plugin.json</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Repozitár pluginov</system:String>

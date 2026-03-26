@@ -352,6 +352,8 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                     Context.API.AddActionKeyword(Context.CurrentPluginMetadata.ID, newKeyword);
                     break;
                 case (false, false):
+                    // Keyword was disabled and remains disabled, but the keyword text was changed.
+                    // No action keyword registration changes needed; the model will be updated below.
                     break;
             }
 

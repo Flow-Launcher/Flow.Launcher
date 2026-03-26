@@ -19,6 +19,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_url">URL</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_search">検索</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">検索クエリのサジェストを有効にする</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_max_suggestions">Max Suggestions</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">サジェストデータの情報源：</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">web検索を選択してください</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">{0} を削除してもよろしいですか？</system:String>
