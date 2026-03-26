@@ -306,3 +306,7 @@ Output-Performance.txt
 .vscode
 .history**/codemap.md
 .slim/
+
+# Local planning artifacts
+.sisyphus/
+nul
