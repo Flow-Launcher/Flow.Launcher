@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using Avalonia.VisualTree;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Avalonia.ViewModel;
 using Flow.Launcher.Infrastructure.UserSettings;
@@ -20,6 +21,9 @@ public partial class MainWindow : Window
     private TextBox? _queryTextBox;
     private Settings? _settings;
     private KeyGesture? _previewHotkeyGesture;
+    private KeyGesture? _openHistoryHotkeyGesture;
+    private KeyGesture? _cycleHistoryUpHotkeyGesture;
+    private KeyGesture? _cycleHistoryDownHotkeyGesture;
 
     public MainWindow()
     {
@@ -36,10 +40,11 @@ public partial class MainWindow : Window
         // Get settings for hotkey configuration
         _settings = Ioc.Default.GetRequiredService<Settings>();
         _settings.PropertyChanged += OnSettingsPropertyChanged;
-        UpdatePreviewHotkeyGesture();
+        UpdateHotkeyGestures();
 
         // Get reference to the query text box
         _queryTextBox = this.FindControl<TextBox>("QueryTextBox");
+        _queryTextBox?.AddHandler(KeyDownEvent, OnQueryTextBoxKeyDown, RoutingStrategies.Tunnel, handledEventsToo: true);
 
         // Subscribe to window events
         this.Deactivated += OnWindowDeactivated;
@@ -51,16 +56,23 @@ public partial class MainWindow : Window
 
     private void OnSettingsPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
-        if (e.PropertyName == nameof(Settings.PreviewHotkey))
+        if (e.PropertyName == nameof(Settings.PreviewHotkey)
+            || e.PropertyName == nameof(Settings.OpenHistoryHotkey)
+            || e.PropertyName == nameof(Settings.CycleHistoryUpHotkey)
+            || e.PropertyName == nameof(Settings.CycleHistoryDownHotkey))
         {
-            UpdatePreviewHotkeyGesture();
+            UpdateHotkeyGestures();
         }
     }
 
-    private void UpdatePreviewHotkeyGesture()
+    private void UpdateHotkeyGestures()
     {
         if (_settings == null) return;
+
         _previewHotkeyGesture = ParseKeyGesture(_settings.PreviewHotkey);
+        _openHistoryHotkeyGesture = ParseKeyGesture(_settings.OpenHistoryHotkey);
+        _cycleHistoryUpHotkeyGesture = ParseKeyGesture(_settings.CycleHistoryUpHotkey);
+        _cycleHistoryDownHotkeyGesture = ParseKeyGesture(_settings.CycleHistoryDownHotkey);
     }
 
     private static KeyGesture? ParseKeyGesture(string hotkey)
@@ -134,13 +146,8 @@ public partial class MainWindow : Window
     {
         base.OnKeyDown(e);
 
-        // Handle Preview hotkey dynamically
-        if (_previewHotkeyGesture != null && 
-            e.Key == _previewHotkeyGesture.Key && 
-            e.KeyModifiers == _previewHotkeyGesture.KeyModifiers)
+        if (TryHandleDynamicHotkeys(e))
         {
-            _viewModel?.TogglePreviewCommand.Execute(null);
-            e.Handled = true;
             return;
         }
 
@@ -206,6 +213,62 @@ public partial class MainWindow : Window
     {
         Show();
         Activate();
+    }
+
+    private void OnQueryTextBoxKeyDown(object? sender, KeyEventArgs e)
+    {
+        if (sender is not TextBox)
+        {
+            return;
+        }
+
+        TryHandleDynamicHotkeys(e);
+    }
+
+    private bool TryHandleDynamicHotkeys(KeyEventArgs e)
+    {
+        if (_openHistoryHotkeyGesture != null
+            && e.Key == _openHistoryHotkeyGesture.Key
+            && e.KeyModifiers == _openHistoryHotkeyGesture.KeyModifiers)
+        {
+            _viewModel?.LoadHistoryCommand.Execute(null);
+            e.Handled = true;
+            return true;
+        }
+
+        if (e.Source is Visual source && source.FindAncestorOfType<TextBox>() == null && e.Source is not TextBox)
+        {
+            return false;
+        }
+
+        if (_previewHotkeyGesture != null
+            && e.Key == _previewHotkeyGesture.Key
+            && e.KeyModifiers == _previewHotkeyGesture.KeyModifiers)
+        {
+            _viewModel?.TogglePreviewCommand.Execute(null);
+            e.Handled = true;
+            return true;
+        }
+
+        if (_cycleHistoryUpHotkeyGesture != null
+            && e.Key == _cycleHistoryUpHotkeyGesture.Key
+            && e.KeyModifiers == _cycleHistoryUpHotkeyGesture.KeyModifiers)
+        {
+            _viewModel?.ReverseHistoryCommand.Execute(null);
+            e.Handled = true;
+            return true;
+        }
+
+        if (_cycleHistoryDownHotkeyGesture != null
+            && e.Key == _cycleHistoryDownHotkeyGesture.Key
+            && e.KeyModifiers == _cycleHistoryDownHotkeyGesture.KeyModifiers)
+        {
+            _viewModel?.ForwardHistoryCommand.Execute(null);
+            e.Handled = true;
+            return true;
+        }
+
+        return false;
     }
 
     private void HandleQueryTextFocusRequest(QueryTextFocusRequest request)

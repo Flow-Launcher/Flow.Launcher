@@ -8,9 +8,11 @@ using System.Threading.Channels;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Flow.Launcher.Avalonia.Storage;
 using Flow.Launcher.Avalonia.Resource;
 using Flow.Launcher.Avalonia.Views.SettingPages;
 using Flow.Launcher.Core.Plugin;
+using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
@@ -23,7 +25,8 @@ namespace Flow.Launcher.Avalonia.ViewModel;
 public enum ActiveView
 {
     Results,
-    ContextMenu
+    ContextMenu,
+    History
 }
 
 public enum QueryTextFocusMode
@@ -41,9 +44,13 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
 {
     private static readonly string ClassName = nameof(MainViewModel);
     private readonly Settings _settings;
+    private readonly FlowLauncherJsonStorage<History> _historyItemsStorage;
+    private readonly History _history;
     private CancellationTokenSource? _queryTokenSource;
     private string? _ignoredQueryText;
+    private string _queryTextBeforeHistory = string.Empty;
     private bool _pluginsReady;
+    private int _lastHistoryIndex = 1;
 
     // Channel-based debouncing for result updates (matches WPF approach)
     private readonly Channel<ResultsForUpdate> _resultsUpdateChannel;
@@ -73,6 +80,9 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
     private ResultsViewModel _contextMenu;
 
     [ObservableProperty]
+    private ResultsViewModel _historyView;
+
+    [ObservableProperty]
     private ActiveView _activeView = ActiveView.Results;
 
     [ObservableProperty]
@@ -92,18 +102,26 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
     public bool IsContextMenuViewActive => ActiveView == ActiveView.ContextMenu;
 
     /// <summary>
+    /// Whether the history view is currently active.
+    /// </summary>
+    public bool IsHistoryViewActive => ActiveView == ActiveView.History;
+
+    /// <summary>
     /// Whether to show the results/context menu area (separator + list).
     /// Based on whether we have a non-empty query - NOT on collection count to prevent flickering.
     /// </summary>
-    public bool ShowResultsArea => !string.IsNullOrWhiteSpace(QueryText) || ContextMenu.Results.Count > 0;
+    public bool ShowResultsArea => ActiveView == ActiveView.History || !string.IsNullOrWhiteSpace(QueryText) || ContextMenu.Results.Count > 0;
 
     public Settings Settings => _settings;
 
     public MainViewModel(Settings settings)
     {
         _settings = settings;
+        _historyItemsStorage = new FlowLauncherJsonStorage<History>();
+        _history = _historyItemsStorage.Load();
         _results = new ResultsViewModel(settings);
         _contextMenu = new ResultsViewModel(settings);
+        _historyView = new ResultsViewModel(settings);
 
         // Initialize channel-based debouncing for result updates
         _resultsUpdateChannel = Channel.CreateUnbounded<ResultsForUpdate>();
@@ -123,6 +141,14 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
             if (e.PropertyName == nameof(ResultsViewModel.SelectedItem) && IsContextMenuViewActive)
             {
                 PreviewSelectedItem = _contextMenu.SelectedItem;
+            }
+        };
+
+        _historyView.PropertyChanged += (s, e) =>
+        {
+            if (e.PropertyName == nameof(ResultsViewModel.SelectedItem) && IsHistoryViewActive)
+            {
+                PreviewSelectedItem = _historyView.SelectedItem;
             }
         };
         
@@ -176,9 +202,16 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
     {
         OnPropertyChanged(nameof(IsResultsViewActive));
         OnPropertyChanged(nameof(IsContextMenuViewActive));
+        OnPropertyChanged(nameof(IsHistoryViewActive));
         OnPropertyChanged(nameof(ShowResultsArea));
-        
-        PreviewSelectedItem = value == ActiveView.Results ? Results.SelectedItem : ContextMenu.SelectedItem;
+
+        PreviewSelectedItem = value switch
+        {
+            ActiveView.Results => Results.SelectedItem,
+            ActiveView.ContextMenu => ContextMenu.SelectedItem,
+            ActiveView.History => HistoryView.SelectedItem,
+            _ => null,
+        };
     }
 
     partial void OnIsQueryRunningChanged(bool value)
@@ -219,6 +252,66 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
         QueryTextFocusRequested?.Invoke(request);
     }
 
+    [RelayCommand]
+    private void ReverseHistory()
+    {
+        var historyItems = _history.LastOpenedHistoryItems;
+        if (historyItems.Count == 0)
+        {
+            return;
+        }
+
+        ApplyHistoryQueryText(historyItems[^_lastHistoryIndex].Query);
+        if (_lastHistoryIndex < historyItems.Count)
+        {
+            _lastHistoryIndex++;
+        }
+    }
+
+    [RelayCommand]
+    private void ForwardHistory()
+    {
+        var historyItems = _history.LastOpenedHistoryItems;
+        if (historyItems.Count == 0)
+        {
+            return;
+        }
+
+        ApplyHistoryQueryText(historyItems[^_lastHistoryIndex].Query);
+        if (_lastHistoryIndex > 1)
+        {
+            _lastHistoryIndex--;
+        }
+    }
+
+    [RelayCommand]
+    private void LoadHistory()
+    {
+        if (ActiveView == ActiveView.Results)
+        {
+            _queryTextBeforeHistory = QueryText;
+            ActiveView = ActiveView.History;
+            QueryText = string.Empty;
+            _ = QueryAsync();
+
+            if (HistoryView.Results.Count > 0)
+            {
+                HistoryView.SelectedIndex = 0;
+                HistoryView.SelectedItem = HistoryView.Results[0];
+            }
+
+            return;
+        }
+
+        if (ActiveView == ActiveView.History)
+        {
+            BackToResultsFromHistory();
+            return;
+        }
+
+        BackToResults();
+    }
+
     /// <summary>
     /// Toggle the main window visibility. Called by global hotkey.
     /// </summary>
@@ -241,9 +334,12 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
     public void Hide()
     {
         MainWindowVisibility = false;
+        _lastHistoryIndex = 1;
+        _queryTextBeforeHistory = string.Empty;
         QueryText = "";
         ActiveView = ActiveView.Results;
         ContextMenu.Clear();
+        HistoryView.Clear();
         HideRequested?.Invoke();
         Log.Info(ClassName, "Hide requested");
     }
@@ -254,9 +350,12 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
     public void Show()
     {
         MainWindowVisibility = true;
+        _lastHistoryIndex = 1;
+        _queryTextBeforeHistory = string.Empty;
         QueryText = "";
         ActiveView = ActiveView.Results;
         ContextMenu.Clear();
+        HistoryView.Clear();
         ShowRequested?.Invoke();
         RequestQueryTextFocus(new QueryTextFocusRequest(true, true, QueryTextFocusMode.SelectAll));
         Log.Info(ClassName, "Show requested");
@@ -268,8 +367,11 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
     public void ShowWithInjectedQuery(string queryText)
     {
         MainWindowVisibility = true;
+        _lastHistoryIndex = 1;
+        _queryTextBeforeHistory = string.Empty;
         ActiveView = ActiveView.Results;
         ContextMenu.Clear();
+        HistoryView.Clear();
         QueryText = queryText;
         ShowRequested?.Invoke();
         RequestQueryTextFocus(new QueryTextFocusRequest(true, true, QueryTextFocusMode.CaretAtEnd));
@@ -310,6 +412,13 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
         _queryTokenSource = new CancellationTokenSource();
         var token = _queryTokenSource.Token;
         var queryText = QueryText.Trim();
+
+        if (ActiveView == ActiveView.History)
+        {
+            QueryHistory(queryText);
+            IsQueryRunning = false;
+            return;
+        }
 
         // Only clear results when query is empty
         if (string.IsNullOrWhiteSpace(queryText))
@@ -381,6 +490,51 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
         catch (OperationCanceledException) { }
         catch (Exception e) { Log.Exception(ClassName, "Query error", e); }
         finally { if (!token.IsCancellationRequested) IsQueryRunning = false; }
+    }
+
+    private void QueryHistory(string queryText)
+    {
+        var normalizedQuery = queryText.ToLowerInvariant().Trim();
+        var historyItems = _history.LastOpenedHistoryItems.OrderByDescending(item => item.ExecutedDateTime).ToList();
+        var historyResults = historyItems
+            .Select((item, index) => CreateHistoryResult(item, historyItems.Count - index))
+            .ToList();
+
+        if (!string.IsNullOrEmpty(normalizedQuery))
+        {
+            historyResults = historyResults.Where(result =>
+            {
+                var titleMatch = App.API.FuzzySearch(normalizedQuery, result.Title);
+                if (titleMatch.IsSearchPrecisionScoreMet())
+                {
+                    result.Score = titleMatch.Score;
+                    return true;
+                }
+
+                var subtitleMatch = App.API.FuzzySearch(normalizedQuery, result.SubTitle);
+                if (subtitleMatch.IsSearchPrecisionScoreMet())
+                {
+                    result.Score = subtitleMatch.Score;
+                    return true;
+                }
+
+                return false;
+            }).ToList();
+        }
+
+        HistoryView.ReplaceResults(historyResults);
+        HasResults = HistoryView.Results.Count > 0;
+    }
+
+    private static ResultViewModel CreateHistoryResult(LastOpenedHistoryResult item, int score)
+    {
+        return new ResultViewModel
+        {
+            Title = item.Title,
+            SubTitle = item.SubTitle,
+            Score = score,
+            HistoryItem = item,
+        };
     }
 
     private Task<List<ResultViewModel>> QueryPluginAsync(PluginPair plugin, Query query, CancellationToken token)
@@ -498,13 +652,46 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
         RequestQueryTextFocus(new QueryTextFocusRequest(false, false, QueryTextFocusMode.CaretAtEnd));
     }
 
+    private void ApplyHistoryQueryText(string historyQueryText)
+    {
+        QueryText = historyQueryText;
+        RequestQueryTextFocus(new QueryTextFocusRequest(false, false, QueryTextFocusMode.CaretAtEnd));
+    }
+
+    private void BackToResultsFromHistory(bool restoreQueryText = true)
+    {
+        ActiveView = ActiveView.Results;
+        HistoryView.Clear();
+        HasResults = Results.Results.Count > 0;
+
+        if (!restoreQueryText)
+        {
+            return;
+        }
+
+        var queryToRestore = _queryTextBeforeHistory;
+        _queryTextBeforeHistory = string.Empty;
+        ApplyHistoryQueryText(queryToRestore);
+    }
+
+    private async Task RecordHistoryAsync(string executedQueryText, Result result)
+    {
+        _history.Add(executedQueryText, result);
+        await _historyItemsStorage.SaveAsync();
+        _lastHistoryIndex = 1;
+    }
+
     [RelayCommand]
     private void Esc()
     {
-        // If in context menu, go back to results; otherwise hide window
+        // If in context menu/history, go back to results; otherwise hide window
         if (ActiveView == ActiveView.ContextMenu)
         {
             BackToResults();
+        }
+        else if (ActiveView == ActiveView.History)
+        {
+            BackToResultsFromHistory();
         }
         else
         {
@@ -526,10 +713,17 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
     [RelayCommand]
     private async Task OpenResultAsync()
     {
+        var queryResultsSelected = ActiveView == ActiveView.Results;
+        var executedQueryText = QueryText.Trim();
         Result? result;
         if (ActiveView == ActiveView.ContextMenu)
         {
             result = ContextMenu.SelectedItem?.PluginResult;
+        }
+        else if (ActiveView == ActiveView.History)
+        {
+            await OpenHistoryResultAsync();
+            return;
         }
         else
         {
@@ -542,6 +736,11 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
         {
             if (await result.ExecuteAsync(new ActionContext { SpecialKeyState = SpecialKeyState.Default }))
             {
+                if (queryResultsSelected)
+                {
+                    await RecordHistoryAsync(executedQueryText, result);
+                }
+
                 Hide();
             }
             else if (ActiveView == ActiveView.ContextMenu)
@@ -549,8 +748,43 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
                 // If context menu action didn't hide, go back to results
                 BackToResults();
             }
+            else if (queryResultsSelected)
+            {
+                await RecordHistoryAsync(executedQueryText, result);
+            }
         }
         catch (Exception e) { Log.Exception(ClassName, "Execute error", e); }
+    }
+
+    private async Task OpenHistoryResultAsync()
+    {
+        var historyItem = HistoryView.SelectedItem?.HistoryItem;
+        if (historyItem == null)
+        {
+            return;
+        }
+
+        try
+        {
+            var freshResult = await Helper.ResultHelper.PopulateResultsAsync(historyItem.PluginID, historyItem.Query, historyItem.Title, historyItem.SubTitle, historyItem.RecordKey);
+            if (freshResult != null)
+            {
+                var shouldHide = await freshResult.ExecuteAsync(new ActionContext { SpecialKeyState = SpecialKeyState.Default });
+                if (shouldHide)
+                {
+                    Hide();
+                }
+
+                return;
+            }
+
+            BackToResultsFromHistory(false);
+            ApplyHistoryQueryText(historyItem.Query);
+        }
+        catch (Exception e)
+        {
+            Log.Exception(ClassName, "Execute history error", e);
+        }
     }
 
     /// <summary>
@@ -559,6 +793,11 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
     [RelayCommand]
     private void LoadContextMenu()
     {
+        if (ActiveView == ActiveView.History)
+        {
+            return;
+        }
+
         var selectedResult = Results.SelectedItem?.PluginResult;
         if (selectedResult == null) return;
 
@@ -591,6 +830,8 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
     {
         if (ActiveView == ActiveView.ContextMenu)
             ContextMenu.SelectNextItem();
+        else if (ActiveView == ActiveView.History)
+            HistoryView.SelectNextItem();
         else
             Results.SelectNextItem();
     }
@@ -600,6 +841,8 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
     {
         if (ActiveView == ActiveView.ContextMenu)
             ContextMenu.SelectPrevItem();
+        else if (ActiveView == ActiveView.History)
+            HistoryView.SelectPrevItem();
         else
             Results.SelectPrevItem();
     }

@@ -109,6 +109,13 @@
                                              DataContext="{Binding ContextMenu}" />
                     </StackPanel>
 
+                    <!-- History List (visible when in History view) -->
+                    <StackPanel Name="HistoryArea" Grid.Column="0"
+                                IsVisible="{Binding IsHistoryViewActive}">
+                        <views:ResultListBox Name="HistoryListBox"
+                                             DataContext="{Binding HistoryView}" />
+                    </StackPanel>
+
                     <!-- Preview Panel Separator -->
                     <GridSplitter Name="PreviewSplitter"
                                   Grid.Column="1"

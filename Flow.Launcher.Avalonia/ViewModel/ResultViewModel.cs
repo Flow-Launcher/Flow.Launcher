@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Flow.Launcher.Avalonia.Helper;
+using Flow.Launcher.Avalonia.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 
@@ -41,6 +42,11 @@ public partial class ResultViewModel : ObservableObject
     /// The underlying plugin result. Used for executing actions and accessing additional properties.
     /// </summary>
     public Result? PluginResult { get; set; }
+
+    /// <summary>
+    /// Backing history item when this row represents an item from the history view.
+    /// </summary>
+    public LastOpenedHistoryResult? HistoryItem { get; set; }
 
     // Computed properties for display
     public bool ShowIcon => !string.IsNullOrEmpty(IconPath);
