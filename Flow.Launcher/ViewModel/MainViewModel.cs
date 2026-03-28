@@ -1091,7 +1091,7 @@ namespace Flow.Launcher.ViewModel
                     Settings.EnablePinnedResults &&
                     Settings.PinnedResultsLayout == PinnedLayoutOptions.Grid)
                 {
-                    value = Settings.MaxResultsToShow * 0.25;
+                    value = Math.Max(1, Settings.MaxResultsToShow * 0.25);
                 }
 
                 if (value != _pinnedGridReservedResultCount)
@@ -1099,7 +1099,8 @@ namespace Flow.Launcher.ViewModel
                     _pinnedGridReservedResultCount = value;
                     OnPropertyChanged(nameof(PinnedGridHeightForEmptyQuery));
                 }
-                return value;
+
+                return _pinnedGridReservedResultCount;
             }
         }
 
