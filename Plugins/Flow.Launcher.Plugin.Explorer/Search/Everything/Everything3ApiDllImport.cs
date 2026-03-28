@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -10,16 +11,15 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         public static void Load(string directory)
         {
             var path = Path.Combine(directory, Dll);
-            int code = LoadLibrary(path);
-            if (code == 0)
+            IntPtr handle = LoadLibrary(path);
+            if (handle == IntPtr.Zero)
             {
-                int err = Marshal.GetLastPInvokeError();
-                Marshal.ThrowExceptionForHR(err);
+                throw new Win32Exception(Marshal.GetLastPInvokeError());
             }
         }
 
         [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
-        private static extern int LoadLibrary(string name);
+        private static extern IntPtr LoadLibrary(string name);
         private const string Dll = "Everything3.dll";
 
         [DllImport(Dll, CharSet = CharSet.Unicode)]
