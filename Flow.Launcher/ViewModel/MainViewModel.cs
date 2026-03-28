@@ -1099,7 +1099,7 @@ namespace Flow.Launcher.ViewModel
             get
             {
                 // 10 is the sum of the top and bottom margin of the pinned result grid
-                return Math.Max(0, (Settings.ItemHeightSize * PinnedGridReservedResultCount) - 10);
+                return Math.Max(0, (Settings.ItemHeightSize * PinnedGridReservedResultCount) - 8);
             }
         }
 

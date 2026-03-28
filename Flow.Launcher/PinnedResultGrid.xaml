@@ -10,7 +10,7 @@
     mc:Ignorable="d">
     <Border
         Height="{Binding PinnedGridHeightForEmptyQuery}"
-        Margin="10 5 10 5"
+        Margin="10 8 10 0"
         Padding="8 4"
         Background="#0FFFFFFF"
         CornerRadius="8">
