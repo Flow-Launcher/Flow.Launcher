@@ -75,12 +75,12 @@ namespace Flow.Launcher.ViewModel
         {
             get
             {
-                if (_mainVM?.Results == this &&
-                    _mainVM.QueryResultsSelected() &&
-                    string.IsNullOrEmpty(_mainVM.QueryText) &&
+                if (_mainVM != null &&
+                    _mainVM.ResultsSelected(this) &&  // Results are selected
+                    _mainVM.QueryResultsSelected() &&  // Is query results
                     _mainVM.PinnedGridReservedResultCount > 0)
                 {
-                    return Math.Max(0, MaxResults - _mainVM.PinnedGridReservedResultCount) * _settings.ItemHeightSize;
+                    return Math.Max(0, MaxResults - Math.Floor(_mainVM.PinnedGridReservedResultCount)) * _settings.ItemHeightSize;
                 }
 
                 var newResultsCount = MaxResults;

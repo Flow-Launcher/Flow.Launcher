@@ -1075,7 +1075,7 @@ namespace Flow.Launcher.ViewModel
             set => Settings.WindowHeightSize = value;
         }
 
-        public int PinnedGridReservedResultCount
+        public double PinnedGridReservedResultCount
         {
             get
             {
@@ -1083,7 +1083,7 @@ namespace Flow.Launcher.ViewModel
                     Settings.EnablePinnedResults &&
                     Settings.PinnedResultsLayout == PinnedLayoutOptions.Grid)
                 {
-                    return Math.Max(2, (int)Math.Round(Settings.MaxResultsToShow * 0.25, MidpointRounding.AwayFromZero));
+                    return Settings.MaxResultsToShow * 0.25;
                 }
 
                 return 0;
@@ -1094,6 +1094,7 @@ namespace Flow.Launcher.ViewModel
         {
             get
             {
+                // 10 is the sum of the top and bottom margin of the pinned result grid
                 return Math.Max(0, (Settings.ItemHeightSize * PinnedGridReservedResultCount) - 10);
             }
         }
