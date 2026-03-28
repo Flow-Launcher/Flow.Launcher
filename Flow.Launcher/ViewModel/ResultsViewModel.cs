@@ -55,14 +55,16 @@ namespace Flow.Launcher.ViewModel
             };
             _mainVM.PropertyChanged += (s, e) =>
             {
-                if (e.PropertyName == nameof(_mainVM.QueryText) ||
-                    e.PropertyName == nameof(_mainVM.PinnedGridReservedResultCount))
+                switch (e.PropertyName)
                 {
-                    OnPropertyChanged(nameof(MaxHeight));
+                    case nameof(_mainVM.QueryText):
+                    case nameof(_mainVM.PinnedGridReservedResultCount):
+                        OnPropertyChanged(nameof(MaxHeight));
+                        break;
                 }
             };
         }
-        
+
         #endregion
 
         #region Properties

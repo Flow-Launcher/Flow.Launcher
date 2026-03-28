@@ -1090,7 +1090,13 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        public double PinnedGridHeightForEmptyQuery => Math.Max(0, (Settings.ItemHeightSize * PinnedGridReservedResultCount) - 10);
+        public double PinnedGridHeightForEmptyQuery
+        {
+            get
+            {
+                return Math.Max(0, (Settings.ItemHeightSize * PinnedGridReservedResultCount) - 10);
+            }
+        }
 
         public double QueryBoxFontSize
         {
