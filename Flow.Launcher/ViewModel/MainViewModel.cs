@@ -1479,6 +1479,7 @@ namespace Flow.Launcher.ViewModel
                     {
                         _pinned.AddOrRemove(selected, string.Empty, isResultPinned);
                         App.API.ShowMsg(Localize.success());
+                        App.API.ReQuery();
                         return false;
                     }
                 },
@@ -1492,6 +1493,7 @@ namespace Flow.Launcher.ViewModel
                     {
                         _pinned.AddOrRemove(selected, queryToPin, isQueryPinned);
                         App.API.ShowMsg(Localize.success());
+                        App.API.ReQuery();
                         return false;
                     }
                 }
