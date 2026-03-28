@@ -175,9 +175,6 @@ namespace Flow.Launcher.ViewModel
                             QueryResults();
                         }
                         break;
-                    case nameof(PreviewSelectedItem):
-                        _ = UpdatePreviewAsync();
-                        break;
                 }
             };
 
@@ -1195,7 +1192,9 @@ namespace Flow.Launcher.ViewModel
                 if (_previewSelectedItem != value)
                 {
                     _previewSelectedItem = value;
+                    _ = UpdatePreviewAsync();
                     OnPropertyChanged();
+                    System.Diagnostics.Debug.WriteLine("Update preview");
                 }
             }
         }
