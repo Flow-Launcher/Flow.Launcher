@@ -46,10 +46,9 @@ namespace Flow.Launcher.Plugin.Explorer
             searchManager = new SearchManager(Settings, Context);
             ResultManager.Init(Context, Settings);
 
-            EverythingApiDllImport.Load(Path.Combine(Context.CurrentPluginMetadata.PluginDirectory, "EverythingSDK",
-                Environment.Is64BitProcess ? "x64" : "x86"));
-            Everything3ApiDllImport.Load(Path.Combine(Context.CurrentPluginMetadata.PluginDirectory, "EverythingSDK",
-                Environment.Is64BitProcess ? "x64" : "x86"));
+            var sdkDirectory = Path.Combine(Context.CurrentPluginMetadata.PluginDirectory, "EverythingSDK",
+                Environment.Is64BitProcess ? "x64" : "x86");
+            EverythingApi.ConfigureEverythingSupport(Settings.EnableEverything15Support, sdkDirectory);
             return Task.CompletedTask;
         }
 

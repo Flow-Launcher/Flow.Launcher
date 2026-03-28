@@ -13,6 +13,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         private const int BufferSize = 4096;
 
         private static readonly SemaphoreSlim _semaphore = new(1, 1);
+        private static volatile bool _enableEverything15Support = true;
 
         // cached buffer to remove redundant allocations. semaphore is used to make sure the access to the buffer is thread safe.
         private static readonly StringBuilder buffer = new(BufferSize);
@@ -32,13 +33,42 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         const uint EVERYTHING_REQUEST_FULL_PATH_AND_FILE_NAME = 0x00000004u;
         const uint EVERYTHING_REQUEST_RUN_COUNT = 0x00000400u;
 
+        public static bool EnableEverything15Support => _enableEverything15Support;
+
+        public static void ConfigureEverythingSupport(bool enableEverything15Support, string sdkDirectory)
+        {
+            _semaphore.Wait();
+            try
+            {
+                _enableEverything15Support = enableEverything15Support;
+
+                if (enableEverything15Support)
+                {
+                    EverythingApiDllImport.Unload();
+                    Everything3ApiDllImport.Load(sdkDirectory);
+                }
+                else
+                {
+                    Everything3ApiDllImport.Unload();
+                    EverythingApiDllImport.Load(sdkDirectory);
+                }
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
+        }
+
         /// <summary>
         /// Checks whether the sort option is Fast Sort.
         /// </summary>
         public static bool IsFastSortOption(EverythingSortOption sortOption)
         {
-            if (TryConnectEverything3(out var client))
+            if (EnableEverything15Support)
             {
+                if (!TryConnectEverything3(out var client))
+                    throw new IPCErrorException();
+
                 try
                 {
                     if (TryConvertSortOption(sortOption, out var propertyId, out _))
@@ -57,6 +87,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                     // Throw again to the caller
                     CheckAndThrowExceptionOnErrorFromEverything3();
                 }
+
+                return true;
             }
 
             var fastSortOptionEnabled = EverythingApiDllImport.Everything_IsFastSort(sortOption);
@@ -81,12 +113,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
             try
             {
-                if (TryUseEverything3Client(static _ => { }))
-                    return true;
+                if (EnableEverything15Support)
+                    return TryUseEverything3Client(static _ => { });
 
                 _ = EverythingApiDllImport.Everything_GetMajorVersion();
-                var result = EverythingApiDllImport.Everything_GetLastError() != StateCode.IPCError;
-                return result;
+                return EverythingApiDllImport.Everything_GetLastError() != StateCode.IPCError;
             }
             finally
             {
@@ -145,8 +176,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
                 var searchText = builder.ToString();
 
-                if (TryConnectEverything3(out var client))
+                if (EnableEverything15Support)
                 {
+                    if (!TryConnectEverything3(out var client))
+                        throw new IPCErrorException();
+
                     await foreach (var result in SearchWithEverything3Async(client, option, searchText, useRegex, token))
                         yield return result;
 
@@ -254,9 +288,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             await _semaphore.WaitAsync(TimeSpan.FromSeconds(1));
             try
             {
-                if (TryUseEverything3Client(client =>
-                    _ = Everything3ApiDllImport.Everything3_IncRunCountFromFilenameW(client, fileOrFolder)))
+                if (EnableEverything15Support)
+                {
+                    _ = TryUseEverything3Client(client =>
+                        _ = Everything3ApiDllImport.Everything3_IncRunCountFromFilenameW(client, fileOrFolder));
                     return;
+                }
 
                 _ = EverythingApiDllImport.Everything_IncRunCountFromFileName(fileOrFolder);
             }

@@ -666,6 +666,26 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             }
         }
 
+        public bool EnableEverything15Support
+        {
+            get => Settings.EnableEverything15Support;
+            set
+            {
+                if (Settings.EnableEverything15Support == value)
+                    return;
+
+                Settings.EnableEverything15Support = value;
+
+                var sdkDirectory = Path.Combine(Context.CurrentPluginMetadata.PluginDirectory, "EverythingSDK",
+                    Environment.Is64BitProcess ? "x64" : "x86");
+                EverythingApi.ConfigureEverythingSupport(value, sdkDirectory);
+
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(FastSortWarningVisibility));
+                OnPropertyChanged(nameof(SortOptionWarningMessage));
+            }
+        }
+
         #endregion
     }
 }

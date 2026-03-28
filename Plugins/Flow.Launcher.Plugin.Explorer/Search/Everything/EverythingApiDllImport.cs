@@ -8,18 +8,40 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 {
     public static class EverythingApiDllImport
     {
+        private static IntPtr _dllHandle = IntPtr.Zero;
+
         public static void Load(string directory)
         {
+            if (_dllHandle != IntPtr.Zero)
+            {
+                return;
+            }
+
             var path = Path.Combine(directory, DLL);
-            IntPtr handle = LoadLibrary(path);
-            if (handle == IntPtr.Zero)
+            _dllHandle = LoadLibrary(path);
+            if (_dllHandle == IntPtr.Zero)
             {
                 throw new Win32Exception(Marshal.GetLastPInvokeError());
             }
         }
 
+        public static void Unload()
+        {
+            if (_dllHandle == IntPtr.Zero)
+            {
+                return;
+            }
+
+            _ = FreeLibrary(_dllHandle);
+            _dllHandle = IntPtr.Zero;
+        }
+
         [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         private static extern IntPtr LoadLibrary(string name);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool FreeLibrary(IntPtr hModule);
 
         private const string DLL = "Everything.dll";
 

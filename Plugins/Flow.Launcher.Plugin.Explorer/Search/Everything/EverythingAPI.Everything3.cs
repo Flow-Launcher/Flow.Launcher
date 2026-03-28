@@ -171,6 +171,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         private static bool TryConnectEverything3(out IntPtr client)
         {
             client = IntPtr.Zero;
+
+            if (!EnableEverything15Support)
+                return false;
+
             try
             {
                 client = Everything3ApiDllImport.Everything3_ConnectW(Everything15AlphaInstance);
