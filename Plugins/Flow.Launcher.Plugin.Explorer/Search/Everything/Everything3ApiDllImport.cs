@@ -32,8 +32,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             {
                 return;
             }
-
-            _ = FreeLibrary(_dllHandle);
+            if (!FreeLibrary(_dllHandle))
+            {
+                throw new Win32Exception(Marshal.GetLastPInvokeError());
+            }
             _dllHandle = IntPtr.Zero;
         }
 
