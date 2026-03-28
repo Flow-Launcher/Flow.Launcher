@@ -224,7 +224,8 @@ namespace Flow.Launcher.ViewModel
                 {
                     case nameof(Results.SelectedItem):
                         _selectedItemFromQueryResults = true;
-                        PreviewSelectedItem = Results.SelectedItem;
+                        if (Results.SelectedItem != null)
+                            PreviewSelectedItem = Results.SelectedItem;
                         break;
                 }
             };
@@ -235,7 +236,8 @@ namespace Flow.Launcher.ViewModel
                 {
                     case nameof(History.SelectedItem):
                         _selectedItemFromQueryResults = false;
-                        PreviewSelectedItem = History.SelectedItem;
+                        if (History.SelectedItem != null)
+                            PreviewSelectedItem = History.SelectedItem;
                         break;
                 }
             };
@@ -245,7 +247,8 @@ namespace Flow.Launcher.ViewModel
                 switch (args.PropertyName)
                 {
                     case nameof(PinnedResults.SelectedItem):
-                        PreviewSelectedItem = PinnedResults.SelectedItem;
+                        if (PinnedResults.SelectedItem != null)
+                            PreviewSelectedItem = PinnedResults.SelectedItem;
                         break;
                 }
             };
