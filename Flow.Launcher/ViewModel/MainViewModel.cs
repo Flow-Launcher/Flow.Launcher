@@ -102,7 +102,6 @@ namespace Flow.Launcher.ViewModel
                     case nameof(Settings.ItemHeightSize):
                         OnPropertyChanged(nameof(ItemHeightSize));
                         OnPropertyChanged(nameof(PinnedGridReservedResultCount));
-                        OnPropertyChanged(nameof(PinnedGridHeightForEmptyQuery));
                         break;
                     case nameof(Settings.ResultItemFontSize):
                         OnPropertyChanged(nameof(ResultItemFontSize));
@@ -167,7 +166,6 @@ namespace Flow.Launcher.ViewModel
                     case nameof(Settings.EnablePinnedResults):
                     case nameof(Settings.PinnedResultsLayout):
                         OnPropertyChanged(nameof(PinnedGridReservedResultCount));
-                        OnPropertyChanged(nameof(PinnedGridHeightForEmptyQuery));
                         QueryResults();
                         break;
                     case nameof(Settings.ShouldCleanPinnedResultsFromUninstalledPlugins):
@@ -807,7 +805,6 @@ namespace Flow.Launcher.ViewModel
                 }
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(PinnedGridReservedResultCount));
-                OnPropertyChanged(nameof(PinnedGridHeightForEmptyQuery));
             }
         }
 
@@ -1075,18 +1072,25 @@ namespace Flow.Launcher.ViewModel
             set => Settings.WindowHeightSize = value;
         }
 
+        private double _pinnedGridReservedResultCount = -1;
         public double PinnedGridReservedResultCount
         {
             get
             {
+                double value = 0;
                 if (string.IsNullOrEmpty(QueryText) &&
                     Settings.EnablePinnedResults &&
                     Settings.PinnedResultsLayout == PinnedLayoutOptions.Grid)
                 {
-                    return Settings.MaxResultsToShow * 0.25;
+                    value = Settings.MaxResultsToShow * 0.25;
                 }
 
-                return 0;
+                if (value != _pinnedGridReservedResultCount)
+                {
+                    _pinnedGridReservedResultCount = value;
+                    OnPropertyChanged(nameof(PinnedGridHeightForEmptyQuery));
+                }
+                return value;
             }
         }
 
