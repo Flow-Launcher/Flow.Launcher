@@ -175,6 +175,9 @@ namespace Flow.Launcher.ViewModel
                             QueryResults();
                         }
                         break;
+                    case nameof(PreviewSelectedItem):
+                        _ = UpdatePreviewAsync();
+                        break;
                 }
             };
 
@@ -222,7 +225,6 @@ namespace Flow.Launcher.ViewModel
                     case nameof(Results.SelectedItem):
                         _selectedItemFromQueryResults = true;
                         PreviewSelectedItem = Results.SelectedItem;
-                        _ = UpdatePreviewAsync();
                         break;
                 }
             };
@@ -234,7 +236,6 @@ namespace Flow.Launcher.ViewModel
                     case nameof(History.SelectedItem):
                         _selectedItemFromQueryResults = false;
                         PreviewSelectedItem = History.SelectedItem;
-                        _ = UpdatePreviewAsync();
                         break;
                 }
             };
@@ -245,7 +246,6 @@ namespace Flow.Launcher.ViewModel
                 {
                     case nameof(PinnedResults.SelectedItem):
                         PreviewSelectedItem = PinnedResults.SelectedItem;
-                        _ = UpdatePreviewAsync();
                         break;
                 }
             };
@@ -413,7 +413,6 @@ namespace Flow.Launcher.ViewModel
             {
                 SelectedResults = Results;
                 PreviewSelectedItem = Results.SelectedItem;
-                _ = UpdatePreviewAsync();
             }
         }
 
@@ -495,7 +494,6 @@ namespace Flow.Launcher.ViewModel
             {
                 SelectedResults = Results;
                 PreviewSelectedItem = Results.SelectedItem;
-                _ = UpdatePreviewAsync();
             }
         }
 
@@ -608,6 +606,15 @@ namespace Flow.Launcher.ViewModel
         private void MouseSelect(bool isGridMode)
         {
             IsGridMode = isGridMode;
+
+            if (isGridMode)
+            {
+                PreviewSelectedItem = PinnedResults.SelectedItem;
+            }
+            else
+            {
+                PreviewSelectedItem = Results.SelectedItem;
+            }
         }
 
         private static IReadOnlyList<Result> DeepCloneResults(IReadOnlyList<Result> results, bool isDialogJump, CancellationToken token = default)
@@ -713,17 +720,20 @@ namespace Flow.Launcher.ViewModel
                     if (PinnedResults.Results.Count > 0 && PinnedResults.SelectedIndex == -1)
                     {
                         PinnedResults.SelectedIndex = 0;
+                        PreviewSelectedItem = PinnedResults.SelectedItem;
                     }
-
-                    PreviewSelectedItem = PinnedResults.SelectedItem;
-                    _ = UpdatePreviewAsync();
+                    // Reset the index so that preview will refresh when select any items
+                    Results.SelectedIndex = -1;
                 }
                 else
                 {
                     if (SelectedResults.Results.Count > 0 && SelectedResults.SelectedIndex == -1)
                     {
                         SelectedResults.SelectedIndex = 0;
+                        PreviewSelectedItem = Results.SelectedItem;
                     }
+                    // Reset the index so that preview will refresh when select any items
+                    PinnedResults.SelectedIndex = -1;
                 }
             }
         }
@@ -741,7 +751,6 @@ namespace Flow.Launcher.ViewModel
             {
                 SelectedResults = Results;
                 PreviewSelectedItem = Results.SelectedItem;
-                _ = UpdatePreviewAsync();
             }
             else
             {
@@ -1180,8 +1189,11 @@ namespace Flow.Launcher.ViewModel
             get => _previewSelectedItem;
             set
             {
-                _previewSelectedItem = value;
-                OnPropertyChanged();
+                if (_previewSelectedItem != value)
+                {
+                    _previewSelectedItem = value;
+                    OnPropertyChanged();
+                }
             }
         }
 
