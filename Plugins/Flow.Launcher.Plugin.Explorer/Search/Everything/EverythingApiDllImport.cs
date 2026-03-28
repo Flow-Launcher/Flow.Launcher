@@ -92,7 +92,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         internal static extern string Everything_GetSearchW();
 
         [DllImport(DLL)]
-        internal static extern EverythingApi.StateCode Everything_GetLastError();
+        internal static extern EverythingHelper.StateCode Everything_GetLastError();
 
         [DllImport(DLL, CharSet = CharSet.Unicode)]
         internal static extern bool Everything_QueryW(bool bWait);

@@ -619,7 +619,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             {
                 try
                 {
-                    return EverythingApi.IsFastSortOption(Settings.SortOption) ? Visibility.Collapsed : Visibility.Visible;
+                    return Settings.EverythingManagerInstance.IsFastSortOption(Settings.SortOption) ? Visibility.Collapsed : Visibility.Visible;
                 }
                 catch (IPCErrorException)
                 {
@@ -642,7 +642,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                 {
                     // this method is used to determine if Everything service is running because as at Everything v1.4.1
                     // the sdk does not provide a dedicated interface to determine if it is running.
-                    return EverythingApi.IsFastSortOption(Settings.SortOption) ? string.Empty
+                    return Settings.EverythingManagerInstance.IsFastSortOption(Settings.SortOption) ? string.Empty
                         : Localize.flowlauncher_plugin_everything_nonfastsort_warning();
                 }
                 catch (IPCErrorException)
@@ -678,7 +678,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
 
                 var sdkDirectory = Path.Combine(Context.CurrentPluginMetadata.PluginDirectory, "EverythingSDK",
                     Environment.Is64BitProcess ? "x64" : "x86");
-                EverythingApi.ConfigureEverythingSupport(value, sdkDirectory, Settings.Everything15InstanceName);
+                Settings.EverythingManagerInstance.ReloadApi(sdkDirectory);
 
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(FastSortWarningVisibility));
@@ -692,7 +692,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             set
             {
                 var instanceName = string.IsNullOrWhiteSpace(value)
-                    ? EverythingApi.DefaultEverything15InstanceName
+                    ? EverythingApiV3.DefaultEverything15InstanceName
                     : value.Trim();
 
                 if (Settings.Everything15InstanceName == instanceName)
@@ -704,7 +704,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                 {
                     var sdkDirectory = Path.Combine(Context.CurrentPluginMetadata.PluginDirectory, "EverythingSDK",
                         Environment.Is64BitProcess ? "x64" : "x86");
-                    EverythingApi.ConfigureEverythingSupport(true, sdkDirectory, instanceName);
+                    Settings.EverythingManagerInstance.ReloadApi(sdkDirectory);
                     OnPropertyChanged(nameof(FastSortWarningVisibility));
                     OnPropertyChanged(nameof(SortOptionWarningMessage));
                 }

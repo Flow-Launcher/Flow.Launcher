@@ -1,14 +1,28 @@
-﻿using Flow.Launcher.Plugin.Explorer.Search.Everything.Exceptions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Flow.Launcher.Plugin.Explorer.Search.Everything.Exceptions;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 {
-    public static partial class EverythingApi
+    public class EverythingApiV3 : IEverythingApi
     {
+        public const string DefaultEverything15InstanceName = "1.5a";
+
+        private const int BufferSize = 4096;
+        private static readonly SemaphoreSlim _semaphore = new(1, 1);
+        private static readonly StringBuilder _buffer = new(BufferSize);
+
+        private readonly string _instanceName;
+
+        public EverythingApiV3(string instanceName)
+        {
+            _instanceName = instanceName;
+        }
+
         const uint EVERYTHING3_PROPERTY_ID_NAME = 0;
         const uint EVERYTHING3_PROPERTY_ID_PATH = 1;
         const uint EVERYTHING3_PROPERTY_ID_SIZE = 2;
@@ -30,7 +44,124 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         const uint EVERYTHING3_ERROR_INVALID_PARAMETER = 0xE0000004;
         const uint EVERYTHING3_ERROR_PROPERTY_NOT_FOUND = 0xE0000007;
 
-        private static async IAsyncEnumerable<SearchResult> SearchWithEverything3Async(IntPtr client,
+        public async ValueTask<bool> IsEverythingRunningAsync(CancellationToken token = default)
+        {
+            try
+            {
+                await _semaphore.WaitAsync(token);
+            }
+            catch (OperationCanceledException)
+            {
+                return false;
+            }
+
+            try
+            {
+                return TryUseEverything3Client(static _ => { });
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
+        }
+
+        public async IAsyncEnumerable<SearchResult> SearchAsync(EverythingSearchOption option, [EnumeratorCancellation] CancellationToken token = default)
+        {
+            if (option.Offset < 0)
+                throw new ArgumentOutOfRangeException(nameof(option.Offset), option.Offset, "Offset must be greater than or equal to 0");
+            if (option.MaxCount < 0)
+                throw new ArgumentOutOfRangeException(nameof(option.MaxCount), option.MaxCount, "MaxCount must be greater than or equal to 0");
+
+            try
+            {
+                await _semaphore.WaitAsync(token);
+            }
+            catch (OperationCanceledException)
+            {
+                yield break;
+            }
+
+            try
+            {
+                if (token.IsCancellationRequested)
+                    yield break;
+
+                var useRegex = false;
+                if (option.Keyword.StartsWith("@"))
+                {
+                    useRegex = true;
+                    option.Keyword = option.Keyword[1..];
+                }
+
+                var builder = new StringBuilder();
+                builder.Append(option.Keyword);
+
+                if (!string.IsNullOrWhiteSpace(option.ParentPath))
+                {
+                    builder.Append($" {(option.IsRecursive ? "" : "parent:")}\"{option.ParentPath}\"");
+                }
+
+                if (option.IsContentSearch)
+                {
+                    builder.Append($" content:\"{option.ContentSearchKeyword}\"");
+                }
+
+                var searchText = builder.ToString();
+
+                if (!TryConnectEverything3(out var client))
+                    throw new IPCErrorException();
+
+                await foreach (var result in SearchWithEverything3Async(client, option, searchText, useRegex, token))
+                    yield return result;
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
+        }
+
+        public async Task IncrementRunCounterAsync(string fileOrFolder)
+        {
+            await _semaphore.WaitAsync(TimeSpan.FromSeconds(1));
+            try
+            {
+                _ = TryUseEverything3Client(client =>
+                    _ = Everything3ApiDllImport.Everything3_IncRunCountFromFilenameW(client, fileOrFolder));
+            }
+            catch (Exception)
+            {
+                /*ignored*/
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
+        }
+
+        public bool IsFastSortOption(EverythingSortOption sortOption)
+        {
+            if (!TryConnectEverything3(out var client))
+                throw new IPCErrorException();
+
+            try
+            {
+                if (TryConvertSortOption(sortOption, out var propertyId, out _))
+                {
+                    var isFastSort = Everything3ApiDllImport.Everything3_IsPropertyFastSort(client, propertyId);
+                    CheckAndThrowExceptionOnErrorFromEverything3();
+                    return isFastSort;
+                }
+            }
+            finally
+            {
+                _ = Everything3ApiDllImport.Everything3_DestroyClient(client);
+                CheckAndThrowExceptionOnErrorFromEverything3();
+            }
+
+            return true;
+        }
+
+        private async IAsyncEnumerable<SearchResult> SearchWithEverything3Async(IntPtr client,
             EverythingSearchOption option,
             string searchText,
             bool useRegex,
@@ -62,7 +193,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 _ = Everything3ApiDllImport.Everything3_ClearSearchPropertyRequests(searchState);
                 _ = Everything3ApiDllImport.Everything3_AddSearchPropertyRequestHighlighted(searchState, EVERYTHING3_PROPERTY_ID_NAME);
                 _ = Everything3ApiDllImport.Everything3_AddSearchPropertyRequestHighlighted(searchState, EVERYTHING3_PROPERTY_ID_PATH);
-                // Everything3_GetResultFullPathNameW requires PATH_AND_NAME to be requested
                 _ = Everything3ApiDllImport.Everything3_AddSearchPropertyRequest(searchState, EVERYTHING3_PROPERTY_ID_PATH_AND_NAME);
                 _ = Everything3ApiDllImport.Everything3_AddSearchPropertyRequest(searchState, EVERYTHING3_PROPERTY_ID_RUN_COUNT);
 
@@ -84,15 +214,15 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                         yield break;
                     }
 
-                    buffer.Clear();
-                    var fullPathLength = Everything3ApiDllImport.Everything3_GetResultFullPathNameW(resultList, idx, buffer, BufferSize);
+                    _buffer.Clear();
+                    var fullPathLength = Everything3ApiDllImport.Everything3_GetResultFullPathNameW(resultList, idx, _buffer, BufferSize);
                     if (fullPathLength == 0)
                     {
                         CheckAndThrowExceptionOnErrorFromEverything3();
                         continue;
                     }
 
-                    var fullPath = buffer.ToString();
+                    var fullPath = _buffer.ToString();
                     if (string.IsNullOrEmpty(fullPath))
                     {
                         continue;
@@ -109,20 +239,19 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                         Score = Convert.ToInt32(Everything3ApiDllImport.Everything3_GetResultRunCount(resultList, idx))
                     };
 
-                    // 0 for the first requested property, which is name in our case.
                     if (Everything3ApiDllImport.Everything3_GetSearchPropertyRequestHighlight(searchState, 0))
                     {
-                        buffer.Clear();
+                        _buffer.Clear();
                         var highlightedFileNameLength = Everything3ApiDllImport.Everything3_GetResultPropertyTextHighlightedW(
                             resultList,
                             idx,
                             EVERYTHING3_PROPERTY_ID_NAME,
-                            buffer,
+                            _buffer,
                             BufferSize);
 
                         if (highlightedFileNameLength > 0)
                         {
-                            var highlightData = EverythingHighlightStringToHighlightList(buffer.ToString());
+                            var highlightData = EverythingHelper.EverythingHighlightStringToHighlightList(_buffer.ToString());
                             if (highlightData.Count > 0)
                             {
                                 result = result with
@@ -150,7 +279,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             await Task.CompletedTask;
         }
 
-        private static bool TryUseEverything3Client(Action<IntPtr> action)
+        private bool TryUseEverything3Client(Action<IntPtr> action)
         {
             if (!TryConnectEverything3(out var client))
                 return false;
@@ -166,16 +295,16 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             }
         }
 
-        private static bool TryConnectEverything3(out IntPtr client)
+        private bool TryConnectEverything3(out IntPtr client)
         {
             client = IntPtr.Zero;
 
-            if (!EnableEverything15Support)
-                return false;
-
             try
             {
-                client = Everything3ApiDllImport.Everything3_ConnectW(Everything15InstanceName);
+                var normalizedInstanceName = string.IsNullOrWhiteSpace(_instanceName)
+                    ? DefaultEverything15InstanceName
+                    : _instanceName.Trim();
+                client = Everything3ApiDllImport.Everything3_ConnectW(normalizedInstanceName);
                 return client != IntPtr.Zero;
             }
             catch (DllNotFoundException)
