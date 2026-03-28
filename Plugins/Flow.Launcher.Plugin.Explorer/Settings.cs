@@ -164,7 +164,7 @@ namespace Flow.Launcher.Plugin.Explorer
         public bool EverythingSearchFullPath { get; set; } = false;
         public bool EverythingEnableRunCount { get; set; } = true;
         public bool EnableEverything15Support { get; set; } = false;
-        public string Everything15InstanceName { get; set; } = "1.5a";
+        public string Everything15InstanceName { get; set; } = EverythingApi.DefaultEverything15InstanceName;
 
         #endregion
 
