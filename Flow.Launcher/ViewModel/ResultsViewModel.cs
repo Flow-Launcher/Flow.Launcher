@@ -43,6 +43,8 @@ namespace Flow.Launcher.ViewModel
                 switch (e.PropertyName)
                 {
                     case nameof(_settings.MaxResultsToShow):
+                    case nameof(_settings.EnablePinnedResults):
+                    case nameof(_settings.PinnedResultsLayout):
                         OnPropertyChanged(nameof(MaxHeight));
                         break;
                     case nameof(_settings.ItemHeightSize):
@@ -51,8 +53,16 @@ namespace Flow.Launcher.ViewModel
                         break;
                 }
             };
+            _mainVM.PropertyChanged += (s, e) =>
+            {
+                if (e.PropertyName == nameof(_mainVM.QueryText) ||
+                    e.PropertyName == nameof(_mainVM.PinnedGridReservedResultCount))
+                {
+                    OnPropertyChanged(nameof(MaxHeight));
+                }
+            };
         }
-
+        
         #endregion
 
         #region Properties
@@ -63,6 +73,14 @@ namespace Flow.Launcher.ViewModel
         {
             get
             {
+                if (_mainVM?.Results == this &&
+                    _mainVM.QueryResultsSelected() &&
+                    string.IsNullOrEmpty(_mainVM.QueryText) &&
+                    _mainVM.PinnedGridReservedResultCount > 0)
+                {
+                    return Math.Max(0, MaxResults - _mainVM.PinnedGridReservedResultCount) * _settings.ItemHeightSize;
+                }
+
                 var newResultsCount = MaxResults;
                 if (IsPreviewOn)
                 {

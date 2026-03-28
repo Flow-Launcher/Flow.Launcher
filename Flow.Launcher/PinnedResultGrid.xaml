@@ -9,6 +9,7 @@
     d:DataContext="{d:DesignInstance Type=vm:MainViewModel}"
     mc:Ignorable="d">
     <Border
+        Height="{Binding PinnedGridHeightForEmptyQuery}"
         Margin="10 5 10 5"
         Padding="8 4"
         Background="#0FFFFFFF"
@@ -35,7 +36,7 @@
                 </Style.Triggers>
             </Style>
         </Border.Style>
-        <Grid MinHeight="80">
+        <Grid MinHeight="0">
             <flowlauncher:ResultGrid
                 x:Name="PinnedResultGridControl"
                 VerticalAlignment="Center"

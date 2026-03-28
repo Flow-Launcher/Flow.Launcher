@@ -101,6 +101,8 @@ namespace Flow.Launcher.ViewModel
                         break;
                     case nameof(Settings.ItemHeightSize):
                         OnPropertyChanged(nameof(ItemHeightSize));
+                        OnPropertyChanged(nameof(PinnedGridReservedResultCount));
+                        OnPropertyChanged(nameof(PinnedGridHeightForEmptyQuery));
                         break;
                     case nameof(Settings.ResultItemFontSize):
                         OnPropertyChanged(nameof(ResultItemFontSize));
@@ -159,8 +161,14 @@ namespace Flow.Launcher.ViewModel
                     case nameof(Settings.UseGlyphIcons):
                     case nameof(Settings.ShowBadges):
                     case nameof(Settings.ShowBadgesGlobalOnly):
+                    case nameof(Settings.MaxResultsToShow):
+                        OnPropertyChanged(nameof(PinnedGridReservedResultCount));
+                        OnPropertyChanged(nameof(PinnedGridHeightForEmptyQuery));
+                        break;
                     case nameof(Settings.EnablePinnedResults):
                     case nameof(Settings.PinnedResultsLayout):
+                        OnPropertyChanged(nameof(PinnedGridReservedResultCount));
+                        OnPropertyChanged(nameof(PinnedGridHeightForEmptyQuery));
                         QueryResults();
                         break;
                     case nameof(Settings.ShouldCleanPinnedResultsFromUninstalledPlugins):
@@ -799,6 +807,8 @@ namespace Flow.Launcher.ViewModel
                     IsGridMode = false;
                 }
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(PinnedGridReservedResultCount));
+                OnPropertyChanged(nameof(PinnedGridHeightForEmptyQuery));
             }
         }
 
@@ -1065,6 +1075,23 @@ namespace Flow.Launcher.ViewModel
             get => Settings.WindowHeightSize;
             set => Settings.WindowHeightSize = value;
         }
+
+        public int PinnedGridReservedResultCount
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(QueryText) &&
+                    Settings.EnablePinnedResults &&
+                    Settings.PinnedResultsLayout == PinnedLayoutOptions.Grid)
+                {
+                    return Math.Max(2, (int)Math.Round(Settings.MaxResultsToShow * 0.25, MidpointRounding.AwayFromZero));
+                }
+
+                return 0;
+            }
+        }
+
+        public double PinnedGridHeightForEmptyQuery => Math.Max(0, (Settings.ItemHeightSize * PinnedGridReservedResultCount) - 10);
 
         public double QueryBoxFontSize
         {
