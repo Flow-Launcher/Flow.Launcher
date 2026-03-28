@@ -161,10 +161,9 @@ namespace Flow.Launcher.ViewModel
                     case nameof(Settings.UseGlyphIcons):
                     case nameof(Settings.ShowBadges):
                     case nameof(Settings.ShowBadgesGlobalOnly):
-                    case nameof(Settings.MaxResultsToShow):
-                        OnPropertyChanged(nameof(PinnedGridReservedResultCount));
-                        OnPropertyChanged(nameof(PinnedGridHeightForEmptyQuery));
+                        QueryResults();
                         break;
+                    case nameof(Settings.MaxResultsToShow):
                     case nameof(Settings.EnablePinnedResults):
                     case nameof(Settings.PinnedResultsLayout):
                         OnPropertyChanged(nameof(PinnedGridReservedResultCount));
