@@ -214,10 +214,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 }
 
                 _ = Everything3ApiDllImport.Everything3_ClearSearchPropertyRequests(searchState);
-                // TODO somehow error, no result
                 _ = Everything3ApiDllImport.Everything3_AddSearchPropertyRequestHighlighted(searchState, EVERYTHING3_PROPERTY_ID_NAME);
-                // TODO need to check the "IsFullPathSearch"
                 _ = Everything3ApiDllImport.Everything3_AddSearchPropertyRequestHighlighted(searchState, EVERYTHING3_PROPERTY_ID_PATH);
+                // Everything3_GetResultFullPathNameW requires PATH_AND_NAME to be requested
+                _ = Everything3ApiDllImport.Everything3_AddSearchPropertyRequest(searchState, EVERYTHING3_PROPERTY_ID_PATH_AND_NAME);
+                _ = Everything3ApiDllImport.Everything3_AddSearchPropertyRequest(searchState, EVERYTHING3_PROPERTY_ID_RUN_COUNT);
 
                 if (token.IsCancellationRequested)
                     yield break;
