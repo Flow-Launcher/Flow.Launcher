@@ -9,8 +9,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 {
     public static partial class EverythingApi
     {
-        private const string Everything15AlphaInstance = "1.5a";
-
         const uint EVERYTHING3_PROPERTY_ID_NAME = 0;
         const uint EVERYTHING3_PROPERTY_ID_PATH = 1;
         const uint EVERYTHING3_PROPERTY_ID_SIZE = 2;
@@ -177,7 +175,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
             try
             {
-                client = Everything3ApiDllImport.Everything3_ConnectW(Everything15AlphaInstance);
+                client = Everything3ApiDllImport.Everything3_ConnectW(Everything15InstanceName);
                 return client != IntPtr.Zero;
             }
             catch (DllNotFoundException)

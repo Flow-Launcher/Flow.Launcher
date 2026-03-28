@@ -9,6 +9,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
     internal static class Everything3ApiDllImport
     {
         private static IntPtr _dllHandle = IntPtr.Zero;
+        internal static bool IsLoaded => _dllHandle != IntPtr.Zero;
 
         public static void Load(string directory)
         {

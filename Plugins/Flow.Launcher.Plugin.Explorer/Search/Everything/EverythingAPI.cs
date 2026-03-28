@@ -10,10 +10,13 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 {
     public static partial class EverythingApi
     {
+        public const string DefaultEverything15InstanceName = "1.5a";
+
         private const int BufferSize = 4096;
 
         private static readonly SemaphoreSlim _semaphore = new(1, 1);
         private static volatile bool _enableEverything15Support = true;
+        private static string _everything15InstanceName = DefaultEverything15InstanceName;
 
         // cached buffer to remove redundant allocations. semaphore is used to make sure the access to the buffer is thread safe.
         private static readonly StringBuilder buffer = new(BufferSize);
@@ -34,23 +37,40 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         const uint EVERYTHING_REQUEST_RUN_COUNT = 0x00000400u;
 
         public static bool EnableEverything15Support => _enableEverything15Support;
+        public static string Everything15InstanceName => _everything15InstanceName;
 
-        public static void ConfigureEverythingSupport(bool enableEverything15Support, string sdkDirectory)
+        public static void ConfigureEverythingSupport(bool enableEverything15Support, string sdkDirectory, string everything15InstanceName)
         {
             _semaphore.Wait();
             try
             {
+                var normalizedInstanceName = string.IsNullOrWhiteSpace(everything15InstanceName)
+                    ? DefaultEverything15InstanceName
+                    : everything15InstanceName.Trim();
+
+                var supportChanged = _enableEverything15Support != enableEverything15Support;
                 _enableEverything15Support = enableEverything15Support;
+                _everything15InstanceName = normalizedInstanceName;
 
                 if (enableEverything15Support)
                 {
-                    EverythingApiDllImport.Unload();
-                    Everything3ApiDllImport.Load(sdkDirectory);
+                    if (supportChanged || !Everything3ApiDllImport.IsLoaded)
+                    {
+                        if (EverythingApiDllImport.IsLoaded)
+                            EverythingApiDllImport.Unload();
+
+                        Everything3ApiDllImport.Load(sdkDirectory);
+                    }
                 }
                 else
                 {
-                    Everything3ApiDllImport.Unload();
-                    EverythingApiDllImport.Load(sdkDirectory);
+                    if (supportChanged || !EverythingApiDllImport.IsLoaded)
+                    {
+                        if (Everything3ApiDllImport.IsLoaded)
+                            Everything3ApiDllImport.Unload();
+
+                        EverythingApiDllImport.Load(sdkDirectory);
+                    }
                 }
             }
             finally

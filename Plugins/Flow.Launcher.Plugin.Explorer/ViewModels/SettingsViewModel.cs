@@ -678,11 +678,38 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
 
                 var sdkDirectory = Path.Combine(Context.CurrentPluginMetadata.PluginDirectory, "EverythingSDK",
                     Environment.Is64BitProcess ? "x64" : "x86");
-                EverythingApi.ConfigureEverythingSupport(value, sdkDirectory);
+                EverythingApi.ConfigureEverythingSupport(value, sdkDirectory, Settings.Everything15InstanceName);
 
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(FastSortWarningVisibility));
                 OnPropertyChanged(nameof(SortOptionWarningMessage));
+            }
+        }
+
+        public string Everything15InstanceName
+        {
+            get => Settings.Everything15InstanceName;
+            set
+            {
+                var instanceName = string.IsNullOrWhiteSpace(value)
+                    ? EverythingApi.DefaultEverything15InstanceName
+                    : value.Trim();
+
+                if (Settings.Everything15InstanceName == instanceName)
+                    return;
+
+                Settings.Everything15InstanceName = instanceName;
+
+                if (EnableEverything15Support)
+                {
+                    var sdkDirectory = Path.Combine(Context.CurrentPluginMetadata.PluginDirectory, "EverythingSDK",
+                        Environment.Is64BitProcess ? "x64" : "x86");
+                    EverythingApi.ConfigureEverythingSupport(true, sdkDirectory, instanceName);
+                    OnPropertyChanged(nameof(FastSortWarningVisibility));
+                    OnPropertyChanged(nameof(SortOptionWarningMessage));
+                }
+
+                OnPropertyChanged();
             }
         }
 
