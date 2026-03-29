@@ -676,10 +676,6 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
 
                 Settings.EnableEverything15Support = value;
 
-                var sdkDirectory = Path.Combine(Context.CurrentPluginMetadata.PluginDirectory, "EverythingSDK",
-                    Environment.Is64BitProcess ? "x64" : "x86");
-                Settings.EverythingManagerInstance.ReloadApi(sdkDirectory);
-
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(FastSortWarningVisibility));
                 OnPropertyChanged(nameof(SortOptionWarningMessage));
@@ -702,9 +698,6 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
 
                 if (EnableEverything15Support)
                 {
-                    var sdkDirectory = Path.Combine(Context.CurrentPluginMetadata.PluginDirectory, "EverythingSDK",
-                        Environment.Is64BitProcess ? "x64" : "x86");
-                    Settings.EverythingManagerInstance.ReloadApi(sdkDirectory);
                     OnPropertyChanged(nameof(FastSortWarningVisibility));
                     OnPropertyChanged(nameof(SortOptionWarningMessage));
                 }

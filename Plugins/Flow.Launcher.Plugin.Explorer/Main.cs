@@ -48,7 +48,7 @@ namespace Flow.Launcher.Plugin.Explorer
 
             var sdkDirectory = Path.Combine(Context.CurrentPluginMetadata.PluginDirectory, "EverythingSDK",
                 Environment.Is64BitProcess ? "x64" : "x86");
-            Settings.EverythingManagerInstance.ReloadApi(sdkDirectory);
+            Settings.EverythingManagerInstance.InitializeApi(sdkDirectory);
             return Task.CompletedTask;
         }
 

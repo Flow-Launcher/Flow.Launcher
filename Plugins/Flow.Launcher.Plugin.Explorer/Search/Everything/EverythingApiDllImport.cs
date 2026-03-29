@@ -26,26 +26,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             }
         }
 
-        public static void Unload()
-        {
-            if (_dllHandle == IntPtr.Zero)
-            {
-                return;
-            }
-
-            if (!FreeLibrary(_dllHandle))
-            {
-                throw new Win32Exception(Marshal.GetLastPInvokeError());
-            }
-            _dllHandle = IntPtr.Zero;
-        }
-
         [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         private static extern IntPtr LoadLibrary(string name);
-
-        [DllImport("kernel32.dll", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool FreeLibrary(IntPtr hModule);
 
         private const string DLL = "Everything.dll";
 

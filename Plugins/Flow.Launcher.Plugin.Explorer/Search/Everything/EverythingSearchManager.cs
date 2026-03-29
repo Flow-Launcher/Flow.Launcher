@@ -13,23 +13,27 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
     {
         private static readonly string ClassName = nameof(EverythingSearchManager);
         private static readonly SemaphoreSlim _dllSemaphore = new(1, 1);
-        private static volatile bool _dllLoadedForSdk3 = true;
 
         private Settings Settings { get; }
+        private readonly bool useV3Api;
+        private readonly string everything15InstanceName;
         private readonly Lock _syncRoot = new();
-        private IEverythingApi _api;
+        private bool isApiInitialized;
+        private IEverythingApi api;
 
         public EverythingSearchManager(Settings settings)
         {
             Settings = settings;
-            _api = CreateApi(Settings.EnableEverything15Support, GetNormalizedInstanceName(Settings.Everything15InstanceName));
+            useV3Api = Settings.EnableEverything15Support;
+            everything15InstanceName = Settings.Everything15InstanceName;
+            api = CreateApi(useV3Api, GetNormalizedInstanceName(everything15InstanceName));
         }
 
         private async ValueTask ThrowIfEverythingNotAvailableAsync(CancellationToken token = default)
         {
             try
             {
-                if (!await _api.IsEverythingRunningAsync(token))
+                if (!await api.IsEverythingRunningAsync(token))
                     throw new EngineNotAvailableException(
                         Enum.GetName(Settings.IndexSearchEngineOption.Everything)!,
                         Localize.flowlauncher_plugin_everything_click_to_launch_or_install(),
@@ -90,7 +94,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 IsFullPathSearch: Settings.EverythingSearchFullPath, 
                 IsRunCounterEnabled: Settings.EverythingEnableRunCount);
 
-            await foreach (var result in _api.SearchAsync(option, token))
+            await foreach (var result in api.SearchAsync(option, token))
                 yield return result;
         }
 
@@ -124,7 +128,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 IsFullPathSearch: Settings.EverythingSearchFullPath,
                 IsRunCounterEnabled: Settings.EverythingEnableRunCount);
 
-            await foreach (var result in _api.SearchAsync(option, token))
+            await foreach (var result in api.SearchAsync(option, token))
             {
                 yield return result;
             }
@@ -145,49 +149,40 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 IsFullPathSearch: Settings.EverythingSearchFullPath,
                 IsRunCounterEnabled: Settings.EverythingEnableRunCount);
 
-            await foreach (var result in _api.SearchAsync(option, token))
+            await foreach (var result in api.SearchAsync(option, token))
                 yield return result;
         }
-        public void ReloadApi(string sdkDirectory)
+        public void InitializeApi(string sdkDirectory)
         {
             lock (_syncRoot)
             {
-                LoadDllCore(Settings.EnableEverything15Support, sdkDirectory);
-                _api = CreateApi(Settings.EnableEverything15Support, GetNormalizedInstanceName(Settings.Everything15InstanceName));
+                if (isApiInitialized)
+                    return;
+
+                LoadConfiguredDll(sdkDirectory, useV3Api);
+                api = CreateApi(useV3Api, GetNormalizedInstanceName(Settings.Everything15InstanceName));
+                isApiInitialized = true;
             }
         }
 
-        public bool IsFastSortOption(EverythingSortOption sortOption) => _api.IsFastSortOption(sortOption);
+        public bool IsFastSortOption(EverythingSortOption sortOption) => api.IsFastSortOption(sortOption);
 
-        public Task IncrementRunCounterAsync(string fileOrFolder) => _api.IncrementRunCounterAsync(fileOrFolder);
+        public Task IncrementRunCounterAsync(string fileOrFolder) => api.IncrementRunCounterAsync(fileOrFolder);
 
-        private static void LoadDllCore(bool enableEverything15Support, string sdkDirectory)
+        private static void LoadConfiguredDll(string sdkDirectory, bool enableEverything15Support)
         {
             _dllSemaphore.Wait();
             try
             {
-                var supportChanged = _dllLoadedForSdk3 != enableEverything15Support;
-                _dllLoadedForSdk3 = enableEverything15Support;
-
                 if (enableEverything15Support)
                 {
-                    if (supportChanged || !Everything3ApiDllImport.IsLoaded)
-                    {
-                        if (EverythingApiDllImport.IsLoaded)
-                            EverythingApiDllImport.Unload();
-
+                    if (!Everything3ApiDllImport.IsLoaded)
                         Everything3ApiDllImport.Load(sdkDirectory);
-                    }
                 }
                 else
                 {
-                    if (supportChanged || !EverythingApiDllImport.IsLoaded)
-                    {
-                        if (Everything3ApiDllImport.IsLoaded)
-                            Everything3ApiDllImport.Unload();
-
+                    if (!EverythingApiDllImport.IsLoaded)
                         EverythingApiDllImport.Load(sdkDirectory);
-                    }
                 }
             }
             finally
