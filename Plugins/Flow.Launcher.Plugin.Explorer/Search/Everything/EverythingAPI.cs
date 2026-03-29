@@ -12,10 +12,19 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
     {
         private const int BufferSize = 4096;
         private static readonly SemaphoreSlim _semaphore = new(1, 1);
+        // cached buffer to remove redundant allocations.
         private static readonly StringBuilder buffer = new(BufferSize);
 
+        const uint EVERYTHING_REQUEST_FULL_PATH_AND_FILE_NAME = 0x00000004u;
+        const uint EVERYTHING_REQUEST_RUN_COUNT = 0x00000400u;
+
+        /// <summary>
+        /// Checks whether the sort option is Fast Sort.
+        /// </summary>
         public bool IsFastSortOption(EverythingSortOption sortOption)
         {
+            // If the Everything service is not running, then this call will incorrectly report
+            // the state as false. This checks for errors thrown by the api and up to the caller to handle.
             var fastSortOptionEnabled = EverythingApiDllImport.Everything_IsFastSort(sortOption);
             CheckAndThrowExceptionOnError();
             return fastSortOptionEnabled;
@@ -43,6 +52,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             }
         }
 
+        /// <summary>
+        /// Searches using the specified criteria and resets the Everything API afterwards.
+        /// </summary>
+        /// <param name="option">The search criteria.</param>
+        /// <param name="token">A cancellation token that stops the current search when cancellation is requested.</param>
+        /// <returns>An asynchronous sequence of search results that match the specified criteria.</returns>
         public async IAsyncEnumerable<SearchResult> SearchAsync(EverythingSearchOption option, [EnumeratorCancellation] CancellationToken token = default)
         {
             if (option.Offset < 0)
@@ -84,10 +99,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                     builder.Append($" content:\"{option.ContentSearchKeyword}\"");
                 }
 
-                var searchText = builder.ToString();
-
                 EverythingApiDllImport.Everything_SetRegex(useRegex);
-                EverythingApiDllImport.Everything_SetSearchW(searchText);
+                EverythingApiDllImport.Everything_SetSearchW(builder.ToString());
                 EverythingApiDllImport.Everything_SetOffset(option.Offset);
                 EverythingApiDllImport.Everything_SetMax(option.MaxCount);
 
@@ -96,11 +109,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
                 if (option.SortOption == EverythingSortOption.RUN_COUNT_DESCENDING)
                 {
-                    EverythingApiDllImport.Everything_SetRequestFlags(0x00000004u | 0x00000400u);
+                    EverythingApiDllImport.Everything_SetRequestFlags(EVERYTHING_REQUEST_FULL_PATH_AND_FILE_NAME | EVERYTHING_REQUEST_RUN_COUNT);
                 }
                 else
                 {
-                    EverythingApiDllImport.Everything_SetRequestFlags(0x00000004u);
+                    EverythingApiDllImport.Everything_SetRequestFlags(EVERYTHING_REQUEST_FULL_PATH_AND_FILE_NAME);
                 }
 
                 if (token.IsCancellationRequested) yield break;
@@ -138,8 +151,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 EverythingApiDllImport.Everything_Reset();
                 _semaphore.Release();
             }
-
-            await Task.CompletedTask;
         }
 
         private static void CheckAndThrowExceptionOnError()

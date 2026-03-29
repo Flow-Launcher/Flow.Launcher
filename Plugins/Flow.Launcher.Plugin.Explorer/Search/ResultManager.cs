@@ -412,7 +412,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         private static void IncrementEverythingRunCounterIfNeeded(string fileOrFolder)
         {
-            // What if result is not from everything or even not indexed in Everything?
             if (Settings.EverythingEnabled && Settings.EverythingEnableRunCount)
                 _ = Task.Run(() => Settings.EverythingManagerInstance.IncrementRunCounterAsync(fileOrFolder));
         }
