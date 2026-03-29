@@ -122,11 +122,15 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
         public async Task IncrementRunCounterAsync(string fileOrFolder)
         {
-            await _semaphore.WaitAsync(TimeSpan.FromSeconds(1));
+            var _entered = await _semaphore.WaitAsync(TimeSpan.FromSeconds(1));
+            if (!_entered)
+            {
+                // If we can't acquire the semaphore within the timeout, we skip incrementing the run count to avoid blocking.
+                return;
+            }
             try
             {
-                _ = TryUseEverything3Client(client =>
-                    _ = Everything3ApiDllImport.Everything3_IncRunCountFromFilenameW(client, fileOrFolder));
+                _ = TryUseEverything3Client(client => _ = Everything3ApiDllImport.Everything3_IncRunCountFromFilenameW(client, fileOrFolder));
             }
             catch (Exception)
             {
