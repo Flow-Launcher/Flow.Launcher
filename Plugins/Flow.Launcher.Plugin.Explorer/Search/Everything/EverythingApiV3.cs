@@ -191,10 +191,14 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
                 if (TryConvertSortOption(option.SortOption, out var sortPropertyId, out var ascending))
                 {
-                    _ = Everything3ApiDllImport.Everything3_AddSearchSort(searchState, sortPropertyId, ascending);
+                    if (!Everything3ApiDllImport.Everything3_AddSearchSort(searchState, sortPropertyId, ascending))
+                    {
+                        CheckAndThrowExceptionOnErrorFromEverything3();
+                        yield break;
+                    }
                 }
 
-                _ = Everything3ApiDllImport.Everything3_ClearSearchPropertyRequests(searchState);
+                    _ = Everything3ApiDllImport.Everything3_ClearSearchPropertyRequests(searchState);
                 _ = Everything3ApiDllImport.Everything3_AddSearchPropertyRequestHighlighted(searchState, EVERYTHING3_PROPERTY_ID_NAME);
                 _ = Everything3ApiDllImport.Everything3_AddSearchPropertyRequestHighlighted(searchState, EVERYTHING3_PROPERTY_ID_PATH);
                 _ = Everything3ApiDllImport.Everything3_AddSearchPropertyRequest(searchState, EVERYTHING3_PROPERTY_ID_PATH_AND_NAME);
