@@ -108,3 +108,4 @@ Msix
 dummyprofile
 browserbookmark
 copyurl
+PInvoke
