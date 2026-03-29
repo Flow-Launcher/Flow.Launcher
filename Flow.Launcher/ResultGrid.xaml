@@ -23,7 +23,10 @@
         SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
         <ListBox.ItemsPanel>
             <ItemsPanelTemplate>
-                <UniformGrid Columns="5" IsItemsHost="True" />
+                <WrapPanel
+                    HorizontalAlignment="Center"
+                    IsItemsHost="True"
+                    Orientation="Horizontal" />
             </ItemsPanelTemplate>
         </ListBox.ItemsPanel>
         <ListBox.ItemContainerStyle>
@@ -31,6 +34,9 @@
                 <EventSetter Event="MouseEnter" Handler="OnMouseEnter" />
                 <EventSetter Event="MouseMove" Handler="OnMouseMove" />
                 <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Width" Value="64" />
+                <Setter Property="Height" Value="64" />
+                <Setter Property="Margin" Value="5" />
                 <Setter Property="BorderThickness" Value="0" />
                 <Setter Property="Padding" Value="0" />
                 <Setter Property="HorizontalContentAlignment" Value="Stretch" />

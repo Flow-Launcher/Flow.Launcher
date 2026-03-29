@@ -9,16 +9,14 @@
     d:DataContext="{d:DesignInstance Type=vm:MainViewModel}"
     mc:Ignorable="d">
     <Border
-        Height="{Binding PinnedGridHeightForEmptyQuery}"
-        Margin="10 8 10 0"
-        Padding="8 4"
-        Background="#0FFFFFFF"
+        Margin="8 10 8 10"
+        Padding="8 8"
         CornerRadius="8">
         <Border.Style>
             <Style TargetType="Border">
                 <Setter Property="Visibility" Value="Collapsed" />
                 <Setter Property="BorderBrush" Value="Transparent" />
-                <Setter Property="BorderThickness" Value="1.5" />
+                <Setter Property="BorderThickness" Value="0" />
                 <Style.Triggers>
                     <MultiDataTrigger>
                         <MultiDataTrigger.Conditions>
@@ -39,6 +37,7 @@
         <Grid MinHeight="0">
             <flowlauncher:ResultGrid
                 x:Name="PinnedResultGridControl"
+                HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 DataContext="{Binding PinnedResults}"
                 LeftClickResultCommand="{Binding LeftClickResultCommand}"
