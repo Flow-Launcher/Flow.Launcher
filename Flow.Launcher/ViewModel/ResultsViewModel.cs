@@ -53,19 +53,22 @@ namespace Flow.Launcher.ViewModel
                         break;
                 }
             };
-            _mainVM.PropertyChanged += (s, e) =>
+            if (_mainVM != null)
             {
-                switch (e.PropertyName)
+                _mainVM.PropertyChanged += (s, e) =>
                 {
-                    case nameof(_mainVM.QueryText):
-                    // Here we use PinnedGridHeightForEmptyQuery instead of PinnedGridReservedResultCount is because
-                    // in PinnedGridReservedResultCount getter it will check if it really changes and trigger
-                    // the PropertyChanged of PinnedGridHeightForEmptyQuery
-                    case nameof(_mainVM.PinnedGridHeightForEmptyQuery):
-                        OnPropertyChanged(nameof(MaxHeight));
-                        break;
-                }
-            };
+                    switch (e.PropertyName)
+                    {
+                        case nameof(_mainVM.QueryText):
+                        // Here we use PinnedGridHeightForEmptyQuery instead of PinnedGridReservedResultCount is because
+                        // in PinnedGridReservedResultCount getter it will check if it really changes and trigger
+                        // the PropertyChanged of PinnedGridHeightForEmptyQuery
+                        case nameof(_mainVM.PinnedGridHeightForEmptyQuery):
+                            OnPropertyChanged(nameof(MaxHeight));
+                            break;
+                    }
+                };
+            }
         }
 
         #endregion
