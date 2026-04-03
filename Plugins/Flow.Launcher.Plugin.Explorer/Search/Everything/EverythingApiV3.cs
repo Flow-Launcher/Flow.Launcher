@@ -10,8 +10,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 {
     public class EverythingApiV3 : IEverythingApi
     {
-        public const string DefaultEverything15InstanceName = "1.5a";
-
         private const int BufferSize = 4096;
         private static readonly SemaphoreSlim _semaphore = new(1, 1);
         private static readonly StringBuilder _buffer = new(BufferSize);

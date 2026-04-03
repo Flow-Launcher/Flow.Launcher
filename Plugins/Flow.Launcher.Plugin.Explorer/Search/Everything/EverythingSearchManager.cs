@@ -20,6 +20,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         private readonly Lock _syncRoot = new();
         private bool isApiInitialized;
         private IEverythingApi api;
+        public const string DefaultEverything15InstanceName = "1.5a";
 
         public EverythingSearchManager(Settings settings)
         {
@@ -192,7 +193,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         }
 
         private static string GetNormalizedInstanceName(string instanceName) => string.IsNullOrWhiteSpace(instanceName)
-            ? EverythingApiV3.DefaultEverything15InstanceName
+            ? DefaultEverything15InstanceName
             : instanceName.Trim();
 
         private static IEverythingApi CreateApi(bool enableEverything15Support, string instanceName)
