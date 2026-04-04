@@ -489,6 +489,10 @@
     <system:String x:Key="LogLevelDEBUG">デバッグ</system:String>
     <system:String x:Key="settingWindowFontTitle">設定ウィンドウで使用するフォント</system:String>
 
+    <!--  Plugin Settings Window  -->
+    <system:String x:Key="pluginSettingsWindowTitle">Settings: {0}</system:String>
+    <system:String x:Key="pluginSettingsWindowOpenFailed">Failed to open plugin settings window</system:String>
+
     <!--  Release Notes Window  -->
     <system:String x:Key="seeMoreReleaseNotes">GitHub で詳細なリリース ノートを見る</system:String>
     <system:String x:Key="checkNetworkConnectionTitle">リリースノートの取得に失敗</system:String>
