@@ -488,6 +488,10 @@
     <system:String x:Key="LogLevelDEBUG">Débogage</system:String>
     <system:String x:Key="settingWindowFontTitle">Réglage de la police de la fenêtre</system:String>
 
+    <!--  Plugin Settings Window  -->
+    <system:String x:Key="pluginSettingsWindowTitle">Settings: {0}</system:String>
+    <system:String x:Key="pluginSettingsWindowOpenFailed">Failed to open plugin settings window</system:String>
+
     <!--  Release Notes Window  -->
     <system:String x:Key="seeMoreReleaseNotes">Voir plus de notes de version sur GitHub</system:String>
     <system:String x:Key="checkNetworkConnectionTitle">Impossible de récupérer les notes de version</system:String>
