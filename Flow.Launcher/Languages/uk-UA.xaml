@@ -489,6 +489,10 @@
     <system:String x:Key="LogLevelDEBUG">Налагодження</system:String>
     <system:String x:Key="settingWindowFontTitle">Встановлення шрифту вікна</system:String>
 
+    <!--  Plugin Settings Window  -->
+    <system:String x:Key="pluginSettingsWindowTitle">Settings: {0}</system:String>
+    <system:String x:Key="pluginSettingsWindowOpenFailed">Failed to open plugin settings window</system:String>
+
     <!--  Release Notes Window  -->
     <system:String x:Key="seeMoreReleaseNotes">Дізнатися більше про версію на GitHub</system:String>
     <system:String x:Key="checkNetworkConnectionTitle">Не вдалося отримати примітки до випуску</system:String>
