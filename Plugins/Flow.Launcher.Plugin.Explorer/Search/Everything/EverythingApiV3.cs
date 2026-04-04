@@ -55,7 +55,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
             try
             {
-                return TryUseEverything3Client(static _ => { });
+                if (!TryConnectEverything3(out var client))
+                    return false;
+
+                _ = Everything3ApiDllImport.Everything3_DestroyClient(client);
+                return true;
             }
             finally
             {
@@ -104,7 +108,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             }
             try
             {
-                _ = TryUseEverything3Client(client => _ = Everything3ApiDllImport.Everything3_IncRunCountFromFilenameW(client, fileOrFolder));
+                if (TryConnectEverything3(out var client))
+                    Everything3ApiDllImport.Everything3_IncRunCountFromFilenameW(client, fileOrFolder);
             }
             catch (Exception)
             {
@@ -291,12 +296,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         private bool TryConnectEverything3(out IntPtr client)
         {
             client = IntPtr.Zero;
+            var normalizedInstanceName = string.IsNullOrWhiteSpace(_instanceName)
+                ? EverythingApiFactory.DefaultEverything15InstanceName
+                : _instanceName.Trim();
 
             try
             {
-                var normalizedInstanceName = string.IsNullOrWhiteSpace(_instanceName)
-                    ? EverythingApiFactory.DefaultEverything15InstanceName
-                    : _instanceName.Trim();
                 client = Everything3ApiDllImport.Everything3_ConnectW(normalizedInstanceName);
                 return client != IntPtr.Zero;
             }
@@ -310,6 +315,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             }
         }
 
+        /// <summary>
+        /// Covert the old Everything 1.4 sort options in our UI to Everything 3 property ID and sort direction for compatibility.
+        /// </summary>
         private static bool TryConvertSortOption(EverythingSortOption sortOption, out uint propertyId, out bool ascending)
         {
             switch (sortOption)

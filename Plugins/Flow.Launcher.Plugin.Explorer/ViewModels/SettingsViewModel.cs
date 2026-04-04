@@ -627,7 +627,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                     // update the message to let user know in the settings panel.
                     return Visibility.Visible;
                 }
-                catch (DllNotFoundException)
+                catch (Exception ex) when (ex is DllNotFoundException || ex is EntryPointNotFoundException)
                 {
                     return Visibility.Collapsed;
                 }
@@ -649,7 +649,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                 {
                     return Localize.flowlauncher_plugin_everything_is_not_running();
                 }
-                catch (DllNotFoundException)
+                catch (Exception ex) when (ex is DllNotFoundException || ex is EntryPointNotFoundException)
                 {
                     return Localize.flowlauncher_plugin_everything_sdk_issue();
                 }

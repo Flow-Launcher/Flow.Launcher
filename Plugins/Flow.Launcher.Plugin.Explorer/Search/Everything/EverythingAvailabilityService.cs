@@ -27,11 +27,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                         Constants.EverythingErrorImagePath,
                         ClickToInstallEverythingAsync);
             }
-            catch (DllNotFoundException)
+            catch (Exception ex) when (ex is DllNotFoundException || ex is EntryPointNotFoundException)
             {
                 throw new EngineNotAvailableException(
                     Enum.GetName(Settings.IndexSearchEngineOption.Everything)!,
-                    "Please check whether your system is x86 or x64",
+                    Localize.flowlauncher_plugin_everything_architecture_check(),
                     Constants.GeneralSearchErrorImagePath,
                     Localize.flowlauncher_plugin_everything_sdk_issue());
             }
