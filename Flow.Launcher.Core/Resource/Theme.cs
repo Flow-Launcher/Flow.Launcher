@@ -418,11 +418,6 @@ namespace Flow.Launcher.Core.Resource
                 if (string.IsNullOrEmpty(path))
                     throw new DirectoryNotFoundException($"Theme path can't be found <{path}>");
 
-                // Retrieve theme resource – always use the resource with font settings applied.
-                var resourceDict = GetResourceDictionary(theme);
-
-                UpdateResourceDictionary(resourceDict);
-
                 _settings.Theme = theme;
 
                 // Always allow re-loading default theme, in case of failure of switching to a new theme from default theme
@@ -432,7 +427,8 @@ namespace Flow.Launcher.Core.Resource
                 }
 
                 // Check if blur is enabled
-                BlurEnabled = Win32Helper.IsBackdropSupported() && IsThemeBlurEnabled(resourceDict);
+                var dict = GetThemeResourceDictionary(theme);
+                BlurEnabled = Win32Helper.IsBackdropSupported() && IsThemeBlurEnabled(dict);
 
                 // Apply blur and drop shadow effect so that we do not need to call it again
                 _ = RefreshFrameAsync();
@@ -706,30 +702,27 @@ namespace Flow.Launcher.Core.Resource
 
         private void AutoDropShadow(bool useDropShadowEffect)
         {
-            SetWindowCornerPreference("Default");
-            RemoveDropShadowEffectFromCurrentTheme();
             if (useDropShadowEffect)
             {
                 if (BlurEnabled && Win32Helper.IsBackdropSupported())
                 {
+                    // For themes with blur enabled, the window border is rendered by the system,
+                    // so we set corner preference to round and remove drop shadow effect to avoid rendering issues.
                     SetWindowCornerPreference("Round");
+                    RemoveDropShadowEffectFromCurrentTheme();
                 }
                 else
                 {
+                    // For themes without blur, we set corner preference to default and add drop shadow effect.
                     SetWindowCornerPreference("Default");
                     AddDropShadowEffectToCurrentTheme();
                 }
             }
             else
             {
-                if (BlurEnabled && Win32Helper.IsBackdropSupported())
-                {
-                    SetWindowCornerPreference("Default");
-                }
-                else
-                {
-                    RemoveDropShadowEffectFromCurrentTheme();
-                }
+                // When drop shadow effect is disabled, we set corner preference to default and remove drop shadow effect.
+                SetWindowCornerPreference("Default");
+                RemoveDropShadowEffectFromCurrentTheme();
             }
         }
 

@@ -39,6 +39,8 @@ namespace Flow.Launcher.Plugin.Explorer
 
         public bool DisplayMoreInformationInToolTip { get; set; } = false;
 
+        public bool BoostHomeFolderScore { get; set; } = true;
+
         public string SearchActionKeyword { get; set; } = Query.GlobalPluginWildcardSign;
 
         public bool SearchActionKeywordEnabled { get; set; } = true;
