@@ -489,6 +489,10 @@
     <system:String x:Key="LogLevelDEBUG">Hata ayıklama</system:String>
     <system:String x:Key="settingWindowFontTitle">Pencere Yazı Tipini Ayarla</system:String>
 
+    <!--  Plugin Settings Window  -->
+    <system:String x:Key="pluginSettingsWindowTitle">Settings: {0}</system:String>
+    <system:String x:Key="pluginSettingsWindowOpenFailed">Failed to open plugin settings window</system:String>
+
     <!--  Release Notes Window  -->
     <system:String x:Key="seeMoreReleaseNotes">GitHub'da daha fazla sürüm notlarını gör</system:String>
     <system:String x:Key="checkNetworkConnectionTitle">Sürüm notları alınamadı</system:String>
