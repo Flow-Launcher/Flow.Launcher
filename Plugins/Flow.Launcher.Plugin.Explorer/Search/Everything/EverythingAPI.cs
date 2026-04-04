@@ -44,7 +44,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             try
             {
                 _ = EverythingApiDllImport.Everything_GetMajorVersion();
-                return EverythingApiDllImport.Everything_GetLastError() != EverythingHelper.StateCode.IPCError;
+                return EverythingApiDllImport.Everything_GetLastError() != EverythingStateCode.IPCError;
             }
             finally
             {
@@ -60,10 +60,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         /// <returns>An asynchronous sequence of search results that match the specified criteria.</returns>
         public async IAsyncEnumerable<SearchResult> SearchAsync(EverythingSearchOption option, [EnumeratorCancellation] CancellationToken token = default)
         {
-            if (option.Offset < 0)
-                throw new ArgumentOutOfRangeException(nameof(option.Offset), option.Offset, "Offset must be greater than or equal to 0");
-            if (option.MaxCount < 0)
-                throw new ArgumentOutOfRangeException(nameof(option.MaxCount), option.MaxCount, "MaxCount must be greater than or equal to 0");
+            var query = EverythingHelper.PrepareQuery(option);
+            var preparedOption = query.Option;
 
             try
             {
@@ -79,35 +77,15 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 if (token.IsCancellationRequested)
                     yield break;
 
-                var useRegex = false;
-                if (option.Keyword.StartsWith("@"))
-                {
-                    useRegex = true;
-                    option.Keyword = option.Keyword[1..];
-                }
+                EverythingApiDllImport.Everything_SetRegex(preparedOption.UseRegex);
+                EverythingApiDllImport.Everything_SetSearchW(query.SearchText);
+                EverythingApiDllImport.Everything_SetOffset(preparedOption.Offset);
+                EverythingApiDllImport.Everything_SetMax(preparedOption.MaxCount);
 
-                var builder = new StringBuilder();
-                builder.Append(option.Keyword);
+                EverythingApiDllImport.Everything_SetSort(preparedOption.SortOption);
+                EverythingApiDllImport.Everything_SetMatchPath(preparedOption.IsFullPathSearch);
 
-                if (!string.IsNullOrWhiteSpace(option.ParentPath))
-                {
-                    builder.Append($" {(option.IsRecursive ? "" : "parent:")}\"{option.ParentPath}\"");
-                }
-
-                if (option.IsContentSearch)
-                {
-                    builder.Append($" content:\"{option.ContentSearchKeyword}\"");
-                }
-
-                EverythingApiDllImport.Everything_SetRegex(useRegex);
-                EverythingApiDllImport.Everything_SetSearchW(builder.ToString());
-                EverythingApiDllImport.Everything_SetOffset(option.Offset);
-                EverythingApiDllImport.Everything_SetMax(option.MaxCount);
-
-                EverythingApiDllImport.Everything_SetSort(option.SortOption);
-                EverythingApiDllImport.Everything_SetMatchPath(option.IsFullPathSearch);
-
-                if (option.SortOption == EverythingSortOption.RUN_COUNT_DESCENDING)
+                if (preparedOption.SortOption == EverythingSortOption.RUN_COUNT_DESCENDING)
                 {
                     EverythingApiDllImport.Everything_SetRequestFlags(EVERYTHING_REQUEST_FULL_PATH_AND_FILE_NAME | EVERYTHING_REQUEST_RUN_COUNT);
                 }
@@ -157,21 +135,21 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         {
             switch (EverythingApiDllImport.Everything_GetLastError())
             {
-                case EverythingHelper.StateCode.CreateThreadError:
+                case EverythingStateCode.CreateThreadError:
                     throw new CreateThreadException();
-                case EverythingHelper.StateCode.CreateWindowError:
+                case EverythingStateCode.CreateWindowError:
                     throw new CreateWindowException();
-                case EverythingHelper.StateCode.InvalidCallError:
+                case EverythingStateCode.InvalidCallError:
                     throw new InvalidCallException();
-                case EverythingHelper.StateCode.InvalidIndexError:
+                case EverythingStateCode.InvalidIndexError:
                     throw new InvalidIndexException();
-                case EverythingHelper.StateCode.IPCError:
+                case EverythingStateCode.IPCError:
                     throw new IPCErrorException();
-                case EverythingHelper.StateCode.MemoryError:
+                case EverythingStateCode.MemoryError:
                     throw new MemoryErrorException();
-                case EverythingHelper.StateCode.RegisterClassExError:
+                case EverythingStateCode.RegisterClassExError:
                     throw new RegisterClassExException();
-                case EverythingHelper.StateCode.OK:
+                case EverythingStateCode.OK:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

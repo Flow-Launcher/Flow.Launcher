@@ -65,10 +65,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
         public async IAsyncEnumerable<SearchResult> SearchAsync(EverythingSearchOption option, [EnumeratorCancellation] CancellationToken token = default)
         {
-            if (option.Offset < 0)
-                throw new ArgumentOutOfRangeException(nameof(option.Offset), option.Offset, "Offset must be greater than or equal to 0");
-            if (option.MaxCount < 0)
-                throw new ArgumentOutOfRangeException(nameof(option.MaxCount), option.MaxCount, "MaxCount must be greater than or equal to 0");
+            var query = EverythingHelper.PrepareQuery(option);
+            var preparedOption = query.Option;
 
             try
             {
@@ -84,32 +82,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 if (token.IsCancellationRequested)
                     yield break;
 
-                var useRegex = false;
-                if (option.Keyword.StartsWith("@"))
-                {
-                    useRegex = true;
-                    option.Keyword = option.Keyword[1..];
-                }
-
-                var builder = new StringBuilder();
-                builder.Append(option.Keyword);
-
-                if (!string.IsNullOrWhiteSpace(option.ParentPath))
-                {
-                    builder.Append($" {(option.IsRecursive ? "" : "parent:")}\"{option.ParentPath}\"");
-                }
-
-                if (option.IsContentSearch)
-                {
-                    builder.Append($" content:\"{option.ContentSearchKeyword}\"");
-                }
-
-                var searchText = builder.ToString();
-
                 if (!TryConnectEverything3(out var client))
                     throw new IPCErrorException();
 
-                await foreach (var result in SearchWithEverything3Async(client, option, searchText, useRegex, token))
+                await foreach (var result in SearchWithEverything3Async(client, preparedOption, query, token))
                     yield return result;
             }
             finally
@@ -165,8 +141,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
         private async IAsyncEnumerable<SearchResult> SearchWithEverything3Async(IntPtr client,
             EverythingSearchOption option,
-            string searchText,
-            bool useRegex,
+            EverythingHelper.PreparedQuery query,
             [EnumeratorCancellation] CancellationToken token)
         {
             IntPtr searchState = IntPtr.Zero;
@@ -180,9 +155,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                     yield break;
                 }
 
-                _ = Everything3ApiDllImport.Everything3_SetSearchRegex(searchState, useRegex);
+                _ = Everything3ApiDllImport.Everything3_SetSearchRegex(searchState, option.UseRegex);
                 _ = Everything3ApiDllImport.Everything3_SetSearchMatchPath(searchState, option.IsFullPathSearch);
-                _ = Everything3ApiDllImport.Everything3_SetSearchTextW(searchState, searchText);
+                _ = Everything3ApiDllImport.Everything3_SetSearchTextW(searchState, query.SearchText);
                 _ = Everything3ApiDllImport.Everything3_SetSearchHideResultOmissions(searchState, true);
                 _ = Everything3ApiDllImport.Everything3_SetSearchViewportOffset(searchState, (nuint)option.Offset);
                 _ = Everything3ApiDllImport.Everything3_SetSearchViewportCount(searchState, (nuint)option.MaxCount);
@@ -242,7 +217,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                             : Everything3ApiDllImport.Everything3_IsRootResult(resultList, idx)
                                 ? ResultType.Volume
                                 : ResultType.File,
-                        Score = Convert.ToInt32(Everything3ApiDllImport.Everything3_GetResultRunCount(resultList, idx))
+                        Score = Convert.ToInt32(Everything3ApiDllImport.Everything3_GetResultRunCount(resultList, idx)),
+                        HighlightData = []
                     };
 
                     if (Everything3ApiDllImport.Everything3_GetSearchPropertyRequestHighlight(searchState, 0))

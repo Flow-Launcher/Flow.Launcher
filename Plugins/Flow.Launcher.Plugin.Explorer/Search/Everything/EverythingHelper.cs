@@ -1,20 +1,62 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 {
+    public enum EverythingStateCode
+    {
+        OK,
+        MemoryError,
+        IPCError,
+        RegisterClassExError,
+        CreateWindowError,
+        CreateThreadError,
+        InvalidIndexError,
+        InvalidCallError
+    }
+
     public static class EverythingHelper
     {
-        public enum StateCode
+        #region Query
+
+        public readonly record struct PreparedQuery(
+            EverythingSearchOption Option,
+            string SearchText);
+
+        public static PreparedQuery PrepareQuery(EverythingSearchOption option)
         {
-            OK,
-            MemoryError,
-            IPCError,
-            RegisterClassExError,
-            CreateWindowError,
-            CreateThreadError,
-            InvalidIndexError,
-            InvalidCallError
+            if (option.Offset < 0)
+                throw new ArgumentOutOfRangeException(nameof(option.Offset), option.Offset, "Offset must be greater than or equal to 0");
+            if (option.MaxCount < 0)
+                throw new ArgumentOutOfRangeException(nameof(option.MaxCount), option.MaxCount, "MaxCount must be greater than or equal to 0");
+
+            var keyword = option.Keyword;
+            if (!string.IsNullOrEmpty(keyword) && keyword.StartsWith("@", StringComparison.Ordinal))
+            {
+                option.UseRegex = true;
+                keyword = keyword[1..];
+            }
+
+            var builder = new StringBuilder();
+            builder.Append(keyword);
+
+            if (!string.IsNullOrWhiteSpace(option.ParentPath))
+            {
+                builder.Append($" {(option.IsRecursive ? "" : "parent:")}\"{option.ParentPath}\"");
+            }
+
+            if (option.IsContentSearch)
+            {
+                builder.Append($" content:\"{option.ContentSearchKeyword}\"");
+            }
+
+            return new PreparedQuery(option with { Keyword = keyword }, builder.ToString());
         }
+
+        #endregion
+
+        #region Result
 
         /// <summary>
         /// Convert the highlighted string from Everything API to a list of highlight indexes for our Result.
@@ -65,5 +107,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
             return highlightData;
         }
+
+        #endregion
     }
 }
