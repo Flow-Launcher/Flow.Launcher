@@ -139,7 +139,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             return true;
         }
 
-        private async IAsyncEnumerable<SearchResult> SearchWithEverything3Async(IntPtr client,
+        private static async IAsyncEnumerable<SearchResult> SearchWithEverything3Async(IntPtr client,
             EverythingSearchOption option,
             EverythingHelper.PreparedQuery query,
             [EnumeratorCancellation] CancellationToken token)
@@ -171,7 +171,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                     }
                 }
 
-                    _ = Everything3ApiDllImport.Everything3_ClearSearchPropertyRequests(searchState);
+                _ = Everything3ApiDllImport.Everything3_ClearSearchPropertyRequests(searchState);
                 _ = Everything3ApiDllImport.Everything3_AddSearchPropertyRequestHighlighted(searchState, EVERYTHING3_PROPERTY_ID_NAME);
                 _ = Everything3ApiDllImport.Everything3_AddSearchPropertyRequestHighlighted(searchState, EVERYTHING3_PROPERTY_ID_PATH);
                 _ = Everything3ApiDllImport.Everything3_AddSearchPropertyRequest(searchState, EVERYTHING3_PROPERTY_ID_PATH_AND_NAME);
@@ -195,54 +195,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                         yield break;
                     }
 
-                    _buffer.Clear();
-                    var fullPathLength = Everything3ApiDllImport.Everything3_GetResultFullPathNameW(resultList, idx, _buffer, BufferSize);
-                    if (fullPathLength == 0)
-                    {
-                        CheckAndThrowExceptionOnErrorFromEverything3();
+                    if (!TryCreateSearchResult(resultList, idx, out var result))
                         continue;
-                    }
-
-                    var fullPath = _buffer.ToString();
-                    if (string.IsNullOrEmpty(fullPath))
-                    {
-                        continue;
-                    }
-
-                    var result = new SearchResult
-                    {
-                        FullPath = fullPath,
-                        Type = Everything3ApiDllImport.Everything3_IsFolderResult(resultList, idx)
-                            ? ResultType.Folder
-                            : Everything3ApiDllImport.Everything3_IsRootResult(resultList, idx)
-                                ? ResultType.Volume
-                                : ResultType.File,
-                        Score = Convert.ToInt32(Everything3ApiDllImport.Everything3_GetResultRunCount(resultList, idx)),
-                        HighlightData = []
-                    };
-
-                    if (Everything3ApiDllImport.Everything3_GetSearchPropertyRequestHighlight(searchState, 0))
-                    {
-                        _buffer.Clear();
-                        var highlightedFileNameLength = Everything3ApiDllImport.Everything3_GetResultPropertyTextHighlightedW(
-                            resultList,
-                            idx,
-                            EVERYTHING3_PROPERTY_ID_NAME,
-                            _buffer,
-                            BufferSize);
-
-                        if (highlightedFileNameLength > 0)
-                        {
-                            var highlightData = EverythingHelper.EverythingHighlightStringToHighlightList(_buffer.ToString());
-                            if (highlightData.Count > 0)
-                            {
-                                result = result with
-                                {
-                                    HighlightData = highlightData
-                                };
-                            }
-                        }
-                    }
 
                     yield return result;
                 }
@@ -259,6 +213,63 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             }
 
             await Task.CompletedTask;
+        }
+
+        private static bool TryCreateSearchResult(IntPtr resultList, nuint resultIndex, out SearchResult result)
+        {
+            result = default;
+
+            if (!TryGetResultFullPath(resultList, resultIndex, out var fullPath))
+                return false;
+
+            result = new SearchResult
+            {
+                FullPath = fullPath,
+                Type = GetResultType(resultList, resultIndex),
+                Score = Convert.ToInt32(Everything3ApiDllImport.Everything3_GetResultRunCount(resultList, resultIndex)),
+                HighlightData = GetHighlightData(resultList, resultIndex)
+            };
+
+            return true;
+        }
+
+        private static bool TryGetResultFullPath(IntPtr resultList, nuint resultIndex, out string fullPath)
+        {
+            _buffer.Clear();
+            var fullPathLength = Everything3ApiDllImport.Everything3_GetResultFullPathNameW(resultList, resultIndex, _buffer, BufferSize);
+            if (fullPathLength == 0)
+            {
+                CheckAndThrowExceptionOnErrorFromEverything3();
+                fullPath = string.Empty;
+                return false;
+            }
+
+            fullPath = _buffer.ToString();
+            return !string.IsNullOrEmpty(fullPath);
+        }
+
+        private static ResultType GetResultType(IntPtr resultList, nuint resultIndex)
+        {
+            return Everything3ApiDllImport.Everything3_IsFolderResult(resultList, resultIndex)
+                ? ResultType.Folder
+                : Everything3ApiDllImport.Everything3_IsRootResult(resultList, resultIndex)
+                    ? ResultType.Volume
+                    : ResultType.File;
+        }
+
+        private static List<int> GetHighlightData(IntPtr resultList, nuint resultIndex)
+        {
+            _buffer.Clear();
+            var highlightedFileNameLength = Everything3ApiDllImport.Everything3_GetResultPropertyTextHighlightedW(
+                resultList,
+                resultIndex,
+                EVERYTHING3_PROPERTY_ID_NAME,
+                _buffer,
+                BufferSize);
+
+            return highlightedFileNameLength > 0
+                ? EverythingHelper.EverythingHighlightStringToHighlightList(_buffer.ToString())
+                : [];
         }
 
         private bool TryUseEverything3Client(Action<IntPtr> action)
