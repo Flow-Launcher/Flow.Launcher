@@ -489,6 +489,10 @@
     <system:String x:Key="LogLevelDEBUG">Depuración</system:String>
     <system:String x:Key="settingWindowFontTitle">Configuración de fuente de la ventana</system:String>
 
+    <!--  Plugin Settings Window  -->
+    <system:String x:Key="pluginSettingsWindowTitle">Settings: {0}</system:String>
+    <system:String x:Key="pluginSettingsWindowOpenFailed">Failed to open plugin settings window</system:String>
+
     <!--  Release Notes Window  -->
     <system:String x:Key="seeMoreReleaseNotes">Ver más notas de la versión en GitHub</system:String>
     <system:String x:Key="checkNetworkConnectionTitle">No se ha podido obtener las notas de la versión</system:String>
