@@ -1,6 +1,6 @@
 ﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,80 +11,22 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 {
     public class EverythingSearchManager : IIndexProvider, IContentIndexProvider, IPathIndexProvider
     {
-        private static readonly string ClassName = nameof(EverythingSearchManager);
-        private static readonly SemaphoreSlim _dllSemaphore = new(1, 1);
-
         private Settings Settings { get; }
-        private readonly bool useV3Api;
-        private readonly string everything15InstanceName;
+        private readonly EverythingAvailabilityService _availabilityService;
         private readonly Lock _syncRoot = new();
         private bool isApiInitialized;
         private IEverythingApi api;
-        public const string DefaultEverything15InstanceName = "1.5a";
 
         public EverythingSearchManager(Settings settings)
         {
             Settings = settings;
-            useV3Api = Settings.EnableEverything15Support;
-            everything15InstanceName = Settings.Everything15InstanceName;
-            api = CreateApi(useV3Api, GetNormalizedInstanceName(everything15InstanceName));
-        }
-
-        private async ValueTask ThrowIfEverythingNotAvailableAsync(CancellationToken token = default)
-        {
-            try
-            {
-                if (!await api.IsEverythingRunningAsync(token))
-                    throw new EngineNotAvailableException(
-                        Enum.GetName(Settings.IndexSearchEngineOption.Everything)!,
-                        Localize.flowlauncher_plugin_everything_click_to_launch_or_install(),
-                        Localize.flowlauncher_plugin_everything_is_not_running(),
-                        Constants.EverythingErrorImagePath,
-                        ClickToInstallEverythingAsync);
-            }
-            catch (DllNotFoundException)
-            {
-                throw new EngineNotAvailableException(
-                    Enum.GetName(Settings.IndexSearchEngineOption.Everything)!,
-                    "Please check whether your system is x86 or x64",
-                    Constants.GeneralSearchErrorImagePath,
-                    Localize.flowlauncher_plugin_everything_sdk_issue());
-            }
-        }
-
-        private async ValueTask<bool> ClickToInstallEverythingAsync(ActionContext _)
-        {
-            try
-            {
-                var installedPath = await EverythingDownloadHelper.PromptDownloadIfNotInstallAsync(Settings.EverythingInstalledPath, Main.Context.API);
-
-                if (installedPath == null)
-                {
-                    Main.Context.API.ShowMsgError(Localize.flowlauncher_plugin_everything_not_found());
-                    Main.Context.API.LogError(ClassName, "Unable to find Everything.exe");
-
-                    return false;
-                }
-
-                Settings.EverythingInstalledPath = installedPath;
-                Process.Start(installedPath, "-startup");
-
-                return true;
-            }
-            // Sometimes Everything installation will fail because of permission issues or file not found issues
-            // Just let the user know that Everything is not installed properly and ask them to install it manually
-            catch (Exception e)
-            {
-                Main.Context.API.ShowMsgError(Localize.flowlauncher_plugin_everything_install_issue());
-                Main.Context.API.LogException(ClassName, "Failed to install Everything", e);
-
-                return false;
-            }
+            _availabilityService = new EverythingAvailabilityService(settings);
+            api = EverythingApiFactory.Create(settings);
         }
 
         public async IAsyncEnumerable<SearchResult> SearchAsync(string search, [EnumeratorCancellation] CancellationToken token)
         {
-            await ThrowIfEverythingNotAvailableAsync(token);
+            await _availabilityService.EnsureAvailableAsync(api, token);
 
             if (token.IsCancellationRequested)
                 yield break;
@@ -102,7 +44,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         public async IAsyncEnumerable<SearchResult> ContentSearchAsync(string plainSearch, string contentSearch,
             [EnumeratorCancellation] CancellationToken token)
         {
-            await ThrowIfEverythingNotAvailableAsync(token);
+            await _availabilityService.EnsureAvailableAsync(api, token);
 
             if (!Settings.EnableEverythingContentSearch)
             {
@@ -137,7 +79,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
         public async IAsyncEnumerable<SearchResult> EnumerateAsync(string path, string search, bool recursive, [EnumeratorCancellation] CancellationToken token)
         {
-            await ThrowIfEverythingNotAvailableAsync(token);
+            await _availabilityService.EnsureAvailableAsync(api, token);
 
             if (token.IsCancellationRequested)
                 yield break;
@@ -153,6 +95,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             await foreach (var result in api.SearchAsync(option, token))
                 yield return result;
         }
+
         public void InitializeApi(string sdkDirectory)
         {
             lock (_syncRoot)
@@ -160,8 +103,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 if (isApiInitialized)
                     return;
 
-                LoadConfiguredDll(sdkDirectory, useV3Api);
-                api = CreateApi(useV3Api, GetNormalizedInstanceName(Settings.Everything15InstanceName));
+                EverythingSdkLoader.EnsureLoaded(sdkDirectory, Settings.EnableEverything15Support);
+                api = EverythingApiFactory.Create(Settings);
                 isApiInitialized = true;
             }
         }
@@ -169,38 +112,5 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         public bool IsFastSortOption(EverythingSortOption sortOption) => api.IsFastSortOption(sortOption);
 
         public Task IncrementRunCounterAsync(string fileOrFolder) => api.IncrementRunCounterAsync(fileOrFolder);
-
-        private static void LoadConfiguredDll(string sdkDirectory, bool enableEverything15Support)
-        {
-            _dllSemaphore.Wait();
-            try
-            {
-                if (enableEverything15Support)
-                {
-                    if (!Everything3ApiDllImport.IsLoaded)
-                        Everything3ApiDllImport.Load(sdkDirectory);
-                }
-                else
-                {
-                    if (!EverythingApiDllImport.IsLoaded)
-                        EverythingApiDllImport.Load(sdkDirectory);
-                }
-            }
-            finally
-            {
-                _dllSemaphore.Release();
-            }
-        }
-
-        private static string GetNormalizedInstanceName(string instanceName) => string.IsNullOrWhiteSpace(instanceName)
-            ? DefaultEverything15InstanceName
-            : instanceName.Trim();
-
-        private static IEverythingApi CreateApi(bool enableEverything15Support, string instanceName)
-        {
-            return enableEverything15Support
-                ? new EverythingApiV3(instanceName)
-                : new LegacyEverythingApi();
-        }
     }
 }

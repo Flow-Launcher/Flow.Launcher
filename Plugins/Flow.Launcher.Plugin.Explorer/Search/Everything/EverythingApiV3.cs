@@ -308,7 +308,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             try
             {
                 var normalizedInstanceName = string.IsNullOrWhiteSpace(_instanceName)
-                    ? DefaultEverything15InstanceName
+                    ? EverythingApiFactory.DefaultEverything15InstanceName
                     : _instanceName.Trim();
                 client = Everything3ApiDllImport.Everything3_ConnectW(normalizedInstanceName);
                 return client != IntPtr.Zero;
