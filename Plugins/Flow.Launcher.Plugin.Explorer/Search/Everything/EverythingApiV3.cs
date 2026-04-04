@@ -109,7 +109,16 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             try
             {
                 if (TryConnectEverything3(out var client))
-                    Everything3ApiDllImport.Everything3_IncRunCountFromFilenameW(client, fileOrFolder);
+                {
+                    try
+                    {
+                        Everything3ApiDllImport.Everything3_IncRunCountFromFilenameW(client, fileOrFolder);
+                    }
+                    finally
+                    {
+                        _ = Everything3ApiDllImport.Everything3_DestroyClient(client);
+                    }
+                }
             }
             catch (Exception)
             {
