@@ -95,7 +95,6 @@
                 MaxWidth="400"
                 Margin="0 0 26 12"
                 VerticalAlignment="Center"
-                FontFamily="Segoe UI"
                 FontSize="20"
                 FontWeight="SemiBold"
                 TextAlignment="Left"
