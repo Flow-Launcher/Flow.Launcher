@@ -489,6 +489,10 @@
     <system:String x:Key="LogLevelDEBUG">Debug</system:String>
     <system:String x:Key="settingWindowFontTitle">Einstellung der Fensterschriftart</system:String>
 
+    <!--  Plugin Settings Window  -->
+    <system:String x:Key="pluginSettingsWindowTitle">Settings: {0}</system:String>
+    <system:String x:Key="pluginSettingsWindowOpenFailed">Failed to open plugin settings window</system:String>
+
     <!--  Release Notes Window  -->
     <system:String x:Key="seeMoreReleaseNotes">Weitere Versionshinweise finden Sie auf GitHub</system:String>
     <system:String x:Key="checkNetworkConnectionTitle">Versionshinweise konnten nicht abgerufen werden</system:String>
