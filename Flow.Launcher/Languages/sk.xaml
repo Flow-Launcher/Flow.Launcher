@@ -491,8 +491,8 @@ Nevykonali sa žiadne zmeny.</system:String>
     <system:String x:Key="settingWindowFontTitle">Nastavenie písma okna</system:String>
 
     <!--  Plugin Settings Window  -->
-    <system:String x:Key="pluginSettingsWindowTitle">Settings: {0}</system:String>
-    <system:String x:Key="pluginSettingsWindowOpenFailed">Failed to open plugin settings window</system:String>
+    <system:String x:Key="pluginSettingsWindowTitle">Nastavenia: {0}</system:String>
+    <system:String x:Key="pluginSettingsWindowOpenFailed">Nepodarilo sa otvoriť okno nastavení pluginu</system:String>
 
     <!--  Release Notes Window  -->
     <system:String x:Key="seeMoreReleaseNotes">Ďalšie poznámky k vydaniu na Githube</system:String>
