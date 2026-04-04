@@ -150,7 +150,7 @@ namespace Flow.Launcher
 
         public bool OpenPluginSettingsWindow(string pluginId)
         {
-            return Application.Current.Dispatcher.Invoke(() =>
+            return DispatcherHelper.Invoke(() =>
             {
                 try
                 {
