@@ -20,12 +20,26 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             try
             {
                 if (!await api.IsEverythingRunningAsync(token))
-                    throw new EngineNotAvailableException(
+                {                    
+                    if (_settings.EnableEverything15Support)
+                    {
+                        throw new EngineNotAvailableException(
                         Enum.GetName(Settings.IndexSearchEngineOption.Everything)!,
-                        Localize.flowlauncher_plugin_everything_click_to_launch_or_install(),
-                        Localize.flowlauncher_plugin_everything_is_not_running(),
+                        Localize.flowlauncher_plugin_everything_15_resolution(),
+                        Localize.flowlauncher_plugin_everything_15_unavailable(),
                         Constants.EverythingErrorImagePath,
                         ClickToInstallEverythingAsync);
+                    }
+                    else
+                    {
+                        throw new EngineNotAvailableException(
+                        Enum.GetName(Settings.IndexSearchEngineOption.Everything)!,
+                        Localize.flowlauncher_plugin_everything_click_to_launch_or_install(),
+                        Localize.flowlauncher_plugin_everything_15_unavailable(),
+                        Constants.EverythingErrorImagePath,
+                        ClickToInstallEverythingAsync);
+                    }
+                }
             }
             catch (Exception ex) when (ex is DllNotFoundException || ex is EntryPointNotFoundException)
             {

@@ -647,7 +647,9 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                 }
                 catch (IPCErrorException)
                 {
-                    return Localize.flowlauncher_plugin_everything_is_not_running();
+                    return Settings.EnableEverything15Support
+                        ? Localize.flowlauncher_plugin_everything_15_sort_warning()
+                        : Localize.flowlauncher_plugin_everything_is_not_running();
                 }
                 catch (Exception ex) when (ex is DllNotFoundException || ex is EntryPointNotFoundException)
                 {

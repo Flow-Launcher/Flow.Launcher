@@ -154,6 +154,9 @@
     <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">Failed to load Everything SDK</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_architecture_check">Please check whether your system is x86 or x64</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_is_not_running">Warning: Everything service is not running</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_15_unavailable">Warning: Everything 1.5 is unavailable</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_15_resolution">Ensure Everything is running and verify the configured instance name</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_15_sort_warning">Warning: Everything 1.5 is unavailable. The service may not be running, or the instance name may be invalid</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_query_error">Error while querying Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by">Sort By</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_name_ascending">Name &#x2191;</system:String>
