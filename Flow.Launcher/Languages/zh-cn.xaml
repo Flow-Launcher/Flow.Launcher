@@ -490,8 +490,8 @@
     <system:String x:Key="settingWindowFontTitle">设置窗口字体</system:String>
 
     <!--  Plugin Settings Window  -->
-    <system:String x:Key="pluginSettingsWindowTitle">Settings: {0}</system:String>
-    <system:String x:Key="pluginSettingsWindowOpenFailed">Failed to open plugin settings window</system:String>
+    <system:String x:Key="pluginSettingsWindowTitle">设置：{0}</system:String>
+    <system:String x:Key="pluginSettingsWindowOpenFailed">打开插件设置窗口失败</system:String>
 
     <!--  Release Notes Window  -->
     <system:String x:Key="seeMoreReleaseNotes">在 GitHub 上查看更多版本说明</system:String>
