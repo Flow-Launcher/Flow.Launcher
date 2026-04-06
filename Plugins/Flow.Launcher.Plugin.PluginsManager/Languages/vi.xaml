@@ -13,7 +13,7 @@
     <system:String x:Key="plugin_pluginsmanager_installing_plugin">Cài đặt Plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_from_web">Tải về và cài đặt</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_title">Đã gỡ cài đặt plugin</system:String>
-    <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_title">Keep plugin settings</system:String>
+    <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_title">Giữ lại các cài đặt plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_subtitle">Do you want to keep the settings of the plugin for the next usage?</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_success_restart">Đã cài đặt thành công plugin. Đang khởi động lại Flow, vui lòng đợi...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_errormetadatafile">Không thể tìm thấy tệp siêu dữ liệu plugin.json từ tệp zip được giải nén.</system:String>
@@ -29,10 +29,10 @@
     <system:String x:Key="plugin_pluginsmanager_update_alreadyexists">Đã cài đặt plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_title">Tải xuống bản kê khai plugin không thành công</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_subtitle">Vui lòng kiểm tra xem bạn có thể kết nối với github.com không. Lỗi này có nghĩa là bạn không thể cài đặt hoặc cập nhật plugin.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_all_title">Update all plugins</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_all_subtitle">Would you like to update all plugins?</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_title">Cập nhật tất cả plugin</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_subtitle">Bạn có muốn cập nhật tất cả các plugin không?</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_all_prompt">Would you like to update {0} plugins?{1}Flow Launcher will restart after updating all plugins.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_all_prompt_no_restart">Would you like to update {0} plugins?</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_prompt_no_restart">Bạn có muốn cập nhật {0} plugin không?</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_all_success_restart">{0} plugins successfully updated. Restarting Flow, please wait...</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_success_restart">Plugin {0} successfully updated. Restarting Flow, please wait...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning_title">Cài đặt từ một nguồn không xác định</system:String>

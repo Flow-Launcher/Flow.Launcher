@@ -39,6 +39,8 @@ namespace Flow.Launcher.Plugin.Explorer
 
         public bool DisplayMoreInformationInToolTip { get; set; } = false;
 
+        public bool BoostHomeFolderScore { get; set; } = true;
+
         public string SearchActionKeyword { get; set; } = Query.GlobalPluginWildcardSign;
 
         public bool SearchActionKeywordEnabled { get; set; } = true;
@@ -230,7 +232,7 @@ namespace Flow.Launcher.Plugin.Explorer
         internal Dictionary<ActionKeyword, string> GetActiveActionKeywords(string actionKeywordStr)
         {
             var result = new Dictionary<ActionKeyword, string>();
-            if (string.IsNullOrEmpty(actionKeywordStr)) return null;
+            if (string.IsNullOrEmpty(actionKeywordStr)) return result;
             foreach (var action in Enum.GetValues<ActionKeyword>())
             {
                 var keywordStr = GetActionKeyword(action);

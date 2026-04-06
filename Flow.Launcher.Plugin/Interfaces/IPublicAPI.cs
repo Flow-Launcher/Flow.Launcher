@@ -162,6 +162,15 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         void OpenSettingDialog();
 
+
+        /// <summary>
+        /// Open plugin setting window for a specific plugin.
+        /// Reuses the existing window when that plugin's settings window is already open.
+        /// </summary>
+        /// <param name="pluginId">ID of the plugin whose settings window should be opened</param>
+        /// <returns>True if the plugin settings window was successfully opened or reused; false otherwise</returns>
+        bool OpenPluginSettingsWindow(string pluginId);
+
         /// <summary>
         /// Get translation of current language
         /// You need to implement IPluginI18n if you want to support multiple languages for your plugin
@@ -533,12 +542,12 @@ namespace Flow.Launcher.Plugin
         public Task<bool> UpdatePluginManifestAsync(bool usePrimaryUrlOnly = false, CancellationToken token = default);
 
         /// <summary>
-        /// Get the plugin manifest.
+        /// Get the current plugin manifest entries known to Flow Launcher.
         /// </summary>
-        /// <remarks>
-        /// If Flow cannot get manifest data, this could be null
-        /// </remarks>
-        /// <returns></returns>
+        /// <returns>
+        /// A non-null read-only list of <see cref="UserPlugin"/> entries. The list may be empty if the
+        /// manifest has not been loaded yet, or if no successful manifest fetch has completed in the current session.
+        /// </returns>
         public IReadOnlyList<UserPlugin> GetPluginManifest();
 
         /// <summary>
