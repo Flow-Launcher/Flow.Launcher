@@ -488,8 +488,8 @@
     <system:String x:Key="settingWindowFontTitle">Tipo de letra da aplicação</system:String>
 
     <!--  Plugin Settings Window  -->
-    <system:String x:Key="pluginSettingsWindowTitle">Settings: {0}</system:String>
-    <system:String x:Key="pluginSettingsWindowOpenFailed">Failed to open plugin settings window</system:String>
+    <system:String x:Key="pluginSettingsWindowTitle">Definições: {0}</system:String>
+    <system:String x:Key="pluginSettingsWindowOpenFailed">Falha ao abrir a janela de definições do plugin</system:String>
 
     <!--  Release Notes Window  -->
     <system:String x:Key="seeMoreReleaseNotes">Mostrar notas da versão no GitHub</system:String>
