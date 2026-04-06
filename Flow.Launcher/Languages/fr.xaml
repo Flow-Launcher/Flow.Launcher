@@ -489,8 +489,8 @@
     <system:String x:Key="settingWindowFontTitle">Réglage de la police de la fenêtre</system:String>
 
     <!--  Plugin Settings Window  -->
-    <system:String x:Key="pluginSettingsWindowTitle">Settings: {0}</system:String>
-    <system:String x:Key="pluginSettingsWindowOpenFailed">Failed to open plugin settings window</system:String>
+    <system:String x:Key="pluginSettingsWindowTitle">Paramètres: {0}</system:String>
+    <system:String x:Key="pluginSettingsWindowOpenFailed">Échec de l'ouverture de la fenêtre des paramètres du plugin</system:String>
 
     <!--  Release Notes Window  -->
     <system:String x:Key="seeMoreReleaseNotes">Voir plus de notes de version sur GitHub</system:String>
