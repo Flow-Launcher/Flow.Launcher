@@ -101,6 +101,16 @@ public partial class SettingWindow
             _settings.SettingWindowState = WindowState;
         }
     }
+    private void Window_Activated(object sender, EventArgs e)
+    {
+           
+        // Band-aid fix: Rare edge case where Alt+Tab activates the window but doesn't trigger StateChanged
+        // So we need to restore/maximize it here if it's still minimized
+        if (WindowState == WindowState.Minimized && _settings.SettingWindowState != WindowState.Minimized)
+        {
+            WindowState = _settings.SettingWindowState;
+        }
+    }
 
     private void Window_LocationChanged(object sender, EventArgs e)
     {
