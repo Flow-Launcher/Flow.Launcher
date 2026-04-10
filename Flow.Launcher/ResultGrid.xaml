@@ -34,11 +34,11 @@
                 <EventSetter Event="MouseEnter" Handler="OnMouseEnter" />
                 <EventSetter Event="MouseMove" Handler="OnMouseMove" />
                 <Setter Property="Background" Value="Transparent" />
-                <Setter Property="Width" Value="64" />
-                <Setter Property="Height" Value="64" />
-                <Setter Property="Margin" Value="5" />
+                <Setter Property="Width" Value="84" />
+                <Setter Property="Height" Value="84" />
+                <Setter Property="Margin" Value="2" />
                 <Setter Property="BorderThickness" Value="0" />
-                <Setter Property="Padding" Value="0" />
+                <Setter Property="Padding" Value="10" />
                 <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                 <Setter Property="Template">
                     <Setter.Value>
@@ -98,11 +98,9 @@
                         </Grid>
                     </Border>
                     <TextBlock
-                        Margin="2 0 2 1"
                         HorizontalAlignment="Center"
                         FontSize="{Binding Settings.HomeScreenFontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        Foreground="White"
-                        Opacity="0.9"
+                        Style="{DynamicResource HomeIconFontStyle}"
                         Text="{Binding Result.Title}"
                         TextTrimming="CharacterEllipsis"
                         ToolTip="{Binding ShowTitleToolTip}" />
