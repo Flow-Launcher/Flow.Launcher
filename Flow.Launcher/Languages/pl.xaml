@@ -246,6 +246,11 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="pluginStore_RecentlyUpdated">Ostatnio zaktualizowano</system:String>
     <system:String x:Key="pluginStore_None">Wtyczki</system:String>
     <system:String x:Key="pluginStore_Installed">Zainstalowany</system:String>
+    <system:String x:Key="PluginStoreSortModeDefault">Default</system:String>
+    <system:String x:Key="PluginStoreSortModeName">Nazwa</system:String>
+    <system:String x:Key="PluginStoreSortModeReleaseDate">Release Date</system:String>
+    <system:String x:Key="PluginStoreSortModeUpdatedDate">Updated Date</system:String>
+    <system:String x:Key="PluginStoreSortingModeComboboxLabel">Sorting Mode:</system:String>
     <system:String x:Key="refresh">Odśwież</system:String>
     <system:String x:Key="installbtn">Zainstaluj</system:String>
     <system:String x:Key="uninstallbtn">Odinstaluj</system:String>
