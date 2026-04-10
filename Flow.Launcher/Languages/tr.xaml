@@ -247,6 +247,11 @@
     <system:String x:Key="pluginStore_RecentlyUpdated">Yakın Zamanda Güncellendi</system:String>
     <system:String x:Key="pluginStore_None">Eklentiler</system:String>
     <system:String x:Key="pluginStore_Installed">Yüklü</system:String>
+    <system:String x:Key="PluginStoreSortModeDefault">Varsayılan</system:String>
+    <system:String x:Key="PluginStoreSortModeName">Ad</system:String>
+    <system:String x:Key="PluginStoreSortModeReleaseDate">Release Date</system:String>
+    <system:String x:Key="PluginStoreSortModeUpdatedDate">Updated Date</system:String>
+    <system:String x:Key="PluginStoreSortingModeComboboxLabel">Sorting Mode:</system:String>
     <system:String x:Key="refresh">Yenile</system:String>
     <system:String x:Key="installbtn">Yükle</system:String>
     <system:String x:Key="uninstallbtn">Kaldır</system:String>
