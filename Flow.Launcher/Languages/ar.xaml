@@ -247,6 +247,11 @@
     <system:String x:Key="pluginStore_RecentlyUpdated">تحديثات حديثة</system:String>
     <system:String x:Key="pluginStore_None">لا توجد إضافات</system:String>
     <system:String x:Key="pluginStore_Installed">مثبتة</system:String>
+    <system:String x:Key="PluginStoreSortModeDefault">Default</system:String>
+    <system:String x:Key="PluginStoreSortModeName">اسم البرنامج</system:String>
+    <system:String x:Key="PluginStoreSortModeReleaseDate">Release Date</system:String>
+    <system:String x:Key="PluginStoreSortModeUpdatedDate">Updated Date</system:String>
+    <system:String x:Key="PluginStoreSortingModeComboboxLabel">Sorting Mode:</system:String>
     <system:String x:Key="refresh">تحديث</system:String>
     <system:String x:Key="installbtn">تثبيت</system:String>
     <system:String x:Key="uninstallbtn">إلغاء التثبيت</system:String>
