@@ -250,9 +250,9 @@ Nevykonali sa žiadne zmeny.</system:String>
     <system:String x:Key="pluginStore_Installed">Nainštalované</system:String>
     <system:String x:Key="PluginStoreSortModeDefault">Predvolené</system:String>
     <system:String x:Key="PluginStoreSortModeName">Názov</system:String>
-    <system:String x:Key="PluginStoreSortModeReleaseDate">Release Date</system:String>
-    <system:String x:Key="PluginStoreSortModeUpdatedDate">Updated Date</system:String>
-    <system:String x:Key="PluginStoreSortingModeComboboxLabel">Sorting Mode:</system:String>
+    <system:String x:Key="PluginStoreSortModeReleaseDate">Dátum vydania</system:String>
+    <system:String x:Key="PluginStoreSortModeUpdatedDate">Dátum aktualizácie</system:String>
+    <system:String x:Key="PluginStoreSortingModeComboboxLabel">Zoradiť podľa:</system:String>
     <system:String x:Key="refresh">Obnoviť</system:String>
     <system:String x:Key="installbtn">Inštalovať</system:String>
     <system:String x:Key="uninstallbtn">Odinštalovať</system:String>
