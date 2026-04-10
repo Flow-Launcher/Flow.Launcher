@@ -222,6 +222,22 @@
                                 Minimum="6"
                                 TickFrequency="1"
                                 Value="{Binding ResultSubItemFontSize, Mode=TwoWay}" />
+                            <Separator
+                                Width="Auto"
+                                BorderThickness="1"
+                                Style="{StaticResource SettingSeparatorStyle}" />
+                            <Slider
+                                Name="homeScreenFontSize"
+                                Margin="12 8 12 0"
+                                VerticalAlignment="Center"
+                                ui:ControlHelper.Header="{DynamicResource homeScreenFontSize}"
+                                AutoToolTipPlacement="TopLeft"
+                                IsMoveToPointEnabled="True"
+                                IsSnapToTickEnabled="True"
+                                Maximum="18"
+                                Minimum="8"
+                                TickFrequency="1"
+                                Value="{Binding HomeScreenFontSize, Mode=TwoWay}" />
                             <ComboBox
                                 Name="ResultSubItemFontComboBox"
                                 Margin="12 4 12 0"

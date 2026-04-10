@@ -309,6 +309,7 @@
     <system:String x:Key="queryBoxFont">Query Box Font</system:String>
     <system:String x:Key="resultItemFont">Result Title Font</system:String>
     <system:String x:Key="resultSubItemFont">Result Subtitle Font</system:String>
+    <system:String x:Key="homeScreenFontSize">Home Font Size</system:String>
     <system:String x:Key="resetCustomize">Reset</system:String>
     <system:String x:Key="resetCustomizeToolTip">Reset to the recommended font and size settings.</system:String>
     <system:String x:Key="ImportThemeSize">Import Theme Size</system:String>
