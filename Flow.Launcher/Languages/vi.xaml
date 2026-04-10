@@ -247,6 +247,11 @@
     <system:String x:Key="pluginStore_RecentlyUpdated">Cập nhật gần đây</system:String>
     <system:String x:Key="pluginStore_None">Tiện ích mở rộng</system:String>
     <system:String x:Key="pluginStore_Installed">Đã cài đặt</system:String>
+    <system:String x:Key="PluginStoreSortModeDefault">Default</system:String>
+    <system:String x:Key="PluginStoreSortModeName">Tên</system:String>
+    <system:String x:Key="PluginStoreSortModeReleaseDate">Release Date</system:String>
+    <system:String x:Key="PluginStoreSortModeUpdatedDate">Updated Date</system:String>
+    <system:String x:Key="PluginStoreSortingModeComboboxLabel">Sorting Mode:</system:String>
     <system:String x:Key="refresh">Làm mới</system:String>
     <system:String x:Key="installbtn">Cài đặt</system:String>
     <system:String x:Key="uninstallbtn">Gỡ cài đặt</system:String>
