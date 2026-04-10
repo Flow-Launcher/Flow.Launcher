@@ -247,6 +247,11 @@
     <system:String x:Key="pluginStore_RecentlyUpdated">Recently Updated</system:String>
     <system:String x:Key="pluginStore_None">插件</system:String>
     <system:String x:Key="pluginStore_Installed">Installed</system:String>
+    <system:String x:Key="PluginStoreSortModeDefault">Default</system:String>
+    <system:String x:Key="PluginStoreSortModeName">名稱</system:String>
+    <system:String x:Key="PluginStoreSortModeReleaseDate">Release Date</system:String>
+    <system:String x:Key="PluginStoreSortModeUpdatedDate">Updated Date</system:String>
+    <system:String x:Key="PluginStoreSortingModeComboboxLabel">Sorting Mode:</system:String>
     <system:String x:Key="refresh">重新整理</system:String>
     <system:String x:Key="installbtn">安裝</system:String>
     <system:String x:Key="uninstallbtn">解除安裝</system:String>
