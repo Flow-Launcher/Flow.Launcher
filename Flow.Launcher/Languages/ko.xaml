@@ -238,6 +238,11 @@
     <system:String x:Key="pluginStore_RecentlyUpdated">최근 업데이트</system:String>
     <system:String x:Key="pluginStore_None">플러그인</system:String>
     <system:String x:Key="pluginStore_Installed">설치됨</system:String>
+    <system:String x:Key="PluginStoreSortModeDefault">Default</system:String>
+    <system:String x:Key="PluginStoreSortModeName">Name</system:String>
+    <system:String x:Key="PluginStoreSortModeReleaseDate">Release Date</system:String>
+    <system:String x:Key="PluginStoreSortModeUpdatedDate">Updated Date</system:String>
+    <system:String x:Key="PluginStoreSortingModeComboboxLabel">Sorting Mode:</system:String>
     <system:String x:Key="refresh">새로고침</system:String>
     <system:String x:Key="installbtn">설치</system:String>
     <system:String x:Key="uninstallbtn">제거</system:String>
