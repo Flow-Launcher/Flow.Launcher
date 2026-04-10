@@ -2461,7 +2461,7 @@
     <value>既定のプログラムを設定</value>
   </data>
   <data name="SetUpABroadbandConnection" xml:space="preserve">
-    <value>Set up a broadband connection</value>
+    <value>ブロードバンド接続を設定</value>
   </data>
   <data name="CalibrateTheScreenForPenOrTouchInput" xml:space="preserve">
     <value>ペンまたはタッチ入力の画面をキャリブレーション</value>
