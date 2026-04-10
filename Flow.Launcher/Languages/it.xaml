@@ -247,6 +247,11 @@
     <system:String x:Key="pluginStore_RecentlyUpdated">Aggiornati di recente</system:String>
     <system:String x:Key="pluginStore_None">Plugin</system:String>
     <system:String x:Key="pluginStore_Installed">Installati</system:String>
+    <system:String x:Key="PluginStoreSortModeDefault">Default</system:String>
+    <system:String x:Key="PluginStoreSortModeName">Nome</system:String>
+    <system:String x:Key="PluginStoreSortModeReleaseDate">Release Date</system:String>
+    <system:String x:Key="PluginStoreSortModeUpdatedDate">Updated Date</system:String>
+    <system:String x:Key="PluginStoreSortingModeComboboxLabel">Sorting Mode:</system:String>
     <system:String x:Key="refresh">Aggiorna</system:String>
     <system:String x:Key="installbtn">Installa</system:String>
     <system:String x:Key="uninstallbtn">Disinstalla</system:String>
