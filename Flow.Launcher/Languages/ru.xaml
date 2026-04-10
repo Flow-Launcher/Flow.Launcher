@@ -247,6 +247,11 @@
     <system:String x:Key="pluginStore_RecentlyUpdated">Недавно обновлено</system:String>
     <system:String x:Key="pluginStore_None">Плагины</system:String>
     <system:String x:Key="pluginStore_Installed">Установлено</system:String>
+    <system:String x:Key="PluginStoreSortModeDefault">Default</system:String>
+    <system:String x:Key="PluginStoreSortModeName">Name</system:String>
+    <system:String x:Key="PluginStoreSortModeReleaseDate">Release Date</system:String>
+    <system:String x:Key="PluginStoreSortModeUpdatedDate">Updated Date</system:String>
+    <system:String x:Key="PluginStoreSortingModeComboboxLabel">Sorting Mode:</system:String>
     <system:String x:Key="refresh">Обновить</system:String>
     <system:String x:Key="installbtn">Установить</system:String>
     <system:String x:Key="uninstallbtn">Удалить</system:String>
