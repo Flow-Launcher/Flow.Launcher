@@ -246,6 +246,11 @@
     <system:String x:Key="pluginStore_RecentlyUpdated">עודכן לאחרונה</system:String>
     <system:String x:Key="pluginStore_None">תוספים</system:String>
     <system:String x:Key="pluginStore_Installed">מותקן</system:String>
+    <system:String x:Key="PluginStoreSortModeDefault">Default</system:String>
+    <system:String x:Key="PluginStoreSortModeName">שם</system:String>
+    <system:String x:Key="PluginStoreSortModeReleaseDate">Release Date</system:String>
+    <system:String x:Key="PluginStoreSortModeUpdatedDate">Updated Date</system:String>
+    <system:String x:Key="PluginStoreSortingModeComboboxLabel">Sorting Mode:</system:String>
     <system:String x:Key="refresh">רענן</system:String>
     <system:String x:Key="installbtn">התקן</system:String>
     <system:String x:Key="uninstallbtn">הסר התקנה</system:String>
