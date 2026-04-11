@@ -142,6 +142,7 @@
     <system:String x:Key="DoublePinyinSchemasXingKongJianDao">Xing Kong Jian Dao</system:String>
     <system:String x:Key="DoublePinyinSchemasDaNiu">Da Niu</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoLang">Xiao Lang</system:String>
+    <system:String x:Key="HelpUsTranslateFlow">Help us translate Flow</system:String>
 
     <system:String x:Key="AlwaysPreview">Vždy zobrazit náhled</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Při aktivaci služby Flow vždy otevřete panel náhledu. Stisknutím klávesy {0} přepnete náhled.</system:String>
@@ -460,6 +461,7 @@
     <system:String x:Key="website">Webová stránka</system:String>
     <system:String x:Key="github">GitHub</system:String>
     <system:String x:Key="docs">Dokumentace</system:String>
+    <system:String x:Key="crowdin">Crowdin</system:String>
     <system:String x:Key="version">Verze</system:String>
     <system:String x:Key="icons">Ikony</system:String>
     <system:String x:Key="about_activate_times">Flow Launcher byl aktivován {0} krát</system:String>
