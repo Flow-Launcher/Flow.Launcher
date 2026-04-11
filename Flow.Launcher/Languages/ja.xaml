@@ -142,6 +142,7 @@
     <system:String x:Key="DoublePinyinSchemasXingKongJianDao">Xing Kong Jian Dao</system:String>
     <system:String x:Key="DoublePinyinSchemasDaNiu">Da Niu</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoLang">Xiao Lang</system:String>
+    <system:String x:Key="HelpUsTranslateFlow">Help us translate Flow</system:String>
 
     <system:String x:Key="AlwaysPreview">常にプレビューする</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Flow が有効になったとき、常にプレビューパネルを開きます。 {0} を押してプレビューの表示/非表示を切り替えます。</system:String>
@@ -460,6 +461,7 @@
     <system:String x:Key="website">ウェブサイト</system:String>
     <system:String x:Key="github">GitHub</system:String>
     <system:String x:Key="docs">ドキュメント</system:String>
+    <system:String x:Key="crowdin">Crowdin</system:String>
     <system:String x:Key="version">バージョン</system:String>
     <system:String x:Key="icons">アイコン</system:String>
     <system:String x:Key="about_activate_times">あなたはFlow Launcherを {0} 回利用しました</system:String>
