@@ -143,7 +143,7 @@ Nevykonali sa žiadne zmeny.</system:String>
     <system:String x:Key="DoublePinyinSchemasXingKongJianDao">Xing Kong Jian Dao</system:String>
     <system:String x:Key="DoublePinyinSchemasDaNiu">Da Niu</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoLang">Xiao Lang</system:String>
-    <system:String x:Key="HelpUsTranslateFlow">Help us translate Flow</system:String>
+    <system:String x:Key="HelpUsTranslateFlow">Pomôžte nám preložiť Flow</system:String>
 
     <system:String x:Key="AlwaysPreview">Vždy zobraziť náhľad</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Pri aktivácii Flowu vždy otvoriť panel s náhľadom. Stlačením klávesu {0} prepnete náhľad.</system:String>
