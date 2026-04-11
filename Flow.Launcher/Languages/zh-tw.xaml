@@ -142,6 +142,7 @@
     <system:String x:Key="DoublePinyinSchemasXingKongJianDao">Xing Kong Jian Dao</system:String>
     <system:String x:Key="DoublePinyinSchemasDaNiu">Da Niu</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoLang">Xiao Lang</system:String>
+    <system:String x:Key="HelpUsTranslateFlow">Help us translate Flow</system:String>
 
     <system:String x:Key="AlwaysPreview">一律預覽</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">當 Flow 啟動時，一律開啟預覽面板。按下 {0} 可切換預覽。</system:String>
@@ -460,6 +461,7 @@
     <system:String x:Key="website">官方網站</system:String>
     <system:String x:Key="github">GitHub</system:String>
     <system:String x:Key="docs">文檔</system:String>
+    <system:String x:Key="crowdin">Crowdin</system:String>
     <system:String x:Key="version">版本</system:String>
     <system:String x:Key="icons">圖示</system:String>
     <system:String x:Key="about_activate_times">您已經啟動了 Flow Launcher {0} 次</system:String>
