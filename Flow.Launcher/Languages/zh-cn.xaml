@@ -142,6 +142,7 @@
     <system:String x:Key="DoublePinyinSchemasXingKongJianDao">星空键道</system:String>
     <system:String x:Key="DoublePinyinSchemasDaNiu">大牛双拼</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoLang">小浪双拼</system:String>
+    <system:String x:Key="HelpUsTranslateFlow">Help us translate Flow</system:String>
 
     <system:String x:Key="AlwaysPreview">始终打开预览</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Flow 启动时总是打开预览面板。按 {0} 以切换预览。</system:String>
@@ -460,6 +461,7 @@
     <system:String x:Key="website">官方网站</system:String>
     <system:String x:Key="github">GitHub</system:String>
     <system:String x:Key="docs">文档</system:String>
+    <system:String x:Key="crowdin">Crowdin</system:String>
     <system:String x:Key="version">版本</system:String>
     <system:String x:Key="icons">图标</system:String>
     <system:String x:Key="about_activate_times">你已经激活了 Flow Launcher {0} 次</system:String>
