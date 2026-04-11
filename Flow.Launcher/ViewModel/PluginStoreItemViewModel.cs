@@ -28,6 +28,8 @@ namespace Flow.Launcher.ViewModel
         public string UrlDownload => _newPlugin.UrlDownload;
         public string UrlSourceCode => _newPlugin.UrlSourceCode;
         public string IcoPath => _newPlugin.IcoPath;
+        public DateTime? DateAdded => _newPlugin.DateAdded;
+        public DateTime? UpdatedDate => _newPlugin.LatestReleaseDate;
 
         public bool LabelInstalled => _oldPluginPair != null;
         public bool LabelUpdate => LabelInstalled && new Version(_newPlugin.Version) > new Version(_oldPluginPair.Metadata.Version);
@@ -37,7 +39,9 @@ namespace Flow.Launcher.ViewModel
         internal const string NewRelease = "NewRelease";
         internal const string Installed = "Installed";
 
-        public string Category
+        public string InstallCategory => LabelInstalled ? Installed : None;
+
+        public string DefaultCategory
         {
             get
             {
