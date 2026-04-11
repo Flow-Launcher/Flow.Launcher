@@ -138,6 +138,7 @@
     <system:String x:Key="DoublePinyinSchemasXingKongJianDao">Xing Kong Jian Dao</system:String>
     <system:String x:Key="DoublePinyinSchemasDaNiu">Da Niu</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoLang">Xiao Lang</system:String>
+    <system:String x:Key="HelpUsTranslateFlow">Help us translate Flow</system:String>
 
     <system:String x:Key="AlwaysPreview">Sempre Pré-visualizar</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Sempre abrir o painel de pré-visualização quando o Flow for ativado. Pressione {0} para alternar a pré-visualização.</system:String>
@@ -456,6 +457,7 @@
     <system:String x:Key="website">Site</system:String>
     <system:String x:Key="github">GitHub</system:String>
     <system:String x:Key="docs">Documentação</system:String>
+    <system:String x:Key="crowdin">Crowdin</system:String>
     <system:String x:Key="version">Versão</system:String>
     <system:String x:Key="icons">Ícones</system:String>
     <system:String x:Key="about_activate_times">Você ativou o Flow Launcher {0} vezes</system:String>
