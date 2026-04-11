@@ -142,6 +142,7 @@
     <system:String x:Key="DoublePinyinSchemasXingKongJianDao">Xing Kong Jian Dao</system:String>
     <system:String x:Key="DoublePinyinSchemasDaNiu">Da Niu</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoLang">Xiao Lang</system:String>
+    <system:String x:Key="HelpUsTranslateFlow">Help us translate Flow</system:String>
 
     <system:String x:Key="AlwaysPreview">הצג תמיד תצוגה מקדימה</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">פתח תמיד את לוח התצוגה המקדימה כאשר Flow מופעל. הקש על {0} כדי להחליף את התצוגה המקדימה.</system:String>
@@ -459,6 +460,7 @@
     <system:String x:Key="website">אתר אינטרנט</system:String>
     <system:String x:Key="github">Github</system:String>
     <system:String x:Key="docs">תיעוד</system:String>
+    <system:String x:Key="crowdin">Crowdin</system:String>
     <system:String x:Key="version">גרסה</system:String>
     <system:String x:Key="icons">סמלים</system:String>
     <system:String x:Key="about_activate_times">הפעלת את Flow Launcher {0} פעמים</system:String>
