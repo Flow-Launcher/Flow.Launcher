@@ -142,6 +142,7 @@
     <system:String x:Key="DoublePinyinSchemasXingKongJianDao">Xing Kong Jian Dao</system:String>
     <system:String x:Key="DoublePinyinSchemasDaNiu">Da Niu</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoLang">Xiao Lang</system:String>
+    <system:String x:Key="HelpUsTranslateFlow">Help us translate Flow</system:String>
 
     <system:String x:Key="AlwaysPreview">Önizleme</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Önizleme panelini her zaman aç. Önizlemeyi bu ayardan bağımsız {0} kısayolu ile açıp kapatabilirsiniz.</system:String>
@@ -460,6 +461,7 @@
     <system:String x:Key="website">Websitesi</system:String>
     <system:String x:Key="github">GitHub</system:String>
     <system:String x:Key="docs">Dokümantasyon</system:String>
+    <system:String x:Key="crowdin">Crowdin</system:String>
     <system:String x:Key="version">Sürüm</system:String>
     <system:String x:Key="icons">Kullanılan Simgeler</system:String>
     <system:String x:Key="about_activate_times">Şu ana kadar Flow Launcher'ı {0} kez aktifleştirdiniz.</system:String>
