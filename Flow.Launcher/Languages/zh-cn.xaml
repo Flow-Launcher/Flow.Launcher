@@ -142,7 +142,7 @@
     <system:String x:Key="DoublePinyinSchemasXingKongJianDao">星空键道</system:String>
     <system:String x:Key="DoublePinyinSchemasDaNiu">大牛双拼</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoLang">小浪双拼</system:String>
-    <system:String x:Key="HelpUsTranslateFlow">Help us translate Flow</system:String>
+    <system:String x:Key="HelpUsTranslateFlow">帮助我们翻译 Flow</system:String>
 
     <system:String x:Key="AlwaysPreview">始终打开预览</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Flow 启动时总是打开预览面板。按 {0} 以切换预览。</system:String>
@@ -250,9 +250,9 @@
     <system:String x:Key="pluginStore_Installed">已安装</system:String>
     <system:String x:Key="PluginStoreSortModeDefault">默认</system:String>
     <system:String x:Key="PluginStoreSortModeName">名称</system:String>
-    <system:String x:Key="PluginStoreSortModeReleaseDate">Release Date</system:String>
-    <system:String x:Key="PluginStoreSortModeUpdatedDate">Updated Date</system:String>
-    <system:String x:Key="PluginStoreSortingModeComboboxLabel">Sorting Mode:</system:String>
+    <system:String x:Key="PluginStoreSortModeReleaseDate">发布时间</system:String>
+    <system:String x:Key="PluginStoreSortModeUpdatedDate">更新时间</system:String>
+    <system:String x:Key="PluginStoreSortingModeComboboxLabel">排序模式：</system:String>
     <system:String x:Key="refresh">刷新</system:String>
     <system:String x:Key="installbtn">安装</system:String>
     <system:String x:Key="uninstallbtn">卸载</system:String>
