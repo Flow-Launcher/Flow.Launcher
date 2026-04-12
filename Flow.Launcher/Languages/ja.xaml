@@ -315,7 +315,7 @@
     <system:String x:Key="ImportThemeSizeToolTip">テーマのデザイナーによって意図されたサイズ値が利用可能なとき、それを取得して適用します。</system:String>
     <system:String x:Key="CustomizeToolTip">カスタマイズ</system:String>
     <system:String x:Key="windowMode">ウィンドウモード</system:String>
-    <system:String x:Key="opacity">透過度</system:String>
+    <system:String x:Key="opacity">不透過度</system:String>
     <system:String x:Key="theme_load_failure_path_not_exists">テーマ {0} が存在しません、デフォルトのテーマに戻します。</system:String>
     <system:String x:Key="theme_load_failure_parse_error">テーマ {0} を読み込めません、デフォルトのテーマに戻します。</system:String>
     <system:String x:Key="ThemeFolder">テーマフォルダー</system:String>
@@ -392,7 +392,7 @@
     <system:String x:Key="ReloadPluginHotkeyToolTip">プラグインがデータを再読み込み、または更新することが必要な場合に使用してください。</system:String>
     <system:String x:Key="AdditionalHotkeyToolTip">この機能のホットキーはもう一つ追加できます。</system:String>
     <system:String x:Key="customQueryHotkey">カスタムクエリ ホットキー</system:String>
-    <system:String x:Key="customQueryShortcut">Custom Query Shortcut</system:String>
+    <system:String x:Key="customQueryShortcut">クエリを開くカスタム ショートカット</system:String>
     <system:String x:Key="builtinShortcuts">組み込みショートカット</system:String>
     <system:String x:Key="customQuery">クエリー</system:String>
     <system:String x:Key="customShortcut">ショートカット</system:String>
@@ -591,7 +591,7 @@
     <system:String x:Key="commonCancel">キャンセル</system:String>
     <system:String x:Key="commonReset">リセット</system:String>
     <system:String x:Key="commonDelete">削除</system:String>
-    <system:String x:Key="commonOK">Update</system:String>
+    <system:String x:Key="commonOK">OK</system:String>
     <system:String x:Key="commonYes">はい</system:String>
     <system:String x:Key="commonNo">いいえ</system:String>
     <system:String x:Key="commonBackground">バックグラウンド</system:String>
