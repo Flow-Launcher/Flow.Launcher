@@ -142,7 +142,7 @@
     <system:String x:Key="DoublePinyinSchemasXingKongJianDao">Xing Kong Jian Dao</system:String>
     <system:String x:Key="DoublePinyinSchemasDaNiu">Da Niu</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoLang">Xiao Lang</system:String>
-    <system:String x:Key="HelpUsTranslateFlow">Help us translate Flow</system:String>
+    <system:String x:Key="HelpUsTranslateFlow">Ajude-nos a traduzir Flow Launcher</system:String>
 
     <system:String x:Key="AlwaysPreview">Pré-visualizar sempre</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Abrir painel de pré-visualização ao ativar Flow Launcher. Prima {0} para comutar a pré-visualização.</system:String>
@@ -249,9 +249,9 @@
     <system:String x:Key="pluginStore_Installed">Instalado</system:String>
     <system:String x:Key="PluginStoreSortModeDefault">Padrão</system:String>
     <system:String x:Key="PluginStoreSortModeName">Nome</system:String>
-    <system:String x:Key="PluginStoreSortModeReleaseDate">Release Date</system:String>
-    <system:String x:Key="PluginStoreSortModeUpdatedDate">Updated Date</system:String>
-    <system:String x:Key="PluginStoreSortingModeComboboxLabel">Sorting Mode:</system:String>
+    <system:String x:Key="PluginStoreSortModeReleaseDate">Data de lançamento</system:String>
+    <system:String x:Key="PluginStoreSortModeUpdatedDate">Data de atualização</system:String>
+    <system:String x:Key="PluginStoreSortingModeComboboxLabel">Modo de ordenação:</system:String>
     <system:String x:Key="refresh">Recarregar</system:String>
     <system:String x:Key="installbtn">Instalar</system:String>
     <system:String x:Key="uninstallbtn">Desinstalar</system:String>
