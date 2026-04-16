@@ -9,7 +9,7 @@ namespace Flow.Launcher.Storage
 {
     public class Pinned
     {
-        private readonly int _maxPinned = 11;
+        private readonly int _maxPinned = 10;
 
         [JsonInclude]
         public List<PinnedResultItem> Items { set; get; } = [];
