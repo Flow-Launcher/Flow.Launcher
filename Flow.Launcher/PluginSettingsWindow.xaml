@@ -11,6 +11,7 @@
     ResizeMode="CanResize"
     SnapsToDevicePixels="True"
     StateChanged="Window_StateChanged"
+    Activated="Window_Activated"
     UseLayoutRounding="True"
     WindowStartupLocation="CenterScreen">
     <WindowChrome.WindowChrome>

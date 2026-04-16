@@ -46,11 +46,13 @@ namespace Flow.Launcher.ViewModel
             get
             {
                 string category = None;
-                if (DateTime.Now - _newPlugin.LatestReleaseDate < TimeSpan.FromDays(7))
+                if (_newPlugin.LatestReleaseDate is not null && 
+                    DateTime.Now - _newPlugin.LatestReleaseDate < TimeSpan.FromDays(7))
                 {
                     category = RecentlyUpdated;
                 }
-                if (DateTime.Now - _newPlugin.DateAdded < TimeSpan.FromDays(7))
+                if (_newPlugin.DateAdded is not null && 
+                    DateTime.Now - _newPlugin.DateAdded < TimeSpan.FromDays(7))
                 {
                     category = NewRelease;
                 }

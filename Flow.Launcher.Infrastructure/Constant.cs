@@ -24,6 +24,7 @@ namespace Flow.Launcher.Infrastructure
         public static readonly string Version = FileVersionInfo.GetVersionInfo(Assembly.Location.NonNull()).ProductVersion;
         public static readonly string Dev = "Dev";
         public const string Documentation = "https://flowlauncher.com/docs/#/usage-tips";
+        public const string CrowdinProjectUrl = "https://crowdin.com/project/flow-launcher";
 
         public static readonly int ThumbnailSize = 64;
         private static readonly string ImagesDirectory = Path.Combine(ProgramDirectory, "Images");
