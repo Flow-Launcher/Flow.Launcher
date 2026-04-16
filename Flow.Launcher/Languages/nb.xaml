@@ -530,6 +530,7 @@
     <system:String x:Key="defaultBrowser_newWindow">Nytt vindu</system:String>
     <system:String x:Key="defaultBrowser_newTab">Ny fane</system:String>
     <system:String x:Key="defaultBrowser_parameter">Privat modus</system:String>
+    <system:String x:Key="defaultBrowser_extraArgs">Extra Args</system:String>
     <system:String x:Key="defaultBrowser_default">Default</system:String>
     <system:String x:Key="defaultBrowser_new_profile">New Profile</system:String>
 
