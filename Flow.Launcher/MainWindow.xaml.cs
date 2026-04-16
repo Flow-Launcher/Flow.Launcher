@@ -61,6 +61,10 @@ namespace Flow.Launcher
 
         // Window Event: Key Event
         private bool _isArrowKeyPressed = false;
+        private bool _canEnterGridModeWithDown = true;
+        private const double PinnedGridItemWidth = 64;
+        private const double PinnedGridItemHorizontalMargin = 10;
+        private const double PinnedGridHorizontalChrome = 32;
 
         // Window Sound Effects
         private MediaPlayer _animationSoundWMP;
@@ -229,6 +233,8 @@ namespace Flow.Launcher
                             {
                                 if (_viewModel.MainWindowVisibilityStatus)
                                 {
+                                    _canEnterGridModeWithDown = true;
+
                                     // Play sound effect before activing the window
                                     if (_settings.UseSound && !_viewModel.IsDialogJumpWindowUnderDialog())
                                     {
@@ -441,13 +447,19 @@ namespace Flow.Launcher
                 switch (e.Key)
                 {
                     case Key.Right:
-                    case Key.Down:
                         _viewModel.PinnedResults.SelectNextColumn();
                         e.Handled = true;
                         return;
+                    case Key.Down:
+                        SelectNextPinnedGridRowOrReturnToResults();
+                        e.Handled = true;
+                        return;
                     case Key.Left:
-                    case Key.Up:
                         _viewModel.PinnedResults.SelectPrevColumn();
+                        e.Handled = true;
+                        return;
+                    case Key.Up:
+                        SelectPreviousPinnedGridRow();
                         e.Handled = true;
                         return;
                     case Key.Enter:
@@ -460,11 +472,25 @@ namespace Flow.Launcher
             switch (e.Key)
             {
                 case Key.Down:
+                    if (CanNavigatePinnedGrid())
+                    {
+                        _canEnterGridModeWithDown = false;
+                        _viewModel.ToggleGridMode();
+                        e.Handled = true;
+                        return;
+                    }
                     _isArrowKeyPressed = true;
                     _viewModel.SelectNextItemCommand.Execute(null);
                     e.Handled = true;
                     break;
                 case Key.Up:
+                    if (CanMoveUpToPinnedGrid())
+                    {
+                        _viewModel.IsGridMode = true;
+                        _viewModel.PinnedResults.SelectedIndex = _viewModel.PinnedResults.Results.Count - 1;
+                        e.Handled = true;
+                        return;
+                    }
                     _isArrowKeyPressed = true;
                     _viewModel.SelectPrevItemCommand.Execute(null);
                     e.Handled = true;
@@ -514,6 +540,70 @@ namespace Flow.Launcher
                 default:
                     break;
             }
+        }
+
+        private bool CanNavigatePinnedGrid()
+        {
+            return _canEnterGridModeWithDown && IsPinnedGridAvailableForKeyboardNavigation();
+        }
+
+        private bool CanMoveUpToPinnedGrid()
+        {
+            return IsPinnedGridAvailableForKeyboardNavigation()
+                   && _viewModel.QueryResultsSelected()
+                   && _viewModel.Results.SelectedIndex <= 0;
+        }
+
+        private bool IsPinnedGridAvailableForKeyboardNavigation()
+        {
+            return _settings.EnablePinnedResults
+                   && _settings.PinnedResultsLayout == PinnedLayoutOptions.Grid
+                   && string.IsNullOrEmpty(_viewModel.QueryText)
+                   && _viewModel.PinnedResults.Results.Count > 0
+                   && _viewModel.ContextMenu.Visibility == Visibility.Collapsed
+                   && _viewModel.History.Visibility == Visibility.Collapsed;
+        }
+
+        private int GetPinnedGridColumnCount()
+        {
+            var availableWidth = Math.Max(0, PinnedResultGrid.ActualWidth - PinnedGridHorizontalChrome);
+            var itemWidth = PinnedGridItemWidth + PinnedGridItemHorizontalMargin;
+            return Math.Max(1, (int)Math.Floor(availableWidth / itemWidth));
+        }
+
+        private void SelectPreviousPinnedGridRow()
+        {
+            var selectedIndex = _viewModel.PinnedResults.SelectedIndex;
+            if (selectedIndex < 0)
+            {
+                _viewModel.PinnedResults.SelectedIndex = _viewModel.PinnedResults.Results.Count - 1;
+                return;
+            }
+
+            var previousRowIndex = selectedIndex - GetPinnedGridColumnCount();
+            if (previousRowIndex >= 0)
+            {
+                _viewModel.PinnedResults.SelectedIndex = previousRowIndex;
+            }
+        }
+
+        private void SelectNextPinnedGridRowOrReturnToResults()
+        {
+            var selectedIndex = _viewModel.PinnedResults.SelectedIndex;
+            if (selectedIndex < 0)
+            {
+                _viewModel.PinnedResults.SelectedIndex = 0;
+                return;
+            }
+
+            var nextRowIndex = selectedIndex + GetPinnedGridColumnCount();
+            if (nextRowIndex < _viewModel.PinnedResults.Results.Count)
+            {
+                _viewModel.PinnedResults.SelectedIndex = nextRowIndex;
+                return;
+            }
+
+            _viewModel.ToggleGridMode();
         }
 
         private void OnKeyUp(object sender, KeyEventArgs e)
