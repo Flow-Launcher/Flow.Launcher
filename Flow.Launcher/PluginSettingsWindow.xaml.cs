@@ -12,6 +12,7 @@ namespace Flow.Launcher;
 public partial class PluginSettingsWindow
 {
     private readonly Settings _settings;
+    private WindowState _lastNonMinimizedWindowState = WindowState.Normal;
 
     public string PluginId { get; }
 
@@ -84,12 +85,32 @@ public partial class PluginSettingsWindow
 
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
+        if (WindowState != WindowState.Minimized)
+        {
+            _lastNonMinimizedWindowState = WindowState;
+        }
+
         RefreshMaximizeRestoreButton();
     }
 
     private void Window_StateChanged(object sender, EventArgs e)
     {
+        if (WindowState != WindowState.Minimized)
+        {
+            _lastNonMinimizedWindowState = WindowState;
+        }
+
         RefreshMaximizeRestoreButton();
+    }
+
+    private void Window_Activated(object sender, EventArgs e)
+    {
+        // Band-aid fix: Rare edge case where Alt+Tab activates the window but doesn't trigger StateChanged
+        // So we need to restore/maximize it here if it's still minimized
+        if (WindowState == WindowState.Minimized)
+        {
+            WindowState = _lastNonMinimizedWindowState;
+        }
     }
 
     private void RefreshMaximizeRestoreButton()
