@@ -532,6 +532,7 @@
     <system:String x:Key="defaultBrowser_newWindow">Cửa sổ mới</system:String>
     <system:String x:Key="defaultBrowser_newTab">Thẻ Mới</system:String>
     <system:String x:Key="defaultBrowser_parameter">Chế độ riêng tư</system:String>
+    <system:String x:Key="defaultBrowser_extraArgs">Extra Args</system:String>
     <system:String x:Key="defaultBrowser_default">Default</system:String>
     <system:String x:Key="defaultBrowser_new_profile">New Profile</system:String>
 
