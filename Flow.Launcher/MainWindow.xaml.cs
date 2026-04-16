@@ -62,9 +62,9 @@ namespace Flow.Launcher
         // Window Event: Key Event
         private bool _isArrowKeyPressed = false;
         private bool _canEnterGridModeWithDown = true;
-        private const double PinnedGridItemWidth = 64;
-        private const double PinnedGridItemHorizontalMargin = 10;
-        private const double PinnedGridHorizontalChrome = 32;
+        private const double PinnedGridItemWidth = 84;
+        private const double PinnedGridItemHorizontalMargin = 4;
+        private const double PinnedGridHorizontalChrome = 16;
 
         // Window Sound Effects
         private MediaPlayer _animationSoundWMP;
@@ -551,7 +551,7 @@ namespace Flow.Launcher
         {
             return IsPinnedGridAvailableForKeyboardNavigation()
                    && _viewModel.QueryResultsSelected()
-                   && _viewModel.Results.SelectedIndex <= 0;
+                   && _viewModel.Results.SelectedIndex == 0;
         }
 
         private bool IsPinnedGridAvailableForKeyboardNavigation()
