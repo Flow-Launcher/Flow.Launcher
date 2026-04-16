@@ -9,8 +9,8 @@
     d:DataContext="{d:DesignInstance Type=vm:MainViewModel}"
     mc:Ignorable="d">
     <Border
-        Margin="8 10 8 10"
-        Padding="8 8"
+        Margin="8 8 8 8"
+        Padding="0"
         CornerRadius="8">
         <Border.Style>
             <Style TargetType="Border">

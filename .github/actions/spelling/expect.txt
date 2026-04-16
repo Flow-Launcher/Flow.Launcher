@@ -108,3 +108,7 @@ Msix
 dummyprofile
 browserbookmark
 copyurl
+uninstaller
+taskbar
+taskbars
+ikw

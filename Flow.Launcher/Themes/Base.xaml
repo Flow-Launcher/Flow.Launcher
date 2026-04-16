@@ -539,6 +539,11 @@
         <Setter Property="Foreground" Value="#8f8f8f" />
         <Setter Property="Opacity" Value="0.5" />
     </Style>
+
+    <Style x:Key="BaseHomeIconFontStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="Margin" Value="10 0 10 5" />
+    </Style>
+
     <Style
         x:Key="ItemGlyphSelectedStyle"
         BasedOn="{StaticResource BaseGlyphSelectedStyle}"

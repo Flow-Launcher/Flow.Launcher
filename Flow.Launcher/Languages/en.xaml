@@ -253,6 +253,11 @@
     <system:String x:Key="pluginStore_RecentlyUpdated">Recently Updated</system:String>
     <system:String x:Key="pluginStore_None">Plugins</system:String>
     <system:String x:Key="pluginStore_Installed">Installed</system:String>
+    <system:String x:Key="PluginStoreSortModeDefault">Default</system:String>
+    <system:String x:Key="PluginStoreSortModeName">Name</system:String>
+    <system:String x:Key="PluginStoreSortModeReleaseDate">Release Date</system:String>
+    <system:String x:Key="PluginStoreSortModeUpdatedDate">Updated Date</system:String>
+    <system:String x:Key="PluginStoreSortingModeComboboxLabel">Sorting Mode:</system:String>
     <system:String x:Key="refresh">Refresh</system:String>
     <system:String x:Key="installbtn">Install</system:String>
     <system:String x:Key="uninstallbtn">Uninstall</system:String>
@@ -309,6 +314,7 @@
     <system:String x:Key="queryBoxFont">Query Box Font</system:String>
     <system:String x:Key="resultItemFont">Result Title Font</system:String>
     <system:String x:Key="resultSubItemFont">Result Subtitle Font</system:String>
+    <system:String x:Key="homeScreenFontSize">Home Font Size</system:String>
     <system:String x:Key="resetCustomize">Reset</system:String>
     <system:String x:Key="resetCustomizeToolTip">Reset to the recommended font and size settings.</system:String>
     <system:String x:Key="ImportThemeSize">Import Theme Size</system:String>

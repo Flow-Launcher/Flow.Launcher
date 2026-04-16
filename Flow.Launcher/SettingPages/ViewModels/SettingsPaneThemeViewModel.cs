@@ -122,6 +122,12 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         set => Settings.ResultSubItemFontSize = value;
     }
 
+    public double HomeScreenFontSize
+    {
+        get => Settings.HomeScreenFontSize;
+        set => Settings.HomeScreenFontSize = value;
+    }
+
     public class ColorSchemeData : DropdownDataGeneric<ColorSchemes> { }
 
     public List<ColorSchemeData> ColorSchemes { get; } = DropdownDataGeneric<ColorSchemes>.GetValues<ColorSchemeData>("ColorScheme");
@@ -508,6 +514,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
 
         WindowHeightSize = 42;
         ItemHeightSize = 58;
+        HomeScreenFontSize = 12;
     }
     
     [RelayCommand]

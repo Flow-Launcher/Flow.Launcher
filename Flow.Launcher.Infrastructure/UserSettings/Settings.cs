@@ -126,6 +126,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public double QueryBoxFontSize { get; set; } = 16;
         public double ResultItemFontSize { get; set; } = 16;
         public double ResultSubItemFontSize { get; set; } = 13;
+        public double HomeScreenFontSize { get; set; } = 12;
         public string QueryBoxFont { get; set; } = Win32Helper.GetSystemDefaultFont();
         public string QueryBoxFontStyle { get; set; }
         public string QueryBoxFontWeight { get; set; }

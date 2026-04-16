@@ -318,6 +318,30 @@ namespace Flow.Launcher.Core.Resource
                     => Array.ForEach(setters, p => o.Setters.Add(p)));
             }
 
+            var baseHomeIconStyle = dict["BaseHomeIconFontStyle"] as Style;
+            var itemTitleStyle = (dict["ItemTitleStyle"] ?? dict["BaseItemTitleStyle"]) as Style;
+            var homeIconFontStyle = dict["HomeIconFontStyle"] as Style;
+
+            if (homeIconFontStyle == null && itemTitleStyle != null)
+            {
+                var styleToExtend = baseHomeIconStyle ?? itemTitleStyle;
+                var dynamicHomeStyle = new Style(typeof(TextBlock), styleToExtend);
+
+                var foregroundSetter = itemTitleStyle.Setters
+                    .OfType<Setter>()
+                    .FirstOrDefault(s => s.Property == TextBlock.ForegroundProperty);
+
+                if (foregroundSetter != null)
+                {
+                    dynamicHomeStyle.Setters.Add(new Setter(TextBlock.ForegroundProperty, foregroundSetter.Value));
+                }
+                else if (baseHomeIconStyle != null)
+                {
+                    dynamicHomeStyle.Setters.Add(new Setter(TextBlock.ForegroundProperty, new DynamicResourceExtension("ItemTitleStyle")));
+                }
+                dict["HomeIconFontStyle"] = dynamicHomeStyle;
+            }
+
             /* Ignore Theme Window Width and use setting */
             var windowStyle = dict["WindowStyle"] as Style;
             var width = _settings.WindowSize;
