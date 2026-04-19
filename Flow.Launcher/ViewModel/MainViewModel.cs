@@ -614,6 +614,7 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void MouseSelect(bool isGridMode)
         {
+            PreferResultsListOnHomePage = !isGridMode;
             IsGridMode = isGridMode;
 
             if (isGridMode)
@@ -624,6 +625,33 @@ namespace Flow.Launcher.ViewModel
             {
                 PreviewSelectedItem = Results.SelectedItem;
             }
+        }
+
+        private bool ShouldSelectPinnedGridOnHomePage()
+        {
+            return QueryResultsSelected()
+                   && Settings.EnablePinnedResults
+                   && Settings.PinnedResultsLayout == PinnedLayoutOptions.Grid
+                   && string.IsNullOrEmpty(QueryText)
+                   && !PreferResultsListOnHomePage
+                   && PinnedResults.Results.Count > 0;
+        }
+
+        private void SelectPinnedGridOnHomePage()
+        {
+            if (!ShouldSelectPinnedGridOnHomePage()) return;
+
+            IsGridMode = true;
+
+            if (PinnedResults.SelectedIndex < 0 || PinnedResults.SelectedIndex >= PinnedResults.Results.Count)
+            {
+                PinnedResults.SelectedIndex = 0;
+            }
+
+            PinnedResults.SelectedItem = PinnedResults.Results[PinnedResults.SelectedIndex];
+            Results.SelectedIndex = -1;
+            Results.SelectedItem = null;
+            PreviewSelectedItem = PinnedResults.SelectedItem;
         }
 
         private static IReadOnlyList<Result> DeepCloneResults(IReadOnlyList<Result> results, bool isDialogJump, CancellationToken token = default)
@@ -726,23 +754,22 @@ namespace Flow.Launcher.ViewModel
                 IsGridMode = !IsGridMode;
                 if (IsGridMode)
                 {
-                    if (PinnedResults.Results.Count > 0 && PinnedResults.SelectedIndex == -1)
-                    {
-                        PinnedResults.SelectedIndex = 0;
-                        PreviewSelectedItem = PinnedResults.SelectedItem;
-                    }
+                    SelectPinnedGridOnHomePage();
                     // Reset the index so that preview will refresh when select any items
                     Results.SelectedIndex = -1;
+                    Results.SelectedItem = null;
                 }
                 else
                 {
                     if (SelectedResults.Results.Count > 0 && SelectedResults.SelectedIndex == -1)
                     {
                         SelectedResults.SelectedIndex = 0;
+                        SelectedResults.SelectedItem = SelectedResults.Results[0];
                         PreviewSelectedItem = Results.SelectedItem;
                     }
                     // Reset the index so that preview will refresh when select any items
                     PinnedResults.SelectedIndex = -1;
+                    PinnedResults.SelectedItem = null;
                 }
             }
         }
@@ -810,6 +837,8 @@ namespace Flow.Launcher.ViewModel
 
         public bool GameModeStatus { get; set; } = false;
 
+        public bool PreferResultsListOnHomePage { get; set; } = false;
+
         private string _queryText;
         public string QueryText
         {
@@ -819,6 +848,7 @@ namespace Flow.Launcher.ViewModel
                 _queryText = value;
                 if (!string.IsNullOrEmpty(value))
                 {
+                    PreferResultsListOnHomePage = false;
                     IsGridMode = false;
                 }
                 OnPropertyChanged();
@@ -1045,10 +1075,12 @@ namespace Flow.Launcher.ViewModel
                     if (_isGridMode)
                     {
                         SelectedResults.SelectedIndex = -1;
+                        SelectedResults.SelectedItem = null;
                     }
                     else
                     {
                         PinnedResults.SelectedIndex = -1;
+                        PinnedResults.SelectedItem = null;
                     }
                     OnPropertyChanged();
                 }
@@ -1932,6 +1964,7 @@ namespace Flow.Launcher.ViewModel
                     // If switching from List to Grid, we should clear and add the results
                     PinnedResults.Clear();
                     PinnedResults.AddResults(results, "PinnedGrid");
+                    SelectPinnedGridOnHomePage();
 
                     // Force a refresh so that results will be updated when home page is disabled
                     if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(_emptyResult, _pinnedMetadata, query,
@@ -2480,6 +2513,7 @@ namespace Flow.Launcher.ViewModel
             // Update WPF properties
             MainWindowVisibility = Visibility.Visible;
             MainWindowVisibilityStatus = true;
+            SelectPinnedGridOnHomePage();
             VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = true });
 
             // Switch keyboard layout
@@ -2664,6 +2698,11 @@ namespace Flow.Launcher.ViewModel
             bool reSelect = resultsForUpdates.First().ReSelectFirstResult;
 
             Results.AddResults(resultsForUpdates, token, reSelect);
+
+            if (IsGridMode)
+            {
+                SelectPinnedGridOnHomePage();
+            }
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>")]

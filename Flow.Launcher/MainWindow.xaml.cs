@@ -233,7 +233,7 @@ namespace Flow.Launcher
                             {
                                 if (_viewModel.MainWindowVisibilityStatus)
                                 {
-                                    _canEnterGridModeWithDown = true;
+                                    _canEnterGridModeWithDown = !_viewModel.PreferResultsListOnHomePage;
 
                                     // Play sound effect before activing the window
                                     if (_settings.UseSound && !_viewModel.IsDialogJumpWindowUnderDialog())
@@ -475,6 +475,7 @@ namespace Flow.Launcher
                     if (CanNavigatePinnedGrid())
                     {
                         _canEnterGridModeWithDown = false;
+                        _viewModel.PreferResultsListOnHomePage = false;
                         _viewModel.ToggleGridMode();
                         e.Handled = true;
                         return;
@@ -486,8 +487,10 @@ namespace Flow.Launcher
                 case Key.Up:
                     if (CanMoveUpToPinnedGrid())
                     {
+                        _viewModel.PreferResultsListOnHomePage = false;
                         _viewModel.IsGridMode = true;
-                        _viewModel.PinnedResults.SelectedIndex = _viewModel.PinnedResults.Results.Count - 1;
+                        _viewModel.PinnedResults.SelectedIndex = 0;
+                        _viewModel.PinnedResults.SelectedItem = _viewModel.PinnedResults.Results[0];
                         e.Handled = true;
                         return;
                     }
@@ -544,7 +547,9 @@ namespace Flow.Launcher
 
         private bool CanNavigatePinnedGrid()
         {
-            return _canEnterGridModeWithDown && IsPinnedGridAvailableForKeyboardNavigation();
+            return _canEnterGridModeWithDown
+                   && !_viewModel.PreferResultsListOnHomePage
+                   && IsPinnedGridAvailableForKeyboardNavigation();
         }
 
         private bool CanMoveUpToPinnedGrid()
@@ -584,7 +589,10 @@ namespace Flow.Launcher
             if (previousRowIndex >= 0)
             {
                 _viewModel.PinnedResults.SelectedIndex = previousRowIndex;
+                return;
             }
+
+            SelectLastResultFromPinnedGrid();
         }
 
         private void SelectNextPinnedGridRowOrReturnToResults()
@@ -603,7 +611,23 @@ namespace Flow.Launcher
                 return;
             }
 
+            _canEnterGridModeWithDown = false;
+            _viewModel.PreferResultsListOnHomePage = true;
             _viewModel.ToggleGridMode();
+        }
+
+        private void SelectLastResultFromPinnedGrid()
+        {
+            _canEnterGridModeWithDown = false;
+            _viewModel.PreferResultsListOnHomePage = true;
+            _viewModel.IsGridMode = false;
+
+            if (_viewModel.Results.Results.Count > 0)
+            {
+                _viewModel.Results.SelectedIndex = _viewModel.Results.Results.Count - 1;
+                _viewModel.Results.SelectedItem = _viewModel.Results.Results[^1];
+                _viewModel.PreviewSelectedItem = _viewModel.Results.SelectedItem;
+            }
         }
 
         private void OnKeyUp(object sender, KeyEventArgs e)
