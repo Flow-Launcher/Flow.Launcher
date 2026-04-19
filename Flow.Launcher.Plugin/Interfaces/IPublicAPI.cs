@@ -162,6 +162,15 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         void OpenSettingDialog();
 
+
+        /// <summary>
+        /// Open plugin setting window for a specific plugin.
+        /// Reuses the existing window when that plugin's settings window is already open.
+        /// </summary>
+        /// <param name="pluginId">ID of the plugin whose settings window should be opened</param>
+        /// <returns>True if the plugin settings window was successfully opened or reused; false otherwise</returns>
+        bool OpenPluginSettingsWindow(string pluginId);
+
         /// <summary>
         /// Get translation of current language
         /// You need to implement IPluginI18n if you want to support multiple languages for your plugin

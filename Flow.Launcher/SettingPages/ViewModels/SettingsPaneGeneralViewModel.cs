@@ -226,6 +226,8 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         Settings.CustomBrowser.OnDisplayNameChanged();
     }
 
+    public string Crowdin => Constant.CrowdinProjectUrl;
+
     public string Language
     {
         get => Settings.Language;
