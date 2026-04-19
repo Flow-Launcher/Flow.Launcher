@@ -60,7 +60,7 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 FontSize="14"
-                Foreground="White"
+                Foreground="{DynamicResource Color05B}"
                 Opacity="0.6"
                 Text="{DynamicResource pinnedResultsEmpty}">
                 <TextBlock.Style>
