@@ -28,7 +28,7 @@ namespace Flow.Launcher.Storage
             if (string.IsNullOrEmpty(result.PluginID)) return;
 
             // Maintain the max history limit
-            if (Items.Count > _maxPinned)
+            if (Items.Count >= _maxPinned)
             {
                 Items.RemoveAt(0);
             }
