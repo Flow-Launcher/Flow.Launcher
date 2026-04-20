@@ -1,0 +1,49 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:dialogs="using:Flow.Launcher.Avalonia.Views.Dialogs"
+        mc:Ignorable="d"
+        d:DesignWidth="760"
+        d:DesignHeight="560"
+        x:Class="Flow.Launcher.Avalonia.Views.Dialogs.ReportWindow"
+        x:DataType="dialogs:ReportWindow"
+        Title="Flow Launcher got an error"
+        Width="760"
+        Height="560"
+        CanResize="False"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid RowDefinitions="Auto,*,Auto" Margin="20">
+        <StackPanel Spacing="8">
+            <TextBlock FontSize="24"
+                       FontWeight="SemiBold"
+                       Text="Flow Launcher got an error" />
+            <TextBlock TextWrapping="Wrap"
+                       Text="Please open a GitHub issue and include the report below so the crash can be investigated." />
+        </StackPanel>
+
+        <TextBox Grid.Row="1"
+                 Margin="0,16,0,0"
+                 IsReadOnly="True"
+                 AcceptsReturn="True"
+                 TextWrapping="Wrap"
+                 Text="{Binding ExceptionReportText}" />
+
+        <StackPanel Grid.Row="2"
+                    Margin="0,16,0,0"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Spacing="10">
+            <Button Content="Open issue"
+                    Click="OnOpenIssueClick" />
+            <Button Content="Copy report"
+                    Click="OnCopyClick" />
+            <Button Content="Open logs folder"
+                    Click="OnOpenLogsClick" />
+            <Button Classes="accent"
+                    Content="Close"
+                    Click="OnCloseClick" />
+        </StackPanel>
+    </Grid>
+</Window>

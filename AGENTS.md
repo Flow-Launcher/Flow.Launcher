@@ -36,6 +36,9 @@ Run outputs:
 - `Output/Debug/Flow.Launcher.exe` — WPF
 - `Output/Debug/Avalonia/Flow.Launcher.Avalonia.exe` — Avalonia
 
+## VALIDATION
+- Always finish implementation work with a final user test: start the relevant app host by directly executing the built `.exe`, then verify the debug log can be opened/read so runtime issues are visible.
+
 ## REPO CONVENTIONS
 - C#: PascalCase for types/members/constants, camelCase locals/parameters, `_camelCase` private fields.
 - No `this.` qualifier.

@@ -6,11 +6,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using Flow.Launcher.Avalonia.Views.Dialogs;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
+using Flow.Launcher.Avalonia.Views.Controls;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Avalonia.ViewModel;
@@ -99,17 +101,62 @@ public class AvaloniaPublicAPI : IPublicAPI
     public void SavePluginSettings() { }
     public Task ReloadAllPluginData() => Task.CompletedTask;
     public void CheckForNewUpdate() { }
-    public void ShowMsgError(string title, string subTitle = "") => LogError("API", $"{title}: {subTitle}");
-    public void ShowMsgErrorWithButton(string title, string buttonText, Action buttonAction, string subTitle = "") { }
+    public void ShowMsgError(string title, string subTitle = "") => ShowMsg(title, subTitle, Constant.ErrorIcon, true);
+    public void ShowMsgErrorWithButton(string title, string buttonText, Action buttonAction, string subTitle = "") =>
+        ShowMsgWithButton(title, buttonText, buttonAction, subTitle, Constant.ErrorIcon, true);
     public void ShowMainWindow() { }
     public void FocusQueryTextBox() { }
     public void HideMainWindow() => _getMainViewModel()?.RequestHide();
     public bool IsMainWindowVisible() => true;
-    public void ShowMsg(string title, string subTitle = "", string iconPath = "") { }
-    public void ShowMsg(string title, string subTitle, string iconPath, bool useMainWindowAsOwner = true) { }
-    public void ShowMsgWithButton(string title, string buttonText, Action buttonAction, string subTitle = "", string iconPath = "") { }
-    public void ShowMsgWithButton(string title, string buttonText, Action buttonAction, string subTitle, string iconPath, bool useMainWindowAsOwner = true) { }
+    public void ShowMsg(string title, string subTitle = "", string iconPath = "") =>
+        ShowMsg(title, subTitle, iconPath, true);
+    public void ShowMsg(string title, string subTitle, string iconPath, bool useMainWindowAsOwner = true)
+    {
+        NotificationWindow.ShowNotification(title, subTitle, iconPath);
+    }
+    public void ShowMsgWithButton(string title, string buttonText, Action buttonAction, string subTitle = "", string iconPath = "") =>
+        ShowMsgWithButton(title, buttonText, buttonAction, subTitle, iconPath, true);
+    public void ShowMsgWithButton(string title, string buttonText, Action buttonAction, string subTitle, string iconPath, bool useMainWindowAsOwner = true)
+    {
+        NotificationWindow.ShowNotification(title, subTitle, iconPath, buttonText, buttonAction);
+    }
     public void OpenSettingDialog() => _getMainViewModel()?.OpenSettings();
+    public bool OpenPluginSettingsWindow(string pluginId)
+    {
+        try
+        {
+            var plugin = PluginManager.GetPluginForId(pluginId);
+            if (plugin?.Plugin is not ISettingProvider settingProvider)
+            {
+                return false;
+            }
+
+            if (plugin.Plugin is JsonRPCPluginBase jsonRpcPlugin && !jsonRpcPlugin.NeedCreateSettingPanel())
+            {
+                return false;
+            }
+
+            if (settingProvider.CreateSettingPanelAvalonia() != null)
+            {
+                OpenSettingDialog();
+                return true;
+            }
+
+            var settingsControl = settingProvider.CreateSettingPanel();
+            if (settingsControl == null)
+            {
+                return false;
+            }
+
+            WpfSettingsWindow.Show(settingsControl, plugin.Metadata.Name);
+            return true;
+        }
+        catch (Exception e)
+        {
+            Log.Exception(nameof(AvaloniaPublicAPI), $"Failed to open plugin settings window for plugin id '{pluginId}'", e);
+            return false;
+        }
+    }
     public void RegisterGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback) { }
     public void RemoveGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback) { }
     public T LoadSettingJsonStorage<T>() where T : new() => new T();
@@ -119,8 +166,18 @@ public class AvaloniaPublicAPI : IPublicAPI
     public bool IsGameModeOn() => false;
     public void ReQuery(bool reselect = true) { var q = _getMainViewModel().QueryText; _getMainViewModel().QueryText = ""; _getMainViewModel().QueryText = q; }
     public void BackToQueryResults() { }
-    public MessageBoxResult ShowMsgBox(string messageBoxText, string caption = "", MessageBoxButton button = MessageBoxButton.OK, MessageBoxImage icon = MessageBoxImage.None, MessageBoxResult defaultResult = MessageBoxResult.OK) => defaultResult;
-    public Task ShowProgressBoxAsync(string caption, Func<Action<double>, Task> reportProgressAsync, Action? cancelProgress = null) => reportProgressAsync(_ => { });
+    public MessageBoxResult ShowMsgBox(string messageBoxText, string caption = "", MessageBoxButton button = MessageBoxButton.OK, MessageBoxImage icon = MessageBoxImage.None, MessageBoxResult defaultResult = MessageBoxResult.OK)
+    {
+        if (System.Windows.Application.Current?.Dispatcher != null)
+        {
+            return System.Windows.Application.Current.Dispatcher.Invoke(() =>
+                System.Windows.MessageBox.Show(messageBoxText, caption, button, icon, defaultResult));
+        }
+
+        return System.Windows.MessageBox.Show(messageBoxText, caption, button, icon, defaultResult);
+    }
+    public Task ShowProgressBoxAsync(string caption, Func<Action<double>, Task> reportProgressAsync, Action? cancelProgress = null) =>
+        ProgressBoxWindow.ShowAsync(caption, reportProgressAsync, cancelProgress);
     public void StartLoadingBar() => _getMainViewModel().IsQueryRunning = true;
     public void StopLoadingBar() => _getMainViewModel().IsQueryRunning = false;
     public List<ThemeData> GetAvailableThemes() => new();

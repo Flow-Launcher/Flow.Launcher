@@ -4,8 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Platform.Storage;
+using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Flow.Launcher.Avalonia.Views.Dialogs;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Plugin;
 
@@ -176,20 +178,17 @@ namespace Flow.Launcher.Avalonia.ViewModel.SettingPages
         {
             await PluginInstaller.CheckForPluginUpdatesAsync((plugins) =>
             {
-                // We need to show the update window.
-                // In Avalonia, we need to create a new window or dialog.
-                // For now, since we don't have the PluginUpdateWindow ported to Avalonia yet (presumably),
-                // we might just show a message or log it.
-                // BUT, the task says "Implement the Plugin Store settings page".
-                // If PluginUpdateWindow is not available, we can't show it.
-                // Let's check if PluginUpdateWindow exists in Avalonia.
-                
-                // Assuming it doesn't exist yet, we'll just log or do nothing for now to avoid compilation errors.
-                // Or better, we can just trigger the update if there are updates?
-                // The callback expects us to show UI.
-                
-                // TODO: Implement PluginUpdateWindow for Avalonia
-                
+                Dispatcher.UIThread.Post(async () =>
+                {
+                    if (global::Avalonia.Application.Current?.ApplicationLifetime is not global::Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime desktop ||
+                        desktop.MainWindow is null)
+                    {
+                        return;
+                    }
+
+                    var dialog = new PluginUpdateWindow(plugins);
+                    await dialog.ShowDialog<bool>(desktop.MainWindow);
+                });
             }, silentUpdate: false);
         }
         

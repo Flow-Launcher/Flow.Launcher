@@ -6,7 +6,10 @@ using Avalonia.Markup.Xaml;
 using Avalonia.VisualTree;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Avalonia.ViewModel;
+using Flow.Launcher.Avalonia.Views.Dialogs;
+using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Plugin.SharedModels;
 using System;
 using System.ComponentModel;
 #if DEBUG
@@ -114,6 +117,22 @@ public partial class MainWindow : Window
     protected override void OnLoaded(RoutedEventArgs e)
     {
         base.OnLoaded(e);
+
+        if (_settings?.FirstLaunch == true)
+        {
+            _settings.FirstLaunch = false;
+            _settings.ReleaseNotesVersion = Constant.Version;
+
+            if (Win32Helper.IsBackdropSupported())
+            {
+                _settings.BackdropType = BackdropTypes.Acrylic;
+            }
+
+            _settings.Save();
+
+            var welcomeWindow = new WelcomeWindow();
+            welcomeWindow.Show(this);
+        }
 
         // Focus the query text box when window loads
         _queryTextBox?.Focus();

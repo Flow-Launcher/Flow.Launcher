@@ -6,8 +6,6 @@
              xmlns:vm="using:Flow.Launcher.Avalonia.ViewModel.SettingPages"
              xmlns:i18n="using:Flow.Launcher.Avalonia.Resource"
              xmlns:core="using:Flow.Launcher.Core.Resource"
-             xmlns:userSettings="using:Flow.Launcher.Infrastructure.UserSettings"
-             xmlns:sharedModels="using:Flow.Launcher.Plugin.SharedModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="1200"
              x:Class="Flow.Launcher.Avalonia.Views.SettingPages.GeneralSettingsPage"
              x:DataType="vm:GeneralSettingsViewModel">
@@ -16,7 +14,6 @@
         <StackPanel Spacing="4" Margin="0,18,25,30">
             <TextBlock Text="{i18n:Localize general}" FontSize="28" FontWeight="SemiBold" Margin="0,0,0,8" />
 
-            <!-- Start on System Startup with nested option -->
             <ui:SettingsExpander Header="{i18n:Localize startFlowLauncherOnSystemStartup}"
                                 IconSource="Power"
                                 IsExpanded="False">
@@ -31,7 +28,6 @@
                 </ui:SettingsExpanderItem>
             </ui:SettingsExpander>
 
-            <!-- Hide on Startup -->
             <ui:SettingsExpander Header="{i18n:Localize hideOnStartup}"
                                 Description="{i18n:Localize hideOnStartupToolTip}"
                                 IconSource="Hide">
@@ -40,7 +36,6 @@
                 </ui:SettingsExpander.Footer>
             </ui:SettingsExpander>
 
-            <!-- Hide when lose focus -->
             <ui:SettingsExpander Header="{i18n:Localize hideFlowLauncherWhenLoseFocus}"
                                 IconSource="Hide">
                 <ui:SettingsExpander.Footer>
@@ -48,7 +43,14 @@
                 </ui:SettingsExpander.Footer>
             </ui:SettingsExpander>
 
-            <!-- Hide Notify Icon -->
+            <ui:SettingsExpander Header="{i18n:Localize showTaskbarWhenOpened}"
+                                Description="{i18n:Localize showTaskbarWhenOpenedToolTip}"
+                                IconSource="View">
+                <ui:SettingsExpander.Footer>
+                    <ToggleSwitch IsChecked="{Binding ShowTaskbarWhenOpened}" />
+                </ui:SettingsExpander.Footer>
+            </ui:SettingsExpander>
+
             <ui:SettingsExpander Header="{i18n:Localize hideNotifyIcon}"
                                 Description="{i18n:Localize hideNotifyIconToolTip}"
                                 IconSource="Hide">
@@ -57,7 +59,6 @@
                 </ui:SettingsExpander.Footer>
             </ui:SettingsExpander>
 
-            <!-- Show at Topmost -->
             <ui:SettingsExpander Header="{i18n:Localize showAtTopmost}"
                                 Description="{i18n:Localize showAtTopmostToolTip}"
                                 IconSource="Up">
@@ -66,7 +67,6 @@
                 </ui:SettingsExpander.Footer>
             </ui:SettingsExpander>
 
-            <!-- Search Window Position -->
             <ui:SettingsExpander Header="{i18n:Localize SearchWindowPosition}"
                                 IconSource="MoveUp"
                                 IsExpanded="False">
@@ -76,21 +76,36 @@
                               SelectedValueBinding="{Binding Value}"
                               DisplayMemberBinding="{Binding Display}"
                               MinWidth="200" />
-
                 </ui:SettingsExpander.Footer>
+                <ui:SettingsExpanderItem Content="Custom screen">
+                    <ui:SettingsExpanderItem.Footer>
+                        <ComboBox ItemsSource="{Binding ScreenNumbers}"
+                                  SelectedItem="{Binding CustomScreenNumber, Mode=TwoWay}"
+                                  MinWidth="120"
+                                  IsVisible="{Binding IsCustomWindowScreen}" />
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
                 <ui:SettingsExpanderItem Content="{i18n:Localize SearchWindowAlign}">
                     <ui:SettingsExpanderItem.Footer>
                         <ComboBox ItemsSource="{Binding SearchWindowAligns}"
                                   SelectedValue="{Binding SelectedSearchWindowAlign, Mode=TwoWay}"
                                   SelectedValueBinding="{Binding Value}"
                                   DisplayMemberBinding="{Binding Display}"
-                                  MinWidth="160" />
-
+                                  MinWidth="160"
+                                  IsVisible="{Binding IsSearchWindowAlignVisible}" />
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+                <ui:SettingsExpanderItem Content="Custom position"
+                                         Description="Set X and Y when alignment is Custom">
+                    <ui:SettingsExpanderItem.Footer>
+                        <StackPanel Orientation="Horizontal" Spacing="8" IsVisible="{Binding IsCustomSearchWindowAlign}">
+                            <ui:NumberBox Value="{Binding CustomWindowLeft}" Width="100" SpinButtonPlacementMode="Compact" />
+                            <ui:NumberBox Value="{Binding CustomWindowTop}" Width="100" SpinButtonPlacementMode="Compact" />
+                        </StackPanel>
                     </ui:SettingsExpanderItem.Footer>
                 </ui:SettingsExpanderItem>
             </ui:SettingsExpander>
 
-            <!-- Ignore Hotkeys on Fullscreen -->
             <ui:SettingsExpander Header="{i18n:Localize ignoreHotkeysOnFullscreen}"
                                 Description="{i18n:Localize ignoreHotkeysOnFullscreenToolTip}"
                                 IconSource="Keyboard">
@@ -99,7 +114,6 @@
                 </ui:SettingsExpander.Footer>
             </ui:SettingsExpander>
 
-            <!-- Always Preview -->
             <ui:SettingsExpander Header="{i18n:Localize AlwaysPreview}"
                                 IconSource="PreviewLink">
                 <ui:SettingsExpander.Footer>
@@ -107,7 +121,6 @@
                 </ui:SettingsExpander.Footer>
             </ui:SettingsExpander>
 
-            <!-- Auto Updates -->
             <ui:SettingsExpander Header="{i18n:Localize autoUpdates}"
                                 Description="{i18n:Localize autoUpdatesTooltip}"
                                 IconSource="Sync">
@@ -116,7 +129,14 @@
                 </ui:SettingsExpander.Footer>
             </ui:SettingsExpander>
 
-            <!-- Auto Update Plugins -->
+            <ui:SettingsExpander Header="{i18n:Localize portableMode}"
+                                Description="{i18n:Localize portableModeToolTIp}"
+                                IconSource="Library">
+                <ui:SettingsExpander.Footer>
+                    <ToggleSwitch IsChecked="{Binding PortableMode}" />
+                </ui:SettingsExpander.Footer>
+            </ui:SettingsExpander>
+
             <ui:SettingsExpander Header="{i18n:Localize autoUpdatePlugins}"
                                 Description="{i18n:Localize autoUpdatePluginsToolTip}"
                                 IconSource="Sync">
@@ -125,7 +145,6 @@
                 </ui:SettingsExpander.Footer>
             </ui:SettingsExpander>
 
-            <!-- Query Search Settings -->
             <ui:SettingsExpander Header="{i18n:Localize querySearchPrecision}"
                                 Description="{i18n:Localize querySearchPrecisionToolTip}"
                                 IconSource="Find"
@@ -136,7 +155,6 @@
                               SelectedValueBinding="{Binding Value}"
                               DisplayMemberBinding="{Binding Display}"
                               MinWidth="150" />
-
                 </ui:SettingsExpander.Footer>
                 <ui:SettingsExpanderItem Content="{i18n:Localize lastQueryMode}"
                                          Description="{i18n:Localize lastQueryModeToolTip}">
@@ -146,12 +164,69 @@
                                   SelectedValueBinding="{Binding Value}"
                                   DisplayMemberBinding="{Binding Display}"
                                   MinWidth="180" />
-
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+                <ui:SettingsExpanderItem Content="{i18n:Localize historyStyle}"
+                                         Description="{i18n:Localize historyStyleTooltip}">
+                    <ui:SettingsExpanderItem.Footer>
+                        <ComboBox ItemsSource="{Binding HistoryStyles}"
+                                  SelectedItem="{Binding SelectedHistoryStyle, Mode=TwoWay}"
+                                  MinWidth="180">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Display}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
                     </ui:SettingsExpanderItem.Footer>
                 </ui:SettingsExpanderItem>
             </ui:SettingsExpander>
 
-            <!-- Search Delay -->
+            <ui:SettingsExpander Header="{i18n:Localize dialogJump}"
+                                Description="{i18n:Localize dialogJumpToolTip}"
+                                IconSource="Target"
+                                IsExpanded="False">
+                <ui:SettingsExpander.Footer>
+                    <ToggleSwitch IsChecked="{Binding EnableDialogJump}" />
+                </ui:SettingsExpander.Footer>
+                <ui:SettingsExpanderItem Content="{i18n:Localize showDialogJumpWindow}"
+                                         Description="{i18n:Localize showDialogJumpWindowToolTip}">
+                    <ui:SettingsExpanderItem.Footer>
+                        <ToggleSwitch IsChecked="{Binding ShowDialogJumpWindow}" />
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+                <ui:SettingsExpanderItem Content="{i18n:Localize dialogJumpWindowPosition}"
+                                         Description="{i18n:Localize dialogJumpWindowPositionToolTip}">
+                    <ui:SettingsExpanderItem.Footer>
+                        <ComboBox ItemsSource="{Binding DialogJumpWindowPositions}"
+                                  SelectedValue="{Binding SelectedDialogJumpWindowPosition, Mode=TwoWay}"
+                                  SelectedValueBinding="{Binding Value}"
+                                  DisplayMemberBinding="{Binding Display}"
+                                  MinWidth="180" />
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+                <ui:SettingsExpanderItem Content="{i18n:Localize dialogJumpResultBehaviour}"
+                                         Description="{i18n:Localize dialogJumpResultBehaviourToolTip}">
+                    <ui:SettingsExpanderItem.Footer>
+                        <ComboBox ItemsSource="{Binding DialogJumpResultBehaviours}"
+                                  SelectedValue="{Binding SelectedDialogJumpResultBehaviour, Mode=TwoWay}"
+                                  SelectedValueBinding="{Binding Value}"
+                                  DisplayMemberBinding="{Binding Display}"
+                                  MinWidth="180" />
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+                <ui:SettingsExpanderItem Content="{i18n:Localize dialogJumpFileResultBehaviour}"
+                                         Description="{i18n:Localize dialogJumpFileResultBehaviourToolTip}">
+                    <ui:SettingsExpanderItem.Footer>
+                        <ComboBox ItemsSource="{Binding DialogJumpFileResultBehaviours}"
+                                  SelectedValue="{Binding SelectedDialogJumpFileResultBehaviour, Mode=TwoWay}"
+                                  SelectedValueBinding="{Binding Value}"
+                                  DisplayMemberBinding="{Binding Display}"
+                                  MinWidth="200" />
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+            </ui:SettingsExpander>
+
             <ui:SettingsExpander Header="{i18n:Localize searchDelay}"
                                 Description="{i18n:Localize searchDelayToolTip}"
                                 IconSource="Clock"
@@ -172,7 +247,6 @@
                 </ui:SettingsExpanderItem>
             </ui:SettingsExpander>
 
-            <!-- Home Page Settings -->
             <ui:SettingsExpander Header="{i18n:Localize homePage}"
                                 Description="{i18n:Localize homePageToolTip}"
                                 IconSource="Home"
@@ -197,7 +271,6 @@
                 </ui:SettingsExpanderItem>
             </ui:SettingsExpander>
 
-            <!-- Auto Restart After Changing -->
             <ui:SettingsExpander Header="{i18n:Localize autoRestartAfterChanging}"
                                 Description="{i18n:Localize autoRestartAfterChangingToolTip}"
                                 IconSource="Refresh">
@@ -206,7 +279,6 @@
                 </ui:SettingsExpander.Footer>
             </ui:SettingsExpander>
 
-            <!-- Show Unknown Source Warning -->
             <ui:SettingsExpander Header="{i18n:Localize showUnknownSourceWarning}"
                                 Description="{i18n:Localize showUnknownSourceWarningToolTip}"
                                 IconSource="Important">
@@ -215,7 +287,6 @@
                 </ui:SettingsExpander.Footer>
             </ui:SettingsExpander>
 
-            <!-- Always Start English -->
             <ui:SettingsExpander Header="{i18n:Localize typingStartEn}"
                                 Description="{i18n:Localize typingStartEnTooltip}"
                                 IconSource="Keyboard">
@@ -224,16 +295,52 @@
                 </ui:SettingsExpander.Footer>
             </ui:SettingsExpander>
 
-            <!-- Use Pinyin -->
             <ui:SettingsExpander Header="{i18n:Localize ShouldUsePinyin}"
                                 Description="{i18n:Localize ShouldUsePinyinToolTip}"
-                                IconSource="Character">
+                                IconSource="Character"
+                                IsExpanded="False">
                 <ui:SettingsExpander.Footer>
                     <ToggleSwitch IsChecked="{Binding ShouldUsePinyin}" />
                 </ui:SettingsExpander.Footer>
+                <ui:SettingsExpanderItem Content="{i18n:Localize ShouldUseDoublePinyin}"
+                                         Description="{i18n:Localize ShouldUseDoublePinyinToolTip}">
+                    <ui:SettingsExpanderItem.Footer>
+                        <ToggleSwitch IsChecked="{Binding UseDoublePinyin}"
+                                      IsVisible="{Binding IsDoublePinyinVisible}" />
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+                <ui:SettingsExpanderItem Content="{i18n:Localize DoublePinyinSchema}">
+                    <ui:SettingsExpanderItem.Footer>
+                        <ComboBox ItemsSource="{Binding DoublePinyinSchemas}"
+                                  SelectedValue="{Binding SelectedDoublePinyinSchema, Mode=TwoWay}"
+                                  SelectedValueBinding="{Binding Value}"
+                                  DisplayMemberBinding="{Binding Display}"
+                                  MinWidth="180"
+                                  IsVisible="{Binding UseDoublePinyin}" />
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
             </ui:SettingsExpander>
 
-            <!-- Python Path -->
+            <ui:SettingsExpander Header="{i18n:Localize defaultFileManager}"
+                                Description="{i18n:Localize defaultFileManagerToolTip}"
+                                IconSource="OpenFolderHorizontal">
+                <ui:SettingsExpander.Footer>
+                    <Button Content="{Binding SelectedFileManagerDisplayName}"
+                            Command="{Binding SelectFileManagerCommand}"
+                            MinWidth="180" />
+                </ui:SettingsExpander.Footer>
+            </ui:SettingsExpander>
+
+            <ui:SettingsExpander Header="{i18n:Localize defaultBrowser}"
+                                Description="{i18n:Localize defaultBrowserToolTip}"
+                                IconSource="Globe">
+                <ui:SettingsExpander.Footer>
+                    <Button Content="{Binding SelectedBrowserDisplayName}"
+                            Command="{Binding SelectBrowserCommand}"
+                            MinWidth="180" />
+                </ui:SettingsExpander.Footer>
+            </ui:SettingsExpander>
+
             <ui:SettingsExpander Header="{i18n:Localize pythonFilePath}"
                                 Description="{Binding PythonPath}"
                                 IconSource="Code">
@@ -242,7 +349,6 @@
                 </ui:SettingsExpander.Footer>
             </ui:SettingsExpander>
 
-            <!-- Node Path -->
             <ui:SettingsExpander Header="{i18n:Localize nodeFilePath}"
                                 Description="{Binding NodePath}"
                                 IconSource="Code">
@@ -251,22 +357,38 @@
                 </ui:SettingsExpander.Footer>
             </ui:SettingsExpander>
 
-            <!-- Language Selection -->
             <ui:SettingsExpander Header="{i18n:Localize language}"
                                 IconSource="Globe">
                 <ui:SettingsExpander.Footer>
-                    <ComboBox ItemsSource="{Binding Languages}"
-                              SelectedItem="{Binding SelectedLanguage}"
-                              MinWidth="200">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate x:DataType="core:Language">
-                                <TextBlock Text="{Binding Display}" />
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <Button Content="{i18n:Localize HelpUsTranslateFlow}" Command="{Binding OpenCrowdinCommand}" />
+                        <ComboBox ItemsSource="{Binding Languages}"
+                                  SelectedItem="{Binding SelectedLanguage}"
+                                  MinWidth="200">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate x:DataType="core:Language">
+                                    <TextBlock Text="{Binding Display}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </StackPanel>
                 </ui:SettingsExpander.Footer>
             </ui:SettingsExpander>
 
+            <ui:SettingsExpander Header="{i18n:Localize KoreanImeRegistry}"
+                                Description="{i18n:Localize KoreanImeRegistryTooltip}"
+                                IconSource="Important"
+                                IsVisible="{Binding KoreanIMERegistryKeyExists}">
+                <ui:SettingsExpander.Footer>
+                    <ToggleSwitch IsChecked="{Binding LegacyKoreanIMEEnabled}" />
+                </ui:SettingsExpander.Footer>
+                <ui:SettingsExpanderItem Content="{i18n:Localize KoreanImeTitle}"
+                                         Description="{i18n:Localize KoreanImeGuide}">
+                    <ui:SettingsExpanderItem.Footer>
+                        <Button Content="{i18n:Localize KoreanImeOpenLinkButton}" Command="{Binding OpenImeSettingsCommand}" />
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+            </ui:SettingsExpander>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

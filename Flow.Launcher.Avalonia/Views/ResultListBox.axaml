@@ -32,7 +32,9 @@
         
         <ListBox.ItemTemplate>
             <DataTemplate x:DataType="vm:ResultViewModel">
-                <Grid Classes="resultItemGrid" ColumnDefinitions="Auto,*,Auto">
+                <Grid Classes="resultItemGrid"
+                      ColumnDefinitions="Auto,*,Auto"
+                      MinHeight="{Binding Settings.ItemHeightSize}">
                     
                     <!-- Selection Bullet -->
                     <Border Grid.Column="0" 
@@ -69,6 +71,8 @@
                             
                             <TextBlock Grid.Row="0"
                                        Classes="resultTitle"
+                                       FontSize="{Binding Settings.ResultItemFontSize}"
+                                       FontFamily="{Binding Settings.ResultFont}"
                                        ToolTip.Tip="{Binding Title}">
                                 <helper:TextBlockHelper.FormattedText>
                                     <MultiBinding Converter="{StaticResource HighlightTextConverter}">
@@ -80,6 +84,8 @@
                             
                             <TextBlock Grid.Row="1"
                                        Classes="resultSubTitle"
+                                       FontSize="{Binding Settings.ResultSubItemFontSize}"
+                                       FontFamily="{Binding Settings.ResultSubFont}"
                                        IsVisible="{Binding ShowSubTitle}"
                                        ToolTip.Tip="{Binding SubTitle}">
                                 <helper:TextBlockHelper.FormattedText>

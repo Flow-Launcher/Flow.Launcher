@@ -278,7 +278,7 @@
 | SelectFileManagerViewModel | ~50 | 0 | :x: 0% | Not started |
 
 ### MainViewModel Missing Features
-- [ ] History cycling (up/down arrow)
+- [x] History cycling (up/down arrow)
 - [ ] Clipboard paste handling
 - [ ] Auto-complete suggestions
 - [ ] Text selection handling
@@ -301,7 +301,7 @@
 | FontLoader | :white_check_mark: Done | Font loading |
 | GlobalHotkey | :white_check_mark: Done | In Infrastructure project |
 | TextBlockHelper | :white_check_mark: Done | Text formatting helpers |
-| AutoStartup | :x: Missing | Windows startup registration |
+| AutoStartup | :white_check_mark: Done | Windows startup registration |
 | SingleInstance | :x: Missing | Prevent multiple instances |
 | ErrorReporting | :x: Missing | Error logging/reporting |
 | ExceptionHelper | :x: Missing | Exception formatting |
@@ -311,7 +311,7 @@
 | DataWebRequestFactory | :x: Missing | Web requests with proxy |
 | SyntaxSugars | :x: Missing | Extension methods |
 
-**Progress: 5/13 (38%)**
+**Progress: 6/13 (46%)**
 
 ---
 
@@ -353,7 +353,7 @@
 | Text highlighting | :white_check_mark: Done | Match highlighting in results (bold gold) |
 | Auto-complete | :x: Missing | Tab to complete |
 | Query suggestions | :x: Missing | Suggestion dropdown |
-| History cycling | :x: Missing | Up/Down through history |
+| History cycling | :white_check_mark: Done | Cycle through stored query history via configured hotkeys |
 | Clipboard paste | :x: Missing | Paste and search |
 
 ### Window Management
@@ -371,7 +371,7 @@
 |---------|--------|-------|
 | System tray | :white_check_mark: Done | Icon with menu |
 | Global hotkey | :white_check_mark: Done | Toggle window |
-| Auto-start | :x: Missing | Start with Windows |
+| Auto-start | :white_check_mark: Done | Start with Windows |
 | Single instance | :x: Missing | Prevent duplicates |
 | Portable mode | :x: Missing | Run from USB |
 
@@ -427,7 +427,7 @@
 
 ### High Priority (Core UX)
 1. [ ] **HighlightTextConverter** - Search match highlighting
-2. [ ] **History cycling** - Up/Down arrow through history
+2. [x] **History cycling** - Up/Down arrow through history
 3. [x] **GeneralSettingsPage** - Essential settings (startup, behavior) - DONE
 4. [x] **Card/ExCard controls** - Required for all settings pages - DONE (using FluentAvalonia SettingsExpander)
 5. [x] **Hide on focus loss** - Expected behavior - DONE
@@ -437,7 +437,7 @@
 7. [ ] **ThemeSettingsPage** - Theme selection and customization (partial)
 8. [x] **Plugin settings UI** - IPluginSettingProvider integration - DONE
 9. [x] **Plugin Store** - Install/update plugins - DONE
-10. [ ] **Auto-start** - Windows startup registration
+10. [x] **Auto-start** - Windows startup registration
 11. [ ] **CustomQueryHotkeySetting dialog** - Add/Edit custom query hotkeys
 12. [ ] **CustomShortcutSetting dialog** - Add/Edit custom shortcuts
 
