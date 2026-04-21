@@ -250,8 +250,8 @@
     <system:String x:Key="pluginStore_Installed">インストール済み</system:String>
     <system:String x:Key="PluginStoreSortModeDefault">デフォルト</system:String>
     <system:String x:Key="PluginStoreSortModeName">名前</system:String>
-    <system:String x:Key="PluginStoreSortModeReleaseDate">Release Date</system:String>
-    <system:String x:Key="PluginStoreSortModeUpdatedDate">Updated Date</system:String>
+    <system:String x:Key="PluginStoreSortModeReleaseDate">リリース日</system:String>
+    <system:String x:Key="PluginStoreSortModeUpdatedDate">更新日</system:String>
     <system:String x:Key="PluginStoreSortingModeComboboxLabel">Sorting Mode:</system:String>
     <system:String x:Key="refresh">更新</system:String>
     <system:String x:Key="installbtn">インストール</system:String>
@@ -497,7 +497,7 @@
     <system:String x:Key="settingWindowFontTitle">設定ウィンドウで使用するフォント</system:String>
 
     <!--  Plugin Settings Window  -->
-    <system:String x:Key="pluginSettingsWindowTitle">Settings: {0}</system:String>
+    <system:String x:Key="pluginSettingsWindowTitle">設定: {0}</system:String>
     <system:String x:Key="pluginSettingsWindowOpenFailed">プラグイン設定ウィンドウを開けませんでした</system:String>
 
     <!--  Release Notes Window  -->
@@ -530,7 +530,7 @@
     <system:String x:Key="defaultBrowser_newWindow">新しいウィンドウ</system:String>
     <system:String x:Key="defaultBrowser_newTab">新しいタブ</system:String>
     <system:String x:Key="defaultBrowser_parameter">プライベートモード</system:String>
-    <system:String x:Key="defaultBrowser_extraArgs">Extra Args</system:String>
+    <system:String x:Key="defaultBrowser_extraArgs">そのほかの引数</system:String>
     <system:String x:Key="defaultBrowser_default">デフォルト</system:String>
     <system:String x:Key="defaultBrowser_new_profile">新しいプロファイル</system:String>
 
@@ -612,7 +612,7 @@
     <system:String x:Key="reportWindow_report_succeed">クラッシュレポートの送信に成功しました</system:String>
     <system:String x:Key="reportWindow_report_failed">クラッシュレポートの送信に失敗しました</system:String>
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcherにエラーが発生しました</system:String>
-    <system:String x:Key="reportWindow_please_open_issue">Please open new issue in</system:String>
+    <system:String x:Key="reportWindow_please_open_issue">次の場所で新しい issue を開いてください:</system:String>
     <system:String x:Key="reportWindow_upload_log">1. ログファイルをアップロード: {0}</system:String>
     <system:String x:Key="reportWindow_copy_below">2. 例外メッセージ以下をコピー</system:String>
 
