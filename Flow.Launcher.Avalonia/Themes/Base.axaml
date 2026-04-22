@@ -11,17 +11,20 @@
 
     <!-- Window Border Style -->
     <Style Selector="Border.windowBorder">
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="Background" Value="#E6202020" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="{DynamicResource WindowBorderBrush}" />
+        <Setter Property="Background" Value="{DynamicResource WindowBackgroundBrush}" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="CornerRadius" Value="8" />
         <Setter Property="ClipToBounds" Value="True" />
+        <Setter Property="BoxShadow" Value="0 18 48 0 #26000000" />
     </Style>
 
     <!-- Query Box Background -->
     <Style Selector="Border.queryBoxBg">
         <Setter Property="Margin" Value="0" />
         <Setter Property="MinHeight" Value="50" />
+        <Setter Property="Background" Value="{DynamicResource QuerySurfaceBrush}" />
     </Style>
 
     <!-- Query Text Box -->
@@ -31,9 +34,9 @@
         <Setter Property="Margin" Value="16,7,60,7" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Foreground" Value="#E3E0E3" />
-        <Setter Property="CaretBrush" Value="#E3E0E3" />
-        <Setter Property="SelectionBrush" Value="#505050" />
+        <Setter Property="Foreground" Value="{DynamicResource QueryBoxForegroundBrush}" />
+        <Setter Property="CaretBrush" Value="{DynamicResource QueryBoxForegroundBrush}" />
+        <Setter Property="SelectionBrush" Value="{DynamicResource QueryBoxSelectionBrush}" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
@@ -60,7 +63,7 @@
         <Setter Property="Margin" Value="16,7,60,7" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Foreground" Value="#555555" />
+        <Setter Property="Foreground" Value="{DynamicResource QuerySuggestionForegroundBrush}" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
@@ -73,7 +76,7 @@
 
     <!-- Search Icon -->
     <Style Selector="Path.searchIcon">
-        <Setter Property="Fill" Value="#888888" />
+        <Setter Property="Fill" Value="{DynamicResource SearchIconBrush}" />
         <Setter Property="Width" Value="24" />
         <Setter Property="Height" Value="24" />
     </Style>
@@ -88,7 +91,7 @@
     <!-- Separator -->
     <Style Selector="Rectangle.separator">
         <Setter Property="Height" Value="1" />
-        <Setter Property="Fill" Value="#333333" />
+        <Setter Property="Fill" Value="{DynamicResource SeparatorBrush}" />
         <Setter Property="Margin" Value="12,0,12,0" />
     </Style>
 
@@ -101,6 +104,7 @@
     <!-- Result Area Border -->
     <Style Selector="Border.resultAreaBorder">
         <Setter Property="CornerRadius" Value="0,0,8,8" />
+        <Setter Property="Background" Value="{DynamicResource ResultAreaBackgroundBrush}" />
     </Style>
 
     <!-- Result ListBox -->
@@ -149,13 +153,13 @@
     <!-- Result Glyph -->
     <Style Selector="TextBlock.resultGlyph">
         <Setter Property="FontSize" Value="20" />
-        <Setter Property="Foreground" Value="White" />
+        <Setter Property="Foreground" Value="{DynamicResource ResultGlyphBrush}" />
         <Setter Property="TextAlignment" Value="Center" />
     </Style>
 
     <!-- Result Title -->
     <Style Selector="TextBlock.resultTitle">
-        <Setter Property="Foreground" Value="#FFFFF8" />
+        <Setter Property="Foreground" Value="{DynamicResource ResultTitleBrush}" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="Margin" Value="0,0,0,1" />
         <Setter Property="VerticalAlignment" Value="Bottom" />
@@ -164,7 +168,7 @@
 
     <!-- Result SubTitle -->
     <Style Selector="TextBlock.resultSubTitle">
-        <Setter Property="Foreground" Value="#999999" />
+        <Setter Property="Foreground" Value="{DynamicResource ResultSubTitleBrush}" />
         <Setter Property="FontSize" Value="12" />
         <Setter Property="Margin" Value="0,1,0,0" />
         <Setter Property="VerticalAlignment" Value="Top" />
@@ -190,25 +194,25 @@
     </Style>
 
     <Style Selector="ScrollBar /template/ Thumb">
-        <Setter Property="Background" Value="#505050" />
+        <Setter Property="Background" Value="{DynamicResource ScrollThumbBrush}" />
         <Setter Property="CornerRadius" Value="3" />
         <Setter Property="MinHeight" Value="20" />
     </Style>
 
     <Style Selector="ScrollBar:pointerover /template/ Thumb">
-        <Setter Property="Background" Value="#707070" />
+        <Setter Property="Background" Value="{DynamicResource ScrollThumbPointerOverBrush}" />
     </Style>
 
     <!-- Hotkey Badge -->
     <Style Selector="Border.hotkeyBadge">
-        <Setter Property="Background" Value="#20FFFFFF" />
+        <Setter Property="Background" Value="{DynamicResource HotkeyBadgeBackgroundBrush}" />
         <Setter Property="CornerRadius" Value="4" />
         <Setter Property="Padding" Value="6,2,6,2" />
         <Setter Property="Margin" Value="0,0,10,0" />
     </Style>
 
     <Style Selector="TextBlock.hotkeyText">
-        <Setter Property="Foreground" Value="#888888" />
+        <Setter Property="Foreground" Value="{DynamicResource HotkeyTextBrush}" />
         <Setter Property="FontSize" Value="11" />
         <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
