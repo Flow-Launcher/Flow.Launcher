@@ -15,10 +15,10 @@
                                 Description="{Binding Version}"
                                 IconSource="Info">
                 <ui:SettingsExpander.Footer>
-                    <StackPanel Orientation="Horizontal" Spacing="12">
-                        <Button Content="{i18n:Localize checkUpdates}" Command="{Binding UpdateAppCommand}" />
-                        <Button Content="{i18n:Localize BecomeASponsor}" Command="{Binding OpenSponsorPageCommand}" Classes="accent" />
-                    </StackPanel>
+                    <WrapPanel Orientation="Horizontal">
+                        <Button Content="{i18n:Localize checkUpdates}" Command="{Binding UpdateAppCommand}" Margin="0,0,8,8" />
+                        <Button Content="{i18n:Localize BecomeASponsor}" Command="{Binding OpenSponsorPageCommand}" Classes="accent" Margin="0,0,8,8" />
+                    </WrapPanel>
                 </ui:SettingsExpander.Footer>
             </ui:SettingsExpander>
 
@@ -26,10 +26,10 @@
                                 Description="{Binding ReleaseNotesUrl}"
                                 IconSource="Bookmarks">
                 <ui:SettingsExpander.Footer>
-                    <StackPanel Orientation="Horizontal" Spacing="12">
-                        <Button Content="{i18n:Localize releaseNotes}" Command="{Binding OpenReleaseNotesCommand}" />
-                        <Button Content="{i18n:Localize welcomewindow}" Command="{Binding OpenWelcomeCommand}" />
-                    </StackPanel>
+                    <WrapPanel Orientation="Horizontal">
+                        <Button Content="{i18n:Localize releaseNotes}" Command="{Binding OpenReleaseNotesCommand}" Margin="0,0,8,8" />
+                        <Button Content="{i18n:Localize welcomewindow}" Command="{Binding OpenWelcomeCommand}" Margin="0,0,8,8" />
+                    </WrapPanel>
                 </ui:SettingsExpander.Footer>
             </ui:SettingsExpander>
 
@@ -45,7 +45,7 @@
                                 Description="Flow Launcher web resources"
                                 IconSource="World">
                 <ui:SettingsExpander.Footer>
-                    <WrapPanel Orientation="Horizontal" ItemHeight="36" ItemWidth="140">
+                    <WrapPanel Orientation="Horizontal">
                         <Button Content="{i18n:Localize website}" Command="{Binding OpenWebsiteCommand}" Margin="0,0,8,8" />
                         <Button Content="{i18n:Localize documentation}" Command="{Binding OpenDocumentationCommand}" Margin="0,0,8,8" />
                         <Button Content="GitHub" Command="{Binding OpenGitHubCommand}" Margin="0,0,8,8" />
@@ -59,7 +59,7 @@
                                 Description="Folders and cleanup tools"
                                 IconSource="DeveloperTools">
                 <ui:SettingsExpander.Footer>
-                    <WrapPanel Orientation="Horizontal" ItemHeight="36" ItemWidth="170">
+                    <WrapPanel Orientation="Horizontal">
                         <Button Content="{Binding CacheFolderSize}" Command="{Binding AskClearCacheFolderConfirmationCommand}" Margin="0,0,8,8" />
                         <Button Content="{Binding LogFolderSize}" Command="{Binding AskClearLogFolderConfirmationCommand}" Margin="0,0,8,8" />
                         <Button Content="{i18n:Localize settingfolder}" Command="{Binding OpenSettingsFolderCommand}" Margin="0,0,8,8" />
