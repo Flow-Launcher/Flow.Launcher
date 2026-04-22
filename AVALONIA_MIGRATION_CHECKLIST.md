@@ -1,7 +1,7 @@
 # Flow.Launcher Avalonia Migration Checklist
 
-> **Overall Progress: ~60-65%**  
-> Last Updated: February 2026
+> **Overall Progress: ~70-75%**  
+> Last Updated: April 2026
 
 ---
 
@@ -28,21 +28,21 @@
 | HotkeyRecorderDialog | `HotkeyControlDialog.xaml` | :white_check_mark: Done | Global hook + modifier tracking |
 | ResultListBox | `ResultListBox.xaml` | :white_check_mark: Done | Results display |
 | PreviewPanel | `PreviewPanel.xaml` | :white_check_mark: Done | Result preview |
-| WelcomeWindow | `WelcomeWindow.xaml` | :x: Missing | First-run setup wizard |
-| ReportWindow | `ReportWindow.xaml` | :x: Missing | Error reporting dialog |
-| ReleaseNotesWindow | `ReleaseNotesWindow.xaml` | :x: Missing | Changelog display |
-| SelectBrowserWindow | `SelectBrowserWindow.xaml` | :x: Missing | Browser selection |
-| SelectFileManagerWindow | `SelectFileManagerWindow.xaml` | :x: Missing | File manager selection |
-| PluginUpdateWindow | `PluginUpdateWindow.xaml` | :x: Missing | Plugin update progress |
-| MessageBoxEx | `MessageBoxEx.xaml` | :x: Missing | Custom message box |
-| Msg | `Msg.xaml` | :x: Missing | Simple message dialog |
-| MsgWithButton | `MsgWithButton.xaml` | :x: Missing | Message with action button |
-| ProgressBoxEx | `ProgressBoxEx.xaml` | :x: Missing | Progress dialog |
+| WelcomeWindow | `WelcomeWindow.xaml` | :white_check_mark: Done | First-run window implemented and wired |
+| ReportWindow | `ReportWindow.xaml` | :white_check_mark: Done | Error reporting dialog implemented and wired |
+| ReleaseNotesWindow | `ReleaseNotesWindow.xaml` | :white_check_mark: Done | Changelog display implemented |
+| SelectBrowserWindow | `SelectBrowserWindow.xaml` | :white_check_mark: Done | Browser selection window implemented |
+| SelectFileManagerWindow | `SelectFileManagerWindow.xaml` | :white_check_mark: Done | File manager selection window implemented |
+| PluginUpdateWindow | `PluginUpdateWindow.xaml` | :white_check_mark: Done | Plugin update progress dialog implemented |
+| MessageBoxEx | `MessageBoxEx.xaml` | :white_check_mark: Done | Avalonia message box flow implemented via public API |
+| Msg | `Msg.xaml` | :white_check_mark: Done | Avalonia notification/message flow implemented |
+| MsgWithButton | `MsgWithButton.xaml` | :white_check_mark: Done | Avalonia message-with-action flow implemented |
+| ProgressBoxEx | `ProgressBoxEx.xaml` | :white_check_mark: Done | Avalonia progress dialog implemented |
 | ActionKeywords | `ActionKeywords.xaml` | :x: Missing | Action keyword editor (using dialog instead) |
 | CustomQueryHotkeySetting | `CustomQueryHotkeySetting.xaml` | :x: Missing | Custom hotkey dialog |
 | CustomShortcutSetting | `CustomShortcutSetting.xaml` | :x: Missing | Shortcut editor |
 
-**Progress: 6/19 (32%)**
+**Progress: 16/19 (84%)**
 
 ---
 
@@ -66,7 +66,7 @@
 | **Position Section** |
 | Search window position | :white_check_mark: Done | `SelectedSearchWindowScreen` |
 | Search window align | :white_check_mark: Done | `SelectedSearchWindowAlign` |
-| Custom position X/Y | :x: Missing | `Settings.CustomWindowLeft/Top` |
+| Custom position X/Y | :white_check_mark: Done | `Settings.CustomWindowLeft/Top` |
 | **Search Section** |
 | Query search precision | :white_check_mark: Done | `SelectedSearchPrecision` |
 | Last query mode | :white_check_mark: Done | `SelectedLastQueryMode` |
@@ -90,42 +90,42 @@
 | Python directory | :white_check_mark: Done | `PythonPath` (display) |
 | Node directory | :white_check_mark: Done | `NodePath` (display) |
 | **Not Yet Implemented** |
-| Select browser | :x: Missing | Opens `SelectBrowserWindow` |
-| Select file manager | :x: Missing | Opens `SelectFileManagerWindow` |
-| Portable mode | :x: Missing | Toggle |
-| Dialog jump settings | :x: Missing | ExCard with nested options |
-| Double pinyin settings | :x: Missing | ExCard with schema selector |
-| Korean IME settings | :x: Missing | ExCard with registry toggle |
+| Select browser | :white_check_mark: Done | Opens `SelectBrowserWindow` |
+| Select file manager | :white_check_mark: Done | Opens `SelectFileManagerWindow` |
+| Portable mode | :white_check_mark: Done | Toggle |
+| Dialog jump settings | :white_check_mark: Done | Nested settings implemented |
+| Double pinyin settings | :white_check_mark: Done | Schema selector implemented |
+| Korean IME settings | :white_check_mark: Done | Registry toggle implemented |
 
 ### 2.2 Theme Settings (`SettingsPaneTheme.xaml` - 803 lines)
-**Avalonia: ~70 lines (~35% DONE)**
+**Avalonia: ~200+ lines (~75% DONE)**
 
 | Setting | Status | Notes |
 |---------|--------|-------|
 | **Theme Selection** |
-| Theme list | :x: Missing | ListView with theme previews |
-| Theme preview | :x: Missing | Live preview panel |
+| Theme list | :white_check_mark: Done | Theme selection UI implemented |
+| Theme preview | :white_check_mark: Done | Live preview panel implemented |
 | **Window Settings** |
 | Window size slider | :x: Missing | `Settings.WindowSize` |
-| Window height slider | :x: Missing | `Settings.WindowHeightSize` |
-| Item height slider | :x: Missing | `Settings.ItemHeightSize` |
+| Window height slider | :white_check_mark: Done | `Settings.WindowHeightSize` |
+| Item height slider | :white_check_mark: Done | `Settings.ItemHeightSize` |
 | **Font Settings** |
-| Query box font | :x: Missing | `Settings.QueryBoxFont` (font family) |
+| Query box font | :white_check_mark: Done | `Settings.QueryBoxFont` (font family) |
 | Query box font size | :white_check_mark: Done | `Settings.QueryBoxFontSize` |
-| Result font | :x: Missing | `Settings.ResultFont` (font family) |
+| Result font | :white_check_mark: Done | `Settings.ResultFont` (font family) |
 | Result font size | :white_check_mark: Done | `Settings.ResultItemFontSize` |
-| Result sub font size | :x: Missing | `Settings.ResultSubItemFontSize` |
+| Result sub font size | :white_check_mark: Done | `Settings.ResultSubItemFontSize` |
 | **Appearance** |
 | Color scheme | :white_check_mark: Done | Light/Dark/System |
-| Animation speed | :x: Missing | `Settings.AnimationSpeed` |
-| Use clock | :x: Missing | `Settings.UseDate` |
-| Clock format | :x: Missing | `Settings.TimeFormat` |
-| Date format | :x: Missing | `Settings.DateFormat` |
+| Animation speed | :white_check_mark: Done | `Settings.AnimationSpeed` |
+| Use clock | :white_check_mark: Done | `Settings.UseClock` / `Settings.UseDate` |
+| Clock format | :white_check_mark: Done | `Settings.TimeFormat` |
+| Date format | :white_check_mark: Done | `Settings.DateFormat` |
 | Use glyph icons | :white_check_mark: Done | `Settings.UseGlyphIcons` |
 | Max results | :white_check_mark: Done | `Settings.MaxResultsToShow` |
 | **Backdrop** |
 | Use system backdrop | :x: Missing | `Settings.UseSystemBackdrop` |
-| Backdrop type | :x: Missing | Mica/Acrylic/etc |
+| Backdrop type | :white_check_mark: Done | Mica/Acrylic/etc selection implemented |
 | **Icon Settings** |
 | Icon theme | :x: Missing | `Settings.ColorScheme` |
 | Double-click icon action | :x: Missing | `Settings.DoubleClickIconAction` |
@@ -216,19 +216,19 @@
 | Proxy password | :white_check_mark: Done | Password input (masked) |
 
 ### 2.7 About Settings (`SettingsPaneAbout.xaml` - 184 lines)
-**Avalonia: ~25 lines (~40% DONE)**
+**Avalonia: ~100+ lines (~90% DONE)**
 
 | Feature | Status | Notes |
 |---------|--------|-------|
 | Version display | :white_check_mark: Done | Shows version |
-| Check for updates | :x: Missing | Button + status |
+| Check for updates | :white_check_mark: Done | Button wired to updater |
 | Homepage link | :white_check_mark: Done | Button |
-| Documentation link | :x: Missing | HyperLink |
+| Documentation link | :white_check_mark: Done | Button/link action implemented |
 | GitHub link | :white_check_mark: Done | Button |
 | Discord link | :x: Missing | HyperLink |
-| Release notes | :x: Missing | Opens `ReleaseNotesWindow` |
-| Open logs folder | :x: Missing | Button |
-| Open settings folder | :x: Missing | Button |
+| Release notes | :white_check_mark: Done | Opens `ReleaseNotesWindow` |
+| Open logs folder | :white_check_mark: Done | Button |
+| Open settings folder | :white_check_mark: Done | Button |
 
 **Settings Progress: ~1100/2609 lines (~42%)**
 
@@ -265,15 +265,15 @@
 | ResultViewModel | ~300 | ~200 | :white_check_mark: 67% | Basic display done |
 | SettingWindowViewModel | ~100 | ~50 | :yellow_circle: 50% | Navigation works |
 | GeneralSettingsViewModel | ~100 | ~390 | :white_check_mark: 95% | Most settings implemented |
-| ThemeSettingsViewModel | ~150 | ~116 | :yellow_circle: 77% | Basic theme + fonts done |
+| ThemeSettingsViewModel | ~150 | ~200+ | :yellow_circle: 80% | Theme selection, preview, sizing, fonts, and appearance controls implemented |
 | HotkeySettingsViewModel | ~200 | ~350 | :yellow_circle: 67% | Most hotkeys and shortcut lists implemented; add/edit dialogs still pending |
 | PluginsSettingsViewModel | ~300 | ~220 | :white_check_mark: 73% | Full plugin management |
 | PluginStoreSettingsViewModel | ~250 | ~200 | :white_check_mark: 80% | Store functionality complete |
 | PluginStoreItemViewModel | ~100 | ~113 | :white_check_mark: 95% | Item display + actions |
 | PluginItemViewModel | N/A | ~277 | :white_check_mark: 90% | Individual plugin management |
 | ProxySettingsViewModel | ~80 | ~81 | :white_check_mark: 100% | All proxy settings |
-| AboutSettingsViewModel | ~100 | ~28 | :yellow_circle: 28% | Basic version + links |
-| WelcomeViewModel | ~80 | 0 | :x: 0% | Not started |
+| AboutSettingsViewModel | ~100 | ~390 | :yellow_circle: 90% | Version, updater, links, folders, cleanup, release notes, and welcome flow implemented |
+| WelcomeViewModel | ~80 | 0 | :yellow_circle: Window done | Window exists and is wired; dedicated Avalonia view model still not split out |
 | SelectBrowserViewModel | ~50 | 0 | :x: 0% | Not started |
 | SelectFileManagerViewModel | ~50 | 0 | :x: 0% | Not started |
 
@@ -303,7 +303,7 @@
 | TextBlockHelper | :white_check_mark: Done | Text formatting helpers |
 | AutoStartup | :white_check_mark: Done | Windows startup registration |
 | SingleInstance | :x: Missing | Prevent multiple instances |
-| ErrorReporting | :x: Missing | Error logging/reporting |
+| ErrorReporting | :yellow_circle: Partial | Unhandled exception reporting window wired; helper parity still incomplete |
 | ExceptionHelper | :x: Missing | Exception formatting |
 | SingletonWindowOpener | :x: Missing | Manage singleton windows |
 | WallpaperPathRetrieval | :x: Missing | Get desktop wallpaper |
@@ -373,7 +373,7 @@
 | Global hotkey | :white_check_mark: Done | Toggle window |
 | Auto-start | :white_check_mark: Done | Start with Windows |
 | Single instance | :x: Missing | Prevent duplicates |
-| Portable mode | :x: Missing | Run from USB |
+| Portable mode | :white_check_mark: Done | Toggle and service wiring implemented |
 
 ### Plugin System
 | Feature | Status | Notes |
@@ -397,15 +397,15 @@
 |---------|--------|-------|
 | Light/Dark/System | :white_check_mark: Done | Basic switching |
 | Custom themes | :x: Missing | Load from .xaml files |
-| Theme list | :x: Missing | Browse available themes |
-| Theme preview | :x: Missing | Live preview in settings |
-| Font customization | :yellow_circle: Partial | Font sizes done, font families missing |
-| Size customization | :x: Missing | Window/item sizes |
-| Animation speed | :x: Missing | Transition speed |
-| Backdrop effects | :x: Missing | Mica/Acrylic |
+| Theme list | :yellow_circle: Partial | Theme selection UI exists; full custom theme browser parity still missing |
+| Theme preview | :white_check_mark: Done | Live preview in settings |
+| Font customization | :yellow_circle: Partial | Font families and sizes implemented; full parity polish still remaining |
+| Size customization | :white_check_mark: Done | Window/item sizing controls implemented |
+| Animation speed | :white_check_mark: Done | Transition speed setting implemented |
+| Backdrop effects | :yellow_circle: Partial | Backdrop type selection exists; full effect parity still needs work |
 | Icon themes | :x: Missing | Glyph/image icons |
 
-**Progress: ~20%**
+**Progress: ~45%**
 
 ---
 
@@ -434,7 +434,7 @@
 
 ### Medium Priority (Feature Completeness)
 6. [x] **HotkeySettingsPage** - Most keyboard shortcuts + preset display - DONE except add/edit dialogs
-7. [ ] **ThemeSettingsPage** - Theme selection and customization (partial)
+7. [x] **ThemeSettingsPage** - Theme selection and customization - DONE with remaining polish/parity follow-up
 8. [x] **Plugin settings UI** - IPluginSettingProvider integration - DONE
 9. [x] **Plugin Store** - Install/update plugins - DONE
 10. [x] **Auto-start** - Windows startup registration
@@ -442,10 +442,10 @@
 12. [ ] **CustomShortcutSetting dialog** - Add/Edit custom shortcuts
 
 ### Lower Priority (Polish)
-11. [ ] **WelcomeWindow** - First-run experience
+11. [x] **WelcomeWindow** - First-run experience
 12. [ ] **Animations** - Transitions and effects
-13. [ ] **Message dialogs** - Custom message boxes
-14. [ ] **Error reporting** - ReportWindow
+13. [x] **Message dialogs** - Custom message boxes
+14. [x] **Error reporting** - ReportWindow
 15. [ ] **Backdrop effects** - Mica/Acrylic
 
 ---
@@ -491,12 +491,12 @@ Flow.Launcher.Avalonia/
 │   └── SettingPages/
 │       ├── SettingsWindow.axaml
 │       ├── GeneralSettingsPage.axaml (~270 lines)
-│       ├── ThemeSettingsPage.axaml (~70 lines)
+│       ├── ThemeSettingsPage.axaml (~200 lines)
 │       ├── HotkeySettingsPage.axaml (~26 lines)
 │       ├── PluginsSettingsPage.axaml (~170 lines)
 │       ├── PluginStoreSettingsPage.axaml (~200 lines)
 │       ├── ProxySettingsPage.axaml (~47 lines)
-│       └── AboutSettingsPage.axaml (~25 lines)
+│       └── AboutSettingsPage.axaml (~100 lines)
 ├── ViewModel/
 │   ├── MainViewModel.cs (~490 lines)
 │   ├── SettingPages/
@@ -508,7 +508,7 @@ Flow.Launcher.Avalonia/
 │   │   ├── PluginStoreItemViewModel.cs (~113 lines)
 │   │   ├── PluginItemViewModel.cs (~277 lines)
 │   │   ├── ProxySettingsViewModel.cs (~81 lines)
-│   │   └── AboutSettingsViewModel.cs (~28 lines)
+│   │   └── AboutSettingsViewModel.cs (~390 lines)
 │   └── ...
 ├── Helper/
 │   ├── FontLoader.cs
