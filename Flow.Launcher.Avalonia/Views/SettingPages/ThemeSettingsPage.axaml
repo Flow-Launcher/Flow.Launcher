@@ -16,31 +16,31 @@
 
             <Border Margin="0,0,0,12"
                     Padding="18"
-                    Background="#1E2020"
+                    Background="{DynamicResource ThemePreviewOuterBrush}"
                     CornerRadius="10"
-                    BorderBrush="#333333"
+                    BorderBrush="{DynamicResource WindowBorderBrush}"
                     BorderThickness="1">
                 <StackPanel Spacing="10">
                     <Border MinHeight="{Binding WindowHeightSize}"
-                            Background="#2A2C2C"
+                            Background="{DynamicResource ThemePreviewInnerBrush}"
                             CornerRadius="8"
                             Padding="16,8">
                         <TextBlock Text="Hello there"
                                    FontSize="{Binding QueryBoxFontSize}"
                                    FontFamily="{Binding QueryFont}"
-                                   Foreground="#E3E0E3" />
+                                   Foreground="{DynamicResource QueryBoxForegroundBrush}" />
                     </Border>
-                    <Border Height="1" Background="#444444" />
-                    <Border Height="{Binding ItemHeightSize}" Background="#292929" CornerRadius="8" Padding="12,8">
+                    <Border Height="1" Background="{DynamicResource SeparatorBrush}" />
+                    <Border Height="{Binding ItemHeightSize}" Background="{DynamicResource ThemePreviewResultBrush}" CornerRadius="8" Padding="12,8">
                         <StackPanel VerticalAlignment="Center">
                             <TextBlock Text="Sample result title"
                                        FontSize="{Binding ResultItemFontSize}"
                                        FontFamily="{Binding ResultFont}"
-                                       Foreground="#FFFFF8" />
+                                       Foreground="{DynamicResource ResultTitleBrush}" />
                             <TextBlock Text="Sample result subtitle"
                                        FontSize="{Binding ResultSubItemFontSize}"
                                        FontFamily="{Binding ResultSubFont}"
-                                       Foreground="#999999" />
+                                       Foreground="{DynamicResource ResultSubTitleBrush}" />
                         </StackPanel>
                     </Border>
                 </StackPanel>

@@ -119,15 +119,15 @@
                 <Setter Property="Background" Value="Transparent" />
                 
                 <Style Selector="^:selected">
-                    <Setter Property="Background" Value="#30FFFFFF" />
+                    <Setter Property="Background" Value="{DynamicResource SelectedItemBackgroundBrush}" />
                 </Style>
                 
                 <Style Selector="^:selected /template/ ContentPresenter#PART_ContentPresenter">
-                    <Setter Property="Background" Value="#30FFFFFF" />
+                    <Setter Property="Background" Value="{DynamicResource SelectedItemBackgroundBrush}" />
                 </Style>
                 
                 <Style Selector="^:pointerover">
-                    <Setter Property="Background" Value="#20FFFFFF" />
+                    <Setter Property="Background" Value="{DynamicResource HoveredItemBackgroundBrush}" />
                 </Style>
             </ControlTheme>
         </ListBox.ItemContainerTheme>
