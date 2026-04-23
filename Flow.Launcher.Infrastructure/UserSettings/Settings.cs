@@ -462,6 +462,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         public bool DontPromptUpdateMsg { get; set; }
         public bool EnableUpdateLog { get; set; }
+        public bool DisableSuccessNotifications { get; set; }
 
         public bool StartFlowLauncherOnSystemStartup { get; set; } = false;
         public bool UseLogonTaskForStartup { get; set; } = false;

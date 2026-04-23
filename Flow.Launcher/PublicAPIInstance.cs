@@ -129,6 +129,12 @@ namespace Flow.Launcher
 
         public void ShowMsg(string title, string subTitle, string iconPath, bool useMainWindowAsOwner = true)
         {
+            if (_settings.DisableSuccessNotifications &&
+                !string.Equals(iconPath, Constant.ErrorIcon, StringComparison.OrdinalIgnoreCase))
+            {
+                return;
+            }
+
             Notification.Show(title, subTitle, iconPath);
         }
 
@@ -137,6 +143,12 @@ namespace Flow.Launcher
 
         public void ShowMsgWithButton(string title, string buttonText, Action buttonAction, string subTitle, string iconPath, bool useMainWindowAsOwner = true)
         {
+            if (_settings.DisableSuccessNotifications &&
+                !string.Equals(iconPath, Constant.ErrorIcon, StringComparison.OrdinalIgnoreCase))
+            {
+                return;
+            }
+
             Notification.ShowWithButton(title, buttonText, buttonAction, subTitle, iconPath);
         }
 
