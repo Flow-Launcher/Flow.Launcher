@@ -515,6 +515,17 @@ namespace Flow.Launcher.ViewModel
                 return;
             }
 
+            // New history result must be recorded before ExecuteAsync and Hide() is called, otherwise when in 'Empty Last Query' query style mode
+            // the QueryAsync call will reconstruct the result list without the new item.
+            // This must happen before ExecuteAsync because some plugin actions call HideMainWindow() inside their action,
+            // which triggers a home query that reads history before _history.Add would have been called.
+            // Also, add item to history only if it is from results but not context menu or history.
+            if (queryResultsSelected)
+            {
+                _history.Add(result);
+                lastHistoryIndex = 1;
+            }
+
             var hideWindow = false;
             var isDialogJumpLeftClick = _isDialogJump && Settings.DialogJumpResultBehaviour == DialogJumpResultBehaviours.LeftClick;
 
@@ -539,15 +550,6 @@ namespace Flow.Launcher.ViewModel
                     // not null means pressing modifier key + number, should ignore the modifier key
                     SpecialKeyState = index is not null ? SpecialKeyState.Default : GlobalHotkey.CheckModifiers()
                 }).ConfigureAwait(false);
-            }
-
-            // New history result must be recorded before Hide() is called, otherwise when in 'Empty Last Query' query style mode
-            // the QueryAsync call will reconstruct the result list without the new item.
-            // Also, add item to history only if it is from results but not context menu or history.
-            if (queryResultsSelected)
-            {
-                _history.Add(result);
-                lastHistoryIndex = 1;
             }
 
             // Only hide for query results (not Dialog Jump left-click mode)
@@ -1275,6 +1277,7 @@ namespace Flow.Launcher.ViewModel
             {
                 List<Result> results = PluginManager.GetContextMenusForPlugin(selected);
                 results.Add(ContextMenuTopMost(selected));
+                results.Add(ContextMenuPluginSettings(selected));
                 results.Add(ContextMenuPluginInfo(selected));
 
                 if (!string.IsNullOrEmpty(query))
@@ -1824,6 +1827,26 @@ namespace Flow.Launcher.ViewModel
                 };
             }
 
+            return menu;
+        }
+
+        private static Result ContextMenuPluginSettings(Result result)
+        {
+            var id = result.PluginID;
+            var metadata = PluginManager.GetPluginForId(id).Metadata;
+
+            var menu = new Result
+            {
+                Title = Localize.pluginSettingsWindowTitle(metadata.Name),
+                IcoPath = Constant.SettingsIcon,
+                Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE713"),
+                PluginDirectory = Constant.ProgramDirectory,
+                Action = _ =>
+                {
+                    return App.API.OpenPluginSettingsWindow(id);
+                },
+                OriginQuery = result.OriginQuery
+            };
             return menu;
         }
 
