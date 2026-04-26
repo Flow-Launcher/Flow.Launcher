@@ -110,7 +110,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     return;
                 }
 
-                Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_update_alreadyexists"));
+                Context.API.ShowMsgError(Context.API.GetTranslation("plugin_pluginsmanager_update_alreadyexists"));
                 return;
             }
 

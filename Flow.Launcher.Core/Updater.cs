@@ -42,7 +42,7 @@ namespace Flow.Launcher.Core
             {
                 if (!silentUpdate)
                     _api.ShowMsg(Localize.pleaseWait(),
-                        Localize.update_flowlauncher_update_check());
+                        Localize.update_flowlauncher_update_check(), iconPath: "", forceShown: true);
 
                 using var updateManager = await GitHubUpdateManagerAsync(GitHubRepository).ConfigureAwait(false);
 
@@ -64,7 +64,7 @@ namespace Flow.Launcher.Core
 
                 if (!silentUpdate)
                     _api.ShowMsg(Localize.update_flowlauncher_update_found(),
-                        Localize.update_flowlauncher_updating());
+                        Localize.update_flowlauncher_updating(), iconPath: "", forceShown: true);
 
                 await updateManager.DownloadReleases(newUpdateInfo.ReleasesToApply).ConfigureAwait(false);
 

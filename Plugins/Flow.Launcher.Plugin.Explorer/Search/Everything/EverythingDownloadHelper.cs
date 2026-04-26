@@ -42,12 +42,12 @@ public static class EverythingDownloadHelper
         }
 
         api.ShowMsg(Localize.flowlauncher_plugin_everything_installing_title(),
-            Localize.flowlauncher_plugin_everything_installing_subtitle(), "", useMainWindowAsOwner: false);
+            Localize.flowlauncher_plugin_everything_installing_subtitle(), iconPath: "", forceShown: true);
 
         await DroplexPackage.Drop(App.Everything1_4_1_1009).ConfigureAwait(false);
 
         api.ShowMsg(Localize.flowlauncher_plugin_everything_installing_title(),
-            Localize.flowlauncher_plugin_everything_installationsuccess_subtitle(), "", useMainWindowAsOwner: false);
+            Localize.flowlauncher_plugin_everything_installationsuccess_subtitle(), iconPath: "", forceShown: true);
 
         installedLocation = "C:\\Program Files\\Everything\\Everything.exe";
 
