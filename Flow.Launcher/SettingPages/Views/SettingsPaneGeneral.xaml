@@ -93,9 +93,13 @@
             </ui:SettingsCard>
 
             <ui:SettingsCard
-                Margin="0 4 0 0"
+                Margin="0 14 0 0"
                 Description="{DynamicResource enableSuccessNotificationToolTip}"
                 Header="{DynamicResource enableSuccessNotification}">
+                <ui:SettingsCard.HeaderIcon>
+                    <ui:FontIcon Glyph="&#xE91C;" />
+                </ui:SettingsCard.HeaderIcon>
+
                 <ui:ToggleSwitch
                     IsOn="{Binding Settings.EnableSuccessNotification}"
                     OffContent="{DynamicResource disable}"
