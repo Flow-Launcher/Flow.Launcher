@@ -119,16 +119,16 @@ namespace Flow.Launcher
         public Task ReloadAllPluginData() => PluginManager.ReloadDataAsync();
 
         public void ShowMsgError(string title, string subTitle = "") =>
-            ShowMsg(title, subTitle, Constant.ErrorIcon, forceShown:true);
+            ShowMsg(title, subTitle, Constant.ErrorIcon, useMainWindowAsOwner: true, forceShown:true);
 
         public void ShowMsgErrorWithButton(string title, string buttonText, Action buttonAction, string subTitle = "") =>
-            ShowMsgWithButton(title, buttonText, buttonAction, subTitle, Constant.ErrorIcon);
+            ShowMsgWithButton(title, buttonText, buttonAction, subTitle, Constant.ErrorIcon, useMainWindowAsOwner: true);
 
         public void ShowMsg(string title, string subTitle = "", string iconPath = "") =>
-            ShowMsg(title, subTitle, iconPath);
+            ShowMsg(title, subTitle, iconPath, useMainWindowAsOwner:true, forceShown:false);
 
         public void ShowMsg(string title, string subTitle, string iconPath, bool useMainWindowAsOwner = true) =>
-            ShowMsg(title, subTitle, iconPath, useMainWindowAsOwner:useMainWindowAsOwner);
+            ShowMsg(title, subTitle, iconPath, useMainWindowAsOwner: true, forceShown: false);
 
         public void ShowMsg(string title, string subTitle, string iconPath, bool useMainWindowAsOwner = true, bool forceShown = false)
         {
@@ -142,7 +142,7 @@ namespace Flow.Launcher
         }
 
         public void ShowMsgWithButton(string title, string buttonText, Action buttonAction, string subTitle = "", string iconPath = "") =>
-            ShowMsgWithButton(title, buttonText, buttonAction, subTitle, iconPath);
+            ShowMsgWithButton(title, buttonText, buttonAction, subTitle, iconPath, useMainWindowAsOwner: true);
 
         public void ShowMsgWithButton(string title, string buttonText, Action buttonAction, string subTitle, string iconPath, bool useMainWindowAsOwner = true)
         {
