@@ -145,7 +145,7 @@ namespace Flow.Launcher
             ShowMsgWithButton(title, buttonText, buttonAction, subTitle, iconPath);
 
         public void ShowMsgWithButton(string title, string buttonText, Action buttonAction, string subTitle, string iconPath, bool useMainWindowAsOwner = true)
-        { 
+        {
             Notification.ShowWithButton(title, buttonText, buttonAction, subTitle, iconPath);
         }
 
