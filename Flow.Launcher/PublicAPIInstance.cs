@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -53,7 +53,7 @@ namespace Flow.Launcher
         private Updater _updater;
         private Updater Updater => _updater ??= Ioc.Default.GetRequiredService<Updater>();
 
-        private readonly object _saveSettingsLock = new();
+        private readonly Lock _saveSettingsLock = new();
 
         #region Constructor
 
@@ -119,17 +119,20 @@ namespace Flow.Launcher
         public Task ReloadAllPluginData() => PluginManager.ReloadDataAsync();
 
         public void ShowMsgError(string title, string subTitle = "") =>
-            ShowMsg(title, subTitle, Constant.ErrorIcon, true);
+            ShowMsg(title, subTitle, Constant.ErrorIcon, forceShown:true);
 
         public void ShowMsgErrorWithButton(string title, string buttonText, Action buttonAction, string subTitle = "") =>
-            ShowMsgWithButton(title, buttonText, buttonAction, subTitle, Constant.ErrorIcon, true);
+            ShowMsgWithButton(title, buttonText, buttonAction, subTitle, Constant.ErrorIcon);
 
         public void ShowMsg(string title, string subTitle = "", string iconPath = "") =>
-            ShowMsg(title, subTitle, iconPath, true);
+            ShowMsg(title, subTitle, iconPath);
 
-        public void ShowMsg(string title, string subTitle, string iconPath, bool useMainWindowAsOwner = true)
+        public void ShowMsg(string title, string subTitle, string iconPath, bool useMainWindowAsOwner = true) =>
+            ShowMsg(title, subTitle, iconPath, useMainWindowAsOwner:useMainWindowAsOwner);
+
+        public void ShowMsg(string title, string subTitle, string iconPath, bool useMainWindowAsOwner = true, bool forceShown = false)
         {
-            if (!_settings.EnableSuccessNotification &&
+            if (!forceShown && !_settings.EnableSuccessNotification &&
                 !string.Equals(iconPath, Constant.ErrorIcon, StringComparison.OrdinalIgnoreCase))
             {
                 return;
@@ -139,16 +142,10 @@ namespace Flow.Launcher
         }
 
         public void ShowMsgWithButton(string title, string buttonText, Action buttonAction, string subTitle = "", string iconPath = "") =>
-            ShowMsgWithButton(title, buttonText, buttonAction, subTitle, iconPath, true);
+            ShowMsgWithButton(title, buttonText, buttonAction, subTitle, iconPath);
 
         public void ShowMsgWithButton(string title, string buttonText, Action buttonAction, string subTitle, string iconPath, bool useMainWindowAsOwner = true)
-        {
-            if (!_settings.EnableSuccessNotification &&
-                !string.Equals(iconPath, Constant.ErrorIcon, StringComparison.OrdinalIgnoreCase))
-            {
-                return;
-            }
-
+        { 
             Notification.ShowWithButton(title, buttonText, buttonAction, subTitle, iconPath);
         }
 

@@ -137,6 +137,16 @@ namespace Flow.Launcher.Plugin
         void ShowMsg(string title, string subTitle, string iconPath, bool useMainWindowAsOwner = true);
 
         /// <summary>
+        /// Show message box
+        /// </summary>
+        /// <param name="title">Message title</param>
+        /// <param name="subTitle">Message subtitle</param>
+        /// <param name="iconPath">Message icon path (relative path to your plugin folder)</param>
+        /// <param name="useMainWindowAsOwner">when true will use main windows as the owner</param>
+        /// <param name="forceShown">when true will force the message to be shown regardless of user settings of `Show more notifications`</param>
+        void ShowMsg(string title, string subTitle, string iconPath, bool useMainWindowAsOwner = true, bool forceShown = false);
+
+        /// <summary>
         /// Show message box with button
         /// </summary>
         /// <param name="title">Message title</param>
@@ -161,7 +171,6 @@ namespace Flow.Launcher.Plugin
         /// Open setting dialog
         /// </summary>
         void OpenSettingDialog();
-
 
         /// <summary>
         /// Open plugin setting window for a specific plugin.
