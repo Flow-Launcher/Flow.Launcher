@@ -99,7 +99,7 @@
     <system:String x:Key="plugin_explorer_copyfilefolder">Kopiuj</system:String>
     <system:String x:Key="plugin_explorer_copyfile_subtitle">Kopiuj bieżący plik do schowka</system:String>
     <system:String x:Key="plugin_explorer_copyfolder_subtitle">Kopiuj bieżący folder do schowka</system:String>
-    <system:String x:Key="plugin_explorer_deletefilefolder">Usu</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefolder">Usuń</system:String>
     <system:String x:Key="plugin_explorer_deletefile_subtitle">Trwale usuń bieżący plik</system:String>
     <system:String x:Key="plugin_explorer_deletefolder_subtitle">Trwale usuń bieżący folder</system:String>
     <system:String x:Key="plugin_explorer_name">Nazwa</system:String>
