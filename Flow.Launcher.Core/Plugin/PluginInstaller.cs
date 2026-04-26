@@ -99,7 +99,9 @@ public static class PluginInstaller
         {
             PublicApi.Instance.ShowMsg(
                 Localize.installbtn(),
-                Localize.InstallSuccessNoRestart(newPlugin.Name));
+                Localize.InstallSuccessNoRestart(newPlugin.Name),
+                iconPath: "",
+                forceShown: true);
         }
     }
 
@@ -194,7 +196,9 @@ public static class PluginInstaller
         {
             PublicApi.Instance.ShowMsg(
                 Localize.uninstallbtn(),
-                Localize.UninstallSuccessNoRestart(oldPlugin.Name));
+                Localize.UninstallSuccessNoRestart(oldPlugin.Name),
+                iconPath: "",
+                forceShown: true);
         }
     }
 
@@ -254,7 +258,9 @@ public static class PluginInstaller
         {
             PublicApi.Instance.ShowMsg(
                 Localize.updatebtn(),
-                Localize.UpdateSuccessNoRestart(newPlugin.Name));
+                Localize.UpdateSuccessNoRestart(newPlugin.Name),
+                iconPath: "",
+                forceShown: true);
         }
     }
 
@@ -298,7 +304,8 @@ public static class PluginInstaller
         {
             if (!silentUpdate)
             {
-                PublicApi.Instance.ShowMsg(Localize.updateNoResultTitle(), Localize.updateNoResultSubtitle());
+                PublicApi.Instance.ShowMsg(Localize.updateNoResultTitle(), Localize.updateNoResultSubtitle(), iconPath: "",
+                    forceShown: true);
             }
             return;
         }
@@ -370,7 +377,9 @@ public static class PluginInstaller
         {
             PublicApi.Instance.ShowMsg(
                 Localize.updatebtn(),
-                Localize.PluginsUpdateSuccessNoRestart());
+                Localize.PluginsUpdateSuccessNoRestart(),
+                iconPath: "",
+                forceShown: true);
         }
     }
 

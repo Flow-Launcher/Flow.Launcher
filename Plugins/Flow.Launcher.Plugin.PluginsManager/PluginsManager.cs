@@ -194,14 +194,18 @@ namespace Flow.Launcher.Plugin.PluginsManager
             {
                 Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_installing_plugin"),
                     string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_success_restart"),
-                        plugin.Name));
+                        plugin.Name),
+                    iconPath: "",
+                    forceShown: true);
                 Context.API.RestartApp();
             }
             else
             {
                 Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_installing_plugin"),
                     string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_success_no_restart"),
-                        plugin.Name));
+                        plugin.Name),
+                    iconPath: "",
+                    forceShown: true);
             }
         }
 
@@ -383,7 +387,9 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                                 string.Format(
                                                     Context.API.GetTranslation(
                                                         "plugin_pluginsmanager_update_success_restart"),
-                                                    x.Name));
+                                                    x.Name),
+                                                iconPath: "",
+                                                forceShown: true);
                                             Context.API.RestartApp();
                                         }
                                         else
@@ -393,7 +399,9 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                                 string.Format(
                                                     Context.API.GetTranslation(
                                                         "plugin_pluginsmanager_update_success_no_restart"),
-                                                    x.Name));
+                                                    x.Name),
+                                                iconPath: "",
+                                                forceShown: true);
                                         }
                                     }
                                 }
@@ -510,7 +518,9 @@ namespace Flow.Launcher.Plugin.PluginsManager
                             Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
                                 string.Format(
                                     Context.API.GetTranslation("plugin_pluginsmanager_update_all_success_restart"),
-                                    resultsForUpdate.Count));
+                                    resultsForUpdate.Count),
+                                iconPath: "",
+                                forceShown: true);
                             Context.API.RestartApp();
                         }
                         else
@@ -518,7 +528,9 @@ namespace Flow.Launcher.Plugin.PluginsManager
                             Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
                                 string.Format(
                                     Context.API.GetTranslation("plugin_pluginsmanager_update_all_success_no_restart"),
-                                    resultsForUpdate.Count));
+                                    resultsForUpdate.Count),
+                                iconPath: "",
+                                forceShown: true);
                         }
 
                         return true;
@@ -809,7 +821,9 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                         string.Format(
                                             Context.API.GetTranslation(
                                                 "plugin_pluginsmanager_uninstall_success_no_restart"),
-                                            x.Metadata.Name));
+                                            x.Metadata.Name),
+                                        iconPath: "",
+                                        forceShown: true);
                                 }
 
                                 return true;
