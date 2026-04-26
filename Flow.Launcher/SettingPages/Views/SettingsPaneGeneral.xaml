@@ -94,10 +94,10 @@
 
             <ui:SettingsCard
                 Margin="0 4 0 0"
-                Description="{DynamicResource disableSuccessNotificationsToolTip}"
-                Header="{DynamicResource disableSuccessNotifications}">
+                Description="{DynamicResource enableSuccessNotificationToolTip}"
+                Header="{DynamicResource enableSuccessNotification}">
                 <ui:ToggleSwitch
-                    IsOn="{Binding Settings.DisableSuccessNotifications}"
+                    IsOn="{Binding Settings.EnableSuccessNotification}"
                     OffContent="{DynamicResource disable}"
                     OnContent="{DynamicResource enable}" />
             </ui:SettingsCard>

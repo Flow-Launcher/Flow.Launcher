@@ -125,8 +125,8 @@
     <system:String x:Key="hideOnStartupToolTip">Flow Launcher search window is hidden in the tray after starting up.</system:String>
     <system:String x:Key="hideNotifyIcon">Hide tray icon</system:String>
     <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>
-    <system:String x:Key="disableSuccessNotifications">Disable notifications (non-error)</system:String>
-    <system:String x:Key="disableSuccessNotificationsToolTip">Hide non-error notifications shown after actions (e.g. copy completed). Error notifications are still shown.</system:String>
+    <system:String x:Key="enableSuccessNotification">Enable success notifications</system:String>
+    <system:String x:Key="enableSuccessNotificationToolTip">Show non-error notifications after actions (e.g. copy completed). Error notifications are always shown.</system:String>
     <system:String x:Key="querySearchPrecision">Query Search Precision</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Changes minimum match score required for results.</system:String>
     <system:String x:Key="SearchPrecisionNone">None</system:String>

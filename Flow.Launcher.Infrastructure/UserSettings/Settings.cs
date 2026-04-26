@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 using System.Windows;
@@ -462,7 +462,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         public bool DontPromptUpdateMsg { get; set; }
         public bool EnableUpdateLog { get; set; }
-        public bool DisableSuccessNotifications { get; set; }
+        public bool EnableSuccessNotification { get; set; } = true;
 
         public bool StartFlowLauncherOnSystemStartup { get; set; } = false;
         public bool UseLogonTaskForStartup { get; set; } = false;

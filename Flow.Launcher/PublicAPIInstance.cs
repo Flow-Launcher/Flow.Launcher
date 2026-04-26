@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -129,7 +129,7 @@ namespace Flow.Launcher
 
         public void ShowMsg(string title, string subTitle, string iconPath, bool useMainWindowAsOwner = true)
         {
-            if (_settings.DisableSuccessNotifications &&
+            if (!_settings.EnableSuccessNotification &&
                 !string.Equals(iconPath, Constant.ErrorIcon, StringComparison.OrdinalIgnoreCase))
             {
                 return;
@@ -143,7 +143,7 @@ namespace Flow.Launcher
 
         public void ShowMsgWithButton(string title, string buttonText, Action buttonAction, string subTitle, string iconPath, bool useMainWindowAsOwner = true)
         {
-            if (_settings.DisableSuccessNotifications &&
+            if (!_settings.EnableSuccessNotification &&
                 !string.Equals(iconPath, Constant.ErrorIcon, StringComparison.OrdinalIgnoreCase))
             {
                 return;
