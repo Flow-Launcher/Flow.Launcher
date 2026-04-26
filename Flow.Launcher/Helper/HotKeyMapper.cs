@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Windows.Input;
 using ChefKeys;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.DialogJump;
 using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Plugin;
 using Flow.Launcher.ViewModel;
 using NHotkey;
 using NHotkey.Wpf;
@@ -16,6 +18,8 @@ internal static class HotKeyMapper
 
     private static Settings _settings;
     private static MainViewModel _mainViewModel;
+    private static Func<int, int, SpecialKeyState, bool> _winComboCallback;
+    private static string _winComboHotkeyStr;
 
     internal static void Initialize()
     {
@@ -82,6 +86,12 @@ internal static class HotKeyMapper
         }
         catch (Exception e)
         {
+            if (hotkey.Win && hotkey.CharKey != Key.None)
+            {
+                SetWithGlobalCallback(hotkey);
+                return;
+            }
+
             App.API.LogError(ClassName,
                 string.Format("|HotkeyMapper.SetHotkey|Error registering hotkey {2}: {0} \nStackTrace:{1}",
                               e.Message,
@@ -93,6 +103,32 @@ internal static class HotKeyMapper
         }
     }
 
+    private static void SetWithGlobalCallback(HotkeyModel hotkey)
+    {
+        int expectedVkCode = KeyInterop.VirtualKeyFromKey(hotkey.CharKey);
+        bool needCtrl = hotkey.Ctrl;
+        bool needAlt = hotkey.Alt;
+        bool needShift = hotkey.Shift;
+
+        _winComboCallback = (keyEvent, vkCode, state) =>
+        {
+            if (keyEvent == (int)KeyEvent.WM_KEYDOWN
+                && vkCode == expectedVkCode
+                && state.WinPressed
+                && state.CtrlPressed == needCtrl
+                && state.AltPressed == needAlt
+                && state.ShiftPressed == needShift)
+            {
+                OnToggleHotkeyWithChefKeys();
+                return false;
+            }
+            return true;
+        };
+
+        _winComboHotkeyStr = hotkey.ToString();
+        App.API.RegisterGlobalKeyboardCallback(_winComboCallback);
+    }
+
     internal static void RemoveHotkey(string hotkeyStr)
     {
         try
@@ -100,6 +136,14 @@ internal static class HotKeyMapper
             if (hotkeyStr == "LWin" || hotkeyStr == "RWin")
             {
                 RemoveWithChefKeys(hotkeyStr);
+                return;
+            }
+
+            if (_winComboCallback != null && hotkeyStr == _winComboHotkeyStr)
+            {
+                App.API.RemoveGlobalKeyboardCallback(_winComboCallback);
+                _winComboCallback = null;
+                _winComboHotkeyStr = null;
                 return;
             }
 

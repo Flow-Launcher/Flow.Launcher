@@ -278,7 +278,8 @@ namespace Flow.Launcher
             {
                 bool hotkeyAvailable;
                 // TODO: This is a temporary way to enforce changing only the open flow hotkey to Win, and will be removed by PR #3157
-                if (keyModel.ToString() == "LWin" || keyModel.ToString() == "RWin")
+                if (keyModel.ToString() == "LWin" || keyModel.ToString() == "RWin"
+                    || (Type == HotkeyType.Hotkey && keyModel.Win && keyModel.CharKey != Key.None))
                 {
                     hotkeyAvailable = true;
                 }
