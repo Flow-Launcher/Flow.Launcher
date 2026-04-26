@@ -3,7 +3,7 @@
 
     <!--  Dialogues  -->
     <system:String x:Key="plugin_pluginsmanager_downloading_plugin">Pobieranie wtyczki</system:String>
-    <system:String x:Key="plugin_pluginsmanager_download_success">Successfully downloaded</system:String>
+    <system:String x:Key="plugin_pluginsmanager_download_success">Pomyślnie pobrano {0}</system:String>
     <system:String x:Key="plugin_pluginsmanager_download_error">Błąd: Nie udało się pobrać wtyczki</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_prompt">{0} autorstwa {1} {2}{3}Czy chcesz odinstalować tę wtyczkę? Po odinstalowaniu Flow automatycznie uruchomi się ponownie.</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_prompt_no_restart">{0} autorstwa {1} {2}{2}Czy chcesz odinstalować tę wtyczkę?</system:String>
@@ -15,7 +15,7 @@
     <system:String x:Key="plugin_pluginsmanager_uninstall_title">Odinstalowanie wtyczki</system:String>
     <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_title">Zachowaj ustawienia wtyczki</system:String>
     <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_subtitle">Czy chcesz zachować ustawienia wtyczki do następnego użycia?</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_success_restart">Plugin successfully installed. Restarting Flow, please wait...</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_success_restart">Wtyczka {0} została pomyślnie zainstalowana. Trwa ponowne uruchamianie Flow, proszę czekać...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_errormetadatafile">Nie można znaleźć pliku metadanych plugin.json z rozpakowanego pliku zip.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_duplicate">Błąd: Wtyczka o tej samej lub wyższej wersji co {0} już istnieje.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_title">Błąd podczas instalacji wtyczki</system:String>
