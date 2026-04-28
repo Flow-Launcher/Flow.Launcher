@@ -281,7 +281,7 @@ namespace Flow.Launcher
                 if (keyModel.ToString() == "LWin" || keyModel.ToString() == "RWin"
                     || (Type == HotkeyType.Hotkey && keyModel.Win && keyModel.CharKey != Key.None))
                 {
-                    hotkeyAvailable = true;
+                    hotkeyAvailable = keyModel.Validate(ValidateKeyGesture);
                 }
                 else
                 {

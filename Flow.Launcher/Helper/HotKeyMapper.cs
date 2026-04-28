@@ -88,7 +88,9 @@ internal static class HotKeyMapper
         {
             if (hotkey.Win && hotkey.CharKey != Key.None)
             {
-                SetWithGlobalCallback(hotkey);
+                App.API.LogDebug(ClassName,
+                    $"|HotkeyMapper.SetHotkey|RegisterHotKey failed for {hotkeyStr} ({e.Message}); falling back to global keyboard callback.");
+                SetWithGlobalCallback(hotkey, action);
                 return;
             }
 
@@ -103,23 +105,38 @@ internal static class HotKeyMapper
         }
     }
 
-    private static void SetWithGlobalCallback(HotkeyModel hotkey)
+    private static void SetWithGlobalCallback(HotkeyModel hotkey, EventHandler<HotkeyEventArgs> action)
     {
+        if (_winComboCallback != null)
+        {
+            App.API.RemoveGlobalKeyboardCallback(_winComboCallback);
+            _winComboCallback = null;
+            _winComboHotkeyStr = null;
+        }
+
         int expectedVkCode = KeyInterop.VirtualKeyFromKey(hotkey.CharKey);
         bool needCtrl = hotkey.Ctrl;
         bool needAlt = hotkey.Alt;
         bool needShift = hotkey.Shift;
+        bool keyCurrentlyDown = false;
 
         _winComboCallback = (keyEvent, vkCode, state) =>
         {
-            if (keyEvent == (int)KeyEvent.WM_KEYDOWN
-                && vkCode == expectedVkCode
+            bool isMatch = vkCode == expectedVkCode
                 && state.WinPressed
                 && state.CtrlPressed == needCtrl
                 && state.AltPressed == needAlt
-                && state.ShiftPressed == needShift)
+                && state.ShiftPressed == needShift;
+
+            if (isMatch && keyEvent == (int)KeyEvent.WM_KEYDOWN && !keyCurrentlyDown)
             {
-                OnToggleHotkeyWithChefKeys();
+                keyCurrentlyDown = true;
+                action?.Invoke(null, null);
+                return false;
+            }
+            if (isMatch && keyEvent == (int)KeyEvent.WM_KEYUP)
+            {
+                keyCurrentlyDown = false;
                 return false;
             }
             return true;

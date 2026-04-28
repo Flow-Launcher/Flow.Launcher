@@ -35,7 +35,7 @@ public partial class HotkeyControlDialog : ContentDialog
     public string ResultValue { get; private set; } = string.Empty;
     public static string EmptyHotkey => Localize.none();
 
-    private static bool isOpenFlowHotkey;
+    private bool isOpenFlowHotkey;
     private Func<int, int, SpecialKeyState, bool>? _winComboInterceptor;
 
     public HotkeyControlDialog(string hotkey, string defaultHotkey, string windowTitle = "")
@@ -70,9 +70,18 @@ public partial class HotkeyControlDialog : ContentDialog
                     && vkCode != VK_LWIN && vkCode != VK_RWIN)
                 {
                     var key = KeyInterop.KeyFromVirtualKey(vkCode);
+                    if (key is Key.None
+                        or Key.LeftCtrl or Key.RightCtrl
+                        or Key.LeftAlt or Key.RightAlt
+                        or Key.LeftShift or Key.RightShift
+                        or Key.LWin or Key.RWin)
+                    {
+                        return false;
+                    }
                     _ = App.Current.Dispatcher.InvokeAsync(() =>
                     {
-                        var hotkeyModel = new HotkeyModel(state.AltPressed, state.ShiftPressed, true, state.CtrlPressed, key);
+                        if (!IsLoaded) return;
+                        var hotkeyModel = new HotkeyModel(state.AltPressed, state.ShiftPressed, state.WinPressed, state.CtrlPressed, key);
                         CurrentHotkey = hotkeyModel;
                         SetKeysToDisplay(CurrentHotkey);
                     });
@@ -81,6 +90,7 @@ public partial class HotkeyControlDialog : ContentDialog
                 return true;
             };
             App.API.RegisterGlobalKeyboardCallback(_winComboInterceptor);
+            this.Closed += (_, _) => UnregisterWinComboInterceptor();
         }
     }
 
@@ -218,11 +228,11 @@ public partial class HotkeyControlDialog : ContentDialog
         }
     }
 
-    private static bool CheckHotkeyAvailability(HotkeyModel hotkey, bool validateKeyGesture)
+    private bool CheckHotkeyAvailability(HotkeyModel hotkey, bool validateKeyGesture)
     {
         if (isOpenFlowHotkey && (hotkey.ToString() == "LWin" || hotkey.ToString() == "RWin"
             || (hotkey.Win && hotkey.CharKey != Key.None)))
-            return true;
+            return hotkey.Validate(validateKeyGesture);
 
         return hotkey.Validate(validateKeyGesture) && HotKeyMapper.CheckAvailability(hotkey);
     }
