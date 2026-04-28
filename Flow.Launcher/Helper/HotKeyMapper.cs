@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Input;
 using ChefKeys;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -18,8 +19,7 @@ internal static class HotKeyMapper
 
     private static Settings _settings;
     private static MainViewModel _mainViewModel;
-    private static Func<int, int, SpecialKeyState, bool> _winComboCallback;
-    private static string _winComboHotkeyStr;
+    private static readonly Dictionary<string, Func<int, int, SpecialKeyState, bool>> _winComboCallbacks = new();
 
     internal static void Initialize()
     {
@@ -107,11 +107,11 @@ internal static class HotKeyMapper
 
     private static void SetWithGlobalCallback(HotkeyModel hotkey, EventHandler<HotkeyEventArgs> action)
     {
-        if (_winComboCallback != null)
+        string hotkeyStr = hotkey.ToString();
+        if (_winComboCallbacks.TryGetValue(hotkeyStr, out var existing))
         {
-            App.API.RemoveGlobalKeyboardCallback(_winComboCallback);
-            _winComboCallback = null;
-            _winComboHotkeyStr = null;
+            App.API.RemoveGlobalKeyboardCallback(existing);
+            _winComboCallbacks.Remove(hotkeyStr);
         }
 
         int expectedVkCode = KeyInterop.VirtualKeyFromKey(hotkey.CharKey);
@@ -120,7 +120,7 @@ internal static class HotKeyMapper
         bool needShift = hotkey.Shift;
         bool keyCurrentlyDown = false;
 
-        _winComboCallback = (keyEvent, vkCode, state) =>
+        Func<int, int, SpecialKeyState, bool> callback = (keyEvent, vkCode, state) =>
         {
             bool isMatch = vkCode == expectedVkCode
                 && state.WinPressed
@@ -142,8 +142,8 @@ internal static class HotKeyMapper
             return true;
         };
 
-        _winComboHotkeyStr = hotkey.ToString();
-        App.API.RegisterGlobalKeyboardCallback(_winComboCallback);
+        _winComboCallbacks[hotkeyStr] = callback;
+        App.API.RegisterGlobalKeyboardCallback(callback);
     }
 
     internal static void RemoveHotkey(string hotkeyStr)
@@ -156,11 +156,10 @@ internal static class HotKeyMapper
                 return;
             }
 
-            if (_winComboCallback != null && hotkeyStr == _winComboHotkeyStr)
+            if (_winComboCallbacks.TryGetValue(hotkeyStr, out var callback))
             {
-                App.API.RemoveGlobalKeyboardCallback(_winComboCallback);
-                _winComboCallback = null;
-                _winComboHotkeyStr = null;
+                App.API.RemoveGlobalKeyboardCallback(callback);
+                _winComboCallbacks.Remove(hotkeyStr);
                 return;
             }
 
