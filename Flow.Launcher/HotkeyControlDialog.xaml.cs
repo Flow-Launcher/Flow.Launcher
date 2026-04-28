@@ -65,7 +65,7 @@ public partial class HotkeyControlDialog : ContentDialog
             {
                 const int VK_LWIN = 0x5B;
                 const int VK_RWIN = 0x5C;
-                if (keyEvent == (int)KeyEvent.WM_KEYDOWN
+                if ((keyEvent == (int)KeyEvent.WM_KEYDOWN || keyEvent == (int)KeyEvent.WM_SYSKEYDOWN)
                     && state.WinPressed
                     && vkCode != VK_LWIN && vkCode != VK_RWIN)
                 {

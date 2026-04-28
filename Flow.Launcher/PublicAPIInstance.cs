@@ -670,7 +670,16 @@ namespace Flow.Launcher
 
             var continueHook = true;
             foreach (var x in snapshot)
-                continueHook &= x((int)keyevent, vkcode, state);
+            {
+                try
+                {
+                    continueHook &= x((int)keyevent, vkcode, state);
+                }
+                catch (Exception e)
+                {
+                    LogException(ClassName, "Global keyboard callback failed", e);
+                }
+            }
 
             return continueHook;
         }

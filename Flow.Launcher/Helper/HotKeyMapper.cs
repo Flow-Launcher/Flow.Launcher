@@ -128,13 +128,13 @@ internal static class HotKeyMapper
                 && state.AltPressed == needAlt
                 && state.ShiftPressed == needShift;
 
-            if (isMatch && keyEvent == (int)KeyEvent.WM_KEYDOWN && !keyCurrentlyDown)
+            if (isMatch && (keyEvent == (int)KeyEvent.WM_KEYDOWN || keyEvent == (int)KeyEvent.WM_SYSKEYDOWN) && !keyCurrentlyDown)
             {
                 keyCurrentlyDown = true;
                 action?.Invoke(null, null);
                 return false;
             }
-            if (isMatch && keyEvent == (int)KeyEvent.WM_KEYUP)
+            if (isMatch && (keyEvent == (int)KeyEvent.WM_KEYUP || keyEvent == (int)KeyEvent.WM_SYSKEYUP))
             {
                 keyCurrentlyDown = false;
                 return false;
