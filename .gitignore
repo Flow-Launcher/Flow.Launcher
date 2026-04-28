@@ -310,3 +310,28 @@ Output-Performance.txt
 # Local planning artifacts
 .sisyphus/
 nul
+
+# ── GSD baseline (auto-generated) ──
+.gsd
+.gsd-id
+.mcp.json
+.bg-shell/
+.DS_Store
+*.swp
+*.swo
+.vscode/
+*.code-workspace
+.env
+.env.*
+!.env.example
+.next/
+dist/
+build/
+__pycache__/
+.venv/
+venv/
+target/
+vendor/
+coverage/
+.cache/
+tmp/
