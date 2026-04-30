@@ -267,9 +267,9 @@ Nevykonali sa žiadne zmeny.</system:String>
     <system:String x:Key="ErrorUpdatingPlugin">Chyba aktualizácie pluginu</system:String>
     <system:String x:Key="KeepPluginSettingsTitle">Ponechať nastavenia pluginu</system:String>
     <system:String x:Key="KeepPluginSettingsSubtitle">Chcete zachovať nastavenia pluginu na ďalšie použitie?</system:String>
-    <system:String x:Key="InstallSuccessNoRestart">Plugin {0} bol úspešne nainštalovaný. Prosím, reštartuje Flow.</system:String>
-    <system:String x:Key="UninstallSuccessNoRestart">Plugin {0} bol úspešne odinštalovaný. Prosím, reštartuje Flow.</system:String>
-    <system:String x:Key="UpdateSuccessNoRestart">Plugin {0} bol úspešne aktualizovaný. Prosím, reštartuje Flow.</system:String>
+    <system:String x:Key="InstallSuccessNoRestart">Plugin {0} bol úspešne nainštalovaný. Prosím, reštartujte Flow.</system:String>
+    <system:String x:Key="UninstallSuccessNoRestart">Plugin {0} bol úspešne odinštalovaný. Prosím, reštartujte Flow.</system:String>
+    <system:String x:Key="UpdateSuccessNoRestart">Plugin {0} bol úspešne aktualizovaný. Prosím, reštartujte Flow.</system:String>
     <system:String x:Key="InstallPromptTitle">Inštalácia pluginu</system:String>
     <system:String x:Key="InstallPromptSubtitle">{0} od {1} {2}{2}Chcete nainštalovať tento plugin?</system:String>
     <system:String x:Key="UninstallPromptTitle">Odinštalácia pluginu</system:String>
@@ -289,7 +289,7 @@ Nevykonali sa žiadne zmeny.</system:String>
     <system:String x:Key="updateAllPluginsTitle">Dostupná aktualizácia pluginu</system:String>
     <system:String x:Key="updateAllPluginsButtonContent">Aktualizovať pluginy</system:String>
     <system:String x:Key="checkPluginUpdatesTooltip">Skontrolovať dostupnosť aktualizácií</system:String>
-    <system:String x:Key="PluginsUpdateSuccessNoRestart">Pluginy boli úspešne aktualizované. Prosím, reštartuje Flow.</system:String>
+    <system:String x:Key="PluginsUpdateSuccessNoRestart">Pluginy boli úspešne aktualizované. Prosím, reštartujte Flow.</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Motív</system:String>
