@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using Flow.Launcher.Plugin.Calculator;
+using Flow.Launcher.Plugin.Calculator.Storage;
 using Mages.Core;
 using NUnit.Framework;
 using NUnit.Framework.Legacy;
@@ -17,7 +18,8 @@ namespace Flow.Launcher.Test.Plugins
             DecimalSeparator = DecimalSeparator.UseSystemLocale,
             MaxDecimalPlaces = 10,
             ShowErrorMessage = false, // Make sure we return the empty results when error occurs
-            UseThousandsSeparator = true // Default value
+            UseThousandsSeparator = true, // Default value
+            EnableHistory = true,
         };
         private readonly Engine _engine = new(new Configuration
         {
@@ -40,6 +42,12 @@ namespace Flow.Launcher.Test.Plugins
             if (engineField == null)
                 Assert.Fail("Could not find static field 'MagesEngine' on Flow.Launcher.Plugin.Calculator.Main");
             engineField.SetValue(null, _engine);
+        }
+
+        [SetUp]
+        public void SetUp()
+        {
+            GetHistory().Items.Clear();
         }
 
         [Test]
@@ -78,6 +86,27 @@ namespace Flow.Launcher.Test.Plugins
 
             var result = GetCalculationResult("1000000+234567");
             ClassicAssert.AreEqual("1234567", result);
+        }
+
+        [Test]
+        public void CalculationHistory_IsStoredWhenEnabled()
+        {
+            _settings.EnableHistory = true;
+
+            _plugin.Query(new Plugin.Query { Search = "1+1" });
+
+            ClassicAssert.AreEqual(1, GetHistory().Items.Count);
+            ClassicAssert.AreEqual("1+1", GetHistory().Items[0].Query);
+        }
+
+        [Test]
+        public void CalculationHistory_IsNotStoredWhenDisabled()
+        {
+            _settings.EnableHistory = false;
+
+            _plugin.Query(new Plugin.Query { Search = "1+1" });
+
+            ClassicAssert.AreEqual(0, GetHistory().Items.Count);
         }
 
         // Basic operations
@@ -129,6 +158,19 @@ namespace Flow.Launcher.Test.Plugins
                 Search = expression
             });
             return results.Count > 0 ? results[0].Title : string.Empty;
+        }
+
+        private static History GetHistory()
+        {
+            var historyField = typeof(Main).GetField("History", BindingFlags.NonPublic | BindingFlags.Static);
+            Assert.That(historyField, Is.Not.Null,
+                "Could not find static field 'History' on Flow.Launcher.Plugin.Calculator.Main");
+
+            var history = historyField!.GetValue(null) as History;
+            Assert.That(history, Is.Not.Null,
+                "Static field 'History' on Flow.Launcher.Plugin.Calculator.Main' was not a calculator History instance");
+
+            return history!;
         }
     }
 }
