@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
+using Flow.Launcher.Plugin.Calculator.Storage;
 using Flow.Launcher.Plugin.Calculator.ViewModels;
 using Flow.Launcher.Plugin.Calculator.Views;
 using Mages.Core;
@@ -26,6 +27,10 @@ namespace Flow.Launcher.Plugin.Calculator
         private const string IcoPath = "Images/calculator.png";
         private static readonly List<Result> EmptyResults = [];
 
+        // Adicionar no historico após um calculo
+        // Adicionar no historico após pressionar enter (action trigger)
+        // Apenas adicionar no historico se a config estiver ativa
+        private static readonly History History = new ();
         internal static PluginInitContext Context { get; private set; } = null!;
 
         private Settings _settings;
@@ -57,6 +62,7 @@ namespace Flow.Launcher.Plugin.Calculator
             {
                 var search = query.Search;
                 bool isFunctionPresent = FunctionRegex.IsMatch(search);
+                bool hasCalculationOperator = HasCalculationOperator(search);
 
                 // Mages is case sensitive, so we need to convert all function names to lower case.
                 search = FunctionRegex.Replace(search, m => m.Value.ToLowerInvariant());
@@ -64,7 +70,6 @@ namespace Flow.Launcher.Plugin.Calculator
                 var decimalSep = GetDecimalSeparator();
                 var groupSep = GetGroupSeparator(decimalSep);
                 var expression = NumberRegex.Replace(search, m => NormalizeNumber(m.Value, isFunctionPresent, decimalSep, groupSep));
-
                 // WORKAROUND START: The 'pow' function in Mages v3.0.0 is broken.
                 // https://github.com/FlorianRappl/Mages/issues/132
                 // We bypass it by rewriting any pow(x,y) expression to the equivalent (x^y) expression
@@ -131,31 +136,30 @@ namespace Flow.Launcher.Plugin.Calculator
                     decimal roundedResult = Math.Round(Convert.ToDecimal(result), _settings.MaxDecimalPlaces, MidpointRounding.AwayFromZero);
                     string newResult = FormatResult(roundedResult);
 
-                    return
-                    [
-                        new Result
-                        {
-                            Title = newResult,
-                            IcoPath = IcoPath,
-                            Score = 300,
-                            // Check context nullability for unit testing
-                            SubTitle = Context == null ? string.Empty : Localize.flowlauncher_plugin_calculator_copy_number_to_clipboard(),
-                            CopyText = newResult,
-                            Action = c =>
-                            {
-                                try
-                                {
-                                    Context.API.CopyToClipboard(newResult);
-                                    return true;
-                                }
-                                catch (ExternalException)
-                                {
-                                    Context.API.ShowMsgBox(Localize.flowlauncher_plugin_calculator_failed_to_copy());
-                                    return false;
-                                }
-                            }
-                        }
-                    ];
+                    var results = new List<Result>();
+                    var action = CreateAction(newResult);
+                    var resultObject = new Result
+                    {
+                        Title = newResult,
+                        IcoPath = IcoPath,
+                        Score = 300,
+                        // Check context nullability for unit testing
+                        SubTitle = Context == null
+                            ? string.Empty
+                            : Localize.flowlauncher_plugin_calculator_copy_number_to_clipboard(),
+                        CopyText = newResult,
+                        Action = action
+                    };
+
+                    if (hasCalculationOperator)
+                    {
+                        History.AddOrUpdate(resultObject, action);
+                    }
+                    results.Add(resultObject);
+                    results.AddRange(History.Items);
+
+                    return results;
+
                 }
             }
             catch (Exception)
@@ -173,6 +177,83 @@ namespace Flow.Launcher.Plugin.Calculator
             }
 
             return EmptyResults;
+        }
+
+
+        private Func<ActionContext, bool> CreateAction(string newResult)
+        {
+            return (_) =>
+            {
+                try
+                {
+                    Context.API.CopyToClipboard(newResult);
+
+                    return true;
+                }
+                catch (ExternalException)
+                {
+                    Context.API.ShowMsgBox(
+                        Localize.flowlauncher_plugin_calculator_failed_to_copy()
+                    );
+                    return false;
+                }
+            };
+        }
+        private static bool HasCalculationOperator(string input)
+        {
+            for (var i = 0; i < input.Length; i++)
+            {
+                if (input[i] is not ('+' or '-' or '*' or '/' or '^' or '%'))
+                {
+                    continue;
+                }
+
+                var previousIndex = PreviousNonWhitespaceIndex(input, i - 1);
+                var nextIndex = NextNonWhitespaceIndex(input, i + 1);
+
+                if (previousIndex == -1 || nextIndex == -1)
+                {
+                    continue;
+                }
+
+                if (IsOperandCharacter(input[previousIndex]) && IsOperandCharacter(input[nextIndex]))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private static int PreviousNonWhitespaceIndex(string input, int startIndex)
+        {
+            for (var i = startIndex; i >= 0; i--)
+            {
+                if (!char.IsWhiteSpace(input[i]))
+                {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
+        private static int NextNonWhitespaceIndex(string input, int startIndex)
+        {
+            for (var i = startIndex; i < input.Length; i++)
+            {
+                if (!char.IsWhiteSpace(input[i]))
+                {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
+        private static bool IsOperandCharacter(char c)
+        {
+            return char.IsLetterOrDigit(c) || c is '.' or ',' or ')' or ']' or '\'' or '\u00A0' or '\u202F';
         }
 
         private static string PowMatchEvaluator(Match m)
