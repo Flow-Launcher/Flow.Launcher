@@ -17,6 +17,7 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -79,5 +80,15 @@
             VerticalAlignment="Center"
             Content="{DynamicResource flowlauncher_plugin_calculator_show_error_message}"
             IsChecked="{Binding Settings.ShowErrorMessage, Mode=TwoWay}" />
+
+        <CheckBox
+            Grid.Row="4"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Margin="{StaticResource SettingPanelItemTopBottomMargin}"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Content="{DynamicResource flowlauncher_plugin_calculator_enable_history}"
+            IsChecked="{Binding Settings.EnableHistory, Mode=TwoWay}" />
     </Grid>
 </UserControl>
