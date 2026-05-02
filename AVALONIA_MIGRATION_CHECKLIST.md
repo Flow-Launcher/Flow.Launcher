@@ -51,11 +51,13 @@
 ### 2.1 General Settings (`SettingsPaneGeneral.xaml` - 538 lines)
 **Avalonia: ~270 lines (~95% DONE)**
 
-| Setting | Status | Binding Property |
-|---------|--------|------------------|
+**S03 runtime note:** Direct launch of `Output/Debug/Avalonia/Flow.Launcher.Avalonia.exe` initialized plugins and produced a readable current log. The checked log contained known local plugin-enumeration noise (missing community plugin manifests and WindowsApps/Copilot icon/version lookup failures) but no `GeneralSettingsViewModel`, startup, picker, portable-mode, or Dialog Jump settings exceptions. The required apphost build command is currently blocked by an unrelated local `vgc` file lock on the output exe; a no-apphost compile of the changed Avalonia DLL succeeded.
+
+| Setting | Status | Binding / S03 Evidence |
+|---------|--------|------------------------|
 | **Startup Section** |
-| Start on system startup | :white_check_mark: Done | `StartOnStartup` |
-| Use logon task | :white_check_mark: Done | `UseLogonTaskForStartup` |
+| Start on system startup | :white_check_mark: Done | `StartOnStartup`; S03 preserves WPF registry/logon-task behavior and adds log context before showing `setAutoStartFailed`. Full registry/task mutation was not performed automatically because it changes the user's Windows startup state. |
+| Use logon task | :white_check_mark: Done | `UseLogonTaskForStartup`; S03 adds explicit log context for logon-task vs registry switch failures. Full task/registry switching remains a manual-safe runtime check. |
 | Hide on startup | :white_check_mark: Done | `HideOnStartup` |
 | **Behavior Section** |
 | Hide when lose focus | :white_check_mark: Done | `HideWhenDeactivated` |
@@ -77,7 +79,7 @@
 | History results for home | :white_check_mark: Done | `ShowHistoryResultsForHomePage` |
 | History results count | :white_check_mark: Done | `MaxHistoryResultsToShow` |
 | **Updates Section** |
-| Auto updates | :white_check_mark: Done | `AutoUpdates` |
+| Auto updates | :white_check_mark: Done | `AutoUpdates`; S03 wraps the async update check with exception logging. The destructive/update-install path was not forced during automated verification. |
 | Auto update plugins | :white_check_mark: Done | `AutoUpdatePlugins` |
 | **Miscellaneous** |
 | Auto restart after changing | :white_check_mark: Done | `AutoRestartAfterChanging` |
@@ -87,15 +89,15 @@
 | **Language Section** |
 | Language selector | :white_check_mark: Done | `SelectedLanguage` |
 | **Paths** |
-| Python directory | :white_check_mark: Done | `PythonPath` (display) |
-| Node directory | :white_check_mark: Done | `NodePath` (display) |
+| Python directory | :white_check_mark: Done | `PythonPath` display + `SelectPythonCommand`; S03 adds a warning when the picker cannot open because no Avalonia top-level window is available. |
+| Node directory | :white_check_mark: Done | `NodePath` display + `SelectNodeCommand`; S03 adds a warning when the picker cannot open because no Avalonia top-level window is available. |
 | **Not Yet Implemented** |
-| Select browser | :white_check_mark: Done | Opens `SelectBrowserWindow` |
-| Select file manager | :white_check_mark: Done | Opens `SelectFileManagerWindow` |
-| Portable mode | :white_check_mark: Done | Toggle |
-| Dialog jump settings | :white_check_mark: Done | Nested settings implemented |
-| Double pinyin settings | :white_check_mark: Done | Schema selector implemented |
-| Korean IME settings | :white_check_mark: Done | Registry toggle implemented |
+| Select browser | :white_check_mark: Done | Opens `SelectBrowserWindow`; S03 adds a warning if no Avalonia main window is available for the modal chooser. |
+| Select file manager | :white_check_mark: Done | Opens `SelectFileManagerWindow`; S03 adds a warning if no Avalonia main window is available for the modal chooser. |
+| Portable mode | :white_check_mark: Done | Toggle; automated S03 verification did not enable/disable portability because it migrates data location and requires restart/user prompt semantics. |
+| Dialog jump settings | :white_check_mark: Done | Nested settings implemented; S03 fixes Avalonia startup to initialize DialogJump and registers/removes the Dialog Jump hotkey when the General toggle changes, matching WPF flow. |
+| Double pinyin settings | :white_check_mark: Done | Schema selector implemented; S03 source check confirmed `UseDoublePinyin` visibility follows `ShouldUsePinyin`. |
+| Korean IME settings | :white_check_mark: Done | Registry toggle implemented; S03 launch/log check found no General-settings/Korean IME failure, and destructive registry mutation was not forced. |
 
 ### 2.2 Theme Settings (`SettingsPaneTheme.xaml` - 803 lines)
 **Avalonia: ~200+ lines (~75% DONE)**
