@@ -14,7 +14,7 @@ namespace Flow.Launcher.Plugin.BrowserWorkspace;
 /// Supports two storage formats:
 ///   v1 – workspace list stored as JSON in <c>Workspaces\WorkspacesCache</c>.
 ///   v2 – each workspace stored as a JSON value in a LevelDB database at
-///         <c>Workspaces\LevelDB\</c> (introduced in Edge ≈146).
+///         <c>Workspaces\LevelDB\</c> (introduced approximately in Edge 146).
 /// </summary>
 internal static class EdgeWorkspaceLoader
 {
