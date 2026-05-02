@@ -1,0 +1,12 @@
+{
+  "ID": "2D64B16A3D784B6D82F1DEF72E04B98A",
+  "ActionKeyword": "ew",
+  "Name": "Edge Workspaces",
+  "Description": "Search and launch Microsoft Edge Workspaces",
+  "Author": "Flow Launcher Contributors",
+  "Version": "1.0.0",
+  "Language": "csharp",
+  "Website": "https://github.com/Flow-Launcher/Flow.Launcher",
+  "ExecuteFileName": "Flow.Launcher.Plugin.BrowserWorkspace.dll",
+  "IcoPath": "Images\\workspace.png"
+}
