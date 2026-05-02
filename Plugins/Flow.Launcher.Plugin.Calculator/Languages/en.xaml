@@ -18,4 +18,5 @@
     <system:String x:Key="flowlauncher_plugin_calculator_failed_to_copy">Copy failed, please try later</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_show_error_message">Show error message when calculation fails</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_enable_history">Enable History</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_history_subtitle">Calculated at {0}</system:String>
 </ResourceDictionary>

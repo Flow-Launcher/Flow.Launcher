@@ -1,25 +1,31 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 
 namespace Flow.Launcher.Plugin.Calculator.Storage;
 
-internal class HistoryItem : Result
+public class HistoryItem : Result
 {
-    public string Query { get; set; }
+    public string Query { get; set; } = string.Empty;
     public DateTime CalculatedAt { get; set; }
 
-    public HistoryItem(Result result, Func<ActionContext, bool> action)
+    [JsonIgnore]
+    private const string BadgeIconPath = "Images/history.png";
+    public HistoryItem()
     {
-        Title = result.Title;
-        SubTitle = result.SubTitle;
-        //PluginID = result.PluginID;
-        //Query = result.OriginQuery.TrimmedQuery;
-        //OriginQuery = result.OriginQuery;
-        RecordKey = result.RecordKey;
+    }
+
+    public HistoryItem(Result result, string expression, Func<ActionContext, bool> action)
+    {
+        CalculatedAt = DateTime.Now;
+        Title = $"{expression} = {result.Title}";
+        SubTitle = Localize.flowlauncher_plugin_calculator_history_subtitle(CalculatedAt);
+        Score = 300;
         IcoPath = result.IcoPath;
-        PluginDirectory = result.PluginDirectory;
-        Glyph = result.Glyph;
-        //Query = result.Ori
-        Query = "1+2";
+        Query = expression;
+        BadgeIcoPath = BadgeIconPath;
+        ShowBadge = true;
+        CopyText = result.Title;
         Action = action;
     }
+
 }
