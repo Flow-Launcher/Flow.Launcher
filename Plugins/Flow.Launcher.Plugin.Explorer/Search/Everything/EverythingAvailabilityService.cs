@@ -35,7 +35,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                         throw new EngineNotAvailableException(
                         Enum.GetName(Settings.IndexSearchEngineOption.Everything)!,
                         Localize.flowlauncher_plugin_everything_click_to_launch_or_install(),
-                        Localize.flowlauncher_plugin_everything_15_unavailable(),
+                        Localize.flowlauncher_plugin_everything_is_not_running(),
                         Constants.EverythingErrorImagePath,
                         ClickToInstallEverythingAsync);
                     }
