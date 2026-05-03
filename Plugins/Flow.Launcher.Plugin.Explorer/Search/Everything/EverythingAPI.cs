@@ -85,7 +85,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 EverythingApiDllImport.Everything_SetSort(preparedOption.SortOption);
                 EverythingApiDllImport.Everything_SetMatchPath(preparedOption.IsFullPathSearch);
 
-                if (preparedOption.SortOption == EverythingSortOption.RUN_COUNT_DESCENDING)
+                if (preparedOption.SortOption == EverythingSortOption.RUN_COUNT_DESCENDING ||
+                    preparedOption.SortOption == EverythingSortOption.RUN_COUNT_ASCENDING)
                 {
                     EverythingApiDllImport.Everything_SetRequestFlags(EVERYTHING_REQUEST_FULL_PATH_AND_FILE_NAME | EVERYTHING_REQUEST_RUN_COUNT);
                 }
