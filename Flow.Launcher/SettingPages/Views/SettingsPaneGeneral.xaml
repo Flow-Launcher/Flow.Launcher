@@ -565,13 +565,16 @@
                     <ui:FontIcon Glyph="&#xf2b7;" />
                 </ui:SettingsCard.HeaderIcon>
 
-                <ComboBox
-                    MaxWidth="200"
-                    Margin="10 0 0 0"
-                    DisplayMemberPath="Display"
-                    ItemsSource="{Binding Languages}"
-                    SelectedValue="{Binding Language}"
-                    SelectedValuePath="LanguageCode" />
+                <StackPanel Orientation="Horizontal">
+                    <ui:HyperlinkButton Content="{DynamicResource HelpUsTranslateFlow}" NavigateUri="{Binding Crowdin}" />
+                    <ComboBox
+                        MaxWidth="200"
+                        Margin="10 0 0 0"
+                        DisplayMemberPath="Display"
+                        ItemsSource="{Binding Languages}"
+                        SelectedValue="{Binding Language}"
+                        SelectedValuePath="LanguageCode" />
+                </StackPanel>
             </ui:SettingsCard>
             <Border Visibility="{Binding KoreanIMERegistryKeyExists, Converter={StaticResource BoolToVisibilityConverter}}">
                 <ui:InfoBar
