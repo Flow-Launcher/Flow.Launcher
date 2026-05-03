@@ -406,6 +406,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                     propertyId = EVERYTHING3_PROPERTY_ID_FILE_LIST_NAME;
                     ascending = false;
                     return true;
+                case EverythingSortOption.RUN_COUNT_ASCENDING:
+                    propertyId = EVERYTHING3_PROPERTY_ID_RUN_COUNT;
+                    ascending = true;
+                    return true;
                 case EverythingSortOption.RUN_COUNT_DESCENDING:
                     propertyId = EVERYTHING3_PROPERTY_ID_RUN_COUNT;
                     ascending = false;
