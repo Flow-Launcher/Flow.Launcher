@@ -21,7 +21,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             {
                 if (!await api.IsEverythingRunningAsync(token))
                 {                    
-                    if (_settings.EnableEverything15Support)
+                    if (api is EverythingApiV3)
                     {
                         throw new EngineNotAvailableException(
                         Enum.GetName(Settings.IndexSearchEngineOption.Everything)!,

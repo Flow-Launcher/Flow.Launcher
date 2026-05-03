@@ -163,6 +163,8 @@ namespace Flow.Launcher.Plugin.Explorer
 
         public bool EverythingSearchFullPath { get; set; } = false;
         public bool EverythingEnableRunCount { get; set; } = true;
+
+        // This is only used as a flag to determine whether to show the Everything 1.5 support option in the settings UI, and to determine which instance of Everything API to initialize in the EverythingSearchManager.
         public bool EnableEverything15Support { get; set; } = false;
         public string Everything15InstanceName { get; set; } = EverythingApiFactory.DefaultEverything15InstanceName;
 

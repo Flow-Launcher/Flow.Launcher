@@ -28,11 +28,14 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
         public IReadOnlyList<EnumBindingModel<Settings.ContentIndexSearchEngineOption>> ContentIndexSearchEngines { get; set; }
         public IReadOnlyList<EnumBindingModel<Settings.PathEnumerationEngineOption>> PathEnumerationEngines { get; set; }
 
+        // Cache when initializing
+        private readonly bool UsingEverything15;
+
         public SettingsViewModel(PluginInitContext context, Settings settings)
         {
             Context = context;
             Settings = settings;
-
+            UsingEverything15 = settings.EnableEverything15Support;
             InitializeEngineSelection();
             InitializeActionKeywordModels();
         }
@@ -647,7 +650,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                 }
                 catch (IPCErrorException)
                 {
-                    return Settings.EnableEverything15Support
+                    return UsingEverything15
                         ? Localize.flowlauncher_plugin_everything_15_sort_warning()
                         : Localize.flowlauncher_plugin_everything_is_not_running();
                 }
