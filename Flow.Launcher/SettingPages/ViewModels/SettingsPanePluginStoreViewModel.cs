@@ -12,6 +12,31 @@ namespace Flow.Launcher.SettingPages.ViewModels;
 
 public partial class SettingsPanePluginStoreViewModel : BaseModel
 {
+    public class SortModeData : DropdownDataGeneric<PluginStoreSortMode> { }
+
+    public List<SortModeData> SortModes { get; } =
+        DropdownDataGeneric<PluginStoreSortMode>.GetValues<SortModeData>("PluginStoreSortMode");
+
+    public SettingsPanePluginStoreViewModel()
+    {
+        UpdateEnumDropdownLocalizations();
+    }
+
+    private PluginStoreSortMode _selectedSortMode = PluginStoreSortMode.Default;
+    public PluginStoreSortMode SelectedSortMode
+    {
+        get => _selectedSortMode;
+        set
+        {
+            if (_selectedSortMode != value)
+            {
+                _selectedSortMode = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(ExternalPlugins));
+            }
+        }
+    }
+
     private string filterText = string.Empty;
     public string FilterText
     {
@@ -82,13 +107,8 @@ public partial class SettingsPanePluginStoreViewModel : BaseModel
         }
     }
 
-    public IList<PluginStoreItemViewModel> ExternalPlugins => App.API.GetPluginManifest()?
-        .Select(p => new PluginStoreItemViewModel(p))
-        .OrderByDescending(p => p.Category == PluginStoreItemViewModel.NewRelease)
-        .ThenByDescending(p => p.Category == PluginStoreItemViewModel.RecentlyUpdated)
-        .ThenByDescending(p => p.Category == PluginStoreItemViewModel.None)
-        .ThenByDescending(p => p.Category == PluginStoreItemViewModel.Installed)
-        .ToList();
+    public IList<PluginStoreItemViewModel> ExternalPlugins => GetSortedPlugins(
+        App.API.GetPluginManifest().Select(p => new PluginStoreItemViewModel(p)));
 
     [RelayCommand]
     private async Task RefreshExternalPluginsAsync()
@@ -168,4 +188,48 @@ public partial class SettingsPanePluginStoreViewModel : BaseModel
             App.API.FuzzySearch(FilterText, plugin.Name).IsSearchPrecisionScoreMet() ||
             App.API.FuzzySearch(FilterText, plugin.Description).IsSearchPrecisionScoreMet();
     }
+
+    private void UpdateEnumDropdownLocalizations()
+    {
+        DropdownDataGeneric<PluginStoreSortMode>.UpdateLabels(SortModes);
+    }
+
+    private IList<PluginStoreItemViewModel> GetSortedPlugins(IEnumerable<PluginStoreItemViewModel> plugins)
+    {
+        return SelectedSortMode switch
+        {
+            PluginStoreSortMode.Name => plugins
+                .OrderBy(p => p.LabelInstalled)
+                .ThenBy(p => p.Name)
+                .ToList(),
+
+            PluginStoreSortMode.ReleaseDate => plugins
+                .OrderBy(p => p.LabelInstalled)
+                .ThenByDescending(p => p.DateAdded.HasValue)
+                .ThenByDescending(p => p.DateAdded)
+                .ToList(),
+
+            PluginStoreSortMode.UpdatedDate => plugins
+                .OrderBy(p => p.LabelInstalled)
+                .ThenByDescending(p => p.UpdatedDate.HasValue)
+                .ThenByDescending(p => p.UpdatedDate)
+                .ToList(),
+
+            _ => plugins
+                .OrderByDescending(p => p.DefaultCategory == PluginStoreItemViewModel.NewRelease)
+                .ThenByDescending(p => p.DefaultCategory == PluginStoreItemViewModel.RecentlyUpdated)
+                .ThenByDescending(p => p.DefaultCategory == PluginStoreItemViewModel.None)
+                .ThenByDescending(p => p.DefaultCategory == PluginStoreItemViewModel.Installed)
+                .ToList(),
+        };
+    }
+
+}
+
+public enum PluginStoreSortMode
+{
+    Default,
+    Name,
+    ReleaseDate,
+    UpdatedDate
 }

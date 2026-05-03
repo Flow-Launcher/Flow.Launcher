@@ -29,12 +29,20 @@ public partial class SettingsPanePluginStore
         {
             InitializeComponent();
         }
+        UpdateCategoryGrouping();
         _viewModel.PropertyChanged += ViewModel_PropertyChanged;
         base.OnNavigatedTo(e);
     }
 
     private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
     {
+        // If SelectedSortMode changed, then we need to update the categories
+        if (e.PropertyName == nameof(SettingsPanePluginStoreViewModel.SelectedSortMode))
+        {
+            UpdateCategoryGrouping();
+        }
+
+        // Check if changed property requires PluginStoreCollectionView refresh
         switch (e.PropertyName)
         {
             case nameof(SettingsPanePluginStoreViewModel.FilterText):
@@ -42,6 +50,7 @@ public partial class SettingsPanePluginStore
             case nameof(SettingsPanePluginStoreViewModel.ShowPython):
             case nameof(SettingsPanePluginStoreViewModel.ShowNodeJs):
             case nameof(SettingsPanePluginStoreViewModel.ShowExecutable):
+            case nameof(SettingsPanePluginStoreViewModel.SelectedSortMode):
                 ((CollectionViewSource)FindResource("PluginStoreCollectionView")).View.Refresh();
                 break;
         }
@@ -74,5 +83,24 @@ public partial class SettingsPanePluginStore
         }
 
         e.Accepted = _viewModel.SatisfiesFilter(plugin);
+    }
+
+    private void UpdateCategoryGrouping()
+    {
+        var collectionView = (CollectionViewSource)FindResource("PluginStoreCollectionView");
+        var groupDescriptions = collectionView.GroupDescriptions;
+
+        groupDescriptions.Clear();
+
+        // For default sorting mode we use the default categories 
+        if (_viewModel.SelectedSortMode == PluginStoreSortMode.Default)
+        {
+            groupDescriptions.Add(new PropertyGroupDescription(nameof(PluginStoreItemViewModel.DefaultCategory)));
+        }
+        // Otherwise we only split by installed or not
+        else
+        {
+            groupDescriptions.Add(new PropertyGroupDescription(nameof(PluginStoreItemViewModel.InstallCategory)));
+        }
     }
 }

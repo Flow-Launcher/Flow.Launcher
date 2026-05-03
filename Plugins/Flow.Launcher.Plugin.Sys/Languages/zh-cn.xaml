@@ -2,7 +2,7 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--  Setting  -->
-    <system:String x:Key="flowlauncher_plugin_sys_skip_confirm">Skip confirmation when Shutting down, Restarting, or Logging off</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_skip_confirm">关闭、重启或注销时跳过确认</system:String>
 
     <!--  Command List  -->
     <system:String x:Key="flowlauncher_plugin_sys_name">名称</system:String>

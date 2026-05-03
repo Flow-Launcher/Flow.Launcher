@@ -126,6 +126,7 @@
                             <RowDefinition />
                             <RowDefinition />
                             <RowDefinition />
+                            <RowDefinition />
                         </Grid.RowDefinitions>
                         <TextBlock
                             Grid.Row="0"
@@ -198,7 +199,7 @@
                         <TextBlock
                             Grid.Row="3"
                             Grid.Column="0"
-                            Margin="14 10 0 20"
+                            Margin="14 10 0 0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             FontSize="14"
@@ -206,7 +207,7 @@
                         <StackPanel
                             Grid.Row="3"
                             Grid.Column="1"
-                            Margin="0 10 0 15"
+                            Margin="0 10 0 0"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Center"
                             Orientation="Horizontal">
@@ -230,6 +231,21 @@
                                 </CheckBox.Style>
                             </CheckBox>
                         </StackPanel>
+                        <TextBlock
+                            Grid.Row="4"
+                            Grid.Column="0"
+                            Margin="14 10 0 20"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            FontSize="14"
+                            Text="{DynamicResource defaultBrowser_extraArgs}" />
+                        <TextBox
+                            Grid.Row="4"
+                            Grid.Column="1"
+                            Margin="10 10 0 15"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Center"
+                            Text="{Binding ExtraArgs}" />
                     </Grid>
                 </StackPanel>
             </StackPanel>

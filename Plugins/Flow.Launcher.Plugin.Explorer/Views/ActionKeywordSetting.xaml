@@ -82,7 +82,7 @@
                         VerticalAlignment="Center"
                         DataObject.Pasting="TextBox_Pasting"
                         PreviewKeyDown="TxtCurrentActionKeyword_OnKeyDown"
-                        Text="{Binding ActionKeyword}" />
+                        Text="{Binding ActionKeyword, UpdateSourceTrigger=PropertyChanged}" />
                 </StackPanel>
                 <StackPanel Margin="0 10 0 15" Orientation="Horizontal">
                     <TextBlock
