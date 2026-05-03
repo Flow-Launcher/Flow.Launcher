@@ -41,6 +41,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         FILE_LIST_FILENAME_ASCENDING = 17u,
         [EnumLocalizeKey(nameof(Localize.flowlauncher_plugin_everything_sort_by_file_list_filename_descending))]
         FILE_LIST_FILENAME_DESCENDING = 18u,
+        [EnumLocalizeKey(nameof(Localize.flowlauncher_plugin_everything_sort_by_run_count_ascending))]
+        RUN_COUNT_ASCENDING = 19u,
         [EnumLocalizeKey(nameof(Localize.flowlauncher_plugin_everything_sort_by_run_count_descending))]
         RUN_COUNT_DESCENDING = 20u,
         [EnumLocalizeKey(nameof(Localize.flowlauncher_plugin_everything_sort_by_date_recently_changed_ascending))]

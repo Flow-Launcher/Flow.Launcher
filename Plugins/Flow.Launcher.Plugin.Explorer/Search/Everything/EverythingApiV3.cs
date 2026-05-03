@@ -160,6 +160,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         {
             IntPtr searchState = IntPtr.Zero;
             IntPtr resultList = IntPtr.Zero;
+            var includeRunCount = option.IsRunCounterEnabled || option.SortOption == EverythingSortOption.RUN_COUNT_DESCENDING || option.SortOption == EverythingSortOption.RUN_COUNT_ASCENDING;
+
             try
             {
                 searchState = Everything3ApiDllImport.Everything3_CreateSearchState();
@@ -187,9 +189,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
                 _ = Everything3ApiDllImport.Everything3_ClearSearchPropertyRequests(searchState);
                 _ = Everything3ApiDllImport.Everything3_AddSearchPropertyRequestHighlighted(searchState, EVERYTHING3_PROPERTY_ID_NAME);
-                _ = Everything3ApiDllImport.Everything3_AddSearchPropertyRequestHighlighted(searchState, EVERYTHING3_PROPERTY_ID_PATH);
+                //_ = Everything3ApiDllImport.Everything3_AddSearchPropertyRequestHighlighted(searchState, EVERYTHING3_PROPERTY_ID_PATH);
                 _ = Everything3ApiDllImport.Everything3_AddSearchPropertyRequest(searchState, EVERYTHING3_PROPERTY_ID_PATH_AND_NAME);
-                _ = Everything3ApiDllImport.Everything3_AddSearchPropertyRequest(searchState, EVERYTHING3_PROPERTY_ID_RUN_COUNT);
+                if (includeRunCount)
+                    _ = Everything3ApiDllImport.Everything3_AddSearchPropertyRequest(searchState, EVERYTHING3_PROPERTY_ID_RUN_COUNT);
 
                 if (token.IsCancellationRequested)
                     yield break;
