@@ -344,7 +344,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         /// <summary>
         /// when false Alphabet static service will always return empty results
         /// </summary>
-        private bool _useAlphabet = true;
+        private bool _useAlphabet = false;
         public bool ShouldUsePinyin
         {
             get => _useAlphabet;
