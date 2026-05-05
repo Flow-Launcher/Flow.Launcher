@@ -123,6 +123,9 @@
     <system:String x:Key="hideOnStartupToolTip">يتم إخفاء نافذة بحث Flow Launcher في العلبة بعد بدء التشغيل.</system:String>
     <system:String x:Key="hideNotifyIcon">إخفاء أيقونة العلبة</system:String>
     <system:String x:Key="hideNotifyIconToolTip">عندما تكون الأيقونة مخفية من العلبة، يمكن فتح قائمة الإعدادات عن طريق النقر بزر الماوس الأيمن على نافذة البحث.</system:String>
+    <system:String x:Key="ignoreAccents">Ignore accents when searching</system:String>
+    <system:String x:Key="ignoreAccentsToolTip">Treat accented and unaccented characters as equivalent.</system:String>
+    <system:String x:Key="promptIgnoreAccents">Would you like to turn on the option to ignore accents when searching?</system:String>
     <system:String x:Key="querySearchPrecision">دقة البحث في الاستعلام</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">تغيير الحد الأدنى لدرجة التطابق المطلوبة للنتائج.</system:String>
     <system:String x:Key="SearchPrecisionNone">لا شيء</system:String>
