@@ -123,6 +123,9 @@
     <system:String x:Key="hideOnStartupToolTip">Flow Launcher-Suchfenster wird nach dem Start in der Taskleiste ausgeblendet.</system:String>
     <system:String x:Key="hideNotifyIcon">Tray-Icon ausblenden</system:String>
     <system:String x:Key="hideNotifyIconToolTip">Wenn das Icon in der Taskleiste ausgeblendet ist, kann das Menü Einstellungen durch einen Rechtsklick auf das Suchfenster geöffnet werden.</system:String>
+    <system:String x:Key="ignoreAccents">Ignore accents when searching</system:String>
+    <system:String x:Key="ignoreAccentsToolTip">Treat accented and unaccented characters as equivalent.</system:String>
+    <system:String x:Key="promptIgnoreAccents">Would you like to turn on the option to ignore accents when searching?</system:String>
     <system:String x:Key="querySearchPrecision">Suchgenauigkeit abfragen</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Ändert den für Ergebnisse erforderlichen Mindestübereinstimmungswert.</system:String>
     <system:String x:Key="SearchPrecisionNone">Keine</system:String>
