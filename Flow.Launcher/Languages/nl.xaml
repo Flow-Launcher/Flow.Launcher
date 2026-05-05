@@ -123,6 +123,9 @@
     <system:String x:Key="hideOnStartupToolTip">Flow Launcher zoekvenster is verborgen in het systeemvak na het opstarten.</system:String>
     <system:String x:Key="hideNotifyIcon">Systeemvakpictogram verbergen</system:String>
     <system:String x:Key="hideNotifyIconToolTip">Wanneer het pictogram verborgen is in het vak, kan het instellingenmenu worden geopend door de rechtermuisknop op het zoekvenster te klikken.</system:String>
+    <system:String x:Key="ignoreAccents">Ignore accents when searching</system:String>
+    <system:String x:Key="ignoreAccentsToolTip">Treat accented and unaccented characters as equivalent.</system:String>
+    <system:String x:Key="promptIgnoreAccents">Would you like to turn on the option to ignore accents when searching?</system:String>
     <system:String x:Key="querySearchPrecision">Zoekopdracht nauwkeurigheid</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Wijzigt de minimale overeenkomst-score die vereist is voor resultaten.</system:String>
     <system:String x:Key="SearchPrecisionNone">Geen</system:String>
