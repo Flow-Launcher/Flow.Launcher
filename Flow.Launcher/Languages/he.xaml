@@ -123,6 +123,9 @@
     <system:String x:Key="hideOnStartupToolTip">חלון החיפוש של Flow Launcher מוסתר במגש לאחר ההפעלה.</system:String>
     <system:String x:Key="hideNotifyIcon">הסתר אייקון מגש</system:String>
     <system:String x:Key="hideNotifyIconToolTip">כאשר האייקון מוסתר מהמגש, ניתן לפתוח את תפריט ההגדרות על ידי לחיצה ימנית על חלון החיפוש.</system:String>
+    <system:String x:Key="ignoreAccents">Ignore accents when searching</system:String>
+    <system:String x:Key="ignoreAccentsToolTip">Treat accented and unaccented characters as equivalent.</system:String>
+    <system:String x:Key="promptIgnoreAccents">Would you like to turn on the option to ignore accents when searching?</system:String>
     <system:String x:Key="querySearchPrecision">דיוק חיפוש שאילתה</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">משנה את ציון ההתאמה המינימלי הנדרש לתוצאות.</system:String>
     <system:String x:Key="SearchPrecisionNone">ללא</system:String>
