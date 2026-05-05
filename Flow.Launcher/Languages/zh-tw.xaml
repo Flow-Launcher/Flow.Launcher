@@ -123,6 +123,9 @@
     <system:String x:Key="hideOnStartupToolTip">啟動後，Flow Launcher搜尋視窗會隱藏在系統匣中。</system:String>
     <system:String x:Key="hideNotifyIcon">隱藏任務欄圖示</system:String>
     <system:String x:Key="hideNotifyIconToolTip">當圖示從系統列隱藏時，可以透過在搜尋視窗上按右鍵來開啟設定選單。</system:String>
+    <system:String x:Key="ignoreAccents">Ignore accents when searching</system:String>
+    <system:String x:Key="ignoreAccentsToolTip">Treat accented and unaccented characters as equivalent.</system:String>
+    <system:String x:Key="promptIgnoreAccents">Would you like to turn on the option to ignore accents when searching?</system:String>
     <system:String x:Key="querySearchPrecision">查詢搜尋精確度</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">更改結果所需的最低匹配分數。</system:String>
     <system:String x:Key="SearchPrecisionNone">無</system:String>
