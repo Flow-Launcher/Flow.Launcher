@@ -124,6 +124,9 @@ Nevykonali sa žiadne zmeny.</system:String>
     <system:String x:Key="hideOnStartupToolTip">Vyhľadávacie okno Flow launchera sa po spustení skryje v oblasti oznámení.</system:String>
     <system:String x:Key="hideNotifyIcon">Schovať ikonu z oblasti oznámení</system:String>
     <system:String x:Key="hideNotifyIconToolTip">Keď je ikona skrytá z oblasti oznámení, nastavenia možno otvoriť kliknutím pravým tlačidlom myši na okno vyhľadávania.</system:String>
+    <system:String x:Key="ignoreAccents">Ignore accents when searching</system:String>
+    <system:String x:Key="ignoreAccentsToolTip">Treat accented and unaccented characters as equivalent.</system:String>
+    <system:String x:Key="promptIgnoreAccents">Would you like to turn on the option to ignore accents when searching?</system:String>
     <system:String x:Key="querySearchPrecision">Presnosť vyhľadávania</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Mení minimálne skóre zhody potrebné na zobrazenie výsledkov.</system:String>
     <system:String x:Key="SearchPrecisionNone">Žiadna</system:String>
