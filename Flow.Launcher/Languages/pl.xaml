@@ -123,6 +123,9 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="hideOnStartupToolTip">Okno wyszukiwania Flow Launcher jest ukryte w zasobniku systemowym po uruchomieniu.</system:String>
     <system:String x:Key="hideNotifyIcon">Ukryj ikonę zasobnika</system:String>
     <system:String x:Key="hideNotifyIconToolTip">Gdy ikona jest ukryta w zasobniku systemowym, menu Ustawienia można otworzyć, klikając prawym przyciskiem myszy na oknie wyszukiwania.</system:String>
+    <system:String x:Key="ignoreAccents">Ignore accents when searching</system:String>
+    <system:String x:Key="ignoreAccentsToolTip">Treat accented and unaccented characters as equivalent.</system:String>
+    <system:String x:Key="promptIgnoreAccents">Would you like to turn on the option to ignore accents when searching?</system:String>
     <system:String x:Key="querySearchPrecision">Precyzja wyszukiwania zapytań</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Zmienia minimalny wynik dopasowania wymagany do uzyskania wyników.</system:String>
     <system:String x:Key="SearchPrecisionNone">Brak</system:String>
