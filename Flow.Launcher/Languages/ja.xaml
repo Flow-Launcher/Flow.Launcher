@@ -123,6 +123,9 @@
     <system:String x:Key="hideOnStartupToolTip">起動後、Flow Launcher の検索ウィンドウは非表示になり、トレイに格納されます。</system:String>
     <system:String x:Key="hideNotifyIcon">トレイアイコンを隠す</system:String>
     <system:String x:Key="hideNotifyIconToolTip">トレイアイコンが非表示になっているときは、検索ウィンドウを右クリックすることで設定メニューを開くことができます。</system:String>
+    <system:String x:Key="ignoreAccents">Ignore accents when searching</system:String>
+    <system:String x:Key="ignoreAccentsToolTip">Treat accented and unaccented characters as equivalent.</system:String>
+    <system:String x:Key="promptIgnoreAccents">Would you like to turn on the option to ignore accents when searching?</system:String>
     <system:String x:Key="querySearchPrecision">クエリ検索精度</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">表示する結果に必要な一致スコアの最小値を変更します。</system:String>
     <system:String x:Key="SearchPrecisionNone">最低</system:String>
