@@ -123,6 +123,9 @@
     <system:String x:Key="hideOnStartupToolTip">Arama kutusu başlangıçtan sonra sistem tepsisinde gizlenir.</system:String>
     <system:String x:Key="hideNotifyIcon">Sistem Tepsisinden Gizle</system:String>
     <system:String x:Key="hideNotifyIconToolTip">Arama penceresine sağ tıklayarak ayarları açabilirsiniz.</system:String>
+    <system:String x:Key="ignoreAccents">Ignore accents when searching</system:String>
+    <system:String x:Key="ignoreAccentsToolTip">Treat accented and unaccented characters as equivalent.</system:String>
+    <system:String x:Key="promptIgnoreAccents">Would you like to turn on the option to ignore accents when searching?</system:String>
     <system:String x:Key="querySearchPrecision">Arama Hassasiyeti</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Sonuçlar için gereken minimum eşleşme puanını ayarla.</system:String>
     <system:String x:Key="SearchPrecisionNone">Hiçbiri</system:String>
