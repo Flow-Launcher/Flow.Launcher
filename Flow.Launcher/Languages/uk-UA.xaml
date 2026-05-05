@@ -123,6 +123,9 @@
     <system:String x:Key="hideOnStartupToolTip">Вікно пошуку Flow Launcher після запуску ховається в треї.</system:String>
     <system:String x:Key="hideNotifyIcon">Приховати значок в системному лотку</system:String>
     <system:String x:Key="hideNotifyIconToolTip">Коли піктограму приховано з трею, меню налаштувань можна відкрити, клацнувши правою кнопкою миші у вікні пошуку.</system:String>
+    <system:String x:Key="ignoreAccents">Ignore accents when searching</system:String>
+    <system:String x:Key="ignoreAccentsToolTip">Treat accented and unaccented characters as equivalent.</system:String>
+    <system:String x:Key="promptIgnoreAccents">Would you like to turn on the option to ignore accents when searching?</system:String>
     <system:String x:Key="querySearchPrecision">Точність пошуку запитів</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Змінює мінімальний бал збігів, необхідних для результатів.</system:String>
     <system:String x:Key="SearchPrecisionNone">Нема</system:String>
