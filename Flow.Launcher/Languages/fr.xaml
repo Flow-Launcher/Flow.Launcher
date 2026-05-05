@@ -123,6 +123,9 @@
     <system:String x:Key="hideOnStartupToolTip">La fenêtre de recherche de Flow Launcher est cachée dans la barre d’état après le démarrage.</system:String>
     <system:String x:Key="hideNotifyIcon">Masquer l'icône de la barre des tâches</system:String>
     <system:String x:Key="hideNotifyIconToolTip">Lorsque l'icône est cachée dans la barre de tâches, le menu Paramètres peut être ouvert en faisant un clic droit sur la barre de recherche.</system:String>
+    <system:String x:Key="ignoreAccents">Ignore accents when searching</system:String>
+    <system:String x:Key="ignoreAccentsToolTip">Treat accented and unaccented characters as equivalent.</system:String>
+    <system:String x:Key="promptIgnoreAccents">Would you like to turn on the option to ignore accents when searching?</system:String>
     <system:String x:Key="querySearchPrecision">Précision de la recherche</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Modifie le score de correspondance minimum requis pour les résultats.</system:String>
     <system:String x:Key="SearchPrecisionNone">Aucun</system:String>
