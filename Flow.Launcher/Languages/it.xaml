@@ -123,6 +123,9 @@
     <system:String x:Key="hideOnStartupToolTip">La finestra di ricerca di Flow Launcher è nascosta nelle applicazioni nascoste dopo l'avvio.</system:String>
     <system:String x:Key="hideNotifyIcon">Nascondi Icona nell'Area di Notifica</system:String>
     <system:String x:Key="hideNotifyIconToolTip">Quando l'icona è nascosta dal menu delle icone nascoste, il menu Impostazioni può essere aperto facendo clic con il tasto destro del mouse sulla finestra di ricerca.</system:String>
+    <system:String x:Key="ignoreAccents">Ignore accents when searching</system:String>
+    <system:String x:Key="ignoreAccentsToolTip">Treat accented and unaccented characters as equivalent.</system:String>
+    <system:String x:Key="promptIgnoreAccents">Would you like to turn on the option to ignore accents when searching?</system:String>
     <system:String x:Key="querySearchPrecision">Precisione di ricerca delle query</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Modifica il punteggio minimo richiesto per i risultati.</system:String>
     <system:String x:Key="SearchPrecisionNone">Vuoto</system:String>
