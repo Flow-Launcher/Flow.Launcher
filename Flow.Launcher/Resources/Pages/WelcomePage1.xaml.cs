@@ -41,6 +41,9 @@ namespace Flow.Launcher.Resources.Pages
 
                 if (_translater.PromptShouldUsePinyin(value))
                     Settings.ShouldUsePinyin = true;
+
+                if (_translater.PromptShouldIgnoreAccents(value))
+                    Settings.IgnoreAccents = true;
             }
         }
     }

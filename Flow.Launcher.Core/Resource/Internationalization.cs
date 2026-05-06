@@ -233,7 +233,7 @@ namespace Flow.Launcher.Core.Resource
 
         #endregion
 
-        #region Prompt Pinyin
+        #region Prompt Language Options
 
         public bool PromptShouldUsePinyin(string languageCodeToSet)
         {
@@ -250,6 +250,42 @@ namespace Flow.Launcher.Core.Resource
             string text = languageToSet == AvailableLanguages.Chinese ? "是否启用拼音搜索？" : "是否啓用拼音搜索？";
 
             if (PublicApi.Instance.ShowMsgBox(text, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.No)
+                return false;
+
+            return true;
+        }
+
+        public bool PromptShouldIgnoreAccents(string languageCodeToSet)
+        {
+            var languageToSet = GetLanguageByLanguageCode(languageCodeToSet);
+
+            if (_settings.IgnoreAccents)
+                return false;
+
+            // Languages that commonly use diacritics / accents
+            var languagesWithDiacritics = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+            {
+                AvailableLanguages.French.LanguageCode,
+                AvailableLanguages.Polish.LanguageCode,
+                AvailableLanguages.Slovak.LanguageCode,
+                AvailableLanguages.Czech.LanguageCode,
+                AvailableLanguages.Portuguese_Portugal.LanguageCode,
+                AvailableLanguages.Portuguese_Brazil.LanguageCode,
+                AvailableLanguages.Spanish.LanguageCode,
+                AvailableLanguages.Spanish_LatinAmerica.LanguageCode,
+                AvailableLanguages.Turkish.LanguageCode,
+                AvailableLanguages.Dutch.LanguageCode,
+                AvailableLanguages.German.LanguageCode,
+                AvailableLanguages.Serbian.LanguageCode,
+                AvailableLanguages.Italian.LanguageCode,
+                AvailableLanguages.Danish.LanguageCode,
+                AvailableLanguages.Norwegian_Bokmal.LanguageCode
+            };
+
+            if (!languagesWithDiacritics.Contains(languageToSet.LanguageCode))
+                return false;
+
+            if (PublicApi.Instance.ShowMsgBox(Localize.promptIgnoreAccents(), string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.No)
                 return false;
 
             return true;

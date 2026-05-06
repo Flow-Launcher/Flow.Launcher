@@ -327,11 +327,24 @@ namespace Flow.Launcher.Plugin.Program
                 WatchProgramUpdate();
             }
 
+            Context.API.StringMatcherBehaviorChanged += API_StringMatcherBehaviorChanged;
+
             static void WatchProgramUpdate()
             {
                 Win32.WatchProgramUpdate(_settings);
                 _ = UWPPackage.WatchPackageChangeAsync();
             }
+        }
+
+        private void API_StringMatcherBehaviorChanged(object sender, EventArgs e)
+        {
+            // The cache holds results that were produced with the previous StringMatcher
+            // configuration (for example: case sensitivity, diacritic handling, or scoring
+            // rules). When those matcher behaviors change the cached results can become
+            // stale or have incorrect scores/ordering. Reset the cache so subsequent
+            // queries recompute matches using the updated matcher settings and avoid
+            // returning invalid or misleading results.
+            ResetCache();
         }
 
         public static async Task IndexWin32ProgramsAsync(bool resetCache)
@@ -558,6 +571,7 @@ namespace Flow.Launcher.Plugin.Program
 
         public void Dispose()
         {
+            Context.API.StringMatcherBehaviorChanged -= API_StringMatcherBehaviorChanged;
             Win32.Dispose();
         }
     }
