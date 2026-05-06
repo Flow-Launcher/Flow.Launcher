@@ -61,13 +61,19 @@ namespace Flow.Launcher.Plugin.Calculator
             {
                 var search = query.Search;
                 bool isFunctionPresent = FunctionRegex.IsMatch(search);
-                bool isValidResult = true;
+                bool isValidResultToAddHistory = true;
                 // Mages is case sensitive, so we need to convert all function names to lower case.
                 search = FunctionRegex.Replace(search, m => m.Value.ToLowerInvariant());
 
                 var decimalSep = GetDecimalSeparator();
                 var groupSep = GetGroupSeparator(decimalSep);
                 var expression = NumberRegex.Replace(search, m => NormalizeNumber(m.Value, isFunctionPresent, decimalSep, groupSep));
+
+                // If only 1
+                if (expression.Length == 1)
+                {
+                    isValidResultToAddHistory = false;
+                }
                 // WORKAROUND START: The 'pow' function in Mages v3.0.0 is broken.
                 // https://github.com/FlorianRappl/Mages/issues/132
                 // We bypass it by rewriting any pow(x,y) expression to the equivalent (x^y) expression
@@ -122,20 +128,20 @@ namespace Flow.Launcher.Plugin.Calculator
                 if (result.ToString() == "NaN")
                 {
                     result = Localize.flowlauncher_plugin_calculator_not_a_number();
-                    isValidResult = false;
+                    isValidResultToAddHistory = false;
                 }
 
                 if (result is Function)
                 {
                     result = Localize.flowlauncher_plugin_calculator_expression_not_complete();
-                    isValidResult = false;
+                    isValidResultToAddHistory = false;
                 }
 
                 if (!string.IsNullOrEmpty(result.ToString()))
                 {
                     decimal roundedResult = Math.Round(Convert.ToDecimal(result), _settings.MaxDecimalPlaces, MidpointRounding.AwayFromZero);
                     string newResult = FormatResult(roundedResult);
-
+                    
                     var results = new List<Result>();
                     var action = CreateClipboardAction(newResult);
                     var resultObject = new Result
@@ -152,7 +158,7 @@ namespace Flow.Launcher.Plugin.Calculator
                     };
 
 
-                    if (isValidResult)
+                    if (isValidResultToAddHistory)
                     {
                         History.AddOrUpdate(resultObject, expression, action);
                     }

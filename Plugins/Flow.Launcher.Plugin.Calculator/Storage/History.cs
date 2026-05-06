@@ -20,15 +20,15 @@ public class History
             currentItem.CalculatedAt = DateTime.Now;
             return;
         }
+
         var item = new HistoryItem(result, expression, action);
 
+        if (Items.Count >= MaxItems)
+        {
+            Items.RemoveAt(0);
+        }
+
         Items.Add(item);
-        UpdateItems();
     }
 
-    public void UpdateItems()
-    {
-          Items = Items.OrderByDescending(x => x.CalculatedAt).ToList();
-          Items = Items.Take(MaxItems).ToList();
-    }
 }
