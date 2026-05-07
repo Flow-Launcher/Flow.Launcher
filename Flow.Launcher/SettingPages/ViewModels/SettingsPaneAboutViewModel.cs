@@ -44,6 +44,7 @@ public partial class SettingsPaneAboutViewModel : BaseModel
     public string Documentation => Constant.Documentation;
     public string Docs => Constant.Docs;
     public string Github => Constant.GitHub;
+    public string Crowdin => Constant.CrowdinProjectUrl;
 
     public string Version => Constant.Version switch
     {
