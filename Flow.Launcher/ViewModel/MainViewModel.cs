@@ -777,21 +777,19 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void Esc()
         {
-            if (IsGridMode)
-            {
-                IsGridMode = false;
-                return;
-            }
 
             if (!QueryResultsSelected())
             {
                 SelectedResults = Results;
                 PreviewSelectedItem = Results.SelectedItem;
+                return;
             }
-            else
+            if (IsGridMode)
             {
-                Hide();
+                IsGridMode = false;
             }
+
+            Hide();
         }
 
         public void BackToQueryResults()
