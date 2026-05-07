@@ -425,7 +425,7 @@
     <system:String x:Key="dialogJumpHotkeyToolTip">Introducir atajo de teclado para acceder rápidamente al cuadro de diálogo 'Abrir/Guardar como' en la ruta del administrador de archivos actual.</system:String>
     <system:String x:Key="dialogJump">Salto de diálogo (Dialog Jump)</system:String>
     <system:String x:Key="dialogJumpToolTip">Cuando se abre el cuadro de diálogo 'Abrir/Guardar como', accede rápidamente a la ruta actual del administrador de archivos.</system:String>
-    <system:String x:Key="autoDialogJump">Salto de diálogo automáticamente</system:String>
+    <system:String x:Key="autoDialogJump">Salto de diálogo automático</system:String>
     <system:String x:Key="autoDialogJumpToolTip">Cuando se muestra el cuadro de diálogo 'Abrir/Guardar como', accede automáticamente a la ruta del administrador de archivos actual. (Experimental)</system:String>
     <system:String x:Key="showDialogJumpWindow">Mostrar ventana Salto de diálogo</system:String>
     <system:String x:Key="showDialogJumpWindowToolTip">Muestra la ventana de búsqueda de Salto de diálogo cuando se presenta el cuadro de diálogo de 'Abrir/Guardar' para acceder rápidamente a las ubicaciones de los archivos/carpetas.</system:String>
@@ -575,7 +575,7 @@
     <system:String x:Key="hotkeyUnavailable">El atajo de teclado actual no está disponible.</system:String>
     <system:String x:Key="hotkeyUnavailableUneditable">Este atajo de teclado está reservado para &quot;{0}&quot; y no se puede utilizar. Por favor, elija otro atajo de teclado.</system:String>
     <system:String x:Key="hotkeyUnavailableEditable">Este atajo de teclado ya está siendo utilizado por &quot;{0}&quot;. Si pulsa «Sobrescribir», se eliminará de &quot;{0}&quot;.</system:String>
-    <system:String x:Key="hotkeyRegGuide">Pulsar las teclas que se deseen utilizar para esta función.</system:String>
+    <system:String x:Key="hotkeyRegGuide">Pulsar las teclas que se desean utilizar para esta función.</system:String>
     <system:String x:Key="emptyPluginHotkey">La tecla de acceso rápido y la palabra clave de acción están vacías</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
