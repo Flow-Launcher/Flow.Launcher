@@ -422,12 +422,12 @@
     <system:String x:Key="showBadgesGlobalOnly">Mostrar distintivos en resultados solo para consulta global</system:String>
     <system:String x:Key="showBadgesGlobalOnlyToolTip">Muestra distintivos solo para los resultados de consultas globales</system:String>
     <system:String x:Key="dialogJumpHotkey">Salto de diálogo (Dialog Jump)</system:String>
-    <system:String x:Key="dialogJumpHotkeyToolTip">Introducir atajo de teclado para acceder rápidamente al cuadro de diálogo 'Abrir/Guardar como' en la ruta del administrador de archivos actual.</system:String>
+    <system:String x:Key="dialogJumpHotkeyToolTip">Introducir atajo de teclado para acceder rápidamente al cuadro de diálogo 'Abrir/Guardar como' en la ruta/ventana activa del administrador de archivos.</system:String>
     <system:String x:Key="dialogJump">Salto de diálogo (Dialog Jump)</system:String>
-    <system:String x:Key="dialogJumpToolTip">Cuando se abre el cuadro de diálogo 'Abrir/Guardar como', accede rápidamente a la ruta actual del administrador de archivos.</system:String>
-    <system:String x:Key="autoDialogJump">Salto de diálogo automático</system:String>
+    <system:String x:Key="dialogJumpToolTip">Cuando se abre un cuadro de diálogo 'Abrir/Guardar como', pulsar el atajo de teclado de 'Salto de diálogo' para acceder rápidamente a la ruta/ventana activa del administrador de archivos.</system:String>
+    <system:String x:Key="autoDialogJump">'Salto de diálogo' automático</system:String>
     <system:String x:Key="autoDialogJumpToolTip">Cuando se muestra el cuadro de diálogo 'Abrir/Guardar como', accede automáticamente a la ruta del administrador de archivos actual. (Experimental)</system:String>
-    <system:String x:Key="showDialogJumpWindow">Mostrar ventana Salto de diálogo</system:String>
+    <system:String x:Key="showDialogJumpWindow">Mostrar ventana 'Salto de diálogo'</system:String>
     <system:String x:Key="showDialogJumpWindowToolTip">Muestra la ventana de búsqueda de Salto de diálogo cuando se presenta el cuadro de diálogo de 'Abrir/Guardar' para acceder rápidamente a las ubicaciones de los archivos/carpetas.</system:String>
     <system:String x:Key="dialogJumpWindowPosition">Posición de la ventana Salto de diálogo</system:String>
     <system:String x:Key="dialogJumpWindowPositionToolTip">Selecciona la posición de la ventana de búsqueda de Salto de diálogo</system:String>
@@ -437,10 +437,10 @@
     <system:String x:Key="dialogJumpResultBehaviourToolTip">Comportamiento de navegación del cuadro de diálogo 'Abrir/Guardar como' según la ruta de resultados seleccionada</system:String>
     <system:String x:Key="DialogJumpResultBehaviourLeftClick">Clic izquierdo o tecla Entrar</system:String>
     <system:String x:Key="DialogJumpResultBehaviourRightClick">Clic derecho</system:String>
-    <system:String x:Key="dialogJumpFileResultBehaviour">Comportamiento de navegación de archivos de Salto de diálogo</system:String>
+    <system:String x:Key="dialogJumpFileResultBehaviour">Comportamiento de navegación de 'Salto de diálogo' en archivos</system:String>
     <system:String x:Key="dialogJumpFileResultBehaviourToolTip">Comportamiento de navegación del cuadro de diálogo 'Abrir/Guardar como' cuando el resultado es una ruta de archivo</system:String>
-    <system:String x:Key="DialogJumpFileResultBehaviourFullPath">Rellenar la ruta completa en el cuadro de nombre del archivo</system:String>
-    <system:String x:Key="DialogJumpFileResultBehaviourFullPathOpen">Rellenar la ruta completa en el cuadro de nombre del archivo y abrir</system:String>
+    <system:String x:Key="DialogJumpFileResultBehaviourFullPath">Rellenar la ruta completa en el cuadro de nombre de archivo</system:String>
+    <system:String x:Key="DialogJumpFileResultBehaviourFullPathOpen">Rellenar la ruta completa en el cuadro de nombre de archivo y abrir</system:String>
     <system:String x:Key="DialogJumpFileResultBehaviourDirectory">Rellenar directorio en el cuadro de ruta</system:String>
 
     <!--  Setting Proxy  -->
