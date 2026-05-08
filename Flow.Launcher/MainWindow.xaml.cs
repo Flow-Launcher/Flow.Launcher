@@ -442,7 +442,7 @@ namespace Flow.Launcher
         {
             var specialKeyState = GlobalHotkey.CheckModifiers();
 
-            if (_viewModel.IsGridMode)
+            if (_viewModel.IsGridMode && _viewModel.QueryResultsSelected())
             {
                 switch (e.Key)
                 {
@@ -507,6 +507,12 @@ namespace Flow.Launcher
                     e.Handled = true;
                     break;
                 case Key.Right:
+                    if (_viewModel.IsSelectedResultPinned())
+                    {
+                        _viewModel.LoadContextMenuCommand.Execute(null);
+                        e.Handled = true;
+                        break;
+                    }
                     if (_viewModel.QueryResultsSelected()
                         && QueryTextBox.CaretIndex == QueryTextBox.Text.Length
                         && !string.IsNullOrEmpty(QueryTextBox.Text))

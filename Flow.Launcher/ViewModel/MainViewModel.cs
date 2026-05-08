@@ -482,10 +482,16 @@ namespace Flow.Launcher.ViewModel
             // For query mode, we load context menu
             if (QueryResultsSelected())
             {
+                var selectedResult = SelectedResults.SelectedItem?.Result;
+                if (selectedResult == null)
+                {
+                    selectedResult = GetSelectedGridPinnedResult();
+                }
+
                 // When switch to ContextMenu from QueryResults, but no item being chosen, should do nothing
                 // i.e. Shift+Enter/Ctrl+O right after Alt + Space should do nothing
-                if (SelectedResults.SelectedItem?.Result != null &&
-                    !string.IsNullOrEmpty(SelectedResults.SelectedItem.Result.PluginID))  // Do not show context menu for history results
+                if (selectedResult != null &&
+                    !string.IsNullOrEmpty(selectedResult.PluginID)) // Do not show context menu for history results
                 {
                     SelectedResults = ContextMenu;
                 }
@@ -1415,6 +1421,11 @@ namespace Flow.Launcher.ViewModel
 
         public void Query(bool searchDelay, bool isReQuery = false)
         {
+            if (IsSelectedResultPinned() && ContextMenuSelected())
+            {
+                QueryContextMenu();
+                return;
+            }
             if (_ignoredQueryText != null)
             {
                 if (_ignoredQueryText == QueryText)
@@ -1456,7 +1467,7 @@ namespace Flow.Launcher.ViewModel
             else if (HistorySelected())
             {
                 QueryHistory();
-            }
+            } 
         }
 
         private void QueryContextMenu()
@@ -1466,7 +1477,10 @@ namespace Flow.Launcher.ViewModel
             ContextMenu.Clear();
 
             var selected = Results.SelectedItem?.Result;
-
+            if (selected == null)
+            {
+                selected = GetSelectedGridPinnedResult();
+            }
             if (selected != null && // SelectedItem returns null if selection is empty.
                 !string.IsNullOrEmpty(selected.PluginID))  // SelectedItem must have a valid PluginID, history results do not.
             {
@@ -1563,6 +1577,32 @@ namespace Flow.Launcher.ViewModel
             {
                 History.AddResults(results, id);
             }
+        }
+
+
+        private Result GetSelectedGridPinnedResult()
+        {
+            if (Settings.EnablePinnedResults)
+            {
+                return PinnedResults.SelectedItem?.Result;
+
+            }
+            return null;
+        }
+
+        public bool IsSelectedResultPinned()
+        {
+            if (!Settings.EnablePinnedResults)
+            {
+                return false;
+            }
+
+            var selected = Results.SelectedItem?.Result;
+            if (selected == null)
+            {
+                selected = GetSelectedGridPinnedResult();
+            }
+            return selected != null && _pinned.Exists(selected);
         }
 
         private static List<Result> GetPinnedResultItems(IEnumerable<PinnedResultItem> items)
