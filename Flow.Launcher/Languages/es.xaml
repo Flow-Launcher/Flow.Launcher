@@ -424,13 +424,13 @@
     <system:String x:Key="dialogJumpHotkey">Salto de diálogo (Dialog Jump)</system:String>
     <system:String x:Key="dialogJumpHotkeyToolTip">Introducir atajo de teclado para acceder rápidamente al cuadro de diálogo 'Abrir/Guardar como' en la ruta/ventana activa del administrador de archivos.</system:String>
     <system:String x:Key="dialogJump">Salto de diálogo (Dialog Jump)</system:String>
-    <system:String x:Key="dialogJumpToolTip">Cuando se abre un cuadro de diálogo 'Abrir/Guardar como', pulsar el atajo de teclado de 'Salto de diálogo' para acceder rápidamente a la ruta/ventana activa del administrador de archivos.</system:String>
+    <system:String x:Key="dialogJumpToolTip">Cuando se abre un cuadro de diálogo 'Abrir/Guardar como', pulsar el atajo de teclado de 'Salto de diálogo' permite acceder rápidamente a la ruta/ventana activa del administrador de archivos.</system:String>
     <system:String x:Key="autoDialogJump">'Salto de diálogo' automático</system:String>
     <system:String x:Key="autoDialogJumpToolTip">Cuando se muestra el cuadro de diálogo 'Abrir/Guardar como', accede automáticamente a la ruta del administrador de archivos actual. (Experimental)</system:String>
     <system:String x:Key="showDialogJumpWindow">Mostrar ventana 'Salto de diálogo'</system:String>
     <system:String x:Key="showDialogJumpWindowToolTip">Muestra la ventana de búsqueda de 'Salto de diálogo' cuando se abre un cuadro de diálogo 'Abrir/Guardar como' para acceder rápidamente a las ubicaciones de los archivos/carpetas.</system:String>
     <system:String x:Key="dialogJumpWindowPosition">Posición de la ventana 'Salto de diálogo'</system:String>
-    <system:String x:Key="dialogJumpWindowPositionToolTip">Selecciona la posición de la ventana de búsqueda de Salto de diálogo</system:String>
+    <system:String x:Key="dialogJumpWindowPositionToolTip">Seleccionar la posición de la ventana de búsqueda de 'Salto de diálogo'</system:String>
     <system:String x:Key="DialogJumpWindowPositionUnderDialog">Fijada bajo el cuadro de diálogo 'Abrir/Guardar como'. Se muestra al abrir y permanece hasta que se cierra la ventana</system:String>
     <system:String x:Key="DialogJumpWindowPositionFollowDefault">Posición predeterminada de la ventana de búsqueda. Se muestra cuando se activa con el atajo de teclado de la ventana de búsqueda</system:String>
     <system:String x:Key="dialogJumpResultBehaviour">Comportamiento de navegación de 'Salto de diálogo' en resultados</system:String>
