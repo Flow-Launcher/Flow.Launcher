@@ -49,6 +49,7 @@
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">Utiliser l'emplacement du résultat de la recherche comme répertoire de travail de l'exécutable</system:String>
     <system:String x:Key="plugin_explorer_display_more_info_in_tooltip">Afficher plus d'informations comme la taille et l'âge dans les infobulles</system:String>
     <system:String x:Key="plugin_explorer_default_open_in_file_manager">Appuyez sur Entrée pour ouvrir le dossier dans le gestionnaire de fichiers par défaut</system:String>
+    <system:String x:Key="plugin_explorer_boost_home_folder_score">Prioriser les dossiers d'accueil (Documents, Bureau, Téléchargements, etc.) dans les résultats de recherche</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Utiliser la recherche d'index pour la recherche de chemin d'accès</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Options d'indexation</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">Recherche :</system:String>

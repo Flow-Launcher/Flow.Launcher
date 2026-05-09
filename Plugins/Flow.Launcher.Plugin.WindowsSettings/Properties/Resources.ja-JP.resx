@@ -251,7 +251,7 @@
     <value>アプリ</value>
   </data>
   <data name="AreaClockAndRegion" xml:space="preserve">
-    <value>時計とリージョン</value>
+    <value>時計と地域</value>
   </data>
   <data name="AreaControlPanel" xml:space="preserve">
     <value>コントロールパネル</value>
@@ -375,7 +375,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="BlueLight" xml:space="preserve">
-    <value>薄い青</value>
+    <value>青いライト</value>
   </data>
   <data name="Bluetooth" xml:space="preserve">
     <value>Bluetooth</value>
@@ -1572,7 +1572,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Version" xml:space="preserve">
-    <value></value>
+    <value>バージョン</value>
     <comment>Means The "Windows Version"</comment>
   </data>
   <data name="VideoPlayback" xml:space="preserve">
@@ -2461,7 +2461,7 @@
     <value>既定のプログラムを設定</value>
   </data>
   <data name="SetUpABroadbandConnection" xml:space="preserve">
-    <value>Set up a broadband connection</value>
+    <value>ブロードバンド接続を設定</value>
   </data>
   <data name="CalibrateTheScreenForPenOrTouchInput" xml:space="preserve">
     <value>ペンまたはタッチ入力の画面をキャリブレーション</value>
