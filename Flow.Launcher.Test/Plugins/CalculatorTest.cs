@@ -42,12 +42,14 @@ namespace Flow.Launcher.Test.Plugins
             if (engineField == null)
                 Assert.Fail("Could not find static field 'MagesEngine' on Flow.Launcher.Plugin.Calculator.Main");
             engineField.SetValue(null, _engine);
+
+            SetHistory(new History());
         }
 
         [SetUp]
         public void SetUp()
         {
-            GetHistory().Items.Clear();
+            SetHistory(new History());
         }
 
         [Test]
@@ -94,19 +96,26 @@ namespace Flow.Launcher.Test.Plugins
             _settings.EnableHistory = true;
 
             _plugin.Query(new Plugin.Query { Search = "1+1" });
+            WaitForHistoryDebounce();
 
             ClassicAssert.AreEqual(1, GetHistory().Items.Count);
             ClassicAssert.AreEqual("1+1", GetHistory().Items[0].Query);
+            ClassicAssert.AreEqual("2", GetHistory().Items[0].CopyText);
+            ClassicAssert.IsNotEmpty(GetHistory().Items[0].SubTitle);
         }
 
         [Test]
-        public void CalculationHistory_IsNotStoredWhenDisabled()
+        public void CalculationHistory_IsNotReturnedWhenDisabled()
         {
-            _settings.EnableHistory = false;
-
+            _settings.EnableHistory = true;
             _plugin.Query(new Plugin.Query { Search = "1+1" });
+            WaitForHistoryDebounce();
 
-            ClassicAssert.AreEqual(0, GetHistory().Items.Count);
+            _settings.EnableHistory = false;
+            var results = _plugin.Query(new Plugin.Query { Search = "2+2" });
+
+            ClassicAssert.AreEqual(1, results.Count);
+            ClassicAssert.AreEqual("4", results[0].Title);
         }
 
         // Basic operations
@@ -160,17 +169,35 @@ namespace Flow.Launcher.Test.Plugins
             return results.Count > 0 ? results[0].Title : string.Empty;
         }
 
-        private static History GetHistory()
+        private void WaitForHistoryDebounce()
         {
-            var historyField = typeof(Main).GetField("History", BindingFlags.NonPublic | BindingFlags.Static);
-            Assert.That(historyField, Is.Not.Null,
-                "Could not find static field 'History' on Flow.Launcher.Plugin.Calculator.Main");
+            var flushPendingItemMethod = typeof(History).GetMethod("FlushPendingItem", BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.That(flushPendingItemMethod, Is.Not.Null,
+                "Could not find method 'FlushPendingItem' on Flow.Launcher.Plugin.Calculator.Storage.History");
 
-            var history = historyField!.GetValue(null) as History;
+            flushPendingItemMethod!.Invoke(GetHistory(), null);
+        }
+
+        private History GetHistory()
+        {
+            var historyProperty = typeof(Main).GetProperty("History", BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.That(historyProperty, Is.Not.Null,
+                "Could not find property 'History' on Flow.Launcher.Plugin.Calculator.Main");
+
+            var history = historyProperty!.GetValue(_plugin) as History;
             Assert.That(history, Is.Not.Null,
-                "Static field 'History' on Flow.Launcher.Plugin.Calculator.Main' was not a calculator History instance");
+                "Property 'History' on Flow.Launcher.Plugin.Calculator.Main' was not a calculator History instance");
 
             return history!;
+        }
+
+        private void SetHistory(History history)
+        {
+            var historyProperty = typeof(Main).GetProperty("History", BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.That(historyProperty, Is.Not.Null,
+                "Could not find property 'History' on Flow.Launcher.Plugin.Calculator.Main");
+
+            historyProperty!.SetValue(_plugin, history);
         }
     }
 }

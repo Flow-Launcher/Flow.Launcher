@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading;
@@ -63,11 +62,11 @@ public class History
             var currentItem = Items.FirstOrDefault(x => x.Query == _pendingItem.Expression);
             if (currentItem != null)
             {
-                currentItem.Refresh(_pendingItem.Result, _pendingItem.Action);
+                currentItem.Refresh(_pendingItem);
             }
             else
             {
-                var item = new HistoryItem(_pendingItem.Result, _pendingItem.Expression, _pendingItem.Action);
+                var item = new HistoryItem(_pendingItem);
 
                 if (Items.Count >= MaxItems)
                 {
@@ -80,6 +79,4 @@ public class History
             _pendingItem = null;
         }
     }
-
-    public sealed record PendingHistoryItem(Result Result, string Expression, Func<ActionContext, bool> Action);
 }

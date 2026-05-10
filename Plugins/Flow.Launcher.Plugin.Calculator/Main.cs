@@ -155,7 +155,8 @@ namespace Flow.Launcher.Plugin.Calculator
 
                     if (isValidResultToAddHistory)
                     {
-                        History.AddOrUpdate(new History.PendingHistoryItem(resultObject, expression, action));
+                        var item = CreatePendingHistoryItem(resultObject, newResult, expression, action);
+                        History.AddOrUpdate(item);
                     }
 
                     results.Add(resultObject);
@@ -183,6 +184,21 @@ namespace Flow.Launcher.Plugin.Calculator
             return EmptyResults;
         }
 
+        private PendingHistoryItem CreatePendingHistoryItem(Result result, string calcResult, string expression,
+            Func<ActionContext, bool> action)
+        {
+            var calculatedAt = DateTime.Now;
+            var copyToClipboard = Context == null
+                ? "Copy this number to the clipboard"
+                : Localize.flowlauncher_plugin_calculator_copy_number_to_clipboard();
+            var historySubtitle = Context == null
+                ? string.Format(CultureInfo.CurrentCulture, "Calculated at {0}", calculatedAt)
+                : Localize.flowlauncher_plugin_calculator_history_subtitle(calculatedAt);
+            var subtitle =
+                $"{calcResult} - {copyToClipboard}" +
+                $"\n{historySubtitle}";
+            return new PendingHistoryItem(result, expression, action, subtitle, calculatedAt);
+        }
 
         private Func<ActionContext, bool> CreateClipboardAction(string newResult)
         {

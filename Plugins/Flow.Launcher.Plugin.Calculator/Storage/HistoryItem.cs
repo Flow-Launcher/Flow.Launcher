@@ -8,39 +8,32 @@ public class HistoryItem : Result
     public string Query { get; set; } = string.Empty;
     public DateTime CalculatedAt { get; set; }
 
-    [JsonIgnore]
-    private const string BadgeIconPath = "Images/history.png";
+    [JsonIgnore] private const string BadgeIconPath = "Images/history.png";
+
     public HistoryItem()
     {
     }
 
-    public HistoryItem(Result result, string expression, Func<ActionContext, bool> action)
+    public HistoryItem(PendingHistoryItem item)
     {
-        CalculatedAt = DateTime.Now;
-        Title = expression;
-        SubTitle = CreateSubTitle(result.Title);
+        CalculatedAt = item.CalculatedAt;
+        Title = item.Expression;
+        SubTitle = item.SubTitle;
         Score = 300;
-        IcoPath = result.IcoPath;
-        Query = expression;
+        IcoPath = item.Result.IcoPath;
+        Query = item.Expression;
         BadgeIcoPath = BadgeIconPath;
         ShowBadge = true;
-        CopyText = result.Title;
-        Action = action;
+        CopyText = item.Result.Title;
+        Action = item.Action;
     }
 
-    public void Refresh(Result result, Func<ActionContext, bool> action)
+    public void Refresh(PendingHistoryItem item)
     {
-        CalculatedAt = DateTime.Now;
-        SubTitle = CreateSubTitle(result.Title);
-        CopyText = result.Title;
-        Action = action;
+        CalculatedAt = item.CalculatedAt;
+        SubTitle = item.SubTitle;
+        CopyText = item.Result.Title;
+        Action = item.Action;
     }
 
-
-    private string CreateSubTitle(string value)
-    {
-        return
-            $"{value} - {Localize.flowlauncher_plugin_calculator_copy_number_to_clipboard()}" +
-            $"\n{Localize.flowlauncher_plugin_calculator_history_subtitle(CalculatedAt)}";
-    }
 }
