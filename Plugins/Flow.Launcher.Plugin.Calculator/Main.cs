@@ -69,10 +69,6 @@ namespace Flow.Launcher.Plugin.Calculator
                 var groupSep = GetGroupSeparator(decimalSep);
                 var expression = NumberRegex.Replace(search, m => NormalizeNumber(m.Value, isFunctionPresent, decimalSep, groupSep));
 
-                if (expression.Length == 1)
-                {
-                    isValidResultToAddHistory = false;
-                }
                 // WORKAROUND START: The 'pow' function in Mages v3.0.0 is broken.
                 // https://github.com/FlorianRappl/Mages/issues/132
                 // We bypass it by rewriting any pow(x,y) expression to the equivalent (x^y) expression
@@ -159,7 +155,7 @@ namespace Flow.Launcher.Plugin.Calculator
 
                     if (isValidResultToAddHistory)
                     {
-                        History.AddOrUpdate(resultObject, expression, action);
+                        History.AddOrUpdate(new History.PendingHistoryItem(resultObject, expression, action));
                     }
 
                     results.Add(resultObject);

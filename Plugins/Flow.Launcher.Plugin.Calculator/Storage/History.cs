@@ -23,11 +23,11 @@ public class History
     [JsonIgnore]
     private PendingHistoryItem _pendingItem;
 
-    public void AddOrUpdate(Result result, string expression, Func<ActionContext, bool> action)
+    public void AddOrUpdate(PendingHistoryItem pendingItem)
     {
         lock (_syncRoot)
         {
-            _pendingItem = new PendingHistoryItem(result, expression, action);
+            _pendingItem = pendingItem;
 
             if (_debounceTimer == null)
             {
@@ -81,5 +81,5 @@ public class History
         }
     }
 
-    private sealed record PendingHistoryItem(Result Result, string Expression, Func<ActionContext, bool> Action);
+    public sealed record PendingHistoryItem(Result Result, string Expression, Func<ActionContext, bool> Action);
 }
