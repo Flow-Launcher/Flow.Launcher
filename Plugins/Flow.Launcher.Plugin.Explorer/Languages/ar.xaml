@@ -49,6 +49,7 @@
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">استخدام موقع نتيجة البحث كدليل العمل للتنفيذ</system:String>
     <system:String x:Key="plugin_explorer_display_more_info_in_tooltip">Display more information like size and age in tooltips</system:String>
     <system:String x:Key="plugin_explorer_default_open_in_file_manager">اضغط Enter لفتح المجلد في مدير الملفات الافتراضي</system:String>
+    <system:String x:Key="plugin_explorer_boost_home_folder_score">Prioritize home folders (Documents, Desktop, Downloads, etc.) in search results</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">استخدام البحث المفهرس للبحث في المسار</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">خيارات الفهرسة</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">بحث:</system:String>

@@ -49,6 +49,7 @@
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">Utilizar localização do resultado da pesquisa como pasta de trabalho do executável</system:String>
     <system:String x:Key="plugin_explorer_display_more_info_in_tooltip">Mostrar mais informações nas dicas (ex.: tamanho e antiguidade)</system:String>
     <system:String x:Key="plugin_explorer_default_open_in_file_manager">Toque Enter para abrir a pasta no gestor de ficheiros</system:String>
+    <system:String x:Key="plugin_explorer_boost_home_folder_score">Priorizar pastas iniciais (Documentos, Ambiente de trabalho, Transferências, etc.) nos resultados das pesquisas</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Utilizar índice de pesquisa para o caminho</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Opções de indexação</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">Pesquisar:</system:String>

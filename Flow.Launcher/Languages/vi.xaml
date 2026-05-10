@@ -123,6 +123,9 @@
     <system:String x:Key="hideOnStartupToolTip">Flow Launcher sẽ ẩn trong khay hệ thống sau khi khởi động.</system:String>
     <system:String x:Key="hideNotifyIcon">Ẩn biểu tượng thanh trạng thái</system:String>
     <system:String x:Key="hideNotifyIconToolTip">Khi biểu tượng bị ẩn khỏi khay, bạn có thể mở menu Cài đặt bằng cách nhấp chuột phải vào cửa sổ tìm kiếm.</system:String>
+    <system:String x:Key="ignoreAccents">Ignore accents when searching</system:String>
+    <system:String x:Key="ignoreAccentsToolTip">Treat accented and unaccented characters as equivalent.</system:String>
+    <system:String x:Key="promptIgnoreAccents">Would you like to turn on the option to ignore accents when searching?</system:String>
     <system:String x:Key="querySearchPrecision">Độ chính xác của tìm kiếm truy vấn</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Kết quả tìm kiếm bắt buộc.</system:String>
     <system:String x:Key="SearchPrecisionNone">Không</system:String>
@@ -142,6 +145,7 @@
     <system:String x:Key="DoublePinyinSchemasXingKongJianDao">Xing Kong Jian Dao</system:String>
     <system:String x:Key="DoublePinyinSchemasDaNiu">Da Niu</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoLang">Xiao Lang</system:String>
+    <system:String x:Key="HelpUsTranslateFlow">Help us translate Flow</system:String>
 
     <system:String x:Key="AlwaysPreview">Luôn xem trước</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Luôn mở bảng xem trước khi Flow kích hoạt. Nhấn {0} để chuyển đổi chế độ xem trước.</system:String>
@@ -247,6 +251,11 @@
     <system:String x:Key="pluginStore_RecentlyUpdated">Cập nhật gần đây</system:String>
     <system:String x:Key="pluginStore_None">Tiện ích mở rộng</system:String>
     <system:String x:Key="pluginStore_Installed">Đã cài đặt</system:String>
+    <system:String x:Key="PluginStoreSortModeDefault">Default</system:String>
+    <system:String x:Key="PluginStoreSortModeName">Tên</system:String>
+    <system:String x:Key="PluginStoreSortModeReleaseDate">Release Date</system:String>
+    <system:String x:Key="PluginStoreSortModeUpdatedDate">Updated Date</system:String>
+    <system:String x:Key="PluginStoreSortingModeComboboxLabel">Sorting Mode:</system:String>
     <system:String x:Key="refresh">Làm mới</system:String>
     <system:String x:Key="installbtn">Cài đặt</system:String>
     <system:String x:Key="uninstallbtn">Gỡ cài đặt</system:String>
@@ -455,6 +464,7 @@
     <system:String x:Key="website">Trang web</system:String>
     <system:String x:Key="github">GitHub</system:String>
     <system:String x:Key="docs">Tài liệu</system:String>
+    <system:String x:Key="crowdin">Crowdin</system:String>
     <system:String x:Key="version">Phiên bản</system:String>
     <system:String x:Key="icons">Biểu tượng</system:String>
     <system:String x:Key="about_activate_times">Bạn đã kích hoạt Flow Launcher {0} lần</system:String>
@@ -491,6 +501,10 @@
     <system:String x:Key="LogLevelDEBUG">Debug</system:String>
     <system:String x:Key="settingWindowFontTitle">Setting Window Font</system:String>
 
+    <!--  Plugin Settings Window  -->
+    <system:String x:Key="pluginSettingsWindowTitle">Settings: {0}</system:String>
+    <system:String x:Key="pluginSettingsWindowOpenFailed">Failed to open plugin settings window</system:String>
+
     <!--  Release Notes Window  -->
     <system:String x:Key="seeMoreReleaseNotes">See more release notes on GitHub</system:String>
     <system:String x:Key="checkNetworkConnectionTitle">Failed to fetch release notes</system:String>
@@ -521,6 +535,7 @@
     <system:String x:Key="defaultBrowser_newWindow">Cửa sổ mới</system:String>
     <system:String x:Key="defaultBrowser_newTab">Thẻ Mới</system:String>
     <system:String x:Key="defaultBrowser_parameter">Chế độ riêng tư</system:String>
+    <system:String x:Key="defaultBrowser_extraArgs">Extra Args</system:String>
     <system:String x:Key="defaultBrowser_default">Default</system:String>
     <system:String x:Key="defaultBrowser_new_profile">New Profile</system:String>
 

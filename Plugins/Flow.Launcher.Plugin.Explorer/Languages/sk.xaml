@@ -49,6 +49,7 @@
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">Použiť umiestnenie výsledku vyhľadávania ako pracovný priečinok spustiteľného súboru</system:String>
     <system:String x:Key="plugin_explorer_display_more_info_in_tooltip">Zobraziť viac informácií v popise ako veľkosť a dátumy</system:String>
     <system:String x:Key="plugin_explorer_default_open_in_file_manager">Stlačením klávesu Enter otvoriť priečinok v predvolenom správcovi súborov</system:String>
+    <system:String x:Key="plugin_explorer_boost_home_folder_score">Uprednostniť vo výsledkoch vyhľadávania domovské priečinky (Dokumenty, Pracovná plocha, Stiahnuté súbory, atď.)</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Na vyhľadanie cesty použiť vyhľadávanie v indexe</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Možnosti indexovania</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">Vyhľadávanie:</system:String>
