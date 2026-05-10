@@ -55,11 +55,11 @@
 
     <system:String x:Key="flowlauncher_plugin_program_update">更新</system:String>
     <system:String x:Key="flowlauncher_plugin_program_only_index_tip">プログラムプラグインは、選択されたファイル名の末尾と .url ファイルのみをインデックス化します。</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_update_file_suffixes">Sucessfully update file suffixes</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_update_file_suffixes">ファイル名の末尾が正常に更新されました</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_cannot_empty">ファイル名の末尾は空にできません</system:String>
     <system:String x:Key="flowlauncher_plugin_protocols_cannot_empty">プロトコルは空にできません</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_program_suffixes_executable_types">Index file suffixes</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_executable_types">ファイル名の末尾</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_types">ショートカット（URL）</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_steam">Steam ゲーム</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_epic">Epic ゲーム</system:String>

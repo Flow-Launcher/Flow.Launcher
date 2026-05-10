@@ -49,6 +49,7 @@
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">Usar la ubicación de los resultados de búsqueda como directorio de trabajo del ejecutable</system:String>
     <system:String x:Key="plugin_explorer_display_more_info_in_tooltip">Mostrar más información, como el tamaño y la antigüedad, en los mensajes emergentes</system:String>
     <system:String x:Key="plugin_explorer_default_open_in_file_manager">Pulsar Entrar para abrir la carpeta en el administrador de archivos predeterminado</system:String>
+    <system:String x:Key="plugin_explorer_boost_home_folder_score">Priorizar las carpetas personales (Documentos, Escritorio, Descargas, etc.) en los resultados de búsqueda</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Usar búsqueda indexada para buscar rutas</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Opciones de indexación</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">Buscar:</system:String>
@@ -137,7 +138,7 @@
     <system:String x:Key="plugin_explorer_file_not_found">Archivo no encontrado: {0}</system:String>
     <system:String x:Key="plugin_explorer_fail_to_open">Fallo al abrir {0}</system:String>
     <system:String x:Key="plugin_explorer_fail_to_set_text">Fallo al establecer texto en el portapapeles</system:String>
-    <system:String x:Key="plugin_explorer_fail_to_set_files">Fallo al establecer archivos/carpetas en el portapapeles</system:String>
+    <system:String x:Key="plugin_explorer_fail_to_set_files">No se pueden guardar archivos/carpetas en el portapapeles</system:String>
 
     <!--  Special Results  -->
     <system:String x:Key="plugin_explorer_diskfreespace">{0} libre de {1}</system:String>
