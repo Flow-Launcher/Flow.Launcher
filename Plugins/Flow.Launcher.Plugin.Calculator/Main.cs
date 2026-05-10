@@ -69,7 +69,6 @@ namespace Flow.Launcher.Plugin.Calculator
                 var groupSep = GetGroupSeparator(decimalSep);
                 var expression = NumberRegex.Replace(search, m => NormalizeNumber(m.Value, isFunctionPresent, decimalSep, groupSep));
 
-                // If only 1
                 if (expression.Length == 1)
                 {
                     isValidResultToAddHistory = false;
@@ -165,8 +164,7 @@ namespace Flow.Launcher.Plugin.Calculator
 
                     results.Add(resultObject);
                     var historyItems = _settings.EnableHistory
-                        ? History.Items.Where(x => x.Query != expression)
-                            .OrderByDescending(x => x.CalculatedAt).ToList()
+                        ? History.GetItemsExcluding(expression)
                         : [];
                     return results.Concat(historyItems).ToList();
 

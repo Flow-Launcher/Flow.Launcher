@@ -17,8 +17,8 @@ public class HistoryItem : Result
     public HistoryItem(Result result, string expression, Func<ActionContext, bool> action)
     {
         CalculatedAt = DateTime.Now;
-        Title = $"{expression} = {result.Title}";
-        SubTitle = Localize.flowlauncher_plugin_calculator_history_subtitle(CalculatedAt);
+        Title = expression;
+        SubTitle = CreateSubTitle(result.Title);
         Score = 300;
         IcoPath = result.IcoPath;
         Query = expression;
@@ -28,4 +28,19 @@ public class HistoryItem : Result
         Action = action;
     }
 
+    public void Refresh(Result result, Func<ActionContext, bool> action)
+    {
+        CalculatedAt = DateTime.Now;
+        SubTitle = CreateSubTitle(result.Title);
+        CopyText = result.Title;
+        Action = action;
+    }
+
+
+    private string CreateSubTitle(string value)
+    {
+        return
+            $"{value} - {Localize.flowlauncher_plugin_calculator_copy_number_to_clipboard()}" +
+            $"\n{Localize.flowlauncher_plugin_calculator_history_subtitle(CalculatedAt)}";
+    }
 }
