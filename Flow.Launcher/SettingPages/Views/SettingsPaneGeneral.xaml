@@ -560,18 +560,35 @@
                 </ui:SettingsExpander.Items>
             </ui:SettingsExpander>
 
+            <ui:SettingsCard
+                Margin="0 4 0 0"
+                Description="{DynamicResource ignoreAccentsToolTip}"
+                Header="{DynamicResource ignoreAccents}">
+                <ui:SettingsCard.HeaderIcon>
+                    <TextBlock Text="áé" />
+                </ui:SettingsCard.HeaderIcon>
+
+                <ui:ToggleSwitch
+                    IsOn="{Binding IgnoreAccents}"
+                    OffContent="{DynamicResource disable}"
+                    OnContent="{DynamicResource enable}" />
+            </ui:SettingsCard>
+
             <ui:SettingsCard Margin="0 14 0 0" Header="{DynamicResource language}">
                 <ui:SettingsCard.HeaderIcon>
                     <ui:FontIcon Glyph="&#xf2b7;" />
                 </ui:SettingsCard.HeaderIcon>
 
-                <ComboBox
-                    MaxWidth="200"
-                    Margin="10 0 0 0"
-                    DisplayMemberPath="Display"
-                    ItemsSource="{Binding Languages}"
-                    SelectedValue="{Binding Language}"
-                    SelectedValuePath="LanguageCode" />
+                <StackPanel Orientation="Horizontal">
+                    <ui:HyperlinkButton Content="{DynamicResource HelpUsTranslateFlow}" NavigateUri="{Binding Crowdin}" />
+                    <ComboBox
+                        MaxWidth="200"
+                        Margin="10 0 0 0"
+                        DisplayMemberPath="Display"
+                        ItemsSource="{Binding Languages}"
+                        SelectedValue="{Binding Language}"
+                        SelectedValuePath="LanguageCode" />
+                </StackPanel>
             </ui:SettingsCard>
             <Border Visibility="{Binding KoreanIMERegistryKeyExists, Converter={StaticResource BoolToVisibilityConverter}}">
                 <ui:InfoBar

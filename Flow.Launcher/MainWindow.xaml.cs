@@ -95,7 +95,7 @@ namespace Flow.Launcher
             InitializeComponent();
             UpdatePosition();
 
-            InitSoundEffects();
+            SyncSoundEffectsState();
             RegisterSoundEffectsEvent();
             DataObject.AddPastingHandler(QueryTextBox, QueryTextBox_OnPaste);
             _viewModel.ActualApplicationThemeChanged += ViewModel_ActualApplicationThemeChanged;
@@ -327,6 +327,9 @@ namespace Flow.Launcher
                         break;
                     case nameof(Settings.ShowAtTopmost):
                         Topmost = _settings.ShowAtTopmost;
+                        break;
+                    case nameof(Settings.UseSound):
+                        SyncSoundEffectsState();
                         break;
                 }
             };
@@ -707,14 +710,64 @@ namespace Flow.Launcher
             {
                 if (_settings.WMPInstalled)
                 {
+                    if (_animationSoundWMP == null)
+                    {
+                        return;
+                    }
+
                     _animationSoundWMP.Position = TimeSpan.Zero;
                     _animationSoundWMP.Volume = _settings.SoundVolume / 100.0;
                     _animationSoundWMP.Play();
                 }
                 else
                 {
+                    if (_animationSoundWPF == null)
+                    {
+                        return;
+                    }
+
                     _animationSoundWPF.Play();
                 }
+            }
+        }
+
+        private bool IsSoundEffectsInitialized()
+        {
+            lock (_soundLock)
+            {
+                return _animationSoundWMP != null || _animationSoundWPF != null;
+            }
+        }
+
+        private void DisposeSoundEffects()
+        {
+            lock (_soundLock)
+            {
+                _animationSoundWMP?.Stop();
+                _animationSoundWMP?.Close();
+                _animationSoundWMP = null;
+
+                _animationSoundWPF?.Stop();
+                _animationSoundWPF?.Dispose();
+                _animationSoundWPF = null;
+            }
+        }
+
+        private void SyncSoundEffectsState(bool forceReinitializeWhenEnabled = false)
+        {
+            if (!_settings.UseSound)
+            {
+                if (IsSoundEffectsInitialized())
+                {
+                    DisposeSoundEffects();
+                }
+
+                return;
+            }
+
+            if (forceReinitializeWhenEnabled || !IsSoundEffectsInitialized())
+            {
+                InitSoundEffects();
             }
         }
 
@@ -727,7 +780,7 @@ namespace Flow.Launcher
                 Win32Helper.RegisterSleepModeListener(() =>
                 {
                     // We must run InitSoundEffects on UI thread because MediaPlayer is a DispatcherObject
-                    DispatcherHelper.Invoke(InitSoundEffects);
+                    DispatcherHelper.Invoke(() => SyncSoundEffectsState(forceReinitializeWhenEnabled: true));
                 });
             }
             catch (Exception e)
@@ -1469,10 +1522,9 @@ namespace Flow.Launcher
                 {
                     _hwndSource?.Dispose();
                     _notifyIcon?.Dispose();
-                    _animationSoundWMP?.Close();
-                    _animationSoundWPF?.Dispose();
-                    _viewModel.ActualApplicationThemeChanged -= ViewModel_ActualApplicationThemeChanged;
                     UnregisterSoundEffectsEvent();
+                    DisposeSoundEffects();
+                    _viewModel.ActualApplicationThemeChanged -= ViewModel_ActualApplicationThemeChanged;
                 }
 
                 _disposed = true;
