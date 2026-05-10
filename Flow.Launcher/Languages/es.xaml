@@ -123,6 +123,9 @@
     <system:String x:Key="hideOnStartupToolTip">La ventana de búsqueda de Flow Launcher se oculta en la bandeja del sistema tras el arranque.</system:String>
     <system:String x:Key="hideNotifyIcon">Ocultar icono en la bandeja del sistema</system:String>
     <system:String x:Key="hideNotifyIconToolTip">Cuando el icono está oculto en la bandeja del sistema, se puede abrir el menú de configuración haciendo clic con el botón derecho en la ventana de búsqueda.</system:String>
+    <system:String x:Key="ignoreAccents">Ignorar los acentos en la búsqueda</system:String>
+    <system:String x:Key="ignoreAccentsToolTip">Considera equivalentes los caracteres acentuados y los no acentuados.</system:String>
+    <system:String x:Key="promptIgnoreAccents">¿Desearía activar la opción de ignorar los acentos al realizar búsquedas?</system:String>
     <system:String x:Key="querySearchPrecision">Precisión de búsqueda en consultas</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Cambia la puntuación mínima requerida para la coincidencia de los resultados.</system:String>
     <system:String x:Key="SearchPrecisionNone">Ninguna</system:String>
@@ -142,6 +145,7 @@
     <system:String x:Key="DoublePinyinSchemasXingKongJianDao">Xing Kong Jian Dao</system:String>
     <system:String x:Key="DoublePinyinSchemasDaNiu">Da Niu</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoLang">Xiao Lang</system:String>
+    <system:String x:Key="HelpUsTranslateFlow">Ayúdenos a traducir Flow</system:String>
 
     <system:String x:Key="AlwaysPreview">Mostrar siempre vista previa</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Muestra siempre el panel de vista previa al iniciar Flow. Pulsar {0} para mostrar/ocultar la vista previa.</system:String>
@@ -239,7 +243,7 @@
     <system:String x:Key="errorCreatingSettingPanel">Error al crear el panel de configuración para el complemento {0}:{1}{2}</system:String>
     <system:String x:Key="pluginMinimumAppVersionUnsatisfiedTitle">{0} requiere la versión {1} de Flow para ejecutarse</system:String>
     <system:String x:Key="pluginMinimumAppVersionUnsatisfiedMessage">Flow no cumple los requisitos mínimos de versión para ejecutar {0}. ¿Desea continuar con la instalación?{1}{1}Recomendamos actualizar Flow a la última versión para garantizar que {0} funcione sin problemas.</system:String>
-    <system:String x:Key="pluginJsonInvalidOrCorrupted">No se pudo instalar el plugin porque plugin.json no es válido o está dañado</system:String>
+    <system:String x:Key="pluginJsonInvalidOrCorrupted">No se pudo instalar el complemento porque plugin.json no es válido o está dañado</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Tienda complementos</system:String>
@@ -247,6 +251,11 @@
     <system:String x:Key="pluginStore_RecentlyUpdated">Actualizado(s) recientemente</system:String>
     <system:String x:Key="pluginStore_None">Complementos</system:String>
     <system:String x:Key="pluginStore_Installed">Instalado(s)</system:String>
+    <system:String x:Key="PluginStoreSortModeDefault">Predeterminado</system:String>
+    <system:String x:Key="PluginStoreSortModeName">Nombre</system:String>
+    <system:String x:Key="PluginStoreSortModeReleaseDate">Fecha de lanzamiento</system:String>
+    <system:String x:Key="PluginStoreSortModeUpdatedDate">Fecha de actualización</system:String>
+    <system:String x:Key="PluginStoreSortingModeComboboxLabel">Modo de ordenación:</system:String>
     <system:String x:Key="refresh">Refrescar</system:String>
     <system:String x:Key="installbtn">Instalar</system:String>
     <system:String x:Key="uninstallbtn">Desinstalar</system:String>
@@ -369,14 +378,14 @@
     <system:String x:Key="SelectPrevItemHotkey">Seleccionar elemento anterior</system:String>
     <system:String x:Key="SelectNextPageHotkey">Seleccionar siguiente página</system:String>
     <system:String x:Key="SelectPrevPageHotkey">Seleccionar página anterior</system:String>
-    <system:String x:Key="CycleHistoryUpHotkey">Recuperar una tras otra la consulta anterior</system:String>
-    <system:String x:Key="CycleHistoryDownHotkey">Recuperar una tras otra la siguiente consulta</system:String>
+    <system:String x:Key="CycleHistoryUpHotkey">Recuperar una tras otra las consultas anteriores</system:String>
+    <system:String x:Key="CycleHistoryDownHotkey">Recuperar una tras otra las consultas siguientes</system:String>
     <system:String x:Key="OpenContextMenuHotkey">Abrir menú contextual</system:String>
     <system:String x:Key="OpenNativeContextMenuHotkey">Abrir menú contextual nativo</system:String>
     <system:String x:Key="SettingWindowHotkey">Abrir ventana de configuración</system:String>
     <system:String x:Key="CopyFilePathHotkey">Copiar ruta del archivo</system:String>
     <system:String x:Key="ToggleGameModeHotkey">Cambiar a Modo Juego</system:String>
-    <system:String x:Key="ToggleHistoryHotkey">Cambiar historial</system:String>
+    <system:String x:Key="ToggleHistoryHotkey">Mostrar/Ocultar historial</system:String>
     <system:String x:Key="OpenContainFolderHotkey">Abrir carpeta contenedora</system:String>
     <system:String x:Key="RunAsAdminHotkey">Ejecutar como administrador</system:String>
     <system:String x:Key="RequeryHotkey">Actualizar resultados de búsqueda</system:String>
@@ -412,26 +421,26 @@
     <system:String x:Key="showBadgesToolTip">Para los complementos compatibles, se muestran distintivos que ayudan a distinguirlos más fácilmente.</system:String>
     <system:String x:Key="showBadgesGlobalOnly">Mostrar distintivos en resultados solo para consulta global</system:String>
     <system:String x:Key="showBadgesGlobalOnlyToolTip">Muestra distintivos solo para los resultados de consultas globales</system:String>
-    <system:String x:Key="dialogJumpHotkey">Salto de diálogo</system:String>
-    <system:String x:Key="dialogJumpHotkeyToolTip">Introducir atajo de teclado para acceder rápidamente a la ventana de diálogo Abrir/Guardar como en la ruta del administrador de archivos actual.</system:String>
-    <system:String x:Key="dialogJump">Salto de diálogo</system:String>
-    <system:String x:Key="dialogJumpToolTip">Cuando se abre la ventana de diálogo Abrir/Guardar como, accede rápidamente a la ruta actual del administrador de archivos.</system:String>
-    <system:String x:Key="autoDialogJump">Salto de diálogo automáticamente</system:String>
-    <system:String x:Key="autoDialogJumpToolTip">Cuando se muestra la ventana de diálogo Abrir/Guardar como, accede automáticamente a la ruta del administrador de archivos actual. (Experimental)</system:String>
-    <system:String x:Key="showDialogJumpWindow">Mostrar ventana de salto de diálogo</system:String>
-    <system:String x:Key="showDialogJumpWindowToolTip">Muestra la ventana de búsqueda de salto de diálogo cuando se presenta la ventana de diálogo de abrir/guardar para acceder rápidamente a las ubicaciones de los archivos/carpetas.</system:String>
-    <system:String x:Key="dialogJumpWindowPosition">Posición de la ventana de salto de diálogo</system:String>
-    <system:String x:Key="dialogJumpWindowPositionToolTip">Selecciona la posición de la ventana de búsqueda de salto de diálogo</system:String>
-    <system:String x:Key="DialogJumpWindowPositionUnderDialog">Fijada bajo la ventana de diálogo Abrir/Guardar como. Se muestra al abrir y permanece hasta que se cierra la ventana</system:String>
+    <system:String x:Key="dialogJumpHotkey">Salto de diálogo (Dialog Jump)</system:String>
+    <system:String x:Key="dialogJumpHotkeyToolTip">Introducir atajo de teclado para acceder rápidamente al cuadro de diálogo 'Abrir/Guardar como' en la ruta/ventana activa del administrador de archivos.</system:String>
+    <system:String x:Key="dialogJump">Salto de diálogo (Dialog Jump)</system:String>
+    <system:String x:Key="dialogJumpToolTip">Cuando se abre un cuadro de diálogo 'Abrir/Guardar como', pulsar el atajo de teclado de 'Salto de diálogo' permite acceder rápidamente a la ruta/ventana activa del administrador de archivos.</system:String>
+    <system:String x:Key="autoDialogJump">'Salto de diálogo' automático</system:String>
+    <system:String x:Key="autoDialogJumpToolTip">Cuando se muestra el cuadro de diálogo 'Abrir/Guardar como', accede automáticamente a la ruta del administrador de archivos actual. (Experimental)</system:String>
+    <system:String x:Key="showDialogJumpWindow">Mostrar ventana 'Salto de diálogo'</system:String>
+    <system:String x:Key="showDialogJumpWindowToolTip">Muestra la ventana de búsqueda de 'Salto de diálogo' cuando se abre un cuadro de diálogo 'Abrir/Guardar como' para acceder rápidamente a las ubicaciones de los archivos/carpetas.</system:String>
+    <system:String x:Key="dialogJumpWindowPosition">Posición de la ventana 'Salto de diálogo'</system:String>
+    <system:String x:Key="dialogJumpWindowPositionToolTip">Seleccionar la posición de la ventana de búsqueda de 'Salto de diálogo'</system:String>
+    <system:String x:Key="DialogJumpWindowPositionUnderDialog">Fijada bajo el cuadro de diálogo 'Abrir/Guardar como'. Se muestra al abrir y permanece hasta que se cierra la ventana</system:String>
     <system:String x:Key="DialogJumpWindowPositionFollowDefault">Posición predeterminada de la ventana de búsqueda. Se muestra cuando se activa con el atajo de teclado de la ventana de búsqueda</system:String>
-    <system:String x:Key="dialogJumpResultBehaviour">Comportamiento de navegación de los resultados de salto de diálogo</system:String>
-    <system:String x:Key="dialogJumpResultBehaviourToolTip">Comportamiento de navegación de la ventana de diálogo Abrir/Guardar como según la ruta de resultados seleccionada</system:String>
-    <system:String x:Key="DialogJumpResultBehaviourLeftClick">Clic izquierdo o tecla Entrar</system:String>
+    <system:String x:Key="dialogJumpResultBehaviour">Comportamiento de navegación de 'Salto de diálogo' en resultados</system:String>
+    <system:String x:Key="dialogJumpResultBehaviourToolTip">Comportamiento para acceder a la ventana de diálogo 'Abrir/Guardar como' en la ruta de resultado seleccionada</system:String>
+    <system:String x:Key="DialogJumpResultBehaviourLeftClick">Clic izquierdo o pulsar Entrar</system:String>
     <system:String x:Key="DialogJumpResultBehaviourRightClick">Clic derecho</system:String>
-    <system:String x:Key="dialogJumpFileResultBehaviour">Comportamiento de navegación de archivos de salto de diálogo</system:String>
-    <system:String x:Key="dialogJumpFileResultBehaviourToolTip">Comportamiento de navegación de la ventana de diálogo Abrir/Guardar como cuando el resultado es una ruta de archivo</system:String>
-    <system:String x:Key="DialogJumpFileResultBehaviourFullPath">Rellenar la ruta completa en el cuadro del nombre del archivo</system:String>
-    <system:String x:Key="DialogJumpFileResultBehaviourFullPathOpen">Rellenar la ruta completa en el cuadro del nombre del archivo y abrir</system:String>
+    <system:String x:Key="dialogJumpFileResultBehaviour">Comportamiento de navegación de 'Salto de diálogo' en archivos</system:String>
+    <system:String x:Key="dialogJumpFileResultBehaviourToolTip">Comportamiento para acceder a la ventana de diálogo 'Abrir/Guardar como' cuando el resultado es una ruta de archivo</system:String>
+    <system:String x:Key="DialogJumpFileResultBehaviourFullPath">Rellenar la ruta completa en el cuadro de nombre de archivo</system:String>
+    <system:String x:Key="DialogJumpFileResultBehaviourFullPathOpen">Rellenar la ruta completa en el cuadro de nombre de archivo y abrir</system:String>
     <system:String x:Key="DialogJumpFileResultBehaviourDirectory">Rellenar directorio en el cuadro de ruta</system:String>
 
     <!--  Setting Proxy  -->
@@ -455,6 +464,7 @@
     <system:String x:Key="website">Sitio web</system:String>
     <system:String x:Key="github">GitHub</system:String>
     <system:String x:Key="docs">Documentación</system:String>
+    <system:String x:Key="crowdin">Crowdin</system:String>
     <system:String x:Key="version">Versión</system:String>
     <system:String x:Key="icons">Iconos</system:String>
     <system:String x:Key="about_activate_times">Ha activado Flow Launcher {0} veces</system:String>
@@ -489,6 +499,10 @@
     <system:String x:Key="LogLevelDEBUG">Depuración</system:String>
     <system:String x:Key="settingWindowFontTitle">Configuración de fuente de la ventana</system:String>
 
+    <!--  Plugin Settings Window  -->
+    <system:String x:Key="pluginSettingsWindowTitle">Configuración: {0}</system:String>
+    <system:String x:Key="pluginSettingsWindowOpenFailed">No se ha podido abrir la ventana de configuración del complemento</system:String>
+
     <!--  Release Notes Window  -->
     <system:String x:Key="seeMoreReleaseNotes">Ver más notas de la versión en GitHub</system:String>
     <system:String x:Key="checkNetworkConnectionTitle">No se ha podido obtener las notas de la versión</system:String>
@@ -519,6 +533,7 @@
     <system:String x:Key="defaultBrowser_newWindow">Nueva ventana</system:String>
     <system:String x:Key="defaultBrowser_newTab">Nueva pestaña</system:String>
     <system:String x:Key="defaultBrowser_parameter">Modo privado</system:String>
+    <system:String x:Key="defaultBrowser_extraArgs">Argumentos adicionales</system:String>
     <system:String x:Key="defaultBrowser_default">Predeterminado</system:String>
     <system:String x:Key="defaultBrowser_new_profile">Nuevo perfil</system:String>
 
@@ -560,7 +575,7 @@
     <system:String x:Key="hotkeyUnavailable">El atajo de teclado actual no está disponible.</system:String>
     <system:String x:Key="hotkeyUnavailableUneditable">Este atajo de teclado está reservado para &quot;{0}&quot; y no se puede utilizar. Por favor, elija otro atajo de teclado.</system:String>
     <system:String x:Key="hotkeyUnavailableEditable">Este atajo de teclado ya está siendo utilizado por &quot;{0}&quot;. Si pulsa «Sobrescribir», se eliminará de &quot;{0}&quot;.</system:String>
-    <system:String x:Key="hotkeyRegGuide">Pulsar las teclas que se deseen utilizar para esta función.</system:String>
+    <system:String x:Key="hotkeyRegGuide">Pulsar las teclas que se desean utilizar para esta función.</system:String>
     <system:String x:Key="emptyPluginHotkey">La tecla de acceso rápido y la palabra clave de acción están vacías</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->

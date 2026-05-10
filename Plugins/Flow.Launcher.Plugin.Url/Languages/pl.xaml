@@ -10,13 +10,13 @@
     <system:String x:Key="flowlauncher_plugin_url_plugin_choose">Wybierz</system:String>
     <system:String x:Key="flowlauncher_plugin_url_plugin_filter">Aplikacja(*.exe)|*.exe|Wszystkie pliki|*.*</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_url_use_custom_browser">Use custom instead of Flow's default web browser</system:String>
-    <system:String x:Key="flowlauncher_plugin_url_browser_path">Browser path</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_use_custom_browser">Użyj własnej przeglądarki zamiast domyślnej dla Flow</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_browser_path">Ścieżka do przeglądarki</system:String>
 
     <system:String x:Key="flowlauncher_plugin_url_new_tab">Nowa karta</system:String>
     <system:String x:Key="flowlauncher_plugin_url_new_window">Nowe okno</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_url_private_mode">Private mode</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_private_mode">Tryb prywatny</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_url_usehttps">Prefer https over http</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_usehttps">Preferuj https zamiast http</system:String>
 </ResourceDictionary>

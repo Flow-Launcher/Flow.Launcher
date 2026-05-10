@@ -49,6 +49,7 @@
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">Використовувати розташування результату пошуку як робочу директорію виконуваного файлу</system:String>
     <system:String x:Key="plugin_explorer_display_more_info_in_tooltip">Показувати більше інформації, наприклад розмір і дату створення, у підказках</system:String>
     <system:String x:Key="plugin_explorer_default_open_in_file_manager">Натисніть Enter, щоб відкрити теку у типовому файловому менеджері</system:String>
+    <system:String x:Key="plugin_explorer_boost_home_folder_score">Надавати пріоритет домашнім текам (Документи, Робочий стіл, Завантаження тощо) у результатах пошуку</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Використовуйте індексний пошук для пошуку шляху</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Параметри індексації</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">Пошук:</system:String>

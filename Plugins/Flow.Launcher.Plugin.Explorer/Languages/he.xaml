@@ -49,6 +49,7 @@
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">השתמש במיקום תוצאת החיפוש כספריית העבודה של הקובץ להפעלה</system:String>
     <system:String x:Key="plugin_explorer_display_more_info_in_tooltip">Display more information like size and age in tooltips</system:String>
     <system:String x:Key="plugin_explorer_default_open_in_file_manager">לחץ Enter כדי לפתוח את התיקייה במנהל הקבצים המוגדר כברירת מחדל</system:String>
+    <system:String x:Key="plugin_explorer_boost_home_folder_score">Prioritize home folders (Documents, Desktop, Downloads, etc.) in search results</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">השתמש בחיפוש אינדקס עבור חיפוש נתיבים</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">אפשרויות אינדקס</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">חיפוש:</system:String>

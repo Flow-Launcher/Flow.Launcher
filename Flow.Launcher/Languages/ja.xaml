@@ -21,7 +21,7 @@
     <system:String x:Key="restartToEnablePortableMode">Flow Launcherはポータブルモードの有効化のために再起動する必要があります。再起動の後、パソコンに保存された設定項目は削除され、ポータブルな形式で保存されます</system:String>
     <system:String x:Key="moveToDifferentLocation">Flow Launcherはポータブルモードの有効化を検知しました。Flow Launcherを別の場所に移動しますか？</system:String>
     <system:String x:Key="shortcutsUninstallerCreated">Flow Launcherはポータブルモードの無効化を検知しました。関連するショートカットやアンインストーラーが配置されます</system:String>
-    <system:String x:Key="userDataDuplicated">Flow Launcherはあなたのユーザーデータが{0} と {1} の両方に存在することを検知しました。{2}{2}続行するには、{1}を削除してください。処理は中断されました。</system:String>
+    <system:String x:Key="userDataDuplicated">Flow Launcherはあなたのユーザーデータが {0} と {1} の両方に存在することを検知しました。{2}{2}続行するには、{1}を削除してください。処理は中断されました。</system:String>
 
     <!--  Plugin Loader  -->
     <system:String x:Key="pluginHasErrored">以下のプラグインにエラーがあるためロードできません：</system:String>
@@ -123,6 +123,9 @@
     <system:String x:Key="hideOnStartupToolTip">起動後、Flow Launcher の検索ウィンドウは非表示になり、トレイに格納されます。</system:String>
     <system:String x:Key="hideNotifyIcon">トレイアイコンを隠す</system:String>
     <system:String x:Key="hideNotifyIconToolTip">トレイアイコンが非表示になっているときは、検索ウィンドウを右クリックすることで設定メニューを開くことができます。</system:String>
+    <system:String x:Key="ignoreAccents">Ignore accents when searching</system:String>
+    <system:String x:Key="ignoreAccentsToolTip">Treat accented and unaccented characters as equivalent.</system:String>
+    <system:String x:Key="promptIgnoreAccents">Would you like to turn on the option to ignore accents when searching?</system:String>
     <system:String x:Key="querySearchPrecision">クエリ検索精度</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">表示する結果に必要な一致スコアの最小値を変更します。</system:String>
     <system:String x:Key="SearchPrecisionNone">最低</system:String>
@@ -142,6 +145,7 @@
     <system:String x:Key="DoublePinyinSchemasXingKongJianDao">Xing Kong Jian Dao</system:String>
     <system:String x:Key="DoublePinyinSchemasDaNiu">Da Niu</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoLang">Xiao Lang</system:String>
+    <system:String x:Key="HelpUsTranslateFlow">Help us translate Flow</system:String>
 
     <system:String x:Key="AlwaysPreview">常にプレビューする</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Flow が有効になったとき、常にプレビューパネルを開きます。 {0} を押してプレビューの表示/非表示を切り替えます。</system:String>
@@ -237,9 +241,9 @@
     <system:String x:Key="fileNotFoundMessage">展開されたzipファイルからplugin.jsonが見つからないか、このパス {0} が存在しません</system:String>
     <system:String x:Key="pluginExistAlreadyMessage">同じIDとバージョンのプラグインがすでに存在するか、またはこのダウンロードしたプラグインよりもバージョンが大きいです</system:String>
     <system:String x:Key="errorCreatingSettingPanel">プラグイン {0}の設定パネル作成中にエラーが発生しました:{1}{2}</system:String>
-    <system:String x:Key="pluginMinimumAppVersionUnsatisfiedTitle">{0} requires Flow version {1} to run</system:String>
-    <system:String x:Key="pluginMinimumAppVersionUnsatisfiedMessage">Flow does not meet the minimum version requirements for {0} to run. Do you want to continue installing it?{1}{1}We recommend updating Flow to the latest version to ensure that {0} works without issues.</system:String>
-    <system:String x:Key="pluginJsonInvalidOrCorrupted">Failed to install plugin because plugin.json is invalid or corrupted</system:String>
+    <system:String x:Key="pluginMinimumAppVersionUnsatisfiedTitle">{0} を実行するには Flow のバージョン {1} が必要です</system:String>
+    <system:String x:Key="pluginMinimumAppVersionUnsatisfiedMessage">Flow は {0} の実行に必要な最低バージョン要求を満たしていません｡インストールを続けますか?{1}{1}{0}が正しく動作することを保証するために、Flow を最新版に更新することをおすすめします。</system:String>
+    <system:String x:Key="pluginJsonInvalidOrCorrupted">plugin.json が無効または破損しているため、プラグインのインストールに失敗しました</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">プラグインストア</system:String>
@@ -247,6 +251,11 @@
     <system:String x:Key="pluginStore_RecentlyUpdated">最近の更新</system:String>
     <system:String x:Key="pluginStore_None">プラグイン</system:String>
     <system:String x:Key="pluginStore_Installed">インストール済み</system:String>
+    <system:String x:Key="PluginStoreSortModeDefault">デフォルト</system:String>
+    <system:String x:Key="PluginStoreSortModeName">名前</system:String>
+    <system:String x:Key="PluginStoreSortModeReleaseDate">リリース日</system:String>
+    <system:String x:Key="PluginStoreSortModeUpdatedDate">更新日</system:String>
+    <system:String x:Key="PluginStoreSortingModeComboboxLabel">Sorting Mode:</system:String>
     <system:String x:Key="refresh">更新</system:String>
     <system:String x:Key="installbtn">インストール</system:String>
     <system:String x:Key="uninstallbtn">アンインストール</system:String>
@@ -309,7 +318,7 @@
     <system:String x:Key="ImportThemeSizeToolTip">テーマのデザイナーによって意図されたサイズ値が利用可能なとき、それを取得して適用します。</system:String>
     <system:String x:Key="CustomizeToolTip">カスタマイズ</system:String>
     <system:String x:Key="windowMode">ウィンドウモード</system:String>
-    <system:String x:Key="opacity">透過度</system:String>
+    <system:String x:Key="opacity">不透過度</system:String>
     <system:String x:Key="theme_load_failure_path_not_exists">テーマ {0} が存在しません、デフォルトのテーマに戻します。</system:String>
     <system:String x:Key="theme_load_failure_parse_error">テーマ {0} を読み込めません、デフォルトのテーマに戻します。</system:String>
     <system:String x:Key="ThemeFolder">テーマフォルダー</system:String>
@@ -386,7 +395,7 @@
     <system:String x:Key="ReloadPluginHotkeyToolTip">プラグインがデータを再読み込み、または更新することが必要な場合に使用してください。</system:String>
     <system:String x:Key="AdditionalHotkeyToolTip">この機能のホットキーはもう一つ追加できます。</system:String>
     <system:String x:Key="customQueryHotkey">カスタムクエリ ホットキー</system:String>
-    <system:String x:Key="customQueryShortcut">Custom Query Shortcut</system:String>
+    <system:String x:Key="customQueryShortcut">クエリを開くカスタム ショートカット</system:String>
     <system:String x:Key="builtinShortcuts">組み込みショートカット</system:String>
     <system:String x:Key="customQuery">クエリー</system:String>
     <system:String x:Key="customShortcut">ショートカット</system:String>
@@ -455,6 +464,7 @@
     <system:String x:Key="website">ウェブサイト</system:String>
     <system:String x:Key="github">GitHub</system:String>
     <system:String x:Key="docs">ドキュメント</system:String>
+    <system:String x:Key="crowdin">Crowdin</system:String>
     <system:String x:Key="version">バージョン</system:String>
     <system:String x:Key="icons">アイコン</system:String>
     <system:String x:Key="about_activate_times">あなたはFlow Launcherを {0} 回利用しました</system:String>
@@ -489,6 +499,10 @@
     <system:String x:Key="LogLevelDEBUG">デバッグ</system:String>
     <system:String x:Key="settingWindowFontTitle">設定ウィンドウで使用するフォント</system:String>
 
+    <!--  Plugin Settings Window  -->
+    <system:String x:Key="pluginSettingsWindowTitle">設定: {0}</system:String>
+    <system:String x:Key="pluginSettingsWindowOpenFailed">プラグイン設定ウィンドウを開けませんでした</system:String>
+
     <!--  Release Notes Window  -->
     <system:String x:Key="seeMoreReleaseNotes">GitHub で詳細なリリース ノートを見る</system:String>
     <system:String x:Key="checkNetworkConnectionTitle">リリースノートの取得に失敗</system:String>
@@ -519,6 +533,7 @@
     <system:String x:Key="defaultBrowser_newWindow">新しいウィンドウ</system:String>
     <system:String x:Key="defaultBrowser_newTab">新しいタブ</system:String>
     <system:String x:Key="defaultBrowser_parameter">プライベートモード</system:String>
+    <system:String x:Key="defaultBrowser_extraArgs">そのほかの引数</system:String>
     <system:String x:Key="defaultBrowser_default">デフォルト</system:String>
     <system:String x:Key="defaultBrowser_new_profile">新しいプロファイル</system:String>
 
@@ -580,7 +595,7 @@
     <system:String x:Key="commonCancel">キャンセル</system:String>
     <system:String x:Key="commonReset">リセット</system:String>
     <system:String x:Key="commonDelete">削除</system:String>
-    <system:String x:Key="commonOK">Update</system:String>
+    <system:String x:Key="commonOK">OK</system:String>
     <system:String x:Key="commonYes">はい</system:String>
     <system:String x:Key="commonNo">いいえ</system:String>
     <system:String x:Key="commonBackground">バックグラウンド</system:String>
@@ -600,7 +615,7 @@
     <system:String x:Key="reportWindow_report_succeed">クラッシュレポートの送信に成功しました</system:String>
     <system:String x:Key="reportWindow_report_failed">クラッシュレポートの送信に失敗しました</system:String>
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcherにエラーが発生しました</system:String>
-    <system:String x:Key="reportWindow_please_open_issue">Please open new issue in</system:String>
+    <system:String x:Key="reportWindow_please_open_issue">次の場所で新しい issue を開いてください:</system:String>
     <system:String x:Key="reportWindow_upload_log">1. ログファイルをアップロード: {0}</system:String>
     <system:String x:Key="reportWindow_copy_below">2. 例外メッセージ以下をコピー</system:String>
 
