@@ -38,11 +38,11 @@
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning_title">Inštalácia z neznámeho zdroja</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning">Tento plugin inštalujete z neznámeho zdroja a môže obsahovať potenciálne riziká!{0}{0}Uistite sa, že rozumiete, odkiaľ tento plugin pochádza, a že je bezpečný.{0}{0}Chcete pokračovať?{0}{0}(Toto upozornenie môžete vypnúť v nastaveniach)</system:String>
 
-    <system:String x:Key="plugin_pluginsmanager_install_success_no_restart">Plugin {0} bol úspešne nainštalovaný. Prosím, reštartuje Flow.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_uninstall_success_no_restart">Plugin {0} bol úspešne odinštalovaný. Prosím, reštartuje Flow.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_success_no_restart">Plugin {0} bol úspešne aktualizovaný. Prosím, reštartuje Flow.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_success_no_restart">Plugin {0} bol úspešne nainštalovaný. Prosím, reštartujte Flow.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_uninstall_success_no_restart">Plugin {0} bol úspešne odinštalovaný. Prosím, reštartujte Flow.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_success_no_restart">Plugin {0} bol úspešne aktualizovaný. Prosím, reštartujte Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_all_success_no_restart">Pluginy úspešne aktualizované ({0}). Reštartuje Flow.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_modified_error">Plugin {0} už bol upravený. Prosím, reštartuje Flow pred ďalšími zmenami.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_modified_error">Plugin {0} už bol upravený. Prosím, reštartujte Flow pred ďalšími zmenami.</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_modified_error_title">Plugin {0} už bol upravený</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_modified_error_message">Pred vykonaním ďalších zmien reštartujte Flow Launcher</system:String>
 

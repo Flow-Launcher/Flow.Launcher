@@ -123,6 +123,9 @@
     <system:String x:Key="hideOnStartupToolTip">啟動後，Flow Launcher搜尋視窗會隱藏在系統匣中。</system:String>
     <system:String x:Key="hideNotifyIcon">隱藏任務欄圖示</system:String>
     <system:String x:Key="hideNotifyIconToolTip">當圖示從系統列隱藏時，可以透過在搜尋視窗上按右鍵來開啟設定選單。</system:String>
+    <system:String x:Key="ignoreAccents">Ignore accents when searching</system:String>
+    <system:String x:Key="ignoreAccentsToolTip">Treat accented and unaccented characters as equivalent.</system:String>
+    <system:String x:Key="promptIgnoreAccents">Would you like to turn on the option to ignore accents when searching?</system:String>
     <system:String x:Key="querySearchPrecision">查詢搜尋精確度</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">更改結果所需的最低匹配分數。</system:String>
     <system:String x:Key="SearchPrecisionNone">無</system:String>
@@ -142,6 +145,7 @@
     <system:String x:Key="DoublePinyinSchemasXingKongJianDao">Xing Kong Jian Dao</system:String>
     <system:String x:Key="DoublePinyinSchemasDaNiu">Da Niu</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoLang">Xiao Lang</system:String>
+    <system:String x:Key="HelpUsTranslateFlow">Help us translate Flow</system:String>
 
     <system:String x:Key="AlwaysPreview">一律預覽</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">當 Flow 啟動時，一律開啟預覽面板。按下 {0} 可切換預覽。</system:String>
@@ -237,6 +241,9 @@
     <system:String x:Key="fileNotFoundMessage">Unable to find plugin.json from the extracted zip file, or this path {0} does not exist</system:String>
     <system:String x:Key="pluginExistAlreadyMessage">A plugin with the same ID and version already exists, or the version is greater than this downloaded plugin</system:String>
     <system:String x:Key="errorCreatingSettingPanel">Error creating setting panel for plugin {0}:{1}{2}</system:String>
+    <system:String x:Key="pluginMinimumAppVersionUnsatisfiedTitle">{0} requires Flow version {1} to run</system:String>
+    <system:String x:Key="pluginMinimumAppVersionUnsatisfiedMessage">Flow does not meet the minimum version requirements for {0} to run. Do you want to continue installing it?{1}{1}We recommend updating Flow to the latest version to ensure that {0} works without issues.</system:String>
+    <system:String x:Key="pluginJsonInvalidOrCorrupted">Failed to install plugin because plugin.json is invalid or corrupted</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">插件商店</system:String>
@@ -244,6 +251,11 @@
     <system:String x:Key="pluginStore_RecentlyUpdated">Recently Updated</system:String>
     <system:String x:Key="pluginStore_None">插件</system:String>
     <system:String x:Key="pluginStore_Installed">Installed</system:String>
+    <system:String x:Key="PluginStoreSortModeDefault">Default</system:String>
+    <system:String x:Key="PluginStoreSortModeName">名稱</system:String>
+    <system:String x:Key="PluginStoreSortModeReleaseDate">Release Date</system:String>
+    <system:String x:Key="PluginStoreSortModeUpdatedDate">Updated Date</system:String>
+    <system:String x:Key="PluginStoreSortingModeComboboxLabel">Sorting Mode:</system:String>
     <system:String x:Key="refresh">重新整理</system:String>
     <system:String x:Key="installbtn">安裝</system:String>
     <system:String x:Key="uninstallbtn">解除安裝</system:String>
@@ -452,6 +464,7 @@
     <system:String x:Key="website">官方網站</system:String>
     <system:String x:Key="github">GitHub</system:String>
     <system:String x:Key="docs">文檔</system:String>
+    <system:String x:Key="crowdin">Crowdin</system:String>
     <system:String x:Key="version">版本</system:String>
     <system:String x:Key="icons">圖示</system:String>
     <system:String x:Key="about_activate_times">您已經啟動了 Flow Launcher {0} 次</system:String>
@@ -486,6 +499,10 @@
     <system:String x:Key="LogLevelDEBUG">Debug</system:String>
     <system:String x:Key="settingWindowFontTitle">Setting Window Font</system:String>
 
+    <!--  Plugin Settings Window  -->
+    <system:String x:Key="pluginSettingsWindowTitle">Settings: {0}</system:String>
+    <system:String x:Key="pluginSettingsWindowOpenFailed">Failed to open plugin settings window</system:String>
+
     <!--  Release Notes Window  -->
     <system:String x:Key="seeMoreReleaseNotes">See more release notes on GitHub</system:String>
     <system:String x:Key="checkNetworkConnectionTitle">Failed to fetch release notes</system:String>
@@ -516,6 +533,7 @@
     <system:String x:Key="defaultBrowser_newWindow">新增視窗</system:String>
     <system:String x:Key="defaultBrowser_newTab">新增分頁</system:String>
     <system:String x:Key="defaultBrowser_parameter">無痕模式</system:String>
+    <system:String x:Key="defaultBrowser_extraArgs">Extra Args</system:String>
     <system:String x:Key="defaultBrowser_default">Default</system:String>
     <system:String x:Key="defaultBrowser_new_profile">New Profile</system:String>
 

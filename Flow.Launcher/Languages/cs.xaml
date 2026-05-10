@@ -123,6 +123,9 @@
     <system:String x:Key="hideOnStartupToolTip">Flow Launcher search window is hidden in the tray after starting up.</system:String>
     <system:String x:Key="hideNotifyIcon">Skrýt ikonu v systémové liště</system:String>
     <system:String x:Key="hideNotifyIconToolTip">Pokud je ikona v oznamovací oblasti skrytá, nastavení lze otevřít kliknutím pravým tlačítkem myši na okno vyhledávání.</system:String>
+    <system:String x:Key="ignoreAccents">Ignore accents when searching</system:String>
+    <system:String x:Key="ignoreAccentsToolTip">Treat accented and unaccented characters as equivalent.</system:String>
+    <system:String x:Key="promptIgnoreAccents">Would you like to turn on the option to ignore accents when searching?</system:String>
     <system:String x:Key="querySearchPrecision">Přesnost vyhledávání</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Změní minimální skóre shody, které je nutné pro zobrazení výsledků.</system:String>
     <system:String x:Key="SearchPrecisionNone">None</system:String>
@@ -142,6 +145,7 @@
     <system:String x:Key="DoublePinyinSchemasXingKongJianDao">Xing Kong Jian Dao</system:String>
     <system:String x:Key="DoublePinyinSchemasDaNiu">Da Niu</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoLang">Xiao Lang</system:String>
+    <system:String x:Key="HelpUsTranslateFlow">Help us translate Flow</system:String>
 
     <system:String x:Key="AlwaysPreview">Vždy zobrazit náhled</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Při aktivaci služby Flow vždy otevřete panel náhledu. Stisknutím klávesy {0} přepnete náhled.</system:String>
@@ -237,6 +241,9 @@
     <system:String x:Key="fileNotFoundMessage">Unable to find plugin.json from the extracted zip file, or this path {0} does not exist</system:String>
     <system:String x:Key="pluginExistAlreadyMessage">A plugin with the same ID and version already exists, or the version is greater than this downloaded plugin</system:String>
     <system:String x:Key="errorCreatingSettingPanel">Error creating setting panel for plugin {0}:{1}{2}</system:String>
+    <system:String x:Key="pluginMinimumAppVersionUnsatisfiedTitle">{0} requires Flow version {1} to run</system:String>
+    <system:String x:Key="pluginMinimumAppVersionUnsatisfiedMessage">Flow does not meet the minimum version requirements for {0} to run. Do you want to continue installing it?{1}{1}We recommend updating Flow to the latest version to ensure that {0} works without issues.</system:String>
+    <system:String x:Key="pluginJsonInvalidOrCorrupted">Failed to install plugin because plugin.json is invalid or corrupted</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Obchod s pluginy</system:String>
@@ -244,6 +251,11 @@
     <system:String x:Key="pluginStore_RecentlyUpdated">Nedávno aktualizované</system:String>
     <system:String x:Key="pluginStore_None">Pluginy</system:String>
     <system:String x:Key="pluginStore_Installed">Nainstalovaný</system:String>
+    <system:String x:Key="PluginStoreSortModeDefault">Default</system:String>
+    <system:String x:Key="PluginStoreSortModeName">Jméno</system:String>
+    <system:String x:Key="PluginStoreSortModeReleaseDate">Release Date</system:String>
+    <system:String x:Key="PluginStoreSortModeUpdatedDate">Updated Date</system:String>
+    <system:String x:Key="PluginStoreSortingModeComboboxLabel">Sorting Mode:</system:String>
     <system:String x:Key="refresh">Obnovit</system:String>
     <system:String x:Key="installbtn">Instalovat</system:String>
     <system:String x:Key="uninstallbtn">Odinstalovat</system:String>
@@ -452,6 +464,7 @@
     <system:String x:Key="website">Webová stránka</system:String>
     <system:String x:Key="github">GitHub</system:String>
     <system:String x:Key="docs">Dokumentace</system:String>
+    <system:String x:Key="crowdin">Crowdin</system:String>
     <system:String x:Key="version">Verze</system:String>
     <system:String x:Key="icons">Ikony</system:String>
     <system:String x:Key="about_activate_times">Flow Launcher byl aktivován {0} krát</system:String>
@@ -486,6 +499,10 @@
     <system:String x:Key="LogLevelDEBUG">Debug</system:String>
     <system:String x:Key="settingWindowFontTitle">Setting Window Font</system:String>
 
+    <!--  Plugin Settings Window  -->
+    <system:String x:Key="pluginSettingsWindowTitle">Settings: {0}</system:String>
+    <system:String x:Key="pluginSettingsWindowOpenFailed">Failed to open plugin settings window</system:String>
+
     <!--  Release Notes Window  -->
     <system:String x:Key="seeMoreReleaseNotes">See more release notes on GitHub</system:String>
     <system:String x:Key="checkNetworkConnectionTitle">Failed to fetch release notes</system:String>
@@ -516,6 +533,7 @@
     <system:String x:Key="defaultBrowser_newWindow">Nové okno</system:String>
     <system:String x:Key="defaultBrowser_newTab">Nová karta</system:String>
     <system:String x:Key="defaultBrowser_parameter">Soukromý režim</system:String>
+    <system:String x:Key="defaultBrowser_extraArgs">Extra Args</system:String>
     <system:String x:Key="defaultBrowser_default">Default</system:String>
     <system:String x:Key="defaultBrowser_new_profile">New Profile</system:String>
 

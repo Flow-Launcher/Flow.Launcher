@@ -171,6 +171,15 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         void OpenSettingDialog();
 
+
+        /// <summary>
+        /// Open plugin setting window for a specific plugin.
+        /// Reuses the existing window when that plugin's settings window is already open.
+        /// </summary>
+        /// <param name="pluginId">ID of the plugin whose settings window should be opened</param>
+        /// <returns>True if the plugin settings window was successfully opened or reused; false otherwise</returns>
+        bool OpenPluginSettingsWindow(string pluginId);
+
         /// <summary>
         /// Get translation of current language
         /// You need to implement IPluginI18n if you want to support multiple languages for your plugin
@@ -542,12 +551,12 @@ namespace Flow.Launcher.Plugin
         public Task<bool> UpdatePluginManifestAsync(bool usePrimaryUrlOnly = false, CancellationToken token = default);
 
         /// <summary>
-        /// Get the plugin manifest.
+        /// Get the current plugin manifest entries known to Flow Launcher.
         /// </summary>
-        /// <remarks>
-        /// If Flow cannot get manifest data, this could be null
-        /// </remarks>
-        /// <returns></returns>
+        /// <returns>
+        /// A non-null read-only list of <see cref="UserPlugin"/> entries. The list may be empty if the
+        /// manifest has not been loaded yet, or if no successful manifest fetch has completed in the current session.
+        /// </returns>
         public IReadOnlyList<UserPlugin> GetPluginManifest();
 
         /// <summary>
@@ -646,6 +655,20 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         /// <returns></returns>
         string GetLogDirectory();
+
+        /// <summary>
+        /// Raised when StringMatcher behavior or options change.
+        /// This can include changes such as case sensitivity, diacritic handling, or
+        /// other matcher configuration that affect how queries are compared to
+        /// candidate strings. Such changes can alter the results produced by
+        /// <see cref="FuzzySearch(string,string)"/> and the content of any existing
+        /// <see cref="MatchResult"/> values.
+        ///
+        /// Plugins that cache match results or ranking information should subscribe
+        /// to this event so they can invalidate and recompute those caches when the
+        /// string matcher behavior changes.
+        /// </summary>
+        event EventHandler StringMatcherBehaviorChanged;
 
         /// <summary>
         /// Start a process with support for handling administrative privileges

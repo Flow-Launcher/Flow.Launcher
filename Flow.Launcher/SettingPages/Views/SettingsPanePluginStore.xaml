@@ -22,7 +22,7 @@
             Filter="PluginStoreCollectionView_OnFilter"
             Source="{Binding ExternalPlugins}">
             <CollectionViewSource.GroupDescriptions>
-                <PropertyGroupDescription PropertyName="Category" />
+                <PropertyGroupDescription PropertyName="DefaultCategory" />
             </CollectionViewSource.GroupDescriptions>
         </CollectionViewSource>
     </ui:Page.Resources>
@@ -32,7 +32,7 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="72" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Border
@@ -50,77 +50,104 @@
         <DockPanel
             Grid.Row="0"
             Grid.Column="1"
-            Margin="5 24 0 0">
-
+            Margin="5 24 0 8">
             <ikw:SimpleStackPanel
                 HorizontalAlignment="Right"
                 VerticalAlignment="Center"
                 DockPanel.Dock="Right"
-                Orientation="Horizontal"
+                Orientation="Vertical"
                 Spacing="8">
-                <Button
-                    Height="34"
-                    Margin="0 5 0 5"
-                    Padding="12 4"
+                <ikw:SimpleStackPanel
                     HorizontalAlignment="Right"
-                    VerticalAlignment="Center"
-                    Command="{Binding RefreshExternalPluginsCommand}"
-                    Content="{DynamicResource refresh}"
-                    FontSize="13" />
-                <Button Height="34">
-                    <ui:FontIcon FontSize="14" Glyph="&#xe71c;" />
-                    <ui:FlyoutService.Flyout>
-                        <ui:MenuFlyout x:Name="FilterFlyout" Placement="Bottom">
-                            <MenuItem
-                                Header=".Net"
-                                IsCheckable="True"
-                                IsChecked="{Binding ShowDotNet, Mode=TwoWay}"
-                                StaysOpenOnClick="True" />
-                            <MenuItem
-                                Header="Python"
-                                IsCheckable="True"
-                                IsChecked="{Binding ShowPython, Mode=TwoWay}"
-                                StaysOpenOnClick="True" />
-                            <MenuItem
-                                Header="Node.js"
-                                IsCheckable="True"
-                                IsChecked="{Binding ShowNodeJs, Mode=TwoWay}"
-                                StaysOpenOnClick="True" />
-                            <MenuItem
-                                Header="Exe"
-                                IsCheckable="True"
-                                IsChecked="{Binding ShowExecutable, Mode=TwoWay}"
-                                StaysOpenOnClick="True" />
-                        </ui:MenuFlyout>
-                    </ui:FlyoutService.Flyout>
-                </Button>
-                <Button
-                    Height="34"
-                    Command="{Binding InstallPluginCommand}"
-                    ToolTip="{DynamicResource installLocalPluginTooltip}">
-                    <ui:FontIcon FontSize="14" Glyph="&#xE8DA;" />
-                </Button>
-                <Button
-                    Height="34"
-                    Command="{Binding CheckPluginUpdatesCommand}"
-                    ToolTip="{DynamicResource checkPluginUpdatesTooltip}">
-                    <ui:FontIcon FontSize="14" Glyph="&#xecc5;" />
-                </Button>
-                <TextBox
-                    Name="PluginStoreFilterTextbox"
-                    Width="150"
-                    Height="34"
+                    Orientation="Horizontal"
+                    Spacing="8">
+                    <Button
+                        Height="34"
+                        Padding="12 4"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Command="{Binding RefreshExternalPluginsCommand}"
+                        Content="{DynamicResource refresh}"
+                        FontSize="13" />
+                    <Button Height="34">
+                        <ui:FontIcon FontSize="14" Glyph="&#xe71c;" />
+                        <ui:FlyoutService.Flyout>
+                            <ui:MenuFlyout x:Name="FilterFlyout" Placement="Bottom">
+                                <MenuItem
+                                    Header=".Net"
+                                    IsCheckable="True"
+                                    IsChecked="{Binding ShowDotNet, Mode=TwoWay}"
+                                    StaysOpenOnClick="True" />
+                                <MenuItem
+                                    Header="Python"
+                                    IsCheckable="True"
+                                    IsChecked="{Binding ShowPython, Mode=TwoWay}"
+                                    StaysOpenOnClick="True" />
+                                <MenuItem
+                                    Header="Node.js"
+                                    IsCheckable="True"
+                                    IsChecked="{Binding ShowNodeJs, Mode=TwoWay}"
+                                    StaysOpenOnClick="True" />
+                                <MenuItem
+                                    Header="Exe"
+                                    IsCheckable="True"
+                                    IsChecked="{Binding ShowExecutable, Mode=TwoWay}"
+                                    StaysOpenOnClick="True" />
+                            </ui:MenuFlyout>
+                        </ui:FlyoutService.Flyout>
+                    </Button>
+                    <Button
+                        Height="34"
+                        Command="{Binding InstallPluginCommand}"
+                        ToolTip="{DynamicResource installLocalPluginTooltip}">
+                        <ui:FontIcon FontSize="14" Glyph="&#xE8DA;" />
+                    </Button>
+                    <Button
+                        Height="34"
+                        Command="{Binding CheckPluginUpdatesCommand}"
+                        ToolTip="{DynamicResource checkPluginUpdatesTooltip}">
+                        <ui:FontIcon FontSize="14" Glyph="&#xecc5;" />
+                    </Button>
+                    <TextBox
+                        Name="PluginStoreFilterTextbox"
+                        Width="150"
+                        Height="34"
+                        Margin="0 0 26 0"
+                        HorizontalAlignment="Right"
+                        VerticalContentAlignment="Center"
+                        ui:ControlHelper.PlaceholderText="{DynamicResource searchplugin}"
+                        ContextMenu="{StaticResource TextBoxContextMenu}"
+                        DockPanel.Dock="Right"
+                        FontSize="14"
+                        Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}"
+                        ToolTip="{DynamicResource searchpluginToolTip}"
+                        ToolTipService.InitialShowDelay="200"
+                        ToolTipService.Placement="Top" />
+                </ikw:SimpleStackPanel>
+
+                <ikw:SimpleStackPanel
+                    HorizontalAlignment="Right"
                     Margin="0 0 26 0"
-                    HorizontalAlignment="Right"
-                    VerticalContentAlignment="Center"
-                    ui:ControlHelper.PlaceholderText="{DynamicResource searchplugin}"
-                    ContextMenu="{StaticResource TextBoxContextMenu}"
-                    DockPanel.Dock="Right"
-                    FontSize="14"
-                    Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}"
-                    ToolTip="{DynamicResource searchpluginToolTip}"
-                    ToolTipService.InitialShowDelay="200"
-                    ToolTipService.Placement="Top" />
+                    Orientation="Horizontal"
+                    Spacing="8">
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="14"
+                        Foreground="{DynamicResource Color15B}"
+                        Text="{DynamicResource PluginStoreSortingModeComboboxLabel}" />
+                    <ComboBox
+                        x:Name="SortModeComboBox"
+                        Width="Auto"
+                        Height="34"
+                        MinWidth="150"
+                        MaxWidth="150"
+                        HorizontalContentAlignment="Left"
+                        Background="{DynamicResource Color00B}"
+                        ItemsSource="{Binding SortModes}"
+                        DisplayMemberPath="Display"
+                        SelectedValuePath="Value" 
+                        SelectedValue="{Binding SelectedSortMode, Mode=TwoWay}"/>
+                </ikw:SimpleStackPanel>
             </ikw:SimpleStackPanel>
         </DockPanel>
 
@@ -333,7 +360,7 @@
                                         Margin="18 24 0 0"
                                         HorizontalAlignment="Left"
                                         RenderOptions.BitmapScalingMode="Fant"
-                                        Source="{Binding IcoPathAbsolute, IsAsync=True}" />
+                                        Source="{Binding IcoPath, IsAsync=True}" />
                                     <Border
                                         x:Name="LabelUpdate"
                                         Height="12"

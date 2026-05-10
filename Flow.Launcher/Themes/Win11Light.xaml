@@ -52,7 +52,7 @@
         <Setter Property="Padding" Value="0 0 50 0" />
         <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
         <Setter Property="CaretBrush" Value="{DynamicResource Color05B}" />
-        <Setter Property="SelectionBrush" Value="{StaticResource SystemAccentColorLight1Brush}" />
+        <Setter Property="SelectionBrush" Value="{DynamicResource SystemAccentColorLight1Brush}" />
         <Setter Property="FontSize" Value="16" />
         <Setter Property="Height" Value="42" />
     </Style>

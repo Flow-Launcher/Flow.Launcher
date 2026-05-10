@@ -123,6 +123,9 @@
     <system:String x:Key="hideOnStartupToolTip">Flow Launcher 启动后搜索窗口隐藏在托盘中。</system:String>
     <system:String x:Key="hideNotifyIcon">隐藏任务栏图标</system:String>
     <system:String x:Key="hideNotifyIconToolTip">任务栏图标被隐藏时，右键点击搜索窗口即可打开设置菜单。</system:String>
+    <system:String x:Key="ignoreAccents">Ignore accents when searching</system:String>
+    <system:String x:Key="ignoreAccentsToolTip">Treat accented and unaccented characters as equivalent.</system:String>
+    <system:String x:Key="promptIgnoreAccents">Would you like to turn on the option to ignore accents when searching?</system:String>
     <system:String x:Key="querySearchPrecision">查询搜索精度</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">更改匹配成功所需的最低分数。</system:String>
     <system:String x:Key="SearchPrecisionNone">无</system:String>
@@ -142,6 +145,7 @@
     <system:String x:Key="DoublePinyinSchemasXingKongJianDao">星空键道</system:String>
     <system:String x:Key="DoublePinyinSchemasDaNiu">大牛双拼</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoLang">小浪双拼</system:String>
+    <system:String x:Key="HelpUsTranslateFlow">帮助我们翻译 Flow</system:String>
 
     <system:String x:Key="AlwaysPreview">始终打开预览</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Flow 启动时总是打开预览面板。按 {0} 以切换预览。</system:String>
@@ -237,6 +241,9 @@
     <system:String x:Key="fileNotFoundMessage">无法从提取的zip文件中找到plugin.json，或者此路径 {0} 不存在</system:String>
     <system:String x:Key="pluginExistAlreadyMessage">已存在相同ID和版本的插件，或者存在版本大于此下载的插件</system:String>
     <system:String x:Key="errorCreatingSettingPanel">为插件 {0} 创建设置面板时出错：{1}{2}</system:String>
+    <system:String x:Key="pluginMinimumAppVersionUnsatisfiedTitle">{0} 需要运行 Flow 版本 {1}</system:String>
+    <system:String x:Key="pluginMinimumAppVersionUnsatisfiedMessage">Flow 不能满足 {0} 运行的最低版本要求。 您想继续安装吗？{1}{1}我们建议更新流到最新版本，以确保 {0} 工作时没有问题。</system:String>
+    <system:String x:Key="pluginJsonInvalidOrCorrupted">安装插件失败，因为 plugin.json 无效或已损坏</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">插件商店</system:String>
@@ -244,6 +251,11 @@
     <system:String x:Key="pluginStore_RecentlyUpdated">最近更新</system:String>
     <system:String x:Key="pluginStore_None">插件</system:String>
     <system:String x:Key="pluginStore_Installed">已安装</system:String>
+    <system:String x:Key="PluginStoreSortModeDefault">默认</system:String>
+    <system:String x:Key="PluginStoreSortModeName">名称</system:String>
+    <system:String x:Key="PluginStoreSortModeReleaseDate">发布时间</system:String>
+    <system:String x:Key="PluginStoreSortModeUpdatedDate">更新时间</system:String>
+    <system:String x:Key="PluginStoreSortingModeComboboxLabel">排序模式：</system:String>
     <system:String x:Key="refresh">刷新</system:String>
     <system:String x:Key="installbtn">安装</system:String>
     <system:String x:Key="uninstallbtn">卸载</system:String>
@@ -452,6 +464,7 @@
     <system:String x:Key="website">官方网站</system:String>
     <system:String x:Key="github">GitHub</system:String>
     <system:String x:Key="docs">文档</system:String>
+    <system:String x:Key="crowdin">Crowdin</system:String>
     <system:String x:Key="version">版本</system:String>
     <system:String x:Key="icons">图标</system:String>
     <system:String x:Key="about_activate_times">你已经激活了 Flow Launcher {0} 次</system:String>
@@ -486,6 +499,10 @@
     <system:String x:Key="LogLevelDEBUG">调试</system:String>
     <system:String x:Key="settingWindowFontTitle">设置窗口字体</system:String>
 
+    <!--  Plugin Settings Window  -->
+    <system:String x:Key="pluginSettingsWindowTitle">设置：{0}</system:String>
+    <system:String x:Key="pluginSettingsWindowOpenFailed">打开插件设置窗口失败</system:String>
+
     <!--  Release Notes Window  -->
     <system:String x:Key="seeMoreReleaseNotes">在 GitHub 上查看更多版本说明</system:String>
     <system:String x:Key="checkNetworkConnectionTitle">无法获取版本说明</system:String>
@@ -516,6 +533,7 @@
     <system:String x:Key="defaultBrowser_newWindow">新窗口</system:String>
     <system:String x:Key="defaultBrowser_newTab">新标签</system:String>
     <system:String x:Key="defaultBrowser_parameter">隐身模式</system:String>
+    <system:String x:Key="defaultBrowser_extraArgs">额外参数</system:String>
     <system:String x:Key="defaultBrowser_default">默认</system:String>
     <system:String x:Key="defaultBrowser_new_profile">新配置</system:String>
 

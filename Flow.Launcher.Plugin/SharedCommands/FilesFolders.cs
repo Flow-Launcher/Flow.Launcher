@@ -2,6 +2,8 @@
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+
 #pragma warning disable IDE0005
 using System.Windows;
 #pragma warning restore IDE0005
@@ -485,6 +487,35 @@ namespace Flow.Launcher.Plugin.SharedCommands
                         File.Copy(bundledDataPath, dataPath, true);
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Resolves a path that may be relative to an absolute path.
+        /// If the path is already absolute, returns it as-is.
+        /// If the path is not rooted (as determined by <see cref="Path.IsPathRooted(string)"/>), resolves it relative to ProgramDirectory.
+        /// </summary>
+        /// <param name="path">The path to resolve</param>
+        /// <returns>An absolute path</returns>
+        public static string ResolveAbsolutePath(string path)
+        {
+            if (string.IsNullOrEmpty(path))
+                return path;
+
+            // If already absolute, return as-is
+            if (Path.IsPathFullyQualified(path))
+                return path;
+
+            // Resolve relative to ProgramDirectory, handling invalid path formats gracefully
+            try
+            {
+                return Path.GetFullPath(Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location).ToString(), path));
+            }
+            catch (Exception)
+            {
+                // If the path cannot be resolved (invalid characters, format, or too long),
+                // return the original path to avoid crashing the application.
+                return path;
             }
         }
     }

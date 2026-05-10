@@ -123,6 +123,9 @@
     <system:String x:Key="hideOnStartupToolTip">חלון החיפוש של Flow Launcher מוסתר במגש לאחר ההפעלה.</system:String>
     <system:String x:Key="hideNotifyIcon">הסתר אייקון מגש</system:String>
     <system:String x:Key="hideNotifyIconToolTip">כאשר האייקון מוסתר מהמגש, ניתן לפתוח את תפריט ההגדרות על ידי לחיצה ימנית על חלון החיפוש.</system:String>
+    <system:String x:Key="ignoreAccents">Ignore accents when searching</system:String>
+    <system:String x:Key="ignoreAccentsToolTip">Treat accented and unaccented characters as equivalent.</system:String>
+    <system:String x:Key="promptIgnoreAccents">Would you like to turn on the option to ignore accents when searching?</system:String>
     <system:String x:Key="querySearchPrecision">דיוק חיפוש שאילתה</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">משנה את ציון ההתאמה המינימלי הנדרש לתוצאות.</system:String>
     <system:String x:Key="SearchPrecisionNone">ללא</system:String>
@@ -142,6 +145,7 @@
     <system:String x:Key="DoublePinyinSchemasXingKongJianDao">Xing Kong Jian Dao</system:String>
     <system:String x:Key="DoublePinyinSchemasDaNiu">Da Niu</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoLang">Xiao Lang</system:String>
+    <system:String x:Key="HelpUsTranslateFlow">Help us translate Flow</system:String>
 
     <system:String x:Key="AlwaysPreview">הצג תמיד תצוגה מקדימה</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">פתח תמיד את לוח התצוגה המקדימה כאשר Flow מופעל. הקש על {0} כדי להחליף את התצוגה המקדימה.</system:String>
@@ -236,6 +240,9 @@
     <system:String x:Key="fileNotFoundMessage">Unable to find plugin.json from the extracted zip file, or this path {0} does not exist</system:String>
     <system:String x:Key="pluginExistAlreadyMessage">A plugin with the same ID and version already exists, or the version is greater than this downloaded plugin</system:String>
     <system:String x:Key="errorCreatingSettingPanel">Error creating setting panel for plugin {0}:{1}{2}</system:String>
+    <system:String x:Key="pluginMinimumAppVersionUnsatisfiedTitle">{0} requires Flow version {1} to run</system:String>
+    <system:String x:Key="pluginMinimumAppVersionUnsatisfiedMessage">Flow does not meet the minimum version requirements for {0} to run. Do you want to continue installing it?{1}{1}We recommend updating Flow to the latest version to ensure that {0} works without issues.</system:String>
+    <system:String x:Key="pluginJsonInvalidOrCorrupted">Failed to install plugin because plugin.json is invalid or corrupted</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">חנות תוספים</system:String>
@@ -243,6 +250,11 @@
     <system:String x:Key="pluginStore_RecentlyUpdated">עודכן לאחרונה</system:String>
     <system:String x:Key="pluginStore_None">תוספים</system:String>
     <system:String x:Key="pluginStore_Installed">מותקן</system:String>
+    <system:String x:Key="PluginStoreSortModeDefault">Default</system:String>
+    <system:String x:Key="PluginStoreSortModeName">שם</system:String>
+    <system:String x:Key="PluginStoreSortModeReleaseDate">Release Date</system:String>
+    <system:String x:Key="PluginStoreSortModeUpdatedDate">Updated Date</system:String>
+    <system:String x:Key="PluginStoreSortingModeComboboxLabel">Sorting Mode:</system:String>
     <system:String x:Key="refresh">רענן</system:String>
     <system:String x:Key="installbtn">התקן</system:String>
     <system:String x:Key="uninstallbtn">הסר התקנה</system:String>
@@ -451,6 +463,7 @@
     <system:String x:Key="website">אתר אינטרנט</system:String>
     <system:String x:Key="github">Github</system:String>
     <system:String x:Key="docs">תיעוד</system:String>
+    <system:String x:Key="crowdin">Crowdin</system:String>
     <system:String x:Key="version">גרסה</system:String>
     <system:String x:Key="icons">סמלים</system:String>
     <system:String x:Key="about_activate_times">הפעלת את Flow Launcher {0} פעמים</system:String>
@@ -485,6 +498,10 @@
     <system:String x:Key="LogLevelDEBUG">ניפוי שגיאות</system:String>
     <system:String x:Key="settingWindowFontTitle">Setting Window Font</system:String>
 
+    <!--  Plugin Settings Window  -->
+    <system:String x:Key="pluginSettingsWindowTitle">Settings: {0}</system:String>
+    <system:String x:Key="pluginSettingsWindowOpenFailed">Failed to open plugin settings window</system:String>
+
     <!--  Release Notes Window  -->
     <system:String x:Key="seeMoreReleaseNotes">See more release notes on GitHub</system:String>
     <system:String x:Key="checkNetworkConnectionTitle">Failed to fetch release notes</system:String>
@@ -515,6 +532,7 @@
     <system:String x:Key="defaultBrowser_newWindow">חלון חדש</system:String>
     <system:String x:Key="defaultBrowser_newTab">כרטיסייה חדשה</system:String>
     <system:String x:Key="defaultBrowser_parameter">מצב פרטיות</system:String>
+    <system:String x:Key="defaultBrowser_extraArgs">Extra Args</system:String>
     <system:String x:Key="defaultBrowser_default">Default</system:String>
     <system:String x:Key="defaultBrowser_new_profile">New Profile</system:String>
 
