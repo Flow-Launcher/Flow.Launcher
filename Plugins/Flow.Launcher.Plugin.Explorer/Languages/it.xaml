@@ -49,6 +49,7 @@
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">Utilizza il percorso ottenuto dalla ricerca come cartella di lavoro</system:String>
     <system:String x:Key="plugin_explorer_display_more_info_in_tooltip">Display more information like size and age in tooltips</system:String>
     <system:String x:Key="plugin_explorer_default_open_in_file_manager">Premi Invio per aprire la cartella nel gestore file predefinito</system:String>
+    <system:String x:Key="plugin_explorer_boost_home_folder_score">Prioritize home folders (Documents, Desktop, Downloads, etc.) in search results</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Usa Indice di Ricerca per la Ricerca Percorso</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Opzioni di Indicizzazione</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">Cerca:</system:String>

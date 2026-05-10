@@ -123,6 +123,9 @@
     <system:String x:Key="hideOnStartupToolTip">Ocultar caixa de pesquisa na bandeja após iniciar Flow Launcher.</system:String>
     <system:String x:Key="hideNotifyIcon">Ocultar ícone na bandeja</system:String>
     <system:String x:Key="hideNotifyIconToolTip">Se o ícone da bandeja estiver oculto, pode abrir as Definições com um clique com o botão direito do rato na caixa de pesquisa.</system:String>
+    <system:String x:Key="ignoreAccents">Ignorar acentos ao pesquisar</system:String>
+    <system:String x:Key="ignoreAccentsToolTip">Ignorar acentos e tratar todos os caracteres de forma igual.</system:String>
+    <system:String x:Key="promptIgnoreAccents">Gostaria de ativar a opção de ignorar acentos nas pesquisas?</system:String>
     <system:String x:Key="querySearchPrecision">Precisão da pesquisa</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Altera a precisão mínima para a obtenção dos resultados</system:String>
     <system:String x:Key="SearchPrecisionNone">Nenhuma</system:String>
@@ -142,6 +145,7 @@
     <system:String x:Key="DoublePinyinSchemasXingKongJianDao">Xing Kong Jian Dao</system:String>
     <system:String x:Key="DoublePinyinSchemasDaNiu">Da Niu</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoLang">Xiao Lang</system:String>
+    <system:String x:Key="HelpUsTranslateFlow">Ajude-nos a traduzir Flow Launcher</system:String>
 
     <system:String x:Key="AlwaysPreview">Pré-visualizar sempre</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Abrir painel de pré-visualização ao ativar Flow Launcher. Prima {0} para comutar a pré-visualização.</system:String>
@@ -246,6 +250,11 @@
     <system:String x:Key="pluginStore_RecentlyUpdated">Atualizado recentemente</system:String>
     <system:String x:Key="pluginStore_None">Plugins</system:String>
     <system:String x:Key="pluginStore_Installed">Instalado</system:String>
+    <system:String x:Key="PluginStoreSortModeDefault">Padrão</system:String>
+    <system:String x:Key="PluginStoreSortModeName">Nome</system:String>
+    <system:String x:Key="PluginStoreSortModeReleaseDate">Data de lançamento</system:String>
+    <system:String x:Key="PluginStoreSortModeUpdatedDate">Data de atualização</system:String>
+    <system:String x:Key="PluginStoreSortingModeComboboxLabel">Modo de ordenação:</system:String>
     <system:String x:Key="refresh">Recarregar</system:String>
     <system:String x:Key="installbtn">Instalar</system:String>
     <system:String x:Key="uninstallbtn">Desinstalar</system:String>
@@ -454,6 +463,7 @@
     <system:String x:Key="website">Site</system:String>
     <system:String x:Key="github">GitHub</system:String>
     <system:String x:Key="docs">Documentação</system:String>
+    <system:String x:Key="crowdin">Crowdin</system:String>
     <system:String x:Key="version">Versão</system:String>
     <system:String x:Key="icons">Ícones</system:String>
     <system:String x:Key="about_activate_times">Ativou o Flow Launcher {0} vezes</system:String>
@@ -487,6 +497,10 @@
     <system:String x:Key="LogLevelDEBUG">Depuração</system:String>
     <system:String x:Key="settingWindowFontTitle">Tipo de letra da aplicação</system:String>
 
+    <!--  Plugin Settings Window  -->
+    <system:String x:Key="pluginSettingsWindowTitle">Definições: {0}</system:String>
+    <system:String x:Key="pluginSettingsWindowOpenFailed">Falha ao abrir a janela de definições do plugin</system:String>
+
     <!--  Release Notes Window  -->
     <system:String x:Key="seeMoreReleaseNotes">Mostrar notas da versão no GitHub</system:String>
     <system:String x:Key="checkNetworkConnectionTitle">Falha ao obter notas da versão</system:String>
@@ -517,6 +531,7 @@
     <system:String x:Key="defaultBrowser_newWindow">Nova janela</system:String>
     <system:String x:Key="defaultBrowser_newTab">Novo separador</system:String>
     <system:String x:Key="defaultBrowser_parameter">Modo privado</system:String>
+    <system:String x:Key="defaultBrowser_extraArgs">Argumentos adicionais</system:String>
     <system:String x:Key="defaultBrowser_default">Padrão</system:String>
     <system:String x:Key="defaultBrowser_new_profile">Novo perfil</system:String>
 
