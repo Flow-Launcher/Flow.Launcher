@@ -1,10 +1,11 @@
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -144,6 +145,30 @@ namespace Flow.Launcher
             Application.Current.Dispatcher.Invoke(() =>
             {
                 SettingWindow sw = SingletonWindowOpener.Open<SettingWindow>();
+            });
+        }
+
+        public bool OpenPluginSettingsWindow(string pluginId)
+        {
+            return Application.Current.Dispatcher.Invoke(() =>
+            {
+                try
+                {
+                    // get existing settings window for this plugin, or else create a new one
+                    var window = Application.Current.Windows
+                        .OfType<PluginSettingsWindow>()
+                        .FirstOrDefault(existing => existing.PluginId == pluginId)
+                        ?? new PluginSettingsWindow(pluginId);
+
+                    WindowVisibilityHelper.ShowOrActivate(window);
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    LogException(ClassName, $"Failed to open plugin settings window for plugin id '{pluginId}'", e);
+                    ShowMsgError(Localize.pluginSettingsWindowOpenFailed());
+                    return false;
+                }
             });
         }
 
@@ -429,17 +454,20 @@ namespace Flow.Launcher
                 {
                     if (browserInfo.OpenInTab)
                     {
-                        uri.AbsoluteUri.OpenInBrowserTab(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg);
+                        uri.AbsoluteUri.OpenInBrowserTab(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg, browserInfo.ExtraArgs);
                     }
                     else
                     {
-                        uri.AbsoluteUri.OpenInBrowserWindow(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg);
+                        uri.AbsoluteUri.OpenInBrowserWindow(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg, browserInfo.ExtraArgs);
                     }
                 }
                 catch (Exception e)
                 {
                     var tabOrWindow = browserInfo.OpenInTab ? "tab" : "window";
-                    LogException(ClassName, $"Failed to open URL in browser {tabOrWindow}: {path}, {inPrivate ?? browserInfo.EnablePrivate}, {browserInfo.PrivateArg}", e);
+                    var includesExtraArgs = string.IsNullOrWhiteSpace(browserInfo.ExtraArgs) 
+                        ? "" 
+                        : ", [including omitted Extra Args]";
+                    LogException(ClassName, $"Failed to open URL in browser {tabOrWindow}: {path}, {inPrivate ?? browserInfo.EnablePrivate}, {browserInfo.PrivateArg}{includesExtraArgs}", e);
                     ShowMsgError(
                         Localize.errorTitle(),
                         Localize.browserOpenError()
@@ -583,7 +611,7 @@ namespace Flow.Launcher
         public Task<bool> UpdatePluginManifestAsync(bool usePrimaryUrlOnly = false, CancellationToken token = default) =>
             PluginsManifest.UpdateManifestAsync(usePrimaryUrlOnly, token);
 
-        public IReadOnlyList<UserPlugin> GetPluginManifest() => PluginsManifest.UserPlugins;
+        public IReadOnlyList<UserPlugin> GetPluginManifest() => PluginsManifest.UserPlugins ?? [];
 
         public bool PluginModified(string id) => PluginManager.PluginModified(id);
 
@@ -622,6 +650,12 @@ namespace Flow.Launcher
         public string GetDataDirectory() => DataLocation.DataDirectory();
 
         public string GetLogDirectory() => DataLocation.VersionLogDirectory;
+
+        public event EventHandler StringMatcherBehaviorChanged
+        {
+            add => _settings.StringMatcherBehaviorChanged += value;
+            remove => _settings.StringMatcherBehaviorChanged -= value;
+        }
 
         #endregion
 

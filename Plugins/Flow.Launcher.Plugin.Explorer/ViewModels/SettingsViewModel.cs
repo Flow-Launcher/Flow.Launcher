@@ -321,8 +321,9 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                     Context.API.AddActionKeyword(Context.CurrentPluginMetadata.ID, actionKeywordWindow.ActionKeyword);
                     break;
                 case (false, false):
-                    throw new ArgumentException(
-                        $"Both false in {nameof(actionKeyword)}.{nameof(actionKeyword.Enabled)} and {nameof(actionKeywordWindow)}.{nameof(actionKeywordWindow.KeywordEnabled)} should suggest that the ShowDialog() result is false");
+                    // Keyword was disabled and remains disabled, but the keyword text was changed.
+                    // No action keyword registration changes needed; the model will be updated below.
+                    break;
             }
 
             (actionKeyword.Keyword, actionKeyword.Enabled) = (actionKeywordWindow.ActionKeyword, actionKeywordWindow.KeywordEnabled);

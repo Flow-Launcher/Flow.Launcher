@@ -196,6 +196,20 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         }
     }
 
+
+    public bool IgnoreAccents
+    {
+        get => Settings.IgnoreAccents;
+        set
+        {
+            if(Settings.IgnoreAccents != value)
+            {
+                Settings.IgnoreAccents = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
     public int MaxHistoryResultsToShowValue
     {
         get => Settings.MaxHistoryResultsToShowForHomePage;
@@ -226,6 +240,8 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         Settings.CustomBrowser.OnDisplayNameChanged();
     }
 
+    public string Crowdin => Constant.CrowdinProjectUrl;
+
     public string Language
     {
         get => Settings.Language;
@@ -235,6 +251,9 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
 
             if (_translater.PromptShouldUsePinyin(value))
                 ShouldUsePinyin = true;
+
+            if (_translater.PromptShouldIgnoreAccents(value))
+                IgnoreAccents = true;
 
             UpdateEnumDropdownLocalizations();
         }

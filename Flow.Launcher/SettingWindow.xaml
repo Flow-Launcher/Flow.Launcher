@@ -22,6 +22,7 @@
     ResizeMode="CanResize"
     SnapsToDevicePixels="True"
     StateChanged="Window_StateChanged"
+    Activated="Window_Activated"
     Top="{Binding SettingWindowTop, Mode=TwoWay}"
     UseLayoutRounding="True"
     WindowStartupLocation="Manual"
