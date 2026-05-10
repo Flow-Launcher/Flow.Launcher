@@ -1072,7 +1072,8 @@ namespace Flow.Launcher.Infrastructure
                 }
             };
 
-            PInvoke.AdjustTokenPrivileges(hProcessToken, false, &tp, 0, null, null);
+            var emptyPreviousState = Span<byte>.Empty;
+            PInvoke.AdjustTokenPrivileges(hProcessToken, false, &tp, emptyPreviousState);
             var lastError = Marshal.GetLastWin32Error();
             hProcessToken.Dispose();
 
