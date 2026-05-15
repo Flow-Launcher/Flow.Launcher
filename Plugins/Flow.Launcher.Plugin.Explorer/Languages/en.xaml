@@ -44,7 +44,7 @@
     <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Date and time format</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">Sort Option:</system:String>
     <system:String x:Key="plugin_explorer_everything_installed_path">Everything Path:</system:String>
-    <system:String x:Key="plugin_explorer_everything_15_instance_name">Everything 1.5 instance name (requires app restart): </system:String>
+    <system:String x:Key="plugin_explorer_everything_15_instance_name">Everything 1.5 instance name: </system:String>
     <system:String x:Key="plugin_explorer_launch_hidden">Launch Hidden</system:String>
     <system:String x:Key="plugin_explorer_editor_path">Editor Path</system:String>
     <system:String x:Key="plugin_explorer_shell_path">Shell Path</system:String>
@@ -191,7 +191,8 @@
 
     <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">Search Full Path</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_run_count">Enable File/Folder Run Count</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_enable_15_support">Use Everything 1.5 (requires app restart)</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_enable_15_support">Use Everything 1.5</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_15_restart_required">Restart Flow Launcher for this change to take effect</system:String>
 
     <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Click to launch or install Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_title">Everything Installation</system:String>

@@ -608,6 +608,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -640,8 +641,17 @@
                     Text="{Binding Everything15InstanceName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, TargetNullValue=''}"
                     Visibility="{Binding EnableEverything15Support, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
-                <CheckBox
+                <TextBlock
                     Grid.Row="2"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Margin="{StaticResource SettingPanelItemTopBottomMargin}"
+                    Foreground="Orange"
+                    Text="{DynamicResource flowlauncher_plugin_everything_15_restart_required}"
+                    Visibility="{Binding Everything15RestartRequired, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+                <CheckBox
+                    Grid.Row="3"
                     Grid.Column="0"
                     Grid.ColumnSpan="2"
                     Margin="{StaticResource SettingPanelItemTopBottomMargin}"
@@ -650,7 +660,7 @@
                     IsChecked="{Binding Settings.EverythingSearchFullPath}" />
 
                 <CheckBox
-                    Grid.Row="3"
+                    Grid.Row="4"
                     Grid.Column="0"
                     Grid.ColumnSpan="2"
                     Margin="{StaticResource SettingPanelItemTopBottomMargin}"
@@ -659,14 +669,14 @@
                     IsChecked="{Binding Settings.EverythingEnableRunCount}" />
 
                 <TextBlock
-                    Grid.Row="4"
+                    Grid.Row="5"
                     Grid.Column="0"
                     Margin="{StaticResource SettingPanelItemTopBottomMargin}"
                     VerticalAlignment="Center"
                     Foreground="{DynamicResource Color05B}"
                     Text="{DynamicResource plugin_explorer_everything_sort_option}" />
                 <ComboBox
-                    Grid.Row="4"
+                    Grid.Row="5"
                     Grid.Column="1"
                     Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
                     VerticalAlignment="Center"
@@ -676,14 +686,14 @@
                     SelectedValuePath="Value" />
 
                 <TextBlock
-                    Grid.Row="5"
+                    Grid.Row="6"
                     Grid.Column="0"
                     Margin="{StaticResource SettingPanelItemTopBottomMargin}"
                     VerticalAlignment="Center"
                     Foreground="{DynamicResource Color05B}"
                     Text="{DynamicResource plugin_explorer_everything_installed_path}" />
                 <TextBox
-                    Grid.Row="5"
+                    Grid.Row="6"
                     Grid.Column="1"
                     Width="{StaticResource SettingPanelPathTextBoxWidth}"
                     Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
@@ -692,7 +702,7 @@
 
                 <TextBlock
                     Name="tbFastSortWarning"
-                    Grid.Row="6"
+                    Grid.Row="7"
                     Grid.Column="0"
                     Grid.ColumnSpan="2"
                     Margin="{StaticResource SettingPanelItemTopBottomMargin}"

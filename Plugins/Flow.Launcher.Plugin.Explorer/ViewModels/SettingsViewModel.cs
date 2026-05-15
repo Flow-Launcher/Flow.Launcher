@@ -29,13 +29,15 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
         public IReadOnlyList<EnumBindingModel<Settings.PathEnumerationEngineOption>> PathEnumerationEngines { get; set; }
 
         // Cache when initializing
-        private readonly bool UsingEverything15;
+        private readonly bool InitialUsingEverything15;
+        private readonly string InitialEverything15InstanceName;
 
         public SettingsViewModel(PluginInitContext context, Settings settings)
         {
             Context = context;
             Settings = settings;
-            UsingEverything15 = settings.EnableEverything15Support;
+            InitialUsingEverything15 = settings.EnableEverything15Support;
+            InitialEverything15InstanceName = settings.Everything15InstanceName;
             InitializeEngineSelection();
             InitializeActionKeywordModels();
         }
@@ -650,7 +652,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                 }
                 catch (IPCErrorException)
                 {
-                    return UsingEverything15
+                    return InitialUsingEverything15
                         ? Localize.flowlauncher_plugin_everything_15_sort_warning()
                         : Localize.flowlauncher_plugin_everything_is_not_running();
                 }
@@ -684,8 +686,13 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(FastSortWarningVisibility));
                 OnPropertyChanged(nameof(SortOptionWarningMessage));
+                OnPropertyChanged(nameof(Everything15RestartRequired));
             }
         }
+
+        public bool Everything15RestartRequired =>
+            Settings.EnableEverything15Support != InitialUsingEverything15 ||
+            (Settings.EnableEverything15Support && Settings.Everything15InstanceName != InitialEverything15InstanceName);
 
         public string Everything15InstanceName
         {
@@ -703,6 +710,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                 {
                     OnPropertyChanged(nameof(FastSortWarningVisibility));
                     OnPropertyChanged(nameof(SortOptionWarningMessage));
+                    OnPropertyChanged(nameof(Everything15RestartRequired));
                 }
 
                 OnPropertyChanged();
