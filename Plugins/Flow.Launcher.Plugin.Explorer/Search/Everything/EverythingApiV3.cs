@@ -147,10 +147,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             finally
             {
                 _ = Everything3ApiDllImport.Everything3_DestroyClient(client);
-                CheckAndThrowExceptionOnErrorFromEverything3();
             }
 
-            return true;
+            return false;
         }
 
         private static async IAsyncEnumerable<SearchResult> SearchWithEverything3Async(IntPtr client,
