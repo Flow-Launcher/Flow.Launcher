@@ -692,9 +692,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             get => Settings.Everything15InstanceName;
             set
             {
-                var instanceName = string.IsNullOrWhiteSpace(value)
-                    ? EverythingApiFactory.DefaultEverything15InstanceName
-                    : value.Trim();
+                var instanceName = value?.Trim() ?? string.Empty;
 
                 if (Settings.Everything15InstanceName == instanceName)
                     return;

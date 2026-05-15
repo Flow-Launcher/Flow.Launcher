@@ -1,4 +1,4 @@
-<UserControl
+﻿<UserControl
     x:Class="Flow.Launcher.Plugin.Explorer.Views.ExplorerSettings"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -637,7 +637,7 @@
                     Width="{StaticResource SettingPanelPathTextBoxWidth}"
                     Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
                     HorizontalAlignment="Left"
-                    Text="{Binding Everything15InstanceName}"
+                    Text="{Binding Everything15InstanceName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, TargetNullValue=''}"
                     Visibility="{Binding EnableEverything15Support, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                 <CheckBox

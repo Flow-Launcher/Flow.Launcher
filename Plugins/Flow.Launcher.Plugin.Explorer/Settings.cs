@@ -166,7 +166,7 @@ namespace Flow.Launcher.Plugin.Explorer
 
         // This is only used as a flag to determine whether to show the Everything 1.5 support option in the settings UI, and to determine which instance of Everything API to initialize in the EverythingSearchManager.
         public bool EnableEverything15Support { get; set; } = false;
-        public string Everything15InstanceName { get; set; } = EverythingApiFactory.DefaultEverything15InstanceName;
+        public string Everything15InstanceName { get; set; } = string.Empty;
 
         #endregion
 

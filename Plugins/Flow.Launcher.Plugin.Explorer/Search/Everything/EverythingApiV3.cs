@@ -308,13 +308,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         private bool TryConnectEverything3(out IntPtr client)
         {
             client = IntPtr.Zero;
-            var normalizedInstanceName = string.IsNullOrWhiteSpace(_instanceName)
-                ? EverythingApiFactory.DefaultEverything15InstanceName
-                : _instanceName.Trim();
 
             try
             {
-                client = Everything3ApiDllImport.Everything3_ConnectW(normalizedInstanceName);
+                client = Everything3ApiDllImport.Everything3_ConnectW(_instanceName);
                 return client != IntPtr.Zero;
             }
             catch (DllNotFoundException)
