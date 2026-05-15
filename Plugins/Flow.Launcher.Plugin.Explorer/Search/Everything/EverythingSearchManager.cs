@@ -101,7 +101,17 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 if (isApiInitialized)
                     return;
 
-                EverythingSdkLoader.EnsureLoaded(sdkDirectory, Settings.EnableEverything15Support);
+                if (Settings.EnableEverything15Support)
+                {
+                    if (!Everything3ApiDllImport.IsLoaded)
+                        Everything3ApiDllImport.Load(sdkDirectory);
+                }
+                else
+                {
+                    if (!EverythingApiDllImport.IsLoaded)
+                        EverythingApiDllImport.Load(sdkDirectory);
+                }
+
                 api = Settings.EnableEverything15Support
                     ? new EverythingApiV3(Settings.Everything15InstanceName)
                     : new LegacyEverythingApi();
