@@ -228,8 +228,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
                 _ = Everything3ApiDllImport.Everything3_DestroyClient(client);
             }
-
-            await Task.CompletedTask;
         }
 
         private static bool TryCreateSearchResult(IntPtr resultList, nuint resultIndex, out SearchResult result)
@@ -307,21 +305,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
         private bool TryConnectEverything3(out IntPtr client)
         {
-            client = IntPtr.Zero;
-
-            try
-            {
-                client = Everything3ApiDllImport.Everything3_ConnectW(_instanceName);
-                return client != IntPtr.Zero;
-            }
-            catch (DllNotFoundException)
-            {
-                return false;
-            }
-            catch (EntryPointNotFoundException)
-            {
-                return false;
-            }
+            client = Everything3ApiDllImport.Everything3_ConnectW(_instanceName);
+            return client != IntPtr.Zero;
         }
 
         /// <summary>
