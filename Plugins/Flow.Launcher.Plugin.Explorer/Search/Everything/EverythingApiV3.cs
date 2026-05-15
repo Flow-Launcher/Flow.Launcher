@@ -287,22 +287,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 : [];
         }
 
-        private bool TryUseEverything3Client(Action<IntPtr> action)
-        {
-            if (!TryConnectEverything3(out var client))
-                return false;
-
-            try
-            {
-                action(client);
-                return true;
-            }
-            finally
-            {
-                _ = Everything3ApiDllImport.Everything3_DestroyClient(client);
-            }
-        }
-
         private bool TryConnectEverything3(out IntPtr client)
         {
             client = Everything3ApiDllImport.Everything3_ConnectW(_instanceName);
