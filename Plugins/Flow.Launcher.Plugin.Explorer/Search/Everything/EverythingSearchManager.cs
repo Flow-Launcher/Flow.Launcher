@@ -20,7 +20,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         {
             Settings = settings;
             _availabilityService = new EverythingAvailabilityService(settings);
-            api = EverythingApiFactory.Create(settings);
         }
 
         public async IAsyncEnumerable<SearchResult> SearchAsync(string search, [EnumeratorCancellation] CancellationToken token)
@@ -103,7 +102,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                     return;
 
                 EverythingSdkLoader.EnsureLoaded(sdkDirectory, Settings.EnableEverything15Support);
-                api = EverythingApiFactory.Create(Settings);
+                api = Settings.EnableEverything15Support
+                    ? new EverythingApiV3(Settings.Everything15InstanceName)
+                    : new LegacyEverythingApi();
                 isApiInitialized = true;
             }
         }
