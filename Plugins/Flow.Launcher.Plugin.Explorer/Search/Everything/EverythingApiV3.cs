@@ -16,6 +16,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
         private readonly string _instanceName;
 
+        public string UnavailableMessage => Localize.flowlauncher_plugin_everything_15_unavailable();
+        public string UnavailableResolution => Localize.flowlauncher_plugin_everything_15_resolution();
+        public bool SupportsInstall => false;
+
         public EverythingApiV3(string instanceName)
         {
             _instanceName = instanceName;

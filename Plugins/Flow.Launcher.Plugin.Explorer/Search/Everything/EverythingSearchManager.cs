@@ -11,7 +11,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
     public class EverythingSearchManager : IIndexProvider, IContentIndexProvider, IPathIndexProvider
     {
         private Settings Settings { get; }
-        private readonly EverythingAvailabilityService _availabilityService;
+        private EverythingAvailabilityService _availabilityService;
         private readonly Lock _syncRoot = new();
         private bool isApiInitialized;
         private IEverythingApi api;
@@ -19,18 +19,17 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         public EverythingSearchManager(Settings settings)
         {
             Settings = settings;
-            _availabilityService = new EverythingAvailabilityService(settings);
         }
 
         public async IAsyncEnumerable<SearchResult> SearchAsync(string search, [EnumeratorCancellation] CancellationToken token)
         {
-            await _availabilityService.EnsureAvailableAsync(api, token);
+            await _availabilityService.EnsureAvailableAsync(token);
 
             if (token.IsCancellationRequested)
                 yield break;
 
             var option = new EverythingSearchOption(search, 
-                Settings.SortOption, 
+                Settings.SortOption,
                 MaxCount: Settings.MaxResult, 
                 IsFullPathSearch: Settings.EverythingSearchFullPath, 
                 IsRunCounterEnabled: Settings.EverythingEnableRunCount);
@@ -42,7 +41,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         public async IAsyncEnumerable<SearchResult> ContentSearchAsync(string plainSearch, string contentSearch,
             [EnumeratorCancellation] CancellationToken token)
         {
-            await _availabilityService.EnsureAvailableAsync(api, token);
+            await _availabilityService.EnsureAvailableAsync(token);
 
             if (!Settings.EnableEverythingContentSearch)
             {
@@ -77,7 +76,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
         public async IAsyncEnumerable<SearchResult> EnumerateAsync(string path, string search, bool recursive, [EnumeratorCancellation] CancellationToken token)
         {
-            await _availabilityService.EnsureAvailableAsync(api, token);
+            await _availabilityService.EnsureAvailableAsync(token);
 
             if (token.IsCancellationRequested)
                 yield break;
@@ -115,6 +114,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 api = Settings.EnableEverything15Support
                     ? new EverythingApiV3(Settings.Everything15InstanceName)
                     : new LegacyEverythingApi();
+                _availabilityService = new EverythingAvailabilityService(Settings, api);
                 isApiInitialized = true;
             }
         }

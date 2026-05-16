@@ -15,6 +15,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         // cached buffer to remove redundant allocations.
         private static readonly StringBuilder buffer = new(BufferSize);
 
+        public string UnavailableMessage => Localize.flowlauncher_plugin_everything_is_not_running();
+        public string UnavailableResolution => Localize.flowlauncher_plugin_everything_click_to_launch_or_install();
+        public bool SupportsInstall => true;
+
         const uint EVERYTHING_REQUEST_FULL_PATH_AND_FILE_NAME = 0x00000004u;
         const uint EVERYTHING_REQUEST_RUN_COUNT = 0x00000400u;
 

@@ -9,36 +9,26 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
     internal class EverythingAvailabilityService
     {
         private readonly Settings _settings;
+        private readonly IEverythingApi _api;
 
-        public EverythingAvailabilityService(Settings settings)
+        public EverythingAvailabilityService(Settings settings, IEverythingApi api)
         {
             _settings = settings;
+            _api = api;
         }
 
-        public async ValueTask EnsureAvailableAsync(IEverythingApi api, CancellationToken token = default)
+        public async ValueTask EnsureAvailableAsync(CancellationToken token = default)
         {
             try
             {
-                if (!await api.IsEverythingRunningAsync(token))
-                {                    
-                    if (api is EverythingApiV3)
-                    {
-                        throw new EngineNotAvailableException(
+                if (!await _api.IsEverythingRunningAsync(token))
+                {
+                    throw new EngineNotAvailableException(
                         Enum.GetName(Settings.IndexSearchEngineOption.Everything)!,
-                        Localize.flowlauncher_plugin_everything_15_resolution(),
-                        Localize.flowlauncher_plugin_everything_15_unavailable(),
+                        _api.UnavailableResolution,
+                        _api.UnavailableMessage,
                         Constants.EverythingErrorImagePath,
-                        ClickToInstallEverythingAsync);
-                    }
-                    else
-                    {
-                        throw new EngineNotAvailableException(
-                        Enum.GetName(Settings.IndexSearchEngineOption.Everything)!,
-                        Localize.flowlauncher_plugin_everything_click_to_launch_or_install(),
-                        Localize.flowlauncher_plugin_everything_is_not_running(),
-                        Constants.EverythingErrorImagePath,
-                        ClickToInstallEverythingAsync);
-                    }
+                        _api.SupportsInstall ? ClickToInstallEverythingAsync : null);
                 }
             }
             catch (Exception ex) when (ex is DllNotFoundException || ex is EntryPointNotFoundException)
