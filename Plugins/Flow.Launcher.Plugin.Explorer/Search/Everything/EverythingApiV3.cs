@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Flow.Launcher.Plugin.Explorer.Exceptions;
 using Flow.Launcher.Plugin.Explorer.Search.Everything.Exceptions;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.Everything
@@ -15,10 +16,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         private static readonly StringBuilder _buffer = new(BufferSize);
 
         private readonly string _instanceName;
-
-        public string UnavailableMessage => Localize.flowlauncher_plugin_everything_15_unavailable();
-        public string UnavailableResolution => Localize.flowlauncher_plugin_everything_15_resolution();
-        public bool SupportsInstall => false;
 
         public EverythingApiV3(string instanceName)
         {
@@ -46,7 +43,13 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         const uint EVERYTHING3_ERROR_INVALID_PARAMETER = 0xE0000004;
         const uint EVERYTHING3_ERROR_PROPERTY_NOT_FOUND = 0xE0000007;
 
-        public async ValueTask<bool> IsEverythingRunningAsync(CancellationToken token = default)
+        public async IAsyncEnumerable<SearchResult> SearchAsync(EverythingSearchOption option, [EnumeratorCancellation] CancellationToken token = default)
+        {
+            await foreach (var result in SearchCoreAsync(option, token))
+                yield return result;
+        }
+
+        public async Task CheckAvailableAsync(CancellationToken token = default)
         {
             try
             {
@@ -54,16 +57,14 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             }
             catch (OperationCanceledException)
             {
-                return false;
+                return;
             }
 
             try
             {
                 if (!TryConnectEverything3(out var client))
-                    return false;
-
+                    throw new IPCErrorException();
                 _ = Everything3ApiDllImport.Everything3_DestroyClient(client);
-                return true;
             }
             finally
             {
@@ -71,7 +72,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             }
         }
 
-        public async IAsyncEnumerable<SearchResult> SearchAsync(EverythingSearchOption option, [EnumeratorCancellation] CancellationToken token = default)
+        private async IAsyncEnumerable<SearchResult> SearchCoreAsync(EverythingSearchOption option, [EnumeratorCancellation] CancellationToken token)
         {
             var query = EverythingHelper.PrepareQuery(option);
             var preparedOption = query.Option;
@@ -231,6 +232,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
                 _ = Everything3ApiDllImport.Everything3_DestroyClient(client);
             }
+
+            await Task.CompletedTask;
         }
 
         private static bool TryCreateSearchResult(IntPtr resultList, nuint resultIndex, out SearchResult result)

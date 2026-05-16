@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Flow.Launcher.Plugin.Explorer.Exceptions;
 using Flow.Launcher.Plugin.Explorer.Search.Everything.Exceptions;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.Everything
@@ -14,10 +16,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         private static readonly SemaphoreSlim _semaphore = new(1, 1);
         // cached buffer to remove redundant allocations.
         private static readonly StringBuilder buffer = new(BufferSize);
-
-        public string UnavailableMessage => Localize.flowlauncher_plugin_everything_is_not_running();
-        public string UnavailableResolution => Localize.flowlauncher_plugin_everything_click_to_launch_or_install();
-        public bool SupportsInstall => true;
 
         const uint EVERYTHING_REQUEST_FULL_PATH_AND_FILE_NAME = 0x00000004u;
         const uint EVERYTHING_REQUEST_RUN_COUNT = 0x00000400u;
@@ -34,28 +32,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             return fastSortOptionEnabled;
         }
 
-        public async ValueTask<bool> IsEverythingRunningAsync(CancellationToken token = default)
-        {
-            try
-            {
-                await _semaphore.WaitAsync(token);
-            }
-            catch (OperationCanceledException)
-            {
-                return false;
-            }
-
-            try
-            {
-                _ = EverythingApiDllImport.Everything_GetMajorVersion();
-                return EverythingApiDllImport.Everything_GetLastError() != EverythingStateCode.IPCError;
-            }
-            finally
-            {
-                _semaphore.Release();
-            }
-        }
-
         /// <summary>
         /// Searches using the specified criteria and resets the Everything API afterwards.
         /// </summary>
@@ -63,6 +39,35 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         /// <param name="token">A cancellation token that stops the current search when cancellation is requested.</param>
         /// <returns>An asynchronous sequence of search results that match the specified criteria.</returns>
         public async IAsyncEnumerable<SearchResult> SearchAsync(EverythingSearchOption option, [EnumeratorCancellation] CancellationToken token = default)
+        {
+            await foreach (var result in SearchCoreAsync(option, token))
+                yield return result;
+        }
+
+        public async Task CheckAvailableAsync(CancellationToken token = default)
+        {
+            try
+            {
+                await _semaphore.WaitAsync(token);
+            }
+            catch (OperationCanceledException)
+            {
+                return;
+            }
+
+            try
+            {
+                _ = EverythingApiDllImport.Everything_GetMajorVersion();
+                if (EverythingApiDllImport.Everything_GetLastError() == EverythingStateCode.IPCError)
+                    throw new IPCErrorException();
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
+        }
+
+        private async IAsyncEnumerable<SearchResult> SearchCoreAsync(EverythingSearchOption option, [EnumeratorCancellation] CancellationToken token)
         {
             var query = EverythingHelper.PrepareQuery(option);
             var preparedOption = query.Option;
@@ -110,13 +115,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 for (var idx = 0; idx < EverythingApiDllImport.Everything_GetNumResults(); ++idx)
                 {
                     if (token.IsCancellationRequested)
-                    {
                         yield break;
-                    }
 
                     EverythingApiDllImport.Everything_GetResultFullPathNameW(idx, buffer, BufferSize);
 
-                    var result = new SearchResult
+                    yield return new SearchResult
                     {
                         FullPath = buffer.ToString(),
                         Type = EverythingApiDllImport.Everything_IsFolderResult(idx) ? ResultType.Folder :
@@ -125,8 +128,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                         Score = Convert.ToInt32(EverythingApiDllImport.Everything_GetResultRunCount((uint)idx)),
                         HighlightData = EverythingHelper.EverythingHighlightStringToHighlightList(EverythingApiDllImport.Everything_GetResultHighlightedFileName((uint)idx))
                     };
-
-                    yield return result;
                 }
             }
             finally
