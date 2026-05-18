@@ -849,10 +849,10 @@ namespace Flow.Launcher.Infrastructure
 
             try
             {
-                var hrFolder = PInvoke.SHParseDisplayName(folderPath, null, out pidlFolder, 0, out _);
+                var hrFolder = PInvoke.SHParseDisplayName(folderPath, null, out pidlFolder, 0, null);
                 if (hrFolder.Failed) throw new COMException("Failed to parse folder path", hrFolder);
 
-                var hrFile = PInvoke.SHParseDisplayName(filePath, null, out pidlFile, 0, out _);
+                var hrFile = PInvoke.SHParseDisplayName(filePath, null, out pidlFile, 0, null);
                 if (hrFile.Failed) throw new COMException("Failed to parse file path", hrFile);
 
                 var hrSelect = PInvoke.SHOpenFolderAndSelectItems(pidlFolder, 1, &pidlFile, 0);
