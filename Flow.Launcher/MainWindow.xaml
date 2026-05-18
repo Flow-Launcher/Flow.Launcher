@@ -470,16 +470,10 @@
                                     <RowDefinition Height="*" />
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
-                                <Grid Grid.Row="0" VerticalAlignment="Center">
-                                    <Grid.Style>
-                                        <Style TargetType="{x:Type Grid}">
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding IsMarkdownPreview}" Value="True">
-                                                    <Setter Property="Visibility" Value="Collapsed" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Grid.Style>
+                                <Grid
+                                    Grid.Row="0"
+                                    VerticalAlignment="Center"
+                                    Visibility="{Binding IsMarkdownPreview, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=Inverted}">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="Auto" />
@@ -527,19 +521,16 @@
                                     Grid.Row="0"
                                     Grid.RowSpan="2"
                                     Margin="8 10 10 10"
-                                    HorizontalScrollBarVisibility="Auto"
+                                    HorizontalScrollBarVisibility="Disabled"
                                     Markdown="{Binding PreviewDescription}"
                                     MarkdownStyle="{DynamicResource PreviewMarkdownStyle}"
                                     VerticalScrollBarVisibility="Auto"
                                     Visibility="{Binding IsMarkdownPreview, Converter={StaticResource BoolToVisibilityConverter}}" />
-                                <StackPanel Grid.Row="1">
+                                <StackPanel Grid.Row="1" Visibility="{Binding IsMarkdownPreview, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=Inverted}">
                                     <StackPanel.Style>
                                         <Style TargetType="{x:Type StackPanel}">
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding ElementName=PreviewSubTitle, UpdateSourceTrigger=PropertyChanged, Path=Text.Length}" Value="0">
-                                                    <Setter Property="Visibility" Value="Collapsed" />
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{Binding IsMarkdownPreview}" Value="True">
                                                     <Setter Property="Visibility" Value="Collapsed" />
                                                 </DataTrigger>
                                             </Style.Triggers>
