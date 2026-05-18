@@ -1,7 +1,6 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
     xmlns:cc="clr-namespace:Flow.Launcher.Resources.Controls;assembly=Flow.Launcher"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
     xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
@@ -598,7 +597,7 @@
                 </Style.Triggers>
             </Style>
 
-            <Style TargetType="{x:Type avalonEdit:TextEditor}">
+            <Style xmlns:avalonEdit="clr-namespace:ICSharpCode.AvalonEdit;assembly=ICSharpCode.AvalonEdit" TargetType="avalonEdit:TextEditor">
                 <Setter Property="Background" Value="{DynamicResource Color03B}" />
                 <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
                 <Setter Property="FontFamily" Value="Cascadia Code, Consolas" />

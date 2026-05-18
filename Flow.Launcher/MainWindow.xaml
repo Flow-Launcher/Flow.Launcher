@@ -3,10 +3,10 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converters="clr-namespace:Flow.Launcher.Converters"
+    xmlns:controls="clr-namespace:Flow.Launcher.Resources.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:flowlauncher="clr-namespace:Flow.Launcher"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:mdxam="clr-namespace:MdXaml;assembly=MdXaml"
     xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
     xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
     Name="FlowMainWindow"
@@ -471,6 +471,15 @@
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <Grid Grid.Row="0" VerticalAlignment="Center">
+                                    <Grid.Style>
+                                        <Style TargetType="{x:Type Grid}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsMarkdownPreview}" Value="True">
+                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Grid.Style>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="Auto" />
@@ -514,11 +523,23 @@
                                         TextAlignment="Center"
                                         TextWrapping="Wrap" />
                                 </Grid>
+                                <controls:PreviewMarkdownScrollViewer
+                                    Grid.Row="0"
+                                    Grid.RowSpan="2"
+                                    Margin="8 10 10 10"
+                                    HorizontalScrollBarVisibility="Auto"
+                                    Markdown="{Binding PreviewDescription}"
+                                    MarkdownStyle="{DynamicResource PreviewMarkdownStyle}"
+                                    VerticalScrollBarVisibility="Auto"
+                                    Visibility="{Binding IsMarkdownPreview, Converter={StaticResource BoolToVisibilityConverter}}" />
                                 <StackPanel Grid.Row="1">
                                     <StackPanel.Style>
                                         <Style TargetType="{x:Type StackPanel}">
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding ElementName=PreviewSubTitle, UpdateSourceTrigger=PropertyChanged, Path=Text.Length}" Value="0">
+                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding IsMarkdownPreview}" Value="True">
                                                     <Setter Property="Visibility" Value="Collapsed" />
                                                 </DataTrigger>
                                             </Style.Triggers>
@@ -528,16 +549,7 @@
                                     <TextBlock
                                         x:Name="PreviewSubTitle"
                                         Style="{DynamicResource PreviewItemSubTitleStyle}"
-                                        Text="{Binding PreviewDescription}"
-                                        Visibility="{Binding IsMarkdownPreview, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=Inverse}" />
-                                    <mdxam:MarkdownScrollViewer
-                                        MaxHeight="{Binding ElementName=ResultListBox, Path=ActualHeight}"
-                                        Margin="5 6 0 10"
-                                        HorizontalScrollBarVisibility="Auto"
-                                        Markdown="{Binding PreviewDescription}"
-                                        MarkdownStyle="{DynamicResource PreviewMarkdownStyle}"
-                                        VerticalScrollBarVisibility="Auto"
-                                        Visibility="{Binding IsMarkdownPreview, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                        Text="{Binding PreviewDescription}" />
                                 </StackPanel>
                             </Grid>
                         </Border>
