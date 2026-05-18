@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Text.Json.Serialization;
 
 namespace Flow.Launcher.Plugin
 {
@@ -407,6 +407,12 @@ namespace Flow.Launcher.Plugin
             public string FilePath { get; set; } = null;
 
             /// <summary>
+            /// Determines how <see cref="Description"/> should be rendered in Flow Launcher's preview panel.
+            /// </summary>
+            [JsonConverter(typeof(JsonStringEnumConverter<PreviewContentType>))]
+            public PreviewContentType ContentType { get; set; } = PreviewContentType.Text;
+
+            /// <summary>
             /// Default instance of <see cref="PreviewInfo"/>
             /// </summary>
             public static PreviewInfo Default { get; } = new()
@@ -416,7 +422,26 @@ namespace Flow.Launcher.Plugin
                 IsMedia = false,
                 PreviewDelegate = null,
                 FilePath = null,
+                ContentType = PreviewContentType.Text,
             };
         }
+    }
+
+    /// <summary>
+    /// Supported preview description rendering modes.
+    /// </summary>
+    public enum PreviewContentType
+    {
+        /// <summary>
+        /// Render preview descriptions as plain text.
+        /// </summary>
+        [JsonStringEnumMemberName("text")]
+        Text,
+
+        /// <summary>
+        /// Render preview descriptions as markdown.
+        /// </summary>
+        [JsonStringEnumMemberName("markdown")]
+        Markdown,
     }
 }

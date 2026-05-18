@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:flowlauncher="clr-namespace:Flow.Launcher"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mdxam="clr-namespace:MdXaml;assembly=MdXaml"
     xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
     xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
     Name="FlowMainWindow"
@@ -527,7 +528,16 @@
                                     <TextBlock
                                         x:Name="PreviewSubTitle"
                                         Style="{DynamicResource PreviewItemSubTitleStyle}"
-                                        Text="{Binding PreviewDescription}" />
+                                        Text="{Binding PreviewDescription}"
+                                        Visibility="{Binding IsMarkdownPreview, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=Inverse}" />
+                                    <mdxam:MarkdownScrollViewer
+                                        MaxHeight="{Binding ElementName=ResultListBox, Path=ActualHeight}"
+                                        Margin="5 6 0 10"
+                                        HorizontalScrollBarVisibility="Auto"
+                                        Markdown="{Binding PreviewDescription}"
+                                        MarkdownStyle="{DynamicResource PreviewMarkdownStyle}"
+                                        VerticalScrollBarVisibility="Auto"
+                                        Visibility="{Binding IsMarkdownPreview, Converter={StaticResource BoolToVisibilityConverter}}" />
                                 </StackPanel>
                             </Grid>
                         </Border>
