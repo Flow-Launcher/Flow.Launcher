@@ -113,12 +113,18 @@ public partial class HotkeyControlDialog : ContentDialog
         ChefKeysManager.Start();
     }
 
+    /// <summary>
+    /// Resets the hotkey display to the default hotkey value.
+    /// </summary>
     private void Reset(object sender, RoutedEventArgs routedEventArgs)
     {
         ResetDetectionState();
         SetKeysToDisplay(new HotkeyModel(DefaultHotkey));
     }
 
+    /// <summary>
+    /// Clears the current hotkey binding, setting it to empty.
+    /// </summary>
     private void Delete(object sender, RoutedEventArgs routedEventArgs)
     {
         ResetDetectionState();
@@ -126,6 +132,9 @@ public partial class HotkeyControlDialog : ContentDialog
         KeysToDisplay.Add(EmptyHotkey);
     }
 
+    /// <summary>
+    /// Cancels the dialog without saving changes, stopping ChefKeys and resetting detection state.
+    /// </summary>
     private void Cancel(object sender, RoutedEventArgs routedEventArgs)
     {
         ResetDetectionState();
@@ -136,6 +145,10 @@ public partial class HotkeyControlDialog : ContentDialog
         Hide();
     }
 
+    /// <summary>
+    /// Saves the current hotkey binding and closes the dialog.
+    /// If the display shows the empty hotkey, deletes the binding instead.
+    /// </summary>
     private void Save(object sender, RoutedEventArgs routedEventArgs)
     {
         ResetDetectionState();
@@ -164,6 +177,9 @@ public partial class HotkeyControlDialog : ContentDialog
         _doubleTapDetectionTimer.Stop();
     }
 
+    /// <summary>
+    /// Handles the Unloaded event by resetting the detection state machine.
+    /// </summary>
     private void OnUnloaded(object sender, RoutedEventArgs e)
     {
         ResetDetectionState();
@@ -192,6 +208,11 @@ public partial class HotkeyControlDialog : ContentDialog
         }
     }
 
+    /// <summary>
+    /// Handles key-down events for hotkey capture. In double-tap mode, immediately creates
+    /// a double-tap binding. In normal mode, uses the modifier detection state machine to
+    /// distinguish between combo hotkeys and double-tap hotkeys.
+    /// </summary>
     private void OnPreviewKeyDown(object sender, KeyEventArgs e)
     {
         e.Handled = true;
@@ -350,6 +371,10 @@ public partial class HotkeyControlDialog : ContentDialog
         }
     }
 
+    /// <summary>
+    /// Handles key-up events to detect when a lone modifier key is released,
+    /// transitioning from ModifierDown to WaitingSecondPress state.
+    /// </summary>
     private void OnPreviewKeyUp(object sender, KeyEventArgs e)
     {
         e.Handled = true;
@@ -468,25 +493,31 @@ public partial class HotkeyControlDialog : ContentDialog
 
     /// <summary>
     /// Creates a double-tap HotkeyModel from a single key press.
-    /// For modifier keys (Ctrl, Alt, Shift, Win), creates "Key + Key" format.
-    /// For other keys, also creates "Key + Key" format.
+    /// Only modifier keys (Ctrl, Alt, Shift, Win) are valid for double-tap bindings.
+    /// Non-modifier keys return an invalid HotkeyModel that will fail validation.
     /// </summary>
     private static HotkeyModel CreateDoubleTapHotkey(Key key)
     {
-        // Map the pressed key to a double-tap hotkey model
-        // For modifier keys, we use the left variant as the CharKey
+        // Only modifier keys are valid for double-tap hotkeys.
+        // For modifier keys, we use the left variant as the CharKey.
+        // Non-modifier keys return a HotkeyModel with DoubleTap=true but CharKey=None,
+        // which will fail HotkeyModel.Validate() and prevent registration.
         var doubleTapKey = key switch
         {
             Key.LeftCtrl or Key.RightCtrl => Key.LeftCtrl,
             Key.LeftAlt or Key.RightAlt => Key.LeftAlt,
             Key.LeftShift or Key.RightShift => Key.LeftShift,
             Key.LWin or Key.RWin => Key.LWin,
-            _ => key
+            _ => Key.None // Non-modifier keys are not valid for double-tap
         };
 
-        return new HotkeyModel(false, false, false, false, doubleTapKey, true);
+        return new HotkeyModel(false, false, false, false, doubleTapKey, doubleTapKey != Key.None);
     }
 
+    /// <summary>
+    /// Updates the display with the given hotkey model and checks availability.
+    /// Shows conflict warnings if the hotkey is already registered elsewhere.
+    /// </summary>
     private void SetKeysToDisplay(HotkeyModel? hotkey)
     {
         _overwriteOtherHotkey = null;
@@ -551,6 +582,10 @@ public partial class HotkeyControlDialog : ContentDialog
         }
     }
 
+    /// <summary>
+    /// Checks if a hotkey is available for registration. Double-tap hotkeys use
+    /// a different validation path than combo hotkeys.
+    /// </summary>
     private static bool CheckHotkeyAvailability(HotkeyModel hotkey, bool validateKeyGesture)
     {
         // Double-tap hotkeys use a different validation path
@@ -566,6 +601,9 @@ public partial class HotkeyControlDialog : ContentDialog
         return hotkey.Validate(validateKeyGesture) && HotKeyMapper.CheckAvailability(hotkey);
     }
 
+    /// <summary>
+    /// Overwrites an existing hotkey conflict and saves the new binding.
+    /// </summary>
     private void Overwrite(object sender, RoutedEventArgs e)
     {
         _overwriteOtherHotkey?.Invoke();

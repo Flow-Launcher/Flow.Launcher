@@ -237,6 +237,9 @@ case HotkeyType.DialogJumpHotkey:
             CurrentHotkey = new HotkeyModel(hotkey);
         }
 
+        /// <summary>
+        /// Checks if a combo hotkey is available for registration via NHotkey.
+        /// </summary>
         private static bool CheckHotkeyAvailability(HotkeyModel hotkey, bool validateKeyGesture) =>
             hotkey.Validate(validateKeyGesture) && HotKeyMapper.CheckAvailability(hotkey);
 
@@ -246,11 +249,18 @@ case HotkeyType.DialogJumpHotkey:
 
         public HotkeyModel CurrentHotkey { get; private set; } = new(false, false, false, false, Key.None);
 
+        /// <summary>
+        /// Opens the hotkey capture dialog for the user to set a new hotkey binding.
+        /// </summary>
         public void GetNewHotkey(object sender, RoutedEventArgs e)
         {
             _ = OpenHotkeyDialogAsync();
         }
 
+        /// <summary>
+        /// Opens the hotkey capture dialog asynchronously. Removes the current hotkey
+        /// registration before opening, then applies the new binding based on the dialog result.
+        /// </summary>
         private async Task OpenHotkeyDialogAsync()
         {
             // For double-tap hotkeys, we don't use NHotkey, so no need to remove
@@ -262,7 +272,7 @@ case HotkeyType.DialogJumpHotkey:
             }
             else if (currentModel.DoubleTap)
             {
-                HotKeyMapper.RemoveDoubleTapHotkey();
+                HotKeyMapper.RemoveDoubleTapHotkey(Type == HotkeyType.Hotkey);
             }
 
             // Allow double-tap detection in the main hotkey dialog too
@@ -286,6 +296,11 @@ case HotkeyType.DialogJumpHotkey:
             }
         }
 
+        /// <summary>
+        /// Applies a new hotkey binding from the capture dialog. Validates availability
+        /// before registering. Routes double-tap hotkeys to HotKeyMapper and combo hotkeys
+        /// to the ChangeHotkey command.
+        /// </summary>
         private void SetHotkey(HotkeyModel keyModel, bool triggerValidate = true)
         {
             if (triggerValidate)
@@ -320,7 +335,7 @@ case HotkeyType.DialogJumpHotkey:
                 // This applies to both DoubleTapHotkey type and Hotkey type (main toggle hotkey)
                 if (keyModel.DoubleTap)
                 {
-                    HotKeyMapper.SetDoubleTapHotkey(keyModel.ToString());
+                    HotKeyMapper.SetDoubleTapHotkey(keyModel.ToString(), Type == HotkeyType.Hotkey);
                 }
                 else
                 {
@@ -334,7 +349,7 @@ case HotkeyType.DialogJumpHotkey:
                 // For double-tap hotkeys, register via HotKeyMapper instead of NHotkey
                 if (keyModel.DoubleTap)
                 {
-                    HotKeyMapper.SetDoubleTapHotkey(keyModel.ToString());
+                    HotKeyMapper.SetDoubleTapHotkey(keyModel.ToString(), Type == HotkeyType.Hotkey);
                 }
                 else
                 {
@@ -343,13 +358,17 @@ case HotkeyType.DialogJumpHotkey:
             }
         }
 
+        /// <summary>
+        /// Removes the current hotkey binding and clears the display.
+        /// Routes to the appropriate removal method based on whether the hotkey is double-tap or combo.
+        /// </summary>
         public void Delete()
         {
             // Check if the current hotkey is a double-tap format
             var currentModel = new HotkeyModel(Hotkey);
             if (currentModel.DoubleTap)
             {
-                HotKeyMapper.RemoveDoubleTapHotkey();
+                HotKeyMapper.RemoveDoubleTapHotkey(Type == HotkeyType.Hotkey);
             }
             else if (!string.IsNullOrEmpty(Hotkey))
             {
@@ -359,6 +378,10 @@ case HotkeyType.DialogJumpHotkey:
             SetKeysToDisplay(new HotkeyModel(false, false, false, false, Key.None));
         }
 
+        /// <summary>
+        /// Updates the key display chips from the given hotkey model.
+        /// Shows the empty hotkey placeholder if the model is null or default.
+        /// </summary>
         private void SetKeysToDisplay(HotkeyModel? hotkey)
         {
             KeysToDisplay.Clear();
@@ -375,6 +398,9 @@ case HotkeyType.DialogJumpHotkey:
             }
         }
 
+        /// <summary>
+        /// Creates a HotkeyModel from a string and applies it via <see cref="SetHotkey(HotkeyModel, bool)"/>.
+        /// </summary>
         public void SetHotkey(string? keyStr, bool triggerValidate = true)
         {
             SetHotkey(new HotkeyModel(keyStr), triggerValidate);

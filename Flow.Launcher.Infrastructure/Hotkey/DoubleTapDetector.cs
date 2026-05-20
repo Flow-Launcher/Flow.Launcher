@@ -8,13 +8,15 @@ using Windows.Win32.UI.Input.KeyboardAndMouse;
 namespace Flow.Launcher.Infrastructure.Hotkey
 {
     /// <summary>
-    /// Detects double-tap (double-press) of a single key within a configurable time interval.
+    /// Detects double-tap (double-press) of a single modifier key within a configurable time interval.
     /// For example, pressing Ctrl twice within 300ms triggers the double-tap action.
     /// Uses the GlobalHotkey WH_KEYBOARD_LL hook to track key-down and key-up events.
     /// 
     /// Important: For modifier keys, Windows generates auto-repeat WM_KEYDOWN events when
     /// the key is held down. To avoid false positives, we only count a second press if
     /// the key was released between the two presses (key-up detected between key-downs).
+    /// 
+    /// Only modifier keys (Ctrl, Alt, Shift, Win) are supported for double-tap bindings.
     /// </summary>
     public class DoubleTapDetector : IDisposable
     {
@@ -25,14 +27,36 @@ namespace Flow.Launcher.Infrastructure.Hotkey
         private readonly Action _singleTapAction;
         private readonly int _intervalMs;
 
-        // The virtual key code to monitor for double-tap
+        /// <summary>
+        /// The virtual key code to monitor for double-tap.
+        /// </summary>
         private VIRTUAL_KEY _targetVkCode;
 
-        // Timestamp tracking
+        /// <summary>
+        /// Timestamp of the last key-down event for interval measurement.
+        /// </summary>
         private long _lastKeyDownTimestamp = 0;
+
+        /// <summary>
+        /// Whether a first key press is pending (waiting for a second press within the interval).
+        /// </summary>
         private bool _firstPressPending = false;
-        private bool _keyIsCurrentlyDown = false; // Tracks whether the target key is physically held down
-        private long _lastKeyDownTickCount = 0; // TickCount64 of last key-down, for desync recovery
+
+        /// <summary>
+        /// Tracks whether the target key is physically held down, to distinguish
+        /// auto-repeat from genuine double-tap.
+        /// </summary>
+        private bool _keyIsCurrentlyDown = false;
+
+        /// <summary>
+        /// TickCount64 of the last key-down event, used for desync recovery
+        /// when a key-up event was missed.
+        /// </summary>
+        private long _lastKeyDownTickCount = 0;
+
+        /// <summary>
+        /// Whether this instance has been disposed.
+        /// </summary>
         private bool _disposed = false;
 
         /// <summary>
@@ -41,12 +65,12 @@ namespace Flow.Launcher.Infrastructure.Hotkey
         public bool IsEnabled { get; private set; }
 
         /// <summary>
-        /// The hotkey string representation (e.g., "Ctrl + Ctrl", "Alt + Alt", "Space + Space").
+        /// The hotkey string representation (e.g., "Ctrl + Ctrl", "Alt + Alt").
         /// </summary>
         public string HotkeyString { get; private set; }
 
         /// <summary>
-        /// Creates a DoubleTapDetector that monitors a specific key for double-press within an interval.
+        /// Creates a DoubleTapDetector that monitors a specific modifier key for double-press within an interval.
         /// </summary>
         /// <param name="hotkeyString">The hotkey string (e.g., "Ctrl + Ctrl")</param>
         /// <param name="intervalMs">Maximum interval between two presses in milliseconds</param>
@@ -70,14 +94,18 @@ namespace Flow.Launcher.Infrastructure.Hotkey
             _timeoutTimer.Tick += OnTimeout;
         }
 
+        /// <summary>
+        /// Writes a debug message to the debug output.
+        /// </summary>
         private static void Log(string message)
         {
             Debug.WriteLine($"[{ClassName}] {message}");
         }
 
         /// <summary>
-        /// Parses the hotkey string to determine which key to monitor.
+        /// Parses the hotkey string to determine which modifier key to monitor.
         /// Double-tap hotkeys are represented as "Key + Key" (e.g., "Ctrl + Ctrl", "Alt + Alt").
+        /// Only modifier keys (Ctrl, Alt, Shift, Win) are valid for double-tap bindings.
         /// </summary>
         private void ParseTargetKey(string hotkeyString)
         {
@@ -109,38 +137,24 @@ namespace Flow.Launcher.Infrastructure.Hotkey
                         _targetVkCode = VIRTUAL_KEY.VK_LWIN;
                         break;
                     default:
-                        if (Enum.TryParse<VIRTUAL_KEY>("VK_" + keyName.ToUpper(), out var vk))
-                        {
-                            _targetVkCode = vk;
-                        }
-                        else
-                        {
-                            try
-                            {
-                                var wpfKey = (Key)Enum.Parse(typeof(Key), keyName);
-                                _targetVkCode = MapWpfKeyToVirtualKey(wpfKey);
-                            }
-                            catch
-                            {
-                                _targetVkCode = (VIRTUAL_KEY)0;
-                            }
-                        }
+                        // Non-modifier keys are not valid for double-tap hotkeys.
+                        // This aligns with IsValidDoubleTapKey and HotkeyModel.Validate.
+                        _targetVkCode = (VIRTUAL_KEY)0;
                         break;
                 }
             }
             else if (parts.Length == 1)
             {
+                // Single key format — only valid if it's a modifier key name
                 var keyName = parts[0];
-
-                try
+                _targetVkCode = keyName switch
                 {
-                    var wpfKey = (Key)Enum.Parse(typeof(Key), keyName);
-                    _targetVkCode = MapWpfKeyToVirtualKey(wpfKey);
-                }
-                catch
-                {
-                    _targetVkCode = (VIRTUAL_KEY)0;
-                }
+                    "Ctrl" => VIRTUAL_KEY.VK_CONTROL,
+                    "Alt" => VIRTUAL_KEY.VK_MENU,
+                    "Shift" => VIRTUAL_KEY.VK_SHIFT,
+                    "Win" => VIRTUAL_KEY.VK_LWIN,
+                    _ => (VIRTUAL_KEY)0
+                };
             }
             else
             {
@@ -148,13 +162,17 @@ namespace Flow.Launcher.Infrastructure.Hotkey
             }
         }
 
+        /// <summary>
+        /// Maps a WPF Key to its virtual key code equivalent.
+        /// </summary>
         private static VIRTUAL_KEY MapWpfKeyToVirtualKey(Key key)
         {
             return (VIRTUAL_KEY)KeyInterop.VirtualKeyFromKey(key);
         }
 
         /// <summary>
-        /// Enables the double-tap detector.
+        /// Enables the double-tap detector. If the target key is invalid (0), the detector
+        /// remains disabled.
         /// </summary>
         public void Enable()
         {
@@ -173,7 +191,7 @@ namespace Flow.Launcher.Infrastructure.Hotkey
         }
 
         /// <summary>
-        /// Disables the double-tap detector.
+        /// Disables the double-tap detector and resets all tracking state.
         /// </summary>
         public void Disable()
         {
@@ -193,6 +211,9 @@ namespace Flow.Launcher.Infrastructure.Hotkey
         /// to distinguish between auto-repeat (key held down) and genuine double-tap
         /// (key pressed, released, pressed again).
         /// </summary>
+        /// <param name="keyEvent">The keyboard event type (WM_KEYDOWN, WM_KEYUP, etc.)</param>
+        /// <param name="vkCode">The virtual key code of the key event</param>
+        /// <param name="state">The current state of modifier keys</param>
         public bool ProcessKeyEvent(KeyEvent keyEvent, int vkCode, SpecialKeyState state)
         {
             if (!IsEnabled || _targetVkCode == (VIRTUAL_KEY)0)
@@ -300,6 +321,7 @@ namespace Flow.Launcher.Infrastructure.Hotkey
         /// Checks if the given virtual key code matches the target key for double-tap.
         /// For modifier keys, both left and right variants are considered matches.
         /// </summary>
+        /// <param name="vkCode">The virtual key code to check.</param>
         private bool IsTargetKey(int vkCode)
         {
             // The WH_KEYBOARD_LL hook sends specific VK codes for left/right modifier keys:
@@ -313,16 +335,12 @@ namespace Flow.Launcher.Infrastructure.Hotkey
             switch (_targetVkCode)
             {
                 case VIRTUAL_KEY.VK_CONTROL:
-                    // Match VK_LCONTROL (0xA2) or VK_RCONTROL (0xA3)
                     return vkCode == 0xA2 || vkCode == 0xA3;
                 case VIRTUAL_KEY.VK_MENU:
-                    // Match VK_LMENU (0xA4) or VK_RMENU (0xA5)
                     return vkCode == 0xA4 || vkCode == 0xA5;
                 case VIRTUAL_KEY.VK_SHIFT:
-                    // Match VK_LSHIFT (0xA0) or VK_RSHIFT (0xA1)
                     return vkCode == 0xA0 || vkCode == 0xA1;
                 case VIRTUAL_KEY.VK_LWIN:
-                    // Match VK_LWIN (0x5B) or VK_RWIN (0x5C)
                     return vkCode == 0x5B || vkCode == 0x5C;
                 default:
                     return vkCode == (int)_targetVkCode;
@@ -330,7 +348,8 @@ namespace Flow.Launcher.Infrastructure.Hotkey
         }
 
         /// <summary>
-        /// Called when the timeout timer expires - means only one press was detected within the interval.
+        /// Called when the timeout timer expires — means only one press was detected within the interval.
+        /// Invokes the single-tap action if configured.
         /// </summary>
         private void OnTimeout(object sender, EventArgs e)
         {
@@ -348,7 +367,10 @@ namespace Flow.Launcher.Infrastructure.Hotkey
 
         /// <summary>
         /// Checks if the given hotkey string is a valid double-tap hotkey format.
+        /// A valid format is "Key + Key" where Key is a modifier key (Ctrl, Alt, Shift, Win).
         /// </summary>
+        /// <param name="hotkeyString">The hotkey string to validate.</param>
+        /// <returns>True if the hotkey string is a valid double-tap format.</returns>
         public static bool IsValidDoubleTapHotkey(string hotkeyString)
         {
             if (string.IsNullOrEmpty(hotkeyString))
@@ -365,36 +387,23 @@ namespace Flow.Launcher.Infrastructure.Hotkey
 
         /// <summary>
         /// Checks if a key name is valid for double-tap binding.
+        /// Only modifier keys (Ctrl, Alt, Shift, Win) are valid for double-tap hotkeys,
+        /// consistent with <see cref="HotkeyModel.Validate"/> which restricts double-tap
+        /// to modifier keys only.
         /// </summary>
+        /// <param name="keyName">The key name to check.</param>
+        /// <returns>True if the key name is a valid modifier key for double-tap.</returns>
         public static bool IsValidDoubleTapKey(string keyName)
         {
-            switch (keyName)
-            {
-                case "Ctrl":
-                case "Alt":
-                case "Shift":
-                case "Win":
-                    return true;
-                default:
-                    try
-                    {
-                        var key = (Key)Enum.Parse(typeof(Key), keyName);
-                        return key != Key.None &&
-                               key != Key.LeftCtrl && key != Key.RightCtrl &&
-                               key != Key.LeftAlt && key != Key.RightAlt &&
-                               key != Key.LeftShift && key != Key.RightShift &&
-                               key != Key.LWin && key != Key.RWin;
-                    }
-                    catch
-                    {
-                        return false;
-                    }
-            }
+            return keyName is "Ctrl" or "Alt" or "Shift" or "Win";
         }
 
         /// <summary>
         /// Gets the display string for a double-tap hotkey.
+        /// For example, "Ctrl + Ctrl" becomes "Ctrl ×2".
         /// </summary>
+        /// <param name="hotkeyString">The hotkey string to format.</param>
+        /// <returns>The formatted display string.</returns>
         public static string GetDisplayString(string hotkeyString)
         {
             if (string.IsNullOrEmpty(hotkeyString))
@@ -409,6 +418,9 @@ namespace Flow.Launcher.Infrastructure.Hotkey
             return hotkeyString;
         }
 
+        /// <summary>
+        /// Disposes the double-tap detector, stopping the timer and disabling detection.
+        /// </summary>
         public void Dispose()
         {
             if (_disposed)
