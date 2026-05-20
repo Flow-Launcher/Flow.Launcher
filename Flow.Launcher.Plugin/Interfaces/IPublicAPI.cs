@@ -143,7 +143,7 @@ namespace Flow.Launcher.Plugin
         /// <param name="subTitle">Message subtitle</param>
         /// <param name="iconPath">Message icon path (relative path to your plugin folder)</param>
         /// <param name="useMainWindowAsOwner">when true will use main windows as the owner</param>
-        /// <param name="forceShown">when true will force the message to be shown regardless of user settings of `Show more notifications`</param>
+        /// <param name="forceShown">when true will force the message to be shown regardless of user settings of `Show success notifications`</param>
         void ShowMsg(string title, string subTitle, string iconPath, bool useMainWindowAsOwner = true, bool forceShown = false);
 
         /// <summary>
