@@ -580,8 +580,8 @@
     </Style>
     <Style x:Key="PreviewMarkdownStyle" TargetType="{x:Type FlowDocument}">
         <Setter Property="FontFamily" Value="{DynamicResource ContentControlThemeFontFamily}" />
-        <Setter Property="FontSize" Value="13" />
-        <Setter Property="Foreground" Value="{DynamicResource SubTitleForeground}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Foreground" Value="{DynamicResource Color04B}" />
         <Setter Property="PagePadding" Value="0" />
         <Setter Property="TextAlignment" Value="Left" />
 
@@ -600,12 +600,14 @@
             <Style xmlns:avalonEdit="clr-namespace:ICSharpCode.AvalonEdit;assembly=ICSharpCode.AvalonEdit" TargetType="avalonEdit:TextEditor">
                 <Setter Property="Background" Value="{DynamicResource Color03B}" />
                 <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource SeparatorForeground}" />
+                <Setter Property="BorderThickness" Value="1" />
                 <Setter Property="FontFamily" Value="Cascadia Code, Consolas" />
                 <Setter Property="FontSize" Value="12" />
                 <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
                 <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
-                <Setter Property="Margin" Value="0 2 0 10" />
-                <Setter Property="Padding" Value="8" />
+                <Setter Property="Margin" Value="0 4 0 12" />
+                <Setter Property="Padding" Value="12 10" />
             </Style>
 
             <Style TargetType="{x:Type Paragraph}">
