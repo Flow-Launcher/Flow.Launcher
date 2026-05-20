@@ -108,6 +108,19 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string CycleHistoryDownHotkey { get; set; } = $"{KeyConstant.Alt} + Down";
         public string DialogJumpHotkey { get; set; } = $"{KeyConstant.Alt} + G";
 
+        /// <summary>
+        /// Double-tap hotkey to toggle Flow Launcher.
+        /// Format: "Key + Key" where both parts are the same (e.g., "Ctrl + Ctrl", "Alt + Alt").
+        /// When set, pressing the same key twice within <see cref="DoubleTapHotkeyInterval"/>ms triggers the toggle action.
+        /// </summary>
+        public string DoubleTapHotkey { get; set; } = "";
+
+        /// <summary>
+        /// Maximum interval in milliseconds between two key presses to be considered a double-tap.
+        /// Default is 300ms. Range: 100-500ms.
+        /// </summary>
+        public int DoubleTapHotkeyInterval { get; set; } = 300;
+
         private string _language = Constant.SystemLanguageCode;
         public string Language
         {
@@ -629,6 +642,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                     list.Add(new(CycleHistoryDownHotkey, "CycleHistoryDownHotkey", () => CycleHistoryDownHotkey = ""));
                 if (!string.IsNullOrEmpty(DialogJumpHotkey))
                     list.Add(new(DialogJumpHotkey, "dialogJumpHotkey", () => DialogJumpHotkey = ""));
+                if (!string.IsNullOrEmpty(DoubleTapHotkey))
+                    list.Add(new(DoubleTapHotkey, "doubleTapHotkey", () => DoubleTapHotkey = ""));
 
                 // Custom Query Hotkeys
                 foreach (var customPluginHotkey in CustomPluginHotkeys)

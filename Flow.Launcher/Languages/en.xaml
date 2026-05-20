@@ -418,6 +418,10 @@
     <system:String x:Key="showBadgesGlobalOnlyToolTip">Show badges for global query results only</system:String>
     <system:String x:Key="dialogJumpHotkey">Dialog Jump</system:String>
     <system:String x:Key="dialogJumpHotkeyToolTip">Enter shortcut to quickly navigate the Open/Save As dialog window to the path of the current file manager.</system:String>
+    <system:String x:Key="doubleTapHotkey">Double-Tap Hotkey</system:String>
+    <system:String x:Key="doubleTapHotkeyToolTip">Press the same key twice quickly to toggle Flow Launcher. For example, pressing Ctrl twice within the interval will open/hide the search window.</system:String>
+    <system:String x:Key="doubleTapHotkeyInterval">Double-Tap Interval</system:String>
+    <system:String x:Key="doubleTapHotkeyIntervalToolTip">Maximum time interval (in milliseconds) between two key presses to be considered a double-tap. Default is 300ms.</system:String>
     <system:String x:Key="dialogJump">Dialog Jump</system:String>
     <system:String x:Key="dialogJumpToolTip">When Open/Save As dialog window opens, quickly navigate to the current path of the file manager.</system:String>
     <system:String x:Key="autoDialogJump">Dialog Jump Automatically</system:String>

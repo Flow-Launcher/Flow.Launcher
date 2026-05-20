@@ -90,7 +90,7 @@ namespace Flow.Launcher
             set { SetValue(TypeProperty, value); }
         }
 
-        public enum HotkeyType
+public enum HotkeyType
         {
             None,
             // Custom query hotkeys
@@ -112,6 +112,8 @@ namespace Flow.Launcher
             SelectNextItemHotkey,
             SelectNextItemHotkey2,
             DialogJumpHotkey,
+            // Double-tap hotkey
+            DoubleTapHotkey,
         }
 
         // We can initialize settings in static field because it has been constructed in App constuctor
@@ -123,7 +125,7 @@ namespace Flow.Launcher
         {
             get
             {
-                return Type switch
+return Type switch
                 {
                     // Custom query hotkeys
                     HotkeyType.CustomQueryHotkey => hotkey,
@@ -144,6 +146,7 @@ namespace Flow.Launcher
                     HotkeyType.SelectNextItemHotkey => _settings.SelectNextItemHotkey,
                     HotkeyType.SelectNextItemHotkey2 => _settings.SelectNextItemHotkey2,
                     HotkeyType.DialogJumpHotkey => _settings.DialogJumpHotkey,
+                    HotkeyType.DoubleTapHotkey => _settings.DoubleTapHotkey,
                     _ => throw new System.NotImplementedException("Hotkey type not set")
                 };
             }
@@ -203,8 +206,11 @@ namespace Flow.Launcher
                     case HotkeyType.SelectNextItemHotkey2:
                         _settings.SelectNextItemHotkey2 = value;
                         break;
-                    case HotkeyType.DialogJumpHotkey:
+case HotkeyType.DialogJumpHotkey:
                         _settings.DialogJumpHotkey = value;
+                        break;
+                    case HotkeyType.DoubleTapHotkey:
+                        _settings.DoubleTapHotkey = value;
                         break;
                     default:
                         throw new System.NotImplementedException("Hotkey type not set");
@@ -247,12 +253,20 @@ namespace Flow.Launcher
 
         private async Task OpenHotkeyDialogAsync()
         {
-            if (!string.IsNullOrEmpty(Hotkey))
+            // For double-tap hotkeys, we don't use NHotkey, so no need to remove
+            // Also check if the current hotkey is a double-tap format (e.g., "Ctrl + Ctrl")
+            var currentModel = new HotkeyModel(Hotkey);
+            if (!currentModel.DoubleTap && !string.IsNullOrEmpty(Hotkey))
             {
                 HotKeyMapper.RemoveHotkey(Hotkey);
             }
+            else if (currentModel.DoubleTap)
+            {
+                HotKeyMapper.RemoveDoubleTapHotkey();
+            }
 
-            var dialog = new HotkeyControlDialog(Hotkey, DefaultHotkey, WindowTitle)
+            // Allow double-tap detection in the main hotkey dialog too
+            var dialog = new HotkeyControlDialog(Hotkey, DefaultHotkey, WindowTitle, Type == HotkeyType.DoubleTapHotkey)
             {
                 Owner = Window.GetWindow(this)
             };
@@ -277,8 +291,15 @@ namespace Flow.Launcher
             if (triggerValidate)
             {
                 bool hotkeyAvailable;
+
+                // Double-tap hotkeys use a different validation path
+                if (keyModel.DoubleTap)
+                {
+                    hotkeyAvailable = keyModel.Validate(ValidateKeyGesture) &&
+                        HotKeyMapper.CheckDoubleTapAvailability(keyModel.ToString());
+                }
                 // TODO: This is a temporary way to enforce changing only the open flow hotkey to Win, and will be removed by PR #3157
-                if (keyModel.ToString() == "LWin" || keyModel.ToString() == "RWin")
+                else if (keyModel.ToString() == "LWin" || keyModel.ToString() == "RWin")
                 {
                     hotkeyAvailable = true;
                 }
@@ -294,19 +315,46 @@ namespace Flow.Launcher
 
                 Hotkey = keyModel.ToString();
                 SetKeysToDisplay(CurrentHotkey);
-                ChangeHotkey?.Execute(keyModel);
+
+                // For double-tap hotkeys, register via HotKeyMapper instead of NHotkey
+                // This applies to both DoubleTapHotkey type and Hotkey type (main toggle hotkey)
+                if (keyModel.DoubleTap)
+                {
+                    HotKeyMapper.SetDoubleTapHotkey(keyModel.ToString());
+                }
+                else
+                {
+                    ChangeHotkey?.Execute(keyModel);
+                }
             }
             else
             {
                 Hotkey = keyModel.ToString();
-                ChangeHotkey?.Execute(keyModel);
+
+                // For double-tap hotkeys, register via HotKeyMapper instead of NHotkey
+                if (keyModel.DoubleTap)
+                {
+                    HotKeyMapper.SetDoubleTapHotkey(keyModel.ToString());
+                }
+                else
+                {
+                    ChangeHotkey?.Execute(keyModel);
+                }
             }
         }
 
         public void Delete()
         {
-            if (!string.IsNullOrEmpty(Hotkey))
+            // Check if the current hotkey is a double-tap format
+            var currentModel = new HotkeyModel(Hotkey);
+            if (currentModel.DoubleTap)
+            {
+                HotKeyMapper.RemoveDoubleTapHotkey();
+            }
+            else if (!string.IsNullOrEmpty(Hotkey))
+            {
                 HotKeyMapper.RemoveHotkey(Hotkey);
+            }
             Hotkey = "";
             SetKeysToDisplay(new HotkeyModel(false, false, false, false, Key.None));
         }

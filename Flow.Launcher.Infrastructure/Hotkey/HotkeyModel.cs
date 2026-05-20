@@ -15,9 +15,26 @@ namespace Flow.Launcher.Infrastructure.Hotkey
 
         public Key CharKey { get; set; } = Key.None;
 
+        /// <summary>
+        /// Indicates this is a double-tap hotkey (e.g., "Ctrl + Ctrl" means press Ctrl twice).
+        /// When true, the hotkey is triggered by pressing the same key twice within a time interval.
+        /// </summary>
+        public bool DoubleTap { get; set; } = false;
+
         private static readonly Dictionary<Key, string> specialSymbolDictionary = new Dictionary<Key, string>
         {
             { Key.Space, "Space" }, { Key.Oem3, "~" }
+        };
+
+        /// <summary>
+        /// Maps modifier key names to their WPF Key equivalents for double-tap parsing.
+        /// </summary>
+        private static readonly Dictionary<string, Key> modifierKeyMap = new Dictionary<string, Key>
+        {
+            { "Ctrl", Key.LeftCtrl },
+            { "Alt", Key.LeftAlt },
+            { "Shift", Key.LeftShift },
+            { "Win", Key.LWin }
         };
 
         public ModifierKeys ModifierKeys
@@ -63,6 +80,26 @@ namespace Flow.Launcher.Infrastructure.Hotkey
             CharKey = key;
         }
 
+        public HotkeyModel(bool alt, bool shift, bool win, bool ctrl, Key key, bool doubleTap)
+        {
+            DoubleTap = doubleTap;
+            if (doubleTap)
+            {
+                Alt = false;
+                Shift = false;
+                Win = false;
+                Ctrl = false;
+            }
+            else
+            {
+                Alt = alt;
+                Shift = shift;
+                Win = win;
+                Ctrl = ctrl;
+            }
+            CharKey = key;
+        }
+
         private void Parse(string hotkeyString)
         {
             if (string.IsNullOrEmpty(hotkeyString))
@@ -70,7 +107,41 @@ namespace Flow.Launcher.Infrastructure.Hotkey
                 return;
             }
 
-            List<string> keys = hotkeyString.Replace(" ", "").Split('+').ToList();
+            var parts = hotkeyString.Replace(" ", "").Split('+').ToList();
+
+            // Double-tap format: "Key + Key" where both parts are the same (e.g., "Ctrl + Ctrl")
+            if (parts.Count == 2 && parts[0] == parts[1])
+            {
+                DoubleTap = true;
+                var keyName = parts[0];
+
+                if (modifierKeyMap.TryGetValue(keyName, out var modifierKey))
+                {
+                    CharKey = modifierKey;
+                }
+                else
+                {
+                    // Try parsing as a regular key name (e.g., "Space", "F1")
+                    try
+                    {
+                        CharKey = (Key)Enum.Parse(typeof(Key), keyName);
+                    }
+                    catch (ArgumentException)
+                    {
+                    }
+                }
+
+                // If the key couldn't be resolved, don't treat this as a valid double-tap
+                if (CharKey == Key.None)
+                {
+                    DoubleTap = false;
+                }
+
+                return;
+            }
+
+            // Regular hotkey format (existing logic)
+            List<string> keys = parts;
             if (keys.Contains("Alt"))
             {
                 Alt = true;
@@ -124,6 +195,28 @@ namespace Flow.Launcher.Infrastructure.Hotkey
 
         public IEnumerable<string> EnumerateDisplayKeys()
         {
+            // Double-tap display: show the key name twice (e.g., "Ctrl" + "Ctrl")
+            if (DoubleTap && CharKey != Key.None)
+            {
+                var keyName = specialSymbolDictionary.TryGetValue(CharKey, out var value)
+                    ? value
+                    : CharKey.ToString();
+
+                // Map modifier key names back to friendly names
+                keyName = CharKey switch
+                {
+                    Key.LeftCtrl or Key.RightCtrl => "Ctrl",
+                    Key.LeftAlt or Key.RightAlt => "Alt",
+                    Key.LeftShift or Key.RightShift => "Shift",
+                    Key.LWin or Key.RWin => "Win",
+                    _ => keyName
+                };
+
+                yield return keyName;
+                yield return keyName;
+                yield break;
+            }
+
             if (Ctrl && CharKey is not (Key.LeftCtrl or Key.RightCtrl))
             {
                 yield return "Ctrl";
@@ -159,6 +252,13 @@ namespace Flow.Launcher.Infrastructure.Hotkey
         /// <returns></returns>
         public bool Validate(bool validateKeyGestrue = false)
         {
+            // Double-tap hotkeys are only valid for modifier keys
+            if (DoubleTap)
+            {
+                return CharKey is Key.LeftCtrl or Key.RightCtrl or Key.LeftAlt or Key.RightAlt
+                            or Key.LeftShift or Key.RightShift or Key.LWin or Key.RWin;
+            }
+
             switch (CharKey)
             {
                 case Key.LeftAlt:
@@ -224,7 +324,7 @@ namespace Flow.Launcher.Infrastructure.Hotkey
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(ModifierKeys, CharKey);
+            return HashCode.Combine(ModifierKeys, CharKey, DoubleTap);
         }
     }
 }
