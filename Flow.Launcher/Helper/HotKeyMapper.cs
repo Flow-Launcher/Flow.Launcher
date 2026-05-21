@@ -462,28 +462,26 @@ internal static class HotKeyMapper
     }
 
     /// <summary>
-    /// Global keyboard callback that forwards events to all active DoubleTapDetectors.
-    /// Each detector independently checks if the event matches its target key.
-    /// Returns false if any detector consumed the event (double-tap detected),
-    /// true to allow the event to continue to other handlers.
+    /// Global keyboard callback that forwards events to active DoubleTapDetectors.
+    /// Short-circuits as soon as any detector consumes the event (double-tap detected),
+    /// preventing other detectors from also acting on the same key event.
+    /// Returns false if the event was consumed, true to continue to other handlers.
     /// </summary>
     private static bool OnGlobalKeyboardEvent(int keyEvent, int vkCode, SpecialKeyState state)
     {
-        bool consumed = false;
-
         if (_mainDoubleTapDetector != null && _mainDoubleTapDetector.IsEnabled)
         {
             if (!_mainDoubleTapDetector.ProcessKeyEvent((KeyEvent)keyEvent, vkCode, state))
-                consumed = true;
+                return false;
         }
 
         if (_separateDoubleTapDetector != null && _separateDoubleTapDetector.IsEnabled)
         {
             if (!_separateDoubleTapDetector.ProcessKeyEvent((KeyEvent)keyEvent, vkCode, state))
-                consumed = true;
+                return false;
         }
 
-        return !consumed;
+        return true;
     }
 
     /// <summary>
