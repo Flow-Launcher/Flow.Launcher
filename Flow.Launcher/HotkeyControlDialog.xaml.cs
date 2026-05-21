@@ -37,7 +37,7 @@ public partial class HotkeyControlDialog : ContentDialog
     /// Idle: Waiting for any key press.
     /// ModifierDown: A lone modifier key was pressed. Waiting to see if user presses another key (combo)
     ///               or releases the modifier (potential double-tap).
-    /// WaitingSecondPress: The lone modifier was released. Waiting 300ms for a second press (double-tap).
+    /// WaitingSecondPress: The lone modifier was released. Waiting for a second press within the configured interval (double-tap).
     /// </summary>
     private enum ModifierDetectionState
     {
@@ -61,15 +61,12 @@ public partial class HotkeyControlDialog : ContentDialog
 
     /// <summary>
     /// Timer used to detect double-tap: after a lone modifier key is released,
-    /// we wait this interval for a second press. If no second press within 300ms,
+    /// we wait this interval for a second press. If no second press within the interval,
     /// we reset to Idle (the modifier was just pressed alone, not a double-tap).
+    /// The interval is read from <see cref="_hotkeySettings"/>.DoubleTapHotkeyInterval
+    /// so that capture and runtime detection agree.
     /// </summary>
     private readonly DispatcherTimer _doubleTapDetectionTimer;
-
-    /// <summary>
-    /// The double-tap detection interval in milliseconds.
-    /// </summary>
-    private const int DoubleTapDetectionIntervalMs = 300;
 
     public enum EResultType
     {
@@ -100,7 +97,7 @@ public partial class HotkeyControlDialog : ContentDialog
 
         _doubleTapDetectionTimer = new DispatcherTimer(DispatcherPriority.Input)
         {
-            Interval = TimeSpan.FromMilliseconds(DoubleTapDetectionIntervalMs)
+            Interval = TimeSpan.FromMilliseconds(_hotkeySettings.DoubleTapHotkeyInterval)
         };
         _doubleTapDetectionTimer.Tick += OnDoubleTapDetectionTimeout;
 
@@ -188,7 +185,7 @@ public partial class HotkeyControlDialog : ContentDialog
     /// <summary>
     /// Called when the double-tap detection timer expires.
     /// This means the user released a lone modifier key but didn't press it again
-    /// within 300ms, so it was just a single modifier press — not a double-tap.
+    /// within the configured interval, so it was just a single modifier press — not a double-tap.
     /// We reset to Idle and clear the pending display.
     /// </summary>
     private void OnDoubleTapDetectionTimeout(object sender, EventArgs e)
@@ -325,7 +322,7 @@ public partial class HotkeyControlDialog : ContentDialog
                 break;
 
             case ModifierDetectionState.WaitingSecondPress:
-                // The modifier was released, and we're waiting for a second press within 300ms.
+                // The modifier was released, and we're waiting for a second press within the configured interval.
                 if (isLoneModifier && _pendingModifierKey.HasValue && IsSameModifierFamily(key, _pendingModifierKey.Value))
                 {
                     // Second press of the same modifier within 300ms!

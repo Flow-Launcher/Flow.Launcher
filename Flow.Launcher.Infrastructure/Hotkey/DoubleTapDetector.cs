@@ -287,7 +287,7 @@ namespace Flow.Launcher.Infrastructure.Hotkey
 
                     Log("*** DOUBLE-TAP DETECTED! Invoking action ***");
                     _doubleTapAction?.Invoke();
-                    return true;
+                    return false;
                 }
                 else
                 {
