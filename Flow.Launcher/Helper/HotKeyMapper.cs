@@ -131,6 +131,9 @@ internal static class HotKeyMapper
         bool needAlt = hotkey.Alt;
         bool needShift = hotkey.Shift;
         bool keyCurrentlyDown = false;
+        bool suppressNextWinKeyUp = false;
+        const int VK_LWIN = 0x5B;
+        const int VK_RWIN = 0x5C;
 
         Func<int, int, SpecialKeyState, bool> callback = (keyEvent, vkCode, state) =>
         {
@@ -143,12 +146,21 @@ internal static class HotKeyMapper
             if (isMatch && (keyEvent == (int)KeyEvent.WM_KEYDOWN || keyEvent == (int)KeyEvent.WM_SYSKEYDOWN) && !keyCurrentlyDown)
             {
                 keyCurrentlyDown = true;
+                suppressNextWinKeyUp = true;
                 action?.Invoke(null, null);
                 return false;
             }
             if (isMatch && (keyEvent == (int)KeyEvent.WM_KEYUP || keyEvent == (int)KeyEvent.WM_SYSKEYUP))
             {
                 keyCurrentlyDown = false;
+                return false;
+            }
+            // Suppress Win key up after our combo fired to prevent the Start Menu from opening
+            if (suppressNextWinKeyUp
+                && (vkCode == VK_LWIN || vkCode == VK_RWIN)
+                && (keyEvent == (int)KeyEvent.WM_KEYUP || keyEvent == (int)KeyEvent.WM_SYSKEYUP))
+            {
+                suppressNextWinKeyUp = false;
                 return false;
             }
             return true;
