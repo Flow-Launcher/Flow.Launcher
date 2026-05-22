@@ -658,6 +658,12 @@ namespace Flow.Launcher
 
         public string GetLogDirectory() => DataLocation.VersionLogDirectory;
 
+        public event EventHandler StringMatcherBehaviorChanged
+        {
+            add => _settings.StringMatcherBehaviorChanged += value;
+            remove => _settings.StringMatcherBehaviorChanged -= value;
+        }
+
         #endregion
 
         #region Private Methods
