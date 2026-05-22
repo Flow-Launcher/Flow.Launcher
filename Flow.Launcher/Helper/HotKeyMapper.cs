@@ -90,7 +90,19 @@ internal static class HotKeyMapper
             {
                 App.API.LogDebug(ClassName,
                     $"|HotkeyMapper.SetHotkey|RegisterHotKey failed for {hotkeyStr} ({e.Message}); falling back to global keyboard callback.");
-                SetWithGlobalCallback(hotkey, action);
+                try
+                {
+                    SetWithGlobalCallback(hotkey, action);
+                }
+                catch (Exception fallbackEx)
+                {
+                    App.API.LogError(ClassName,
+                        string.Format("|HotkeyMapper.SetHotkey|Fallback global callback registration also failed for {2}: {0} \nStackTrace:{1}",
+                                      fallbackEx.Message,
+                                      fallbackEx.StackTrace,
+                                      hotkeyStr));
+                    App.API.ShowMsgBox(Localize.registerHotkeyFailed(hotkeyStr), Localize.MessageBoxTitle());
+                }
                 return;
             }
 
