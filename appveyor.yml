@@ -81,7 +81,7 @@ deploy:
       
       Please report any bugs or issues over at the [main repository](https://github.com/Flow-Launcher/Flow.Launcher/issues)'
     auth_token:
-      secure: ij4UeXUYQBDJxn2YRAAhUOjklOGVKDB87Hn5J8tKIzj13yatoI7sLM666QDQFEgv
+      secure: ZSlXMOONaB9prSh1rOaL9zlzhvGpbyeiBydJuTxYJAloaYJghhsUNaUWavHcL9hN
     artifact: Squirrel Installer, Portable Version, Squirrel nupkg, Squirrel RELEASES
     force_update: true
     on:
@@ -90,7 +90,7 @@ deploy:
   - provider: GitHub
     release: v$(flowVersion)
     auth_token:
-      secure: ij4UeXUYQBDJxn2YRAAhUOjklOGVKDB87Hn5J8tKIzj13yatoI7sLM666QDQFEgv
+      secure: ZSlXMOONaB9prSh1rOaL9zlzhvGpbyeiBydJuTxYJAloaYJghhsUNaUWavHcL9hN
     artifact: Squirrel Installer, Portable Version, Squirrel nupkg, Squirrel RELEASES
     draft: true
     force_update: true
