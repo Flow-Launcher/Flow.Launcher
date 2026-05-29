@@ -139,7 +139,6 @@ internal static class HotKeyMapper
         bool winSuppressed = false;
         ushort pressedWinVk = 0;
         bool comboFired = false;
-        bool keyCurrentlyDown = false;
         bool winReplayed = false;
         bool skipNextWinDown = false;
         bool skipNextWinUp = false;
@@ -176,7 +175,6 @@ internal static class HotKeyMapper
                 winSuppressed = false;
                 pressedWinVk = 0;
                 comboFired = false;
-                keyCurrentlyDown = false;
                 winReplayed = false;
 
                 if (fired)
@@ -219,9 +217,8 @@ internal static class HotKeyMapper
                     && state.AltPressed == needAlt
                     && state.ShiftPressed == needShift;
 
-                if (isOurHotkey && !keyCurrentlyDown)
+                if (isOurHotkey && !comboFired)
                 {
-                    keyCurrentlyDown = true;
                     comboFired = true;
                     action?.Invoke(null, null);
                     return false;
@@ -241,10 +238,7 @@ internal static class HotKeyMapper
 
             // Suppress the char key-up that matches the suppressed key-down
             if (comboFired && isUp && vkCode == expectedVkCode)
-            {
-                keyCurrentlyDown = false;
                 return false;
-            }
 
             return true;
         };
