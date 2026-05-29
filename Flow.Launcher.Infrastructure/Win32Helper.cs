@@ -152,6 +152,31 @@ namespace Flow.Launcher.Infrastructure
             return handle.Equals(PInvoke.GetForegroundWindow());
         }
 
+        /// <summary>
+        /// Brings <paramref name="window"/> to the foreground even when the calling context does not
+        /// hold foreground permission (e.g. a WH_KEYBOARD_LL hook callback).  Unlike a plain
+        /// SetForegroundWindow call, this temporarily attaches the current thread's input queue to
+        /// the foreground thread, which causes Windows to honour the request.
+        /// </summary>
+        public static void ForceForeground(Window window)
+        {
+            var hwnd = new HWND((nint)GetWindowHandle(window));
+            var foregroundHwnd = PInvoke.GetForegroundWindow();
+            uint foreThread = PInvoke.GetWindowThreadProcessId(foregroundHwnd);
+            uint appThread  = PInvoke.GetCurrentThreadId();
+
+            if (foreThread != appThread)
+            {
+                PInvoke.AttachThreadInput(foreThread, appThread, true);
+                PInvoke.SetForegroundWindow(hwnd);
+                PInvoke.AttachThreadInput(foreThread, appThread, false);
+            }
+            else
+            {
+                PInvoke.SetForegroundWindow(hwnd);
+            }
+        }
+
         #endregion
 
         #region Task Switching

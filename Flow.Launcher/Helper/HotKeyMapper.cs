@@ -165,6 +165,11 @@ internal static class HotKeyMapper
                 return false;
             }
 
+            // Suppress repeated Win keydowns (auto-repeat or both Win keys held simultaneously)
+            // while already tracking, to prevent the second keydown from reaching the system.
+            if (isDown && isWin && winSuppressed)
+                return false;
+
             // Win keyup while tracking
             if (isUp && isWin && winSuppressed && vkCode == pressedWinVk)
             {
@@ -179,7 +184,13 @@ internal static class HotKeyMapper
 
                 if (fired)
                 {
-                    // Our hotkey fired — suppress Win entirely so Start Menu never opens
+                    if (replayed)
+                    {
+                        // Win-down was injected during replay; clean it up so Win doesn't stay
+                        // stuck pressed in the system key state.
+                        skipNextWinUp = true;
+                        Win32Helper.InjectKeyUp(winVk);
+                    }
                     return false;
                 }
 

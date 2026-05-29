@@ -59,6 +59,14 @@ public partial class HotkeyControlDialog : ContentDialog
         ChefKeysManager.StartMenuEnableBlocking = true;
         ChefKeysManager.Start();
 
+        // Cancel/Save explicitly clean up ChefKeys before calling Hide(). The Closed handler
+        // covers the X-button path where neither Cancel nor Save runs.
+        this.Closed += (_, _) =>
+        {
+            ChefKeysManager.StartMenuEnableBlocking = false;
+            ChefKeysManager.Stop();
+        };
+
         if (isOpenFlowHotkey)
         {
             _winComboInterceptor = (keyEvent, vkCode, state) =>
@@ -76,7 +84,9 @@ public partial class HotkeyControlDialog : ContentDialog
                         or Key.LeftShift or Key.RightShift
                         or Key.LWin or Key.RWin)
                     {
-                        return false;
+                        // Pass unrecognised/modifier keys through — suppressing them would
+                        // silently eat media keys and other unmapped VK codes system-wide.
+                        return true;
                     }
                     _ = App.Current.Dispatcher.InvokeAsync(() =>
                     {
