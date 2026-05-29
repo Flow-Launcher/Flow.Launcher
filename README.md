@@ -25,7 +25,8 @@ Dedicated to making your workflow more seamless. Search everything from applicat
 
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
-<h4 align="center">
+<h4 align="center">  
+  <a href="#-official-channels">Official Channels</a> •
   <a href="#-getting-started">Getting Started</a> •
   <a href="#-features">Features</a> •
   <a href="#-plugins">Plugins</a> •
@@ -35,6 +36,19 @@ Dedicated to making your workflow more seamless. Search everything from applicat
   <a href="#development">Development</a> •
   <a href="https://flowlauncher.com/docs">Docs</a>
 </h4>
+
+<img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
+
+## 📣 Official Channels
+
+- Website: [https://flowlauncher.com](https://flowlauncher.com)
+- GitHub Organization: [https://github.com/Flow-Launcher](https://github.com/Flow-Launcher)
+- Discord: [https://discord.gg/AvgAQgh](https://discord.gg/AvgAQgh)
+- Reddit: [https://www.reddit.com/r/FlowLauncher/](https://www.reddit.com/r/FlowLauncher/)
+
+⚠️ Only trust official channels for downloads and announcements, and be careful of similar-looking domains.
+
+For installation, use the official methods listed below.
 
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
