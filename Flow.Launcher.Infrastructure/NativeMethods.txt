@@ -94,3 +94,8 @@ PowerUnregisterSuspendResumeNotification
 DeviceNotifyCallbackRoutine
 
 MonitorFromWindow
+
+SendInput
+INPUT
+INPUT_TYPE
+KEYBD_EVENT_FLAGS

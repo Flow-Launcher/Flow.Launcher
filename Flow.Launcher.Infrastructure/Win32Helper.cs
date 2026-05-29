@@ -1017,6 +1017,28 @@ namespace Flow.Launcher.Infrastructure
 
         #endregion
 
+        #region Keyboard Input
+
+        public static unsafe void InjectKeyDown(ushort vk)
+        {
+            Span<INPUT> inputs = stackalloc INPUT[1];
+            inputs[0].type = INPUT_TYPE.INPUT_KEYBOARD;
+            inputs[0].Anonymous.ki.wVk = (VIRTUAL_KEY)vk;
+            inputs[0].Anonymous.ki.dwFlags = 0;
+            PInvoke.SendInput(inputs, Marshal.SizeOf<INPUT>());
+        }
+
+        public static unsafe void InjectKeyUp(ushort vk)
+        {
+            Span<INPUT> inputs = stackalloc INPUT[1];
+            inputs[0].type = INPUT_TYPE.INPUT_KEYBOARD;
+            inputs[0].Anonymous.ki.wVk = (VIRTUAL_KEY)vk;
+            inputs[0].Anonymous.ki.dwFlags = KEYBD_EVENT_FLAGS.KEYEVENTF_KEYUP;
+            PInvoke.SendInput(inputs, Marshal.SizeOf<INPUT>());
+        }
+
+        #endregion
+
         #region Taskbar
 
         public static unsafe void ShowTaskbar()
