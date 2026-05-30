@@ -348,6 +348,13 @@ namespace Flow.Launcher.ViewModel
                 if (Count == 0 && newItems.Count == 0)
                     return;
 
+                if (Count == newItems.Count)
+                {
+                    ReplaceAll(newItems, token);
+                    editTime++;
+                    return;
+                }
+
                 if (editTime < 10 || newItems.Count < 30)
                 {
                     if (Count != 0) RemoveAll(newItems.Count);
@@ -373,6 +380,29 @@ namespace Flow.Launcher.ViewModel
                         Capacity = newItems.Count;
                     }
                     editTime++;
+                }
+            }
+
+            private void ReplaceAll(List<ResultViewModel> items, CancellationToken token = default)
+            {
+                for (var i = 0; i < items.Count; i++)
+                {
+                    if (token.IsCancellationRequested)
+                        return;
+
+                    var oldItem = this[i];
+                    var newItem = items[i];
+                    if (ReferenceEquals(oldItem, newItem))
+                    {
+                        continue;
+                    }
+
+                    this[i] = newItem;
+                    OnCollectionChanged(new NotifyCollectionChangedEventArgs(
+                        NotifyCollectionChangedAction.Replace,
+                        newItem,
+                        oldItem,
+                        i));
                 }
             }
         }

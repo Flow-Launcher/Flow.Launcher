@@ -227,17 +227,47 @@ namespace Flow.Launcher.Infrastructure.Image
                         {
                             image = Image;
                             type = ImageType.Error;
-                            Log.Exception(ClassName, $"Failed to load image file from path {path}: {ex.Message}", ex);
+                            Log.Warn(ClassName, $"Failed to load image file from path {path}: {ex.Message}");
                         }
                     }
                     else
                     {
-                        /* Although the documentation for GetImage on MSDN indicates that
-                         * if a thumbnail is available it will return one, this has proved to not
-                         * be the case in many situations while testing.
-                         * - Solution: explicitly pass the ThumbnailOnly flag
-                         */
-                        image = GetThumbnail(path, ThumbnailOptions.ThumbnailOnly);
+                        // For known image formats, decode via BitmapImage with a constrained pixel height
+                        // instead of routing through Windows Shell's ThumbnailOnly path. Shell thumbnailing
+                        // can return silently-blank images for small plugin icon PNGs (no cached thumbnail,
+                        // generation returns a blank), which then poison ImageCache. Direct decoding is
+                        // both faster and reliable for the formats WPF natively supports.
+                        try
+                        {
+                            var bmp = new BitmapImage();
+                            bmp.BeginInit();
+                            bmp.CacheOption = BitmapCacheOption.OnLoad;
+                            bmp.CreateOptions = BitmapCreateOptions.IgnoreColorProfile;
+                            bmp.UriSource = new Uri(path);
+                            // .ico holds multiple resolutions; ask for the 256 frame and let WPF
+                            // high-quality downscale to whatever the surface needs. Other formats
+                            // (PNG/JPG/etc.) stay clamped to SmallIconSize to keep the cache compact.
+                            var decodePixelSize = extension == ".ico" ? FullIconSize : SmallIconSize;
+                            bmp.DecodePixelHeight = decodePixelSize;
+                            bmp.DecodePixelWidth = decodePixelSize;
+                            bmp.EndInit();
+                            image = bmp;
+                        }
+                        catch (System.Exception ex)
+                        {
+                            Log.Warn(ClassName, $"BitmapImage decode failed for {path}, falling back to shell thumbnail: {ex.Message}");
+                            try
+                            {
+                                image = GetThumbnail(path, ThumbnailOptions.ThumbnailOnly);
+                            }
+                            catch (System.Exception thumbnailEx)
+                            {
+                                Log.Warn(ClassName, $"Shell thumbnail fallback failed for {path}: {thumbnailEx.Message}");
+                                image = MissingImage;
+                                type = ImageType.Error;
+                                path = Constant.MissingImgIcon;
+                            }
+                        }
                     }
                 }
                 else if (extension == SvgExtension)
@@ -251,7 +281,7 @@ namespace Flow.Launcher.Infrastructure.Image
                     {
                         image = Image;
                         type = ImageType.Error;
-                        Log.Exception(ClassName, $"Failed to load SVG image from path {path}: {ex.Message}", ex);
+                        Log.Warn(ClassName, $"Failed to load SVG image from path {path}: {ex.Message}");
                     }
                 }
                 else

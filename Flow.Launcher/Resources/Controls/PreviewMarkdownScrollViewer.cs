@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -16,56 +14,26 @@ namespace Flow.Launcher.Resources.Controls;
 public class PreviewMarkdownScrollViewer : MarkdownScrollViewer
 {
     private static readonly string[] EmphasisMarkers = ["**", "__", "*", "_"];
+    private const double MinimumDocumentPageWidth = 64;
 
-    private static readonly Dictionary<string, Color> HighlightPalette = new(StringComparer.OrdinalIgnoreCase)
+    internal static CodeHighlightTheme ActiveTheme { get; set; } = CodeHighlightTheme.VSCodeDarkPlus;
+
+    static PreviewMarkdownScrollViewer()
     {
-        ["Comment"] = Color.FromRgb(0x6E, 0x73, 0x8D),
-        ["Comments"] = Color.FromRgb(0x6E, 0x73, 0x8D),
-        ["LineComment"] = Color.FromRgb(0x6E, 0x73, 0x8D),
-        ["BlockComment"] = Color.FromRgb(0x6E, 0x73, 0x8D),
-        ["DocComment"] = Color.FromRgb(0x6E, 0x73, 0x8D),
-        ["String"] = Color.FromRgb(0xA6, 0xDA, 0x95),
-        ["Strings"] = Color.FromRgb(0xA6, 0xDA, 0x95),
-        ["StringDQ"] = Color.FromRgb(0xA6, 0xDA, 0x95),
-        ["StringSQ"] = Color.FromRgb(0xA6, 0xDA, 0x95),
-        ["RawString"] = Color.FromRgb(0xA6, 0xDA, 0x95),
-        ["Char"] = Color.FromRgb(0xA6, 0xDA, 0x95),
-        ["Character"] = Color.FromRgb(0xA6, 0xDA, 0x95),
-        ["Keyword"] = Color.FromRgb(0xC6, 0xA0, 0xF6),
-        ["Keywords"] = Color.FromRgb(0xC6, 0xA0, 0xF6),
-        ["ControlKeyword"] = Color.FromRgb(0xC6, 0xA0, 0xF6),
-        ["GotoKeywords"] = Color.FromRgb(0xC6, 0xA0, 0xF6),
-        ["ExceptionKeywords"] = Color.FromRgb(0xC6, 0xA0, 0xF6),
-        ["MethodKeywords"] = Color.FromRgb(0xC6, 0xA0, 0xF6),
-        ["OperatorKeywords"] = Color.FromRgb(0xC6, 0xA0, 0xF6),
-        ["NullValue"] = Color.FromRgb(0xC6, 0xA0, 0xF6),
-        ["Boolean"] = Color.FromRgb(0xF5, 0xA9, 0x7F),
-        ["BooleanConstants"] = Color.FromRgb(0xF5, 0xA9, 0x7F),
-        ["Number"] = Color.FromRgb(0xF5, 0xA9, 0x7F),
-        ["Numbers"] = Color.FromRgb(0xF5, 0xA9, 0x7F),
-        ["NumberLiteral"] = Color.FromRgb(0xF5, 0xA9, 0x7F),
-        ["Digits"] = Color.FromRgb(0xF5, 0xA9, 0x7F),
-        ["Type"] = Color.FromRgb(0xEE, 0xD4, 0x9F),
-        ["Types"] = Color.FromRgb(0xEE, 0xD4, 0x9F),
-        ["TypeName"] = Color.FromRgb(0xEE, 0xD4, 0x9F),
-        ["Class"] = Color.FromRgb(0xEE, 0xD4, 0x9F),
-        ["ClassName"] = Color.FromRgb(0xEE, 0xD4, 0x9F),
-        ["ReferenceTypes"] = Color.FromRgb(0xEE, 0xD4, 0x9F),
-        ["ValueTypes"] = Color.FromRgb(0xEE, 0xD4, 0x9F),
-        ["MethodCall"] = Color.FromRgb(0x8A, 0xAD, 0xF4),
-        ["Method"] = Color.FromRgb(0x8A, 0xAD, 0xF4),
-        ["MethodName"] = Color.FromRgb(0x8A, 0xAD, 0xF4),
-        ["Function"] = Color.FromRgb(0x8A, 0xAD, 0xF4),
-        ["Functions"] = Color.FromRgb(0x8A, 0xAD, 0xF4),
-        ["Builtin"] = Color.FromRgb(0x91, 0xD7, 0xE3),
-        ["Builtins"] = Color.FromRgb(0x91, 0xD7, 0xE3),
-        ["Decorator"] = Color.FromRgb(0xC6, 0xA0, 0xF6),
-        ["Preprocessor"] = Color.FromRgb(0xC6, 0xA0, 0xF6),
-        ["Punctuation"] = Color.FromRgb(0xB8, 0xC0, 0xE0),
-        ["Operator"] = Color.FromRgb(0xB8, 0xC0, 0xE0),
-        ["Operators"] = Color.FromRgb(0xB8, 0xC0, 0xE0),
-        ["BraceMismatch"] = Color.FromRgb(0xED, 0x87, 0x96),
-    };
+        // AvalonEdit ships no AHK highlighter; map AHK language tags to the C++ definition so
+        // MdXaml fenced blocks tagged ```ahk / ```autohotkey get C-style coloring instead of plain text.
+        var cpp = HighlightingManager.Instance.GetDefinition("C++");
+        if (cpp is not null)
+        {
+            foreach (var alias in new[] { "autohotkey", "AutoHotkey", "ahk", "AHK", "ahk2", "AHK2" })
+            {
+                if (HighlightingManager.Instance.GetDefinition(alias) is null)
+                {
+                    HighlightingManager.Instance.RegisterHighlighting(alias, [".ahk"], cpp);
+                }
+            }
+        }
+    }
 
     protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
     {
@@ -73,6 +41,7 @@ public class PreviewMarkdownScrollViewer : MarkdownScrollViewer
 
         if (e.Property == MarkdownProperty)
         {
+            UpdateDocumentPageWidth(ActualWidth);
             _ = Dispatcher.BeginInvoke(ApplyMarkdownCompatibilityFixes, DispatcherPriority.Loaded);
         }
     }
@@ -80,8 +49,50 @@ public class PreviewMarkdownScrollViewer : MarkdownScrollViewer
     protected override void OnInitialized(EventArgs e)
     {
         base.OnInitialized(e);
+        UpdateDocumentPageWidth(ActualWidth);
         _ = Dispatcher.BeginInvoke(ApplyMarkdownCompatibilityFixes, DispatcherPriority.Loaded);
     }
+
+    protected override Size ArrangeOverride(Size arrangeSize)
+    {
+        UpdateDocumentPageWidth(arrangeSize.Width);
+        var arranged = base.ArrangeOverride(arrangeSize);
+        UpdateDocumentPageWidth(arrangeSize.Width);
+        return arranged;
+    }
+
+    protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
+    {
+        base.OnRenderSizeChanged(sizeInfo);
+        UpdateDocumentPageWidth(sizeInfo.NewSize.Width);
+    }
+
+    private void UpdateDocumentPageWidth(double width)
+    {
+        if (Document is null || double.IsNaN(width) || double.IsInfinity(width) || width <= 0)
+        {
+            return;
+        }
+
+        var pageWidth = Math.Max(MinimumDocumentPageWidth, width);
+        if (!AreClose(Document.PageWidth, pageWidth))
+        {
+            Document.PageWidth = pageWidth;
+        }
+
+        if (!AreClose(Document.MaxPageWidth, pageWidth))
+        {
+            Document.MaxPageWidth = pageWidth;
+        }
+
+        if (!AreClose(Document.ColumnWidth, pageWidth))
+        {
+            Document.ColumnWidth = pageWidth;
+        }
+    }
+
+    private static bool AreClose(double left, double right)
+        => Math.Abs(left - right) < 0.5;
 
     private void ApplyMarkdownCompatibilityFixes()
     {
@@ -125,13 +136,8 @@ public class PreviewMarkdownScrollViewer : MarkdownScrollViewer
 
                     break;
 
-                case BlockUIContainer container when container.Child is TextEditor editor:
+                case BlockUIContainer { Child: TextEditor editor }:
                     RetintEditor(editor);
-                    WrapWithRoundedFrame(container, editor);
-                    break;
-
-                case BlockUIContainer { Child: Border { Child: TextEditor wrappedEditor } }:
-                    RetintEditor(wrappedEditor);
                     break;
             }
         }
@@ -167,7 +173,7 @@ public class PreviewMarkdownScrollViewer : MarkdownScrollViewer
 
             if (marker.Length == 2)
             {
-                inline.FontWeight = FontWeights.Bold;
+                inline.FontWeight = FontWeights.SemiBold;
             }
             else
             {
@@ -194,10 +200,16 @@ public class PreviewMarkdownScrollViewer : MarkdownScrollViewer
             return;
         }
 
+        var theme = ActiveTheme;
+
+        var defaultForeground = new SolidColorBrush(theme.DefaultForeground);
+        defaultForeground.Freeze();
+        editor.Foreground = defaultForeground;
+
         var changed = false;
         foreach (var color in definition.NamedHighlightingColors)
         {
-            if (color.Name is null || !HighlightPalette.TryGetValue(color.Name, out var target))
+            if (color.Name is null || !theme.TryGetColor(color.Name, out var target))
             {
                 continue;
             }
@@ -214,26 +226,6 @@ public class PreviewMarkdownScrollViewer : MarkdownScrollViewer
         {
             editor.TextArea.TextView.Redraw();
         }
-    }
-
-    private static void WrapWithRoundedFrame(BlockUIContainer container, TextEditor editor)
-    {
-        var border = new Border
-        {
-            CornerRadius = new CornerRadius(6),
-            BorderThickness = new Thickness(1),
-            Margin = editor.Margin,
-            SnapsToDevicePixels = true,
-        };
-        border.SetResourceReference(Border.BackgroundProperty, "Color03B");
-        border.SetResourceReference(Border.BorderBrushProperty, "SeparatorForeground");
-
-        editor.Margin = new Thickness(0);
-        editor.BorderThickness = new Thickness(0);
-        editor.Background = Brushes.Transparent;
-
-        container.Child = border;
-        border.Child = editor;
     }
 
     private sealed class SolidHighlightingBrush : HighlightingBrush

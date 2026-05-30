@@ -110,8 +110,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
                             appNode.SelectSingleNode($"*[local-name()='VisualElements']", namespaceManager);
                         var logoUri = visualElement?.Attributes[logoName]?.Value;
                         app.LogoPath = app.LogoPathFromUri(logoUri, (64, 64));
-                        // use small logo or may have a big margin
-                        var previewUri = visualElement?.Attributes[logoName]?.Value;
+                        // Preview has more room than result rows, so prefer the package's larger tile image.
+                        var previewUri = visualElement?.Attributes[bigLogoName]?.Value;
                         app.PreviewImagePath = app.LogoPathFromUri(previewUri, (256, 256));
                     }
                 }
@@ -542,10 +542,9 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 return string.Empty;
             }
 
-            string path = Path.Combine(Location, uri);
-
             var pxCount = desiredSize.Item1 * desiredSize.Item2;
-            var logoPath = TryToFindLogo(uri, path, pxCount);
+            var path = Path.Combine(Location, uri);
+            var logoPath = TryToFindLogo(path, pxCount);
             if (logoPath == string.Empty)
             {
                 var tmp = Path.Combine(Location, "Assets", uri);
@@ -554,34 +553,30 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     // TODO: Don't know why, just keep it at the moment
                     // Maybe on older version of Windows 10?
                     // for C:\Windows\MiracastView etc
-                    return TryToFindLogo(uri, tmp, pxCount);
+                    return TryToFindLogo(tmp, pxCount);
                 }
             }
 
             return logoPath;
 
-            string TryToFindLogo(string uri, string path, int px)
+            string TryToFindLogo(string path, int px)
             {
                 var extension = Path.GetExtension(path);
-                if (extension != null)
+                if (!string.IsNullOrEmpty(extension))
                 {
                     //if (File.Exists(path))
                     //{
                     //    return path; // shortcut, avoid enumerating files
                     //}
 
-                    var logoNamePrefix = Path.GetFileNameWithoutExtension(uri); // e.g Square44x44
+                    var logoNamePrefix = Path.GetFileNameWithoutExtension(path); // e.g Square44x44
                     var logoDir = Path.GetDirectoryName(path); // e.g ..\..\Assets
                     if (String.IsNullOrEmpty(logoNamePrefix) || !Directory.Exists(logoDir))
                     {
-                        // Known issue: Edge always triggers it since logo is not at uri
-                        ProgramLogger.LogException($"|UWP|LogoPathFromUri|{Location}" +
-                                                   $"|{UserModelId} can't find logo uri for {uri} in package location (logo name or directory not found): {Location}",
-                            new FileNotFoundException());
                         return string.Empty;
                     }
 
-                    var logos = Directory.EnumerateFiles(logoDir, $"{logoNamePrefix}*{extension}");
+                    var logos = EnumerateLogoFiles(logoDir, logoNamePrefix, extension);
 
                     // Currently we don't care which one to choose
                     // Just ignore all qualifiers
@@ -589,16 +584,15 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     // https://learn.microsoft.com/en-us/windows/uwp/app-resources/tailor-resources-lang-scale-contrast
 
                     // todo select from file name like pt run
-                    var selected = logos.FirstOrDefault();
-                    var closest = selected;
+                    var closest = string.Empty;
                     int min = int.MaxValue;
                     foreach (var logo in logos)
                     {
-                        var imageStream = File.OpenRead(logo);
-                        var decoder = BitmapDecoder.Create(imageStream, BitmapCreateOptions.IgnoreColorProfile,
-                            BitmapCacheOption.None);
-                        var height = decoder.Frames[0].PixelHeight;
-                        var width = decoder.Frames[0].PixelWidth;
+                        if (!TryGetLogoSize(logo, out var width, out var height))
+                        {
+                            continue;
+                        }
+
                         int pixelCountDiff = Math.Abs(height * width - px);
                         if (pixelCountDiff < min)
                         {
@@ -610,18 +604,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         }
                     }
 
-                    selected = closest;
-                    if (!string.IsNullOrEmpty(selected))
-                    {
-                        return selected;
-                    }
-                    else
-                    {
-                        ProgramLogger.LogException($"|UWP|LogoPathFromUri|{Location}" +
-                                                   $"|{UserModelId} can't find logo uri for {uri} in package location (can't find specified logo): {Location}",
-                            new FileNotFoundException());
-                        return string.Empty;
-                    }
+                    return closest;
                 }
                 else
                 {
@@ -629,6 +612,42 @@ namespace Flow.Launcher.Plugin.Program.Programs
                                                $"|Unable to find extension from {uri} for {UserModelId} " +
                                                $"in package location {Location}", new FileNotFoundException());
                     return string.Empty;
+                }
+            }
+
+            static bool TryGetLogoSize(string logo, out int width, out int height)
+            {
+                width = 0;
+                height = 0;
+
+                try
+                {
+                    using var imageStream = File.OpenRead(logo);
+                    var decoder = BitmapDecoder.Create(imageStream, BitmapCreateOptions.IgnoreColorProfile,
+                        BitmapCacheOption.None);
+                    height = decoder.Frames[0].PixelHeight;
+                    width = decoder.Frames[0].PixelWidth;
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            static IEnumerable<string> EnumerateLogoFiles(string logoDir, string logoNamePrefix, string extension)
+            {
+                foreach (var logo in Directory.EnumerateFiles(logoDir, $"{logoNamePrefix}*{extension}"))
+                {
+                    yield return logo;
+                }
+
+                foreach (var localizedLogoDir in Directory.EnumerateDirectories(logoDir))
+                {
+                    foreach (var logo in Directory.EnumerateFiles(localizedLogoDir, $"{logoNamePrefix}*{extension}"))
+                    {
+                        yield return logo;
+                    }
                 }
             }
         }

@@ -11,6 +11,7 @@ using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Plugin.SharedModels;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices;
 using System.Threading.Channels;
 using Flow.Launcher.Plugin.Program.Views.Models;
 using IniParser;
@@ -379,6 +380,10 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
                 return Default;
             }
+            catch (COMException)
+            {
+                return Default;
+            }
 #if !DEBUG //Only do a catch all in production. This is so make developer aware of any unhandled exception and add the exception handling in.
             catch (Exception e)
             {
@@ -432,6 +437,11 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
         private static Win32 ExeProgram(string path)
         {
+            if (!File.Exists(path))
+            {
+                return Default;
+            }
+
             try
             {
                 var program = Win32Program(path);

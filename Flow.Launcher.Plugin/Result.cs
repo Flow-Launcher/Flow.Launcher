@@ -29,6 +29,10 @@ namespace Flow.Launcher.Plugin
 
         private string _badgeIcoPath;
 
+        private string _badgeIcoPathAbsolute;
+
+        private PreviewInfo _preview = new();
+
         /// <summary>
         /// The title of the result. This is always required.
         /// </summary>
@@ -121,25 +125,15 @@ namespace Flow.Launcher.Plugin
         /// <remarks>If null or empty, will use plugin icon</remarks>
         public string BadgeIcoPath
         {
-            get => _badgeIcoPath;
+            get => _badgeIcoPathAbsolute;
             set
             {
-                // As a standard this property will handle prepping and converting to absolute local path for icon image processing
-                if (!string.IsNullOrEmpty(value)
-                    && !string.IsNullOrEmpty(PluginDirectory)
-                    && !Path.IsPathRooted(value)
-                    && !value.StartsWith("http://", StringComparison.OrdinalIgnoreCase)
-                    && !value.StartsWith("https://", StringComparison.OrdinalIgnoreCase)
-                    && !value.StartsWith("data:image", StringComparison.OrdinalIgnoreCase))
-                {
-                    _badgeIcoPath = Path.Combine(PluginDirectory, value);
-                }
-                else
-                {
-                    _badgeIcoPath = value;
-                }
+                _badgeIcoPath = value;
+                UpdateBadgeIcoPathAbsolute();
             }
         }
+
+        internal string BadgeIcoPathRaw => _badgeIcoPath;
 
         /// <summary>
         /// Determines if Icon has a border radius
@@ -236,7 +230,8 @@ namespace Flow.Launcher.Plugin
                 // UpdatePluginMetadata call is made at PluginManager.cs L196. Once the PluginDirectory becomes available
                 // we need to update (only if not Uri path) the IcoPath and BadgeIcoPath with the full absolute path so the image can be loaded.
                 IcoPath = _icoPath;
-                BadgeIcoPath = _badgeIcoPath;
+                UpdateBadgeIcoPathAbsolute();
+                Preview?.UpdatePluginDirectory(_pluginDirectory);
             }
         }
 
@@ -285,7 +280,15 @@ namespace Flow.Launcher.Plugin
         /// <summary>
         /// Contains data used to populate the preview section of this result.
         /// </summary>
-        public PreviewInfo Preview { get; set; } = PreviewInfo.Default;
+        public PreviewInfo Preview
+        {
+            get => _preview;
+            set
+            {
+                _preview = value ?? new PreviewInfo();
+                _preview.UpdatePluginDirectory(_pluginDirectory);
+            }
+        }
 
         /// <summary>
         /// Determines if the user selection count should be added to the score. This can be useful when set to false to allow the result sequence order to be the same everytime instead of changing based on selection.
@@ -346,7 +349,7 @@ namespace Flow.Launcher.Plugin
                 CopyText = CopyText,
                 AutoCompleteText = AutoCompleteText,
                 IcoPath = IcoPath,
-                BadgeIcoPath = BadgeIcoPath,
+                BadgeIcoPath = _badgeIcoPath,
                 RoundedIcon = RoundedIcon,
                 Icon = Icon,
                 BadgeIcon = BadgeIcon,
@@ -364,7 +367,7 @@ namespace Flow.Launcher.Plugin
                 PreviewPanel = PreviewPanel,
                 ProgressBar = ProgressBar,
                 ProgressBarColor = ProgressBarColor,
-                Preview = Preview,
+                Preview = Preview.Copy(),
                 AddSelectedCount = AddSelectedCount,
                 RecordKey = RecordKey,
                 ShowBadge = ShowBadge,
@@ -372,15 +375,55 @@ namespace Flow.Launcher.Plugin
             };
         }
 
+        private void UpdateBadgeIcoPathAbsolute()
+        {
+            // As a standard this property will handle prepping and converting to absolute local path for icon image processing.
+            if (!string.IsNullOrEmpty(_badgeIcoPath)
+                && !string.IsNullOrEmpty(PluginDirectory)
+                && !Path.IsPathRooted(_badgeIcoPath)
+                && !_badgeIcoPath.StartsWith("http://", StringComparison.OrdinalIgnoreCase)
+                && !_badgeIcoPath.StartsWith("https://", StringComparison.OrdinalIgnoreCase)
+                && !_badgeIcoPath.StartsWith("data:image", StringComparison.OrdinalIgnoreCase))
+            {
+                _badgeIcoPathAbsolute = Path.Combine(PluginDirectory, _badgeIcoPath);
+            }
+            else
+            {
+                _badgeIcoPathAbsolute = _badgeIcoPath;
+            }
+        }
+
         /// <summary>
         /// Info of the preview section of a <see cref="Result"/>
         /// </summary>
         public record PreviewInfo
         {
+            private string _pluginDirectory;
+            private string _previewImagePath;
+            private string _previewImagePathAbsolute;
+
             /// <summary>
-            /// Full image used for preview panel
+            /// Full image used for preview panel.
+            /// Relative paths are resolved against the owning <see cref="Result.PluginDirectory"/>
+            /// (same convention as <see cref="Result.IcoPath"/>); absolute paths and URIs are left as-is.
             /// </summary>
-            public string PreviewImagePath { get; set; } = null;
+            public string PreviewImagePath
+            {
+                get => _previewImagePath;
+                set
+                {
+                    _previewImagePath = value;
+                    UpdatePreviewImagePathAbsolute();
+                }
+            }
+
+            /// <summary>
+            /// Absolute path or URI used by Flow to load the preview image.
+            /// Relative <see cref="PreviewImagePath"/> values are resolved against the owning
+            /// result's plugin directory, while URLs, data URIs, and absolute paths are left as-is.
+            /// </summary>
+            [JsonIgnore]
+            public string PreviewImagePathAbsolute => _previewImagePathAbsolute;
 
             /// <summary>
             /// Determines if the preview image should occupy the full width of the preview panel.
@@ -413,9 +456,38 @@ namespace Flow.Launcher.Plugin
             public PreviewContentType ContentType { get; set; } = PreviewContentType.Text;
 
             /// <summary>
+            /// Resolves <see cref="PreviewImagePath"/> against the owning result's plugin directory.
+            /// Called by <see cref="Result.PluginDirectory"/> once the launcher has populated it.
+            /// </summary>
+            internal void UpdatePluginDirectory(string pluginDirectory)
+            {
+                _pluginDirectory = pluginDirectory;
+                UpdatePreviewImagePathAbsolute();
+            }
+
+            internal PreviewInfo Copy() => this with { };
+
+            private void UpdatePreviewImagePathAbsolute()
+            {
+                if (!string.IsNullOrEmpty(_previewImagePath)
+                    && !string.IsNullOrEmpty(_pluginDirectory)
+                    && !Path.IsPathRooted(_previewImagePath)
+                    && !_previewImagePath.StartsWith("http://", StringComparison.OrdinalIgnoreCase)
+                    && !_previewImagePath.StartsWith("https://", StringComparison.OrdinalIgnoreCase)
+                    && !_previewImagePath.StartsWith("data:image", StringComparison.OrdinalIgnoreCase))
+                {
+                    _previewImagePathAbsolute = Path.Combine(_pluginDirectory, _previewImagePath);
+                }
+                else
+                {
+                    _previewImagePathAbsolute = _previewImagePath;
+                }
+            }
+
+            /// <summary>
             /// Default instance of <see cref="PreviewInfo"/>
             /// </summary>
-            public static PreviewInfo Default { get; } = new()
+            public static PreviewInfo Default => new()
             {
                 PreviewImagePath = null,
                 Description = null,
@@ -443,5 +515,11 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         [JsonStringEnumMemberName("markdown")]
         Markdown,
+
+        /// <summary>
+        /// Suppress the preview pane for this result, even when the global "Always Preview" setting is on.
+        /// </summary>
+        [JsonStringEnumMemberName("hidden")]
+        Hidden,
     }
 }

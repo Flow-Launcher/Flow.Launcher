@@ -24,7 +24,7 @@
                 CopyText = CopyText,
                 AutoCompleteText = AutoCompleteText,
                 IcoPath = IcoPath,
-                BadgeIcoPath = BadgeIcoPath,
+                BadgeIcoPath = BadgeIcoPathRaw,
                 RoundedIcon = RoundedIcon,
                 Icon = Icon,
                 BadgeIcon = BadgeIcon,
@@ -42,10 +42,11 @@
                 PreviewPanel = PreviewPanel,
                 ProgressBar = ProgressBar,
                 ProgressBarColor = ProgressBarColor,
-                Preview = Preview,
+                Preview = Preview.Copy(),
                 AddSelectedCount = AddSelectedCount,
                 RecordKey = RecordKey,
                 ShowBadge = ShowBadge,
+                QuerySuggestionText = QuerySuggestionText,
                 DialogJumpPath = DialogJumpPath
             };
         }
@@ -63,7 +64,7 @@
                 CopyText = result.CopyText,
                 AutoCompleteText = result.AutoCompleteText,
                 IcoPath = result.IcoPath,
-                BadgeIcoPath = result.BadgeIcoPath,
+                BadgeIcoPath = result.BadgeIcoPathRaw,
                 RoundedIcon = result.RoundedIcon,
                 Icon = result.Icon,
                 BadgeIcon = result.BadgeIcon,
@@ -81,10 +82,11 @@
                 PreviewPanel = result.PreviewPanel,
                 ProgressBar = result.ProgressBar,
                 ProgressBarColor = result.ProgressBarColor,
-                Preview = result.Preview,
+                Preview = result.Preview.Copy(),
                 AddSelectedCount = result.AddSelectedCount,
                 RecordKey = result.RecordKey,
                 ShowBadge = result.ShowBadge,
+                QuerySuggestionText = result.QuerySuggestionText,
                 DialogJumpPath = dialogJumpPath
             };
         }

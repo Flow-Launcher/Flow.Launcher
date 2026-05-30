@@ -47,7 +47,14 @@ public static class ErrorReporting
     {
         // log exception but do not handle unobserved task exceptions on UI thread
         //Application.Current.Dispatcher.Invoke(() => Report(e.Exception, true));
-        Log.Exception(nameof(ErrorReporting), "Unobserved task exception occurred.", e.Exception);
+        // Log.Exception rethrows in DEBUG builds; swallow so we still observe the task.
+        try
+        {
+            Log.Exception(nameof(ErrorReporting), "Unobserved task exception occurred.", e.Exception);
+        }
+        catch
+        {
+        }
         // prevent application exit, so the user can copy the prompted error info
         e.SetObserved();
     }

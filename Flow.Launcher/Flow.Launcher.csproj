@@ -157,9 +157,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Flow.Launcher.Core\Flow.Launcher.Core.csproj" />
-    <ProjectReference Include="..\Flow.Launcher.Infrastructure\Flow.Launcher.Infrastructure.csproj" />
-    <ProjectReference Include="..\Flow.Launcher.Plugin\Flow.Launcher.Plugin.csproj" />
+    <ProjectReference Include="..\Flow.Launcher.Core\Flow.Launcher.Core.csproj" GlobalPropertiesToRemove="SkipFlowLauncherTaskKill" />
+    <ProjectReference Include="..\Flow.Launcher.Infrastructure\Flow.Launcher.Infrastructure.csproj" GlobalPropertiesToRemove="SkipFlowLauncherTaskKill" />
+    <ProjectReference Include="..\Flow.Launcher.Plugin\Flow.Launcher.Plugin.csproj" GlobalPropertiesToRemove="SkipFlowLauncherTaskKill" />
   </ItemGroup>
 
   <PropertyGroup>
@@ -181,7 +181,7 @@
     </None>
   </ItemGroup>
 
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(SkipFlowLauncherTaskKill)' != 'true'">
     <Exec Command="taskkill /f /fi &quot;IMAGENAME eq Flow.Launcher.exe&quot;" />
   </Target>
   

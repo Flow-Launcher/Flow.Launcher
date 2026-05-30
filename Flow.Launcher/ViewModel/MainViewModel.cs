@@ -1032,6 +1032,7 @@ namespace Flow.Launcher.ViewModel
         private static readonly int ResultAreaColumnPreviewHidden = 3;
 
         private bool? _selectedItemFromQueryResults;
+        private bool _previewSuppressedBySelectedResult;
 
         private ResultViewModel _previewSelectedItem;
         public ResultViewModel PreviewSelectedItem
@@ -1100,6 +1101,8 @@ namespace Flow.Launcher.ViewModel
 
         private void HidePreview()
         {
+            _previewSuppressedBySelectedResult = false;
+
             if (PluginManager.UseExternalPreview())
                 _ = CloseExternalPreviewAsync();
 
@@ -1107,9 +1110,36 @@ namespace Flow.Launcher.ViewModel
                 HideInternalPreview();
         }
 
+        internal static bool ShouldSuppressPreview(ResultViewModel previewSelectedItem)
+            => previewSelectedItem?.HidePreviewPane == true;
+
+        private async Task SuppressPreviewAsync()
+        {
+            var previewWasVisible = ExternalPreviewVisible || InternalPreviewVisible;
+
+            if (ExternalPreviewVisible)
+            {
+                await CloseExternalPreviewAsync();
+            }
+
+            if (InternalPreviewVisible)
+            {
+                HideInternalPreview();
+            }
+
+            if (previewWasVisible)
+                _previewSuppressedBySelectedResult = true;
+        }
+
         [RelayCommand]
         private void TogglePreview()
         {
+            if (ShouldSuppressPreview(PreviewSelectedItem))
+            {
+                _ = SuppressPreviewAsync();
+                return;
+            }
+
             if (InternalPreviewVisible || ExternalPreviewVisible)
             {
                 HidePreview();
@@ -1150,6 +1180,12 @@ namespace Flow.Launcher.ViewModel
 
         public void ResetPreview()
         {
+            if (ShouldSuppressPreview(PreviewSelectedItem))
+            {
+                _ = SuppressPreviewAsync();
+                return;
+            }
+
             switch (Settings.AlwaysPreview)
             {
                 case true
@@ -1167,6 +1203,28 @@ namespace Flow.Launcher.ViewModel
 
         private async Task UpdatePreviewAsync()
         {
+            // Respect per-result HidePreviewPane: collapse the pane on selections that
+            // explicitly opt out (e.g., Shorty's "Ask" placeholder), restore on others.
+            if (ShouldSuppressPreview(PreviewSelectedItem))
+            {
+                await SuppressPreviewAsync();
+                return;
+            }
+
+            if (_previewSuppressedBySelectedResult)
+            {
+                _previewSuppressedBySelectedResult = false;
+                if (!InternalPreviewVisible && !ExternalPreviewVisible)
+                {
+                    await ShowPreviewAsync();
+                    return;
+                }
+            }
+
+            if (Settings.AlwaysPreview && !InternalPreviewVisible && !ExternalPreviewVisible)
+            {
+                ShowInternalPreview();
+            }
             switch (PluginManager.UseExternalPreview())
             {
                 case true

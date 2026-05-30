@@ -14,7 +14,7 @@
     d:DataContext="{d:DesignInstance vm:SettingWindowViewModel}"
     Closed="OnClosed"
     FontFamily="{DynamicResource SettingWindowFont}"
-    Icon="Images\app.ico"
+    Icon="Images\app.png"
     Left="{Binding SettingWindowLeft, Mode=TwoWay}"
     Loaded="OnLoaded"
     LocationChanged="Window_LocationChanged"

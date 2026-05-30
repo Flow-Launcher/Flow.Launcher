@@ -39,7 +39,7 @@ namespace Flow.Launcher.Infrastructure
         public static string PythonPath;
         public static string NodePath;
 
-        public static readonly string QueryTextBoxIconImagePath = $"{ProgramDirectory}\\Images\\mainsearch.svg";
+        public static readonly string QueryTextBoxIconImagePath = $"{ProgramDirectory}\\Images\\mainsearch.png";
 
         public const string DefaultTheme = "Win11Light";
 

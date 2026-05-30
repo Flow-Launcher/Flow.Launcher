@@ -599,6 +599,14 @@ namespace Flow.Launcher.Core.Plugin
                 r.PluginID = metadata.ID;
                 r.OriginQuery = query;
 
+                if (string.IsNullOrEmpty(r.IcoPath)
+                    && r.Icon is null
+                    && r.Glyph is null
+                    && !string.IsNullOrEmpty(metadata.IcoPath))
+                {
+                    r.IcoPath = metadata.IcoPath;
+                }
+
                 // ActionKeywordAssigned is used for constructing MainViewModel's query text auto-complete suggestions
                 // Plugins may have multi-actionkeywords eg. WebSearches. In this scenario it needs to be overriden on the plugin level
                 if (metadata.ActionKeywords.Count == 1)

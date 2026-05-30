@@ -60,6 +60,15 @@ namespace Flow.Launcher.ViewModel
                     Glyph = glyph;
                 }
             }
+
+            // Fallback: any result without an explicit icon source gets a generic document glyph
+            // so it doesn't render with an empty placeholder.
+            if (Glyph is null
+                && string.IsNullOrEmpty(Result.IcoPath)
+                && Result.Icon is null)
+            {
+                Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE8A5");
+            }
         }
 
         public Settings Settings { get; }
@@ -145,7 +154,7 @@ namespace Flow.Launcher.ViewModel
 
         private bool BadgeIconAvailable => !string.IsNullOrEmpty(Result.BadgeIcoPath) || Result.BadgeIcon is not null;
 
-        private bool PreviewImageAvailable => !string.IsNullOrEmpty(Result.Preview.PreviewImagePath) || Result.Preview.PreviewDelegate != null;
+        private bool PreviewImageAvailable => !string.IsNullOrEmpty(Result.Preview.PreviewImagePathAbsolute) || Result.Preview.PreviewDelegate != null;
 
         public string ShowTitleToolTip => string.IsNullOrEmpty(Result.TitleToolTip)
             ? Result.Title
@@ -175,7 +184,11 @@ namespace Flow.Launcher.ViewModel
 
                 return _image;
             }
-            private set => _image = value;
+            private set
+            {
+                _image = value;
+                OnPropertyChanged();
+            }
         }
 
         public ImageSource BadgeImage
@@ -190,7 +203,11 @@ namespace Flow.Launcher.ViewModel
 
                 return _badgeImage;
             }
-            private set => _badgeImage = value;
+            private set
+            {
+                _badgeImage = value;
+                OnPropertyChanged();
+            }
         }
 
         public ImageSource PreviewImage
@@ -205,7 +222,11 @@ namespace Flow.Launcher.ViewModel
 
                 return _previewImage;
             }
-            private set => _previewImage = value;
+            private set
+            {
+                _previewImage = value;
+                OnPropertyChanged();
+            }
         }
 
         /// <summary>
@@ -266,7 +287,9 @@ namespace Flow.Launcher.ViewModel
 
         private async Task LoadPreviewImageAsync()
         {
-            var imagePath = Result.Preview.PreviewImagePath ?? Result.IcoPathAbsolute;
+            var imagePath = string.IsNullOrEmpty(Result.Preview.PreviewImagePathAbsolute)
+                ? Result.IcoPathAbsolute
+                : Result.Preview.PreviewImagePathAbsolute;
             var iconDelegate = Result.Preview.PreviewDelegate ?? Result.Icon;
             if (ImageLoader.TryGetValue(imagePath, true, out var img))
             {
@@ -291,6 +314,8 @@ namespace Flow.Launcher.ViewModel
         public string PreviewDescription => Result.Preview?.Description ?? Result.SubTitle;
 
         public bool IsMarkdownPreview => Result.Preview?.ContentType == PreviewContentType.Markdown;
+
+        public bool HidePreviewPane => Result.Preview?.ContentType == PreviewContentType.Hidden;
 
         public Result Result { get; }
         public int ResultProgress

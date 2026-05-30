@@ -44,10 +44,9 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     target = MemoryMarshal.CreateReadOnlySpanFromNullTerminated(bufferPtr).ToString();
                 }
             }
-            catch (COMException e)
+            catch (COMException)
             {
-                ProgramLogger.LogException($"|IShellLinkW|retrieveTargetPath|{path}" +
-                "|Error occurred while getting program arguments", e);
+                return string.Empty;
             }
 
             // To set the app description
@@ -61,12 +60,10 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         description = MemoryMarshal.CreateReadOnlySpanFromNullTerminated(bufferPtr).ToString();
                     }
                 }
-                catch (COMException e)
+                catch (COMException)
                 {
-                    // C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\MiracastView.lnk always cause exception
-                    ProgramLogger.LogException($"|IShellLinkW|retrieveTargetPath|{path}" +
-                                               "|Error caused likely due to trying to get the description of the program",
-                        e);
+                    // Some Windows-provided shortcuts fail description lookup but still resolve and launch.
+                    description = string.Empty;
                 }
 
                 fixed (char* bufferPtr = buffer)
