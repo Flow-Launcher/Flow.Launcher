@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Avalonia.Helper;
+using Flow.Launcher.Avalonia.Resource;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
@@ -63,7 +64,7 @@ namespace Flow.Launcher.Avalonia.Views.Controls
             KeysToDisplay.Clear();
             if (string.IsNullOrEmpty(Hotkey))
             {
-                KeysToDisplay.Add("None");
+                KeysToDisplay.Add(Translator.GetString("none"));
                 return;
             }
 
@@ -91,9 +92,9 @@ namespace Flow.Launcher.Avalonia.Views.Controls
             {
                 Hotkey = dialog.ResultValue;
 
-                if (shouldUnregisterToggle && string.Equals(dialog.ResultValue, originalHotkey, System.StringComparison.Ordinal))
+                if (shouldUnregisterToggle)
                 {
-                    HotKeyMapper.SetToggleHotkey(originalHotkey);
+                    HotKeyMapper.SetToggleHotkey(dialog.ResultValue);
                 }
             }
             else if (result == HotkeyRecorderDialog.EResultType.Delete)

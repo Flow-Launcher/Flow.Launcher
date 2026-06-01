@@ -31,13 +31,17 @@ namespace Flow.Launcher.Avalonia.ViewModel.SettingPages
             {
                 // First, try to show cached plugins immediately
                 LoadPluginsFromManifest();
-                
+
                 // If no cached plugins, fetch from remote
                 if (ExternalPlugins.Count == 0)
                 {
                     await App.API.UpdatePluginManifestAsync();
                     LoadPluginsFromManifest();
                 }
+            }
+            catch (Exception ex)
+            {
+                Flow.Launcher.Infrastructure.Logger.Log.Exception(nameof(PluginStoreSettingsViewModel), "Failed to load plugins", ex);
             }
             finally
             {

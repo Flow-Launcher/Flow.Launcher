@@ -85,13 +85,7 @@ public partial class ProgressBoxWindow : Window, INotifyPropertyChanged
         }
         finally
         {
-            await Dispatcher.UIThread.InvokeAsync(() =>
-            {
-                if (progressWindow.IsVisible)
-                {
-                    progressWindow.Close();
-                }
-            });
+            await Dispatcher.UIThread.InvokeAsync(progressWindow.Close);
         }
     }
 

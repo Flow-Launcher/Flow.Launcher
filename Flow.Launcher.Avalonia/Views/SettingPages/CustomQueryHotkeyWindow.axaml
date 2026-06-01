@@ -22,7 +22,7 @@
                        FontSize="20"
                        FontWeight="SemiBold" />
 
-            <TextBlock Text="Choose a hotkey and the query text to insert when it is pressed."
+            <TextBlock Text="{i18n:Localize customQueryHotkeyDescription, Fallback='Choose a hotkey and the query text to insert when it is pressed.'}"
                        TextWrapping="Wrap" />
 
             <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto" Margin="0,4,0,0">

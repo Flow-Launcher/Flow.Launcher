@@ -277,22 +277,26 @@ public class Internationalization
     /// </summary>
     public void ChangeLanguage(string languageCode)
     {
+        var resolvedLanguageCode = string.Equals(languageCode, Constant.SystemLanguageCode, StringComparison.OrdinalIgnoreCase)
+            ? CultureInfo.CurrentCulture.TwoLetterISOLanguageName
+            : languageCode;
+
         _translations.Clear();
-        
+
         // Reload English as base
         LoadLanguageFile(DefaultLanguageCode);
-        
+
         // Load new language on top
-        if (!string.Equals(languageCode, DefaultLanguageCode, StringComparison.OrdinalIgnoreCase))
+        if (!string.Equals(resolvedLanguageCode, DefaultLanguageCode, StringComparison.OrdinalIgnoreCase))
         {
-            LoadLanguageFile(languageCode);
+            LoadLanguageFile(resolvedLanguageCode);
         }
 
-        ChangeCultureInfo(languageCode);
-        
+        ChangeCultureInfo(resolvedLanguageCode);
+
         // Re-inject into Application.Resources for DynamicResource bindings
         InjectIntoApplicationResources();
-        
-        Log.Info(ClassName, $"Language changed to: {languageCode}");
+
+        Log.Info(ClassName, $"Language changed to: {resolvedLanguageCode}");
     }
 }

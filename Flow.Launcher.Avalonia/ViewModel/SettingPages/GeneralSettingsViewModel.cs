@@ -95,7 +95,10 @@ public partial class GeneralSettingsViewModel : ObservableObject
         get => _settings.StartFlowLauncherOnSystemStartup;
         set
         {
-            _settings.StartFlowLauncherOnSystemStartup = value;
+            if (_settings.StartFlowLauncherOnSystemStartup == value)
+            {
+                return;
+            }
 
             try
             {
@@ -118,8 +121,10 @@ public partial class GeneralSettingsViewModel : ObservableObject
             catch (Exception e)
             {
                 App.API?.ShowMsgError(Translator.GetString("setAutoStartFailed"), e.Message);
+                return;
             }
 
+            _settings.StartFlowLauncherOnSystemStartup = value;
             OnPropertyChanged();
         }
     }
@@ -129,7 +134,10 @@ public partial class GeneralSettingsViewModel : ObservableObject
         get => _settings.UseLogonTaskForStartup;
         set
         {
-            _settings.UseLogonTaskForStartup = value;
+            if (_settings.UseLogonTaskForStartup == value)
+            {
+                return;
+            }
 
             if (StartOnStartup)
             {
@@ -147,9 +155,11 @@ public partial class GeneralSettingsViewModel : ObservableObject
                 catch (Exception e)
                 {
                     App.API?.ShowMsgError(Translator.GetString("setAutoStartFailed"), e.Message);
+                    return;
                 }
             }
 
+            _settings.UseLogonTaskForStartup = value;
             OnPropertyChanged();
         }
     }
@@ -491,18 +501,23 @@ public partial class GeneralSettingsViewModel : ObservableObject
         get => DataLocation.PortableDataLocationInUse();
         set
         {
+            if (DataLocation.PortableDataLocationInUse() == value)
+            {
+                return;
+            }
+
             if (!_portable.CanUpdatePortability())
             {
                 return;
             }
 
-            if (DataLocation.PortableDataLocationInUse())
+            if (value)
             {
-                _portable.DisablePortableMode();
+                _portable.EnablePortableMode();
             }
             else
             {
-                _portable.EnablePortableMode();
+                _portable.DisablePortableMode();
             }
 
             OnPropertyChanged();
@@ -747,14 +762,14 @@ public partial class GeneralSettingsViewModel : ObservableObject
 
     private void LoadLanguages()
     {
-        // Minimal set of languages for now, can be expanded by loading from directory later
         Languages = new List<Language>
         {
-            new Language("en", "English"),
-            new Language("zh-cn", "中文 (简体)"),
-            new Language("zh-tw", "中文 (繁體)"),
-            new Language("ko", "한국어"),
-            new Language("ja", "日本語")
+            new(Constant.SystemLanguageCode, "System"),
+            new("en", "English"),
+            new("zh-cn", "中文 (简体)"),
+            new("zh-tw", "中文 (繁體)"),
+            new("ko", "한국어"),
+            new("ja", "日本語")
         };
     }
 

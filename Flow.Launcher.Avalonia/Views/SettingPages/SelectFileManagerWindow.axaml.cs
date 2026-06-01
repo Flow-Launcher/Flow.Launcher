@@ -27,6 +27,13 @@ public partial class SelectFileManagerWindow : Window, INotifyPropertyChanged
         _settings = Ioc.Default.GetRequiredService<Settings>();
         _i18n = Ioc.Default.GetRequiredService<Internationalization>();
         CustomExplorers = new ObservableCollection<CustomExplorerViewModel>(_settings.CustomExplorerList.Select(x => x.Copy()));
+        if (CustomExplorers.Count == 0)
+        {
+            CustomExplorers.Add(new CustomExplorerViewModel
+            {
+                Name = Translate("defaultBrowser_new_profile", "New profile")
+            });
+        }
         _selectedCustomExplorerIndex = Math.Clamp(_settings.CustomExplorerIndex, 0, Math.Max(0, CustomExplorers.Count - 1));
 
         InitializeComponent();
@@ -82,6 +89,14 @@ public partial class SelectFileManagerWindow : Window, INotifyPropertyChanged
         }
 
         CustomExplorers.RemoveAt(SelectedCustomExplorerIndex);
+        if (CustomExplorers.Count == 0)
+        {
+            CustomExplorers.Add(new CustomExplorerViewModel
+            {
+                Name = Translate("defaultBrowser_new_profile", "New profile")
+            });
+        }
+
         SelectedCustomExplorerIndex = Math.Clamp(SelectedCustomExplorerIndex, 0, Math.Max(0, CustomExplorers.Count - 1));
     }
 

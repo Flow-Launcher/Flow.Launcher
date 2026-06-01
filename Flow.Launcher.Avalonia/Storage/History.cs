@@ -23,17 +23,17 @@ public class History
             return;
         }
 
-        if (LastOpenedHistoryItems.Count >= _maxHistory)
-        {
-            LastOpenedHistoryItems.RemoveAt(0);
-        }
-
         var existingHistoryItem = LastOpenedHistoryItems.FirstOrDefault(x => x.Equals(queryText, result));
         if (existingHistoryItem is not null)
         {
             existingHistoryItem.ExecutedDateTime = DateTime.Now;
             existingHistoryItem.Query = queryText;
             return;
+        }
+
+        if (LastOpenedHistoryItems.Count >= _maxHistory)
+        {
+            LastOpenedHistoryItems.RemoveAt(0);
         }
 
         LastOpenedHistoryItems.Add(new LastOpenedHistoryResult(queryText, result));

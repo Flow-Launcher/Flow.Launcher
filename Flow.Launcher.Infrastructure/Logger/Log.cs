@@ -147,7 +147,9 @@ namespace Flow.Launcher.Infrastructure.Logger
             logger.Log(level, message);
 
             // Also output to console for easy debugging
+#if DEBUG
             System.Console.WriteLine($"[{level}] {classNameWithMethod}: {message}");
+#endif
         }
 
         public static void Debug(string className, string message, [CallerMemberName] string methodName = "")

@@ -46,12 +46,12 @@ public partial class ReportWindow : Window, INotifyPropertyChanged
 
     private void OnOpenIssueClick(object? sender, RoutedEventArgs e)
     {
-        Process.Start(new ProcessStartInfo(IssueUrl) { UseShellExecute = true });
+        OpenShellTarget(IssueUrl);
     }
 
     private void OnOpenLogsClick(object? sender, RoutedEventArgs e)
     {
-        Process.Start(new ProcessStartInfo(DataLocation.VersionLogDirectory) { UseShellExecute = true });
+        OpenShellTarget(DataLocation.VersionLogDirectory);
     }
 
     private void OnCloseClick(object? sender, RoutedEventArgs e)
@@ -67,6 +67,11 @@ public partial class ReportWindow : Window, INotifyPropertyChanged
         }
 
         var website = pluginException.Metadata.Website;
+        if (string.IsNullOrWhiteSpace(website))
+        {
+            return Constant.IssuesUrl;
+        }
+
         if (!website.StartsWith("https://github.com", StringComparison.OrdinalIgnoreCase))
         {
             return website;
@@ -109,6 +114,16 @@ public partial class ReportWindow : Window, INotifyPropertyChanged
         catch
         {
             return null;
+        }
+    }
+    private static void OpenShellTarget(string target)
+    {
+        try
+        {
+            Process.Start(new ProcessStartInfo(target) { UseShellExecute = true });
+        }
+        catch
+        {
         }
     }
 

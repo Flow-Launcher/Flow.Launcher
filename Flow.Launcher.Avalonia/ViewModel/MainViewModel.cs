@@ -228,8 +228,8 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
     public void OnPluginsReady()
     {
         _pluginsReady = true;
-        MainWindowVisibility = true;
-        Log.Info(ClassName, "Plugins ready - window shown");
+        MainWindowVisibility = !_settings.HideOnStartup;
+        Log.Info(ClassName, MainWindowVisibility ? "Plugins ready - window shown" : "Plugins ready - window kept hidden");
         if (!string.IsNullOrWhiteSpace(QueryText))
             _ = QueryAsync();
     }
@@ -408,7 +408,9 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
 
     private async Task QueryAsync()
     {
-        _queryTokenSource?.Cancel();
+        var previousQueryTokenSource = _queryTokenSource;
+        previousQueryTokenSource?.Cancel();
+        previousQueryTokenSource?.Dispose();
         _queryTokenSource = new CancellationTokenSource();
         var token = _queryTokenSource.Token;
         var queryText = QueryText.Trim();

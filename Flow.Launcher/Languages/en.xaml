@@ -397,6 +397,9 @@
     <system:String x:Key="customQuery">Query</system:String>
     <system:String x:Key="customShortcut">Shortcut</system:String>
     <system:String x:Key="customShortcutExpansion">Expansion</system:String>
+    <system:String x:Key="customShortcutDescription">Create a reusable shortcut that expands into longer text inside the query box.</system:String>
+    <system:String x:Key="customQueryHotkeyDescription">Choose a hotkey and the query text to insert when it is pressed.</system:String>
+    <system:String x:Key="settingsWindowTitle">Flow Launcher Settings</system:String>
     <system:String x:Key="builtinShortcutDescription">Description</system:String>
     <system:String x:Key="delete">Delete</system:String>
     <system:String x:Key="edit">Edit</system:String>

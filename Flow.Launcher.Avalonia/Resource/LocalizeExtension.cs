@@ -1,4 +1,5 @@
 using Avalonia.Data;
+using Avalonia;
 using Avalonia.Markup.Xaml;
 using Avalonia.Markup.Xaml.MarkupExtensions;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -40,11 +41,16 @@ public class LocalizeExtension : MarkupExtension
 
         try
         {
-            // Try to get I18n service from DI
+            if (Application.Current?.Resources.ContainsKey(Key) == true)
+            {
+                return new DynamicResourceExtension(Key).ProvideValue(serviceProvider);
+            }
+
+            // Try to get I18n service from DI before falling back.
             var i18n = Ioc.Default.GetService<Internationalization>();
             if (i18n != null && i18n.HasTranslation(Key))
             {
-                return i18n.GetTranslation(Key);
+                return new DynamicResourceExtension(Key).ProvideValue(serviceProvider);
             }
         }
         catch

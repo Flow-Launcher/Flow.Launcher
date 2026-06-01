@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using Avalonia;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -19,10 +20,11 @@ using FluentAvalonia.UI.Controls;
 
 namespace Flow.Launcher.Avalonia.ViewModel.SettingPages;
 
-public partial class PluginsSettingsViewModel : ObservableObject
+public partial class PluginsSettingsViewModel : ObservableObject, IDisposable
 {
     private readonly Settings _settings;
     private readonly Internationalization _i18n;
+    private readonly PropertyChangedEventHandler _settingsPropertyChangedHandler;
 
     public PluginsSettingsViewModel()
     {
@@ -32,7 +34,7 @@ public partial class PluginsSettingsViewModel : ObservableObject
         LoadDisplayModes();
         LoadPlugins();
 
-        _settings.PropertyChanged += (s, e) =>
+        _settingsPropertyChangedHandler = (_, e) =>
         {
             if (e.PropertyName == nameof(Settings.Language))
             {
@@ -42,6 +44,7 @@ public partial class PluginsSettingsViewModel : ObservableObject
                 }
             }
         };
+        _settings.PropertyChanged += _settingsPropertyChangedHandler;
     }
 
     [ObservableProperty]
@@ -68,6 +71,15 @@ public partial class PluginsSettingsViewModel : ObservableObject
         foreach (var plugin in allPlugins.OrderBy(p => p.Metadata.Disabled).ThenBy(p => p.Metadata.Name))
         {
             Plugins.Add(new PluginItemViewModel(plugin, _settings));
+        }
+    }
+    public void Dispose()
+    {
+        _settings.PropertyChanged -= _settingsPropertyChangedHandler;
+
+        foreach (var plugin in Plugins)
+        {
+            plugin.Dispose();
         }
     }
 
@@ -218,12 +230,13 @@ public partial class PluginsSettingsViewModel : ObservableObject
     }
 }
 
-public partial class PluginItemViewModel : ObservableObject
+public partial class PluginItemViewModel : ObservableObject, IDisposable
 {
     private readonly PluginPair _plugin;
     private readonly Settings _settings;
     private readonly ISettingProvider? _settingProvider;
     private readonly Internationalization _i18n;
+    private readonly PropertyChangedEventHandler _metadataChangedHandler;
 
     public PluginItemViewModel(PluginPair plugin, Settings settings)
     {
@@ -266,13 +279,14 @@ public partial class PluginItemViewModel : ObservableObject
         }
 
         // Listen to metadata changes
-        _plugin.Metadata.PropertyChanged += (_, args) =>
+        _metadataChangedHandler = (_, args) =>
         {
             if (args.PropertyName == nameof(PluginMetadata.AvgQueryTime))
                 OnPropertyChanged(nameof(QueryTime));
             if (args.PropertyName == nameof(PluginMetadata.ActionKeywords))
                 OnPropertyChanged(nameof(ActionKeywordsText));
         };
+        _plugin.Metadata.PropertyChanged += _metadataChangedHandler;
         
         _ = LoadIconAsync();
     }
@@ -282,6 +296,10 @@ public partial class PluginItemViewModel : ObservableObject
     private async Task LoadIconAsync()
     {
         Icon = await Flow.Launcher.Avalonia.Helper.ImageLoader.LoadAsync(_plugin.Metadata.IcoPath);
+    }
+    public void Dispose()
+    {
+        _plugin.Metadata.PropertyChanged -= _metadataChangedHandler;
     }
 
     [ObservableProperty]

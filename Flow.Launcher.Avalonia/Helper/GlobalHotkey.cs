@@ -5,6 +5,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Threading;
+using Flow.Launcher.Infrastructure.Logger;
 
 namespace Flow.Launcher.Avalonia.Helper;
 
@@ -15,6 +16,7 @@ namespace Flow.Launcher.Avalonia.Helper;
 public static class GlobalHotkey
 {
     private const int WM_HOTKEY = 0x0312;
+    private const string ClassName = nameof(GlobalHotkey);
 
     [DllImport("user32.dll", SetLastError = true)]
     private static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
@@ -155,7 +157,7 @@ public static class GlobalHotkey
 
         if (RegisterClass(ref wc) == 0)
         {
-            Console.WriteLine("[GlobalHotkey] Failed to register window class");
+            Log.Error(ClassName, "Failed to register window class");
             return;
         }
 
@@ -167,7 +169,7 @@ public static class GlobalHotkey
 
         if (_messageWindow == IntPtr.Zero)
         {
-            Console.WriteLine("[GlobalHotkey] Failed to create message window");
+            Log.Error(ClassName, "Failed to create message window");
             return;
         }
 
@@ -177,7 +179,7 @@ public static class GlobalHotkey
         _messageTimer.Start();
 
         _initialized = true;
-        Console.WriteLine("[GlobalHotkey] Initialized successfully");
+        Log.Info(ClassName, "Initialized successfully");
     }
 
     /// <summary>
@@ -191,7 +193,7 @@ public static class GlobalHotkey
     {
         if (!_initialized)
         {
-            Console.WriteLine("[GlobalHotkey] Not initialized");
+            Log.Warn(ClassName, "Not initialized");
             return -1;
         }
 
@@ -203,12 +205,12 @@ public static class GlobalHotkey
         if (!RegisterHotKey(_messageWindow, id, mods, key))
         {
             int error = Marshal.GetLastWin32Error();
-            Console.WriteLine($"[GlobalHotkey] Failed to register hotkey (error {error})");
+            Log.Error(ClassName, $"Failed to register hotkey (error {error})");
             return -1;
         }
 
         _hotkeyCallbacks[id] = callback;
-        Console.WriteLine($"[GlobalHotkey] Registered hotkey id={id}, mods={modifiers}, key=0x{key:X2}");
+        Log.Info(ClassName, $"Registered hotkey id={id}, mods={modifiers}, key=0x{key:X2}");
         return id;
     }
 
@@ -221,7 +223,7 @@ public static class GlobalHotkey
 
         UnregisterHotKey(_messageWindow, hotkeyId);
         _hotkeyCallbacks.Remove(hotkeyId);
-        Console.WriteLine($"[GlobalHotkey] Unregistered hotkey id={hotkeyId}");
+        Log.Debug(ClassName, $"Unregistered hotkey id={hotkeyId}");
     }
 
     /// <summary>
@@ -244,7 +246,7 @@ public static class GlobalHotkey
         }
 
         _initialized = false;
-        Console.WriteLine("[GlobalHotkey] Shutdown complete");
+        Log.Info(ClassName, "Shutdown complete");
     }
 
     private static void ProcessMessages()
@@ -263,7 +265,7 @@ public static class GlobalHotkey
             int id = wParam.ToInt32();
             if (_hotkeyCallbacks.TryGetValue(id, out var callback))
             {
-                Console.WriteLine($"[GlobalHotkey] Hotkey triggered id={id}");
+                Log.Debug(ClassName, $"Hotkey triggered id={id}");
                 Dispatcher.UIThread.Post(() => callback());
             }
         }

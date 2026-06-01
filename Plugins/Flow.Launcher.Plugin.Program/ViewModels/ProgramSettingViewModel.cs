@@ -204,8 +204,14 @@ public partial class ProgramSettingViewModel : ObservableObject
     private async Task Reindex()
     {
         IsIndexing = true;
-        await Main.IndexProgramsAsync();
-        IsIndexing = false;
+        try
+        {
+            await Main.IndexProgramsAsync();
+        }
+        finally
+        {
+            IsIndexing = false;
+        }
     }
 
     [RelayCommand]

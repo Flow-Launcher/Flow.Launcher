@@ -25,4 +25,4 @@ $wpfTotal = (Get-ChildItem "Output/Debug" -Recurse -File -ErrorAction SilentlyCo
 $avTotal = (Get-ChildItem "Output/Debug/Avalonia" -Recurse -File | Measure-Object Length -Sum).Sum
 Write-Host ("WPF total (excl. Avalonia subfolder): {0:N2} MB" -f ($wpfTotal / 1MB))
 Write-Host ("Avalonia total: {0:N2} MB" -f ($avTotal / 1MB))
-Write-Host ("Difference: {0:N2} MB" -f (($avTotal - $wpfTotal + $wpfPlugins.Sum) / 1MB))
+Write-Host ("Difference: {0:N2} MB" -f (($avTotal - $wpfTotal) / 1MB))

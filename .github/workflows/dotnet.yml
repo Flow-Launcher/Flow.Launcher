@@ -33,7 +33,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: 9.0.x
+          dotnet-version: 10.0.x
 #          cache: true
 #          cache-dependency-path: |
 #            Flow.Launcher/packages.lock.json
@@ -92,7 +92,7 @@ jobs:
             Output\Packages\RELEASES
           compression-level: 0
       - name: Upload Avalonia Build
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v7
         with:
           name: Flow Launcher Avalonia
           path: |

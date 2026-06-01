@@ -5,7 +5,7 @@ using System.Linq;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media;
+using Avalonia.Media;
 using Avalonia.Controls.ApplicationLifetimes;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -35,7 +35,7 @@ public partial class AboutSettingsViewModel : ObservableObject
         _i18n = Ioc.Default.GetRequiredService<Internationalization>();
 
         LogLevels = DropdownDataGeneric.GetEnumData<LOGLEVEL>("LogLevel");
-        AvailableFonts = Fonts.SystemFontFamilies.Select(x => x.Source).OrderBy(x => x).ToList();
+        AvailableFonts = FontManager.Current.SystemFonts.OrderBy(font => font.Name).Select(font => font.Name).Distinct().ToList();
     }
 
     public string Version => Constant.Version switch
@@ -345,7 +345,8 @@ public partial class AboutSettingsViewModel : ObservableObject
 
     private static List<FileInfo> GetLogFiles(string version = "")
     {
-        return GetLogDir(version).EnumerateFiles("*", SearchOption.AllDirectories).ToList();
+        var directory = GetLogDir(version);
+        return directory.Exists ? directory.EnumerateFiles("*", SearchOption.AllDirectories).ToList() : [];
     }
 
     private static DirectoryInfo GetCacheDir()
@@ -360,7 +361,8 @@ public partial class AboutSettingsViewModel : ObservableObject
 
     private static List<FileInfo> GetCacheFiles()
     {
-        return GetCacheDir().EnumerateFiles("*", SearchOption.AllDirectories).ToList();
+        var directory = GetCacheDir();
+        return directory.Exists ? directory.EnumerateFiles("*", SearchOption.AllDirectories).ToList() : [];
     }
 
     private static string BytesToReadableString(long bytes)

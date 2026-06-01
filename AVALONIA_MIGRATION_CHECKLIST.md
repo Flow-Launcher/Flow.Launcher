@@ -324,7 +324,7 @@
 | BoolToIsVisibleConverter | :white_check_mark: Done | Boolean to IsVisible |
 | TranslationConverter | :white_check_mark: Done | Localization converter |
 | CommonConverters | :white_check_mark: Done | Various common converters |
-| HighlightTextConverter | :x: Missing | Bold gold highlighting for matched characters |
+| HighlightTextConverter | :white_check_mark: Done | Bold gold highlighting for matched characters |
 | QuerySuggestionBoxConverter | :yellow_circle: Stub | Not implemented |
 | TextConverter | :x: Missing | Text transformations |
 | SizeRatioConverter | :x: Missing | Size calculations |
@@ -428,7 +428,7 @@
 ## Priority Recommendations
 
 ### High Priority (Core UX)
-1. [ ] **HighlightTextConverter** - Search match highlighting
+1. [x] **HighlightTextConverter** - Search match highlighting
 2. [x] **History cycling** - Up/Down arrow through history
 3. [x] **GeneralSettingsPage** - Essential settings (startup, behavior) - DONE
 4. [x] **Card/ExCard controls** - Required for all settings pages - DONE (using FluentAvalonia SettingsExpander)

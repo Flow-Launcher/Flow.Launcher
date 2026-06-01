@@ -84,8 +84,7 @@ internal static class AutoStartup
 
                 if (needsRecreation)
                 {
-                    UnscheduleLogonTask();
-                    ScheduleLogonTask();
+                    return UnscheduleLogonTask() && ScheduleLogonTask();
                 }
             }
 
@@ -112,8 +111,7 @@ internal static class AutoStartup
             if (!action.Equals(Constant.ExecutablePath, StringComparison.OrdinalIgnoreCase)
                 && !action.Equals($"\"{Constant.ExecutablePath}\"", StringComparison.OrdinalIgnoreCase))
             {
-                UnscheduleRegistry();
-                ScheduleRegistry();
+                return UnscheduleRegistry() && ScheduleRegistry();
             }
 
             return true;

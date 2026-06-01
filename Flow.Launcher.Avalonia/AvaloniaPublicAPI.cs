@@ -9,6 +9,7 @@ using System.Windows.Media;
 using Flow.Launcher.Avalonia.Views.Dialogs;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
@@ -29,6 +30,7 @@ public class AvaloniaPublicAPI : IPublicAPI
     private readonly Settings _settings;
     private readonly Func<MainViewModel> _getMainViewModel;
     private readonly Internationalization _i18n;
+    private readonly Dictionary<Type, ISavable> _pluginJsonStorages = new();
 
     public AvaloniaPublicAPI(Settings settings, Func<MainViewModel> getMainViewModel, Internationalization i18n)
     {
@@ -43,7 +45,17 @@ public class AvaloniaPublicAPI : IPublicAPI
 #pragma warning restore CS0067
 
     // Essential for plugins
-    public void ChangeQuery(string query, bool requery = false) => _getMainViewModel().QueryText = query;
+    public void ChangeQuery(string query, bool requery = false)
+    {
+        var mainViewModel = _getMainViewModel();
+        if (requery && string.Equals(mainViewModel.QueryText, query, StringComparison.Ordinal))
+        {
+            ReQuery();
+            return;
+        }
+
+        mainViewModel.QueryText = query;
+    }
     
     public string GetTranslation(string key) => _i18n.GetTranslation(key);
     
@@ -69,8 +81,24 @@ public class AvaloniaPublicAPI : IPublicAPI
     public void OpenWebUrl(Uri url, bool? inPrivate = null) => OpenUrl(url.ToString(), inPrivate);
     public void OpenAppUri(Uri appUri) => OpenUrl(appUri);
     public void OpenAppUri(string appUri) => OpenUrl(appUri);
-    public void OpenDirectory(string DirectoryPath, string? FileNameOrFilePath = null) => 
-        System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo { FileName = DirectoryPath, UseShellExecute = true });
+    public void OpenDirectory(string DirectoryPath, string? FileNameOrFilePath = null)
+    {
+        if (FileNameOrFilePath is null)
+        {
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+            {
+                FileName = DirectoryPath,
+                UseShellExecute = true
+            });
+            return;
+        }
+
+        var targetPath = Path.IsPathRooted(FileNameOrFilePath)
+            ? FileNameOrFilePath
+            : Path.Combine(DirectoryPath, FileNameOrFilePath);
+
+        Win32Helper.OpenFolderAndSelectFile(targetPath);
+    }
 
     // Clipboard
     public void CopyToClipboard(string text, bool directCopy = false, bool showDefaultNotification = true)
@@ -159,8 +187,27 @@ public class AvaloniaPublicAPI : IPublicAPI
     }
     public void RegisterGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback) { }
     public void RemoveGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback) { }
-    public T LoadSettingJsonStorage<T>() where T : new() => new T();
-    public void SaveSettingJsonStorage<T>() where T : new() { }
+    public T LoadSettingJsonStorage<T>() where T : new()
+    {
+        var type = typeof(T);
+        if (!_pluginJsonStorages.ContainsKey(type))
+        {
+            _pluginJsonStorages[type] = new PluginJsonStorage<T>();
+        }
+
+        return ((PluginJsonStorage<T>)_pluginJsonStorages[type]).Load();
+    }
+
+    public void SaveSettingJsonStorage<T>() where T : new()
+    {
+        var type = typeof(T);
+        if (!_pluginJsonStorages.ContainsKey(type))
+        {
+            _pluginJsonStorages[type] = new PluginJsonStorage<T>();
+        }
+
+        ((PluginJsonStorage<T>)_pluginJsonStorages[type]).Save();
+    }
     public void ToggleGameMode() { }
     public void SetGameMode(bool value) { }
     public bool IsGameModeOn() => false;

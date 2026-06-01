@@ -66,11 +66,15 @@ public partial class ResultsViewModel : ObservableObject, IDisposable
         // This is necessary because EditDiff reuses existing ResultViewModel instances
         // based on Title+SubTitle equality, but highlight indices are query-specific.
         // For example, "Chrome" highlighted for "chr" [0,1,2] vs "chrome" [0,1,2,3,4,5].
-        var existingItems = _sourceList.Items.ToDictionary(r => (r.Title, r.SubTitle));
+        var existingItems = _sourceList.Items.ToDictionary(ResultViewModelComparer.GetIdentityKey);
         foreach (var newItem in resultsList)
         {
-            if (existingItems.TryGetValue((newItem.Title, newItem.SubTitle), out var existing))
+            if (existingItems.TryGetValue(ResultViewModelComparer.GetIdentityKey(newItem), out var existing))
             {
+                existing.PluginResult = newItem.PluginResult;
+                existing.HistoryItem = newItem.HistoryItem;
+                existing.IconPath = newItem.IconPath;
+                existing.Glyph = newItem.Glyph;
                 existing.TitleHighlightData = newItem.TitleHighlightData;
                 existing.SubTitleHighlightData = newItem.SubTitleHighlightData;
                 existing.Score = newItem.Score;
@@ -166,12 +170,22 @@ public partial class ResultsViewModel : ObservableObject, IDisposable
         {
             if (ReferenceEquals(x, y)) return true;
             if (x is null || y is null) return false;
-            return x.Title == y.Title && x.SubTitle == y.SubTitle;
+            return GetIdentityKey(x).Equals(GetIdentityKey(y));
         }
 
         public int GetHashCode(ResultViewModel obj)
         {
-            return HashCode.Combine(obj.Title, obj.SubTitle);
+            return GetIdentityKey(obj).GetHashCode();
+        }
+
+        public static (string PluginId, string RecordKey, string Query, string Title, string SubTitle) GetIdentityKey(ResultViewModel item)
+        {
+            return (
+                item.PluginResult?.PluginID ?? item.HistoryItem?.PluginID ?? string.Empty,
+                item.PluginResult?.RecordKey ?? item.HistoryItem?.RecordKey ?? string.Empty,
+                item.HistoryItem?.Query ?? string.Empty,
+                item.Title,
+                item.SubTitle);
         }
     }
 }

@@ -25,10 +25,11 @@ using AvaloniaI18n = Flow.Launcher.Avalonia.Resource.Internationalization;
 
 namespace Flow.Launcher.Avalonia.ViewModel.SettingPages;
 
-public partial class ThemeSettingsViewModel : ObservableObject
+public partial class ThemeSettingsViewModel : ObservableObject, IDisposable
 {
     private readonly Settings _settings;
     private readonly AvaloniaI18n _i18n;
+    private readonly System.ComponentModel.PropertyChangedEventHandler _settingsPropertyChangedHandler;
 
     private const string ThemeMetadataNamePrefix = "Name:";
     private const string ThemeMetadataIsDarkPrefix = "IsDark:";
@@ -47,13 +48,14 @@ public partial class ThemeSettingsViewModel : ObservableObject
 
         ApplyColorScheme(SelectedColorScheme);
 
-        _settings.PropertyChanged += (_, e) =>
+        _settingsPropertyChangedHandler = (_, e) =>
         {
             if (e.PropertyName == nameof(Settings.Language))
             {
                 UpdateLabels();
             }
         };
+        _settings.PropertyChanged += _settingsPropertyChangedHandler;
     }
 
     public List<DropdownDataGeneric<ColorSchemes>> ColorSchemeOptions { get; }
@@ -627,12 +629,26 @@ public partial class ThemeSettingsViewModel : ObservableObject
         var themes = new List<ThemeData>();
         foreach (var directory in themeDirectories.Where(Directory.Exists))
         {
-            themes.AddRange(Directory.GetFiles(directory, "*.xaml")
-                .Where(path => !path.EndsWith("Base.xaml", StringComparison.OrdinalIgnoreCase))
-                .Select(GetThemeDataFromPath));
+            foreach (var path in Directory.GetFiles(directory, "*.xaml")
+                .Where(path => !path.EndsWith("Base.xaml", StringComparison.OrdinalIgnoreCase)))
+            {
+                try
+                {
+                    themes.Add(GetThemeDataFromPath(path));
+                }
+                catch (Exception ex)
+                {
+                    Flow.Launcher.Infrastructure.Logger.Log.Exception(nameof(ThemeSettingsViewModel), $"Failed to load theme metadata from {path}", ex);
+                }
+            }
         }
 
         return themes.OrderBy(theme => theme.Name).ToList();
+    }
+
+    public void Dispose()
+    {
+        _settings.PropertyChanged -= _settingsPropertyChangedHandler;
     }
 
     private static List<FontTypefaceOption> GetTypefaceOptions(string familyName)

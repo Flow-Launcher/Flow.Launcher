@@ -19,6 +19,7 @@ internal static class HotKeyMapper
     private static Settings? _settings;
     private static MainViewModel? _mainViewModel;
     private static int _toggleHotkeyId = -1;
+    private static string _toggleHotkeyString = string.Empty;
     private static readonly Dictionary<string, int> _customQueryHotkeyIds = new(StringComparer.Ordinal);
 
     /// <summary>
@@ -51,32 +52,55 @@ internal static class HotKeyMapper
     /// </summary>
     internal static void SetToggleHotkey(string hotkeyString)
     {
-        RemoveToggleHotkey();
-
         if (string.IsNullOrWhiteSpace(hotkeyString))
         {
+            RemoveToggleHotkey();
             Log.Warn(ClassName, "Empty hotkey string");
             return;
         }
 
         var (mods, key) = GlobalHotkey.ParseHotkeyString(hotkeyString);
-        
+
         if (key == 0)
         {
             Log.Error(ClassName, $"Failed to parse hotkey: {hotkeyString}");
             return;
         }
 
-        _toggleHotkeyId = GlobalHotkey.Register(mods, key, OnToggleHotkey);
-        
-        if (_toggleHotkeyId < 0)
+        var previousHotkeyId = _toggleHotkeyId;
+        var previousHotkeyString = _toggleHotkeyString;
+
+        if (previousHotkeyId >= 0)
+        {
+            GlobalHotkey.Unregister(previousHotkeyId);
+            _toggleHotkeyId = -1;
+        }
+
+        var newHotkeyId = GlobalHotkey.Register(mods, key, OnToggleHotkey);
+        if (newHotkeyId < 0)
         {
             Log.Error(ClassName, $"Failed to register hotkey: {hotkeyString}");
+
+            if (!string.IsNullOrWhiteSpace(previousHotkeyString))
+            {
+                var (previousMods, previousKey) = GlobalHotkey.ParseHotkeyString(previousHotkeyString);
+                if (previousKey != 0)
+                {
+                    _toggleHotkeyId = GlobalHotkey.Register(previousMods, previousKey, OnToggleHotkey);
+                    if (_toggleHotkeyId >= 0)
+                    {
+                        _toggleHotkeyString = previousHotkeyString;
+                        Log.Warn(ClassName, $"Restored previous toggle hotkey: {previousHotkeyString}");
+                    }
+                }
+            }
+
+            return;
         }
-        else
-        {
-            Log.Info(ClassName, $"Registered toggle hotkey: {hotkeyString}");
-        }
+
+        _toggleHotkeyId = newHotkeyId;
+        _toggleHotkeyString = hotkeyString;
+        Log.Info(ClassName, $"Registered toggle hotkey: {hotkeyString}");
     }
 
     /// <summary>
@@ -89,6 +113,8 @@ internal static class HotKeyMapper
             GlobalHotkey.Unregister(_toggleHotkeyId);
             _toggleHotkeyId = -1;
         }
+
+        _toggleHotkeyString = string.Empty;
     }
 
     internal static void LoadCustomPluginHotkeys()

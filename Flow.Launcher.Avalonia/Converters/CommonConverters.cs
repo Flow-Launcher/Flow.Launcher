@@ -124,7 +124,7 @@ public class SizeRatioConverter : IValueConverter
 {
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        if (value is double size && parameter is string ratioStr && double.TryParse(ratioStr, out var ratio))
+        if (value is double size && parameter is string ratioStr && double.TryParse(ratioStr, NumberStyles.Float, CultureInfo.InvariantCulture, out var ratio))
         {
             return size * ratio;
         }

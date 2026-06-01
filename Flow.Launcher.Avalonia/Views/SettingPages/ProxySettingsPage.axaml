@@ -27,7 +27,7 @@
 
         <ui:SettingsExpander Header="{i18n:Localize port}">
             <ui:SettingsExpander.Footer>
-                <NumericUpDown Value="{Binding ProxyPort}" Minimum="0" Maximum="65535" IsEnabled="{Binding ProxyEnabled}" />
+                <NumericUpDown Value="{Binding ProxyPort}" Minimum="1" Maximum="65535" IsEnabled="{Binding ProxyEnabled}" />
             </ui:SettingsExpander.Footer>
         </ui:SettingsExpander>
 

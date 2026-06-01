@@ -142,11 +142,13 @@ public partial class App : Application
         catch (Exception e)
         {
             Log.Exception(ClassName, "Settings load failed", e);
+            var storage = new FlowLauncherJsonStorage<Settings>();
             _settings = new Settings
             {
                 WindowSize = 580, WindowHeightSize = 42, QueryBoxFontSize = 24,
                 ItemHeightSize = 50, ResultItemFontSize = 14, ResultSubItemFontSize = 12, MaxResultsToShow = 6
             };
+            _settings.SetStorage(storage);
         }
     }
 

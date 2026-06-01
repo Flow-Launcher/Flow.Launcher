@@ -25,6 +25,13 @@ public partial class SelectBrowserWindow : Window, INotifyPropertyChanged
         _settings = Ioc.Default.GetRequiredService<Settings>();
         _i18n = Ioc.Default.GetRequiredService<Internationalization>();
         CustomBrowsers = new ObservableCollection<CustomBrowserViewModel>(_settings.CustomBrowserList.Select(x => x.Copy()));
+        if (CustomBrowsers.Count == 0)
+        {
+            CustomBrowsers.Add(new CustomBrowserViewModel
+            {
+                Name = Translate("defaultBrowser_new_profile", "New profile")
+            });
+        }
         _selectedCustomBrowserIndex = Math.Clamp(_settings.CustomBrowserIndex, 0, Math.Max(0, CustomBrowsers.Count - 1));
 
         InitializeComponent();
@@ -110,6 +117,14 @@ public partial class SelectBrowserWindow : Window, INotifyPropertyChanged
         }
 
         CustomBrowsers.RemoveAt(SelectedCustomBrowserIndex);
+        if (CustomBrowsers.Count == 0)
+        {
+            CustomBrowsers.Add(new CustomBrowserViewModel
+            {
+                Name = Translate("defaultBrowser_new_profile", "New profile")
+            });
+        }
+
         SelectedCustomBrowserIndex = Math.Clamp(SelectedCustomBrowserIndex, 0, Math.Max(0, CustomBrowsers.Count - 1));
     }
 

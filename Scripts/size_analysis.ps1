@@ -10,6 +10,16 @@ function Get-FolderSize {
     }
     return 0
 }
+function Get-FolderSizeExcludingPath {
+    param([string]$folder, [string]$excludeRegex)
+    if (Test-Path $folder) {
+        $files = Get-ChildItem -Path $folder -Recurse -File -ErrorAction SilentlyContinue |
+            Where-Object { $_.FullName -notmatch $excludeRegex }
+        $sum = ($files | Measure-Object -Property Length -Sum).Sum
+        return [math]::Round($sum / 1MB, 2)
+    }
+    return 0
+}
 
 function Get-LargestFiles {
     param([string]$folder, [int]$count = 30)
@@ -37,7 +47,7 @@ function Get-RuntimeFolders {
 }
 
 Write-Host "=== WPF Debug ===" -ForegroundColor Cyan
-Write-Host "Total: $(Get-FolderSize 'Output\Debug') MB (excluding Avalonia subfolder)"
+Write-Host "Total: $(Get-FolderSizeExcludingPath 'Output\Debug' '\\Avalonia\\') MB (excluding Avalonia subfolder)"
 Write-Host ""
 Write-Host "Largest files:"
 Get-LargestFiles "Output\Debug"

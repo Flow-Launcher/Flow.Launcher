@@ -17,7 +17,7 @@ namespace Flow.Launcher.Avalonia.Views.Dialogs;
 public partial class NotificationWindow : Window, INotifyPropertyChanged
 {
     private static readonly object ActiveWindowsLock = new();
-    private static int _activeWindows;
+    private static readonly System.Collections.Generic.List<NotificationWindow> ActiveWindows = [];
 
     private readonly Action? _buttonAction;
     private readonly DispatcherTimer _closeTimer;
@@ -100,10 +100,8 @@ public partial class NotificationWindow : Window, INotifyPropertyChanged
         {
             lock (ActiveWindowsLock)
             {
-                var x = screen.WorkingArea.X + screen.WorkingArea.Width - (int)Width - 20;
-                var y = screen.WorkingArea.Y + 20 + (_activeWindows * ((int)Height - 8));
-                Position = new PixelPoint(x, y);
-                _activeWindows++;
+                ActiveWindows.Add(this);
+                RepositionActiveWindows(screen.WorkingArea);
             }
         }
 
@@ -116,7 +114,11 @@ public partial class NotificationWindow : Window, INotifyPropertyChanged
 
         lock (ActiveWindowsLock)
         {
-            _activeWindows = Math.Max(0, _activeWindows - 1);
+            ActiveWindows.Remove(this);
+            if (Screens.Primary != null)
+            {
+                RepositionActiveWindows(Screens.Primary.WorkingArea);
+            }
         }
     }
 
@@ -144,6 +146,16 @@ public partial class NotificationWindow : Window, INotifyPropertyChanged
         if (IsVisible)
         {
             Close();
+        }
+    }
+    private static void RepositionActiveWindows(PixelRect workingArea)
+    {
+        for (var index = 0; index < ActiveWindows.Count; index++)
+        {
+            var window = ActiveWindows[index];
+            var x = workingArea.X + workingArea.Width - (int)window.Width - 20;
+            var y = workingArea.Y + 20 + (index * ((int)window.Height - 8));
+            window.Position = new PixelPoint(x, y);
         }
     }
 

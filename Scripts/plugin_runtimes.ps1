@@ -1,6 +1,11 @@
 # Analyze plugin runtimes
 Write-Host "=== Plugin Runtime Folders ===" -ForegroundColor Cyan
 
+if (-not (Test-Path "Output/Release/Avalonia/Plugins")) {
+    Write-Host "Output/Release/Avalonia/Plugins not found" -ForegroundColor Yellow
+    return
+}
+
 $pluginRuntimes = Get-ChildItem "Output/Release/Avalonia/Plugins" -Recurse -Directory -Filter "runtimes"
 
 $totalSize = 0

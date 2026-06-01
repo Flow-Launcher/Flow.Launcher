@@ -16,15 +16,15 @@
             <TextBlock Text="{i18n:Localize pluginStore}" FontSize="28" FontWeight="SemiBold" VerticalAlignment="Center"/>
             
             <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10">
-                <Button Command="{Binding RefreshExternalPluginsCommand}" ToolTip.Tip="{i18n:Localize refresh}">
+                <Button Command="{Binding RefreshExternalPluginsCommand}" ToolTip.Tip="{i18n:Localize refresh}" AutomationProperties.Name="{i18n:Localize refresh}">
                     <ui:SymbolIcon Symbol="Refresh" FontSize="16"/>
                 </Button>
                 
-                <Button Command="{Binding CheckPluginUpdatesCommand}" ToolTip.Tip="{i18n:Localize checkUpdates}">
+                <Button Command="{Binding CheckPluginUpdatesCommand}" ToolTip.Tip="{i18n:Localize checkUpdates}" AutomationProperties.Name="{i18n:Localize checkUpdates}">
                     <ui:SymbolIcon Symbol="Sync" FontSize="16"/>
                 </Button>
                 
-                <Button Command="{Binding InstallPluginCommand}" ToolTip.Tip="{i18n:Localize installLocalPluginTooltip}">
+                <Button Command="{Binding InstallPluginCommand}" ToolTip.Tip="{i18n:Localize installLocalPluginTooltip}" AutomationProperties.Name="{i18n:Localize installLocalPluginTooltip}">
                     <ui:SymbolIcon Symbol="Add" FontSize="16"/>
                 </Button>
             </StackPanel>
@@ -45,7 +45,7 @@
                      Text="{Binding FilterText, Mode=TwoWay}"
                      Watermark="{i18n:Localize searchplugin}">
                 <TextBox.InnerRightContent>
-                    <Button Theme="{StaticResource TransparentButton}"
+                    <Button Theme="{StaticResource TransparentButton}" AutomationProperties.Name="{i18n:Localize search}"
                             IsVisible="{Binding FilterText, Converter={x:Static conv:StringConverters.IsNotNullOrEmpty}}"
                             Command="{Binding ClearFilterTextCommand}">
                         <ui:SymbolIcon Symbol="Dismiss" FontSize="12"/>
@@ -163,11 +163,11 @@
                                     <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="5">
                                         <Border Background="{DynamicResource SystemFillColorSuccessBrush}" CornerRadius="4" Padding="6,2"
                                                 IsVisible="{Binding LabelInstalled}">
-                                            <TextBlock Text="{i18n:Localize pluginStore_Installed}" FontSize="10" Foreground="White"/>
+                                            <TextBlock Text="{i18n:Localize pluginStore_Installed}" FontSize="10" Foreground="{DynamicResource TextOnAccentFillColorPrimaryBrush}"/>
                                         </Border>
                                         <Border Background="{DynamicResource SystemFillColorAttentionBrush}" CornerRadius="4" Padding="6,2"
                                                 IsVisible="{Binding LabelUpdate}">
-                                            <TextBlock Text="{i18n:Localize pluginStore_NewRelease}" FontSize="10" Foreground="Black"/>
+                                            <TextBlock Text="{i18n:Localize pluginStore_NewRelease}" FontSize="10" Foreground="{DynamicResource TextOnAccentFillColorPrimaryBrush}"/>
                                         </Border>
                                     </StackPanel>
                                 </Grid>

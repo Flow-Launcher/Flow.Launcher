@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Concurrent;
 using System.IO;
-using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Avalonia;
@@ -23,7 +22,6 @@ public static class ImageLoader
 
     // Thread-safe cache
     private static readonly ConcurrentDictionary<string, IImage?> _cache = new();
-    private static readonly HttpClient _httpClient = new();
 
     // Default image (lazy loaded)
     private static IImage? _defaultImage;
@@ -270,10 +268,7 @@ public static class ImageLoader
     {
         try
         {
-            using var response = await _httpClient.GetAsync(url);
-            response.EnsureSuccessStatusCode();
-
-            await using var stream = await response.Content.ReadAsStreamAsync();
+            await using var stream = await Flow.Launcher.Infrastructure.Http.Http.GetStreamAsync(url);
             using var memoryStream = new MemoryStream();
             await stream.CopyToAsync(memoryStream);
             memoryStream.Position = 0;

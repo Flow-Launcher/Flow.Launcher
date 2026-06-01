@@ -65,9 +65,10 @@
                 </Border>
 
                 <!-- Search Icon -->
-                <Canvas Name="SearchIconCanvas" 
+                <Canvas Name="SearchIconCanvas"
                         Classes="searchIconPosition"
-                        HorizontalAlignment="Right">
+                        HorizontalAlignment="Right"
+                        IsHitTestVisible="False">
                     <Path Name="SearchIcon"
                           Classes="searchIcon"
                           Data="{DynamicResource SearchIconGeometry}"
