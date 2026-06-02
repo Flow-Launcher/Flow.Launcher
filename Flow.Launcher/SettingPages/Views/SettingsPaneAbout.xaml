@@ -147,6 +147,13 @@
                         </ui:SettingsCard.HeaderIcon>
                         <Button Command="{Binding OpenTestReportWindowCommand}" Content="{DynamicResource devtoolsOpenTestWindow}" />
                     </ui:SettingsCard>
+
+                    <ui:SettingsCard Header="{DynamicResource devtoolsProgressWindow}">
+                        <ui:SettingsCard.HeaderIcon>
+                            <ui:FontIcon Glyph="&#xe895;" />
+                        </ui:SettingsCard.HeaderIcon>
+                        <Button Command="{Binding OpenTestProgressWindowCommand}" Content="{DynamicResource devtoolsOpenTestWindow}" />
+                    </ui:SettingsCard>
                 </ui:SettingsExpander.Items>
             </ui:SettingsExpander>
 

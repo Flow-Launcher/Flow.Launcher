@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using CommunityToolkit.Mvvm.Input;
@@ -99,6 +100,38 @@ public partial class SettingsPaneAboutViewModel : BaseModel
             new Exception("Dev Tools test exception")
         );
         reportWindow.Show();
+    }
+
+    [RelayCommand]
+    private async Task OpenTestProgressWindowAsync()
+    {
+        using var cancellationTokenSource = new CancellationTokenSource();
+
+        await ProgressBoxEx.ShowAsync(
+            Localize.devtoolsProgressWindow(),
+            async reportProgress =>
+            {
+                if (reportProgress == null)
+                    return;
+
+                var duration = TimeSpan.FromMinutes(1);
+                var updateInterval = TimeSpan.FromSeconds(0.5);
+                var totalSteps = (int)(duration.Ticks / updateInterval.Ticks);
+
+                try
+                {
+                    for (var currentStep = 1; currentStep <= totalSteps; currentStep++)
+                    {
+                        await Task.Delay(updateInterval, cancellationTokenSource.Token).ConfigureAwait(false);
+                        reportProgress((double)currentStep / totalSteps * 100);
+                    }
+                }
+                catch (OperationCanceledException)
+                {
+                    // Progress window cancel action triggers this path.
+                }
+            },
+            cancellationTokenSource.Cancel);
     }
 
     [RelayCommand]
