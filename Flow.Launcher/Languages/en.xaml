@@ -487,6 +487,8 @@
     <system:String x:Key="userdatapathToolTip">User settings and installed plugins are saved in the user data folder. This location may vary depending on whether it's in portable mode or not.</system:String>
     <system:String x:Key="userdatapathButton">Open Folder</system:String>
     <system:String x:Key="openFolderButton">Open Folder</system:String>
+    <system:String x:Key="devtoolsReportWindow">Report Window</system:String>
+    <system:String x:Key="devtoolsOpenTestWindow">Open Test Window</system:String>
     <system:String x:Key="advanced">Advanced</system:String>
     <system:String x:Key="logLevel">Log Level</system:String>
     <system:String x:Key="LogLevelNONE">Silent</system:String>

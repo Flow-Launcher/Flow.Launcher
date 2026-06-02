@@ -93,6 +93,15 @@ public partial class SettingsPaneAboutViewModel : BaseModel
     }
 
     [RelayCommand]
+    private void OpenTestReportWindow()
+    {
+        var reportWindow = new ReportWindow(
+            new Exception("Dev Tools test exception")
+        );
+        reportWindow.Show();
+    }
+
+    [RelayCommand]
     private void AskClearLogFolderConfirmation()
     {
         var confirmResult = App.API.ShowMsgBox(

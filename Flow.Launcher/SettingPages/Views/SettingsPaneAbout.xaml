@@ -140,6 +140,13 @@
                         </ui:SettingsCard.HeaderIcon>
                         <Button Command="{Binding OpenWelcomeWindowCommand}" Content="{DynamicResource welcomewindow}" />
                     </ui:SettingsCard>
+
+                    <ui:SettingsCard Header="{DynamicResource devtoolsReportWindow}">
+                        <ui:SettingsCard.HeaderIcon>
+                            <ui:FontIcon Glyph="&#xe783;" />
+                        </ui:SettingsCard.HeaderIcon>
+                        <Button Command="{Binding OpenTestReportWindowCommand}" Content="{DynamicResource devtoolsOpenTestWindow}" />
+                    </ui:SettingsCard>
                 </ui:SettingsExpander.Items>
             </ui:SettingsExpander>
 
