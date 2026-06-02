@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core;
+using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
@@ -132,6 +133,13 @@ public partial class SettingsPaneAboutViewModel : BaseModel
                 }
             },
             cancellationTokenSource.Cancel);
+    }
+
+    [RelayCommand]
+    private void OpenTestPluginUpdateWindow()
+    {
+        var window = new PluginUpdateWindow(new List<PluginUpdateInfo>());
+        window.ShowDialog();
     }
 
     [RelayCommand]
