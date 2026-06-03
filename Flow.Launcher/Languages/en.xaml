@@ -490,6 +490,7 @@
     <system:String x:Key="devtoolsReportWindow">Report Window</system:String>
     <system:String x:Key="devtoolsProgressWindow">Progress Window</system:String>
     <system:String x:Key="devtoolsPluginUpdateWindow">Plugin Update Window</system:String>
+    <system:String x:Key="devtoolsMessageBoxWindow">Message Box Window</system:String>
     <system:String x:Key="devtoolsOpenTestWindow">Open Test Window</system:String>
     <system:String x:Key="advanced">Advanced</system:String>
     <system:String x:Key="logLevel">Log Level</system:String>

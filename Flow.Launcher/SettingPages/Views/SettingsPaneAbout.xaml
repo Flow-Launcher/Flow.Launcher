@@ -161,6 +161,13 @@
                         </ui:SettingsCard.HeaderIcon>
                         <Button Command="{Binding OpenTestPluginUpdateWindowCommand}" Content="{DynamicResource devtoolsOpenTestWindow}" />
                     </ui:SettingsCard>
+
+                    <ui:SettingsCard Header="{DynamicResource devtoolsMessageBoxWindow}">
+                        <ui:SettingsCard.HeaderIcon>
+                            <ui:FontIcon Glyph="&#xE8BD;" />
+                        </ui:SettingsCard.HeaderIcon>
+                        <Button Command="{Binding OpenTestMessageBoxWindowCommand}" Content="{DynamicResource devtoolsOpenTestWindow}" />
+                    </ui:SettingsCard>
                 </ui:SettingsExpander.Items>
             </ui:SettingsExpander>
 

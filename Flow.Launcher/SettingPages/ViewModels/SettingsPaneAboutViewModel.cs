@@ -143,6 +143,12 @@ public partial class SettingsPaneAboutViewModel : BaseModel
     }
 
     [RelayCommand]
+    private void OpenTestMessageBoxWindow()
+    {
+        MessageBoxEx.Show("Dev Tools test message", "Dev Tools Test", MessageBoxButton.OKCancel, MessageBoxImage.Information);
+    }
+
+    [RelayCommand]
     private void AskClearLogFolderConfirmation()
     {
         var confirmResult = App.API.ShowMsgBox(
