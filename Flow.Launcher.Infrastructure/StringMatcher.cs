@@ -268,7 +268,7 @@ namespace Flow.Launcher.Infrastructure
                char.IsWhiteSpace(stringToCompare[compareStringIndex - 1]);
 
         private static bool IsAcronymNumber(string stringToCompare, int compareStringIndex)
-            => stringToCompare[compareStringIndex] >= 0 && stringToCompare[compareStringIndex] <= 9;
+            => char.IsAsciiDigit(stringToCompare[compareStringIndex]);
 
         // To get the index of the closest space which preceeds the first matching index
         private static int CalculateClosestSpaceIndex(List<int> spaceIndices, int firstMatchIndex)
