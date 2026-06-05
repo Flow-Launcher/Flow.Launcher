@@ -72,6 +72,8 @@ namespace Flow.Launcher.Infrastructure
 
             var currentAcronymQueryIndex = 0;
             var acronymMatchData = new List<int>();
+            // Count of distinct acronym groups in the compare string.
+            // Digit runs count as one group (e.g. "2019" is 1 group, not 4).
             int acronymsTotalCount = 0;
             int acronymsMatched = 0;
 
@@ -215,7 +217,9 @@ namespace Flow.Launcher.Infrastructure
             // return acronym match if all query char matched
             if (acronymsMatched > 0 && acronymsMatched == query.Length)
             {
-                int acronymScore = acronymsMatched * 100 / acronymsTotalCount;
+                // we need to consider groups to avoid counting digit runs multiple times
+                int matchedGroups = CountDistinctAcronymGroups(acronymMatchData, stringToCompare);
+                int acronymScore = matchedGroups * 100 / acronymsTotalCount;
 
                 if (acronymScore >= (int)UserSettingSearchPrecision)
                 {
@@ -269,6 +273,45 @@ namespace Flow.Launcher.Infrastructure
 
         private static bool IsAcronymNumber(string stringToCompare, int compareStringIndex)
             => char.IsAsciiDigit(stringToCompare[compareStringIndex]);
+
+        /// <summary>
+        /// Counts distinct acronym groups from matched character indices in <paramref name="stringToCompare"/>.
+        /// Each matched non-digit character index forms its own group.
+        /// Contiguous digit characters in the string form a single group regardless of how many indices match within the run.
+        ///
+        /// Example:
+        /// For "Visual Studio 2019", matched indices [0, 14, 17] refer to characters 'V', '2', and '9'.
+        /// These produce 2 groups: 'V' and the digit run "2019".
+        /// </summary>
+        private static int CountDistinctAcronymGroups(List<int> matchedIndices, string stringToCompare)
+        {
+            int groups = 0;
+            var processedIndices = new HashSet<int>();
+
+            foreach (int matchedIndex in matchedIndices)
+            {
+                // try process index and skip if already processed in a previous group
+                if (!processedIndices.Add(matchedIndex))
+                    continue;
+
+                // since we processed a new index we start a new group
+                groups += 1;
+
+                // if this isn't a digit then its a single index group so we stop here
+                if (!IsAcronymNumber(stringToCompare, matchedIndex))
+                    continue;
+
+                // check if this is a digit run and process any indices in that run as they are part of this group
+                int digitRunEnd = matchedIndex;
+                while (digitRunEnd < stringToCompare.Length - 1 && IsAcronymNumber(stringToCompare, digitRunEnd + 1))
+                {
+                    digitRunEnd += 1;
+                    processedIndices.Add(digitRunEnd);
+                }
+            }
+
+            return groups;
+        }
 
         // To get the index of the closest space which preceeds the first matching index
         private static int CalculateClosestSpaceIndex(List<int> spaceIndices, int firstMatchIndex)
