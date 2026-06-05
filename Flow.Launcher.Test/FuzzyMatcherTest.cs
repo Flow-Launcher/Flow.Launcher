@@ -359,6 +359,24 @@ namespace Flow.Launcher.Test
         [TestCase("vsp", "Visual Studio", 0)]
         [TestCase("vps", "Visual Studio", 0)]
         [TestCase(Chrome, HelpCureHopeRaiseOnMindEntityChrome, 75)]
+        // --- Digit run acronym matching ---
+        // A run of consecutive digits (e.g. "2019") counts as a single acronym unit.
+        // Matching any digit within the run "claims" it, but extra digits from the
+        // same run don't increase the group count.
+        // "Visual Studio 2019" has 3 acronym units: V, S, 2019-run.
+
+        // All words + digit run matched: V S 2019 = 3/3
+        [TestCase("vs2",   "Visual Studio 2019", 100)]
+        [TestCase("vs19",  "Visual Studio 2019", 100)]
+        [TestCase("vs2019","Visual Studio 2019", 100)]
+        // Partial: only V + digit run (missing S) = 2/3 = 66
+        [TestCase("v29",   "Visual Studio 2019", 66)]
+        [TestCase("v2019", "Visual Studio 2019", 66)]
+        [TestCase("v19",   "Visual Studio 2019", 66)]
+        // Digit run does not match comparison string — no acronym match
+        [TestCase("vs19",  "Visual Studio 2018", 0)]
+        // Shorter digit run treated identically: V S 19-run = 3/3
+        [TestCase("vs19",  "Visual Studio 19", 100)]
         public void WhenGivenAnAcronymQuery_ShouldReturnAcronymScore(string queryString, string compareString,
             int desiredScore)
         {
