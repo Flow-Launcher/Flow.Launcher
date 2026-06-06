@@ -337,6 +337,7 @@
                 </Border>
                 <Line
                     x:Name="ProgressBar"
+                    Style="{DynamicResource PendingLineStyle}"
                     Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualWidth}"
                     Height="2"
                     Margin="12 0 12 0"
