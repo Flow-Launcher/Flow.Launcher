@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Security;
 using System.Text;
+using System.Threading.Channels;
 using System.Threading.Tasks;
-using Microsoft.Win32;
+using System.Windows.Input;
 using Flow.Launcher.Plugin.Program.Logger;
+using Flow.Launcher.Plugin.Program.Views.Models;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Plugin.SharedModels;
-using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-using System.Threading.Channels;
-using Flow.Launcher.Plugin.Program.Views.Models;
 using IniParser;
-using System.Windows.Input;
 using MemoryPack;
+using Microsoft.Win32;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
@@ -196,15 +196,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     // Ctrl + Shift + Enter to run as admin
                     bool runAsAdmin = c.SpecialKeyState.ToModifierKeys() == (ModifierKeys.Control | ModifierKeys.Shift);
 
-                    var info = new ProcessStartInfo
-                    {
-                        FileName = FullPath,
-                        WorkingDirectory = ParentDirectory,
-                        UseShellExecute = true,
-                        Verb = runAsAdmin ? "runas" : "",
-                    };
-
-                    _ = Task.Run(() => Main.StartProcess(Process.Start, info));
+                    Launch(runAsAdmin);
 
                     return true;
                 }
@@ -213,6 +205,15 @@ namespace Flow.Launcher.Plugin.Program.Programs
             return result;
         }
 
+        private void Launch(bool runAsAdmin = false)
+        {
+            _ = Task.Run(() => Main.Context.API.StartProcess(
+                FullPath,
+                workingDirectory: ParentDirectory,
+                arguments: string.Empty,
+                useShellExecute: true,
+                verb: runAsAdmin ? "runas" : ""));
+        }
 
         public List<Result> ContextMenus(IPublicAPI api)
         {
@@ -240,15 +241,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     Title = api.GetTranslation("flowlauncher_plugin_program_run_as_administrator"),
                     Action = c =>
                     {
-                        var info = new ProcessStartInfo
-                        {
-                            FileName = FullPath,
-                            WorkingDirectory = ParentDirectory,
-                            Verb = "runas",
-                            UseShellExecute = true
-                        };
-
-                        _ = Task.Run(() => Main.StartProcess(Process.Start, info));
+                        Launch(true);
 
                         return true;
                     },

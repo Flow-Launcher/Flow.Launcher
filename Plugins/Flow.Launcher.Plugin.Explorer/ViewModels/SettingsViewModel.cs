@@ -507,6 +507,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                 Arguments = Constants.WindowsIndexingOptions
             };
 
+            // No need to de-elevate since we are opening windows settings which cannot bring security risks
             Process.Start(psi);
         }
 

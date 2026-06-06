@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -74,7 +75,12 @@ namespace Flow.Launcher
             _mainVM.ChangeQueryText(query, requery);
         }
 
-        public void RestartApp()
+        public void RestartApp() => RestartApp(false);
+
+        public void RestartAppAsAdmin() => RestartApp(true);
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
+        private async void RestartApp(bool runAsAdmin)
         {
             _mainVM.Hide();
 
@@ -86,7 +92,7 @@ namespace Flow.Launcher
             // Restart requires Squirrel's Update.exe to be present in the parent folder, 
             // it is only published from the project's release pipeline. When debugging without it,
             // the project may not restart or just terminates. This is expected.
-            UpdateManager.RestartApp(Constant.ApplicationFileName);
+            App.RestartApp(runAsAdmin);
         }
 
         public void ShowMainWindow() => _mainVM.Show();
@@ -176,8 +182,7 @@ namespace Flow.Launcher
         {
             var args = filename == "cmd.exe" ? $"/C {cmd}" : $"{cmd}";
 
-            var startInfo = ShellCommand.SetProcessStartInfo(filename, arguments: args, createNoWindow: true);
-            ShellCommand.Execute(startInfo);
+            StartProcess(filename, arguments: args, createNoWindow: true);
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
@@ -478,11 +483,7 @@ namespace Flow.Launcher
             {
                 try
                 {
-                    Process.Start(new ProcessStartInfo()
-                    {
-                        FileName = uri.AbsoluteUri,
-                        UseShellExecute = true
-                    })?.Dispose();
+                    StartProcess(uri.AbsoluteUri, arguments: string.Empty, useShellExecute: true);
                 }
                 catch (Exception e)
                 {
@@ -655,6 +656,85 @@ namespace Flow.Launcher
         {
             add => _settings.StringMatcherBehaviorChanged += value;
             remove => _settings.StringMatcherBehaviorChanged -= value;
+        }
+
+        public bool StartProcess(string fileName, string workingDirectory = "", string arguments = "", bool useShellExecute = false, string verb = "", bool createNoWindow = false)
+        {
+            try
+            {
+                workingDirectory = string.IsNullOrEmpty(workingDirectory) ? Environment.CurrentDirectory : workingDirectory;
+
+                // Use command executer to run the process as desktop user if running as admin
+                if (Win32Helper.IsAdministrator())
+                {
+                    var result = Win32Helper.RunAsDesktopUser(
+                        Constant.CommandExecutablePath,
+                        Environment.CurrentDirectory,
+                        $"-StartProcess " +
+                        $"-FileName {AddDoubleQuotes(fileName)} " +
+                        $"-WorkingDirectory {AddDoubleQuotes(workingDirectory)} " +
+                        $"-Arguments {AddDoubleQuotes(arguments)} " +
+                        $"-UseShellExecute {useShellExecute} " +
+                        $"-Verb {AddDoubleQuotes(verb)} " +
+                        $"-CreateNoWindow {createNoWindow}",
+                        false,
+                        true, // Do not show the command window
+                        out var errorInfo);
+                    if (!string.IsNullOrEmpty(errorInfo))
+                    {
+                        LogError(ClassName, $"Failed to start process {fileName} with arguments {arguments} under {workingDirectory}: {errorInfo}");
+                    }
+
+                    return result;
+                }
+
+                var info = new ProcessStartInfo
+                {
+                    FileName = fileName,
+                    WorkingDirectory = workingDirectory,
+                    Arguments = arguments,
+                    UseShellExecute = useShellExecute,
+                    Verb = verb,
+                    CreateNoWindow = createNoWindow
+                };
+                Process.Start(info)?.Dispose();
+                return true;
+            }
+            catch (Exception e)
+            {
+                LogException(ClassName, $"Failed to start process {fileName} with arguments {arguments} under {workingDirectory}", e);
+                return false;
+            }
+        }
+
+        public bool StartProcess(string fileName, string workingDirectory = "", Collection<string> argumentList = null, bool useShellExecute = false, string verb = "", bool createNoWindow = false) =>
+            StartProcess(fileName, workingDirectory, JoinArgumentList(argumentList), useShellExecute, verb, createNoWindow);
+
+        private static string AddDoubleQuotes(string arg)
+        {
+            if (string.IsNullOrEmpty(arg))
+                return "\"\"";
+
+            // If already wrapped in double quotes, return as is
+            if (arg.Length >= 2 && arg[0] == '"' && arg[^1] == '"')
+                return arg;
+
+            return $"\"{arg}\"";
+        }
+
+        private static string JoinArgumentList(Collection<string> args)
+        {
+            if (args == null || args.Count == 0)
+                return string.Empty;
+
+            return string.Join(" ", args.Select(arg =>
+            {
+                if (string.IsNullOrEmpty(arg))
+                    return "\"\"";
+
+                // Add double quotes
+                return AddDoubleQuotes(arg);
+            }));
         }
 
         #endregion
