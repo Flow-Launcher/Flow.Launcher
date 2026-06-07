@@ -21,6 +21,7 @@ using Windows.Win32.Foundation;
 using Windows.Win32.Graphics.Dwm;
 using Windows.Win32.System.Power;
 using Windows.Win32.System.Threading;
+using Windows.Win32.UI.Controls;
 using Windows.Win32.UI.Input.KeyboardAndMouse;
 using Windows.Win32.UI.Shell.Common;
 using Windows.Win32.UI.WindowsAndMessaging;
@@ -60,6 +61,14 @@ namespace Flow.Launcher.Infrastructure
                 BackdropTypes.MicaAlt => DWM_SYSTEMBACKDROP_TYPE.DWMSBT_TABBEDWINDOW,
                 _ => DWM_SYSTEMBACKDROP_TYPE.DWMSBT_AUTO
             };
+
+            // The backdrop renders in the non-client frame area. WindowStyle=None
+            // removes that area, so we extend it across the entire client area.
+            // This is harmless when backdrop is None or blur not enabled
+            // as DWM has nothing to render in the extended area.
+            // https://learn.microsoft.com/en-us/windows/win32/api/dwmapi/nf-dwmapi-dwmextendframeintoclientarea
+            var margins = new MARGINS { cxLeftWidth = -1, cxRightWidth = -1, cyTopHeight = -1, cyBottomHeight = -1 };
+            PInvoke.DwmExtendFrameIntoClientArea(GetWindowHandle(window), in margins);
 
             return PInvoke.DwmSetWindowAttribute(
                 GetWindowHandle(window),
