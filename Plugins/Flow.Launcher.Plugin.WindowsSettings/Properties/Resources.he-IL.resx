@@ -1183,19 +1183,19 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="PinyinImeSettings" xml:space="preserve">
-    <value>Pinyin IME settings</value>
+    <value>הגדרות Pinyin IME</value>
     <comment>Area TimeAndLanguage, available if the Microsoft Pinyin input method editor is installed</comment>
   </data>
   <data name="PinyinImeSettingsDomainLexicon" xml:space="preserve">
-    <value>Pinyin IME settings - domain lexicon</value>
+    <value>הגדרות Pinyin IME - לקסיקון דומיין</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="PinyinImeSettingsKeyConfiguration" xml:space="preserve">
-    <value>Pinyin IME settings - Key configuration</value>
+    <value>הגדרות Pinyin IME - תצורת מקשים</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="PinyinImeSettingsUdp" xml:space="preserve">
-    <value>Pinyin IME settings - UDP</value>
+    <value>הגדרות Pinyin IME - UDP</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="PlayingGameFullScreen" xml:space="preserve">
