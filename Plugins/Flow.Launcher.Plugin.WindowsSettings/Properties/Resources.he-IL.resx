@@ -705,7 +705,7 @@
     <comment>Area Gaming</comment>
   </data>
   <data name="Gateway" xml:space="preserve">
-    <value>Gateway</value>
+    <value>כניסה</value>
     <comment>Should not translated</comment>
   </data>
   <data name="General" xml:space="preserve">
@@ -1362,7 +1362,7 @@
     <comment>Area Cortana</comment>
   </data>
   <data name="SecureDNS" xml:space="preserve">
-    <value>SecureDNS</value>
+    <value>Dns מאובטח</value>
     <comment>Should not translated</comment>
   </data>
   <data name="SecurityCenter" xml:space="preserve">
@@ -1450,7 +1450,7 @@
     <comment>Area System</comment>
   </data>
   <data name="SubtitlePreposition" xml:space="preserve">
-    <value>in</value>
+    <value>ב</value>
     <comment>Example: Area "System" in System settings</comment>
   </data>
   <data name="SyncCenter" xml:space="preserve">
