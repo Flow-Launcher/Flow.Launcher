@@ -16,9 +16,9 @@
     <system:String x:Key="flowlauncher_plugin_program_location">מיקום</system:String>
     <system:String x:Key="flowlauncher_plugin_program_all_programs">כל התוכניות</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes">סוג קובץ</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_reindex">בצע אינדוקס מחדש</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_indexing">מבצע אינדוקס</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_index_source">מקורות אינדוקס</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_reindex">בצע אינדקס מחדש</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_indexing">מבצע אינדקס</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_source">מקורות אינדקס</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_option">אפשרויות</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_uwp">אפליקציות UWP</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_uwp_tooltip">כאשר האפשרות מופעלת, Flow יטען אפליקציות UWP</system:String>
