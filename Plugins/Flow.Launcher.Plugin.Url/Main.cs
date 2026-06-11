@@ -41,7 +41,9 @@ namespace Flow.Launcher.Plugin.Url
                         Score = 8,
                         Action = _ =>
                         {
-                            // not a recognized scheme, add preferred http scheme
+                            // if url was accepted without having any of the recognized scheme, 
+                            // then that means no scheme was specified (e.g. www.google.com)
+                            // so we add the preferred http/https scheme
                             if (!UrlSchemes.Any(scheme => raw.StartsWith(scheme + "://", StringComparison.OrdinalIgnoreCase)))
                             {
                                 raw = GetHttpPreference() + "://" + raw;
