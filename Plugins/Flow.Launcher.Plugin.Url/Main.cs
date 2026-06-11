@@ -12,7 +12,7 @@ namespace Flow.Launcher.Plugin.Url
         internal static PluginInitContext Context { get; private set; }
         internal static Settings Settings { get; private set; }
 
-        private static readonly string[] UrlSchemes = ["http://", "https://", "ftp://"];
+        private static readonly string[] UrlSchemes = ["http", "https", "ftp"];
 
         public List<Result> Query(Query query)
         {
@@ -42,7 +42,7 @@ namespace Flow.Launcher.Plugin.Url
                         Action = _ =>
                         {
                             // not a recognized scheme, add preferred http scheme
-                            if (!UrlSchemes.Any(scheme => raw.StartsWith(scheme, StringComparison.OrdinalIgnoreCase)))
+                            if (!UrlSchemes.Any(scheme => raw.StartsWith(scheme + "://", StringComparison.OrdinalIgnoreCase)))
                             {
                                 raw = GetHttpPreference() + "://" + raw;
                             }
@@ -115,7 +115,7 @@ namespace Flow.Launcher.Plugin.Url
             }
 
             // Add protocol if missing for Uri validation
-            var urlToValidate = UrlSchemes.Any(s => input.StartsWith(s, StringComparison.OrdinalIgnoreCase))
+            var urlToValidate = UrlSchemes.Any(s => input.StartsWith(s + "://", StringComparison.OrdinalIgnoreCase))
                 ? input
                 : GetHttpPreference() + "://" + input;
 
@@ -123,8 +123,8 @@ namespace Flow.Launcher.Plugin.Url
                 return false;
             
 
-            // Validate protocol
-            if (uri.Scheme != Uri.UriSchemeHttp && uri.Scheme != Uri.UriSchemeHttps && uri.Scheme != Uri.UriSchemeFtp)
+            // Validate protocol against known schemes
+            if (!UrlSchemes.Any(scheme => uri.Scheme == scheme))
                 return false;
 
             var host = uri.Host;
