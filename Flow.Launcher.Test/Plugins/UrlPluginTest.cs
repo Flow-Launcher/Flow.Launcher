@@ -49,6 +49,9 @@ namespace Flow.Launcher.Test.Plugins
         [TestCase("HTTPS://EXAMPLE.COM")]
         [TestCase("EXAMPLE.COM")]
         [TestCase("LOCALHOST")]
+        [TestCase("Http://Example.Com")]
+        [TestCase("hTTps://ExAmPlE.CoM")]
+        [TestCase("LocalHost")]
         [TestCase("example.com/path")]
         [TestCase("example.com/path/to/resource")]
         [TestCase("http://example.com/path")]
@@ -59,6 +62,10 @@ namespace Flow.Launcher.Test.Plugins
         [TestCase("http://localhost/path")]
         [TestCase("[::1]/path")]
         [TestCase("[2001:db8::1]/path?query=1")]
+        [TestCase("192.168.1.1?query=value")]
+        [TestCase("192.168.1.1#fragment")]
+        [TestCase("localhost:8080?test=123")]
+        [TestCase("example.com#fragment")]
         public void WhenValidUrlThenIsUrlReturnsTrue(string url)
         {
             Assert.That(plugin.IsURL(url), Is.True);
@@ -71,11 +78,15 @@ namespace Flow.Launcher.Test.Plugins
         [TestCase("just text")]
         [TestCase("http://")]
         [TestCase("://example.com")]
-        [TestCase("0.0.0.0")] // Pattern excludes 0.0.0.0
+        [TestCase("0.0.0.0")] // reserved default route address / IPAddress.Any
         [TestCase("256.1.1.1")] // Invalid IPv4
         [TestCase("example")] // No TLD
+        [TestCase("example..com")]
+        [TestCase("example .com")]
+        [TestCase("..example.com")]
         [TestCase(".com")]
         [TestCase("http://.com")]
+        [TestCase("2001:db8:::1")]
         public void WhenInvalidUrlThenIsUrlReturnsFalse(string url)
         {
             Assert.That(plugin.IsURL(url), Is.False);
