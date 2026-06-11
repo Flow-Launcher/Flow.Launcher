@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Win32;
 using Flow.Launcher.Plugin.Program.Logger;
@@ -336,24 +335,22 @@ namespace Flow.Launcher.Plugin.Program.Programs
         {
             var program = Win32Program(path);
             try
-            {
-                const int MAX_PATH = 260;
-                StringBuilder buffer = new StringBuilder(MAX_PATH);
-                ShellLinkHelper _helper = new ShellLinkHelper();
-                string target = _helper.retrieveTargetPath(path);
+            {   
+                var shellLink = ShellLinkReader.Read(path);
+                string target = shellLink.TargetPath;
 
                 if (!string.IsNullOrEmpty(target) && File.Exists(target))
                 {
                     program.LnkResolvedPath = Path.GetFullPath(target);
                     program.ExecutableName = Path.GetFileNameWithoutExtension(target);
 
-                    var args = _helper.arguments;
+                    var args = shellLink.Arguments;
                     if (!string.IsNullOrEmpty(args))
                     {
                         program.Args = args;
                     }
 
-                    var description = _helper.description;
+                    var description = shellLink.Description;
                     if (!string.IsNullOrEmpty(description))
                     {
                         program.Description = description;

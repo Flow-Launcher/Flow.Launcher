@@ -30,7 +30,7 @@ namespace Flow.Launcher.Core.Plugin
         private static readonly ConcurrentDictionary<string, PluginPair> _allInitializedPlugins = [];
         private static readonly ConcurrentDictionary<string, PluginPair> _initFailedPlugins = [];
         private static readonly ConcurrentDictionary<string, PluginPair> _globalPlugins = [];
-        private static readonly ConcurrentDictionary<string, PluginPair> _nonGlobalPlugins = [];
+        private static readonly ConcurrentDictionary<string, List<PluginPair>> _nonGlobalPlugins = [];
 
         private static PluginsSettings Settings;
         private static readonly ConcurrentBag<string> ModifiedPlugins = [];
@@ -333,7 +333,19 @@ namespace Flow.Launcher.Core.Plugin
                         _globalPlugins.TryAdd(pair.Metadata.ID, pair);
                         break;
                     default:
-                        _nonGlobalPlugins.TryAdd(actionKeyword, pair);
+                        _nonGlobalPlugins.AddOrUpdate(actionKeyword,
+                            _ => [pair],
+                            (_, existing) =>
+                            {
+                                lock (existing)
+                                {
+                                    if (!existing.Contains(pair))
+                                    {
+                                        existing.Add(pair);
+                                    }
+                                }
+                                return existing;
+                            });
                         break;
                 }
             }
@@ -369,7 +381,7 @@ namespace Flow.Launcher.Core.Plugin
             if (query is null)
                 return Array.Empty<PluginPair>();
 
-            if (!_nonGlobalPlugins.TryGetValue(query.ActionKeyword, out var plugin))
+            if (!TryGetNonGlobalPlugins(query.ActionKeyword, out var plugins))
             {
                 if (dialogJump)
                     return [.. GetGlobalPlugins().Where(p => p.Plugin is IAsyncDialogJump && !PluginModified(p.Metadata.ID))];
@@ -377,13 +389,25 @@ namespace Flow.Launcher.Core.Plugin
                     return [.. GetGlobalPlugins().Where(p => !PluginModified(p.Metadata.ID))];
             }
 
-            if (dialogJump && plugin.Plugin is not IAsyncDialogJump)
-                return Array.Empty<PluginPair>();
+            var validPlugins = plugins.Where(p => !p.Metadata.Disabled && !PluginModified(p.Metadata.ID));
+            if (dialogJump)
+                validPlugins = validPlugins.Where(p => p.Plugin is IAsyncDialogJump);
 
-            if (PluginModified(plugin.Metadata.ID))
-                return Array.Empty<PluginPair>();
+            return [.. validPlugins];
+        }
 
-            return [plugin];
+        private static bool TryGetNonGlobalPlugins(string actionKeyword, out List<PluginPair> plugins)
+        {
+            if (_nonGlobalPlugins.TryGetValue(actionKeyword, out var list))
+            {
+                lock (list)
+                {
+                    plugins = [.. list];
+                }
+                return true;
+            }
+            plugins = [];
+            return false;
         }
 
         public static ICollection<PluginPair> ValidPluginsForHomeQuery()
@@ -577,9 +601,17 @@ namespace Flow.Launcher.Core.Plugin
             return [.. _globalPlugins.Values];
         }
 
-        public static Dictionary<string, PluginPair> GetNonGlobalPlugins()
+        public static Dictionary<string, List<PluginPair>> GetNonGlobalPlugins()
         {
-            return _nonGlobalPlugins.ToDictionary();
+            var nonGlobalPlugins = new Dictionary<string, List<PluginPair>>();
+            foreach (var kvp in _nonGlobalPlugins)
+            {
+                lock (kvp.Value)
+                {
+                    nonGlobalPlugins.Add(kvp.Key, [.. kvp.Value]);
+                }
+            }
+            return nonGlobalPlugins;
         }
 
         public static List<PluginPair> GetTranslationPlugins()
@@ -722,12 +754,12 @@ namespace Flow.Launcher.Core.Plugin
 
         #region Plugin Action Keyword
 
+        [Obsolete("This method is only used for old Flow compatibility.")]
         public static bool ActionKeywordRegistered(string actionKeyword)
         {
-            // this method is only checking for action keywords (defined as not '*') registration
-            // hence the actionKeyword != Query.GlobalPluginWildcardSign logic
-            return actionKeyword != Query.GlobalPluginWildcardSign 
-                && _nonGlobalPlugins.ContainsKey(actionKeyword);
+            // Since now we support to assign one action keyword to multiple plugins,
+            // this check is unnecessary, so we will just return false here to ensure compatibility for old plugins.
+            return false;
         }
 
         /// <summary>
@@ -737,17 +769,34 @@ namespace Flow.Launcher.Core.Plugin
         public static void AddActionKeyword(string id, string newActionKeyword)
         {
             var plugin = GetPluginForId(id);
+            if (plugin == null) return;
+
             if (newActionKeyword == Query.GlobalPluginWildcardSign)
             {
                 _globalPlugins.TryAdd(id, plugin);
             }
             else
             {
-                _nonGlobalPlugins.AddOrUpdate(newActionKeyword, plugin, (key, oldValue) => plugin);
+                _nonGlobalPlugins.AddOrUpdate(newActionKeyword,
+                    _ => [plugin],
+                    (_, existing) =>
+                    {
+                        lock (existing)
+                        {
+                            if (!existing.Contains(plugin))
+                            {
+                                existing.Add(plugin);
+                            }
+                        }
+                        return existing;
+                    });
             }
 
             // Update action keywords and action keyword in plugin metadata
-            plugin.Metadata.ActionKeywords.Add(newActionKeyword);
+            if (!plugin.Metadata.ActionKeywords.Contains(newActionKeyword))
+            {
+                plugin.Metadata.ActionKeywords.Add(newActionKeyword);
+            }
             if (plugin.Metadata.ActionKeywords.Count > 0)
             {
                 plugin.Metadata.ActionKeyword = plugin.Metadata.ActionKeywords[0];
@@ -765,6 +814,8 @@ namespace Flow.Launcher.Core.Plugin
         public static void RemoveActionKeyword(string id, string oldActionkeyword)
         {
             var plugin = GetPluginForId(id);
+            if (plugin == null) return;
+
             if (oldActionkeyword == Query.GlobalPluginWildcardSign
                 && // Plugins may have multiple ActionKeywords that are global, eg. WebSearch
                 plugin.Metadata.ActionKeywords
@@ -775,11 +826,22 @@ namespace Flow.Launcher.Core.Plugin
 
             if (oldActionkeyword != Query.GlobalPluginWildcardSign)
             {
-                _nonGlobalPlugins.TryRemove(oldActionkeyword, out _);
+                if (_nonGlobalPlugins.TryGetValue(oldActionkeyword, out var plugins))
+                {
+                    lock (plugins)
+                    {
+                        plugins.RemoveAll(p => p.Metadata.ID == id);
+
+                        if (plugins.Count == 0)
+                        {
+                            _nonGlobalPlugins.TryRemove(new KeyValuePair<string, List<PluginPair>>(oldActionkeyword, plugins));
+                        }
+                    }
+                }
             }
 
             // Update action keywords and action keyword in plugin metadata
-            plugin.Metadata.ActionKeywords.Remove(oldActionkeyword);
+            plugin.Metadata.ActionKeywords.RemoveAll(k => k == oldActionkeyword);
             if (plugin.Metadata.ActionKeywords.Count > 0)
             {
                 plugin.Metadata.ActionKeyword = plugin.Metadata.ActionKeywords[0];
@@ -1063,10 +1125,18 @@ namespace Flow.Launcher.Core.Plugin
                 {
                     _globalPlugins.TryRemove(plugin.ID, out var _);
                 }
-                var keysToRemove = _nonGlobalPlugins.Where(p => p.Value.Metadata.ID == plugin.ID).Select(p => p.Key).ToList();
-                foreach (var key in keysToRemove)
+                var entriesToUpdate = _nonGlobalPlugins.ToList();
+                foreach (var entry in entriesToUpdate)
                 {
-                    _nonGlobalPlugins.TryRemove(key, out var _);
+                    lock (entry.Value)
+                    {
+                        entry.Value.RemoveAll(p => p.Metadata.ID == plugin.ID);
+
+                        if (entry.Value.Count == 0)
+                        {
+                            _nonGlobalPlugins.TryRemove(new KeyValuePair<string, List<PluginPair>>(entry.Key, entry.Value));
+                        }
+                    }
                 }
             }
 

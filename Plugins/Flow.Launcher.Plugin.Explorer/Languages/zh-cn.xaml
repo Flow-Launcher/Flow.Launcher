@@ -49,6 +49,7 @@
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">使用搜索结果的位置作为应用程序的工作目录</system:String>
     <system:String x:Key="plugin_explorer_display_more_info_in_tooltip">在提示框中显示更多信息，例如大小和年龄</system:String>
     <system:String x:Key="plugin_explorer_default_open_in_file_manager">点击回车在默认文件管理器中打开文件夹</system:String>
+    <system:String x:Key="plugin_explorer_boost_home_folder_score">在搜索结果中优先考虑主文件夹（文档、桌面、下载等）</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">使用索引进行路径搜索</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">索引选项</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">搜索：</system:String>

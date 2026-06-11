@@ -292,7 +292,9 @@ namespace Flow.Launcher
         public void AddActionKeyword(string pluginId, string newActionKeyword) =>
             PluginManager.AddActionKeyword(pluginId, newActionKeyword);
 
+#pragma warning disable CS0618 // Type or member is obsolete
         public bool ActionKeywordAssigned(string actionKeyword) => PluginManager.ActionKeywordRegistered(actionKeyword);
+#pragma warning restore CS0618 // Type or member is obsolete
 
         public void RemoveActionKeyword(string pluginId, string oldActionKeyword) =>
             PluginManager.RemoveActionKeyword(pluginId, oldActionKeyword);
@@ -650,6 +652,12 @@ namespace Flow.Launcher
         public string GetDataDirectory() => DataLocation.DataDirectory();
 
         public string GetLogDirectory() => DataLocation.VersionLogDirectory;
+
+        public event EventHandler StringMatcherBehaviorChanged
+        {
+            add => _settings.StringMatcherBehaviorChanged += value;
+            remove => _settings.StringMatcherBehaviorChanged -= value;
+        }
 
         #endregion
 

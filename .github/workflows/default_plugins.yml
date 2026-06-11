@@ -53,8 +53,7 @@ jobs:
           files: "Flow.Launcher.Plugin.BrowserBookmark.zip"
           tag_name: "v${{steps.updated-version-browserbookmark.outputs.prop}}"
           body: Visit Flow's [release notes](https://github.com/Flow-Launcher/Flow.Launcher/releases) for changes.
-        env:
-          GITHUB_TOKEN: ${{ secrets.PUBLISH_PLUGINS }}
+          token: ${{ secrets.PUBLISH_PLUGINS }}
 
 
       - name: Get Calculator Version
@@ -77,8 +76,7 @@ jobs:
           files: "Flow.Launcher.Plugin.Calculator.zip"
           tag_name: "v${{steps.updated-version-calculator.outputs.prop}}"
           body: Visit Flow's [release notes](https://github.com/Flow-Launcher/Flow.Launcher/releases) for changes.
-        env:
-          GITHUB_TOKEN: ${{ secrets.PUBLISH_PLUGINS }}
+          token: ${{ secrets.PUBLISH_PLUGINS }}
 
 
       - name: Get Explorer Version
@@ -101,8 +99,7 @@ jobs:
           files: "Flow.Launcher.Plugin.Explorer.zip"
           tag_name: "v${{steps.updated-version-explorer.outputs.prop}}"
           body: Visit Flow's [release notes](https://github.com/Flow-Launcher/Flow.Launcher/releases) for changes.
-        env:
-          GITHUB_TOKEN: ${{ secrets.PUBLISH_PLUGINS }}
+          token: ${{ secrets.PUBLISH_PLUGINS }}
 
 
       - name: Get PluginIndicator Version
@@ -125,8 +122,7 @@ jobs:
           files: "Flow.Launcher.Plugin.PluginIndicator.zip"
           tag_name: "v${{steps.updated-version-pluginindicator.outputs.prop}}"
           body: Visit Flow's [release notes](https://github.com/Flow-Launcher/Flow.Launcher/releases) for changes.
-        env:
-          GITHUB_TOKEN: ${{ secrets.PUBLISH_PLUGINS }}
+          token: ${{ secrets.PUBLISH_PLUGINS }}
 
 
       - name: Get PluginsManager Version
@@ -149,8 +145,7 @@ jobs:
           files: "Flow.Launcher.Plugin.PluginsManager.zip"
           tag_name: "v${{steps.updated-version-pluginsmanager.outputs.prop}}"
           body: Visit Flow's [release notes](https://github.com/Flow-Launcher/Flow.Launcher/releases) for changes.
-        env:
-          GITHUB_TOKEN: ${{ secrets.PUBLISH_PLUGINS }}
+          token: ${{ secrets.PUBLISH_PLUGINS }}
 
 
       - name: Get ProcessKiller Version
@@ -173,8 +168,7 @@ jobs:
           files: "Flow.Launcher.Plugin.ProcessKiller.zip"
           tag_name: "v${{steps.updated-version-processkiller.outputs.prop}}"
           body: Visit Flow's [release notes](https://github.com/Flow-Launcher/Flow.Launcher/releases) for changes.
-        env:
-          GITHUB_TOKEN: ${{ secrets.PUBLISH_PLUGINS }}
+          token: ${{ secrets.PUBLISH_PLUGINS }}
 
 
       - name: Get Program Version
@@ -197,8 +191,7 @@ jobs:
           files: "Flow.Launcher.Plugin.Program.zip"
           tag_name: "v${{steps.updated-version-program.outputs.prop}}"
           body: Visit Flow's [release notes](https://github.com/Flow-Launcher/Flow.Launcher/releases) for changes.
-        env:
-          GITHUB_TOKEN: ${{ secrets.PUBLISH_PLUGINS }}
+          token: ${{ secrets.PUBLISH_PLUGINS }}
 
 
       - name: Get Shell Version
@@ -221,8 +214,7 @@ jobs:
           files: "Flow.Launcher.Plugin.Shell.zip"
           tag_name: "v${{steps.updated-version-shell.outputs.prop}}"
           body: Visit Flow's [release notes](https://github.com/Flow-Launcher/Flow.Launcher/releases) for changes.
-        env:
-          GITHUB_TOKEN: ${{ secrets.PUBLISH_PLUGINS }}
+          token: ${{ secrets.PUBLISH_PLUGINS }}
 
 
       - name: Get Sys Version
@@ -245,8 +237,7 @@ jobs:
           files: "Flow.Launcher.Plugin.Sys.zip"
           tag_name: "v${{steps.updated-version-sys.outputs.prop}}"
           body: Visit Flow's [release notes](https://github.com/Flow-Launcher/Flow.Launcher/releases) for changes.
-        env:
-          GITHUB_TOKEN: ${{ secrets.PUBLISH_PLUGINS }}
+          token: ${{ secrets.PUBLISH_PLUGINS }}
 
 
       - name: Get Url Version
@@ -269,8 +260,7 @@ jobs:
           files: "Flow.Launcher.Plugin.Url.zip"
           tag_name: "v${{steps.updated-version-url.outputs.prop}}"
           body: Visit Flow's [release notes](https://github.com/Flow-Launcher/Flow.Launcher/releases) for changes.
-        env:
-          GITHUB_TOKEN: ${{ secrets.PUBLISH_PLUGINS }}
+          token: ${{ secrets.PUBLISH_PLUGINS }}
 
 
       - name: Get WebSearch Version
@@ -293,8 +283,7 @@ jobs:
           files: "Flow.Launcher.Plugin.WebSearch.zip"
           tag_name: "v${{steps.updated-version-websearch.outputs.prop}}"
           body: Visit Flow's [release notes](https://github.com/Flow-Launcher/Flow.Launcher/releases) for changes.
-        env:
-          GITHUB_TOKEN: ${{ secrets.PUBLISH_PLUGINS }}
+          token: ${{ secrets.PUBLISH_PLUGINS }}
 
 
       - name: Get WindowsSettings Version
@@ -317,5 +306,4 @@ jobs:
           files: "Flow.Launcher.Plugin.WindowsSettings.zip"
           tag_name: "v${{steps.updated-version-windowssettings.outputs.prop}}"
           body: Visit Flow's [release notes](https://github.com/Flow-Launcher/Flow.Launcher/releases) for changes.
-        env:
-          GITHUB_TOKEN: ${{ secrets.PUBLISH_PLUGINS }}
+          token: ${{ secrets.PUBLISH_PLUGINS }}
