@@ -407,6 +407,12 @@ namespace Flow.Launcher.Plugin
             public string FilePath { get; set; } = null;
 
             /// <summary>
+            /// Determines how <see cref="Description"/> should be rendered in Flow Launcher's preview panel.
+            /// </summary>
+            [JsonConverter(typeof(JsonStringEnumConverter<PreviewContentType>))]
+            public PreviewContentType ContentType { get; set; } = PreviewContentType.Text;
+
+            /// <summary>
             /// Default instance of <see cref="PreviewInfo"/>
             /// </summary>
             public static PreviewInfo Default { get; } = new()
@@ -416,7 +422,32 @@ namespace Flow.Launcher.Plugin
                 IsMedia = false,
                 PreviewDelegate = null,
                 FilePath = null,
+                ContentType = PreviewContentType.Text,
             };
         }
+    }
+
+    /// <summary>
+    /// Supported preview description rendering modes.
+    /// </summary>
+    public enum PreviewContentType
+    {
+        /// <summary>
+        /// Render preview descriptions as plain text.
+        /// </summary>
+        [JsonStringEnumMemberName("text")]
+        Text,
+
+        /// <summary>
+        /// Render preview descriptions as markdown.
+        /// </summary>
+        [JsonStringEnumMemberName("markdown")]
+        Markdown,
+
+        /// <summary>
+        /// Suppress the preview pane for this result, even when the global "Always Preview" setting is on.
+        /// </summary>
+        [JsonStringEnumMemberName("hidden")]
+        Hidden,
     }
 }

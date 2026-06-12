@@ -7,6 +7,7 @@ using System.IO;
 using System.Threading;
 using System.Text;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Flow.Launcher.Test.Plugins
 {
@@ -61,5 +62,36 @@ namespace Flow.Launcher.Test.Plugins
                 }
             })
         };
+
+        [Test]
+        public async Task GivenMarkdownPreviewContentType_WhenDeserializeJsonRpcResult_ThenPreviewContentTypeIsMarkdown()
+        {
+            const string resultText =
+                """
+                {
+                  "result": [
+                    {
+                      "title": "Answer",
+                      "subTitle": "*args in Python",
+                      "preview": {
+                        "description": "**`*args`** collects extra positional arguments.",
+                        "contentType": "markdown"
+                      }
+                    }
+                  ],
+                  "debugMessage": null
+                }
+                """;
+
+            var results = await QueryAsync(new Query
+            {
+                Search = resultText
+            }, default);
+
+            var result = results.Single();
+
+            ClassicAssert.AreEqual(PreviewContentType.Markdown, result.Preview.ContentType);
+            ClassicAssert.AreEqual("**`*args`** collects extra positional arguments.", result.Preview.Description);
+        }
     }
 }

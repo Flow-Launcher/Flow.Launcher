@@ -290,6 +290,10 @@ namespace Flow.Launcher.ViewModel
 
         public string PreviewDescription => Result.Preview?.Description ?? Result.SubTitle;
 
+        public bool IsMarkdownPreview => Result.Preview?.ContentType == PreviewContentType.Markdown;
+
+        public bool HidePreviewPane => Result.Preview?.ContentType == PreviewContentType.Hidden;
+
         public Result Result { get; }
         public int ResultProgress
         {
