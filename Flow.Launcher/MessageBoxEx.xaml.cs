@@ -191,13 +191,26 @@ namespace Flow.Launcher
         {
             e.Handled = true;
 
-            if (_button == MessageBoxButton.YesNo)
-                // Follow System.Windows.MessageBox behavior
-                return;
-            else if (_button == MessageBoxButton.OK)
-                _result = MessageBoxResult.OK;
-            else
-                _result = MessageBoxResult.Cancel;
+            // Replicates System.Windows.MessageBox behavior
+            // https://learn.microsoft.com/en-us/dotnet/api/system.windows.messageboxresult#remarks
+            
+            switch (_button)
+            {
+                // For YesNo, the windows MessageBox disables the close button entirely.
+                // Since we don't have that we fall back to returning No.
+                case MessageBoxButton.YesNo:
+                    _result = MessageBoxResult.No;
+                    break;
+                case MessageBoxButton.OK:
+                    _result = MessageBoxResult.OK;
+                    break;
+                case MessageBoxButton.OKCancel:
+                case MessageBoxButton.YesNoCancel:
+                default:
+                    _result = MessageBoxResult.Cancel;
+                    break;
+            }
+
             msgBox.Close();
             msgBox = null;
         }
