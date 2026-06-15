@@ -20,6 +20,11 @@ namespace Flow.Launcher
         {
             _button = button;
             InitializeComponent();
+
+            // For YesNo dialogs, hide the close button to match native windows message box behavior
+            // https://learn.microsoft.com/en-us/dotnet/api/system.windows.messageboxbutton?view=windowsdesktop-10.0#remarks
+            if (_button == MessageBoxButton.YesNo)
+                TitleBar.ShowCloseButton = false;
         }
 
         public static MessageBoxResult Show(
@@ -196,11 +201,10 @@ namespace Flow.Launcher
             
             switch (_button)
             {
-                // For YesNo, the windows MessageBox disables the close button entirely.
-                // Since we don't have that we fall back to returning No.
+                // For YesNo, the close button should be hidden and inaccessible.
                 case MessageBoxButton.YesNo:
-                    _result = MessageBoxResult.No;
-                    break;
+                    App.API.LogWarn(ClassName, "Close button was invoked despite being hidden for YesNo dialog");
+                    return;
                 case MessageBoxButton.OK:
                     _result = MessageBoxResult.OK;
                     break;
