@@ -12,7 +12,7 @@ namespace Flow.Launcher.Plugin.Url
         internal static PluginInitContext Context { get; private set; }
         internal static Settings Settings { get; private set; }
 
-        private static readonly string[] UrlSchemes = ["http", "https", "ftp"];
+        private static readonly string[] UrlSchemes = ["http", "https"];
 
         public List<Result> Query(Query query)
         {
