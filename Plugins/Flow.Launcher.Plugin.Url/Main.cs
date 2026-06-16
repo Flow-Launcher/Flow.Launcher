@@ -15,10 +15,18 @@ namespace Flow.Launcher.Plugin.Url
         // Schemes requiring full host validation: domain with TLD, IP address, or localhost
         private static readonly string[] HostValidatedSchemes = ["http", "https"];
 
-        // Schemes validated by scheme recognition alone — any valid URI structure is accepted
-        private static readonly string[] SchemeOnlySchemes = ["file", "brave", "opera", "vivaldi", "edge", "chrome", "chrome-extension", "moz-extension"];
+        // Chromium browser schemes accepting both :// and : forms (e.g. chrome://settings, chrome:settings)
+        private static readonly string[] ChromiumSchemes = ["chrome-extension", "chrome", "brave", "edge", "opera", "vivaldi"];
 
-        private static readonly string[] UrlSchemes = [.. HostValidatedSchemes, .. SchemeOnlySchemes];
+        // Schemes using :// that are validated by scheme recognition alone — any valid URI structure is accepted
+        private static readonly string[] NonHostValidatedDoubleSlashSchemes = [.. ChromiumSchemes, "file", "moz-extension"];
+
+        // Schemes using colon-only syntax (e.g. about:blank, chrome:settings)
+        // Chromium schemes also accept the colon form
+        private static readonly string[] ColonOnlySchemes = [.. ChromiumSchemes, "about", "data"];
+
+        // All :// schemes
+        private static readonly string[] AllDoubleSlashSchemes = [.. HostValidatedSchemes, .. NonHostValidatedDoubleSlashSchemes];
 
         public List<Result> Query(Query query)
         {
@@ -50,7 +58,12 @@ namespace Flow.Launcher.Plugin.Url
                             // if url was accepted without having any of the recognized scheme, 
                             // then that means no scheme was specified (e.g. www.google.com)
                             // so we add the preferred http/https scheme
-                            if (!UrlSchemes.Any(scheme => raw.StartsWith(scheme + "://", StringComparison.OrdinalIgnoreCase)))
+                            var hasScheme = (
+                                AllDoubleSlashSchemes.Any(scheme => raw.StartsWith(scheme + "://", StringComparison.OrdinalIgnoreCase))
+                                ||
+                                ColonOnlySchemes.Any(scheme => raw.StartsWith(scheme + ":", StringComparison.OrdinalIgnoreCase))
+                            );
+                            if (!hasScheme)
                             {
                                 raw = GetHttpPreference() + "://" + raw;
                             }
@@ -122,8 +135,30 @@ namespace Flow.Launcher.Plugin.Url
                 return true;
             }
 
+            // Check colon-only schemes (e.g. about:blank, chrome:settings)
+            // by extracting the scheme as everything before the first colon
+            var colonIndex = input.IndexOf(':');
+            if (colonIndex > 0)
+            {
+                var scheme = input[..colonIndex];
+                if (ColonOnlySchemes.Any(s => scheme.Equals(s, StringComparison.OrdinalIgnoreCase)))
+                {
+                    var content = input[(colonIndex + 1)..];
+
+                    // Some schemes accept both : and :// syntax, so :// forms
+                    // are handled by the Uri validation below instead
+                    if (!content.StartsWith("//"))
+                    {
+                        var hasContent = content.Length > 0;
+                        var hasNoWhitespace = !content.Any(char.IsWhiteSpace);
+
+                        return hasContent && hasNoWhitespace;
+                    }
+                }
+            }
+
             // Add protocol if missing for Uri validation
-            var urlToValidate = UrlSchemes.Any(s => input.StartsWith(s + "://", StringComparison.OrdinalIgnoreCase))
+            var urlToValidate = AllDoubleSlashSchemes.Any(s => input.StartsWith(s + "://", StringComparison.OrdinalIgnoreCase))
                 ? input
                 : GetHttpPreference() + "://" + input;
 
@@ -131,15 +166,15 @@ namespace Flow.Launcher.Plugin.Url
                 return false;
             
 
-            // Validate protocol against known schemes
-            if (!UrlSchemes.Any(scheme => uri.Scheme == scheme))
+            // Validate protocol against known :// schemes
+            if (!AllDoubleSlashSchemes.Any(scheme => uri.Scheme == scheme))
                 return false;
 
             var host = uri.Host;
 
             // Scheme-only validation: any valid URI structure is accepted, no host checks
             // Reject bare scheme:// with no actual content (e.g. chrome://)
-            if (SchemeOnlySchemes.Any(scheme => uri.Scheme == scheme))
+            if (NonHostValidatedDoubleSlashSchemes.Any(scheme => uri.Scheme == scheme))
             {
                 var schemePrefix = uri.Scheme + "://";
                 var hasContent = input.Length > schemePrefix.Length;
