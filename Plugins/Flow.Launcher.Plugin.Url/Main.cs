@@ -12,7 +12,13 @@ namespace Flow.Launcher.Plugin.Url
         internal static PluginInitContext Context { get; private set; }
         internal static Settings Settings { get; private set; }
 
-        private static readonly string[] UrlSchemes = ["http", "https"];
+        // Schemes requiring full host validation: domain with TLD, IP address, or localhost
+        private static readonly string[] HostValidatedSchemes = ["http", "https"];
+
+        // Schemes validated by scheme recognition alone — any valid URI structure is accepted
+        private static readonly string[] SchemeOnlySchemes = ["file", "brave", "opera", "vivaldi", "edge", "chrome", "chrome-extension", "moz-extension"];
+
+        private static readonly string[] UrlSchemes = [.. HostValidatedSchemes, .. SchemeOnlySchemes];
 
         public List<Result> Query(Query query)
         {
@@ -130,6 +136,16 @@ namespace Flow.Launcher.Plugin.Url
                 return false;
 
             var host = uri.Host;
+
+            // Scheme-only validation: any valid URI structure is accepted, no host checks
+            // Reject bare scheme:// with no actual content (e.g. chrome://)
+            if (SchemeOnlySchemes.Any(scheme => uri.Scheme == scheme))
+            {
+                var schemePrefix = uri.Scheme + "://";
+                var hasContent = input.Length > schemePrefix.Length;
+
+                return hasContent;
+            }
 
             // localhost is valid
             if (host.Equals("localhost", StringComparison.OrdinalIgnoreCase))
