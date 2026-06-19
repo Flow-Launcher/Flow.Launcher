@@ -14,6 +14,7 @@ Vim Mode transforms the Flow Launcher search bar into a modal editor, offering *
 You can instantly toggle this feature on or off via the `General` tab in the Flow Launcher Settings.
 
 ### Modes & Intercepts
+- **Mode Indicator**: A subtle, low-opacity indicator sits at the bottom-left of the search bar to clearly show your current mode (`-- NORMAL --`, `-- VISUAL --`, etc.) without interfering with plugins.
 - **Insert Mode**: The default state. Works exactly like standard Flow Launcher (blinking text caret).
 - **Normal Mode**: Replaces the blinking caret with a solid block caret, and intercepts alphanumeric keystrokes to execute text manipulation commands.
 - **Visual Mode**: Char-wise selection. Movements extend the selection from a fixed anchor point; operators apply to the selected region.
@@ -31,9 +32,9 @@ You can instantly toggle this feature on or off via the `General` tab in the Flo
 - `$` : Snap to the end of the query
 
 #### Word Boundaries
-- `w` : Jump to the start of the next word boundary
-- `e` : Jump to the end of the current word boundary
-- `b` : Jump back to the start of the previous word boundary
+- `w` / `W` (Shift) : Jump to the start of the next word / BIG word boundary
+- `e` / `E` (Shift) : Jump to the end of the current word / BIG word boundary
+- `b` / `B` (Shift) : Jump back to the start of the previous word / BIG word boundary
 
 #### Character Lookup
 - `f{char}` : Find the next occurrence of `{char}` forward
@@ -50,11 +51,18 @@ You can instantly toggle this feature on or off via the `General` tab in the Flo
 - `S` (Shift+S) : Substitute line (Clears query and enters Insert mode)
 - `r{char}` : Replace the character under the cursor with `{char}`
 - `~` : Toggle the casing of the character under the cursor
+- `gu` / `gU` : Make lowercase / uppercase (operator pending, e.g., `guw` to lower a word)
 - `dd` / `cc` : Delete or Change the entire query
 - `D` / `C` : Delete or Change from the cursor to the end of the line
 - `Y` (Shift+Y) : Yank (Copy) the entire query
 - `p` : Paste from system clipboard
 - `u` : Undo the last edit (hooks into WPF native undo stack)
+
+#### Text Objects (For Operators & Visual Mode)
+Use these immediately after an operator (like `d`, `c`, `y`, `gu`) to target specific text structures.
+- **Modifiers**: `i` (inner), `a` (around)
+- **Targets**: `w` (word), `"` (double quotes), `'` (single quotes), `(` (parentheses), `[` (brackets), `{` (braces)
+- *Example*: `diw` (delete inner word), `ci"` (change inside quotes), `ya(` (yank around parentheses)
 
 #### Mode Switching
 - `i` : Enter Insert mode at the cursor
@@ -72,7 +80,7 @@ You can instantly toggle this feature on or off via the `General` tab in the Flo
 
 #### Extending the Selection (Visual mode only)
 - `h` / `l` : Extend selection left / right
-- `w` / `b` / `e` : Extend by word boundary
+- `w` / `b` / `e` (and `W`/`B`/`E`) : Extend by word boundary
 - `0` / `^` / `$` : Extend to beginning / first non-blank / end of query
 - `f{char}` / `F{char}` / `t{char}` / `T{char}` : Extend to character lookup
 - `;` / `,` : Repeat last character lookup
@@ -83,6 +91,7 @@ You can instantly toggle this feature on or off via the `General` tab in the Flo
 - `c` / `s` : Change the selection (delete and enter Insert mode)
 - `r{char}` : Replace every character in the selection with `{char}`
 - `~` : Toggle casing of every character in the selection
+- `gu` / `gU` : Make every character in the selection lowercase / uppercase
 
 #### Mode Transitions
 - `Esc` : Return to Normal mode (clears selection)
