@@ -14,7 +14,7 @@ namespace Flow.Launcher.VimMode
         private readonly TextBox _queryTextBox;
         private readonly VimEngine _vimEngine;
         private readonly System.Windows.Shapes.Rectangle _vimBlockCaret;
-        private readonly TextBlock _vimModeText;
+        private readonly Border _vimModeIndicator;
         private string _pendingCommand = "";
         private string _awaitingCharCommand = "";
         private string _lastFindCmd = "";
@@ -29,13 +29,13 @@ namespace Flow.Launcher.VimMode
         private string _lastChange = "";
         private readonly Flow.Launcher.Infrastructure.UserSettings.Settings _settings;
 
-        public VimManager(MainWindow mainWindow, MainViewModel viewModel, TextBox queryTextBox, System.Windows.Shapes.Rectangle vimBlockCaret, TextBlock vimModeText, Flow.Launcher.Infrastructure.UserSettings.Settings settings)
+        public VimManager(MainWindow mainWindow, MainViewModel viewModel, TextBox queryTextBox, System.Windows.Shapes.Rectangle vimBlockCaret, Border vimModeIndicator, Flow.Launcher.Infrastructure.UserSettings.Settings settings)
         {
             _mainWindow = mainWindow;
             _viewModel = viewModel;
             _queryTextBox = queryTextBox;
             _vimBlockCaret = vimBlockCaret;
-            _vimModeText = vimModeText;
+            _vimModeIndicator = vimModeIndicator;
             _settings = settings;
 
             _vimEngine = new VimEngine();
@@ -132,21 +132,17 @@ namespace Flow.Launcher.VimMode
                 _ => null
             };
 
-            if (_vimModeText != null)
+            if (_vimModeIndicator != null)
             {
-                _vimModeText.Visibility = _settings.EnableVimMode && mode != VimModes.Insert ? Visibility.Visible : Visibility.Collapsed;
-                _vimModeText.Text = label ?? "";
+                _vimModeIndicator.Visibility = _settings.EnableVimMode && mode != VimModes.Insert ? Visibility.Visible : Visibility.Collapsed;
                 
-                if (_vimModeText.Parent is Border border)
+                _vimModeIndicator.Background = mode switch
                 {
-                    border.Background = mode switch
-                    {
-                        VimModes.Normal => (System.Windows.Media.Brush)Application.Current.FindResource("BasicSystemAccentColor") ?? new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(0, 120, 215)),
-                        VimModes.Visual => new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(153, 50, 204)),
-                        VimModes.VisualLine => new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 140, 0)),
-                        _ => System.Windows.Media.Brushes.Transparent
-                    };
-                }
+                    VimModes.Normal => (System.Windows.Media.Brush)Application.Current.FindResource("BasicSystemAccentColor") ?? new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(0, 120, 215)),
+                    VimModes.Visual => new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(153, 50, 204)),
+                    VimModes.VisualLine => new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 140, 0)),
+                    _ => new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Transparent)
+                };
             }
 
             if (_vimBlockCaret == null) return;
@@ -172,9 +168,9 @@ namespace Flow.Launcher.VimMode
                 {
                     _vimBlockCaret.Visibility = Visibility.Collapsed;
                 }
-                if (_vimModeText != null && _vimModeText.Visibility == Visibility.Visible)
+                if (_vimModeIndicator != null && _vimModeIndicator.Visibility == Visibility.Visible)
                 {
-                    _vimModeText.Visibility = Visibility.Collapsed;
+                    _vimModeIndicator.Visibility = Visibility.Collapsed;
                 }
                 return false;
             }

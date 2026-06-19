@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Media;
@@ -97,7 +97,7 @@ namespace Flow.Launcher
             InitializeComponent();
             UpdatePosition();
 
-            _vimManager = new Flow.Launcher.VimMode.VimManager(this, _viewModel, QueryTextBox, VimBlockCaret, VimModeText, _settings);
+            _vimManager = new Flow.Launcher.VimMode.VimManager(this, _viewModel, QueryTextBox, VimBlockCaret, VimModeIndicator, _settings);
 
             SyncSoundEffectsState();
             RegisterSoundEffectsEvent();
