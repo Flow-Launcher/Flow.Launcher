@@ -59,6 +59,7 @@ namespace Flow.Launcher.Core.Resource
                     string.Equals(languageCode, fullName, StringComparison.OrdinalIgnoreCase))
                 {
                     SystemLanguageCode = languageCode;
+                    return;
                 }
             }
 
