@@ -22,6 +22,11 @@ namespace Flow.Launcher.VimMode
         private DateTime _lastEscapeTime = DateTime.MinValue;
         private int _visualAnchor;
         private int _visualCaret;
+        private int _count;
+        private bool _gPending;
+        private string _awaitingTextObject = "";
+        private (int anchor, int caret)? _lastVisualRange;
+        private string _lastChange = "";
         private readonly Flow.Launcher.Infrastructure.UserSettings.Settings _settings;
 
         public VimManager(MainWindow mainWindow, MainViewModel viewModel, TextBox queryTextBox, System.Windows.Shapes.Rectangle vimBlockCaret, TextBlock vimModeText, Flow.Launcher.Infrastructure.UserSettings.Settings settings)
@@ -181,6 +186,13 @@ namespace Flow.Launcher.VimMode
 
             var modifiers = e.KeyboardDevice.Modifiers;
 
+            if (modifiers.HasFlag(ModifierKeys.Control) && e.Key == Key.R && _vimEngine.CurrentMode == VimModes.Normal)
+            {
+                try { _queryTextBox.Redo(); } catch { }
+                e.Handled = true;
+                return true;
+            }
+
             if (modifiers.HasFlag(ModifierKeys.Control) || modifiers.HasFlag(ModifierKeys.Alt))
             {
                 return false;
@@ -209,6 +221,7 @@ namespace Flow.Launcher.VimMode
                 {
                     if (e.Key == Key.Escape)
                     {
+                        SaveVisualRange();
                         _queryTextBox.SelectionLength = 0;
                         _vimEngine.SwitchToNormal();
                         e.Handled = true;
@@ -246,6 +259,34 @@ namespace Flow.Launcher.VimMode
         {
             var modifiers = e.KeyboardDevice.Modifiers;
 
+            if (_vimEngine.CurrentMode == VimModes.Normal || _vimEngine.CurrentMode == VimModes.Visual)
+            {
+                if (_gPending)
+                {
+                    _gPending = false;
+                    return HandleGKey(e, modifiers);
+                }
+
+                if (string.IsNullOrEmpty(_awaitingCharCommand) && string.IsNullOrEmpty(_awaitingTextObject) && _pendingCommand == "")
+                {
+                    if (e.Key >= Key.D1 && e.Key <= Key.D9 && !modifiers.HasFlag(ModifierKeys.Shift))
+                    {
+                        _count = _count * 10 + (e.Key - Key.D0);
+                        return true;
+                    }
+                    if (e.Key == Key.D0 && !modifiers.HasFlag(ModifierKeys.Shift) && _count > 0)
+                    {
+                        _count = _count * 10;
+                        return true;
+                    }
+                }
+
+                if (string.IsNullOrEmpty(_awaitingCharCommand) && _awaitingTextObject.Length > 0)
+                {
+                    return HandleTextObjectKey(e, modifiers);
+                }
+            }
+
             if (_vimEngine.CurrentMode == VimModes.Normal || _vimEngine.CurrentMode == VimModes.Visual || _vimEngine.CurrentMode == VimModes.VisualLine)
             {
                 if (!string.IsNullOrEmpty(_awaitingCharCommand))
@@ -276,19 +317,38 @@ namespace Flow.Launcher.VimMode
                             _viewModel.SelectPrevItemCommand.Execute(null);
                             return true;
                         case Key.H:
-                            ExecuteMotion(VimMotionEngine.MoveLeft(_queryTextBox.CaretIndex, _queryTextBox.Text.Length));
+                            ExecuteMotion(ApplyCountMove(i => VimMotionEngine.MoveLeft(i, _queryTextBox.Text.Length)));
                             return true;
                         case Key.L:
-                            ExecuteMotion(VimMotionEngine.MoveRight(_queryTextBox.CaretIndex, _queryTextBox.Text.Length));
+                            ExecuteMotion(ApplyCountMove(i => VimMotionEngine.MoveRight(i, _queryTextBox.Text.Length)));
                             return true;
-                        case Key.W:
-                            ExecuteMotion(VimMotionEngine.MoveNextWord(_queryTextBox.Text, _queryTextBox.CaretIndex));
+                        case Key.W when modifiers == ModifierKeys.None:
+                            ExecuteMotion(ApplyCountMove(i => VimMotionEngine.MoveNextWord(_queryTextBox.Text, i)));
                             return true;
-                        case Key.B:
-                            ExecuteMotion(VimMotionEngine.MovePrevWord(_queryTextBox.Text, _queryTextBox.CaretIndex));
+                        case Key.B when modifiers == ModifierKeys.None:
+                            ExecuteMotion(ApplyCountMove(i => VimMotionEngine.MovePrevWord(_queryTextBox.Text, i)));
                             return true;
-                        case Key.E:
-                            ExecuteMotion(VimMotionEngine.MoveEndWord(_queryTextBox.Text, _queryTextBox.CaretIndex));
+                        case Key.E when modifiers == ModifierKeys.None:
+                            ExecuteMotion(ApplyCountMove(i => VimMotionEngine.MoveEndWord(_queryTextBox.Text, i)));
+                            return true;
+                        case Key.W when modifiers.HasFlag(ModifierKeys.Shift):
+                            ExecuteMotion(ApplyCountMove(i => VimMotionEngine.MoveNextWordBig(_queryTextBox.Text, i)));
+                            return true;
+                        case Key.B when modifiers.HasFlag(ModifierKeys.Shift):
+                            ExecuteMotion(ApplyCountMove(i => VimMotionEngine.MovePrevWordBig(_queryTextBox.Text, i)));
+                            return true;
+                        case Key.E when modifiers.HasFlag(ModifierKeys.Shift):
+                            ExecuteMotion(ApplyCountMove(i => VimMotionEngine.MoveEndWordBig(_queryTextBox.Text, i)));
+                            return true;
+                        case Key.D5 when modifiers.HasFlag(ModifierKeys.Shift):
+                            ExecuteMotion(VimMotionEngine.FindMatchingBracket(_queryTextBox.Text, _queryTextBox.CaretIndex));
+                            return true;
+                        case Key.G:
+                            if (modifiers.HasFlag(ModifierKeys.Shift))
+                            {
+                                _gPending = true;
+                                return true;
+                            }
                             return true;
                         case Key.D0:
                             if (modifiers.HasFlag(ModifierKeys.Shift)) return false; // Handle ')' normally or ignore
@@ -341,13 +401,16 @@ namespace Flow.Launcher.VimMode
                             }
                             else // x
                             {
+                                int n = GetCount();
                                 if (_queryTextBox.CaretIndex < _queryTextBox.Text.Length)
                                 {
                                     int c = _queryTextBox.CaretIndex;
-                                    try { Clipboard.SetText(_queryTextBox.Text.Substring(c, 1)); } catch { }
-                                    _queryTextBox.Text = _queryTextBox.Text.Remove(c, 1);
+                                    int len = Math.Min(n, _queryTextBox.Text.Length - c);
+                                    try { Clipboard.SetText(_queryTextBox.Text.Substring(c, len)); } catch { }
+                                    _queryTextBox.Text = _queryTextBox.Text.Remove(c, len);
                                     _queryTextBox.CaretIndex = c;
                                 }
+                                _lastChange = "x";
                             }
                             return true;
                         case Key.S:
@@ -380,6 +443,7 @@ namespace Flow.Launcher.VimMode
                                     _queryTextBox.Text = _queryTextBox.Text.Remove(c, 1).Insert(c, ch.ToString());
                                     _queryTextBox.CaretIndex = Math.Min(_queryTextBox.Text.Length, c + 1);
                                 }
+                                _lastChange = "~";
                                 return true;
                             }
                             return false;
@@ -409,6 +473,7 @@ namespace Flow.Launcher.VimMode
                             {
                                 _pendingCommand = cmd;
                                 ExecuteMotion(VimMotionEngine.MoveEndOfLine(_queryTextBox.Text.Length));
+                                _lastChange = cmd.ToUpper() + "_eol";
                                 return true;
                             }
 
@@ -424,24 +489,34 @@ namespace Flow.Launcher.VimMode
                                     _queryTextBox.CaretIndex = 0;
                                 }
                                 if (cmd == "c")
-                                {
                                     _vimEngine.SwitchToInsert();
-                                }
+                                _lastChange = cmd + cmd;
                                 _pendingCommand = "";
+                            }
+                            else if (_pendingCommand != "" && _pendingCommand != cmd)
+                            {
+                                _pendingCommand = "";
+                                return true;
                             }
                             else
                             {
                                 _pendingCommand = cmd;
                             }
                             return true;
-                        case Key.I when modifiers == ModifierKeys.None:
+                        case Key.A when _pendingCommand == "d" || _pendingCommand == "c" || _pendingCommand == "y":
+                            _awaitingTextObject = "a";
+                            return true;
+                        case Key.I when _pendingCommand == "d" || _pendingCommand == "c" || _pendingCommand == "y":
+                            _awaitingTextObject = "i";
+                            return true;
+                        case Key.I when modifiers == ModifierKeys.None && _pendingCommand == "":
                             _vimEngine.SwitchToInsert();
                             return true;
                         case Key.I when modifiers.HasFlag(ModifierKeys.Shift):
                             _vimEngine.SwitchToInsert();
                             _queryTextBox.CaretIndex = 0;
                             return true;
-                        case Key.A when modifiers == ModifierKeys.None:
+                        case Key.A when modifiers == ModifierKeys.None && _pendingCommand == "":
                             _vimEngine.SwitchToInsert();
                             if (_queryTextBox.CaretIndex < _queryTextBox.Text.Length)
                             {
@@ -458,6 +533,10 @@ namespace Flow.Launcher.VimMode
                         case Key.V when modifiers.HasFlag(ModifierKeys.Shift):
                             EnterVisualLineMode();
                             return true;
+                        case Key.OemPeriod:
+                            if (!string.IsNullOrEmpty(_lastChange))
+                                RepeatLastChange();
+                            return true;
                         case Key.Escape:
                             return true; 
                         default:
@@ -472,24 +551,55 @@ namespace Flow.Launcher.VimMode
                         case Key.V when modifiers.HasFlag(ModifierKeys.Shift):
                             EnterVisualLineMode();
                             return true;
+                        case Key.O when modifiers == ModifierKeys.None:
+                            SwapVisualEnds();
+                            return true;
+                        case Key.I when modifiers == ModifierKeys.None:
+                            {
+                                int pos = Math.Min(_visualAnchor, _visualCaret);
+                                _queryTextBox.SelectionLength = 0;
+                                _queryTextBox.CaretIndex = pos;
+                                _vimEngine.SwitchToInsert();
+                            }
+                            return true;
+                        case Key.A when modifiers == ModifierKeys.None:
+                            {
+                                int pos = Math.Max(_visualAnchor, _visualCaret) + 1;
+                                _queryTextBox.SelectionLength = 0;
+                                _queryTextBox.CaretIndex = Math.Min(pos, _queryTextBox.Text.Length);
+                                _vimEngine.SwitchToInsert();
+                            }
+                            return true;
                         case Key.H:
-                            ExecuteVisualMotion(VimMotionEngine.MoveLeft(_visualCaret, _queryTextBox.Text.Length));
+                            ExecuteVisualMotion(ApplyCountMove(i => VimMotionEngine.MoveLeft(i, _queryTextBox.Text.Length)));
                             return true;
                         case Key.L:
-                            ExecuteVisualMotion(VimMotionEngine.MoveRight(_visualCaret, _queryTextBox.Text.Length));
+                            ExecuteVisualMotion(ApplyCountMove(i => VimMotionEngine.MoveRight(i, _queryTextBox.Text.Length)));
                             return true;
-                        case Key.W:
-                            ExecuteVisualMotion(VimMotionEngine.MoveNextWord(_queryTextBox.Text, _visualCaret));
+                        case Key.W when modifiers == ModifierKeys.None:
+                            ExecuteVisualMotion(ApplyCountMove(i => VimMotionEngine.MoveNextWord(_queryTextBox.Text, i)));
                             return true;
-                        case Key.B:
-                            ExecuteVisualMotion(VimMotionEngine.MovePrevWord(_queryTextBox.Text, _visualCaret));
+                        case Key.B when modifiers == ModifierKeys.None:
+                            ExecuteVisualMotion(ApplyCountMove(i => VimMotionEngine.MovePrevWord(_queryTextBox.Text, i)));
                             return true;
-                        case Key.E:
-                            ExecuteVisualMotion(VimMotionEngine.MoveEndWord(_queryTextBox.Text, _visualCaret));
+                        case Key.E when modifiers == ModifierKeys.None:
+                            ExecuteVisualMotion(ApplyCountMove(i => VimMotionEngine.MoveEndWord(_queryTextBox.Text, i)));
+                            return true;
+                        case Key.W when modifiers.HasFlag(ModifierKeys.Shift):
+                            ExecuteVisualMotion(ApplyCountMove(i => VimMotionEngine.MoveNextWordBig(_queryTextBox.Text, i)));
+                            return true;
+                        case Key.B when modifiers.HasFlag(ModifierKeys.Shift):
+                            ExecuteVisualMotion(ApplyCountMove(i => VimMotionEngine.MovePrevWordBig(_queryTextBox.Text, i)));
+                            return true;
+                        case Key.E when modifiers.HasFlag(ModifierKeys.Shift):
+                            ExecuteVisualMotion(ApplyCountMove(i => VimMotionEngine.MoveEndWordBig(_queryTextBox.Text, i)));
                             return true;
                         case Key.D0:
                             if (modifiers.HasFlag(ModifierKeys.Shift)) return true;
                             ExecuteVisualMotion(VimMotionEngine.MoveStartOfLine());
+                            return true;
+                        case Key.D5 when modifiers.HasFlag(ModifierKeys.Shift):
+                            ExecuteVisualMotion(VimMotionEngine.FindMatchingBracket(_queryTextBox.Text, _visualCaret));
                             return true;
                         case Key.D6:
                             if (modifiers.HasFlag(ModifierKeys.Shift))
@@ -524,6 +634,12 @@ namespace Flow.Launcher.VimMode
                                 ExecuteFindCommand(reverseCmd, _lastFindChar);
                                 return true;
                             }
+                            return true;
+                        case Key.A when modifiers == ModifierKeys.None:
+                            _awaitingTextObject = "a";
+                            return true;
+                        case Key.I when modifiers == ModifierKeys.None:
+                            _awaitingTextObject = "i";
                             return true;
                         case Key.X:
                         case Key.D:
@@ -652,6 +768,207 @@ namespace Flow.Launcher.VimMode
             }
         }
 
+        private bool HandleGKey(KeyEventArgs e, ModifierKeys modifiers)
+        {
+            switch (_vimEngine.CurrentMode)
+            {
+                case VimModes.Normal:
+                    switch (e.Key)
+                    {
+                        case Key.OemMinus when modifiers.HasFlag(ModifierKeys.Shift):
+                            ExecuteMotion(VimMotionEngine.MoveLastNonBlank(_queryTextBox.Text));
+                            return true;
+                        case Key.T when modifiers.HasFlag(ModifierKeys.Shift):
+                            _pendingCommand = "~";
+                            return true;
+                        case Key.U when modifiers == ModifierKeys.None:
+                            _pendingCommand = "gu";
+                            return true;
+                        case Key.U when modifiers.HasFlag(ModifierKeys.Shift):
+                            _pendingCommand = "gU";
+                            return true;
+                        case Key.V:
+                            if (_lastVisualRange != null)
+                            {
+                                _visualAnchor = _lastVisualRange.Value.anchor;
+                                _visualCaret = _lastVisualRange.Value.caret;
+                                _vimEngine.SwitchToVisual();
+                                UpdateVisualSelection();
+                            }
+                            return true;
+                        case Key.OemTilde:
+                            _pendingCommand = "~";
+                            return true;
+                        default:
+                            return true;
+                    }
+                case VimModes.Visual:
+                    switch (e.Key)
+                    {
+                        case Key.V:
+                            if (_lastVisualRange != null)
+                            {
+                                _visualAnchor = _lastVisualRange.Value.anchor;
+                                _visualCaret = _lastVisualRange.Value.caret;
+                                UpdateVisualSelection();
+                            }
+                            return true;
+                        default:
+                            return true;
+                    }
+                default:
+                    return true;
+            }
+        }
+
+        private bool HandleTextObjectKey(KeyEventArgs e, ModifierKeys modifiers)
+        {
+            string prefix = _awaitingTextObject;
+            _awaitingTextObject = "";
+
+            char delim = GetCharFromKey(e.Key, modifiers);
+            if (delim == '\0' && e.Key != Key.W) return true;
+            if (e.Key == Key.W) delim = 'w';
+
+            string text = _queryTextBox.Text;
+            int caret = (_vimEngine.CurrentMode == VimModes.Visual) ? _visualCaret : _queryTextBox.CaretIndex;
+            bool around = prefix == "a";
+            (int start, int end) range = (0, 0);
+
+            switch (delim)
+            {
+                case 'w':
+                    range = VimMotionEngine.TextObjectWord(text, caret, around);
+                    break;
+                case '"':
+                    range = VimMotionEngine.TextObjectQuote(text, caret, '"', around);
+                    break;
+                case '\'':
+                    range = VimMotionEngine.TextObjectQuote(text, caret, '\'', around);
+                    break;
+                case '(':
+                case ')':
+                    range = VimMotionEngine.TextObjectDelimited(text, caret, '(', ')', around);
+                    break;
+                case '[':
+                case ']':
+                    range = VimMotionEngine.TextObjectDelimited(text, caret, '[', ']', around);
+                    break;
+                case '{':
+                case '}':
+                    range = VimMotionEngine.TextObjectDelimited(text, caret, '{', '}', around);
+                    break;
+                default:
+                    return true;
+            }
+
+            if (range.start < 0) return true;
+
+            if (_vimEngine.CurrentMode == VimModes.Visual)
+            {
+                _visualAnchor = range.start;
+                _visualCaret = range.end;
+                UpdateVisualSelection();
+                return true;
+            }
+
+            if (_pendingCommand == "d" || _pendingCommand == "c" || _pendingCommand == "y")
+            {
+                int len = range.end - range.start + 1;
+                if (len > 0)
+                {
+                    try { Clipboard.SetText(text.Substring(range.start, len)); } catch { }
+                    if (_pendingCommand != "y")
+                    {
+                        _queryTextBox.Text = text.Remove(range.start, len);
+                        _queryTextBox.CaretIndex = range.start;
+                    }
+                    if (_pendingCommand == "c")
+                        _vimEngine.SwitchToInsert();
+                }
+                _pendingCommand = "";
+                return true;
+            }
+
+            return true;
+        }
+
+        private int ApplyCountMove(Func<int, int> move)
+        {
+            int target = (_vimEngine.CurrentMode == VimModes.Visual) ? _visualCaret : _queryTextBox.CaretIndex;
+            int n = _count > 0 ? _count : 1;
+            for (int i = 0; i < n; i++)
+                target = move(target);
+            _count = 0;
+            return target;
+        }
+
+        private int GetCount()
+        {
+            int c = _count > 0 ? _count : 1;
+            _count = 0;
+            return c;
+        }
+
+        private void RepeatLastChange()
+        {
+            switch (_lastChange)
+            {
+                case "dd":
+                    try { Clipboard.SetText(_queryTextBox.Text); } catch { }
+                    _queryTextBox.Text = "";
+                    _queryTextBox.CaretIndex = 0;
+                    break;
+                case "cc":
+                    try { Clipboard.SetText(_queryTextBox.Text); } catch { }
+                    _queryTextBox.Text = "";
+                    _queryTextBox.CaretIndex = 0;
+                    _vimEngine.SwitchToInsert();
+                    break;
+                case "D_eol":
+                case "C_eol":
+                    {
+                        int c = _queryTextBox.CaretIndex;
+                        if (c < _queryTextBox.Text.Length)
+                        {
+                            try { Clipboard.SetText(_queryTextBox.Text.Substring(c)); } catch { }
+                            _queryTextBox.Text = _queryTextBox.Text.Remove(c);
+                            _queryTextBox.CaretIndex = c;
+                        }
+                        if (_lastChange == "C_eol") _vimEngine.SwitchToInsert();
+                    }
+                    break;
+                case "Y_eol":
+                    try { Clipboard.SetText(_queryTextBox.Text); } catch { }
+                    break;
+                case "x":
+                    {
+                        int n = GetCount();
+                        int c = _queryTextBox.CaretIndex;
+                        int len = Math.Min(n, _queryTextBox.Text.Length - c);
+                        if (len > 0)
+                        {
+                            try { Clipboard.SetText(_queryTextBox.Text.Substring(c, len)); } catch { }
+                            _queryTextBox.Text = _queryTextBox.Text.Remove(c, len);
+                            _queryTextBox.CaretIndex = c;
+                        }
+                    }
+                    break;
+                case "~":
+                    {
+                        int c = _queryTextBox.CaretIndex;
+                        if (c < _queryTextBox.Text.Length)
+                        {
+                            char ch = _queryTextBox.Text[c];
+                            ch = char.IsUpper(ch) ? char.ToLower(ch) : char.ToUpper(ch);
+                            _queryTextBox.Text = _queryTextBox.Text.Remove(c, 1).Insert(c, ch.ToString());
+                            _queryTextBox.CaretIndex = Math.Min(_queryTextBox.Text.Length, c + 1);
+                        }
+                    }
+                    break;
+            }
+        }
+
         private void ExecuteCharCommand(string cmd, char c)
         {
             _awaitingCharCommand = "";
@@ -712,7 +1029,6 @@ namespace Flow.Launcher.VimMode
         {
             if (_pendingCommand == "d" || _pendingCommand == "c")
             {
-                // Deletion
                 int start = _queryTextBox.CaretIndex;
                 int end = targetCaret;
                 if (start > end) { var temp = start; start = end; end = temp; }
@@ -725,8 +1041,59 @@ namespace Flow.Launcher.VimMode
                 }
                 
                 if (_pendingCommand == "c")
-                {
                     _vimEngine.SwitchToInsert();
+                _lastChange = _pendingCommand + "_motion";
+                _pendingCommand = "";
+            }
+            else if (_pendingCommand == "~")
+            {
+                int start = _queryTextBox.CaretIndex;
+                int end = targetCaret;
+                if (start > end) { var temp = start; start = end; end = temp; }
+                if (end < _queryTextBox.Text.Length) end++;
+                
+                if (end > start)
+                {
+                    char[] chars = _queryTextBox.Text.ToCharArray();
+                    for (int i = start; i < end && i < chars.Length; i++)
+                        chars[i] = char.IsUpper(chars[i]) ? char.ToLower(chars[i]) : char.ToUpper(chars[i]);
+                    _queryTextBox.Text = new string(chars);
+                    _queryTextBox.CaretIndex = Math.Min(start, _queryTextBox.Text.Length);
+                }
+                _lastChange = "~";
+                _pendingCommand = "";
+            }
+            else if (_pendingCommand == "gu")
+            {
+                int start = _queryTextBox.CaretIndex;
+                int end = targetCaret;
+                if (start > end) { var temp = start; start = end; end = temp; }
+                if (end < _queryTextBox.Text.Length) end++;
+                
+                if (end > start)
+                {
+                    char[] chars = _queryTextBox.Text.ToCharArray();
+                    for (int i = start; i < end && i < chars.Length; i++)
+                        chars[i] = char.ToLower(chars[i]);
+                    _queryTextBox.Text = new string(chars);
+                    _queryTextBox.CaretIndex = start;
+                }
+                _pendingCommand = "";
+            }
+            else if (_pendingCommand == "gU")
+            {
+                int start = _queryTextBox.CaretIndex;
+                int end = targetCaret;
+                if (start > end) { var temp = start; start = end; end = temp; }
+                if (end < _queryTextBox.Text.Length) end++;
+                
+                if (end > start)
+                {
+                    char[] chars = _queryTextBox.Text.ToCharArray();
+                    for (int i = start; i < end && i < chars.Length; i++)
+                        chars[i] = char.ToUpper(chars[i]);
+                    _queryTextBox.Text = new string(chars);
+                    _queryTextBox.CaretIndex = start;
                 }
                 _pendingCommand = "";
             }
@@ -771,6 +1138,19 @@ namespace Flow.Launcher.VimMode
             _vimEngine.SwitchToVisualLine();
             _queryTextBox.Select(0, _queryTextBox.Text.Length);
             UpdateCaretPosition();
+        }
+
+        private void SwapVisualEnds()
+        {
+            int temp = _visualAnchor;
+            _visualAnchor = _visualCaret;
+            _visualCaret = temp;
+            UpdateVisualSelection();
+        }
+
+        private void SaveVisualRange()
+        {
+            _lastVisualRange = (_visualAnchor, _visualCaret);
         }
 
         private static bool IsVimBlockedKey(Key key)
