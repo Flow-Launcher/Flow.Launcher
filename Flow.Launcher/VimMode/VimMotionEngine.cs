@@ -4,7 +4,7 @@ namespace Flow.Launcher.VimMode
 {
     public class VimMotionEngine
     {
-        public static int MoveLeft(int caret, int length)
+        public static int MoveLeft(int caret)
         {
             return Math.Max(0, caret - 1);
         }

@@ -11,9 +11,9 @@ namespace Flow.Launcher.Test
         [Test]
         public void MoveLeftTest()
         {
-            Assert.That(VimMotionEngine.MoveLeft(5, Sample.Length), Is.EqualTo(4));
-            Assert.That(VimMotionEngine.MoveLeft(0, Sample.Length), Is.EqualTo(0));
-            Assert.That(VimMotionEngine.MoveLeft(2, Sample.Length), Is.EqualTo(1));
+            Assert.That(VimMotionEngine.MoveLeft(5), Is.EqualTo(4));
+            Assert.That(VimMotionEngine.MoveLeft(0), Is.EqualTo(0));
+            Assert.That(VimMotionEngine.MoveLeft(2), Is.EqualTo(1));
         }
 
         [Test]

@@ -361,19 +361,26 @@
                        Height="24"
                        IsHitTestVisible="False"
                        Panel.ZIndex="10" />
-            <TextBlock
-                x:Name="VimModeText"
-                Text="-- NORMAL --"
-                FontSize="9"
-                FontWeight="SemiBold"
-                Foreground="{DynamicResource ItemTitleNormalColor}"
-                Opacity="0.35"
+            <Border
                 HorizontalAlignment="Left"
-                VerticalAlignment="Bottom"
-                Margin="12,0,0,1"
-                IsHitTestVisible="False"
+                VerticalAlignment="Center"
+                Margin="12,0,0,0"
+                Padding="6,2"
+                CornerRadius="6"
+                Background="{DynamicResource BasicSystemAccentColor}"
                 Panel.ZIndex="10"
-                Visibility="Collapsed" />
+                IsHitTestVisible="False"
+                Visibility="{Binding Visibility, ElementName=VimModeText}">
+                <TextBlock
+                    x:Name="VimModeText"
+                    Text="NORMAL"
+                    FontSize="10"
+                    FontWeight="Bold"
+                    Foreground="White"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Visibility="Collapsed" />
+            </Border>
             </Grid>
 
             <Grid x:Name="MiddleSeparatorArea" ClipToBounds="True">
