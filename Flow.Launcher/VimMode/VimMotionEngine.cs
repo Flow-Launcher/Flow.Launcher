@@ -2,28 +2,56 @@ using System;
 
 namespace Flow.Launcher.VimMode
 {
+    /// <summary>
+    /// Provides pure static methods for calculating caret movements and text object selections.
+    /// </summary>
     public class VimMotionEngine
     {
+        /// <summary>
+        /// Calculates the new caret position after moving left one character.
+        /// </summary>
+        /// <param name="caret">The current caret index.</param>
+        /// <returns>The new caret index.</returns>
         public static int MoveLeft(int caret)
         {
             return Math.Max(0, caret - 1);
         }
 
+        /// <summary>
+        /// Calculates the new caret position after moving right one character.
+        /// </summary>
+        /// <param name="caret">The current caret index.</param>
+        /// <param name="length">The total length of the text.</param>
+        /// <returns>The new caret index.</returns>
         public static int MoveRight(int caret, int length)
         {
             return Math.Min(length, caret + 1);
         }
 
+        /// <summary>
+        /// Calculates the new caret position at the start of the line.
+        /// </summary>
+        /// <returns>The start index (always 0).</returns>
         public static int MoveStartOfLine()
         {
             return 0;
         }
 
+        /// <summary>
+        /// Calculates the new caret position at the end of the line.
+        /// </summary>
+        /// <param name="length">The total length of the text.</param>
+        /// <returns>The end index.</returns>
         public static int MoveEndOfLine(int length)
         {
             return length;
         }
 
+        /// <summary>
+        /// Calculates the index of the first non-blank character in the text.
+        /// </summary>
+        /// <param name="text">The text to search.</param>
+        /// <returns>The index of the first non-blank character, or 0 if none.</returns>
         public static int MoveFirstNonBlank(string text)
         {
             for (int i = 0; i < text.Length; i++)
@@ -33,6 +61,11 @@ namespace Flow.Launcher.VimMode
             return 0;
         }
 
+        /// <summary>
+        /// Calculates the index after the last non-blank character in the text.
+        /// </summary>
+        /// <param name="text">The text to search.</param>
+        /// <returns>The target index.</returns>
         public static int MoveLastNonBlank(string text)
         {
             for (int i = text.Length - 1; i >= 0; i--)
@@ -42,6 +75,12 @@ namespace Flow.Launcher.VimMode
             return 0;
         }
 
+        /// <summary>
+        /// Calculates the index of the start of the next word (w motion).
+        /// </summary>
+        /// <param name="text">The text to traverse.</param>
+        /// <param name="caret">The current caret index.</param>
+        /// <returns>The new caret index.</returns>
         public static int MoveNextWord(string text, int caret)
         {
             if (caret >= text.Length) return text.Length;
@@ -58,6 +97,12 @@ namespace Flow.Launcher.VimMode
             return Math.Min(i, text.Length);
         }
 
+        /// <summary>
+        /// Calculates the index of the start of the previous word (b motion).
+        /// </summary>
+        /// <param name="text">The text to traverse.</param>
+        /// <param name="caret">The current caret index.</param>
+        /// <returns>The new caret index.</returns>
         public static int MovePrevWord(string text, int caret)
         {
             if (caret <= 0) return 0;
@@ -75,6 +120,12 @@ namespace Flow.Launcher.VimMode
             return Math.Max(0, i);
         }
 
+        /// <summary>
+        /// Calculates the index of the end of the current or next word (e motion).
+        /// </summary>
+        /// <param name="text">The text to traverse.</param>
+        /// <param name="caret">The current caret index.</param>
+        /// <returns>The new caret index.</returns>
         public static int MoveEndWord(string text, int caret)
         {
             if (caret >= text.Length - 1) return text.Length - 1;
@@ -94,6 +145,12 @@ namespace Flow.Launcher.VimMode
             return Math.Min(i, text.Length - 1);
         }
 
+        /// <summary>
+        /// Calculates the index of the start of the next big word (W motion).
+        /// </summary>
+        /// <param name="text">The text to traverse.</param>
+        /// <param name="caret">The current caret index.</param>
+        /// <returns>The new caret index.</returns>
         public static int MoveNextWordBig(string text, int caret)
         {
             if (caret >= text.Length) return text.Length;
@@ -109,6 +166,12 @@ namespace Flow.Launcher.VimMode
             return Math.Min(i, text.Length);
         }
 
+        /// <summary>
+        /// Calculates the index of the start of the previous big word (B motion).
+        /// </summary>
+        /// <param name="text">The text to traverse.</param>
+        /// <param name="caret">The current caret index.</param>
+        /// <returns>The new caret index.</returns>
         public static int MovePrevWordBig(string text, int caret)
         {
             if (caret <= 0) return 0;
@@ -124,6 +187,12 @@ namespace Flow.Launcher.VimMode
             return Math.Max(0, i);
         }
 
+        /// <summary>
+        /// Calculates the index of the end of the current or next big word (E motion).
+        /// </summary>
+        /// <param name="text">The text to traverse.</param>
+        /// <param name="caret">The current caret index.</param>
+        /// <returns>The new caret index.</returns>
         public static int MoveEndWordBig(string text, int caret)
         {
             if (caret >= text.Length - 1) return text.Length - 1;
@@ -141,6 +210,12 @@ namespace Flow.Launcher.VimMode
             return Math.Min(i, text.Length - 1);
         }
 
+        /// <summary>
+        /// Finds the index of the matching bracket (% motion).
+        /// </summary>
+        /// <param name="text">The text containing brackets.</param>
+        /// <param name="caret">The current caret index.</param>
+        /// <returns>The index of the matching bracket, or the original caret if none.</returns>
         public static int FindMatchingBracket(string text, int caret)
         {
             if (caret >= text.Length) return caret;
@@ -183,6 +258,13 @@ namespace Flow.Launcher.VimMode
             return caret;
         }
 
+        /// <summary>
+        /// Calculates the selection bounds for a word text object (iw / aw).
+        /// </summary>
+        /// <param name="text">The text.</param>
+        /// <param name="caret">The current caret index.</param>
+        /// <param name="around">True for aw, false for iw.</param>
+        /// <returns>A tuple containing the start and end indices of the selection.</returns>
         public static (int start, int end) TextObjectWord(string text, int caret, bool around)
         {
             if (text.Length == 0) return (0, 0);
@@ -236,6 +318,15 @@ namespace Flow.Launcher.VimMode
             return (start, end);
         }
 
+        /// <summary>
+        /// Calculates the selection bounds for a delimited text object, such as parentheses or brackets.
+        /// </summary>
+        /// <param name="text">The text.</param>
+        /// <param name="caret">The current caret index.</param>
+        /// <param name="open">The opening delimiter.</param>
+        /// <param name="close">The closing delimiter.</param>
+        /// <param name="around">True to include the delimiters (a object), false to exclude (i object).</param>
+        /// <returns>A tuple containing the start and end indices, or (-1, -1) if invalid.</returns>
         public static (int start, int end) TextObjectDelimited(string text, int caret, char open, char close, bool around)
         {
             int depth = 0;
@@ -264,6 +355,14 @@ namespace Flow.Launcher.VimMode
             return (start, end);
         }
 
+        /// <summary>
+        /// Calculates the selection bounds for a quote text object.
+        /// </summary>
+        /// <param name="text">The text.</param>
+        /// <param name="caret">The current caret index.</param>
+        /// <param name="quote">The quote character.</param>
+        /// <param name="around">True to include the quotes, false to exclude.</param>
+        /// <returns>A tuple containing the start and end indices, or (-1, -1) if invalid.</returns>
         public static (int start, int end) TextObjectQuote(string text, int caret, char quote, bool around)
         {
             int first = -1;
@@ -297,6 +396,14 @@ namespace Flow.Launcher.VimMode
             return char.IsLetterOrDigit(c) || c == '_';
         }
 
+        /// <summary>
+        /// Finds the next occurrence of a character (f / t motion).
+        /// </summary>
+        /// <param name="text">The text.</param>
+        /// <param name="caret">The current caret index.</param>
+        /// <param name="target">The character to find.</param>
+        /// <param name="till">True for t (stops before), false for f (lands on).</param>
+        /// <returns>The index of the target character, or the original caret if not found.</returns>
         public static int FindCharForward(string text, int caret, char target, bool till = false)
         {
             if (caret >= text.Length - 1) return caret;
@@ -306,6 +413,14 @@ namespace Flow.Launcher.VimMode
             return till ? index - 1 : index;
         }
 
+        /// <summary>
+        /// Finds the previous occurrence of a character (F / T motion).
+        /// </summary>
+        /// <param name="text">The text.</param>
+        /// <param name="caret">The current caret index.</param>
+        /// <param name="target">The character to find.</param>
+        /// <param name="till">True for T (stops after), false for F (lands on).</param>
+        /// <returns>The index of the target character, or the original caret if not found.</returns>
         public static int FindCharBackward(string text, int caret, char target, bool till = false)
         {
             if (caret <= 0) return caret;

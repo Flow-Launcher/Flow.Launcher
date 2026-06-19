@@ -6,6 +6,9 @@ using Flow.Launcher.ViewModel;
 
 namespace Flow.Launcher.VimMode
 {
+    /// <summary>
+    /// Manages the integration of Vim keybindings and UI overlays into the application window.
+    /// </summary>
     public class VimManager : IDisposable
     {
         private bool _disposed;
@@ -29,6 +32,9 @@ namespace Flow.Launcher.VimMode
         private string _lastChange = "";
         private readonly Flow.Launcher.Infrastructure.UserSettings.Settings _settings;
 
+        /// <summary>
+        /// Initializes a new instance of the VimManager class.
+        /// </summary>
         public VimManager(MainWindow mainWindow, MainViewModel viewModel, TextBox queryTextBox, System.Windows.Shapes.Rectangle vimBlockCaret, Border vimModeIndicator, Flow.Launcher.Infrastructure.UserSettings.Settings settings)
         {
             _mainWindow = mainWindow;
@@ -160,6 +166,11 @@ namespace Flow.Launcher.VimMode
             }
         }
 
+        /// <summary>
+        /// Intercepts and processes key presses before they reach the main window, applying Vim bindings if enabled.
+        /// </summary>
+        /// <param name="e">The key event arguments.</param>
+        /// <returns>True if the key was handled by Vim mode, otherwise false.</returns>
         public bool HandlePreviewKeyDown(KeyEventArgs e)
         {
             if (!_settings.EnableVimMode)
@@ -1210,8 +1221,14 @@ namespace Flow.Launcher.VimMode
             }
         }
 
+        /// <summary>
+        /// Gets a value indicating whether native text input is currently blocked by Vim mode.
+        /// </summary>
         public bool IsInputBlocked => _vimEngine.CurrentMode != VimModes.Insert;
 
+        /// <summary>
+        /// Disposes the Vim manager and detaches from window events.
+        /// </summary>
         public void Dispose()
         {
             Dispose(disposing: true);
