@@ -56,7 +56,8 @@ You can instantly toggle this feature on or off via the `General` tab in the Flo
 - `D` / `C` : Delete or Change from the cursor to the end of the line
 - `Y` (Shift+Y) : Yank (Copy) the entire query
 - `p` : Paste from system clipboard
-- `u` : Undo the last edit (hooks into WPF native undo stack)
+- `u` : Undo the last Vim operation (operation-level, not character-level)
+- `Ctrl+R` : Redo the last undone operation
 
 #### Text Objects (For Operators & Visual Mode)
 Use these immediately after an operator (like `d`, `c`, `y`, `gu`) to target specific text structures.

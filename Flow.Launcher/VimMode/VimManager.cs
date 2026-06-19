@@ -47,6 +47,47 @@ namespace Flow.Launcher.VimMode
         private string _lastChange = "";
         private readonly Flow.Launcher.Infrastructure.UserSettings.Settings _settings;
 
+        // Vim-style operation-level undo/redo stacks
+        private readonly System.Collections.Generic.Stack<(string text, int caretIndex)> _undoStack = new();
+        private readonly System.Collections.Generic.Stack<(string text, int caretIndex)> _redoStack = new();
+
+        /// <summary>Snapshots the current text+caret state onto the undo stack and clears the redo stack.</summary>
+        private void PushUndo()
+        {
+            _undoStack.Push((_queryTextBox.Text, _queryTextBox.CaretIndex));
+            _redoStack.Clear();
+        }
+
+        private void VimUndo()
+        {
+            if (_undoStack.Count == 0) return;
+            _redoStack.Push((_queryTextBox.Text, _queryTextBox.CaretIndex));
+            var (text, caret) = _undoStack.Pop();
+            _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, text);
+            _queryTextBox.CaretIndex = Math.Min(caret, text.Length);
+        }
+
+        private void VimRedo()
+        {
+            if (_redoStack.Count == 0) return;
+            _undoStack.Push((_queryTextBox.Text, _queryTextBox.CaretIndex));
+            var (text, caret) = _redoStack.Pop();
+            _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, text);
+            _queryTextBox.CaretIndex = Math.Min(caret, text.Length);
+        }
+
+        /// <summary>
+        /// Applies a text mutation: snapshots the current state onto the undo stack,
+        /// then sets the TextBox text. All text-mutating Vim commands must use this
+        /// instead of calling SetCurrentValue directly.
+        /// </summary>
+        private void SetText(string newText)
+        {
+            PushUndo();
+            _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, newText);
+        }
+
+
         /// <summary>
         /// Initializes a new instance of the VimManager class.
         /// </summary>
@@ -202,7 +243,7 @@ namespace Flow.Launcher.VimMode
 
             if (modifiers.HasFlag(ModifierKeys.Control) && e.Key == Key.R && _vimEngine.CurrentMode == VimModeType.Normal)
             {
-                try { _queryTextBox.Redo(); } catch { }
+                VimRedo();
                 e.Handled = true;
                 return true;
             }
@@ -411,7 +452,7 @@ namespace Flow.Launcher.VimMode
                                 {
                                     int c = _queryTextBox.CaretIndex - 1;
                                     SetClipboardText(_queryTextBox.Text.Substring(c, 1));
-                                    _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, _queryTextBox.Text.Remove(c, 1));
+                                    SetText(_queryTextBox.Text.Remove(c, 1));
                                     _queryTextBox.CaretIndex = c;
                                 }
                             }
@@ -423,7 +464,7 @@ namespace Flow.Launcher.VimMode
                                     int c = _queryTextBox.CaretIndex;
                                     int len = Math.Min(n, _queryTextBox.Text.Length - c);
                                     SetClipboardText(_queryTextBox.Text.Substring(c, len));
-                                    _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, _queryTextBox.Text.Remove(c, len));
+                                    SetText(_queryTextBox.Text.Remove(c, len));
                                     _queryTextBox.CaretIndex = c;
                                 }
                                 _lastChange = "x";
@@ -442,7 +483,7 @@ namespace Flow.Launcher.VimMode
                                 {
                                     int c = _queryTextBox.CaretIndex;
                                     SetClipboardText(_queryTextBox.Text.Substring(c, 1));
-                                    _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, _queryTextBox.Text.Remove(c, 1));
+                                    SetText(_queryTextBox.Text.Remove(c, 1));
                                     _queryTextBox.CaretIndex = c;
                                 }
                                 _vimEngine.SwitchToInsert();
@@ -456,7 +497,7 @@ namespace Flow.Launcher.VimMode
                                 {
                                     char ch = _queryTextBox.Text[c];
                                     ch = char.IsUpper(ch) ? char.ToLower(ch) : char.ToUpper(ch);
-                                    _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, _queryTextBox.Text.Remove(c, 1).Insert(c, ch.ToString()));
+                                    SetText(_queryTextBox.Text.Remove(c, 1).Insert(c, ch.ToString()));
                                     _queryTextBox.CaretIndex = Math.Min(_queryTextBox.Text.Length, c + 1);
                                 }
                                 _lastChange = "~";
@@ -472,14 +513,14 @@ namespace Flow.Launcher.VimMode
                                 {
                                     int c = _queryTextBox.CaretIndex;
                                     if (c < _queryTextBox.Text.Length) c++;
-                                    _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, _queryTextBox.Text.Insert(c, text));
+                                    SetText(_queryTextBox.Text.Insert(c, text));
                                     _queryTextBox.CaretIndex = c;
                                 }
                             }
                             catch (Exception ex) { Flow.Launcher.Infrastructure.Logger.Log.Exception("VimManager", "Clipboard/Redo operation failed", ex); }
                             return true;
                         case Key.U:
-                            _queryTextBox.Undo();
+                            VimUndo();
                             return true;
                         case Key.D:
                         case Key.C:
@@ -501,7 +542,7 @@ namespace Flow.Launcher.VimMode
                                 }
                                 if (cmd == "d" || cmd == "c")
                                 {
-                                    _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, "");
+                                    SetText("");
                                     _queryTextBox.CaretIndex = 0;
                                 }
                                 if (cmd == "c")
@@ -673,7 +714,7 @@ namespace Flow.Launcher.VimMode
                                 if (selLength > 0)
                                 {
                                     SetClipboardText(_queryTextBox.Text.Substring(selStart, selLength));
-                                    _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, _queryTextBox.Text.Remove(selStart, selLength));
+                                    SetText(_queryTextBox.Text.Remove(selStart, selLength));
                                     _queryTextBox.CaretIndex = selStart;
                                 }
                                 _vimEngine.SwitchToNormal();
@@ -700,7 +741,7 @@ namespace Flow.Launcher.VimMode
                                 if (selLength > 0)
                                 {
                                     SetClipboardText(_queryTextBox.Text.Substring(selStart, selLength));
-                                    _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, _queryTextBox.Text.Remove(selStart, selLength));
+                                    SetText(_queryTextBox.Text.Remove(selStart, selLength));
                                     _queryTextBox.CaretIndex = selStart;
                                 }
                                 _vimEngine.SwitchToInsert();
@@ -716,7 +757,7 @@ namespace Flow.Launcher.VimMode
                                     char[] chars = _queryTextBox.Text.ToCharArray();
                                     for (int i = selStart; i < selStart + selLength && i < chars.Length; i++)
                                         chars[i] = char.IsUpper(chars[i]) ? char.ToLower(chars[i]) : char.ToUpper(chars[i]);
-                                    _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, new string(chars));
+                                    SetText(new string(chars));
                                     _queryTextBox.CaretIndex = selStart;
                                     _queryTextBox.SelectionLength = 0;
                                 }
@@ -751,7 +792,7 @@ namespace Flow.Launcher.VimMode
                         case Key.X:
                         case Key.D:
                             SetClipboardText(_queryTextBox.Text);
-                            _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, "");
+                            SetText("");
                             _queryTextBox.CaretIndex = 0;
                             _vimEngine.SwitchToNormal();
                             return true;
@@ -764,7 +805,7 @@ namespace Flow.Launcher.VimMode
                         case Key.C:
                         case Key.S:
                             SetClipboardText(_queryTextBox.Text);
-                            _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, "");
+                            SetText("");
                             _queryTextBox.CaretIndex = 0;
                             _vimEngine.SwitchToInsert();
                             return true;
@@ -779,7 +820,7 @@ namespace Flow.Launcher.VimMode
                                     char[] chars = _queryTextBox.Text.ToCharArray();
                                     for (int i = 0; i < chars.Length; i++)
                                         chars[i] = char.IsUpper(chars[i]) ? char.ToLower(chars[i]) : char.ToUpper(chars[i]);
-                                    _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, new string(chars));
+                                    SetText(new string(chars));
                                     _queryTextBox.CaretIndex = 0;
                                     _queryTextBox.SelectionLength = 0;
                                 }
@@ -913,7 +954,7 @@ namespace Flow.Launcher.VimMode
                     SetClipboardText(text.Substring(range.start, len));
                     if (_pendingCommand != "y")
                     {
-                        _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, text.Remove(range.start, len));
+                        SetText(text.Remove(range.start, len));
                         _queryTextBox.CaretIndex = range.start;
                     }
                     if (_pendingCommand == "c")
@@ -949,12 +990,12 @@ namespace Flow.Launcher.VimMode
             {
                 case "dd":
                     SetClipboardText(_queryTextBox.Text);
-                    _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, "");
+                    SetText("");
                     _queryTextBox.CaretIndex = 0;
                     break;
                 case "cc":
                     SetClipboardText(_queryTextBox.Text);
-                    _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, "");
+                    SetText("");
                     _queryTextBox.CaretIndex = 0;
                     _vimEngine.SwitchToInsert();
                     break;
@@ -965,7 +1006,7 @@ namespace Flow.Launcher.VimMode
                         if (c < _queryTextBox.Text.Length)
                         {
                             SetClipboardText(_queryTextBox.Text.Substring(c));
-                            _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, _queryTextBox.Text.Remove(c));
+                            SetText(_queryTextBox.Text.Remove(c));
                             _queryTextBox.CaretIndex = c;
                         }
                         if (_lastChange == "C_eol") _vimEngine.SwitchToInsert();
@@ -982,7 +1023,7 @@ namespace Flow.Launcher.VimMode
                         if (len > 0)
                         {
                             SetClipboardText(_queryTextBox.Text.Substring(c, len));
-                            _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, _queryTextBox.Text.Remove(c, len));
+                            SetText(_queryTextBox.Text.Remove(c, len));
                             _queryTextBox.CaretIndex = c;
                         }
                     }
@@ -994,7 +1035,7 @@ namespace Flow.Launcher.VimMode
                         {
                             char ch = _queryTextBox.Text[c];
                             ch = char.IsUpper(ch) ? char.ToLower(ch) : char.ToUpper(ch);
-                            _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, _queryTextBox.Text.Remove(c, 1).Insert(c, ch.ToString()));
+                            SetText(_queryTextBox.Text.Remove(c, 1).Insert(c, ch.ToString()));
                             _queryTextBox.CaretIndex = Math.Min(_queryTextBox.Text.Length, c + 1);
                         }
                     }
@@ -1019,7 +1060,7 @@ namespace Flow.Launcher.VimMode
                         char[] chars = text.ToCharArray();
                         for (int i = selStart; i < selStart + selLength && i < chars.Length; i++)
                             chars[i] = c;
-                        _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, new string(chars));
+                        SetText(new string(chars));
                         _queryTextBox.CaretIndex = selStart;
                         _queryTextBox.SelectionLength = 0;
                         _vimEngine.SwitchToNormal();
@@ -1027,7 +1068,7 @@ namespace Flow.Launcher.VimMode
                 }
                 else if (caret < text.Length)
                 {
-                    _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, text.Remove(caret, 1).Insert(caret, c.ToString()));
+                    SetText(text.Remove(caret, 1).Insert(caret, c.ToString()));
                     _queryTextBox.CaretIndex = caret;
                 }
             }
@@ -1071,7 +1112,7 @@ namespace Flow.Launcher.VimMode
                     SetClipboardText(_queryTextBox.Text.Substring(start, end - start));
                     if (_pendingCommand != "y")
                     {
-                        _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, _queryTextBox.Text.Remove(start, end - start));
+                        SetText(_queryTextBox.Text.Remove(start, end - start));
                         _queryTextBox.CaretIndex = start;
                     }
                 }
@@ -1093,7 +1134,7 @@ namespace Flow.Launcher.VimMode
                     char[] chars = _queryTextBox.Text.ToCharArray();
                     for (int i = start; i < end && i < chars.Length; i++)
                         chars[i] = char.IsUpper(chars[i]) ? char.ToLower(chars[i]) : char.ToUpper(chars[i]);
-                    _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, new string(chars));
+                    SetText(new string(chars));
                     _queryTextBox.CaretIndex = Math.Min(start, _queryTextBox.Text.Length);
                 }
                 _lastChange = "~";
@@ -1111,7 +1152,7 @@ namespace Flow.Launcher.VimMode
                     char[] chars = _queryTextBox.Text.ToCharArray();
                     for (int i = start; i < end && i < chars.Length; i++)
                         chars[i] = char.ToLower(chars[i]);
-                    _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, new string(chars));
+                    SetText(new string(chars));
                     _queryTextBox.CaretIndex = start;
                 }
                 _pendingCommand = "";
@@ -1128,7 +1169,7 @@ namespace Flow.Launcher.VimMode
                     char[] chars = _queryTextBox.Text.ToCharArray();
                     for (int i = start; i < end && i < chars.Length; i++)
                         chars[i] = char.ToUpper(chars[i]);
-                    _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, new string(chars));
+                    SetText(new string(chars));
                     _queryTextBox.CaretIndex = start;
                 }
                 _pendingCommand = "";
