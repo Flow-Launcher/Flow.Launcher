@@ -396,7 +396,7 @@ namespace Flow.Launcher.VimMode
                                 {
                                     int c = _queryTextBox.CaretIndex - 1;
                                     try { Clipboard.SetText(_queryTextBox.Text.Substring(c, 1)); } catch (Exception ex) { Flow.Launcher.Infrastructure.Logger.Log.Exception("VimManager", "Clipboard/Redo operation failed", ex); }
-                                    _queryTextBox.Text = _queryTextBox.Text.Remove(c, 1);
+                                    _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, _queryTextBox.Text.Remove(c, 1));
                                     _queryTextBox.CaretIndex = c;
                                 }
                             }
@@ -408,7 +408,7 @@ namespace Flow.Launcher.VimMode
                                     int c = _queryTextBox.CaretIndex;
                                     int len = Math.Min(n, _queryTextBox.Text.Length - c);
                                     try { Clipboard.SetText(_queryTextBox.Text.Substring(c, len)); } catch (Exception ex) { Flow.Launcher.Infrastructure.Logger.Log.Exception("VimManager", "Clipboard/Redo operation failed", ex); }
-                                    _queryTextBox.Text = _queryTextBox.Text.Remove(c, len);
+                                    _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, _queryTextBox.Text.Remove(c, len));
                                     _queryTextBox.CaretIndex = c;
                                 }
                                 _lastChange = "x";
@@ -427,7 +427,7 @@ namespace Flow.Launcher.VimMode
                                 {
                                     int c = _queryTextBox.CaretIndex;
                                     try { Clipboard.SetText(_queryTextBox.Text.Substring(c, 1)); } catch (Exception ex) { Flow.Launcher.Infrastructure.Logger.Log.Exception("VimManager", "Clipboard/Redo operation failed", ex); }
-                                    _queryTextBox.Text = _queryTextBox.Text.Remove(c, 1);
+                                    _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, _queryTextBox.Text.Remove(c, 1));
                                     _queryTextBox.CaretIndex = c;
                                 }
                                 _vimEngine.SwitchToInsert();
@@ -441,7 +441,7 @@ namespace Flow.Launcher.VimMode
                                 {
                                     char ch = _queryTextBox.Text[c];
                                     ch = char.IsUpper(ch) ? char.ToLower(ch) : char.ToUpper(ch);
-                                    _queryTextBox.Text = _queryTextBox.Text.Remove(c, 1).Insert(c, ch.ToString());
+                                    _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, _queryTextBox.Text.Remove(c, 1).Insert(c, ch.ToString()));
                                     _queryTextBox.CaretIndex = Math.Min(_queryTextBox.Text.Length, c + 1);
                                 }
                                 _lastChange = "~";
@@ -457,7 +457,7 @@ namespace Flow.Launcher.VimMode
                                 {
                                     int c = _queryTextBox.CaretIndex;
                                     if (c < _queryTextBox.Text.Length) c++;
-                                    _queryTextBox.Text = _queryTextBox.Text.Insert(c, text);
+                                    _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, _queryTextBox.Text.Insert(c, text));
                                     _queryTextBox.CaretIndex = c;
                                 }
                             }
@@ -486,7 +486,7 @@ namespace Flow.Launcher.VimMode
                                 }
                                 if (cmd == "d" || cmd == "c")
                                 {
-                                    _queryTextBox.Text = "";
+                                    _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, "");
                                     _queryTextBox.CaretIndex = 0;
                                 }
                                 if (cmd == "c")
@@ -652,7 +652,7 @@ namespace Flow.Launcher.VimMode
                                 if (selLength > 0)
                                 {
                                     try { Clipboard.SetText(_queryTextBox.Text.Substring(selStart, selLength)); } catch (Exception ex) { Flow.Launcher.Infrastructure.Logger.Log.Exception("VimManager", "Clipboard/Redo operation failed", ex); }
-                                    _queryTextBox.Text = _queryTextBox.Text.Remove(selStart, selLength);
+                                    _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, _queryTextBox.Text.Remove(selStart, selLength));
                                     _queryTextBox.CaretIndex = selStart;
                                 }
                                 _vimEngine.SwitchToNormal();
@@ -679,7 +679,7 @@ namespace Flow.Launcher.VimMode
                                 if (selLength > 0)
                                 {
                                     try { Clipboard.SetText(_queryTextBox.Text.Substring(selStart, selLength)); } catch (Exception ex) { Flow.Launcher.Infrastructure.Logger.Log.Exception("VimManager", "Clipboard/Redo operation failed", ex); }
-                                    _queryTextBox.Text = _queryTextBox.Text.Remove(selStart, selLength);
+                                    _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, _queryTextBox.Text.Remove(selStart, selLength));
                                     _queryTextBox.CaretIndex = selStart;
                                 }
                                 _vimEngine.SwitchToInsert();
@@ -695,7 +695,7 @@ namespace Flow.Launcher.VimMode
                                     char[] chars = _queryTextBox.Text.ToCharArray();
                                     for (int i = selStart; i < selStart + selLength && i < chars.Length; i++)
                                         chars[i] = char.IsUpper(chars[i]) ? char.ToLower(chars[i]) : char.ToUpper(chars[i]);
-                                    _queryTextBox.Text = new string(chars);
+                                    _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, new string(chars));
                                     _queryTextBox.CaretIndex = selStart;
                                     _queryTextBox.SelectionLength = 0;
                                 }
@@ -721,7 +721,7 @@ namespace Flow.Launcher.VimMode
                         case Key.X:
                         case Key.D:
                             try { Clipboard.SetText(_queryTextBox.Text); } catch (Exception ex) { Flow.Launcher.Infrastructure.Logger.Log.Exception("VimManager", "Clipboard/Redo operation failed", ex); }
-                            _queryTextBox.Text = "";
+                            _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, "");
                             _queryTextBox.CaretIndex = 0;
                             _vimEngine.SwitchToNormal();
                             return true;
@@ -734,7 +734,7 @@ namespace Flow.Launcher.VimMode
                         case Key.C:
                         case Key.S:
                             try { Clipboard.SetText(_queryTextBox.Text); } catch (Exception ex) { Flow.Launcher.Infrastructure.Logger.Log.Exception("VimManager", "Clipboard/Redo operation failed", ex); }
-                            _queryTextBox.Text = "";
+                            _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, "");
                             _queryTextBox.CaretIndex = 0;
                             _vimEngine.SwitchToInsert();
                             return true;
@@ -749,7 +749,7 @@ namespace Flow.Launcher.VimMode
                                     char[] chars = _queryTextBox.Text.ToCharArray();
                                     for (int i = 0; i < chars.Length; i++)
                                         chars[i] = char.IsUpper(chars[i]) ? char.ToLower(chars[i]) : char.ToUpper(chars[i]);
-                                    _queryTextBox.Text = new string(chars);
+                                    _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, new string(chars));
                                     _queryTextBox.CaretIndex = 0;
                                     _queryTextBox.SelectionLength = 0;
                                 }
@@ -883,7 +883,7 @@ namespace Flow.Launcher.VimMode
                     try { Clipboard.SetText(text.Substring(range.start, len)); } catch (Exception ex) { Flow.Launcher.Infrastructure.Logger.Log.Exception("VimManager", "Clipboard/Redo operation failed", ex); }
                     if (_pendingCommand != "y")
                     {
-                        _queryTextBox.Text = text.Remove(range.start, len);
+                        _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, text.Remove(range.start, len));
                         _queryTextBox.CaretIndex = range.start;
                     }
                     if (_pendingCommand == "c")
@@ -919,12 +919,12 @@ namespace Flow.Launcher.VimMode
             {
                 case "dd":
                     try { Clipboard.SetText(_queryTextBox.Text); } catch (Exception ex) { Flow.Launcher.Infrastructure.Logger.Log.Exception("VimManager", "Clipboard/Redo operation failed", ex); }
-                    _queryTextBox.Text = "";
+                    _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, "");
                     _queryTextBox.CaretIndex = 0;
                     break;
                 case "cc":
                     try { Clipboard.SetText(_queryTextBox.Text); } catch (Exception ex) { Flow.Launcher.Infrastructure.Logger.Log.Exception("VimManager", "Clipboard/Redo operation failed", ex); }
-                    _queryTextBox.Text = "";
+                    _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, "");
                     _queryTextBox.CaretIndex = 0;
                     _vimEngine.SwitchToInsert();
                     break;
@@ -935,7 +935,7 @@ namespace Flow.Launcher.VimMode
                         if (c < _queryTextBox.Text.Length)
                         {
                             try { Clipboard.SetText(_queryTextBox.Text.Substring(c)); } catch (Exception ex) { Flow.Launcher.Infrastructure.Logger.Log.Exception("VimManager", "Clipboard/Redo operation failed", ex); }
-                            _queryTextBox.Text = _queryTextBox.Text.Remove(c);
+                            _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, _queryTextBox.Text.Remove(c));
                             _queryTextBox.CaretIndex = c;
                         }
                         if (_lastChange == "C_eol") _vimEngine.SwitchToInsert();
@@ -952,7 +952,7 @@ namespace Flow.Launcher.VimMode
                         if (len > 0)
                         {
                             try { Clipboard.SetText(_queryTextBox.Text.Substring(c, len)); } catch (Exception ex) { Flow.Launcher.Infrastructure.Logger.Log.Exception("VimManager", "Clipboard/Redo operation failed", ex); }
-                            _queryTextBox.Text = _queryTextBox.Text.Remove(c, len);
+                            _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, _queryTextBox.Text.Remove(c, len));
                             _queryTextBox.CaretIndex = c;
                         }
                     }
@@ -964,7 +964,7 @@ namespace Flow.Launcher.VimMode
                         {
                             char ch = _queryTextBox.Text[c];
                             ch = char.IsUpper(ch) ? char.ToLower(ch) : char.ToUpper(ch);
-                            _queryTextBox.Text = _queryTextBox.Text.Remove(c, 1).Insert(c, ch.ToString());
+                            _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, _queryTextBox.Text.Remove(c, 1).Insert(c, ch.ToString()));
                             _queryTextBox.CaretIndex = Math.Min(_queryTextBox.Text.Length, c + 1);
                         }
                     }
@@ -989,7 +989,7 @@ namespace Flow.Launcher.VimMode
                         char[] chars = text.ToCharArray();
                         for (int i = selStart; i < selStart + selLength && i < chars.Length; i++)
                             chars[i] = c;
-                        _queryTextBox.Text = new string(chars);
+                        _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, new string(chars));
                         _queryTextBox.CaretIndex = selStart;
                         _queryTextBox.SelectionLength = 0;
                         _vimEngine.SwitchToNormal();
@@ -997,7 +997,7 @@ namespace Flow.Launcher.VimMode
                 }
                 else if (caret < text.Length)
                 {
-                    _queryTextBox.Text = text.Remove(caret, 1).Insert(caret, c.ToString());
+                    _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, text.Remove(caret, 1).Insert(caret, c.ToString()));
                     _queryTextBox.CaretIndex = caret;
                 }
             }
@@ -1039,7 +1039,7 @@ namespace Flow.Launcher.VimMode
                 if (end > start)
                 {
                     try { Clipboard.SetText(_queryTextBox.Text.Substring(start, end - start)); } catch (Exception ex) { Flow.Launcher.Infrastructure.Logger.Log.Exception("VimManager", "Clipboard/Redo operation failed", ex); }
-                    _queryTextBox.Text = _queryTextBox.Text.Remove(start, end - start);
+                    _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, _queryTextBox.Text.Remove(start, end - start));
                     _queryTextBox.CaretIndex = start;
                 }
                 
@@ -1060,7 +1060,7 @@ namespace Flow.Launcher.VimMode
                     char[] chars = _queryTextBox.Text.ToCharArray();
                     for (int i = start; i < end && i < chars.Length; i++)
                         chars[i] = char.IsUpper(chars[i]) ? char.ToLower(chars[i]) : char.ToUpper(chars[i]);
-                    _queryTextBox.Text = new string(chars);
+                    _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, new string(chars));
                     _queryTextBox.CaretIndex = Math.Min(start, _queryTextBox.Text.Length);
                 }
                 _lastChange = "~";
@@ -1078,7 +1078,7 @@ namespace Flow.Launcher.VimMode
                     char[] chars = _queryTextBox.Text.ToCharArray();
                     for (int i = start; i < end && i < chars.Length; i++)
                         chars[i] = char.ToLower(chars[i]);
-                    _queryTextBox.Text = new string(chars);
+                    _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, new string(chars));
                     _queryTextBox.CaretIndex = start;
                 }
                 _pendingCommand = "";
@@ -1095,7 +1095,7 @@ namespace Flow.Launcher.VimMode
                     char[] chars = _queryTextBox.Text.ToCharArray();
                     for (int i = start; i < end && i < chars.Length; i++)
                         chars[i] = char.ToUpper(chars[i]);
-                    _queryTextBox.Text = new string(chars);
+                    _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, new string(chars));
                     _queryTextBox.CaretIndex = start;
                 }
                 _pendingCommand = "";
