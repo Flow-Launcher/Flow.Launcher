@@ -365,7 +365,7 @@
                 x:Name="VimModeIndicator"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
-                Margin="6,0,0,0"
+                Margin="6,2,0,0"
                 Width="6"
                 Height="6"
                 CornerRadius="3"
