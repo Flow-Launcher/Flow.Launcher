@@ -28,48 +28,32 @@ namespace Flow.Launcher.VimMode
         /// </summary>
         public event Action<VimModeType> ModeChanged;
 
+        private void SetMode(VimModeType newMode)
+        {
+            var oldMode = CurrentMode;
+            CurrentMode = newMode;
+            if (oldMode != newMode)
+                ModeChanged?.Invoke(CurrentMode);
+        }
+
         /// <summary>
         /// Switches the engine to Insert mode.
         /// </summary>
-        public void SwitchToInsert()
-        {
-            var oldMode = CurrentMode;
-            CurrentMode = VimModeType.Insert;
-            if (oldMode != VimModeType.Insert)
-                ModeChanged?.Invoke(CurrentMode);
-        }
+        public void SwitchToInsert() => SetMode(VimModeType.Insert);
 
         /// <summary>
         /// Switches the engine to Normal mode.
         /// </summary>
-        public void SwitchToNormal()
-        {
-            var oldMode = CurrentMode;
-            CurrentMode = VimModeType.Normal;
-            if (oldMode != VimModeType.Normal)
-                ModeChanged?.Invoke(CurrentMode);
-        }
+        public void SwitchToNormal() => SetMode(VimModeType.Normal);
 
         /// <summary>
         /// Switches the engine to Visual mode.
         /// </summary>
-        public void SwitchToVisual()
-        {
-            var oldMode = CurrentMode;
-            CurrentMode = VimModeType.Visual;
-            if (oldMode != VimModeType.Visual)
-                ModeChanged?.Invoke(CurrentMode);
-        }
+        public void SwitchToVisual() => SetMode(VimModeType.Visual);
 
         /// <summary>
         /// Switches the engine to Visual Line mode.
         /// </summary>
-        public void SwitchToVisualLine()
-        {
-            var oldMode = CurrentMode;
-            CurrentMode = VimModeType.VisualLine;
-            if (oldMode != VimModeType.VisualLine)
-                ModeChanged?.Invoke(CurrentMode);
-        }
+        public void SwitchToVisualLine() => SetMode(VimModeType.VisualLine);
     }
 }

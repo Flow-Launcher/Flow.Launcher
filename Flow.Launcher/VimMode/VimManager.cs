@@ -233,6 +233,8 @@ namespace Flow.Launcher.VimMode
                 {
                     _vimModeIndicator.Visibility = Visibility.Collapsed;
                 }
+                _queryTextBox.ClearValue(System.Windows.Controls.TextBox.CaretBrushProperty);
+                InputMethod.SetIsInputMethodSuspended(_queryTextBox, false);
                 return false;
             }
 
@@ -280,6 +282,8 @@ namespace Flow.Launcher.VimMode
                     {
                         SaveVisualRange();
                         _queryTextBox.SelectionLength = 0;
+                        _pendingCommand = "";
+                        _awaitingCharCommand = "";
                         _vimEngine.SwitchToNormal();
                         e.Handled = true;
                         return true;
@@ -297,6 +301,7 @@ namespace Flow.Launcher.VimMode
                     {
                         _lastEscapeTime = DateTime.Now;
                         _pendingCommand = "";
+                        _awaitingCharCommand = "";
                         e.Handled = true;
                         return true;
                     }
@@ -1264,6 +1269,7 @@ namespace Flow.Launcher.VimMode
                 _queryTextBox.CaretIndex = _queryTextBox.Text.Length - 1;
             _visualAnchor = _queryTextBox.CaretIndex;
             _visualCaret = _queryTextBox.CaretIndex;
+            _pendingCommand = "";
             _vimEngine.SwitchToVisual();
             UpdateVisualSelection();
         }
@@ -1273,6 +1279,7 @@ namespace Flow.Launcher.VimMode
             if (_queryTextBox.Text.Length == 0) return;
             _visualAnchor = 0;
             _visualCaret = _queryTextBox.Text.Length - 1;
+            _pendingCommand = "";
             _vimEngine.SwitchToVisualLine();
             _queryTextBox.Select(0, _queryTextBox.Text.Length);
             UpdateCaretPosition();
