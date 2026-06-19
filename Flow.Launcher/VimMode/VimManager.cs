@@ -543,11 +543,11 @@ namespace Flow.Launcher.VimMode
                             _vimEngine.SwitchToInsert();
                             _queryTextBox.CaretIndex = _queryTextBox.Text.Length;
                             return true;
-                        case Key.V when modifiers == ModifierKeys.None:
-                            EnterVisualMode();
-                            return true;
-                        case Key.V when modifiers.HasFlag(ModifierKeys.Shift):
-                            EnterVisualLineMode();
+                        case Key.V:
+                            if (modifiers.HasFlag(ModifierKeys.Shift))
+                                EnterVisualLineMode();
+                            else
+                                EnterVisualMode();
                             return true;
                         case Key.OemPeriod:
                             if (!string.IsNullOrEmpty(_lastChange))
@@ -564,8 +564,14 @@ namespace Flow.Launcher.VimMode
                 case VimModeType.Visual:
                     switch (e.Key)
                     {
-                        case Key.V when modifiers.HasFlag(ModifierKeys.Shift):
-                            EnterVisualLineMode();
+                        case Key.V:
+                            if (modifiers.HasFlag(ModifierKeys.Shift))
+                                EnterVisualLineMode();
+                            else
+                            {
+                                _queryTextBox.SelectionLength = 0;
+                                _vimEngine.SwitchToNormal();
+                            }
                             return true;
                         case Key.O when modifiers == ModifierKeys.None:
                             SwapVisualEnds();
@@ -730,8 +736,17 @@ namespace Flow.Launcher.VimMode
                 case VimModeType.VisualLine:
                     switch (e.Key)
                     {
-                        case Key.V when modifiers == ModifierKeys.None:
-                            EnterVisualMode();
+                        case Key.V:
+                            if (modifiers.HasFlag(ModifierKeys.Shift))
+                            {
+                                _queryTextBox.SelectionLength = 0;
+                                _vimEngine.SwitchToNormal();
+                            }
+                            else
+                            {
+                                _vimEngine.SwitchToVisual();
+                                UpdateVisualSelection();
+                            }
                             return true;
                         case Key.X:
                         case Key.D:
