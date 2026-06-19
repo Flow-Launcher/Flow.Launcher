@@ -45,6 +45,8 @@ namespace Flow.Launcher.VimMode
         private string _awaitingTextObject = "";
         private (int anchor, int caret)? _lastVisualRange;
         private string _lastChange = "";
+        private int _lastChangeLen = 0;   // chars affected by last change (for . repeat)
+        private char _lastReplaceChar = '\0'; // char used in last r{char} (for . repeat)
         private readonly Flow.Launcher.Infrastructure.UserSettings.Settings _settings;
 
         // Vim-style operation-level undo/redo stacks
@@ -455,6 +457,8 @@ namespace Flow.Launcher.VimMode
                                     SetText(_queryTextBox.Text.Remove(c, 1));
                                     _queryTextBox.CaretIndex = c;
                                 }
+                                _lastChange = "X";
+                                _lastChangeLen = 1;
                             }
                             else // x
                             {
@@ -468,6 +472,7 @@ namespace Flow.Launcher.VimMode
                                     _queryTextBox.CaretIndex = c;
                                 }
                                 _lastChange = "x";
+                                _lastChangeLen = n;
                             }
                             return true;
                         case Key.S:
@@ -486,6 +491,8 @@ namespace Flow.Launcher.VimMode
                                     SetText(_queryTextBox.Text.Remove(c, 1));
                                     _queryTextBox.CaretIndex = c;
                                 }
+                                _lastChange = "s";
+                                _lastChangeLen = 1;
                                 _vimEngine.SwitchToInsert();
                             }
                             return true;
@@ -1040,6 +1047,56 @@ namespace Flow.Launcher.VimMode
                         }
                     }
                     break;
+                case "d_motion":
+                    {
+                        int c = _queryTextBox.CaretIndex;
+                        int len = Math.Min(_lastChangeLen, _queryTextBox.Text.Length - c);
+                        if (len > 0)
+                        {
+                            SetClipboardText(_queryTextBox.Text.Substring(c, len));
+                            SetText(_queryTextBox.Text.Remove(c, len));
+                            _queryTextBox.CaretIndex = c;
+                        }
+                    }
+                    break;
+                case "c_motion":
+                    {
+                        int c = _queryTextBox.CaretIndex;
+                        int len = Math.Min(_lastChangeLen, _queryTextBox.Text.Length - c);
+                        if (len > 0)
+                        {
+                            SetClipboardText(_queryTextBox.Text.Substring(c, len));
+                            SetText(_queryTextBox.Text.Remove(c, len));
+                            _queryTextBox.CaretIndex = c;
+                        }
+                        _vimEngine.SwitchToInsert();
+                    }
+                    break;
+                case "s":
+                case "X":
+                    {
+                        int c = _queryTextBox.CaretIndex;
+                        if (_lastChange == "X") c = Math.Max(0, c - 1);
+                        int len = Math.Min(_lastChangeLen, _queryTextBox.Text.Length - c);
+                        if (len > 0)
+                        {
+                            SetClipboardText(_queryTextBox.Text.Substring(c, len));
+                            SetText(_queryTextBox.Text.Remove(c, len));
+                            _queryTextBox.CaretIndex = c;
+                        }
+                        if (_lastChange == "s") _vimEngine.SwitchToInsert();
+                    }
+                    break;
+                case "r":
+                    {
+                        int c = _queryTextBox.CaretIndex;
+                        if (_lastReplaceChar != '\0' && c < _queryTextBox.Text.Length)
+                        {
+                            SetText(_queryTextBox.Text.Remove(c, 1).Insert(c, _lastReplaceChar.ToString()));
+                            _queryTextBox.CaretIndex = c;
+                        }
+                    }
+                    break;
             }
         }
 
@@ -1070,6 +1127,8 @@ namespace Flow.Launcher.VimMode
                 {
                     SetText(text.Remove(caret, 1).Insert(caret, c.ToString()));
                     _queryTextBox.CaretIndex = caret;
+                    _lastChange = "r";
+                    _lastReplaceChar = c;
                 }
             }
             else if (cmd == "f" || cmd == "F" || cmd == "t" || cmd == "T")
@@ -1120,6 +1179,7 @@ namespace Flow.Launcher.VimMode
                 if (_pendingCommand == "c")
                     _vimEngine.SwitchToInsert();
                 _lastChange = _pendingCommand + "_motion";
+                _lastChangeLen = end - start;
                 _pendingCommand = "";
             }
             else if (_pendingCommand == "~")
