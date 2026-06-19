@@ -59,6 +59,20 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             _storage.Save();
         }
 
+        private bool _enableVimMode = false;
+        public bool EnableVimMode
+        {
+            get => _enableVimMode;
+            set
+            {
+                if (_enableVimMode != value)
+                {
+                    _enableVimMode = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public string Hotkey { get; set; } = $"{KeyConstant.Alt} + {KeyConstant.Space}";
 
         private string _openResultModifiers = KeyConstant.Alt;

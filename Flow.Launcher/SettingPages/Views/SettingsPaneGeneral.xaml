@@ -84,6 +84,16 @@
 
             <ui:SettingsCard
                 Margin="0 4 0 0"
+                Description="Enables terminal-style inline Vim keybindings (Insert, Normal, Visual, and Visual Line modes, motions, and clipboard operations) directly within the search bar."
+                Header="Enable Advanced Vim Mode">
+                <ui:ToggleSwitch
+                    IsOn="{Binding Settings.EnableVimMode}"
+                    OffContent="{DynamicResource disable}"
+                    OnContent="{DynamicResource enable}" />
+            </ui:SettingsCard>
+
+            <ui:SettingsCard
+                Margin="0 4 0 0"
                 Description="{DynamicResource hideNotifyIconToolTip}"
                 Header="{DynamicResource hideNotifyIcon}">
                 <ui:ToggleSwitch
