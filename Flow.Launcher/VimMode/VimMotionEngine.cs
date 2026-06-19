@@ -77,19 +77,21 @@ namespace Flow.Launcher.VimMode
 
         public static int MoveEndWord(string text, int caret)
         {
-            if (caret >= text.Length - 1) return text.Length;
+            if (caret >= text.Length - 1) return text.Length - 1;
 
             int i = caret + 1;
 
-            while (i < text.Length - 1 && char.IsWhiteSpace(text[i]))
+            while (i < text.Length && char.IsWhiteSpace(text[i]))
                 i++;
+
+            if (i >= text.Length) return caret;
 
             bool targetIsWord = IsWordChar(text[i]);
 
             while (i < text.Length - 1 && IsWordChar(text[i + 1]) == targetIsWord && !char.IsWhiteSpace(text[i + 1]))
                 i++;
 
-            return Math.Min(i, text.Length);
+            return Math.Min(i, text.Length - 1);
         }
 
         public static int MoveNextWordBig(string text, int caret)
@@ -124,17 +126,19 @@ namespace Flow.Launcher.VimMode
 
         public static int MoveEndWordBig(string text, int caret)
         {
-            if (caret >= text.Length - 1) return text.Length;
+            if (caret >= text.Length - 1) return text.Length - 1;
 
             int i = caret + 1;
 
-            while (i < text.Length - 1 && char.IsWhiteSpace(text[i]))
+            while (i < text.Length && char.IsWhiteSpace(text[i]))
                 i++;
+
+            if (i >= text.Length) return caret;
 
             while (i < text.Length - 1 && !char.IsWhiteSpace(text[i + 1]))
                 i++;
 
-            return Math.Min(i, text.Length);
+            return Math.Min(i, text.Length - 1);
         }
 
         public static int FindMatchingBracket(string text, int caret)
@@ -184,24 +188,49 @@ namespace Flow.Launcher.VimMode
             if (text.Length == 0) return (0, 0);
 
             int start, end;
-            bool startIsWord = IsWordChar(text[Math.Min(caret, text.Length - 1)]);
-
             int i = Math.Min(caret, text.Length - 1);
-            while (i > 0 && IsWordChar(text[i - 1]) == startIsWord && !char.IsWhiteSpace(text[i - 1]))
+            bool isWs = char.IsWhiteSpace(text[i]);
+            bool startIsWord = IsWordChar(text[i]);
+
+            while (i > 0)
+            {
+                if (isWs)
+                {
+                    if (!char.IsWhiteSpace(text[i - 1])) break;
+                }
+                else
+                {
+                    if (IsWordChar(text[i - 1]) != startIsWord || char.IsWhiteSpace(text[i - 1])) break;
+                }
                 i--;
+            }
             start = i;
 
             i = Math.Min(caret, text.Length - 1);
-            while (i < text.Length - 1 && IsWordChar(text[i + 1]) == startIsWord && !char.IsWhiteSpace(text[i + 1]))
+            while (i < text.Length - 1)
+            {
+                if (isWs)
+                {
+                    if (!char.IsWhiteSpace(text[i + 1])) break;
+                }
+                else
+                {
+                    if (IsWordChar(text[i + 1]) != startIsWord || char.IsWhiteSpace(text[i + 1])) break;
+                }
                 i++;
+            }
             end = i;
 
-            if (around)
+            if (around && !isWs)
             {
                 if (end + 1 < text.Length && char.IsWhiteSpace(text[end + 1]))
-                    end++;
+                {
+                    while (end + 1 < text.Length && char.IsWhiteSpace(text[end + 1])) end++;
+                }
                 else if (start > 0 && char.IsWhiteSpace(text[start - 1]))
-                    start--;
+                {
+                    while (start > 0 && char.IsWhiteSpace(text[start - 1])) start--;
+                }
             }
 
             return (start, end);
@@ -237,24 +266,30 @@ namespace Flow.Launcher.VimMode
 
         public static (int start, int end) TextObjectQuote(string text, int caret, char quote, bool around)
         {
-            int first = -1, second = -1;
+            int first = -1;
 
             for (int i = 0; i < text.Length; i++)
             {
                 if (text[i] == quote)
                 {
-                    if (first == -1) first = i;
-                    else if (second == -1) { second = i; break; }
+                    if (first == -1) 
+                    {
+                        first = i;
+                    }
+                    else 
+                    {
+                        if (caret >= first && caret <= i)
+                        {
+                            int start = around ? first : first + 1;
+                            int end = around ? i : i - 1;
+                            return (start, end);
+                        }
+                        first = -1;
+                    }
                 }
             }
 
-            if (first == -1 || second == -1) return (-1, -1);
-            if (caret < first || caret > second) return (-1, -1);
-
-            int start = around ? first : first + 1;
-            int end = around ? second : second - 1;
-
-            return (start, end);
+            return (-1, -1);
         }
 
         private static bool IsWordChar(char c)

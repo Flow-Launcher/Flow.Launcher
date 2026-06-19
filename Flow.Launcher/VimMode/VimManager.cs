@@ -267,7 +267,7 @@ namespace Flow.Launcher.VimMode
                     return HandleGKey(e, modifiers);
                 }
 
-                if (string.IsNullOrEmpty(_awaitingCharCommand) && string.IsNullOrEmpty(_awaitingTextObject) && _pendingCommand == "")
+                if (string.IsNullOrEmpty(_awaitingCharCommand) && string.IsNullOrEmpty(_awaitingTextObject))
                 {
                     if (e.Key >= Key.D1 && e.Key <= Key.D9 && !modifiers.HasFlag(ModifierKeys.Shift))
                     {
@@ -370,8 +370,10 @@ namespace Flow.Launcher.VimMode
                             return false;
                         case Key.F:
                         case Key.T:
-                        case Key.R:
                             _awaitingCharCommand = modifiers.HasFlag(ModifierKeys.Shift) ? e.Key.ToString() : e.Key.ToString().ToLower();
+                            return true;
+                        case Key.R:
+                            _awaitingCharCommand = "r";
                             return true;
                         case Key.OemSemicolon:
                             if (!modifiers.HasFlag(ModifierKeys.Shift) && _lastFindChar != '\0')
@@ -617,8 +619,10 @@ namespace Flow.Launcher.VimMode
                             return true;
                         case Key.F:
                         case Key.T:
-                        case Key.R:
                             _awaitingCharCommand = modifiers.HasFlag(ModifierKeys.Shift) ? e.Key.ToString() : e.Key.ToString().ToLower();
+                            return true;
+                        case Key.R:
+                            _awaitingCharCommand = "r";
                             return true;
                         case Key.OemSemicolon:
                             if (!modifiers.HasFlag(ModifierKeys.Shift) && _lastFindChar != '\0')

@@ -2,7 +2,7 @@
 
 This is a specialized fork of [Flow Launcher](https://github.com/Flow-Launcher/Flow.Launcher), equipped with a fully featured, terminal-grade inline **Vim Mode** directly integrated into the search bar. 
 
-### Why does this exist?
+## Why does this exist?
 This fork was originally created to streamline journaling workflows. By using Flow Launcher to quickly input journal entries into a personal journaling system, typing out long strings quickly became tedious to edit. Standard text box navigation isn't fast enough. This fork adds native Vim motions directly to the search bar so that when you make a mistake typing a long entry or command, you can instantly drop into Normal mode, hop across word boundaries, and fix the typo without your hands ever leaving the home row.
 
 ---
@@ -14,7 +14,7 @@ Vim Mode transforms the Flow Launcher search bar into a modal editor, offering *
 You can instantly toggle this feature on or off via the `General` tab in the Flow Launcher Settings.
 
 ### Modes & Intercepts
-- **Mode Indicator**: A subtle, low-opacity indicator sits at the bottom-left of the search bar to clearly show your current mode (`-- NORMAL --`, `-- VISUAL --`, etc.) without interfering with plugins.
+- **Mode Indicator**: A slick, color-coded pill indicator sits at the far left of the search bar to clearly show your current mode (`NORMAL`, `VISUAL`, etc.).
 - **Insert Mode**: The default state. Works exactly like standard Flow Launcher (blinking text caret).
 - **Normal Mode**: Replaces the blinking caret with a solid block caret, and intercepts alphanumeric keystrokes to execute text manipulation commands.
 - **Visual Mode**: Char-wise selection. Movements extend the selection from a fixed anchor point; operators apply to the selected region.

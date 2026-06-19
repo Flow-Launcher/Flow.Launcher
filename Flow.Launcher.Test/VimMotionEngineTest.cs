@@ -68,7 +68,7 @@ namespace Flow.Launcher.Test
         {
             Assert.That(VimMotionEngine.MoveEndWord(Sample, 0), Is.EqualTo(4));
             Assert.That(VimMotionEngine.MoveEndWord(Sample, 5), Is.EqualTo(14));
-            Assert.That(VimMotionEngine.MoveEndWord(Sample, Sample.Length - 1), Is.EqualTo(Sample.Length));
+            Assert.That(VimMotionEngine.MoveEndWord(Sample, Sample.Length - 1), Is.EqualTo(Sample.Length - 1));
         }
 
         [Test]
