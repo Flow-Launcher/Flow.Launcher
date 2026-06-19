@@ -13,6 +13,7 @@ public class Settings : BaseModel
     public bool LoadChromeBookmark { get; set; } = true;
     public bool LoadFirefoxBookmark { get; set; } = true;
     public bool LoadEdgeBookmark { get; set; } = true;
+    public bool ReuseTabs { get; set; } = false;
 
     public ObservableCollection<CustomBrowser> CustomChromiumBrowsers { get; set; } = new();
 }

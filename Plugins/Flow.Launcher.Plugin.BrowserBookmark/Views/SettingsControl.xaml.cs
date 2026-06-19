@@ -48,6 +48,15 @@ public partial class SettingsControl
         }
     }
 
+    public bool ReuseTabs
+    {
+        get => Settings.ReuseTabs;
+        set
+        {
+            _ = Task.Run(() => Main.SetReuseTabs(value));
+        }
+    }
+
     public bool OpenInNewBrowserWindow
     {
         get => Settings.OpenInNewBrowserWindow;
