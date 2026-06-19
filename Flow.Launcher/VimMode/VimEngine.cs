@@ -5,7 +5,7 @@ namespace Flow.Launcher.VimMode
     /// <summary>
     /// Represents the different states of the Vim engine.
     /// </summary>
-    public enum VimModes
+    public enum VimModeType
     {
         Insert,
         Normal,
@@ -21,12 +21,12 @@ namespace Flow.Launcher.VimMode
         /// <summary>
         /// Gets the current Vim mode.
         /// </summary>
-        public VimModes CurrentMode { get; private set; } = VimModes.Insert;
+        public VimModeType CurrentMode { get; private set; } = VimModeType.Insert;
 
         /// <summary>
         /// Event fired whenever the Vim mode changes.
         /// </summary>
-        public event Action<VimModes> ModeChanged;
+        public event Action<VimModeType> ModeChanged;
 
         /// <summary>
         /// Switches the engine to Insert mode.
@@ -34,8 +34,8 @@ namespace Flow.Launcher.VimMode
         public void SwitchToInsert()
         {
             var oldMode = CurrentMode;
-            CurrentMode = VimModes.Insert;
-            if (oldMode != VimModes.Insert)
+            CurrentMode = VimModeType.Insert;
+            if (oldMode != VimModeType.Insert)
                 ModeChanged?.Invoke(CurrentMode);
         }
 
@@ -45,8 +45,8 @@ namespace Flow.Launcher.VimMode
         public void SwitchToNormal()
         {
             var oldMode = CurrentMode;
-            CurrentMode = VimModes.Normal;
-            if (oldMode != VimModes.Normal)
+            CurrentMode = VimModeType.Normal;
+            if (oldMode != VimModeType.Normal)
                 ModeChanged?.Invoke(CurrentMode);
         }
 
@@ -56,8 +56,8 @@ namespace Flow.Launcher.VimMode
         public void SwitchToVisual()
         {
             var oldMode = CurrentMode;
-            CurrentMode = VimModes.Visual;
-            if (oldMode != VimModes.Visual)
+            CurrentMode = VimModeType.Visual;
+            if (oldMode != VimModeType.Visual)
                 ModeChanged?.Invoke(CurrentMode);
         }
 
@@ -67,8 +67,8 @@ namespace Flow.Launcher.VimMode
         public void SwitchToVisualLine()
         {
             var oldMode = CurrentMode;
-            CurrentMode = VimModes.VisualLine;
-            if (oldMode != VimModes.VisualLine)
+            CurrentMode = VimModeType.VisualLine;
+            if (oldMode != VimModeType.VisualLine)
                 ModeChanged?.Invoke(CurrentMode);
         }
     }

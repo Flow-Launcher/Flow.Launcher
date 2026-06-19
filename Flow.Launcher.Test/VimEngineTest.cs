@@ -11,7 +11,7 @@ namespace Flow.Launcher.Test
         public void DefaultModeIsInsert()
         {
             var engine = new VimEngine();
-            Assert.That(engine.CurrentMode, Is.EqualTo(VimModes.Insert));
+            Assert.That(engine.CurrentMode, Is.EqualTo(VimModeType.Insert));
         }
 
         [Test]
@@ -19,13 +19,13 @@ namespace Flow.Launcher.Test
         {
             var engine = new VimEngine();
             engine.SwitchToNormal();
-            var modes = new List<VimModes>();
+            var modes = new List<VimModeType>();
             engine.ModeChanged += m => modes.Add(m);
 
             engine.SwitchToInsert();
 
-            Assert.That(engine.CurrentMode, Is.EqualTo(VimModes.Insert));
-            Assert.That(modes, Is.EqualTo(new[] { VimModes.Insert }));
+            Assert.That(engine.CurrentMode, Is.EqualTo(VimModeType.Insert));
+            Assert.That(modes, Is.EqualTo(new[] { VimModeType.Insert }));
         }
 
         [Test]
@@ -44,13 +44,13 @@ namespace Flow.Launcher.Test
         public void SwitchToNormalFiresEvent()
         {
             var engine = new VimEngine();
-            var modes = new List<VimModes>();
+            var modes = new List<VimModeType>();
             engine.ModeChanged += m => modes.Add(m);
 
             engine.SwitchToNormal();
 
-            Assert.That(engine.CurrentMode, Is.EqualTo(VimModes.Normal));
-            Assert.That(modes, Is.EqualTo(new[] { VimModes.Normal }));
+            Assert.That(engine.CurrentMode, Is.EqualTo(VimModeType.Normal));
+            Assert.That(modes, Is.EqualTo(new[] { VimModeType.Normal }));
         }
 
         [Test]
@@ -71,13 +71,13 @@ namespace Flow.Launcher.Test
         {
             var engine = new VimEngine();
             engine.SwitchToNormal();
-            var modes = new List<VimModes>();
+            var modes = new List<VimModeType>();
             engine.ModeChanged += m => modes.Add(m);
 
             engine.SwitchToVisual();
 
-            Assert.That(engine.CurrentMode, Is.EqualTo(VimModes.Visual));
-            Assert.That(modes, Is.EqualTo(new[] { VimModes.Visual }));
+            Assert.That(engine.CurrentMode, Is.EqualTo(VimModeType.Visual));
+            Assert.That(modes, Is.EqualTo(new[] { VimModeType.Visual }));
         }
 
         [Test]
@@ -98,13 +98,13 @@ namespace Flow.Launcher.Test
         {
             var engine = new VimEngine();
             engine.SwitchToVisual();
-            var modes = new List<VimModes>();
+            var modes = new List<VimModeType>();
             engine.ModeChanged += m => modes.Add(m);
 
             engine.SwitchToVisualLine();
 
-            Assert.That(engine.CurrentMode, Is.EqualTo(VimModes.VisualLine));
-            Assert.That(modes, Is.EqualTo(new[] { VimModes.VisualLine }));
+            Assert.That(engine.CurrentMode, Is.EqualTo(VimModeType.VisualLine));
+            Assert.That(modes, Is.EqualTo(new[] { VimModeType.VisualLine }));
         }
 
         [Test]
@@ -124,7 +124,7 @@ namespace Flow.Launcher.Test
         public void FullModeCycleTest()
         {
             var engine = new VimEngine();
-            var modes = new List<VimModes>();
+            var modes = new List<VimModeType>();
             engine.ModeChanged += m => modes.Add(m);
 
             engine.SwitchToNormal();
@@ -132,9 +132,9 @@ namespace Flow.Launcher.Test
             engine.SwitchToNormal();
             engine.SwitchToInsert();
 
-            Assert.That(engine.CurrentMode, Is.EqualTo(VimModes.Insert));
+            Assert.That(engine.CurrentMode, Is.EqualTo(VimModeType.Insert));
             Assert.That(modes, Is.EqualTo(new[] {
-                VimModes.Normal, VimModes.Visual, VimModes.Normal, VimModes.Insert
+                VimModeType.Normal, VimModeType.Visual, VimModeType.Normal, VimModeType.Insert
             }));
         }
 
@@ -142,7 +142,7 @@ namespace Flow.Launcher.Test
         public void VisualLineCycleTest()
         {
             var engine = new VimEngine();
-            var modes = new List<VimModes>();
+            var modes = new List<VimModeType>();
             engine.ModeChanged += m => modes.Add(m);
 
             engine.SwitchToNormal();
@@ -152,10 +152,10 @@ namespace Flow.Launcher.Test
             engine.SwitchToNormal();
             engine.SwitchToInsert();
 
-            Assert.That(engine.CurrentMode, Is.EqualTo(VimModes.Insert));
+            Assert.That(engine.CurrentMode, Is.EqualTo(VimModeType.Insert));
             Assert.That(modes, Is.EqualTo(new[] {
-                VimModes.Normal, VimModes.VisualLine, VimModes.Visual,
-                VimModes.VisualLine, VimModes.Normal, VimModes.Insert
+                VimModeType.Normal, VimModeType.VisualLine, VimModeType.Visual,
+                VimModeType.VisualLine, VimModeType.Normal, VimModeType.Insert
             }));
         }
 

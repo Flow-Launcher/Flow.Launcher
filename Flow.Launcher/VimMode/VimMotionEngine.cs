@@ -216,7 +216,7 @@ namespace Flow.Launcher.VimMode
         /// <param name="text">The text containing brackets.</param>
         /// <param name="caret">The current caret index.</param>
         /// <returns>The index of the matching bracket, or the original caret if none.</returns>
-        public static int FindMatchingBracket(string text, int caret)
+        public static int MoveToMatchingBracket(string text, int caret)
         {
             if (caret >= text.Length) return caret;
             char c = text[caret];
@@ -327,30 +327,40 @@ namespace Flow.Launcher.VimMode
         /// <param name="close">The closing delimiter.</param>
         /// <param name="around">True to include the delimiters (a object), false to exclude (i object).</param>
         /// <returns>A tuple containing the start and end indices, or (-1, -1) if invalid.</returns>
-        public static (int start, int end) TextObjectDelimited(string text, int caret, char open, char close, bool around)
+                public static (int start, int end) TextObjectDelimited(string text, int caret, char open, char close, bool around)
         {
-            int depth = 0;
             int openPos = -1;
-            int closePos = -1;
-
-            for (int i = 0; i < text.Length; i++)
+            int depth = 0;
+            for (int i = Math.Min(caret, text.Length - 1); i >= 0; i--)
             {
-                if (text[i] == open)
+                if (text[i] == close) depth++;
+                else if (text[i] == open)
                 {
-                    if (i <= caret) { openPos = i; depth = 1; closePos = -1; }
-                    else if (depth > 0) depth++;
-                }
-                else if (text[i] == close && depth > 0)
-                {
+                    if (depth == 0) { openPos = i; break; }
                     depth--;
-                    if (depth == 0) { closePos = i; break; }
                 }
             }
 
-            if (openPos == -1 || closePos == -1) return (-1, -1);
+            if (openPos == -1) return (-1, -1);
+
+            int closePos = -1;
+            depth = 0;
+            for (int i = openPos + 1; i < text.Length; i++)
+            {
+                if (text[i] == open) depth++;
+                else if (text[i] == close)
+                {
+                    if (depth == 0) { closePos = i; break; }
+                    depth--;
+                }
+            }
+
+            if (closePos == -1) return (-1, -1);
 
             int start = around ? openPos : openPos + 1;
             int end = around ? closePos : closePos - 1;
+
+            if (start > end) return (start, start - 1);
 
             return (start, end);
         }
@@ -363,7 +373,7 @@ namespace Flow.Launcher.VimMode
         /// <param name="quote">The quote character.</param>
         /// <param name="around">True to include the quotes, false to exclude.</param>
         /// <returns>A tuple containing the start and end indices, or (-1, -1) if invalid.</returns>
-        public static (int start, int end) TextObjectQuote(string text, int caret, char quote, bool around)
+                public static (int start, int end) TextObjectQuote(string text, int caret, char quote, bool around)
         {
             int first = -1;
 
@@ -381,6 +391,7 @@ namespace Flow.Launcher.VimMode
                         {
                             int start = around ? first : first + 1;
                             int end = around ? i : i - 1;
+                            if (start > end) return (start, start - 1);
                             return (start, end);
                         }
                         first = -1;
@@ -390,6 +401,8 @@ namespace Flow.Launcher.VimMode
 
             return (-1, -1);
         }
+
+        
 
         private static bool IsWordChar(char c)
         {

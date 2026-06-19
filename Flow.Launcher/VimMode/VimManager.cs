@@ -15,6 +15,21 @@ namespace Flow.Launcher.VimMode
         private readonly MainWindow _mainWindow;
         private readonly MainViewModel _viewModel;
         private readonly TextBox _queryTextBox;
+
+        private static void SetClipboardText(string text)
+        {
+            if (!string.IsNullOrEmpty(text))
+            {
+                try { Clipboard.SetText(text); } catch (Exception ex) { Flow.Launcher.Infrastructure.Logger.Log.Exception("VimManager", "Clipboard operation failed", ex); }
+            }
+        }
+        
+        private static System.Windows.Media.SolidColorBrush CreateBrush(byte r, byte g, byte b)
+        {
+            var brush = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(r, g, b));
+            brush.Freeze();
+            return brush;
+        }
         private readonly VimEngine _vimEngine;
         private readonly System.Windows.Shapes.Rectangle _vimBlockCaret;
         private readonly Border _vimModeIndicator;
@@ -71,11 +86,11 @@ namespace Flow.Launcher.VimMode
 
         private void UpdateCaretPosition()
         {
-            if (_vimEngine.CurrentMode != VimModes.Insert && _vimBlockCaret != null)
+            if (_vimEngine.CurrentMode != VimModeType.Insert && _vimBlockCaret != null)
             {
                 try
                 {
-                    int index = (_vimEngine.CurrentMode == VimModes.Visual || _vimEngine.CurrentMode == VimModes.VisualLine)
+                    int index = (_vimEngine.CurrentMode == VimModeType.Visual || _vimEngine.CurrentMode == VimModeType.VisualLine)
                         ? _visualCaret
                         : _queryTextBox.CaretIndex;
                     var rect = _queryTextBox.GetRectFromCharacterIndex(index);
@@ -99,7 +114,7 @@ namespace Flow.Launcher.VimMode
                 {
                     _mainWindow.Dispatcher.BeginInvoke(new Action(() =>
                     {
-                        if (_vimEngine.CurrentMode != VimModes.Insert)
+                        if (_vimEngine.CurrentMode != VimModeType.Insert)
                         {
                             _queryTextBox.SelectionLength = 0;
                             _vimEngine.SwitchToInsert();
@@ -109,12 +124,12 @@ namespace Flow.Launcher.VimMode
             }
         }
 
-        private void VimEngine_ModeChanged(VimModes mode)
+        private void VimEngine_ModeChanged(VimModeType mode)
         {
             UpdateIndicatorAsync(mode);
         }
 
-        private void UpdateIndicatorAsync(VimModes mode)
+        private void UpdateIndicatorAsync(VimModeType mode)
         {
             if (_mainWindow.Dispatcher.CheckAccess())
             {
@@ -126,26 +141,26 @@ namespace Flow.Launcher.VimMode
             }
         }
 
-        private void ApplyModeUI(VimModes mode)
+        private void ApplyModeUI(VimModeType mode)
         {
-            InputMethod.SetIsInputMethodSuspended(_queryTextBox, mode != VimModes.Insert);
+            InputMethod.SetIsInputMethodSuspended(_queryTextBox, mode != VimModeType.Insert);
 
             if (_vimModeIndicator != null)
             {
-                _vimModeIndicator.Visibility = _settings.EnableVimMode && mode != VimModes.Insert ? Visibility.Visible : Visibility.Collapsed;
+                _vimModeIndicator.Visibility = _settings.EnableVimMode && mode != VimModeType.Insert ? Visibility.Visible : Visibility.Collapsed;
                 
                 _vimModeIndicator.Background = mode switch
                 {
-                    VimModes.Normal => (System.Windows.Media.Brush)Application.Current.FindResource("BasicSystemAccentColor") ?? new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(0, 120, 215)),
-                    VimModes.Visual => new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(153, 50, 204)),
-                    VimModes.VisualLine => new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 140, 0)),
+                    VimModeType.Normal => (System.Windows.Media.Brush)Application.Current.FindResource("BasicSystemAccentColor") ?? CreateBrush(0, 120, 215),
+                    VimModeType.Visual => CreateBrush(153, 50, 204),
+                    VimModeType.VisualLine => CreateBrush(255, 140, 0),
                     _ => new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Transparent)
                 };
             }
 
             if (_vimBlockCaret == null) return;
 
-            if (mode == VimModes.Insert)
+            if (mode == VimModeType.Insert)
             {
                 _vimBlockCaret.Visibility = Visibility.Collapsed;
                 _queryTextBox.ClearValue(System.Windows.Controls.TextBox.CaretBrushProperty);
@@ -178,16 +193,16 @@ namespace Flow.Launcher.VimMode
                 return false;
             }
 
-            if (_vimBlockCaret != null && _vimBlockCaret.Visibility == Visibility.Collapsed && _vimEngine.CurrentMode != VimModes.Insert)
+            if (_vimBlockCaret != null && _vimBlockCaret.Visibility == Visibility.Collapsed && _vimEngine.CurrentMode != VimModeType.Insert)
             {
                 _vimBlockCaret.Visibility = Visibility.Visible;
             }
 
             var modifiers = e.KeyboardDevice.Modifiers;
 
-            if (modifiers.HasFlag(ModifierKeys.Control) && e.Key == Key.R && _vimEngine.CurrentMode == VimModes.Normal)
+            if (modifiers.HasFlag(ModifierKeys.Control) && e.Key == Key.R && _vimEngine.CurrentMode == VimModeType.Normal)
             {
-                try { _queryTextBox.Redo(); } catch (Exception ex) { Flow.Launcher.Infrastructure.Logger.Log.Exception("VimManager", "Clipboard/Redo operation failed", ex); }
+                try { _queryTextBox.Redo(); } catch { }
                 e.Handled = true;
                 return true;
             }
@@ -204,7 +219,7 @@ namespace Flow.Launcher.VimMode
                 return true;
             }
 
-            if (_vimEngine.CurrentMode == VimModes.Insert)
+            if (_vimEngine.CurrentMode == VimModeType.Insert)
             {
                 if (e.Key == Key.Escape)
                 {
@@ -216,7 +231,7 @@ namespace Flow.Launcher.VimMode
             }
             else
             {
-                if (_vimEngine.CurrentMode == VimModes.Visual || _vimEngine.CurrentMode == VimModes.VisualLine)
+                if (_vimEngine.CurrentMode == VimModeType.Visual || _vimEngine.CurrentMode == VimModeType.VisualLine)
                 {
                     if (e.Key == Key.Escape)
                     {
@@ -258,7 +273,7 @@ namespace Flow.Launcher.VimMode
         {
             var modifiers = e.KeyboardDevice.Modifiers;
 
-            if (_vimEngine.CurrentMode == VimModes.Normal || _vimEngine.CurrentMode == VimModes.Visual)
+            if (_vimEngine.CurrentMode == VimModeType.Normal || _vimEngine.CurrentMode == VimModeType.Visual)
             {
                 if (_gPending)
                 {
@@ -286,7 +301,7 @@ namespace Flow.Launcher.VimMode
                 }
             }
 
-            if (_vimEngine.CurrentMode == VimModes.Normal || _vimEngine.CurrentMode == VimModes.Visual || _vimEngine.CurrentMode == VimModes.VisualLine)
+            if (_vimEngine.CurrentMode == VimModeType.Normal || _vimEngine.CurrentMode == VimModeType.Visual || _vimEngine.CurrentMode == VimModeType.VisualLine)
             {
                 if (!string.IsNullOrEmpty(_awaitingCharCommand))
                 {
@@ -306,7 +321,7 @@ namespace Flow.Launcher.VimMode
 
             switch (_vimEngine.CurrentMode)
             {
-                case VimModes.Normal:
+                case VimModeType.Normal:
                     switch (e.Key)
                     {
                         case Key.J:
@@ -340,7 +355,7 @@ namespace Flow.Launcher.VimMode
                             ExecuteMotion(ApplyCountMove(i => VimMotionEngine.MoveEndWordBig(_queryTextBox.Text, i)));
                             return true;
                         case Key.D5 when modifiers.HasFlag(ModifierKeys.Shift):
-                            ExecuteMotion(VimMotionEngine.FindMatchingBracket(_queryTextBox.Text, _queryTextBox.CaretIndex));
+                            ExecuteMotion(VimMotionEngine.MoveToMatchingBracket(_queryTextBox.Text, _queryTextBox.CaretIndex));
                             return true;
                         case Key.G:
                             if (modifiers.HasFlag(ModifierKeys.Shift))
@@ -395,7 +410,7 @@ namespace Flow.Launcher.VimMode
                                 if (_queryTextBox.CaretIndex > 0)
                                 {
                                     int c = _queryTextBox.CaretIndex - 1;
-                                    try { Clipboard.SetText(_queryTextBox.Text.Substring(c, 1)); } catch (Exception ex) { Flow.Launcher.Infrastructure.Logger.Log.Exception("VimManager", "Clipboard/Redo operation failed", ex); }
+                                    SetClipboardText(_queryTextBox.Text.Substring(c, 1));
                                     _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, _queryTextBox.Text.Remove(c, 1));
                                     _queryTextBox.CaretIndex = c;
                                 }
@@ -407,7 +422,7 @@ namespace Flow.Launcher.VimMode
                                 {
                                     int c = _queryTextBox.CaretIndex;
                                     int len = Math.Min(n, _queryTextBox.Text.Length - c);
-                                    try { Clipboard.SetText(_queryTextBox.Text.Substring(c, len)); } catch (Exception ex) { Flow.Launcher.Infrastructure.Logger.Log.Exception("VimManager", "Clipboard/Redo operation failed", ex); }
+                                    SetClipboardText(_queryTextBox.Text.Substring(c, len));
                                     _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, _queryTextBox.Text.Remove(c, len));
                                     _queryTextBox.CaretIndex = c;
                                 }
@@ -426,7 +441,7 @@ namespace Flow.Launcher.VimMode
                                 if (_queryTextBox.CaretIndex < _queryTextBox.Text.Length)
                                 {
                                     int c = _queryTextBox.CaretIndex;
-                                    try { Clipboard.SetText(_queryTextBox.Text.Substring(c, 1)); } catch (Exception ex) { Flow.Launcher.Infrastructure.Logger.Log.Exception("VimManager", "Clipboard/Redo operation failed", ex); }
+                                    SetClipboardText(_queryTextBox.Text.Substring(c, 1));
                                     _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, _queryTextBox.Text.Remove(c, 1));
                                     _queryTextBox.CaretIndex = c;
                                 }
@@ -482,7 +497,7 @@ namespace Flow.Launcher.VimMode
                             {
                                 if (!string.IsNullOrEmpty(_queryTextBox.Text))
                                 {
-                                    try { Clipboard.SetText(_queryTextBox.Text); } catch (Exception ex) { Flow.Launcher.Infrastructure.Logger.Log.Exception("VimManager", "Clipboard/Redo operation failed", ex); }
+                                    SetClipboardText(_queryTextBox.Text);
                                 }
                                 if (cmd == "d" || cmd == "c")
                                 {
@@ -546,7 +561,7 @@ namespace Flow.Launcher.VimMode
                             return false;
                     }
 
-                case VimModes.Visual:
+                case VimModeType.Visual:
                     switch (e.Key)
                     {
                         case Key.V when modifiers.HasFlag(ModifierKeys.Shift):
@@ -600,7 +615,7 @@ namespace Flow.Launcher.VimMode
                             ExecuteVisualMotion(VimMotionEngine.MoveStartOfLine());
                             return true;
                         case Key.D5 when modifiers.HasFlag(ModifierKeys.Shift):
-                            ExecuteVisualMotion(VimMotionEngine.FindMatchingBracket(_queryTextBox.Text, _visualCaret));
+                            ExecuteVisualMotion(VimMotionEngine.MoveToMatchingBracket(_queryTextBox.Text, _visualCaret));
                             return true;
                         case Key.D6:
                             if (modifiers.HasFlag(ModifierKeys.Shift))
@@ -651,7 +666,7 @@ namespace Flow.Launcher.VimMode
                                 int selLength = _queryTextBox.SelectionLength;
                                 if (selLength > 0)
                                 {
-                                    try { Clipboard.SetText(_queryTextBox.Text.Substring(selStart, selLength)); } catch (Exception ex) { Flow.Launcher.Infrastructure.Logger.Log.Exception("VimManager", "Clipboard/Redo operation failed", ex); }
+                                    SetClipboardText(_queryTextBox.Text.Substring(selStart, selLength));
                                     _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, _queryTextBox.Text.Remove(selStart, selLength));
                                     _queryTextBox.CaretIndex = selStart;
                                 }
@@ -664,7 +679,7 @@ namespace Flow.Launcher.VimMode
                                 int selLength = _queryTextBox.SelectionLength;
                                 if (selLength > 0)
                                 {
-                                    try { Clipboard.SetText(_queryTextBox.Text.Substring(selStart, selLength)); } catch (Exception ex) { Flow.Launcher.Infrastructure.Logger.Log.Exception("VimManager", "Clipboard/Redo operation failed", ex); }
+                                    SetClipboardText(_queryTextBox.Text.Substring(selStart, selLength));
                                 }
                                 _queryTextBox.CaretIndex = selStart;
                                 _queryTextBox.SelectionLength = 0;
@@ -678,7 +693,7 @@ namespace Flow.Launcher.VimMode
                                 int selLength = _queryTextBox.SelectionLength;
                                 if (selLength > 0)
                                 {
-                                    try { Clipboard.SetText(_queryTextBox.Text.Substring(selStart, selLength)); } catch (Exception ex) { Flow.Launcher.Infrastructure.Logger.Log.Exception("VimManager", "Clipboard/Redo operation failed", ex); }
+                                    SetClipboardText(_queryTextBox.Text.Substring(selStart, selLength));
                                     _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, _queryTextBox.Text.Remove(selStart, selLength));
                                     _queryTextBox.CaretIndex = selStart;
                                 }
@@ -712,7 +727,7 @@ namespace Flow.Launcher.VimMode
                             return true;
                     }
 
-                case VimModes.VisualLine:
+                case VimModeType.VisualLine:
                     switch (e.Key)
                     {
                         case Key.V when modifiers == ModifierKeys.None:
@@ -720,20 +735,20 @@ namespace Flow.Launcher.VimMode
                             return true;
                         case Key.X:
                         case Key.D:
-                            try { Clipboard.SetText(_queryTextBox.Text); } catch (Exception ex) { Flow.Launcher.Infrastructure.Logger.Log.Exception("VimManager", "Clipboard/Redo operation failed", ex); }
+                            SetClipboardText(_queryTextBox.Text);
                             _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, "");
                             _queryTextBox.CaretIndex = 0;
                             _vimEngine.SwitchToNormal();
                             return true;
                         case Key.Y:
-                            try { Clipboard.SetText(_queryTextBox.Text); } catch (Exception ex) { Flow.Launcher.Infrastructure.Logger.Log.Exception("VimManager", "Clipboard/Redo operation failed", ex); }
+                            SetClipboardText(_queryTextBox.Text);
                             _queryTextBox.CaretIndex = 0;
                             _queryTextBox.SelectionLength = 0;
                             _vimEngine.SwitchToNormal();
                             return true;
                         case Key.C:
                         case Key.S:
-                            try { Clipboard.SetText(_queryTextBox.Text); } catch (Exception ex) { Flow.Launcher.Infrastructure.Logger.Log.Exception("VimManager", "Clipboard/Redo operation failed", ex); }
+                            SetClipboardText(_queryTextBox.Text);
                             _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, "");
                             _queryTextBox.CaretIndex = 0;
                             _vimEngine.SwitchToInsert();
@@ -775,7 +790,7 @@ namespace Flow.Launcher.VimMode
         {
             switch (_vimEngine.CurrentMode)
             {
-                case VimModes.Normal:
+                case VimModeType.Normal:
                     switch (e.Key)
                     {
                         case Key.OemMinus when modifiers.HasFlag(ModifierKeys.Shift):
@@ -805,7 +820,7 @@ namespace Flow.Launcher.VimMode
                         default:
                             return true;
                     }
-                case VimModes.Visual:
+                case VimModeType.Visual:
                     switch (e.Key)
                     {
                         case Key.V:
@@ -834,7 +849,7 @@ namespace Flow.Launcher.VimMode
             if (e.Key == Key.W) delim = 'w';
 
             string text = _queryTextBox.Text;
-            int caret = (_vimEngine.CurrentMode == VimModes.Visual) ? _visualCaret : _queryTextBox.CaretIndex;
+            int caret = (_vimEngine.CurrentMode == VimModeType.Visual) ? _visualCaret : _queryTextBox.CaretIndex;
             bool around = prefix == "a";
             (int start, int end) range = (0, 0);
 
@@ -867,7 +882,7 @@ namespace Flow.Launcher.VimMode
 
             if (range.start < 0) return true;
 
-            if (_vimEngine.CurrentMode == VimModes.Visual)
+            if (_vimEngine.CurrentMode == VimModeType.Visual)
             {
                 _visualAnchor = range.start;
                 _visualCaret = range.end;
@@ -880,7 +895,7 @@ namespace Flow.Launcher.VimMode
                 int len = range.end - range.start + 1;
                 if (len > 0)
                 {
-                    try { Clipboard.SetText(text.Substring(range.start, len)); } catch (Exception ex) { Flow.Launcher.Infrastructure.Logger.Log.Exception("VimManager", "Clipboard/Redo operation failed", ex); }
+                    SetClipboardText(text.Substring(range.start, len));
                     if (_pendingCommand != "y")
                     {
                         _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, text.Remove(range.start, len));
@@ -898,7 +913,7 @@ namespace Flow.Launcher.VimMode
 
         private int ApplyCountMove(Func<int, int> move)
         {
-            int target = (_vimEngine.CurrentMode == VimModes.Visual) ? _visualCaret : _queryTextBox.CaretIndex;
+            int target = (_vimEngine.CurrentMode == VimModeType.Visual) ? _visualCaret : _queryTextBox.CaretIndex;
             int n = _count > 0 ? _count : 1;
             for (int i = 0; i < n; i++)
                 target = move(target);
@@ -918,12 +933,12 @@ namespace Flow.Launcher.VimMode
             switch (_lastChange)
             {
                 case "dd":
-                    try { Clipboard.SetText(_queryTextBox.Text); } catch (Exception ex) { Flow.Launcher.Infrastructure.Logger.Log.Exception("VimManager", "Clipboard/Redo operation failed", ex); }
+                    SetClipboardText(_queryTextBox.Text);
                     _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, "");
                     _queryTextBox.CaretIndex = 0;
                     break;
                 case "cc":
-                    try { Clipboard.SetText(_queryTextBox.Text); } catch (Exception ex) { Flow.Launcher.Infrastructure.Logger.Log.Exception("VimManager", "Clipboard/Redo operation failed", ex); }
+                    SetClipboardText(_queryTextBox.Text);
                     _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, "");
                     _queryTextBox.CaretIndex = 0;
                     _vimEngine.SwitchToInsert();
@@ -934,7 +949,7 @@ namespace Flow.Launcher.VimMode
                         int c = _queryTextBox.CaretIndex;
                         if (c < _queryTextBox.Text.Length)
                         {
-                            try { Clipboard.SetText(_queryTextBox.Text.Substring(c)); } catch (Exception ex) { Flow.Launcher.Infrastructure.Logger.Log.Exception("VimManager", "Clipboard/Redo operation failed", ex); }
+                            SetClipboardText(_queryTextBox.Text.Substring(c));
                             _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, _queryTextBox.Text.Remove(c));
                             _queryTextBox.CaretIndex = c;
                         }
@@ -942,7 +957,7 @@ namespace Flow.Launcher.VimMode
                     }
                     break;
                 case "Y_eol":
-                    try { Clipboard.SetText(_queryTextBox.Text); } catch (Exception ex) { Flow.Launcher.Infrastructure.Logger.Log.Exception("VimManager", "Clipboard/Redo operation failed", ex); }
+                    SetClipboardText(_queryTextBox.Text);
                     break;
                 case "x":
                     {
@@ -951,7 +966,7 @@ namespace Flow.Launcher.VimMode
                         int len = Math.Min(n, _queryTextBox.Text.Length - c);
                         if (len > 0)
                         {
-                            try { Clipboard.SetText(_queryTextBox.Text.Substring(c, len)); } catch (Exception ex) { Flow.Launcher.Infrastructure.Logger.Log.Exception("VimManager", "Clipboard/Redo operation failed", ex); }
+                            SetClipboardText(_queryTextBox.Text.Substring(c, len));
                             _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, _queryTextBox.Text.Remove(c, len));
                             _queryTextBox.CaretIndex = c;
                         }
@@ -980,7 +995,7 @@ namespace Flow.Launcher.VimMode
 
             if (cmd == "r")
             {
-                if (_vimEngine.CurrentMode == VimModes.Visual || _vimEngine.CurrentMode == VimModes.VisualLine)
+                if (_vimEngine.CurrentMode == VimModeType.Visual || _vimEngine.CurrentMode == VimModeType.VisualLine)
                 {
                     int selStart = _queryTextBox.SelectionStart;
                     int selLength = _queryTextBox.SelectionLength;
@@ -1012,7 +1027,7 @@ namespace Flow.Launcher.VimMode
         private void ExecuteFindCommand(string cmd, char c)
         {
             string text = _queryTextBox.Text;
-            int caret = (_vimEngine.CurrentMode == VimModes.Visual || _vimEngine.CurrentMode == VimModes.VisualLine)
+            int caret = (_vimEngine.CurrentMode == VimModeType.Visual || _vimEngine.CurrentMode == VimModeType.VisualLine)
                 ? _visualCaret
                 : _queryTextBox.CaretIndex;
             int target = caret;
@@ -1022,7 +1037,7 @@ namespace Flow.Launcher.VimMode
             else if (cmd == "t") target = VimMotionEngine.FindCharForward(text, caret, c, true);
             else if (cmd == "T") target = VimMotionEngine.FindCharBackward(text, caret, c, true);
 
-            if (_vimEngine.CurrentMode == VimModes.Visual || _vimEngine.CurrentMode == VimModes.VisualLine)
+            if (_vimEngine.CurrentMode == VimModeType.Visual || _vimEngine.CurrentMode == VimModeType.VisualLine)
                 ExecuteVisualMotion(target);
             else
                 ExecuteMotion(target);
@@ -1030,15 +1045,15 @@ namespace Flow.Launcher.VimMode
 
         private void ExecuteMotion(int targetCaret)
         {
-            if (_pendingCommand == "d" || _pendingCommand == "c")
+            if (_pendingCommand == "d" || _pendingCommand == "c" || _pendingCommand == "y")
             {
-                int start = _queryTextBox.CaretIndex;
-                int end = targetCaret;
+                int start = Math.Max(0, _queryTextBox.CaretIndex);
+                int end = Math.Max(0, targetCaret);
                 if (start > end) { var temp = start; start = end; end = temp; }
                 
                 if (end > start)
                 {
-                    try { Clipboard.SetText(_queryTextBox.Text.Substring(start, end - start)); } catch (Exception ex) { Flow.Launcher.Infrastructure.Logger.Log.Exception("VimManager", "Clipboard/Redo operation failed", ex); }
+                    SetClipboardText(_queryTextBox.Text.Substring(start, end - start));
                     _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, _queryTextBox.Text.Remove(start, end - start));
                     _queryTextBox.CaretIndex = start;
                 }
@@ -1050,8 +1065,8 @@ namespace Flow.Launcher.VimMode
             }
             else if (_pendingCommand == "~")
             {
-                int start = _queryTextBox.CaretIndex;
-                int end = targetCaret;
+                int start = Math.Max(0, _queryTextBox.CaretIndex);
+                int end = Math.Max(0, targetCaret);
                 if (start > end) { var temp = start; start = end; end = temp; }
                 if (end < _queryTextBox.Text.Length) end++;
                 
@@ -1068,8 +1083,8 @@ namespace Flow.Launcher.VimMode
             }
             else if (_pendingCommand == "gu")
             {
-                int start = _queryTextBox.CaretIndex;
-                int end = targetCaret;
+                int start = Math.Max(0, _queryTextBox.CaretIndex);
+                int end = Math.Max(0, targetCaret);
                 if (start > end) { var temp = start; start = end; end = temp; }
                 if (end < _queryTextBox.Text.Length) end++;
                 
@@ -1085,8 +1100,8 @@ namespace Flow.Launcher.VimMode
             }
             else if (_pendingCommand == "gU")
             {
-                int start = _queryTextBox.CaretIndex;
-                int end = targetCaret;
+                int start = Math.Max(0, _queryTextBox.CaretIndex);
+                int end = Math.Max(0, targetCaret);
                 if (start > end) { var temp = start; start = end; end = temp; }
                 if (end < _queryTextBox.Text.Length) end++;
                 
@@ -1110,6 +1125,7 @@ namespace Flow.Launcher.VimMode
         {
             int start = Math.Min(_visualAnchor, _visualCaret);
             int end = Math.Max(_visualAnchor, _visualCaret);
+            if (start < 0) start = 0;
             int length = Math.Min(end - start + 1, _queryTextBox.Text.Length - start);
             if (length < 0) length = 0;
             _queryTextBox.Select(start, length);
@@ -1207,7 +1223,7 @@ namespace Flow.Launcher.VimMode
 
         private void QueryTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            if (_vimEngine.CurrentMode != VimModes.Insert)
+            if (_vimEngine.CurrentMode != VimModeType.Insert)
             {
                 e.Handled = true;
             }
@@ -1216,7 +1232,7 @@ namespace Flow.Launcher.VimMode
         /// <summary>
         /// Gets a value indicating whether native text input is currently blocked by Vim mode.
         /// </summary>
-        public bool IsInputBlocked => _vimEngine.CurrentMode != VimModes.Insert;
+        public bool IsInputBlocked => _vimEngine.CurrentMode != VimModeType.Insert;
 
         /// <summary>
         /// Disposes the Vim manager and detaches from window events.
