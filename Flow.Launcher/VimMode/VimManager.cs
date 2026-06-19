@@ -1054,8 +1054,11 @@ namespace Flow.Launcher.VimMode
                 if (end > start)
                 {
                     SetClipboardText(_queryTextBox.Text.Substring(start, end - start));
-                    _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, _queryTextBox.Text.Remove(start, end - start));
-                    _queryTextBox.CaretIndex = start;
+                    if (_pendingCommand != "y")
+                    {
+                        _queryTextBox.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, _queryTextBox.Text.Remove(start, end - start));
+                        _queryTextBox.CaretIndex = start;
+                    }
                 }
                 
                 if (_pendingCommand == "c")
