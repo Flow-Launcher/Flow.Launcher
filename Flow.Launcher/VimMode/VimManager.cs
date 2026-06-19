@@ -130,14 +130,6 @@ namespace Flow.Launcher.VimMode
         {
             InputMethod.SetIsInputMethodSuspended(_queryTextBox, mode != VimModes.Insert);
 
-            string label = mode switch
-            {
-                VimModes.Normal => "NORMAL",
-                VimModes.Visual => "VISUAL",
-                VimModes.VisualLine => "V-LINE",
-                _ => null
-            };
-
             if (_vimModeIndicator != null)
             {
                 _vimModeIndicator.Visibility = _settings.EnableVimMode && mode != VimModes.Insert ? Visibility.Visible : Visibility.Collapsed;
