@@ -9,6 +9,7 @@ on:
     branches:
       - dev
       - master
+      - vim-mode
   pull_request:
 
 jobs:
