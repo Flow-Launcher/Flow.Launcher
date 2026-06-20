@@ -364,7 +364,7 @@ namespace Flow.Launcher.VimMode
         /// <param name="close">The closing delimiter.</param>
         /// <param name="around">True to include the delimiters (a object), false to exclude (i object).</param>
         /// <returns>A tuple containing the start and end indices, or (-1, -1) if invalid.</returns>
-                public static (int start, int end) TextObjectDelimited(string text, int caret, char open, char close, bool around)
+        public static (int start, int end) TextObjectDelimited(string text, int caret, char open, char close, bool around)
         {
             int openPos = -1;
             int depth = 0;
@@ -410,7 +410,7 @@ namespace Flow.Launcher.VimMode
         /// <param name="quote">The quote character.</param>
         /// <param name="around">True to include the quotes, false to exclude.</param>
         /// <returns>A tuple containing the start and end indices, or (-1, -1) if invalid.</returns>
-                public static (int start, int end) TextObjectQuote(string text, int caret, char quote, bool around)
+        public static (int start, int end) TextObjectQuote(string text, int caret, char quote, bool around)
         {
             int first = -1;
 

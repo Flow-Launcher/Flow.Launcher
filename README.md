@@ -1,119 +1,437 @@
-# Flow Launcher - Vim Edition
+<p align="center">
+        <a href="https://flowlauncher.com">
+        	<img src="https://user-images.githubusercontent.com/6903107/207167068-2196d2a3-2caa-4856-958b-a780fbda95c6.gif" width="500">
+        </a><br />
+        <img src="https://user-images.githubusercontent.com/6903107/207168016-85d0dd16-1f3b-4d42-9d37-0e0d5a596ead.png" width="400">
+</p>
+<p align="center">
+<img src="https://img.shields.io/maintenance/yes/3000">
+<a href="https://crowdin.com/project/flow-launcher"><img src="https://badges.crowdin.net/flow-launcher/localized.svg"></a>
+<a href="https://ci.appveyor.com/project/JohnTheGr8/flow-launcher/branch/dev"><img src="https://ci.appveyor.com/api/projects/status/32r7s2skrgm9ubva?svg=true&retina=true"></a>
+<a href="https://github.com/Flow-Launcher/Flow.Launcher/releases"><img src="https://img.shields.io/github/downloads/Flow-Launcher/Flow.Launcher/total.svg"></a><br />
+<img src="https://img.shields.io/github/release-date/Flow-Launcher/Flow.Launcher">
+<a href="https://github.com/Flow-Launcher/Flow.Launcher/releases/latest"><img src="https://img.shields.io/github/v/release/Flow-Launcher/Flow.Launcher"></a>
+<a href="https://flowlauncher.com/docs"><img src="https://img.shields.io/badge/Documentation-7389D8"></a>
+<a href="https://discord.gg/AvgAQgh"><img src="https://img.shields.io/discord/727828229250875472?color=7389D8&labelColor=6A7EC2&label=Community&logo=discord&logoColor=white"></a>
+</p>
 
-This is a specialized fork of [Flow Launcher](https://github.com/Flow-Launcher/Flow.Launcher), equipped with a fully featured, terminal-grade inline **Vim Mode** directly integrated into the search bar. 
+<p align="center">
+A quick file search and app launcher for Windows with community-made plugins.</p>
 
-## Why does this exist?
-This fork was originally created to streamline journaling workflows. By using Flow Launcher to quickly input journal entries into a personal journaling system, typing out long strings quickly became tedious to edit. Standard text box navigation isn't fast enough. This fork adds native Vim motions directly to the search bar so that when you make a mistake typing a long entry or command, you can instantly drop into Normal mode, hop across word boundaries, and fix the typo without your hands ever leaving the home row.
+<p align="center">
+Dedicated to making your workflow more seamless. Search everything from applications, files, bookmarks, YouTube, Twitter and more. Flow will continue to evolve, designed to be open and built with the community at heart.</p>
 
----
+<p align="center"> <sub>Remember to star it, Flow will love you more :)</sub></p>
 
-## 🛠️ Advanced Vim Features
+<img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
-Vim Mode transforms the Flow Launcher search bar into a modal editor, offering **Insert**, **Normal**, **Visual**, and **Visual Line** modes, complete with an overlaid block caret that physically tracks to the text layout.
+<h4 align="center">  
+  <a href="#-official-channels">Official Channels</a> •
+  <a href="#-getting-started">Getting Started</a> •
+  <a href="#-features">Features</a> •
+  <a href="#-plugins">Plugins</a> •
+  <a href="#%EF%B8%8F-hotkeys">Hotkeys</a> •
+  <a href="#sponsors">Sponsors</a> •
+  <a href="#-questionssuggestions">Questions/Suggestions</a> •
+  <a href="#development">Development</a> •
+  <a href="https://flowlauncher.com/docs">Docs</a>
+</h4>
 
-You can instantly toggle this feature on or off via the `General` tab in the Flow Launcher Settings.
+<img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
-### Modes & Intercepts
-- **Mode Indicator**: A small, color-coded dot sits at the far left of the search bar to show your current mode at a glance — accent/blue for **Normal**, purple for **Visual**, orange for **Visual Line**. In Insert mode the dot is hidden (you're just typing normally).
-- **Insert Mode**: The default state. Works exactly like standard Flow Launcher (blinking text caret).
-- **Normal Mode**: Replaces the blinking caret with a solid block caret, and intercepts alphanumeric keystrokes to execute text manipulation commands.
-- **Visual Mode**: Char-wise selection. Movements extend the selection from a fixed anchor point; operators apply to the selected region.
-- **Visual Line Mode**: Line-wise selection. Selects the entire query; operators apply to the whole line.
-- **Escape**: Pressing `Escape` while typing will unconditionally kick you into Normal mode. 
-- **Double-Escape**: Quickly double-tapping `Escape` (within 400ms) will immediately hide the Flow Launcher UI.
+## 📣 Official Channels
 
-### Normal Mode Keybindings
+- Website: [https://flowlauncher.com](https://flowlauncher.com)
+- GitHub Organization: [https://github.com/Flow-Launcher](https://github.com/Flow-Launcher)
+- Discord: [https://discord.gg/AvgAQgh](https://discord.gg/AvgAQgh)
+- Reddit: [https://www.reddit.com/r/FlowLauncher/](https://www.reddit.com/r/FlowLauncher/)
 
-#### Basic Navigation
-- `h` / `l` : Move cursor left / right
-- `j` / `k` : Navigate up / down through Flow Launcher search results
-- `0` : Snap to the absolute beginning of the query
-- `^` : Snap to the first non-blank character of the query
-- `$` : Snap to the end of the query
+⚠️ Only trust official channels for downloads and announcements, and be careful of similar-looking domains.
 
-#### Word Boundaries
-- `w` / `W` (Shift) : Jump to the start of the next word / BIG word boundary
-- `e` / `E` (Shift) : Jump to the end of the current word / BIG word boundary
-- `b` / `B` (Shift) : Jump back to the start of the previous word / BIG word boundary
+For installation, use the official methods listed below.
 
-#### Character Lookup
-- `f{char}` : Find the next occurrence of `{char}` forward
-- `F{char}` : Find the previous occurrence of `{char}` backward
-- `t{char}` : Jump till just before the next occurrence of `{char}`
-- `T{char}` : Jump till just after the previous occurrence of `{char}`
-- `;` : Repeat the last find lookup in the same direction
-- `,` : Repeat the last find lookup in the opposite direction
+<img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
-#### Text Manipulation (Integrated with System Clipboard)
-- `x` : Delete the character under the cursor
-- `X` (Shift+X) : Delete the character before the cursor (Backspace equivalent)
-- `s` : Substitute character (Deletes under cursor and enters Insert mode)
-- `S` (Shift+S) : Substitute line (Clears query and enters Insert mode)
-- `r{char}` : Replace the character under the cursor with `{char}`
-- `~` : Toggle the casing of the character under the cursor
-- `gu` / `gU` : Make lowercase / uppercase (operator pending, e.g., `guw` to lower a word)
-- `dd` / `cc` : Delete or Change the entire query
-- `D` / `C` : Delete or Change from the cursor to the end of the line
-- `Y` (Shift+Y) : Yank (Copy) the entire query
-- `p` : Paste from system clipboard
-- `u` : Undo the last Vim operation (operation-level, not character-level)
-- `Ctrl+R` : Redo the last undone operation
+## 🚗 Getting Started
 
-#### Repeat & Counts
-- `.` : Repeat the last change (e.g. `x`, `dw`, `r{char}`, `p`). Note: a change that ends in Insert mode (like `cw`) repeats the deletion but does not re-type the inserted text.
-- `{count}` : Most motions and operators accept a numeric prefix, e.g. `3w` (forward 3 words), `5x` (delete 5 chars), `2p` (paste twice), `d3w` / `3dw` (delete 3 words).
+### Installation
 
-#### Text Objects (For Operators & Visual Mode)
-Use these immediately after an operator (like `d`, `c`, `y`, `gu`) to target specific text structures.
-- **Modifiers**: `i` (inner), `a` (around)
-- **Targets**: `w` (word), `"` (double quotes), `'` (single quotes), `(` (parentheses), `[` (brackets), `{` (braces)
-- *Example*: `diw` (delete inner word), `ci"` (change inside quotes), `ya(` (yank around parentheses)
+[Windows 10+ Installer](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest/download/Flow-Launcher-Setup.exe) or [Portable Version](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest/download/Flow-Launcher-Portable.zip)
 
-#### Mode Switching
-- `i` : Enter Insert mode at the cursor
-- `I` (Shift+I) : Enter Insert mode at the beginning of the query
-- `a` : Enter Insert mode after the cursor
-- `A` (Shift+A) : Enter Insert mode at the end of the query
-- `v` : Enter Visual mode (char-wise selection)
-- `V` (Shift+V) : Enter Visual Line mode (select entire query)
+#### Winget
 
-### Visual Mode Keybindings
+```
+winget install "Flow Launcher"
+```
 
-#### Entering Visual Mode
-- `v` : From Normal mode, enter char-wise Visual mode at the cursor
-- `V` (Shift+V) : From Normal mode, enter Visual Line mode (selects entire query)
+#### Scoop
 
-#### Extending the Selection (Visual mode only)
-- `h` / `l` : Extend selection left / right
-- `w` / `b` / `e` (and `W`/`B`/`E`) : Extend by word boundary
-- `0` / `^` / `$` : Extend to beginning / first non-blank / end of query
-- `f{char}` / `F{char}` / `t{char}` / `T{char}` : Extend to character lookup
-- `;` / `,` : Repeat last character lookup
+```
+scoop install Flow-Launcher
+```
 
-#### Operators (work on the selected region)
-- `x` / `d` : Delete the selection (copies to clipboard)
-- `y` : Yank (copy) the selection
-- `c` / `s` : Change the selection (delete and enter Insert mode)
-- `r{char}` : Replace every character in the selection with `{char}`
-- `~` : Toggle casing of every character in the selection
-- `gu` / `gU` : Make every character in the selection lowercase / uppercase
+#### Chocolatey
 
-#### Mode Transitions
-- `Esc` : Return to Normal mode (clears selection)
-- `v` : In Visual Line mode, switch to char-wise Visual mode
-- `V` : In Visual mode, switch to Visual Line mode (selects entire query)
-- `j` / `k` : Navigate search results (same as Normal mode)
+```
+choco install Flow-Launcher
+```
 
-### Known Limitations
-- **Keyboard layout**: Character-pending commands (`f`/`F`/`t`/`T`, `r`, and the quote/bracket text objects) reconstruct the target character from the physical key, assuming a US-QWERTY layout. On other layouts, symbols and punctuation may resolve incorrectly. Letters and digits work everywhere.
-- **Dot-repeat of inserts**: `.` replays the operator/motion of the last change but not text typed in Insert mode, so `cwfoo<Esc>.` re-deletes a word without re-typing `foo`.
-- **Single line**: The query is a single-line field, so line-wise commands (`dd`, `cc`, `V`, `0`/`$`) operate on the whole query, and `gg`/`G` are not bound.
+> When installing for the first time Windows may raise an issue about security due to code not being signed, if you downloaded from this repo then you are good to continue the set up.
 
----
+Or download the [early access version](https://github.com/Flow-Launcher/Prereleases/releases).
 
-*(The below is the standard Flow Launcher README)*
+<img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
-# Flow Launcher
-Flow Launcher is a quick file search and app launcher for Windows with community-made plugins.
+## 🎁 Features
 
-[Website](https://flowlauncher.com) | [Documentation](https://flowlauncher.com/docs/) | [Plugin Store](https://flowlauncher.com/docs/plugins.html)
+### Applications & Files
+
+<img src="https://user-images.githubusercontent.com/6903107/145332614-74909973-f6eb-47c2-8235-289931e30718.png" width="400">
+
+- Search for apps, files or file contents.
+- Supports Everything and Windows Index.
+
+<img src="https://user-images.githubusercontent.com/6903107/145018796-658b7c24-a34f-46b6-98d4-cf4f636d8b60.png" width="400">
+
+- Supports search using environment variable paths.
+
+### Web Searches & URLs
+
+<img src="https://user-images.githubusercontent.com/6903107/144517502-5325de01-d0d9-4c2e-aafb-33c3f5d82f81.png" width="400">
+<img src="https://user-images.githubusercontent.com/6903107/144831031-0e01e8ea-3247-4ba4-a7b4-48b0db620bc1.png" width="400">
+<img src="https://user-images.githubusercontent.com/6903107/222829602-aabb1144-db5c-4250-b5ae-66f8342e4ae4.png" width="400">
+
+### Browser Bookmarks
+
+<img src="https://user-images.githubusercontent.com/6903107/207143428-e6406306-4f1e-4c24-917d-d2a333d5dc2b.png" width="400">
+
+### System Commands
+
+<img src="https://user-images.githubusercontent.com/6903107/144517557-9b5b82fc-6408-48a0-af59-69b385a0782e.png" width="400">
+
+- Provides system related commands. shutdown, lock, settings, etc.
+- [System command list](#system-command-list)
+
+### Calculator
+
+<img src="https://user-images.githubusercontent.com/6903107/207142449-7de0c30d-8d5b-4331-967e-f3e78c17ea93.png" width="400">
+
+- Do mathematical calculations and copy the result to clipboard.
+
+### Shell Command
+
+<img src="https://user-images.githubusercontent.com/6903107/207142197-9e910147-96a9-466e-bbc4-b1163314ef59.png" width="400">
+
+- Run batch and PowerShell commands as Administrator or a different user.
+- <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Enter</kbd> to Run as Administrator.
+
+### Explorer
+
+<img src="https://user-images.githubusercontent.com/6903107/207145376-fbb68ec2-93b9-4b0f-befe-0aeb792367a7.png" width="400">
+
+- Save file or folder locations for quick access.
+
+### Windows & Control Panel Settings
+
+<img src="https://user-images.githubusercontent.com/6903107/207140658-52c1bea6-5b14-4db8-ae35-acc65e6bda85.png" width="400">
+
+- Search for Windows & Control Panel settings.
+
+### Dialog Jump
+
+<img src="https://github.com/user-attachments/assets/046c00da-6e4e-4960-8424-b413852300ad" width="400"/>
+
+- Search for a file/folder and quickly jump to its path in the Open/Save As dialog window.
+- Use <kbd>Alt</kbd>+<kbd>G</kbd> to quickly jump the Open/Save As dialog window path to the path of the active file manager.
+
+### Drag & Drop
+
+<img src="https://user-images.githubusercontent.com/6903107/207159486-1993510f-09f2-4e33-bba7-4ca59ca1bc5a.png" width="400">
+
+- Drag a file/folder to File Explorer, or even Discord.
+- Copy/move behavior can be changed via <kbd>Ctrl</kbd> or <kbd>Shift</kbd>, and the operation is displayed on the mouse cursor.
+
+### Priority
+
+<img src="https://user-images.githubusercontent.com/6903107/144517677-857a2b0a-4b94-4be0-bc89-f35723ecddf9.png" width="400">
+
+- Prioritize the order of each plugin's results.
+
+### Preview Panel
+
+<img src="https://user-images.githubusercontent.com/6903107/207159213-662999d3-2c18-4256-b473-c417efca0069.png" width="400">
+
+- Use <kbd>F1</kbd> to toggle the preview panel.
+- Media files will be displayed as large images, otherwise a large icon and full path will be displayed.
+- Turn on preview permanently via Settings (Always Preview).
+- Use <kbd>Ctrl</kbd>+<kbd>+</kbd>/<kbd>-</kbd> and <kbd>Ctrl</kbd>+<kbd>[</kbd>/<kbd>]</kbd> to adjust search window width and height quickly if the preview area is too narrow.
+
+### Customizations
+
+<img src="https://user-images.githubusercontent.com/6903107/144693887-1b92ed16-dca1-4b7e-8644-5e9524cdfb31.gif" width="400">
+
+- Window size adjustment, animation, and sound
+- Color Scheme (aka Dark Mode)
+
+<img src="https://user-images.githubusercontent.com/6903107/144527796-7c06ca31-d933-4f6b-9eb0-4fb06fa94384.png" width="400">
+
+- There are various themes and you also can make your own.
+
+### Date & Time Display In Search Window
+
+<img src="https://user-images.githubusercontent.com/6903107/207159348-8b0c7a2b-0836-4764-916b-e0236087f7f3.png" width="400">
+
+- Display date and time in search window.
+
+### 💬 Languages
+
+- Supports languages from Chinese to Italian and more.
+- Supports Pinyin (拼音) search.
+- [Crowdin](https://crowdin.com/project/flow-launcher) support for language translations.
+
+<details>
+<summary>Supported languages</summary>
+<ul>
+  <li>English</li>
+  <li>中文</li>
+  <li>中文（繁体）</li>
+  <li>Українська</li>
+  <li>Русский</li>
+  <li>Français</li>
+  <li>日本語</li>
+  <li>Dutch</li>
+  <li>Polski</li>
+  <li>Dansk</li>
+  <li>de, Deutsch</li>
+  <li>ko, 한국어</li>
+  <li>Srpski</li>
+  <li>Српски</li>
+  <li>Português</li>
+  <li>Português (Brasil)</li>
+  <li>Spanish</li>
+  <li>es-419, Spanish (Latin America)</li>
+  <li>Italiano</li>
+  <li>Norsk Bokmål</li>
+  <li>Slovenčina</li>
+  <li>Türkçe</li>
+  <li>čeština</li>
+  <li>اللغة العربية</li>
+  <li>Tiếng Việt</li>
+  <li>עברית</li>
+</ul>
+</details>
+
+### Portable
+
+- Fully portable.
+- Type `flow user data` to open your saved user settings folder. They are located at:
+  - If using roaming: `%APPDATA%\FlowLauncher`
+  - If using portable, by default: `%localappdata%\FlowLauncher\app-<VersionOfYourFlowLauncher>\UserData`
+  - Type `open log location` to open your logs folder, they are saved along with your user settings folder.
+
+### 🎮 Game Mode
+
+<img src="https://user-images.githubusercontent.com/6903107/207144711-0c5f8b2b-4b1b-44c8-b23e-c123f6b05146.png" width="200">
+
+- Pause hotkey activation when you are playing games.
+- When in search window use <kbd>Ctrl</kbd>+<kbd>F12</kbd> to toggle on/off.
+- Type `Toggle Game Mode`
+
+<img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
+
+## 📦 Plugins
+
+- Support wide range of plugins. Visit [here](https://www.flowlauncher.com/plugins/) for our plugin portfolio.
+- Publish your own plugin to Flow! Create plugins in:
+
+<p align="center">
+<a href="https://flowlauncher.com/docs/#/develop-dotnet-plugins"><img src="https://user-images.githubusercontent.com/6903107/147870065-4096f233-147c-434e-a3ac-69519582605f.png" width="64"></a>
+<a href="https://github.com/Flow-Launcher/plugin-samples/tree/master/HelloWorldFSharp"><img src="https://user-images.githubusercontent.com/26427004/156536959-dfdc7be8-4b59-4587-9c6a-a297903e4ce1.png" width="64"></a>
+<a href="https://www.flowlauncher.com/docs/#/py-develop-plugins"><img src="https://user-images.githubusercontent.com/6903107/147870066-7599eb15-0333-468e-82e8-4d432ceb5a45.png" width="64"></a>
+<a href="https://flowlauncher.com/docs/#/nodejs-develop-plugins"><img src="https://user-images.githubusercontent.com/6903107/147870071-d67c736b-0748-428f-a283-14587696dfa3.png" width="64"></a>
+<a href="https://flowlauncher.com/docs/#/nodejs-develop-plugins"><img src="https://user-images.githubusercontent.com/6903107/147870069-9bde6fe6-d50c-4d85-8fde-fe5ae921ab8c.png" width="64"></a>
+</p>
+
+### [SpotifyPremium](https://github.com/fow5040/Flow.Launcher.Plugin.SpotifyPremium)
+
+<img src="https://user-images.githubusercontent.com/6903107/144533469-da920295-8c36-46e8-89eb-a9cdd94b74ef.png" width="400">
+
+### [Steam Search](https://github.com/Garulf/Steam-Search)
+
+<img src="https://user-images.githubusercontent.com/6903107/144533523-afd79dca-a444-40e5-b2d9-6d3fe3aaece1.png" width="400">
+
+### [Clipboard+](https://github.com/Jack251970/Flow.Launcher.Plugin.ClipboardPlus)
+
+<img src="https://github.com/user-attachments/assets/4a001dc9-0895-4670-a911-e5b81c70f571" width="400">
+
+### [Home Assistant Commander](https://github.com/Garulf/HA-Commander)
+
+<img src="https://user-images.githubusercontent.com/6903107/144533538-3caa2944-3037-4755-87b9-70fa918d2efa.png" width="400">
+
+### [Colors](https://github.com/Flow-Launcher/Flow.Launcher.Plugin.Color)
+
+<img src="https://user-images.githubusercontent.com/6903107/144533487-2caff162-a8f6-4577-af3f-d1b05d423ee4.png" width="400">
+
+### [GitHub](https://github.com/JohnTheGr8/Flow.Plugin.Github)
+
+<img src="https://user-images.githubusercontent.com/6903107/144533497-8677f800-95c5-4758-8ca3-c96333ee1943.png" width="400">
+
+### [Window Walker](https://github.com/taooceros/Flow.Plugin.WindowWalker)
+
+<img src="https://user-images.githubusercontent.com/6903107/144533517-07bf011f-726c-4221-8657-0e442eca8a82.png" width="400">
+
+......and [more!](https://flowlauncher.com/docs/#/plugins)
+
+<img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
+
+### 🛒 Plugin Store
+
+<img src="https://cdn.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@plugin_api_v2/assets/plugin_store.png" width="700">
+
+- You can view the full plugin list or quickly install a plugin via the Plugin Store menu inside Settings
+
+- or type `pm` `install`/`uninstall`/`update` + the plugin name in the search window,
+
+<img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
+
+## ⌨️ Hotkeys
+
+| Hotkey                                                                    | Description                                     |
+| ------------------------------------------------------------------------- | ----------------------------------------------- |
+| <kbd>Alt</kbd>+<kbd>Space</kbd>                                           | Open search window (default and configurable)   |
+| <kbd>Enter</kbd>                                                          | Execute                                         |
+| <kbd>Ctrl</kbd>+<kbd>Enter</kbd>                                          | Open containing folder                          |
+| <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Enter</kbd>                         | Run as admin                                    |
+| <kbd>↑</kbd>/<kbd>↓</kbd>, <kbd>Shift</kbd>+<kbd>Tab</kbd>/<kbd>Tab</kbd> | Previous / Next result                          |
+| <kbd>←</kbd>/<kbd>→</kbd>                                                 | Back to result / Open Context Menu              |
+| <kbd>Ctrl</kbd>+<kbd>O</kbd> , <kbd>Shift</kbd>+<kbd>Enter</kbd>          | Open Context Menu                               |
+| <kbd>Ctrl</kbd>+<kbd>Tab</kbd>                                            | Autocomplete                                    |
+| <kbd>F1</kbd>                                                             | Toggle Preview Panel (default and configurable) |
+| <kbd>Esc</kbd>                                                            | Back to results / hide search window            |
+| <kbd>Ctrl</kbd>+<kbd>C</kbd>                                              | Copy folder / file                              |
+| <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>C</kbd>                             | Copy folder / file path                         |
+| <kbd>Ctrl</kbd>+<kbd>I</kbd>                                              | Open Flow's settings                            |
+| <kbd>Ctrl</kbd>+<kbd>R</kbd>                                              | Run the current query again (refresh results)   |
+| <kbd>F5</kbd>                                                             | Reload all plugin data                          |
+| <kbd>Ctrl</kbd>+<kbd>F12</kbd>                                            | Toggle Game Mode when in search window          |
+| <kbd>Ctrl</kbd>+<kbd>+</kbd>,<kbd>-</kbd>                                 | Adjust maximum results shown                    |
+| <kbd>Ctrl</kbd>+<kbd>[</kbd>,<kbd>]</kbd>                                 | Adjust search window width                      |
+| <kbd>Ctrl</kbd>+<kbd>H</kbd>                                              | Open search history                             |
+| <kbd>Ctrl</kbd>+<kbd>Backspace</kbd>                                      | Back to previous directory                      |
+| <kbd>PageUp</kbd>/<kbd>PageDown</kbd>                                     | Previous / Next Page                            |
+
+## System Command List
+
+| Command                            | Description                                                                 |
+| ---------------------------------- | --------------------------------------------------------------------------- |
+| Shutdown                           | Shutdown computer                                                           |
+| Restart                            | Restart computer                                                            |
+| Restart With Advanced Boot Options | Restart the computer with Advanced Boot option for safe and debugging modes |
+| Log Off/Sign Out                   | Log off                                                                     |
+| Lock                               | Lock computer                                                               |
+| Sleep                              | Put computer to sleep                                                       |
+| Hibernate                          | Hibernate computer                                                          |
+| Empty Recycle Bin                  | Empty recycle bin                                                           |
+| Open Recycle Bin                   | Open recycle bin                                                            |
+| Exit                               | Close Flow Launcher                                                         |
+| Save Settings                      | Save all Flow Launcher settings                                             |
+| Restart Flow Launcher              | Restart Flow Launcher                                                       |
+| Settings                           | Tweak this app                                                              |
+| Reload Plugin Data                 | Refreshes plugin data with new content                                      |
+| Check For Update                   | Check for new Flow Launcher update                                          |
+| Open Log Location                  | Open Flow Launcher's log location                                           |
+| Index Option                       | Open Windows Search Index window                                            |
+| Flow Launcher Tips                 | Visit Flow Launcher's documentation for more help and usage tips            |
+| Flow Launcher UserData Folder      | Open the location where Flow Launcher's settings are stored                 |
+| Toggle Game Mode                   | Toggle Game Mode                                                            |
+| Set Flow Launcher Theme            | Set the Flow Launcher Theme                                                 |
+
+### 💁‍♂️ Tips
+
+- [More tips](https://flowlauncher.com/docs/#/usage-tips)
+
+<img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
+
+## Sponsors
+<p align="center">
+  <a href="https://coderabbit.ai/">
+    <img src="https://github.com/Flow-Launcher/Flow.Launcher/assets/6903107/7c996d74-0c69-4011-922f-a95ca7e874b0" width="30%" alt="Coderabbit Logo" />
+  </a>
+  <br />
+  <br />
+  <a href="https://github.com/TheBestPessimist">
+    <img src='https://avatars.githubusercontent.com/u/4482210?v=4' width="10%"/>
+  </a>
+  <a href="https://github.com/Calapine">
+    <img src='https://avatars.githubusercontent.com/u/76205879?v=4' width="10%"/>
+  </a>
+</p>
+<p align="center">
+  <a href="https://appwrite.io">
+    <img src='https://appwrite.io/assets/logotype/white.svg' width="30%" alt="Appwrite Logo" />
+  </a>
+  <br />
+</p>
+<p align="center">
+  <a href="https://github.com/itsonlyfrans"><img src="https://avatars.githubusercontent.com/u/46535667?v=4" width="10%" /></a>
+  <a href="https://github.com/atilford"><img src="https://avatars.githubusercontent.com/u/13649625?v=4" width="10%" /></a>
+  <a href="https://github.com/andreqramos"><img src="https://avatars.githubusercontent.com/u/49326063?v=4" width="10%" /></a>
+  <a href="https://github.com/benello"><img src="https://avatars.githubusercontent.com/u/55357205?v=4" width="10%" /></a>
+  <a href="https://github.com/Yuba4"><img src="https://avatars.githubusercontent.com/u/46278200?v=4" width="10%" /></a>
+  <a href="https://github.com/Mavrik327"><img src="https://avatars.githubusercontent.com/u/121626149?v=4" width="10%" /></a>
+  <a href="https://github.com/tikkatek"><img src="https://avatars.githubusercontent.com/u/26571381?v=4" width="10%" /></a>
+  <a href="https://github.com/patrickdobler"><img src="https://avatars.githubusercontent.com/u/16536946?v=4" width="10%" /></a>
+  <a href="https://github.com/benflap"><img src="https://avatars.githubusercontent.com/u/62034481?v=4" width="10%" /></a>
+</p>
+
+### Mentions
+
+- [Why I Chose to Support Flow-Launcher](https://dev.to/appwrite/appwrite-loves-open-source-why-i-chose-to-support-flow-launcher-54pj) - Appwrite
+- [Softpedia Editor's Pick](https://www.softpedia.com/get/System/Launchers-Shutdown-Tools/Flow-Launcher.shtml)
+
+<img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
+
+## ❔ Questions/Suggestions
+
+Yes please, let us know in the [Q&A](https://github.com/Flow-Launcher/Flow.Launcher/discussions/categories/q-a) section. **Join our community on [Discord](https://discord.gg/AvgAQgh)!**
+
+<img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
+
+## Development
+
+### Localization
+
+Our project localization is based on [Crowdin](https://crowdin.com). If you would like to change them, please go to https://crowdin.com/project/flow-launcher.
+
+### WPF UI Library
+
+Our UI library is using [iNKORE.UI.WPF.Modern](https://github.com/iNKORE-NET/UI.WPF.Modern). 
+
+<a href="https://docs.inkore.net/ui-wpf-modern/introduction">
+  <img src="https://github.com/iNKORE-NET/UI.WPF.Modern/blob/main/assets/images/banners/UI.WPF.Modern_Main_1280w.png?raw=true" alt="iNKORE.UI.WPF.Modern" width="400">
+</a>
+
+### New Changes
+
+All changes to Flow are captured via pull requests. Some new changes may have been merged but are still pending release. This means that while a change may not exist in the current release, it may have been accepted and merged into the dev branch and is available as a pre-release download. It is therefore a good idea to search through the open and closed pull requests before you start to make changes to ensure the change you intend to make is not already done.
+
+Each of the pull requests will be marked with a milestone indicating the planned release version for the change.  
+
+### Contributing
+
+Contributions are very welcome, in addition to the main project (C#) there are also [documentation](https://github.com/Flow-Launcher/docs) (md), [website](https://github.com/Flow-Launcher/flow-launcher.github.io) (html/css) and [others](https://github.com/Flow-Launcher) that can be contributed to. If you are unsure of a change you want to make, let us know in the [Discussions](https://github.com/Flow-Launcher/Flow.Launcher/discussions/categories/ideas), otherwise feel free to submit a pull request.
+
+You will find the main goals of Flow placed under the [Projects board](https://github.com/orgs/Flow-Launcher/projects/4), so feel free to contribute on that. If you would like to make small incremental changes, feel free to do so as well.
+
+Get in touch if you would like to join the Flow-Launcher Team and help build this great tool.
+
+### Developing/Debugging
+
+- Flow Launcher's target framework is .Net 9
+
+- Install Visual Studio 2022 (v17.12+)
+
+- Install .Net 9 SDK
+  - via Visual Studio installer
+  - via winget `winget install Microsoft.DotNet.SDK.9`
+  - Manually from [here](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)
