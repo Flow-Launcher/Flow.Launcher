@@ -109,6 +109,22 @@ namespace Flow.Launcher.VimMode
             _queryTextBox.TextChanged += QueryTextBox_TextChanged;
             _mainWindow.Loaded += MainWindow_Loaded;
             _viewModel.PropertyChanged += ViewModel_PropertyChanged;
+            _settings.PropertyChanged += OnSettingsPropertyChanged;
+        }
+
+        private void OnSettingsPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            // When Vim mode is turned off, return to Insert so native typing is not blocked
+            // by QueryTextBox_PreviewTextInput and clear any lingering overlays/state.
+            if (e.PropertyName == nameof(Flow.Launcher.Infrastructure.UserSettings.Settings.EnableVimMode) && !_settings.EnableVimMode)
+            {
+                _mainWindow.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    _queryTextBox.SelectionLength = 0;
+                    ResetPendingState();
+                    _vimEngine.SwitchToInsert();
+                }));
+            }
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -282,8 +298,7 @@ namespace Flow.Launcher.VimMode
                     {
                         SaveVisualRange();
                         _queryTextBox.SelectionLength = 0;
-                        _pendingCommand = "";
-                        _awaitingCharCommand = "";
+                        ResetPendingState();
                         _vimEngine.SwitchToNormal();
                         e.Handled = true;
                         return true;
@@ -300,8 +315,7 @@ namespace Flow.Launcher.VimMode
                     else
                     {
                         _lastEscapeTime = DateTime.Now;
-                        _pendingCommand = "";
-                        _awaitingCharCommand = "";
+                        ResetPendingState();
                         e.Handled = true;
                         return true;
                     }
@@ -406,10 +420,10 @@ namespace Flow.Launcher.VimMode
                             ExecuteMotion(VimMotionEngine.MoveToMatchingBracket(_queryTextBox.Text, _queryTextBox.CaretIndex));
                             return true;
                         case Key.G:
-                            if (modifiers.HasFlag(ModifierKeys.Shift))
+                            // 'g' is the prefix for multi-key commands (gu, gU, g~, gv, g_).
+                            if (modifiers == ModifierKeys.None)
                             {
                                 _gPending = true;
-                                return true;
                             }
                             return true;
                         case Key.D0:
@@ -518,18 +532,7 @@ namespace Flow.Launcher.VimMode
                             return false;
 
                         case Key.P:
-                            try
-                            {
-                                string text = Clipboard.GetText();
-                                if (!string.IsNullOrEmpty(text))
-                                {
-                                    int c = _queryTextBox.CaretIndex;
-                                    if (c < _queryTextBox.Text.Length) c++;
-                                    SetText(_queryTextBox.Text.Insert(c, text));
-                                    _queryTextBox.CaretIndex = c;
-                                }
-                            }
-                            catch (Exception ex) { Flow.Launcher.Infrastructure.Logger.Log.Exception("VimManager", "Clipboard/Redo operation failed", ex); }
+                            PasteAfterCursor(GetCount());
                             return true;
                         case Key.U:
                             VimUndo();
@@ -561,6 +564,7 @@ namespace Flow.Launcher.VimMode
                                     _vimEngine.SwitchToInsert();
                                 _lastChange = cmd + cmd;
                                 _pendingCommand = "";
+                                _count = 0;
                             }
                             else if (_pendingCommand != "" && _pendingCommand != cmd)
                             {
@@ -629,21 +633,9 @@ namespace Flow.Launcher.VimMode
                         case Key.O when modifiers == ModifierKeys.None:
                             SwapVisualEnds();
                             return true;
-                        case Key.I when modifiers == ModifierKeys.None:
-                            {
-                                int pos = Math.Min(_visualAnchor, _visualCaret);
-                                _queryTextBox.SelectionLength = 0;
-                                _queryTextBox.CaretIndex = pos;
-                                _vimEngine.SwitchToInsert();
-                            }
-                            return true;
-                        case Key.A when modifiers == ModifierKeys.None:
-                            {
-                                int pos = Math.Max(_visualAnchor, _visualCaret) + 1;
-                                _queryTextBox.SelectionLength = 0;
-                                _queryTextBox.CaretIndex = Math.Min(pos, _queryTextBox.Text.Length);
-                                _vimEngine.SwitchToInsert();
-                            }
+                        case Key.G when modifiers == ModifierKeys.None:
+                            // 'g' prefix in Visual mode (e.g. gu / gU on the selection).
+                            _gPending = true;
                             return true;
                         case Key.H:
                             ExecuteVisualMotion(ApplyCountMove(i => VimMotionEngine.MoveLeft(i)));
@@ -891,6 +883,12 @@ namespace Flow.Launcher.VimMode
                 case VimModeType.Visual:
                     switch (e.Key)
                     {
+                        case Key.U when modifiers == ModifierKeys.None:
+                            ChangeSelectionCase(toUpper: false);
+                            return true;
+                        case Key.U when modifiers.HasFlag(ModifierKeys.Shift):
+                            ChangeSelectionCase(toUpper: true);
+                            return true;
                         case Key.V:
                             if (_lastVisualRange != null)
                             {
@@ -996,6 +994,20 @@ namespace Flow.Launcher.VimMode
             return c;
         }
 
+        /// <summary>
+        /// Clears all transient command state (pending operator, awaited char/text-object,
+        /// the g-prefix flag, and the numeric count). Called on Escape and on mode entry
+        /// so partially-typed commands never leak into the next one.
+        /// </summary>
+        private void ResetPendingState()
+        {
+            _pendingCommand = "";
+            _awaitingCharCommand = "";
+            _awaitingTextObject = "";
+            _gPending = false;
+            _count = 0;
+        }
+
         private void RepeatLastChange()
         {
             switch (_lastChange)
@@ -1026,6 +1038,9 @@ namespace Flow.Launcher.VimMode
                     break;
                 case "Y_eol":
                     SetClipboardText(_queryTextBox.Text);
+                    break;
+                case "p":
+                    PasteAfterCursor(GetCount());
                     break;
                 case "x":
                     {
@@ -1103,6 +1118,30 @@ namespace Flow.Launcher.VimMode
                     }
                     break;
             }
+        }
+
+        /// <summary>
+        /// Pastes the clipboard text after the cursor (Vim 'p'), <paramref name="count"/> times,
+        /// leaving the caret on the last pasted character. Records the change for '.' repeat.
+        /// </summary>
+        private void PasteAfterCursor(int count)
+        {
+            try
+            {
+                string clip = Clipboard.GetText();
+                if (string.IsNullOrEmpty(clip)) return;
+                if (count < 1) count = 1;
+
+                string pasted = clip;
+                for (int i = 1; i < count; i++) pasted += clip;
+
+                int c = _queryTextBox.CaretIndex;
+                if (c < _queryTextBox.Text.Length) c++;
+                SetText(_queryTextBox.Text.Insert(c, pasted));
+                _queryTextBox.CaretIndex = Math.Min(c + pasted.Length - 1, Math.Max(0, _queryTextBox.Text.Length - 1));
+                _lastChange = "p";
+            }
+            catch (Exception ex) { Flow.Launcher.Infrastructure.Logger.Log.Exception("VimManager", "Clipboard paste operation failed", ex); }
         }
 
         private void ExecuteCharCommand(string cmd, char c)
@@ -1269,7 +1308,7 @@ namespace Flow.Launcher.VimMode
                 _queryTextBox.CaretIndex = _queryTextBox.Text.Length - 1;
             _visualAnchor = _queryTextBox.CaretIndex;
             _visualCaret = _queryTextBox.CaretIndex;
-            _pendingCommand = "";
+            ResetPendingState();
             _vimEngine.SwitchToVisual();
             UpdateVisualSelection();
         }
@@ -1279,7 +1318,7 @@ namespace Flow.Launcher.VimMode
             if (_queryTextBox.Text.Length == 0) return;
             _visualAnchor = 0;
             _visualCaret = _queryTextBox.Text.Length - 1;
-            _pendingCommand = "";
+            ResetPendingState();
             _vimEngine.SwitchToVisualLine();
             _queryTextBox.Select(0, _queryTextBox.Text.Length);
             UpdateCaretPosition();
@@ -1291,6 +1330,26 @@ namespace Flow.Launcher.VimMode
             _visualAnchor = _visualCaret;
             _visualCaret = temp;
             UpdateVisualSelection();
+        }
+
+        /// <summary>
+        /// Applies a case transform to the current Visual-mode selection (gu / gU) and
+        /// returns to Normal mode, mirroring the '~' selection handler.
+        /// </summary>
+        private void ChangeSelectionCase(bool toUpper)
+        {
+            int selStart = _queryTextBox.SelectionStart;
+            int selLength = _queryTextBox.SelectionLength;
+            if (selLength > 0)
+            {
+                char[] chars = _queryTextBox.Text.ToCharArray();
+                for (int i = selStart; i < selStart + selLength && i < chars.Length; i++)
+                    chars[i] = toUpper ? char.ToUpper(chars[i]) : char.ToLower(chars[i]);
+                SetText(new string(chars));
+                _queryTextBox.CaretIndex = selStart;
+                _queryTextBox.SelectionLength = 0;
+            }
+            _vimEngine.SwitchToNormal();
         }
 
         private void SaveVisualRange()
@@ -1349,7 +1408,7 @@ namespace Flow.Launcher.VimMode
 
         private void QueryTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            if (_vimEngine.CurrentMode != VimModeType.Insert)
+            if (_settings.EnableVimMode && _vimEngine.CurrentMode != VimModeType.Insert)
             {
                 e.Handled = true;
             }
@@ -1378,6 +1437,7 @@ namespace Flow.Launcher.VimMode
                     _vimEngine.ModeChanged -= VimEngine_ModeChanged;
                     _mainWindow.Loaded -= MainWindow_Loaded;
                     _viewModel.PropertyChanged -= ViewModel_PropertyChanged;
+                    _settings.PropertyChanged -= OnSettingsPropertyChanged;
                     _queryTextBox.PreviewTextInput -= QueryTextBox_PreviewTextInput;
                     _queryTextBox.SelectionChanged -= QueryTextBox_SelectionChanged;
                     _queryTextBox.TextChanged -= QueryTextBox_TextChanged;

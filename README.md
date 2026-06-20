@@ -14,7 +14,7 @@ Vim Mode transforms the Flow Launcher search bar into a modal editor, offering *
 You can instantly toggle this feature on or off via the `General` tab in the Flow Launcher Settings.
 
 ### Modes & Intercepts
-- **Mode Indicator**: A slick, color-coded pill indicator sits at the far left of the search bar to clearly show your current mode (`NORMAL`, `VISUAL`, etc.).
+- **Mode Indicator**: A small, color-coded dot sits at the far left of the search bar to show your current mode at a glance — accent/blue for **Normal**, purple for **Visual**, orange for **Visual Line**. In Insert mode the dot is hidden (you're just typing normally).
 - **Insert Mode**: The default state. Works exactly like standard Flow Launcher (blinking text caret).
 - **Normal Mode**: Replaces the blinking caret with a solid block caret, and intercepts alphanumeric keystrokes to execute text manipulation commands.
 - **Visual Mode**: Char-wise selection. Movements extend the selection from a fixed anchor point; operators apply to the selected region.
@@ -59,6 +59,10 @@ You can instantly toggle this feature on or off via the `General` tab in the Flo
 - `u` : Undo the last Vim operation (operation-level, not character-level)
 - `Ctrl+R` : Redo the last undone operation
 
+#### Repeat & Counts
+- `.` : Repeat the last change (e.g. `x`, `dw`, `r{char}`, `p`). Note: a change that ends in Insert mode (like `cw`) repeats the deletion but does not re-type the inserted text.
+- `{count}` : Most motions and operators accept a numeric prefix, e.g. `3w` (forward 3 words), `5x` (delete 5 chars), `2p` (paste twice), `d3w` / `3dw` (delete 3 words).
+
 #### Text Objects (For Operators & Visual Mode)
 Use these immediately after an operator (like `d`, `c`, `y`, `gu`) to target specific text structures.
 - **Modifiers**: `i` (inner), `a` (around)
@@ -99,6 +103,11 @@ Use these immediately after an operator (like `d`, `c`, `y`, `gu`) to target spe
 - `v` : In Visual Line mode, switch to char-wise Visual mode
 - `V` : In Visual mode, switch to Visual Line mode (selects entire query)
 - `j` / `k` : Navigate search results (same as Normal mode)
+
+### Known Limitations
+- **Keyboard layout**: Character-pending commands (`f`/`F`/`t`/`T`, `r`, and the quote/bracket text objects) reconstruct the target character from the physical key, assuming a US-QWERTY layout. On other layouts, symbols and punctuation may resolve incorrectly. Letters and digits work everywhere.
+- **Dot-repeat of inserts**: `.` replays the operator/motion of the last change but not text typed in Insert mode, so `cwfoo<Esc>.` re-deletes a word without re-typing `foo`.
+- **Single line**: The query is a single-line field, so line-wise commands (`dd`, `cc`, `V`, `0`/`$`) operate on the whole query, and `gg`/`G` are not bound.
 
 ---
 

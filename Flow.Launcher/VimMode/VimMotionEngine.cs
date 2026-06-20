@@ -128,6 +128,7 @@ namespace Flow.Launcher.VimMode
         /// <returns>The new caret index.</returns>
         public static int MoveEndWord(string text, int caret)
         {
+            if (text.Length == 0) return 0;
             if (caret >= text.Length - 1) return text.Length - 1;
 
             int i = caret + 1;
@@ -195,6 +196,7 @@ namespace Flow.Launcher.VimMode
         /// <returns>The new caret index.</returns>
         public static int MoveEndWordBig(string text, int caret)
         {
+            if (text.Length == 0) return 0;
             if (caret >= text.Length - 1) return text.Length - 1;
 
             int i = caret + 1;
