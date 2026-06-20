@@ -58,7 +58,7 @@ Unit tests live in [`Flow.Launcher.Test`](../../Flow.Launcher.Test) (`VimEngineT
 - `gu` / `gU` — lowercase / uppercase (operator + motion, e.g. `guw`)
 - `dd` / `cc` — delete / change the whole query
 - `D` / `C` — delete / change from the cursor to the end
-- `Y` — yank the whole query · `p` — paste after the cursor
+- `Y` — yank the whole query · `p` / `P` — paste after / before the cursor
 - `u` — undo the last operation · `Ctrl+R` — redo
 
 ### Operators + text objects

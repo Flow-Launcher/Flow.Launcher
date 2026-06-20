@@ -536,7 +536,10 @@ namespace Flow.Launcher.VimMode
                             return false;
 
                         case Key.P:
-                            PasteAfterCursor(GetCount());
+                            if (modifiers.HasFlag(ModifierKeys.Shift))
+                                PasteBeforeCursor(GetCount()); // P: paste before the cursor
+                            else
+                                PasteAfterCursor(GetCount());  // p: paste after the cursor
                             return true;
                         case Key.U:
                             VimUndo();
@@ -1141,6 +1144,29 @@ namespace Flow.Launcher.VimMode
 
                 int c = _queryTextBox.CaretIndex;
                 if (c < _queryTextBox.Text.Length) c++;
+                SetText(_queryTextBox.Text.Insert(c, pasted));
+                _queryTextBox.CaretIndex = Math.Min(c + pasted.Length - 1, Math.Max(0, _queryTextBox.Text.Length - 1));
+                _lastChange = "p";
+            }
+            catch (Exception ex) { Flow.Launcher.Infrastructure.Logger.Log.Exception("VimManager", "Clipboard paste operation failed", ex); }
+        }
+
+        /// <summary>
+        /// Pastes the clipboard text before the cursor (Vim 'P'), <paramref name="count"/> times,
+        /// leaving the caret on the last pasted character. Records the change for '.' repeat.
+        /// </summary>
+        private void PasteBeforeCursor(int count)
+        {
+            try
+            {
+                string clip = Clipboard.GetText();
+                if (string.IsNullOrEmpty(clip)) return;
+                if (count < 1) count = 1;
+
+                string pasted = clip;
+                for (int i = 1; i < count; i++) pasted += clip;
+
+                int c = _queryTextBox.CaretIndex; // P inserts at the caret (before it)
                 SetText(_queryTextBox.Text.Insert(c, pasted));
                 _queryTextBox.CaretIndex = Math.Min(c + pasted.Length - 1, Math.Max(0, _queryTextBox.Text.Length - 1));
                 _lastChange = "p";
