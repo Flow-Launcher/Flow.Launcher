@@ -3,10 +3,45 @@ using System;
 namespace Flow.Launcher.VimMode
 {
     /// <summary>
+    /// Describes how an operator (d/c/y/gu/gU/g~) treats the character at the far end of a motion.
+    /// </summary>
+    public enum MotionInclusivity
+    {
+        /// <summary>Half-open range; the destination character is not affected (w, b, h, l, 0, ^, $).</summary>
+        Exclusive,
+        /// <summary>Forward motions that include the destination character (e, E, f, t).</summary>
+        InclusiveForward,
+        /// <summary>Paired motions that include the far-end character in either direction (%).</summary>
+        InclusivePair
+    }
+
+    /// <summary>
     /// Provides pure static methods for calculating caret movements and text object selections.
     /// </summary>
     public class VimMotionEngine
     {
+        /// <summary>
+        /// Computes the character range [start, end) an operator should act on, given the caret,
+        /// the motion target, and the motion's inclusivity. Handles the Vim rule that inclusive
+        /// forward motions consume the destination character while backward find motions do not.
+        /// </summary>
+        public static (int start, int end) OperatorRange(int caret, int target, MotionInclusivity inclusivity, int textLength)
+        {
+            int start = Math.Max(0, Math.Min(caret, target));
+            int end = Math.Max(0, Math.Max(caret, target));
+
+            // Inclusive-forward (e/f/t) consumes the destination only when the motion moved forward;
+            // a backward find (F/T) leaves the original caret char untouched. A paired motion (%)
+            // consumes the far-end char in either direction, but only when it actually spans a range.
+            bool extend = (inclusivity == MotionInclusivity.InclusiveForward && target > caret)
+                          || (inclusivity == MotionInclusivity.InclusivePair && end > start);
+
+            if (extend && end < textLength)
+                end++;
+
+            return (start, end);
+        }
+
         /// <summary>
         /// Calculates the new caret position after moving left one character.
         /// </summary>

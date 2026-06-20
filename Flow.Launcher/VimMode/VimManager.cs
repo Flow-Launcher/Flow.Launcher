@@ -405,7 +405,7 @@ namespace Flow.Launcher.VimMode
                             ExecuteMotion(ApplyCountMove(i => VimMotionEngine.MovePrevWord(_queryTextBox.Text, i)));
                             return true;
                         case Key.E when modifiers == ModifierKeys.None:
-                            ExecuteMotion(ApplyCountMove(i => VimMotionEngine.MoveEndWord(_queryTextBox.Text, i)));
+                            ExecuteMotion(ApplyCountMove(i => VimMotionEngine.MoveEndWord(_queryTextBox.Text, i)), MotionInclusivity.InclusiveForward);
                             return true;
                         case Key.W when modifiers.HasFlag(ModifierKeys.Shift):
                             ExecuteMotion(ApplyCountMove(i => VimMotionEngine.MoveNextWordBig(_queryTextBox.Text, i)));
@@ -414,10 +414,10 @@ namespace Flow.Launcher.VimMode
                             ExecuteMotion(ApplyCountMove(i => VimMotionEngine.MovePrevWordBig(_queryTextBox.Text, i)));
                             return true;
                         case Key.E when modifiers.HasFlag(ModifierKeys.Shift):
-                            ExecuteMotion(ApplyCountMove(i => VimMotionEngine.MoveEndWordBig(_queryTextBox.Text, i)));
+                            ExecuteMotion(ApplyCountMove(i => VimMotionEngine.MoveEndWordBig(_queryTextBox.Text, i)), MotionInclusivity.InclusiveForward);
                             return true;
                         case Key.D5 when modifiers.HasFlag(ModifierKeys.Shift):
-                            ExecuteMotion(VimMotionEngine.MoveToMatchingBracket(_queryTextBox.Text, _queryTextBox.CaretIndex));
+                            ExecuteMotion(VimMotionEngine.MoveToMatchingBracket(_queryTextBox.Text, _queryTextBox.CaretIndex), MotionInclusivity.InclusivePair);
                             return true;
                         case Key.G:
                             // 'g' is the prefix for multi-key commands (gu, gU, g~, gv, g_).
@@ -454,7 +454,7 @@ namespace Flow.Launcher.VimMode
                         case Key.OemSemicolon:
                             if (!modifiers.HasFlag(ModifierKeys.Shift) && _lastFindChar != '\0')
                             {
-                                ExecuteFindCommand(_lastFindCmd, _lastFindChar);
+                                ExecuteFindCommand(_lastFindCmd, _lastFindChar, GetCount());
                                 return true;
                             }
                             return false;
@@ -462,7 +462,7 @@ namespace Flow.Launcher.VimMode
                             if (!modifiers.HasFlag(ModifierKeys.Shift) && _lastFindChar != '\0')
                             {
                                 string reverseCmd = _lastFindCmd == "f" ? "F" : _lastFindCmd == "F" ? "f" : _lastFindCmd == "t" ? "T" : "t";
-                                ExecuteFindCommand(reverseCmd, _lastFindChar);
+                                ExecuteFindCommand(reverseCmd, _lastFindChar, GetCount());
                                 return true;
                             }
                             return false;
@@ -692,7 +692,7 @@ namespace Flow.Launcher.VimMode
                         case Key.OemSemicolon:
                             if (!modifiers.HasFlag(ModifierKeys.Shift) && _lastFindChar != '\0')
                             {
-                                ExecuteFindCommand(_lastFindCmd, _lastFindChar);
+                                ExecuteFindCommand(_lastFindCmd, _lastFindChar, GetCount());
                                 return true;
                             }
                             return true;
@@ -700,7 +700,7 @@ namespace Flow.Launcher.VimMode
                             if (!modifiers.HasFlag(ModifierKeys.Shift) && _lastFindChar != '\0')
                             {
                                 string reverseCmd = _lastFindCmd == "f" ? "F" : _lastFindCmd == "F" ? "f" : _lastFindCmd == "t" ? "T" : "t";
-                                ExecuteFindCommand(reverseCmd, _lastFindChar);
+                                ExecuteFindCommand(reverseCmd, _lastFindChar, GetCount());
                                 return true;
                             }
                             return true;
@@ -1147,6 +1147,9 @@ namespace Flow.Launcher.VimMode
         private void ExecuteCharCommand(string cmd, char c)
         {
             _awaitingCharCommand = "";
+            // Consume any count typed before the operator (e.g. 3rx, 2f,) so it never leaks
+            // into the next command.
+            int count = GetCount();
             string text = _queryTextBox.Text;
             int caret = _queryTextBox.CaretIndex;
 
@@ -1169,47 +1172,61 @@ namespace Flow.Launcher.VimMode
                 }
                 else if (caret < text.Length)
                 {
-                    SetText(text.Remove(caret, 1).Insert(caret, c.ToString()));
-                    _queryTextBox.CaretIndex = caret;
-                    _lastChange = "r";
-                    _lastReplaceChar = c;
+                    // r{char} with a count replaces that many characters (vim no-ops if fewer remain).
+                    int len = Math.Min(count, text.Length - caret);
+                    if (count <= text.Length - caret && len > 0)
+                    {
+                        char[] chars = text.ToCharArray();
+                        for (int i = caret; i < caret + len; i++) chars[i] = c;
+                        SetText(new string(chars));
+                        _queryTextBox.CaretIndex = caret + len - 1;
+                        _lastChange = "r";
+                        _lastReplaceChar = c;
+                    }
                 }
             }
             else if (cmd == "f" || cmd == "F" || cmd == "t" || cmd == "T")
             {
                 _lastFindCmd = cmd;
                 _lastFindChar = c;
-                ExecuteFindCommand(cmd, c);
+                ExecuteFindCommand(cmd, c, count);
             }
         }
 
-        private void ExecuteFindCommand(string cmd, char c)
+        private void ExecuteFindCommand(string cmd, char c, int count = 1)
         {
             string text = _queryTextBox.Text;
             int caret = (_vimEngine.CurrentMode == VimModeType.Visual || _vimEngine.CurrentMode == VimModeType.VisualLine)
                 ? _visualCaret
                 : _queryTextBox.CaretIndex;
-            int target = caret;
 
-            if (cmd == "f") target = VimMotionEngine.FindCharForward(text, caret, c, false);
-            else if (cmd == "F") target = VimMotionEngine.FindCharBackward(text, caret, c, false);
-            else if (cmd == "t") target = VimMotionEngine.FindCharForward(text, caret, c, true);
-            else if (cmd == "T") target = VimMotionEngine.FindCharBackward(text, caret, c, true);
+            int target = caret;
+            for (int k = 0; k < (count < 1 ? 1 : count); k++)
+            {
+                int next = cmd switch
+                {
+                    "f" => VimMotionEngine.FindCharForward(text, target, c, false),
+                    "F" => VimMotionEngine.FindCharBackward(text, target, c, false),
+                    "t" => VimMotionEngine.FindCharForward(text, target, c, true),
+                    "T" => VimMotionEngine.FindCharBackward(text, target, c, true),
+                    _ => target
+                };
+                if (next == target) break; // not found / no further progress
+                target = next;
+            }
 
             if (_vimEngine.CurrentMode == VimModeType.Visual || _vimEngine.CurrentMode == VimModeType.VisualLine)
                 ExecuteVisualMotion(target);
             else
-                ExecuteMotion(target);
+                ExecuteMotion(target, MotionInclusivity.InclusiveForward);
         }
 
-        private void ExecuteMotion(int targetCaret)
+        private void ExecuteMotion(int targetCaret, MotionInclusivity inclusivity = MotionInclusivity.Exclusive)
         {
             if (_pendingCommand == "d" || _pendingCommand == "c" || _pendingCommand == "y")
             {
-                int start = Math.Max(0, _queryTextBox.CaretIndex);
-                int end = Math.Max(0, targetCaret);
-                if (start > end) { var temp = start; start = end; end = temp; }
-                
+                var (start, end) = VimMotionEngine.OperatorRange(_queryTextBox.CaretIndex, targetCaret, inclusivity, _queryTextBox.Text.Length);
+
                 if (end > start)
                 {
                     SetClipboardText(_queryTextBox.Text.Substring(start, end - start));
@@ -1219,64 +1236,33 @@ namespace Flow.Launcher.VimMode
                         _queryTextBox.CaretIndex = start;
                     }
                 }
-                
+
                 if (_pendingCommand == "c")
                     _vimEngine.SwitchToInsert();
                 _lastChange = _pendingCommand + "_motion";
                 _lastChangeLen = end - start;
                 _pendingCommand = "";
+                _count = 0;
             }
-            else if (_pendingCommand == "~")
+            else if (_pendingCommand == "~" || _pendingCommand == "gu" || _pendingCommand == "gU")
             {
-                int start = Math.Max(0, _queryTextBox.CaretIndex);
-                int end = Math.Max(0, targetCaret);
-                if (start > end) { var temp = start; start = end; end = temp; }
-                if (end < _queryTextBox.Text.Length) end++;
-                
+                var (start, end) = VimMotionEngine.OperatorRange(_queryTextBox.CaretIndex, targetCaret, inclusivity, _queryTextBox.Text.Length);
+
                 if (end > start)
                 {
                     char[] chars = _queryTextBox.Text.ToCharArray();
                     for (int i = start; i < end && i < chars.Length; i++)
-                        chars[i] = char.IsUpper(chars[i]) ? char.ToLower(chars[i]) : char.ToUpper(chars[i]);
+                    {
+                        chars[i] = _pendingCommand == "gu" ? char.ToLower(chars[i])
+                                 : _pendingCommand == "gU" ? char.ToUpper(chars[i])
+                                 : char.IsUpper(chars[i]) ? char.ToLower(chars[i]) : char.ToUpper(chars[i]);
+                    }
                     SetText(new string(chars));
                     _queryTextBox.CaretIndex = Math.Min(start, _queryTextBox.Text.Length);
                 }
-                _lastChange = "~";
+                if (_pendingCommand == "~") _lastChange = "~";
                 _pendingCommand = "";
-            }
-            else if (_pendingCommand == "gu")
-            {
-                int start = Math.Max(0, _queryTextBox.CaretIndex);
-                int end = Math.Max(0, targetCaret);
-                if (start > end) { var temp = start; start = end; end = temp; }
-                if (end < _queryTextBox.Text.Length) end++;
-                
-                if (end > start)
-                {
-                    char[] chars = _queryTextBox.Text.ToCharArray();
-                    for (int i = start; i < end && i < chars.Length; i++)
-                        chars[i] = char.ToLower(chars[i]);
-                    SetText(new string(chars));
-                    _queryTextBox.CaretIndex = start;
-                }
-                _pendingCommand = "";
-            }
-            else if (_pendingCommand == "gU")
-            {
-                int start = Math.Max(0, _queryTextBox.CaretIndex);
-                int end = Math.Max(0, targetCaret);
-                if (start > end) { var temp = start; start = end; end = temp; }
-                if (end < _queryTextBox.Text.Length) end++;
-                
-                if (end > start)
-                {
-                    char[] chars = _queryTextBox.Text.ToCharArray();
-                    for (int i = start; i < end && i < chars.Length; i++)
-                        chars[i] = char.ToUpper(chars[i]);
-                    SetText(new string(chars));
-                    _queryTextBox.CaretIndex = start;
-                }
-                _pendingCommand = "";
+                _count = 0;
             }
             else
             {
