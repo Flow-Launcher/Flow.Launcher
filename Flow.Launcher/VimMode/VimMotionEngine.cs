@@ -412,6 +412,10 @@ namespace Flow.Launcher.VimMode
         /// <returns>A tuple containing the start and end indices, or (-1, -1) if invalid.</returns>
         public static (int start, int end) TextObjectQuote(string text, int caret, char quote, bool around)
         {
+            if (text.Length == 0) return (-1, -1);
+            // CaretIndex can be text.Length (caret past the last char); clamp so end-of-query
+            // resolves onto the closing quote and ci"/di" still match the last quoted region.
+            caret = Math.Max(0, Math.Min(caret, text.Length - 1));
             int first = -1;
 
             for (int i = 0; i < text.Length; i++)

@@ -161,6 +161,10 @@ namespace Flow.Launcher.Test
             Assert.That(VimMotionEngine.TextObjectQuote("say \"hi\" now", 5, '"', false), Is.EqualTo((5, 6)));
             Assert.That(VimMotionEngine.TextObjectQuote("say \"hi\" now", 5, '"', true), Is.EqualTo((4, 7)));
             Assert.That(VimMotionEngine.TextObjectQuote("hello", 1, '"', false), Is.EqualTo((-1, -1)));
+            // caret past the last char (CaretIndex == text.Length) clamps onto the closing quote
+            Assert.That(VimMotionEngine.TextObjectQuote("say \"hi\"", 8, '"', false), Is.EqualTo((5, 6)));
+            Assert.That(VimMotionEngine.TextObjectQuote("say \"hi\"", 8, '"', true), Is.EqualTo((4, 7)));
+            Assert.That(VimMotionEngine.TextObjectQuote("", 0, '"', false), Is.EqualTo((-1, -1)));
         }
 
         [Test]
