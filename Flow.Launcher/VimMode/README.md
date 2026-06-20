@@ -22,6 +22,9 @@ Unit tests live in [`Flow.Launcher.Test`](../../Flow.Launcher.Test) (`VimEngineT
 
 - **Mode indicator** — a small, color-coded dot at the left of the search bar shows the current mode:
   accent for **Normal**, purple for **Visual**, orange for **Visual Line**. In Insert mode the dot is hidden.
+  A dot (rather than a `NORMAL`/`VISUAL` text label) is used deliberately: it conveys the mode at a glance
+  without overlapping the query text or changing Flow Launcher's existing search-bar layout, so users who
+  never enable Vim mode see no difference. A text label could be added later if reviewers prefer one.
 - **Insert** — the default. Works exactly like the standard search bar (blinking caret).
 - **Normal** — a solid block caret; alphanumeric keys are interpreted as commands instead of text.
 - **Visual** — character-wise selection; motions extend the selection from a fixed anchor.

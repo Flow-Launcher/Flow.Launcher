@@ -206,8 +206,12 @@ namespace Flow.Launcher.VimMode
 
             if (_vimModeIndicator != null)
             {
+                // The mode is shown as a small color-coded dot rather than a text label
+                // (Normal = accent, Visual = purple, Visual Line = orange). This keeps the
+                // indicator from overlapping the query text or otherwise altering Flow
+                // Launcher's search-bar layout; a text label can be added later if desired.
                 _vimModeIndicator.Visibility = _settings.EnableVimMode && mode != VimModeType.Insert ? Visibility.Visible : Visibility.Collapsed;
-                
+
                 _vimModeIndicator.Background = mode switch
                 {
                     VimModeType.Normal => (System.Windows.Media.Brush)Application.Current.FindResource("BasicSystemAccentColor") ?? CreateBrush(0, 120, 215),
