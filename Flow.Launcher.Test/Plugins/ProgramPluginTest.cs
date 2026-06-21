@@ -120,9 +120,9 @@ namespace Flow.Launcher.Test.Plugins
             var plugin = new ProgramMain();
             var results = await plugin.QueryAsync(new Query
             {
-                Search = string.Empty,
-                SearchTerms = [],
-                TrimmedQuery = string.Empty,
+                Search = "calc",
+                SearchTerms = ["calc"],
+                TrimmedQuery = "calc",
                 ActionKeyword = string.Empty
             }, CancellationToken.None);
 
