@@ -103,7 +103,6 @@ namespace Flow.Launcher.Test.Plugins
                     Name = "Calculator",
                     Description = string.Empty,
                     FullPath = $@"{windowsAppLocation}\Calculator.exe",
-                    ExecutablePath = $@"{windowsAppLocation}\Calculator.exe",
                     IcoPath = $@"{windowsAppLocation}\Calculator.exe",
                     ParentDirectory = windowsAppLocation,
                     UniqueIdentifier = $@"{windowsAppLocation}\Calculator.exe",
