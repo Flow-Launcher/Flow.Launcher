@@ -483,5 +483,36 @@ namespace Flow.Launcher.VimMode
             if (index == -1) return caret;
             return till ? index + 1 : index;
         }
+
+        /// <summary>
+        /// Vim Ctrl-A / Ctrl-X: finds the (decimal, optionally negative) number at or to the right of the
+        /// caret and adds <paramref name="delta"/> to it. Pure: returns whether a number was found, the new
+        /// text, and the caret position (on the last digit of the result), matching Vim's behaviour.
+        /// </summary>
+        public static (bool found, string newText, int newCaret) ChangeNumber(string text, int caret, int delta)
+        {
+            if (string.IsNullOrEmpty(text)) return (false, text, caret);
+            int n = text.Length;
+            int p = Math.Min(Math.Max(caret, 0), n);
+
+            // Scan right (within the current line) for the first digit.
+            while (p < n && text[p] != '\n' && !char.IsDigit(text[p])) p++;
+            if (p >= n || text[p] == '\n') return (false, text, caret);
+
+            // Expand to the full digit run, then absorb a leading '-' sign.
+            int start = p;
+            while (start > 0 && char.IsDigit(text[start - 1])) start--;
+            int end = p;
+            while (end < n && char.IsDigit(text[end])) end++;
+            if (start > 0 && text[start - 1] == '-') start--;
+
+            if (!long.TryParse(text.Substring(start, end - start), out long value))
+                return (false, text, caret);
+
+            string replacement = (value + delta).ToString();
+            string newText = text.Substring(0, start) + replacement + text.Substring(end);
+            int newCaret = start + replacement.Length - 1; // cursor lands on the last digit
+            return (true, newText, newCaret);
+        }
     }
 }

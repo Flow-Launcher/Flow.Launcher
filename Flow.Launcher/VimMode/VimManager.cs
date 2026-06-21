@@ -352,6 +352,22 @@ namespace Flow.Launcher.VimMode
                 return true;
             }
 
+            // Ctrl-A / Ctrl-X increment / decrement the number at or after the cursor (count-aware).
+            // Normal mode only, so Insert-mode Ctrl-A (select all) is unaffected.
+            if (modifiers.HasFlag(ModifierKeys.Control) && !modifiers.HasFlag(ModifierKeys.Alt)
+                && _vimEngine.CurrentMode == VimModeType.Normal && (e.Key == Key.A || e.Key == Key.X))
+            {
+                int delta = (e.Key == Key.A ? 1 : -1) * Math.Max(1, GetCount());
+                var (found, newText, newCaret) = VimMotionEngine.ChangeNumber(_queryTextBox.Text, _queryTextBox.CaretIndex, delta);
+                if (found)
+                {
+                    SetText(newText);
+                    _queryTextBox.CaretIndex = Math.Min(newCaret, newText.Length);
+                }
+                e.Handled = true;
+                return true;
+            }
+
             if (modifiers.HasFlag(ModifierKeys.Control) || modifiers.HasFlag(ModifierKeys.Alt))
             {
                 return false;
@@ -504,11 +520,11 @@ namespace Flow.Launcher.VimMode
                             ExecuteMotion(VimMotionEngine.MoveToMatchingBracket(_queryTextBox.Text, _queryTextBox.CaretIndex), MotionInclusivity.InclusivePair);
                             return true;
                         case Key.G:
-                            // 'g' is the prefix for multi-key commands (gu, gU, g~, gv, g_).
-                            if (modifiers == ModifierKeys.None)
-                            {
+                            // 'g' is the prefix for multi-key commands (gu, gU, g~, gv, g_); 'G' jumps to the end.
+                            if (modifiers.HasFlag(ModifierKeys.Shift))
+                                ExecuteMotion(VimMotionEngine.MoveEndOfLine(_queryTextBox.Text.Length));
+                            else
                                 _gPending = true;
-                            }
                             return true;
                         case Key.D0:
                             if (modifiers.HasFlag(ModifierKeys.Shift)) return false; // Handle ')' normally or ignore
@@ -729,6 +745,9 @@ namespace Flow.Launcher.VimMode
                             // 'g' prefix in Visual mode (e.g. gu / gU on the selection).
                             _gPending = true;
                             return true;
+                        case Key.G when modifiers.HasFlag(ModifierKeys.Shift):
+                            ExecuteVisualMotion(VimMotionEngine.MoveEndOfLine(_queryTextBox.Text.Length));
+                            return true;
                         case Key.H:
                             ExecuteVisualMotion(ApplyCountMove(i => VimMotionEngine.MoveLeft(i)));
                             return true;
@@ -947,6 +966,9 @@ namespace Flow.Launcher.VimMode
                 case VimModeType.Normal:
                     switch (e.Key)
                     {
+                        case Key.G:
+                            ExecuteMotion(VimMotionEngine.MoveStartOfLine()); // gg -> start of the query
+                            return true;
                         case Key.OemMinus when modifiers.HasFlag(ModifierKeys.Shift):
                             ExecuteMotion(VimMotionEngine.MoveLastNonBlank(_queryTextBox.Text));
                             return true;
@@ -977,6 +999,9 @@ namespace Flow.Launcher.VimMode
                 case VimModeType.Visual:
                     switch (e.Key)
                     {
+                        case Key.G:
+                            ExecuteVisualMotion(VimMotionEngine.MoveStartOfLine()); // gg -> start of the query
+                            return true;
                         case Key.U when modifiers == ModifierKeys.None:
                             ChangeSelectionCase(toUpper: false);
                             return true;
@@ -1005,8 +1030,10 @@ namespace Flow.Launcher.VimMode
             _awaitingTextObject = "";
 
             char delim = GetCharFromKey(e.Key, modifiers);
-            if (delim == '\0' && e.Key != Key.W) return true;
+            if (delim == '\0' && e.Key != Key.W && e.Key != Key.B) return true;
             if (e.Key == Key.W) delim = 'w';
+            // Vim block-object aliases: ib/ab == i(/a(  and  iB/aB == i{/a{
+            if (e.Key == Key.B) delim = modifiers.HasFlag(ModifierKeys.Shift) ? 'B' : 'b';
 
             string text = _queryTextBox.Text;
             int caret = (_vimEngine.CurrentMode == VimModeType.Visual) ? _visualCaret : _queryTextBox.CaretIndex;
@@ -1026,6 +1053,7 @@ namespace Flow.Launcher.VimMode
                     break;
                 case '(':
                 case ')':
+                case 'b':
                     range = VimMotionEngine.TextObjectDelimited(text, caret, '(', ')', around);
                     break;
                 case '[':
@@ -1034,6 +1062,7 @@ namespace Flow.Launcher.VimMode
                     break;
                 case '{':
                 case '}':
+                case 'B':
                     range = VimMotionEngine.TextObjectDelimited(text, caret, '{', '}', around);
                     break;
                 default:
@@ -1041,6 +1070,20 @@ namespace Flow.Launcher.VimMode
             }
 
             if (range.start < 0) return true;
+
+            // Counted word text objects (2aw / 3iw) extend the range through additional words.
+            int toCount = Math.Max(1, GetCount());
+            if (toCount > 1 && delim == 'w')
+            {
+                int wEnd = range.end;
+                for (int k = 1; k < toCount; k++)
+                {
+                    var next = VimMotionEngine.TextObjectWord(text, wEnd + 1, around);
+                    if (next.start < 0 || next.end <= wEnd) break;
+                    wEnd = next.end;
+                }
+                range.end = wEnd;
+            }
 
             if (_vimEngine.CurrentMode == VimModeType.Visual)
             {

@@ -168,6 +168,18 @@ namespace Flow.Launcher.Test
         }
 
         [Test]
+        public void ChangeNumberTest()
+        {
+            // Ctrl-A / Ctrl-X on the number at or to the right of the caret.
+            Assert.That(VimMotionEngine.ChangeNumber("port 8080", 0, 1), Is.EqualTo((true, "port 8081", 8)));
+            Assert.That(VimMotionEngine.ChangeNumber("v1", 0, 1), Is.EqualTo((true, "v2", 1)));
+            Assert.That(VimMotionEngine.ChangeNumber("9", 0, 1), Is.EqualTo((true, "10", 1)));
+            Assert.That(VimMotionEngine.ChangeNumber("5", 0, -1), Is.EqualTo((true, "4", 0)));
+            Assert.That(VimMotionEngine.ChangeNumber("count -5 x", 0, 1), Is.EqualTo((true, "count -4 x", 7)));
+            Assert.That(VimMotionEngine.ChangeNumber("abc", 0, 1).found, Is.False);
+        }
+
+        [Test]
         public void TextObjectDelimitedTest()
         {
             Assert.That(VimMotionEngine.TextObjectDelimited("f(a, b)", 3, '(', ')', false), Is.EqualTo((2, 5)));
