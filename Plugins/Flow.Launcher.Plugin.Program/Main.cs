@@ -118,7 +118,7 @@ namespace Flow.Launcher.Plugin.Program
 
                         // Start querying programs
                         // Collect all UWP Windows app directories
-                        var uwpsDirectories = _settings.HideDuplicatedWindowsApp ? _uwps
+                        var uwpsDirectories = _settings.HideDuplicatedWindowsApp ? uwps
                             .Where(uwp => !string.IsNullOrEmpty(uwp.Location)) // Exclude invalid paths
                             .Where(uwp => uwp.Location.StartsWith(WindowsAppPath, StringComparison.OrdinalIgnoreCase)) // Keep system apps
                             .Select(uwp => uwp.Location.TrimEnd('\\')) // Remove trailing slash

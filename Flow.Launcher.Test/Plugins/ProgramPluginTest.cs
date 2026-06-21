@@ -83,6 +83,54 @@ namespace Flow.Launcher.Test.Plugins
             ClassicAssert.AreEqual("Visual Studio Code", results[0].Title);
         }
 
+        [Test]
+        public async Task QueryAsync_HideDuplicatedWindowsApp_FiltersWin32UsingSnapshotAsync()
+        {
+            const string windowsAppLocation =
+                @"C:\Program Files\WindowsApps\Microsoft.WindowsCalculator_1.0.0.0_x64__8wekyb3d8bbwe";
+
+            SetStaticField("_win32sLock", new SemaphoreSlim(1, 1));
+            SetStaticField("_uwpsLock", new SemaphoreSlim(1, 1));
+            SetStaticProperty("_settings", new ProgramSettings
+            {
+                HideDuplicatedWindowsApp = true,
+                HideAppsPath = true,
+            });
+            SetStaticProperty("_win32s", new List<ProgramWin32>
+            {
+                new()
+                {
+                    Name = "Calculator",
+                    Description = string.Empty,
+                    FullPath = $@"{windowsAppLocation}\Calculator.exe",
+                    ExecutablePath = $@"{windowsAppLocation}\Calculator.exe",
+                    IcoPath = $@"{windowsAppLocation}\Calculator.exe",
+                    ParentDirectory = windowsAppLocation,
+                    UniqueIdentifier = $@"{windowsAppLocation}\Calculator.exe",
+                    Valid = true,
+                    Enabled = true,
+                }
+            });
+            SetStaticProperty("_uwps", new List<UwpApp>
+            {
+                CreateUwpApp("Calculadora", windowsAppLocation, "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App")
+            });
+            SetStaticProperty("Context", new PluginInitContext { API = CreateAlwaysMatchApi().Object });
+            ResetProgramCache();
+
+            var plugin = new ProgramMain();
+            var results = await plugin.QueryAsync(new Query
+            {
+                Search = string.Empty,
+                SearchTerms = [],
+                TrimmedQuery = string.Empty,
+                ActionKeyword = string.Empty
+            }, CancellationToken.None);
+
+            ClassicAssert.AreEqual(1, results.Count);
+            ClassicAssert.AreEqual("Calculadora", results[0].Title);
+        }
+
         private static Mock<IPublicAPI> CreateApi(CancellationTokenSource cancellation, TaskCompletionSource<bool> searchStarted)
         {
             var callCount = 0;
@@ -102,6 +150,26 @@ namespace Flow.Launcher.Test.Plugins
                     return new MatchResult(true, SearchPrecisionScore.None, [0, 1, 2], 100);
                 });
             return api;
+        }
+
+        private static Mock<IPublicAPI> CreateAlwaysMatchApi()
+        {
+            var api = new Mock<IPublicAPI>();
+            api.Setup(x => x.FuzzySearch(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(new MatchResult(true, SearchPrecisionScore.None, [], 100));
+            return api;
+        }
+
+        private static UwpApp CreateUwpApp(string displayName, string location, string userModelId)
+        {
+            var app = (UwpApp)Activator.CreateInstance(typeof(UwpApp), nonPublic: true)!;
+            app.DisplayName = displayName;
+            app.Description = string.Empty;
+            app.Location = location;
+            app.UniqueIdentifier = userModelId;
+            app.UserModelId = userModelId;
+            app.Enabled = true;
+            return app;
         }
 
         private static void SetStaticProperty(string name, object value)
