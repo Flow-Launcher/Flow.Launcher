@@ -350,6 +350,11 @@
                     X2="0"
                     Y1="0"
                     Y2="0" />
+            <Canvas x:Name="VimYankFlash"
+                    ClipToBounds="True"
+                    IsHitTestVisible="False"
+                    Visibility="Collapsed"
+                    Panel.ZIndex="9" />
             <Rectangle x:Name="VimBlockCaret"
                        Fill="{DynamicResource BasicSystemAccentColor}"
                        Opacity="0.5"

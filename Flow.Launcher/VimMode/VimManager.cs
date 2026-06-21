@@ -165,6 +165,86 @@ namespace Flow.Launcher.VimMode
             }
         }
 
+        private System.Windows.Controls.Canvas _vimYankFlash;
+        private int _yankFlashToken;
+
+        /// <summary>
+        /// Briefly highlights a just-yanked text range (like Neovim's on-yank flash) so the user gets
+        /// visual confirmation the yank happened. Draws one accent rectangle per line of the range on the
+        /// VimYankFlash canvas overlay and fades it out. Purely visual — does not touch text, caret, or
+        /// selection. Only call this for pure yanks (y/Y/yy/visual y), never for cuts (x/d/c/s).
+        /// </summary>
+        private void FlashYank(int start, int length)
+        {
+            if (length <= 0) return;
+            if (_vimYankFlash == null)
+                _vimYankFlash = _mainWindow.FindName("VimYankFlash") as System.Windows.Controls.Canvas;
+            if (_vimYankFlash == null) return;
+
+            try
+            {
+                string text = _queryTextBox.Text;
+                if (start < 0 || start >= text.Length) return;
+                int end = Math.Min(start + length, text.Length); // exclusive
+
+                _vimYankFlash.Children.Clear();
+                var m = _queryTextBox.Margin;
+                var fill = (System.Windows.Media.Brush)Application.Current.TryFindResource("BasicSystemAccentColor")
+                           ?? new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(0, 120, 215));
+
+                // Split the range into per-line segments (at '\n') and draw a rectangle for each, so a
+                // multi-line yank highlights every line rather than a single oversized box.
+                int segStart = start;
+                for (int i = start; i <= end; i++)
+                {
+                    bool atBreak = i == end || (i < text.Length && text[i] == '\n');
+                    if (!atBreak) continue;
+                    if (i > segStart) AddFlashRect(segStart, i, m, fill);
+                    segStart = i + 1; // skip the newline
+                }
+                if (_vimYankFlash.Children.Count == 0) return;
+
+                _yankFlashToken++;
+                int token = _yankFlashToken;
+                _vimYankFlash.Visibility = Visibility.Visible;
+                var anim = new System.Windows.Media.Animation.DoubleAnimation(1.0, 0.0, new Duration(TimeSpan.FromMilliseconds(300)));
+                anim.Completed += (_, __) =>
+                {
+                    if (_yankFlashToken != token) return; // a newer flash superseded this one
+                    _vimYankFlash.Children.Clear();
+                    _vimYankFlash.Visibility = Visibility.Collapsed;
+                };
+                _vimYankFlash.BeginAnimation(UIElement.OpacityProperty, anim);
+            }
+            catch (Exception ex) { Flow.Launcher.Infrastructure.Logger.Log.Exception("VimManager", "FlashYank layout exception", ex); }
+        }
+
+        private void AddFlashRect(int segStart, int segEnd, Thickness m, System.Windows.Media.Brush fill)
+        {
+            var r1 = _queryTextBox.GetRectFromCharacterIndex(segStart);
+            var r2 = _queryTextBox.GetRectFromCharacterIndex(segEnd); // leading edge of the char past the segment
+            if (r1.IsEmpty || r2.IsEmpty) return;
+
+            double left = r1.Left + m.Left;
+            double top = Math.Min(r1.Top, r2.Top) + m.Top;
+            double width = Math.Max(r2.Left - r1.Left, 2);
+            double height = Math.Max(r1.Bottom, r2.Bottom) - Math.Min(r1.Top, r2.Top);
+
+            var rect = new System.Windows.Shapes.Rectangle
+            {
+                Width = width,
+                Height = height,
+                Fill = fill,
+                Opacity = 0.35,
+                RadiusX = 2,
+                RadiusY = 2,
+                IsHitTestVisible = false,
+            };
+            System.Windows.Controls.Canvas.SetLeft(rect, left);
+            System.Windows.Controls.Canvas.SetTop(rect, top);
+            _vimYankFlash.Children.Add(rect);
+        }
+
         private void ViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(MainViewModel.MainWindowVisibilityStatus))
@@ -561,6 +641,7 @@ namespace Flow.Launcher.VimMode
                                 if (!string.IsNullOrEmpty(_queryTextBox.Text))
                                 {
                                     SetClipboardText(_queryTextBox.Text);
+                                    if (cmd == "y") FlashYank(0, _queryTextBox.Text.Length);
                                 }
                                 if (cmd == "d" || cmd == "c")
                                 {
@@ -742,6 +823,7 @@ namespace Flow.Launcher.VimMode
                                 if (selLength > 0)
                                 {
                                     SetClipboardText(_queryTextBox.Text.Substring(selStart, selLength));
+                                    FlashYank(selStart, selLength);
                                 }
                                 _queryTextBox.CaretIndex = selStart;
                                 _queryTextBox.SelectionLength = 0;
@@ -813,6 +895,7 @@ namespace Flow.Launcher.VimMode
                             return true;
                         case Key.Y:
                             SetClipboardText(_queryTextBox.Text);
+                            FlashYank(0, _queryTextBox.Text.Length);
                             _queryTextBox.CaretIndex = 0;
                             _queryTextBox.SelectionLength = 0;
                             _vimEngine.SwitchToNormal();
@@ -978,6 +1061,7 @@ namespace Flow.Launcher.VimMode
                         SetText(text.Remove(range.start, len));
                         _queryTextBox.CaretIndex = range.start;
                     }
+                    else FlashYank(range.start, len);
                     if (_pendingCommand == "c")
                         _vimEngine.SwitchToInsert();
                 }
@@ -1276,6 +1360,7 @@ namespace Flow.Launcher.VimMode
                         SetText(_queryTextBox.Text.Remove(start, end - start));
                         _queryTextBox.CaretIndex = start;
                     }
+                    else FlashYank(start, end - start);
                 }
 
                 if (_pendingCommand == "c")

@@ -60,6 +60,7 @@ Unit tests live in [`Flow.Launcher.Test`](../../Flow.Launcher.Test) (`VimEngineT
 - `D` / `C` — delete / change from the cursor to the end
 - `Y` — yank the whole query · `p` / `P` — paste after / before the cursor
 - `u` — undo the last operation · `Ctrl+R` — redo
+- Yanking (`y{motion}`, `yy`, `Y`, Visual `y`) briefly flashes a highlight over the copied text as confirmation.
 
 ### Operators + text objects
 Use a text object after an operator (`d`, `c`, `y`, `gu`, …):
