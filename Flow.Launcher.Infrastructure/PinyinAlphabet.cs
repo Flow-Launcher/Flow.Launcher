@@ -14,13 +14,23 @@ namespace Flow.Launcher.Infrastructure
 {
     public class PinyinAlphabet : IAlphabet
     {
+        private static readonly IReadOnlyDictionary<string, string[]> PolyphonicPhraseOverrides = new Dictionary<string, string[]>
+        {
+            ["重启"] = ["Chong", "Qi"],
+        };
+
         private readonly ConcurrentDictionary<string, (string translation, TranslationMapping map)> _pinyinCache = new();
         private readonly Settings _settings;
         private ReadOnlyDictionary<string, string> currentDoublePinyinTable;
 
         public PinyinAlphabet()
+            : this(Ioc.Default.GetRequiredService<Settings>())
         {
-            _settings = Ioc.Default.GetRequiredService<Settings>();
+        }
+
+        public PinyinAlphabet(Settings settings)
+        {
+            _settings = settings;
             LoadDoublePinyinTable();
 
             _settings.PropertyChanged += (sender, e) =>
@@ -118,6 +128,8 @@ namespace Flow.Launcher.Infrastructure
         private (string translation, TranslationMapping map) BuildCacheFromContent(string content)
         {
             var resultList = WordsHelper.GetPinyinList(content);
+            ApplyPolyphonicPhraseOverrides(content, resultList);
+
             var resultBuilder = new StringBuilder(_settings.UseDoublePinyin ? 3 : 4); // Pre-allocate with estimated capacity
             var map = new TranslationMapping();
 
@@ -161,6 +173,23 @@ namespace Flow.Launcher.Infrastructure
             var result = (translation, map);
 
             return _pinyinCache[content] = result;
+        }
+
+        private static void ApplyPolyphonicPhraseOverrides(string content, string[] resultList)
+        {
+            foreach (var (phrase, pinyin) in PolyphonicPhraseOverrides)
+            {
+                var index = content.IndexOf(phrase, StringComparison.Ordinal);
+                while (index >= 0)
+                {
+                    for (var i = 0; i < pinyin.Length; i++)
+                    {
+                        resultList[index + i] = pinyin[i];
+                    }
+
+                    index = content.IndexOf(phrase, index + phrase.Length, StringComparison.Ordinal);
+                }
+            }
         }
 
         /// <summary>
