@@ -215,19 +215,13 @@ namespace Flow.Launcher.Plugin.Shell
                         {
                             info.FileName = "cmd.exe";
                         }
-                        if (_settings.LeaveShellOpen)
-                        {
-                            info.ArgumentList.Add("/k");
-                        }
-                        else
-                        {
-                            info.ArgumentList.Add("/c");
-                        }
-                        info.ArgumentList.Add(
-                            $"{command}" +
-                            $"{(_settings.CloseShellAfterPress ?
-                                $" && echo {notifyStr} && pause > nul /c" :
-                                "")}");
+                        ConfigureCmdProcessStartInfo(
+                            info,
+                            command,
+                            _settings.LeaveShellOpen,
+                            _settings.CloseShellAfterPress,
+                            notifyStr,
+                            _settings.UseWindowsTerminal);
                         break;
                     }
 
@@ -326,6 +320,28 @@ namespace Flow.Launcher.Plugin.Shell
             _settings.AddCmdHistory(command);
 
             return info;
+        }
+
+        internal static void ConfigureCmdProcessStartInfo(
+            ProcessStartInfo info,
+            string command,
+            bool leaveShellOpen,
+            bool closeShellAfterPress,
+            string notifyStr,
+            bool useWindowsTerminal)
+        {
+            var shellSwitch = leaveShellOpen ? "/k" : "/c";
+            var commandToRun = $"{command}{(closeShellAfterPress ? $" && echo {notifyStr} && pause > nul /c" : "")}";
+
+            if (useWindowsTerminal)
+            {
+                info.ArgumentList.Add("cmd");
+                info.ArgumentList.Add(shellSwitch);
+                info.ArgumentList.Add(commandToRun);
+                return;
+            }
+
+            info.Arguments = $"{shellSwitch} {commandToRun}";
         }
 
         private void Execute(Func<ProcessStartInfo, Process> startProcess, ProcessStartInfo info)
