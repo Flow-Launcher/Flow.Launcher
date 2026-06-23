@@ -30,6 +30,8 @@ namespace Flow.Launcher.Infrastructure
 
         public PinyinAlphabet(Settings settings)
         {
+            ArgumentNullException.ThrowIfNull(settings);
+
             _settings = settings;
             LoadDoublePinyinTable();
 
@@ -182,6 +184,12 @@ namespace Flow.Launcher.Infrastructure
                 var index = content.IndexOf(phrase, StringComparison.Ordinal);
                 while (index >= 0)
                 {
+                    if (pinyin.Length != phrase.Length || index + pinyin.Length > resultList.Length)
+                    {
+                        index = content.IndexOf(phrase, index + phrase.Length, StringComparison.Ordinal);
+                        continue;
+                    }
+
                     for (var i = 0; i < pinyin.Length; i++)
                     {
                         resultList[index + i] = pinyin[i];
