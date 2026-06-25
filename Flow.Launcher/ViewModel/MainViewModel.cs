@@ -73,6 +73,7 @@ namespace Flow.Launcher.ViewModel
         };
 
         private bool _taskbarShownByFlow = false;
+        private bool _suppressNextHomeListMouseSelect;
         
         #endregion
 
@@ -620,6 +621,27 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void MouseSelect(bool isGridMode)
         {
+            var isHomePinnedGrid = IsHomePinnedGrid;
+
+            // Only list/grid interactions on home pinned-grid page should affect layout mode/preference.
+            if (!isHomePinnedGrid)
+            {
+                PreviewSelectedItem = Results.SelectedItem;
+                return;
+            }
+
+            // Ignore one stale list hover event right after auto-selecting pinned grid on query clear.
+            if (!isGridMode && _suppressNextHomeListMouseSelect)
+            {
+                _suppressNextHomeListMouseSelect = false;
+                return;
+            }
+
+            if (isGridMode)
+            {
+                _suppressNextHomeListMouseSelect = false;
+            }
+
             PreferResultsListOnHomePage = !isGridMode;
             IsGridMode = isGridMode;
 
@@ -636,10 +658,7 @@ namespace Flow.Launcher.ViewModel
         private bool ShouldSelectPinnedGridOnHomePage()
         {
             return QueryResultsSelected()
-                   && Settings.EnablePinnedResults
-                   && Settings.PinnedResultsLayout == PinnedLayoutOptions.Grid
-                   && string.IsNullOrEmpty(QueryText)
-                   && !PreferResultsListOnHomePage
+                   && IsHomePinnedGridPreferred
                    && PinnedResults.Results.Count > 0;
         }
 
@@ -648,6 +667,13 @@ namespace Flow.Launcher.ViewModel
             if (!ShouldSelectPinnedGridOnHomePage()) return;
 
             IsGridMode = true;
+            _suppressNextHomeListMouseSelect = true;
+
+            // Ensure list/history selection does not remain highlighted when grid mode becomes active.
+            Results.SelectedIndex = -1;
+            Results.SelectedItem = null;
+            History.SelectedIndex = -1;
+            History.SelectedItem = null;
 
             if (PinnedResults.SelectedIndex < 0 || PinnedResults.SelectedIndex >= PinnedResults.Results.Count)
             {
@@ -655,10 +681,15 @@ namespace Flow.Launcher.ViewModel
             }
 
             PinnedResults.SelectedItem = PinnedResults.Results[PinnedResults.SelectedIndex];
-            Results.SelectedIndex = -1;
-            Results.SelectedItem = null;
             PreviewSelectedItem = PinnedResults.SelectedItem;
         }
+
+        internal bool IsHomePinnedGrid =>
+            string.IsNullOrEmpty(QueryText)
+            && Settings.EnablePinnedResults
+            && Settings.PinnedResultsLayout == PinnedLayoutOptions.Grid;
+
+        internal bool IsHomePinnedGridPreferred => IsHomePinnedGrid && !PreferResultsListOnHomePage;
 
         private static IReadOnlyList<Result> DeepCloneResults(IReadOnlyList<Result> results, bool isDialogJump, CancellationToken token = default)
         {

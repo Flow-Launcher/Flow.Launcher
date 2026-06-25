@@ -65,6 +65,11 @@ namespace Flow.Launcher.ViewModel
                         // the PropertyChanged of PinnedGridHeightForEmptyQuery
                         case nameof(_mainVM.PinnedGridHeightForEmptyQuery):
                             OnPropertyChanged(nameof(MaxHeight));
+                            OnPropertyChanged(nameof(IsSynchronizedWithCurrentItem));
+                            break;
+                        case nameof(_mainVM.IsGridMode):
+                        case nameof(_mainVM.PreferResultsListOnHomePage):
+                            OnPropertyChanged(nameof(IsSynchronizedWithCurrentItem));
                             break;
                     }
                 };
@@ -111,6 +116,15 @@ namespace Flow.Launcher.ViewModel
         public int SelectedIndex { get; set; }
 
         public ResultViewModel SelectedItem { get; set; }
+        public bool IsSynchronizedWithCurrentItem
+        {
+            get
+            {
+                return _mainVM == null
+                    || !_mainVM.ResultsSelected(this)
+                    || !_mainVM.IsHomePinnedGridPreferred;
+            }
+        }
         public Thickness Margin { get; set; }
         public Visibility Visibility { get; set; } = Visibility.Collapsed;
 
@@ -246,11 +260,15 @@ namespace Flow.Launcher.ViewModel
 
         private void UpdateResults(List<ResultViewModel> newResults, bool reselect = true, CancellationToken token = default)
         {
+            var skipListReselectInHomeGrid = _mainVM != null
+                                            && _mainVM.ResultsSelected(this)
+                                            && _mainVM.IsHomePinnedGridPreferred;
+
             lock (_collectionLock)
             {
                 // update UI in one run, so it can avoid UI flickering
                 Results.Update(newResults, token);
-                if (reselect && Results.Any())
+                if (!skipListReselectInHomeGrid && reselect && Results.Any())
                     SelectedItem = Results[0];
             }
             OnPropertyChanged(nameof(IsEmpty));
@@ -264,7 +282,8 @@ namespace Flow.Launcher.ViewModel
                     if (_mainVM == null || // The results are for preview only in appearance page
                         _mainVM.ResultsSelected(this)) // The results are selected
                     {
-                        SelectedIndex = 0;
+                        if (!skipListReselectInHomeGrid)
+                            SelectedIndex = 0;
                         Visibility = Visibility.Visible;
                     }
                     break;

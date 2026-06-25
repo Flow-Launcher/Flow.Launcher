@@ -12,7 +12,7 @@
     d:DesignHeight="100"
     d:DesignWidth="100"
     Focusable="False"
-    IsSynchronizedWithCurrentItem="True"
+    IsSynchronizedWithCurrentItem="{Binding IsSynchronizedWithCurrentItem}"
     ItemsSource="{Binding Results}"
     KeyboardNavigation.DirectionalNavigation="Cycle"
     PreviewMouseDown="ListBox_PreviewMouseDown"
