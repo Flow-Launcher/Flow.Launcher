@@ -114,80 +114,136 @@ namespace Flow.Launcher.Plugin.Url
                 return false;
 
             // Check if it's a bare IP address with optional port, path, query, or fragment
-            var ipPart = input.Split('/', '?', '#')[0]; // Remove path, query, and fragment
-            if (IPEndPoint.TryParse(ipPart, out var endpoint))
-            {
-                switch (endpoint.AddressFamily)
-                {
-                    case System.Net.Sockets.AddressFamily.InterNetwork:
-                        return !endpoint.Address.Equals(IPAddress.Any);
-                    case System.Net.Sockets.AddressFamily.InterNetworkV6:
-                        if (input.Contains('/') || input.Contains('?') || input.Contains('#'))
-                        {
-                            // Check if IPv6 address is properly bracketed
-                            var bracketStart = input.IndexOf('[');
-                            var bracketEnd = input.IndexOf(']');
-                            if (bracketStart == -1 || bracketEnd == -1 || bracketStart > bracketEnd)
-                                return false;
-                        }
-                        return !endpoint.Address.Equals(IPAddress.IPv6Any);
-                }
-                return true;
-            }
+            if (TryMatchBareIP(input, out var bareIPValid))
+                return bareIPValid;
 
             // Check colon-only schemes (e.g. about:blank, chrome:settings)
-            // by extracting the scheme as everything before the first colon
-            var colonIndex = input.IndexOf(':');
-            if (colonIndex > 0)
-            {
-                var scheme = input[..colonIndex];
-                if (ColonOnlySchemes.Any(s => scheme.Equals(s, StringComparison.OrdinalIgnoreCase)))
-                {
-                    var content = input[(colonIndex + 1)..];
-
-                    // Some schemes accept both : and :// syntax, so :// forms
-                    // are handled by the Uri validation below instead
-                    if (!content.StartsWith("//"))
-                    {
-                        var hasContent = content.Length > 0;
-                        var hasNoWhitespace = !content.Any(char.IsWhiteSpace);
-
-                        return hasContent && hasNoWhitespace;
-                    }
-                }
-            }
+            if (TryMatchColonScheme(input, out var colonValid))
+                return colonValid;
 
             // Add protocol if missing for Uri validation
             var urlToValidate = AllDoubleSlashSchemes.Any(s => input.StartsWith(s + "://", StringComparison.OrdinalIgnoreCase))
                 ? input
                 : GetHttpPreference() + "://" + input;
 
+            // At this point it must be a valid absolute URI
             if (!Uri.TryCreate(urlToValidate, UriKind.Absolute, out var uri))
                 return false;
-            
 
-            // Validate protocol against known :// schemes
+            // Other types of supported schemes are handled above so reject if its not a supported :// scheme
             if (!AllDoubleSlashSchemes.Any(scheme => uri.Scheme == scheme))
                 return false;
 
-            var host = uri.Host;
+            // Check Non-host-validated :// schemes (e.g. chrome://settings, file:///C:/path)
+            if (TryMatchNonHostScheme(uri, input, out var nonHostValid))
+                return nonHostValid;
 
-            // Scheme-only validation: any valid URI structure is accepted, no host checks
-            // Reject bare scheme:// with no actual content (e.g. chrome://)
-            if (NonHostValidatedDoubleSlashSchemes.Any(scheme => uri.Scheme == scheme))
+            // Not matched by any other case so treat as a standard host-validated URL
+            return ValidateSchemeHost(uri);
+        }
+
+        /// <summary>
+        /// Checks if input is a bare IP address. 
+        /// isValid indicates whether it is a valid/usable address (excludes 0.0.0.0 and ::).
+        /// </summary>
+        /// <returns>true if input matches IP format, false otherwise</returns>
+        private static bool TryMatchBareIP(string input, out bool isValid)
+        {
+            var ipPart = input.Split('/', '?', '#')[0]; // Remove path, query, and fragment
+            if (!IPEndPoint.TryParse(ipPart, out var endpoint))
             {
-                var schemePrefix = uri.Scheme + "://";
-                var hasContent = input.Length > schemePrefix.Length;
-
-                return hasContent;
+                isValid = false;
+                return false;
             }
+
+            switch (endpoint.AddressFamily)
+            {
+                case System.Net.Sockets.AddressFamily.InterNetwork:
+                    isValid = !endpoint.Address.Equals(IPAddress.Any);
+                    return true;
+                case System.Net.Sockets.AddressFamily.InterNetworkV6:
+                    if (input.Contains('/') || input.Contains('?') || input.Contains('#'))
+                    {
+                        // Check if IPv6 address is properly bracketed
+                        var bracketStart = input.IndexOf('[');
+                        var bracketEnd = input.IndexOf(']');
+                        if (bracketStart == -1 || bracketEnd == -1 || bracketStart > bracketEnd)
+                        {
+                            isValid = false;
+                            return true;
+                        }
+                    }
+                    isValid = !endpoint.Address.Equals(IPAddress.IPv6Any);
+                    return true;
+            }
+
+            isValid = true;
+            return true;
+        }
+
+        /// <summary>
+        /// Checks if input matches a colon-only scheme. 
+        /// isValid indicates whether the content is non-empty with no whitespace.
+        /// </summary>
+        /// <returns>true if input matches colon scheme format, false otherwise</returns>
+        private static bool TryMatchColonScheme(string input, out bool isValid)
+        {
+            int colonIndex = input.IndexOf(':');
+
+            bool hasColonPrefix = colonIndex > 0;
+
+            bool isKnownScheme = hasColonPrefix
+                && ColonOnlySchemes.Any(s => input[..colonIndex].Equals(s, StringComparison.OrdinalIgnoreCase));
+            
+            bool isColonOnlySyntax = isKnownScheme 
+                && !input[(colonIndex + 1)..].StartsWith("//");
+
+            if (!isColonOnlySyntax)
+            {
+                isValid = false;
+                return false;
+            }
+
+            var content = input[(colonIndex + 1)..];
+            bool hasContent = content.Length > 0;
+            bool hasNoWhitespace = !content.Any(char.IsWhiteSpace);
+
+            isValid = hasContent && hasNoWhitespace;
+            return true;
+        }
+
+        /// <summary>
+        /// Checks if the URI matches a non-host-validated :// scheme. 
+        /// isValid indicates whether there is content after the scheme prefix.
+        /// </summary>
+        /// <returns>true if URI matches a non-host scheme, false otherwise</returns>
+        private static bool TryMatchNonHostScheme(Uri uri, string input, out bool isValid)
+        {
+            if (!NonHostValidatedDoubleSlashSchemes.Any(scheme => uri.Scheme == scheme))
+            {
+                isValid = false;
+                return false;
+            }
+
+            string schemePrefix = uri.Scheme + "://";
+            bool hasContent = input.Length > schemePrefix.Length;
+            isValid = hasContent;
+            return true;
+        }
+
+        /// <summary>
+        /// Validates the host portion of a :// scheme URI.
+        /// </summary>
+        private static bool ValidateSchemeHost(Uri uri)
+        {
+            var host = uri.Host;
 
             // localhost is valid
             if (host.Equals("localhost", StringComparison.OrdinalIgnoreCase))
                 return true;
 
             // Valid IP address (excluding 0.0.0.0)
-            if (IPEndPoint.TryParse(host, out endpoint))
+            if (IPEndPoint.TryParse(host, out var endpoint))
                 return !endpoint.Address.Equals(IPAddress.Any) && !endpoint.Address.Equals(IPAddress.IPv6Any);
 
             // Domain must have valid format with TLD
