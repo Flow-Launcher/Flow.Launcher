@@ -1099,6 +1099,12 @@ namespace Flow.Launcher.ViewModel
         public bool MainWindowVisibilityStatus { get; set; } = true;
 
         private bool _isGridMode;
+        /// <summary>
+        /// Indicates whether home pinned-results grid mode is active.
+        /// When enabled, list-side selection is cleared to keep grid as the active selection source.
+        /// When disabled, pinned-grid selection is cleared to return to list-side selection behavior.
+        /// This prevents stale selection from both areas appearing highlighted at the same time.
+        /// </summary>
         public bool IsGridMode
         {
             get => _isGridMode;
@@ -1107,6 +1113,11 @@ namespace Flow.Launcher.ViewModel
                 if (_isGridMode != value)
                 {
                     _isGridMode = value;
+
+                    // This cleanup only handles explicit mode transitions.
+                    // Other stale-selection guards (in other parts of the class) are still needed because
+                    // selection can also change through result refresh/reselect paths, WPF current-item
+                    // synchronization, and mouse hover timing events without toggling IsGridMode.
                     if (_isGridMode)
                     {
                         SelectedResults.SelectedIndex = -1;
