@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
@@ -272,6 +272,7 @@ namespace Flow.Launcher.ViewModel
         private void UpdateResults(List<ResultViewModel> newResults, bool reselect = true, CancellationToken token = default)
         {
             var skipListReselectInHomeGrid = _mainVM != null
+                                            && ReferenceEquals(this, _mainVM.Results)
                                             && _mainVM.ResultsSelected(this)
                                             && _mainVM.IsHomePinnedGridPreferred;
 

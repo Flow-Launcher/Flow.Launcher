@@ -621,7 +621,7 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void MouseSelect(bool isGridMode)
         {
-            var isHomePinnedGrid = IsHomePinnedGrid;
+            var isHomePinnedGrid = QueryResultsSelected() && IsHomePinnedGrid;
 
             // Only list/grid interactions on home pinned-grid page should affect layout mode/preference.
             if (!isHomePinnedGrid)
@@ -1023,6 +1023,12 @@ namespace Flow.Launcher.ViewModel
                     ContextMenu.Visibility = Visibility.Collapsed;
                     History.Visibility = Visibility.Collapsed;
 
+                    if (isReturningFromHistory)
+                    {
+                        History.SelectedIndex = -1;
+                        History.SelectedItem = null;
+                    }
+
                     // QueryText setter (used in ChangeQueryText) runs the query again, resetting the selected
                     // result from the one that was selected before going into the context menu to the first result.
                     // The code below correctly restores QueryText and puts the text caret at the end without
@@ -1039,6 +1045,15 @@ namespace Flow.Launcher.ViewModel
                     else
                     {
                         ChangeQueryText(_queryTextBeforeLeaveResults);
+                    }
+
+                    // When returning from History to home query with pinned-grid preferred,
+                    // re-apply pinned-grid selection/cleanup even if IsGridMode is already true.
+                    // This prevents stale list-side selection from persisting across repeated
+                    // Ctrl+H -> mouse select -> Esc cycles.
+                    if (isReturningFromHistory && IsHomePinnedGridPreferred)
+                    {
+                        SelectPinnedGridOnHomePage();
                     }
 
                     // If we are returning from history and we have not set select item yet,
