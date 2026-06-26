@@ -656,7 +656,7 @@ namespace Flow.Launcher.ViewModel
         }
 
         /// <summary>
-        /// Enforces a single highlighted item when query-results view is active and home pinned-grid mode is set.
+        /// Apply a single highlighted item when query-results view is active and home pinned-grid mode is set.
         /// This method is needed after transitions where stale selection can persist from a previous list/history state,
         /// specifically:
         /// - user clears query back to home (query refresh path),
@@ -671,7 +671,11 @@ namespace Flow.Launcher.ViewModel
         private void ApplyItemSelectionState()
         {
             if (!QueryResultsSelected() || !IsHomePinnedGridPreferred || PinnedResults.Results.Count == 0)
+            {
+                // Exit without changing existing selection state.
+                // IsGridMode and all Results/History/PinnedResults selections remain unchanged.
                 return;
+            }
 
             IsGridMode = true;
             _suppressNextHomeListMouseSelect = true;
