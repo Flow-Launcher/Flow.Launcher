@@ -206,28 +206,13 @@ namespace Flow.Launcher.Plugin.Shell
             {
                 case Shell.Cmd:
                     {
-                        if (_settings.UseWindowsTerminal)
-                        {
-                            info.FileName = "wt.exe";
-                            info.ArgumentList.Add("cmd");
-                        }
-                        else
-                        {
-                            info.FileName = "cmd.exe";
-                        }
-                        if (_settings.LeaveShellOpen)
-                        {
-                            info.ArgumentList.Add("/k");
-                        }
-                        else
-                        {
-                            info.ArgumentList.Add("/c");
-                        }
-                        info.ArgumentList.Add(
-                            $"{command}" +
-                            $"{(_settings.CloseShellAfterPress ?
-                                $" && echo {notifyStr} && pause > nul /c" :
-                                "")}");
+                        ConfigureCmdProcessStartInfo(
+                            info,
+                            command,
+                            _settings.LeaveShellOpen,
+                            _settings.CloseShellAfterPress,
+                            notifyStr,
+                            _settings.UseWindowsTerminal);
                         break;
                     }
 
@@ -328,6 +313,34 @@ namespace Flow.Launcher.Plugin.Shell
             return info;
         }
 
+        internal static void ConfigureCmdProcessStartInfo(
+            ProcessStartInfo info,
+            string command,
+            bool leaveShellOpen,
+            bool closeShellAfterPress,
+            string notifyStr,
+            bool useWindowsTerminal)
+        {
+            var shellSwitch = leaveShellOpen ? "/k" : "/c";
+            var commandToRun = $"{command}{(closeShellAfterPress ? $" && echo {notifyStr} && pause > nul /c" : "")}";
+
+            if (useWindowsTerminal)
+            {
+                // Windows Terminal takes individual arguments via ArgumentList.
+                info.FileName = "wt.exe";
+                info.ArgumentList.Add("cmd");
+                info.ArgumentList.Add(shellSwitch);
+                info.ArgumentList.Add(commandToRun);
+            }
+            else
+            {
+                // Must use Arguments (not ArgumentList) 
+                // so that quoted commands are passed to cmd.exe /c without backslash-escaping
+                info.FileName = "cmd.exe";
+                info.Arguments = $"{shellSwitch} {commandToRun}";
+            }
+        }
+
         private void Execute(Func<ProcessStartInfo, Process> startProcess, ProcessStartInfo info)
         {
             try
@@ -346,7 +359,11 @@ namespace Flow.Launcher.Plugin.Shell
             }
             catch (Exception e)
             {
-                Context.API.LogException(ClassName, $"Error executing command: {info.FileName} {string.Join(" ", info.ArgumentList)}", e);
+                // ArgumentList and Arguments are mutually exclusive (https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.argumentlist?view=net-10.0#remarks).
+                var arguments = info.ArgumentList.Count > 0
+                    ? string.Join(" ", info.ArgumentList)
+                    : info.Arguments;
+                Context.API.LogException(ClassName, $"Error executing command: {info.FileName} {arguments}", e);
             }
         }
 
