@@ -362,7 +362,11 @@ namespace Flow.Launcher.Plugin.Shell
             }
             catch (Exception e)
             {
-                Context.API.LogException(ClassName, $"Error executing command: {info.FileName} {string.Join(" ", info.ArgumentList)}", e);
+                // ArgumentList and Arguments are mutually exclusive (https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.argumentlist?view=net-10.0#remarks).
+                var arguments = info.ArgumentList.Count > 0
+                    ? string.Join(" ", info.ArgumentList)
+                    : info.Arguments;
+                Context.API.LogException(ClassName, $"Error executing command: {info.FileName} {arguments}", e);
             }
         }
 
