@@ -655,16 +655,16 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private bool ShouldSelectPinnedGridOnHomePage()
+        /// <summary>
+        /// Applies selection state for the current view/mode.
+        /// When query results are active and home pinned-grid mode is set, this makes pinned grid
+        /// the single selection source by clearing list/history selection and selecting a pinned item.
+        /// </summary>
+        /// <param name="forceFirstPinnedItem">When true, always select the first pinned item in home pinned-grid preferred mode.</param>
+        private void ApplyItemSelectionState(bool forceFirstPinnedItem = false)
         {
-            return QueryResultsSelected()
-                   && IsHomePinnedGridPreferred
-                   && PinnedResults.Results.Count > 0;
-        }
-
-        private void SelectPinnedGridOnHomePage()
-        {
-            if (!ShouldSelectPinnedGridOnHomePage()) return;
+            if (!QueryResultsSelected() || !IsHomePinnedGridPreferred || PinnedResults.Results.Count == 0)
+                return;
 
             IsGridMode = true;
             _suppressNextHomeListMouseSelect = true;
@@ -675,7 +675,7 @@ namespace Flow.Launcher.ViewModel
             History.SelectedIndex = -1;
             History.SelectedItem = null;
 
-            if (PinnedResults.SelectedIndex < 0 || PinnedResults.SelectedIndex >= PinnedResults.Results.Count)
+            if (forceFirstPinnedItem || PinnedResults.SelectedIndex < 0 || PinnedResults.SelectedIndex >= PinnedResults.Results.Count)
             {
                 PinnedResults.SelectedIndex = 0;
             }
@@ -791,7 +791,7 @@ namespace Flow.Launcher.ViewModel
                 IsGridMode = !IsGridMode;
                 if (IsGridMode)
                 {
-                    SelectPinnedGridOnHomePage();
+                    ApplyItemSelectionState();
                     // Reset the index so that preview will refresh when select any items
                     Results.SelectedIndex = -1;
                     Results.SelectedItem = null;
@@ -1053,7 +1053,7 @@ namespace Flow.Launcher.ViewModel
                     // Ctrl+H -> mouse select -> Esc cycles.
                     if (isReturningFromHistory && IsHomePinnedGridPreferred)
                     {
-                        SelectPinnedGridOnHomePage();
+                        ApplyItemSelectionState(forceFirstPinnedItem: true);
                     }
 
                     // If we are returning from history and we have not set select item yet,
@@ -2059,7 +2059,7 @@ namespace Flow.Launcher.ViewModel
                     // If switching from List to Grid, we should clear and add the results
                     PinnedResults.Clear();
                     PinnedResults.AddResults(results, "PinnedGrid");
-                    SelectPinnedGridOnHomePage();
+                    ApplyItemSelectionState(forceFirstPinnedItem: true);
 
                     // Force a refresh so that results will be updated when home page is disabled
                     if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(_emptyResult, _pinnedMetadata, query,
@@ -2608,7 +2608,7 @@ namespace Flow.Launcher.ViewModel
             // Update WPF properties
             MainWindowVisibility = Visibility.Visible;
             MainWindowVisibilityStatus = true;
-            SelectPinnedGridOnHomePage();
+            ApplyItemSelectionState(forceFirstPinnedItem: true);
             VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = true });
 
             // Switch keyboard layout
@@ -2794,10 +2794,7 @@ namespace Flow.Launcher.ViewModel
 
             Results.AddResults(resultsForUpdates, token, reSelect);
 
-            if (IsGridMode)
-            {
-                SelectPinnedGridOnHomePage();
-            }
+            ApplyItemSelectionState();
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>")]
