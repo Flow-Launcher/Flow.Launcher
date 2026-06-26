@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -656,9 +656,17 @@ namespace Flow.Launcher.ViewModel
         }
 
         /// <summary>
-        /// Applies selection state for the current view/mode.
-        /// When query results are active and home pinned-grid mode is set, this makes pinned grid
-        /// the single selection source by clearing list/history selection and selecting a pinned item.
+        /// Enforces a single highlighted item when query-results view is active and home pinned-grid mode is set.
+        /// This method is needed after transitions where stale selection can persist from a previous list/history state,
+        /// specifically:
+        /// - user clears query back to home (query refresh path),
+        /// - user returns from History to query results (for example via Esc),
+        /// - main window is shown and home pinned-grid should be restored.
+        /// In that scenario this method:
+        /// - forces <see cref="IsGridMode"/> on,
+        /// - clears <see cref="Results"/> and <see cref="History"/> selection,
+        /// - selects a pinned item (or first pinned item when requested),
+        /// so list/history items do not remain highlighted together with grid.
         /// </summary>
         /// <param name="forceFirstPinnedItem">When true, always select the first pinned item in home pinned-grid preferred mode.</param>
         private void ApplyItemSelectionState(bool forceFirstPinnedItem = false)
