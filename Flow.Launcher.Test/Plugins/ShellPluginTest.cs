@@ -11,10 +11,7 @@ namespace Flow.Launcher.Test.Plugins
         [Test]
         public void ConfigureCmdProcessStartInfo_ShouldPreserveQuotedCommands()
         {
-            var info = new ProcessStartInfo
-            {
-                FileName = "cmd.exe"
-            };
+            var info = new ProcessStartInfo();
 
             Main.ConfigureCmdProcessStartInfo(
                 info,
@@ -24,6 +21,7 @@ namespace Flow.Launcher.Test.Plugins
                 notifyStr: "Press any key to close",
                 useWindowsTerminal: false);
 
+            ClassicAssert.AreEqual("cmd.exe", info.FileName);
             ClassicAssert.AreEqual("/c \"cmd.exe\"", info.Arguments);
             ClassicAssert.IsEmpty(info.ArgumentList);
         }
@@ -31,10 +29,7 @@ namespace Flow.Launcher.Test.Plugins
         [Test]
         public void ConfigureCmdProcessStartInfo_ShouldKeepArgumentListForWindowsTerminal()
         {
-            var info = new ProcessStartInfo
-            {
-                FileName = "wt.exe"
-            };
+            var info = new ProcessStartInfo();
 
             Main.ConfigureCmdProcessStartInfo(
                 info,
@@ -44,6 +39,7 @@ namespace Flow.Launcher.Test.Plugins
                 notifyStr: "Press any key to close",
                 useWindowsTerminal: true);
 
+            ClassicAssert.AreEqual("wt.exe", info.FileName);
             CollectionAssert.AreEqual(new[] { "cmd", "/c", "\"cmd.exe\"" }, info.ArgumentList);
             ClassicAssert.IsEmpty(info.Arguments);
         }

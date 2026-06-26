@@ -206,15 +206,6 @@ namespace Flow.Launcher.Plugin.Shell
             {
                 case Shell.Cmd:
                     {
-                        if (_settings.UseWindowsTerminal)
-                        {
-                            info.FileName = "wt.exe";
-                            info.ArgumentList.Add("cmd");
-                        }
-                        else
-                        {
-                            info.FileName = "cmd.exe";
-                        }
                         ConfigureCmdProcessStartInfo(
                             info,
                             command,
@@ -335,13 +326,19 @@ namespace Flow.Launcher.Plugin.Shell
 
             if (useWindowsTerminal)
             {
+                // Windows Terminal takes individual arguments via ArgumentList.
+                info.FileName = "wt.exe";
                 info.ArgumentList.Add("cmd");
                 info.ArgumentList.Add(shellSwitch);
                 info.ArgumentList.Add(commandToRun);
-                return;
             }
-
-            info.Arguments = $"{shellSwitch} {commandToRun}";
+            else
+            {
+                // Must use Arguments (not ArgumentList) 
+                // so that quoted commands are passed to cmd.exe /c without backslash-escaping
+                info.FileName = "cmd.exe";
+                info.Arguments = $"{shellSwitch} {commandToRun}";
+            }
         }
 
         private void Execute(Func<ProcessStartInfo, Process> startProcess, ProcessStartInfo info)
