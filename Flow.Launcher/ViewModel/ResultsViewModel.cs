@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
@@ -65,11 +65,11 @@ namespace Flow.Launcher.ViewModel
                         // the PropertyChanged of PinnedGridHeightForEmptyQuery
                         case nameof(_mainVM.PinnedGridHeightForEmptyQuery):
                             OnPropertyChanged(nameof(MaxHeight));
-                            OnPropertyChanged(nameof(IsSynchronizedWithCurrentItem));
+                            OnPropertyChanged(nameof(EnableListCurrentItemSync));
                             break;
                         case nameof(_mainVM.IsGridMode):
                         case nameof(_mainVM.PreferResultsListOnHomePage):
-                            OnPropertyChanged(nameof(IsSynchronizedWithCurrentItem));
+                            OnPropertyChanged(nameof(EnableListCurrentItemSync));
                             break;
                     }
                 };
@@ -116,7 +116,18 @@ namespace Flow.Launcher.ViewModel
         public int SelectedIndex { get; set; }
 
         public ResultViewModel SelectedItem { get; set; }
-        public bool IsSynchronizedWithCurrentItem
+        
+        /// <summary>
+        /// Controls whether the results list synchronizes selection with the WPF collection view current item.
+        /// Enabled in these cases:
+        /// - <c>_mainVM == null</c>: this instance was created without <see cref="MainViewModel"/>, so home pinned-grid mode is unavailable; keep default sync.
+        /// - <c>!_mainVM.ResultsSelected(this)</c>: this is not the active main results list, so no special sync override is needed.
+        /// - <c>!_mainVM.IsHomePinnedGridPreferred</c>: the app is not in the home pinned-grid mode scenario, so normal list sync is desired.
+        /// Disabled only when this is the active main results list and home pinned-grid mode is active.
+        /// In that one scenario, WPF current-item sync can re-highlight a stale list item after query clear,
+        /// causing both grid and list to appear highlighted; disabling sync prevents that.
+        /// </summary>
+        public bool EnableListCurrentItemSync
         {
             get
             {
