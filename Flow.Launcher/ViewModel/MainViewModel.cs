@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -665,11 +665,10 @@ namespace Flow.Launcher.ViewModel
         /// In that scenario this method:
         /// - forces <see cref="IsGridMode"/> on,
         /// - clears <see cref="Results"/> and <see cref="History"/> selection,
-        /// - selects a pinned item (or first pinned item when requested),
+        /// - always selects the first pinned item,
         /// so list/history items do not remain highlighted together with grid.
         /// </summary>
-        /// <param name="forceFirstPinnedItem">When true, always select the first pinned item in home pinned-grid preferred mode.</param>
-        private void ApplyItemSelectionState(bool forceFirstPinnedItem = false)
+        private void ApplyItemSelectionState()
         {
             if (!QueryResultsSelected() || !IsHomePinnedGridPreferred || PinnedResults.Results.Count == 0)
                 return;
@@ -683,11 +682,7 @@ namespace Flow.Launcher.ViewModel
             History.SelectedIndex = -1;
             History.SelectedItem = null;
 
-            if (forceFirstPinnedItem || PinnedResults.SelectedIndex < 0 || PinnedResults.SelectedIndex >= PinnedResults.Results.Count)
-            {
-                PinnedResults.SelectedIndex = 0;
-            }
-
+            PinnedResults.SelectedIndex = 0;
             PinnedResults.SelectedItem = PinnedResults.Results[PinnedResults.SelectedIndex];
             PreviewSelectedItem = PinnedResults.SelectedItem;
         }
@@ -1061,7 +1056,7 @@ namespace Flow.Launcher.ViewModel
                     // Ctrl+H -> mouse select -> Esc cycles.
                     if (isReturningFromHistory && IsHomePinnedGridPreferred)
                     {
-                        ApplyItemSelectionState(forceFirstPinnedItem: true);
+                        ApplyItemSelectionState();
                     }
 
                     // If we are returning from history and we have not set select item yet,
@@ -2067,7 +2062,7 @@ namespace Flow.Launcher.ViewModel
                     // If switching from List to Grid, we should clear and add the results
                     PinnedResults.Clear();
                     PinnedResults.AddResults(results, "PinnedGrid");
-                    ApplyItemSelectionState(forceFirstPinnedItem: true);
+                    ApplyItemSelectionState();
 
                     // Force a refresh so that results will be updated when home page is disabled
                     if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(_emptyResult, _pinnedMetadata, query,
@@ -2616,7 +2611,7 @@ namespace Flow.Launcher.ViewModel
             // Update WPF properties
             MainWindowVisibility = Visibility.Visible;
             MainWindowVisibilityStatus = true;
-            ApplyItemSelectionState(forceFirstPinnedItem: true);
+            ApplyItemSelectionState();
             VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = true });
 
             // Switch keyboard layout
