@@ -239,7 +239,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                         path[(recursiveIndicatorIndex + 1)..],
                         true,
                         token);
-
             }
             else
             {

@@ -1,7 +1,7 @@
 {
   "version": 1,
   "dependencies": {
-    "net9.0-windows7.0": {
+    "net10.0-windows7.0": {
       "Ben.Demystifier": {
         "type": "Direct",
         "requested": "[0.4.1, )",
