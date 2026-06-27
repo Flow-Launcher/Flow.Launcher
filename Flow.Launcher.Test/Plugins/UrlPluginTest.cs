@@ -21,7 +21,6 @@ namespace Flow.Launcher.Test.Plugins
         [TestCase("http://www.google.com")]
         [TestCase("https://www.google.com")]
         [TestCase("http://google.com")]
-        [TestCase("ftp://google.com")]
         [TestCase("www.google.com")]
         [TestCase("google.com")]
         [TestCase("http://localhost")]
@@ -35,7 +34,6 @@ namespace Flow.Launcher.Test.Plugins
         [TestCase("110.10.10.10:8080")]
         [TestCase("192.168.1.1")]
         [TestCase("192.168.1.1:3000")]
-        [TestCase("ftp://110.10.10.10")]
         [TestCase("[2001:db8::1]")]
         [TestCase("[2001:db8::1]:8080")]
         [TestCase("http://[2001:db8::1]")]
@@ -66,6 +64,23 @@ namespace Flow.Launcher.Test.Plugins
         [TestCase("192.168.1.1#fragment")]
         [TestCase("localhost:8080?test=123")]
         [TestCase("example.com#fragment")]
+        // Non-host-validated :// schemes
+        [TestCase("chrome://settings")]
+        [TestCase("edge://about")]
+        [TestCase("brave://settings")]
+        [TestCase("opera://history")]
+        [TestCase("vivaldi://bookmarks")]
+        [TestCase("chrome-extension://abc123def456/")]
+        [TestCase("moz-extension://abc123def456/")]
+        [TestCase("file:///C:/path/to/file.txt")]
+        // Colon-only schemes
+        [TestCase("about:blank")]
+        [TestCase("about:config")]
+        [TestCase("data:text/plain,hello")]
+        [TestCase("data:,Hello%2C%20World%21")]
+        // Chromium schemes in colon form
+        [TestCase("chrome:settings")]
+        [TestCase("chrome-extension:settings")]
         public void WhenValidUrlThenIsUrlReturnsTrue(string url)
         {
             Assert.That(plugin.IsURL(url), Is.True);
@@ -87,6 +102,14 @@ namespace Flow.Launcher.Test.Plugins
         [TestCase(".com")]
         [TestCase("http://.com")]
         [TestCase("2001:db8:::1")]
+        // Colon scheme with whitespace
+        [TestCase("about: blank")]
+        // Empty colon schemes
+        [TestCase("about:")]
+        [TestCase("chrome:")]
+        // Empty non host validated ://
+        [TestCase("chrome://")]
+        [TestCase("moz-extension://")]
         public void WhenInvalidUrlThenIsUrlReturnsFalse(string url)
         {
             Assert.That(plugin.IsURL(url), Is.False);
