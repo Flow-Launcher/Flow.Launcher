@@ -26,6 +26,7 @@ using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Storage;
 using iNKORE.UI.WPF.Modern;
+using iNKORE.UI.WPF.Modern.Controls;
 using Microsoft.VisualStudio.Threading;
 
 namespace Flow.Launcher.ViewModel
@@ -934,6 +935,25 @@ namespace Flow.Launcher.ViewModel
         public Visibility SearchIconVisibility { get; set; }
         public double ClockPanelOpacity { get; set; } = 1;
         public double SearchIconOpacity { get; set; } = 1;
+
+        public bool InlineNotificationIsOpen { get; set; }
+        public string InlineNotificationTitle { get; set; } = string.Empty;
+        public string InlineNotificationMessage { get; set; } = string.Empty;
+        public InfoBarSeverity InlineNotificationSeverity { get; set; } = InfoBarSeverity.Informational;
+
+        internal void ShowInlineNotification(string title, string message, InfoBarSeverity severity)
+        {
+            if (!Application.Current.Dispatcher.CheckAccess())
+            {
+                Application.Current.Dispatcher.Invoke(() => ShowInlineNotification(title, message, severity));
+                return;
+            }
+
+            InlineNotificationTitle = title;
+            InlineNotificationMessage = message;
+            InlineNotificationSeverity = severity;
+            InlineNotificationIsOpen = true;
+        }
 
         private string _placeholderText;
         public string PlaceholderText

@@ -352,6 +352,16 @@
                     Y2="0" />
             </Grid>
 
+            <ui:InfoBar
+                Title="{Binding InlineNotificationTitle}"
+                Margin="4 0 4 0"
+                IsClosable="True"
+                IsIconVisible="True"
+                IsOpen="{Binding InlineNotificationIsOpen, Mode=TwoWay}"
+                Message="{Binding InlineNotificationMessage}"
+                Severity="{Binding InlineNotificationSeverity}"
+                WindowChrome.IsHitTestVisibleInChrome="True" />
+
             <Grid x:Name="MiddleSeparatorArea" ClipToBounds="True">
                 <ContentControl>
                     <ContentControl.Style>
