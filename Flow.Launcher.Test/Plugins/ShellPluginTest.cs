@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.Shell;
 using NUnit.Framework;
 using NUnit.Framework.Legacy;
@@ -9,16 +10,15 @@ namespace Flow.Launcher.Test.Plugins
     public class ShellPluginTest
     {
         [Test]
-        public void ConfigureCmdProcessStartInfo_ShouldPreserveQuotedCommands()
+        public void CreateProcessStartInfo_Cmd_ShouldPreserveQuotedCommands()
         {
-            var info = new ProcessStartInfo();
-
-            Main.ConfigureCmdProcessStartInfo(
-                info,
+            var info = Main.CreateProcessStartInfo(
                 "\"cmd.exe\"",
+                Shell.Cmd,
                 leaveShellOpen: false,
                 closeShellAfterPress: false,
                 useWindowsTerminal: false,
+                runAsAdmin: false,
                 closePrompt: "Press any key to close");
 
             ClassicAssert.AreEqual("cmd.exe", info.FileName);
@@ -27,16 +27,15 @@ namespace Flow.Launcher.Test.Plugins
         }
 
         [Test]
-        public void ConfigureCmdProcessStartInfo_ShouldKeepArgumentListForWindowsTerminal()
+        public void CreateProcessStartInfo_Cmd_ShouldUseArgumentListForWindowsTerminal()
         {
-            var info = new ProcessStartInfo();
-
-            Main.ConfigureCmdProcessStartInfo(
-                info,
+            var info = Main.CreateProcessStartInfo(
                 "\"cmd.exe\"",
+                Shell.Cmd,
                 leaveShellOpen: false,
                 closeShellAfterPress: false,
                 useWindowsTerminal: true,
+                runAsAdmin: false,
                 closePrompt: "Press any key to close");
 
             ClassicAssert.AreEqual("wt.exe", info.FileName);

@@ -272,7 +272,7 @@ namespace Flow.Launcher.Plugin.Shell
             return info;
         }
 
-        internal static void ConfigureCmdProcessStartInfo(
+        private static void ConfigureCmdProcessStartInfo(
             ProcessStartInfo info,
             string command,
             bool leaveShellOpen,
@@ -300,7 +300,7 @@ namespace Flow.Launcher.Plugin.Shell
             }
         }
 
-        internal static void ConfigurePowershellProcessStartInfo(
+        private static void ConfigurePowershellProcessStartInfo(
             ProcessStartInfo info,
             string command,
             bool leaveShellOpen,
@@ -339,7 +339,7 @@ namespace Flow.Launcher.Plugin.Shell
             }
         }
 
-        internal static void ConfigurePwshProcessStartInfo(
+        private static void ConfigurePwshProcessStartInfo(
             ProcessStartInfo info,
             string command,
             bool leaveShellOpen,
@@ -375,7 +375,7 @@ namespace Flow.Launcher.Plugin.Shell
             info.ArgumentList.Add(commandStr);
         }
 
-        internal static void ConfigureRunCommandStartInfo(
+        private static void ConfigureRunCommandStartInfo(
             ProcessStartInfo info,
             string command)
         {
