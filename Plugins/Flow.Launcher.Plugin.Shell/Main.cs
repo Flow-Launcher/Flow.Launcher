@@ -190,26 +190,52 @@ namespace Flow.Launcher.Plugin.Shell
 
         private ProcessStartInfo PrepareProcessStartInfo(string command, bool runAsAdministrator = false)
         {
+            var runAsAdmin = runAsAdministrator || _settings.RunAsAdministrator;
+            var closePrompt = Localize.flowlauncher_plugin_cmd_press_any_key_to_close();
+            var info = CreateProcessStartInfo(
+                command,
+                _settings.Shell,
+                _settings.LeaveShellOpen,
+                _settings.CloseShellAfterPress,
+                _settings.UseWindowsTerminal,
+                runAsAdmin,
+                closePrompt);
+
+            _settings.AddCmdHistory(command);
+            return info;
+        }
+
+        internal static ProcessStartInfo CreateProcessStartInfo(
+            string command,
+            Shell shell,
+            bool leaveShellOpen,
+            bool closeShellAfterPress,
+            bool useWindowsTerminal,
+            bool runAsAdmin,
+            string closePrompt)
+        {
             command = command.Trim();
             command = Environment.ExpandEnvironmentVariables(command);
+
             var workingDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-            var runAsAdministratorArg = (runAsAdministrator || _settings.RunAsAdministrator) ? "runas" : "";
+            var runAsAdministratorArg = runAsAdmin ? "runas" : "";
 
             var info = new ProcessStartInfo()
             {
                 Verb = runAsAdministratorArg,
                 WorkingDirectory = workingDirectory,
+                UseShellExecute = true,
             };
-            var closePrompt = Localize.flowlauncher_plugin_cmd_press_any_key_to_close();
-            switch (_settings.Shell)
+
+            switch (shell)
             {
                 case Shell.Cmd:
                     ConfigureCmdProcessStartInfo(
                         info,
                         command,
-                        _settings.LeaveShellOpen,
-                        _settings.CloseShellAfterPress,
-                        _settings.UseWindowsTerminal,
+                        leaveShellOpen,
+                        closeShellAfterPress,
+                        useWindowsTerminal,
                         closePrompt);
                     break;
 
@@ -217,9 +243,9 @@ namespace Flow.Launcher.Plugin.Shell
                     ConfigurePowershellProcessStartInfo(
                         info,
                         command,
-                        _settings.LeaveShellOpen,
-                        _settings.CloseShellAfterPress,
-                        _settings.UseWindowsTerminal,
+                        leaveShellOpen,
+                        closeShellAfterPress,
+                        useWindowsTerminal,
                         closePrompt);
                     break;
 
@@ -227,9 +253,9 @@ namespace Flow.Launcher.Plugin.Shell
                     ConfigurePwshProcessStartInfo(
                         info,
                         command,
-                        _settings.LeaveShellOpen,
-                        _settings.CloseShellAfterPress,
-                        _settings.UseWindowsTerminal,
+                        leaveShellOpen,
+                        closeShellAfterPress,
+                        useWindowsTerminal,
                         closePrompt);
                     break;
 
@@ -242,10 +268,6 @@ namespace Flow.Launcher.Plugin.Shell
                 default:
                     throw new NotImplementedException();
             }
-
-            info.UseShellExecute = true;
-
-            _settings.AddCmdHistory(command);
 
             return info;
         }
