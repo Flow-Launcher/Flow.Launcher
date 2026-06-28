@@ -193,7 +193,7 @@ namespace Flow.Launcher.Plugin.Shell
             command = command.Trim();
             command = Environment.ExpandEnvironmentVariables(command);
             var workingDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-            var runAsAdministratorArg = !runAsAdministrator && !_settings.RunAsAdministrator ? "" : "runas";
+            var runAsAdministratorArg = (runAsAdministrator || _settings.RunAsAdministrator) ? "runas" : "";
 
             var info = new ProcessStartInfo()
             {
