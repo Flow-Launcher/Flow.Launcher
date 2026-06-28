@@ -18,8 +18,8 @@ namespace Flow.Launcher.Test.Plugins
                 "\"cmd.exe\"",
                 leaveShellOpen: false,
                 closeShellAfterPress: false,
-                notifyStr: "Press any key to close",
-                useWindowsTerminal: false);
+                useWindowsTerminal: false,
+                closePrompt: "Press any key to close");
 
             ClassicAssert.AreEqual("cmd.exe", info.FileName);
             ClassicAssert.AreEqual("/c \"cmd.exe\"", info.Arguments);
@@ -36,8 +36,8 @@ namespace Flow.Launcher.Test.Plugins
                 "\"cmd.exe\"",
                 leaveShellOpen: false,
                 closeShellAfterPress: false,
-                notifyStr: "Press any key to close",
-                useWindowsTerminal: true);
+                useWindowsTerminal: true,
+                closePrompt: "Press any key to close");
 
             ClassicAssert.AreEqual("wt.exe", info.FileName);
             CollectionAssert.AreEqual(new[] { "cmd", "/c", "\"cmd.exe\"" }, info.ArgumentList);

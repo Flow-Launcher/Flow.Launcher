@@ -200,7 +200,7 @@ namespace Flow.Launcher.Plugin.Shell
                 Verb = runAsAdministratorArg,
                 WorkingDirectory = workingDirectory,
             };
-            var notifyStr = Localize.flowlauncher_plugin_cmd_press_any_key_to_close();
+            var closePrompt = Localize.flowlauncher_plugin_cmd_press_any_key_to_close();
             switch (_settings.Shell)
             {
                 case Shell.Cmd:
@@ -209,8 +209,8 @@ namespace Flow.Launcher.Plugin.Shell
                         command,
                         _settings.LeaveShellOpen,
                         _settings.CloseShellAfterPress,
-                        notifyStr,
-                        _settings.UseWindowsTerminal);
+                        _settings.UseWindowsTerminal,
+                        closePrompt);
                     break;
 
                 case Shell.Powershell:
@@ -219,8 +219,8 @@ namespace Flow.Launcher.Plugin.Shell
                         command,
                         _settings.LeaveShellOpen,
                         _settings.CloseShellAfterPress,
-                        notifyStr,
-                        _settings.UseWindowsTerminal);
+                        _settings.UseWindowsTerminal,
+                        closePrompt);
                     break;
 
                 case Shell.Pwsh:
@@ -229,8 +229,8 @@ namespace Flow.Launcher.Plugin.Shell
                         command,
                         _settings.LeaveShellOpen,
                         _settings.CloseShellAfterPress,
-                        notifyStr,
-                        _settings.UseWindowsTerminal);
+                        _settings.UseWindowsTerminal,
+                        closePrompt);
                     break;
 
                 case Shell.RunCommand:
@@ -255,11 +255,11 @@ namespace Flow.Launcher.Plugin.Shell
             string command,
             bool leaveShellOpen,
             bool closeShellAfterPress,
-            string notifyStr,
-            bool useWindowsTerminal)
+            bool useWindowsTerminal,
+            string closePrompt)
         {
             var shellSwitch = leaveShellOpen ? "/k" : "/c";
-            var commandToRun = $"{command}{(closeShellAfterPress ? $" && echo {notifyStr} && pause > nul /c" : "")}";
+            var commandToRun = $"{command}{(closeShellAfterPress ? $" && echo {closePrompt} && pause > nul /c" : "")}";
 
             if (useWindowsTerminal)
             {
@@ -283,8 +283,8 @@ namespace Flow.Launcher.Plugin.Shell
             string command,
             bool leaveShellOpen,
             bool closeShellAfterPress,
-            string notifyStr,
-            bool useWindowsTerminal)
+            bool useWindowsTerminal,
+            string closePrompt)
         {
             // Using just a ; doesn't work with wt, as it's used to create a new tab for the terminal window.
             // \\ must be escaped for it to work properly, or breaking it into multiple arguments.
@@ -311,7 +311,7 @@ namespace Flow.Launcher.Plugin.Shell
                 var commandStr = $"{command}{escape};";
                 if (closeShellAfterPress)
                 {
-                    commandStr += $" Write-Host '{notifyStr}'{escape}; [System.Console]::ReadKey(){escape}; exit";
+                    commandStr += $" Write-Host '{closePrompt}'{escape}; [System.Console]::ReadKey(){escape}; exit";
                 }
                 info.ArgumentList.Add(commandStr);
             }
@@ -322,8 +322,8 @@ namespace Flow.Launcher.Plugin.Shell
             string command,
             bool leaveShellOpen,
             bool closeShellAfterPress,
-            string notifyStr,
-            bool useWindowsTerminal)
+            bool useWindowsTerminal,
+            string closePrompt)
         {
             // Using just a ; doesn't work with wt, as it's used to create a new tab for the terminal window.
             // \\ must be escaped for it to work properly, or breaking it into multiple arguments.
@@ -348,15 +348,15 @@ namespace Flow.Launcher.Plugin.Shell
             var commandStr = $"{command}{escape};";
             if (closeShellAfterPress)
             {
-                commandStr += $" Write-Host '{notifyStr}'{escape}; [System.Console]::ReadKey(){escape}; exit";
+                commandStr += $" Write-Host '{closePrompt}'{escape}; [System.Console]::ReadKey(){escape}; exit";
             }
             info.ArgumentList.Add(commandStr);
         }
 
         internal static void ConfigureRunCommandStartInfo(
-            ProcessStartInfo info, 
-            string command
-        ) {
+            ProcessStartInfo info,
+            string command)
+        {
             var parts = command.Split([' '], 2);
             if (parts.Length == 2)
             {
