@@ -69,6 +69,7 @@ namespace Flow.Launcher.ViewModel
                             break;
                         case nameof(_mainVM.IsGridMode):
                             OnPropertyChanged(nameof(EnableListCurrentItemSync));
+                            OnPropertyChanged(nameof(ResetScrollToTopWhenSelectionCleared));
                             break;
                     }
                 };
@@ -135,6 +136,17 @@ namespace Flow.Launcher.ViewModel
                     || !_mainVM.IsHomePinnedGridActive;
             }
         }
+
+        public bool ResetScrollToTopWhenSelectionCleared
+        {
+            get
+            {
+                return _mainVM != null
+                    && _mainVM.ResultsSelected(this)
+                    && _mainVM.IsHomePinnedGridActive;
+            }
+        }
+
         public Thickness Margin { get; set; }
         public Visibility Visibility { get; set; } = Visibility.Collapsed;
 

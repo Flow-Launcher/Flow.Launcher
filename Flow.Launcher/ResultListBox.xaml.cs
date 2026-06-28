@@ -51,6 +51,15 @@ namespace Flow.Launcher
             if (e.AddedItems.Count > 0 && e.AddedItems[0] != null)
             {
                 ScrollIntoView(e.AddedItems[0]);
+                return;
+            }
+
+            if (e.AddedItems.Count == 0 && DataContext is ResultsViewModel { ResetScrollToTopWhenSelectionCleared: true } viewModel)
+            {
+                if (viewModel.Results.Count > 0)
+                {
+                    ScrollIntoView(viewModel.Results[0]);
+                }
             }
         }
 
