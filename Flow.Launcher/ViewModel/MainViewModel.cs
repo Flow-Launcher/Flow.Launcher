@@ -621,7 +621,7 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void MouseSelect(bool isGridMode)
         {
-            var isHomePinnedGrid = QueryResultsSelected() && IsHomePinnedGrid;
+            var isHomePinnedGrid = QueryResultsSelected() && IsHomePinnedGridActive;
 
             // Only list/grid interactions on home pinned-grid page should affect layout mode/preference.
             if (!isHomePinnedGrid)
@@ -642,7 +642,6 @@ namespace Flow.Launcher.ViewModel
                 _suppressNextHomeListMouseSelect = false;
             }
 
-            PreferResultsListOnHomePage = !isGridMode;
             IsGridMode = isGridMode;
 
             if (isGridMode)
@@ -670,7 +669,7 @@ namespace Flow.Launcher.ViewModel
         /// </summary>
         private void ApplyItemSelectionState()
         {
-            if (!QueryResultsSelected() || !IsHomePinnedGridPreferred || PinnedResults.Results.Count == 0)
+            if (!QueryResultsSelected() || !IsHomePinnedGridActive || PinnedResults.Results.Count == 0)
             {
                 // Exit without changing existing selection state.
                 // IsGridMode and all Results/History/PinnedResults selections remain unchanged.
@@ -691,12 +690,10 @@ namespace Flow.Launcher.ViewModel
             PreviewSelectedItem = PinnedResults.SelectedItem;
         }
 
-        internal bool IsHomePinnedGrid =>
+        internal bool IsHomePinnedGridActive =>
             string.IsNullOrEmpty(QueryText)
             && Settings.EnablePinnedResults
             && Settings.PinnedResultsLayout == PinnedLayoutOptions.Grid;
-
-        internal bool IsHomePinnedGridPreferred => IsHomePinnedGrid && !PreferResultsListOnHomePage;
 
         private static IReadOnlyList<Result> DeepCloneResults(IReadOnlyList<Result> results, bool isDialogJump, CancellationToken token = default)
         {
@@ -879,8 +876,6 @@ namespace Flow.Launcher.ViewModel
 
         public bool GameModeStatus { get; set; } = false;
 
-        public bool PreferResultsListOnHomePage { get; set; } = false;
-
         private string _queryText;
         public string QueryText
         {
@@ -890,7 +885,6 @@ namespace Flow.Launcher.ViewModel
                 _queryText = value;
                 if (!string.IsNullOrEmpty(value))
                 {
-                    PreferResultsListOnHomePage = false;
                     IsGridMode = false;
                 }
                 OnPropertyChanged();
@@ -1058,7 +1052,7 @@ namespace Flow.Launcher.ViewModel
                     // re-apply pinned-grid selection/cleanup even if IsGridMode is already true.
                     // This prevents stale list-side selection from persisting across repeated
                     // Ctrl+H -> mouse select -> Esc cycles.
-                    if (isReturningFromHistory && IsHomePinnedGridPreferred)
+                    if (isReturningFromHistory && IsHomePinnedGridActive)
                     {
                         ApplyItemSelectionState();
                     }
