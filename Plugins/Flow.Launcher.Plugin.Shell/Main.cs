@@ -297,8 +297,6 @@ namespace Flow.Launcher.Plugin.Shell
                             info.FileName = command;
                         }
 
-                        info.UseShellExecute = true;
-
                         break;
                     }
 
