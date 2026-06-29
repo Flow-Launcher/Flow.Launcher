@@ -126,4 +126,36 @@ internal sealed record CodeHighlightTheme(
         Punctuation:       Color.FromRgb(0xAB, 0xB2, 0xBF),
         Decorator:         Color.FromRgb(0xC6, 0x78, 0xDD),
         Error:             Color.FromRgb(0xE0, 0x6C, 0x75));
+
+    // Light counterpart so "Auto" has something legible to fall back to on light colour schemes;
+    // the bundled dark themes wash out on a light background.
+    public static CodeHighlightTheme VSCodeLight { get; } = new(
+        Name: "VS Code Light",
+        DefaultForeground: Color.FromRgb(0x1F, 0x1F, 0x1F),
+        Comment:           Color.FromRgb(0x00, 0x80, 0x00),
+        String:            Color.FromRgb(0xA3, 0x15, 0x15),
+        Number:            Color.FromRgb(0x09, 0x86, 0x58),
+        Keyword:           Color.FromRgb(0x00, 0x00, 0xFF),
+        ControlFlow:       Color.FromRgb(0xAF, 0x00, 0xDB),
+        Type:              Color.FromRgb(0x26, 0x7F, 0x99),
+        Function:          Color.FromRgb(0x79, 0x5E, 0x26),
+        Variable:          Color.FromRgb(0x00, 0x10, 0x80),
+        BuiltIn:           Color.FromRgb(0x00, 0x00, 0xFF),
+        Punctuation:       Color.FromRgb(0x00, 0x00, 0x00),
+        Decorator:         Color.FromRgb(0x79, 0x5E, 0x26),
+        Error:             Color.FromRgb(0xCD, 0x31, 0x31));
+
+    /// <summary>
+    /// Resolves the configured code-highlight theme setting to a concrete theme. "Auto" (and any
+    /// unrecognised value) follows the app colour scheme: a light theme when the app renders light,
+    /// a dark theme otherwise. Explicit names always win.
+    /// </summary>
+    public static CodeHighlightTheme Resolve(string setting, bool isDark) => setting switch
+    {
+        nameof(VSCodeLight) => VSCodeLight,
+        nameof(VSCodeDarkPlus) => VSCodeDarkPlus,
+        nameof(CatppuccinMacchiato) => CatppuccinMacchiato,
+        nameof(OneDark) => OneDark,
+        _ => isDark ? VSCodeDarkPlus : VSCodeLight,
+    };
 }

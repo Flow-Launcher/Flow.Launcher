@@ -16,7 +16,20 @@ public class PreviewMarkdownScrollViewer : MarkdownScrollViewer
     private static readonly string[] EmphasisMarkers = ["**", "__", "*", "_"];
     private const double MinimumDocumentPageWidth = 64;
 
-    internal static CodeHighlightTheme ActiveTheme { get; set; } = CodeHighlightTheme.VSCodeDarkPlus;
+    internal static CodeHighlightTheme ActiveTheme { get; private set; } = CodeHighlightTheme.VSCodeDarkPlus;
+
+    /// <summary>
+    /// Name of the code-highlight theme currently applied to embedded code blocks.
+    /// </summary>
+    public static string ActiveThemeName => ActiveTheme.Name;
+
+    /// <summary>
+    /// Applies the configured code-highlight theme to subsequently rendered code blocks.
+    /// </summary>
+    /// <param name="setting">The persisted Settings.CodeHighlightTheme value (e.g. "Auto", "OneDark").</param>
+    /// <param name="isDark">Whether the app currently renders with a dark colour scheme.</param>
+    public static void ApplyCodeHighlightTheme(string setting, bool isDark)
+        => ActiveTheme = CodeHighlightTheme.Resolve(setting, isDark);
 
     static PreviewMarkdownScrollViewer()
     {

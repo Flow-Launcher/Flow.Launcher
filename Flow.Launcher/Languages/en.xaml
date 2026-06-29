@@ -322,6 +322,13 @@
     <system:String x:Key="ColorSchemeSystem">System Default</system:String>
     <system:String x:Key="ColorSchemeLight">Light</system:String>
     <system:String x:Key="ColorSchemeDark">Dark</system:String>
+    <system:String x:Key="CodeHighlightTheme">Code Highlight Theme</system:String>
+    <system:String x:Key="CodeHighlightThemeTooltip">Syntax highlighting theme for code blocks in the markdown preview pane.</system:String>
+    <system:String x:Key="CodeHighlightThemeAuto">Auto (match color scheme)</system:String>
+    <system:String x:Key="CodeHighlightThemeVSCodeLight">VS Code Light</system:String>
+    <system:String x:Key="CodeHighlightThemeVSCodeDarkPlus">VS Code Dark+</system:String>
+    <system:String x:Key="CodeHighlightThemeCatppuccinMacchiato">Catppuccin Macchiato</system:String>
+    <system:String x:Key="CodeHighlightThemeOneDark">One Dark</system:String>
     <system:String x:Key="SoundEffect">Sound Effect</system:String>
     <system:String x:Key="SoundEffectTip">Play a small sound when the search window opens</system:String>
     <system:String x:Key="SoundEffectVolume">Sound Effect Volume</system:String>

@@ -24,6 +24,7 @@ using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Plugin.SharedModels;
+using Flow.Launcher.Resources.Controls;
 using Flow.Launcher.ViewModel;
 using iNKORE.UI.WPF.Modern;
 using iNKORE.UI.WPF.Modern.Controls;
@@ -110,6 +111,8 @@ namespace Flow.Launcher
 
         private void ViewModel_ActualApplicationThemeChanged(object sender, ActualApplicationThemeChangedEventArgs args)
         {
+            // Keep the markdown preview's "Auto" code-highlight theme in step with the app colour scheme.
+            PreviewMarkdownScrollViewer.ApplyCodeHighlightTheme(_settings.CodeHighlightTheme, args.IsDark);
             _ = _theme.RefreshFrameAsync();
         }
 
@@ -199,6 +202,12 @@ namespace Flow.Launcher
             {
                 ThemeManager.Current.ApplicationTheme = ApplicationTheme.Dark;
             }
+
+            // Initialize the markdown preview code-highlight theme from settings, resolving "Auto"
+            // against the colour scheme just applied above.
+            PreviewMarkdownScrollViewer.ApplyCodeHighlightTheme(
+                _settings.CodeHighlightTheme,
+                ThemeManager.Current.ActualApplicationTheme == ApplicationTheme.Dark);
 
             // Force update position
             UpdatePosition();
