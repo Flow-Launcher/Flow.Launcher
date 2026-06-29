@@ -604,6 +604,45 @@
             </Style>
 
             <Style xmlns:avalonEdit="clr-namespace:ICSharpCode.AvalonEdit;assembly=ICSharpCode.AvalonEdit" TargetType="avalonEdit:TextEditor">
+                <Style.Resources>
+                    <!--  Thin themed scrollbar for code blocks (the editor's own scrollbars are nested in the
+                          FlowDocument and don't inherit the preview pane's scrollbar style, so theme them here).  -->
+                    <Style TargetType="{x:Type ScrollBar}">
+                        <Setter Property="Background" Value="Transparent" />
+                        <Setter Property="Stylus.IsFlicksEnabled" Value="false" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ScrollBar}">
+                                    <Grid Background="{TemplateBinding Background}">
+                                        <Track x:Name="PART_Track">
+                                            <Track.Thumb>
+                                                <Thumb>
+                                                    <Thumb.Template>
+                                                        <ControlTemplate TargetType="{x:Type Thumb}">
+                                                            <Border Background="#898989" CornerRadius="3" />
+                                                        </ControlTemplate>
+                                                    </Thumb.Template>
+                                                </Thumb>
+                                            </Track.Thumb>
+                                        </Track>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="Orientation" Value="Vertical">
+                                                <Setter TargetName="PART_Track" Property="IsDirectionReversed" Value="True" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="Orientation" Value="Vertical">
+                                <Setter Property="Width" Value="6" />
+                            </Trigger>
+                            <Trigger Property="Orientation" Value="Horizontal">
+                                <Setter Property="Height" Value="6" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Style.Resources>
                 <Setter Property="Background" Value="{DynamicResource Color03B}" />
                 <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
                 <Setter Property="BorderBrush" Value="{DynamicResource SeparatorForeground}" />
