@@ -554,7 +554,7 @@
                                                                     <Thumb>
                                                                         <Thumb.Template>
                                                                             <ControlTemplate TargetType="{x:Type Thumb}">
-                                                                                <Border Background="#898989" CornerRadius="3" />
+                                                                                <Border Background="#66FFFFFF" CornerRadius="3" Margin="2" />
                                                                             </ControlTemplate>
                                                                         </Thumb.Template>
                                                                     </Thumb>
@@ -571,10 +571,10 @@
                                             </Setter>
                                             <Style.Triggers>
                                                 <Trigger Property="Orientation" Value="Vertical">
-                                                    <Setter Property="Width" Value="6" />
+                                                    <Setter Property="Width" Value="8" />
                                                 </Trigger>
                                                 <Trigger Property="Orientation" Value="Horizontal">
-                                                    <Setter Property="Height" Value="6" />
+                                                    <Setter Property="Height" Value="8" />
                                                 </Trigger>
                                             </Style.Triggers>
                                         </Style>
