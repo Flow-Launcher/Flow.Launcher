@@ -93,5 +93,60 @@ namespace Flow.Launcher.Test.Plugins
             ClassicAssert.AreEqual(PreviewContentType.Markdown, result.Preview.ContentType);
             ClassicAssert.AreEqual("**`*args`** collects extra positional arguments.", result.Preview.Description);
         }
+
+        [Test]
+        public async Task GivenPreviewVisibilityNever_WhenDeserializeJsonRpcResult_ThenPreviewVisibilityIsNeverAsync()
+        {
+            const string resultText =
+                """
+                {
+                  "result": [
+                    {
+                      "title": "Ask",
+                      "subTitle": "Type a question",
+                      "previewVisibility": "never"
+                    }
+                  ],
+                  "debugMessage": null
+                }
+                """;
+
+            var results = await QueryAsync(new Query
+            {
+                Search = resultText
+            }, default);
+
+            var result = results.Single();
+
+            ClassicAssert.AreEqual(PreviewVisibility.Never, result.PreviewVisibility);
+        }
+
+        [Test]
+        public async Task GivenPreviewVisibilityAlways_WhenDeserializeJsonRpcResult_ThenPreviewVisibilityIsAlwaysAsync()
+        {
+            const string resultText =
+                """
+                {
+                  "result": [
+                    {
+                      "title": "Answer",
+                      "subTitle": "Markdown answer",
+                      "preview": { "contentType": "markdown" },
+                      "previewVisibility": "always"
+                    }
+                  ],
+                  "debugMessage": null
+                }
+                """;
+
+            var results = await QueryAsync(new Query
+            {
+                Search = resultText
+            }, default);
+
+            var result = results.Single();
+
+            ClassicAssert.AreEqual(PreviewVisibility.Always, result.PreviewVisibility);
+        }
     }
 }

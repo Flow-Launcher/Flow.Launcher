@@ -288,6 +288,18 @@ namespace Flow.Launcher.Plugin
         public PreviewInfo Preview { get; set; } = PreviewInfo.Default;
 
         /// <summary>
+        /// Controls whether Flow Launcher's preview pane is shown for this result.
+        /// </summary>
+        /// <remarks>
+        /// This is independent of <see cref="PreviewInfo.ContentType"/>, which only decides how the
+        /// preview is rendered. Use this to force the pane open (for example a result whose whole purpose
+        /// is its markdown preview) or to hide it on results that have nothing useful to preview.
+        /// </remarks>
+        /// <default><see cref="Flow.Launcher.Plugin.PreviewVisibility.Default"/></default>
+        [JsonConverter(typeof(JsonStringEnumConverter<PreviewVisibility>))]
+        public PreviewVisibility PreviewVisibility { get; set; } = PreviewVisibility.Default;
+
+        /// <summary>
         /// Determines if the user selection count should be added to the score. This can be useful when set to false to allow the result sequence order to be the same everytime instead of changing based on selection.
         /// </summary>
         public bool AddSelectedCount { get; set; } = true;
@@ -365,6 +377,7 @@ namespace Flow.Launcher.Plugin
                 ProgressBar = ProgressBar,
                 ProgressBarColor = ProgressBarColor,
                 Preview = Preview,
+                PreviewVisibility = PreviewVisibility,
                 AddSelectedCount = AddSelectedCount,
                 RecordKey = RecordKey,
                 ShowBadge = ShowBadge,
@@ -443,11 +456,30 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         [JsonStringEnumMemberName("markdown")]
         Markdown,
+    }
+
+    /// <summary>
+    /// Controls whether the preview pane is shown for a <see cref="Result"/>.
+    /// </summary>
+    public enum PreviewVisibility
+    {
+        /// <summary>
+        /// Follow Flow Launcher's normal preview behaviour (the global "Always Preview" setting and the
+        /// user's manual preview toggle decide whether the pane is shown).
+        /// </summary>
+        [JsonStringEnumMemberName("default")]
+        Default,
 
         /// <summary>
-        /// Suppress the preview pane for this result, even when the global "Always Preview" setting is on.
+        /// Never show the preview pane for this result, even when the global "Always Preview" setting is on.
         /// </summary>
-        [JsonStringEnumMemberName("hidden")]
-        Hidden,
+        [JsonStringEnumMemberName("never")]
+        Never,
+
+        /// <summary>
+        /// Always show the preview pane for this result, even when the global "Always Preview" setting is off.
+        /// </summary>
+        [JsonStringEnumMemberName("always")]
+        Always,
     }
 }

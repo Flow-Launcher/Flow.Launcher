@@ -1032,7 +1032,15 @@ namespace Flow.Launcher.ViewModel
         private static readonly int ResultAreaColumnPreviewHidden = 3;
 
         private bool? _selectedItemFromQueryResults;
-        private bool _previewSuppressedBySelectedResult;
+
+        // Set when a PreviewVisibility.Never result collapsed a pane that the user (or Always Preview)
+        // had opened. It arms a one-shot restore so the pane comes back on the next selectable result.
+        // This is distinct from ShouldSuppressPreview(...), which asks whether the *current* result opts
+        // out — this flag is about restoring after a *previous* Never result hid the pane.
+        private bool _restorePreviewAfterNeverResult;
+
+        // Set when the pane was popped open solely because a PreviewVisibility.Always result was selected,
+        // so it can be auto-closed again when the selection moves to a result that does not force it.
         private bool _previewAutoOpenedBySelectedResult;
 
         private ResultViewModel _previewSelectedItem;
@@ -1102,7 +1110,7 @@ namespace Flow.Launcher.ViewModel
 
         private void HidePreview()
         {
-            _previewSuppressedBySelectedResult = false;
+            _restorePreviewAfterNeverResult = false;
             _previewAutoOpenedBySelectedResult = false;
 
             if (PluginManager.UseExternalPreview())
@@ -1112,6 +1120,7 @@ namespace Flow.Launcher.ViewModel
                 HideInternalPreview();
         }
 
+        // True when the currently selected result opts out of the preview pane (PreviewVisibility.Never).
         internal static bool ShouldSuppressPreview(ResultViewModel previewSelectedItem)
             => previewSelectedItem?.HidePreviewPane == true;
 
@@ -1131,16 +1140,16 @@ namespace Flow.Launcher.ViewModel
 
             if (previewWasVisible)
             {
-                // A pane that was only auto-opened by a markdown result should not be
-                // restored on the next non-hidden selection — only user-opened panes are.
-                _previewSuppressedBySelectedResult = !_previewAutoOpenedBySelectedResult;
+                // A pane that was only auto-opened by a PreviewVisibility.Always result should not be
+                // restored on the next non-Never selection — only user-opened panes are.
+                _restorePreviewAfterNeverResult = !_previewAutoOpenedBySelectedResult;
                 _previewAutoOpenedBySelectedResult = false;
             }
             else if (Settings.AlwaysPreview)
             {
                 // With AlwaysPreview on, the pane reopens on the next query regardless, so
-                // arm the restore here too; otherwise a Hidden selection leaves it stuck closed.
-                _previewSuppressedBySelectedResult = true;
+                // arm the restore here too; otherwise a Never selection leaves it stuck closed.
+                _restorePreviewAfterNeverResult = true;
             }
         }
 
@@ -1216,17 +1225,21 @@ namespace Flow.Launcher.ViewModel
 
         private async Task UpdatePreviewAsync()
         {
-            // Respect per-result HidePreviewPane: collapse the pane on selections that
-            // explicitly opt out (e.g., Shorty's "Ask" placeholder), restore on others.
+            // Two related-but-distinct checks follow, in order:
+            //   1. Does the *current* result opt out (PreviewVisibility.Never)? If so, collapse the pane
+            //      now and arm a restore for later. (e.g. Shorty's "Ask" placeholder.)
             if (ShouldSuppressPreview(PreviewSelectedItem))
             {
                 await SuppressPreviewAsync();
                 return;
             }
 
-            if (_previewSuppressedBySelectedResult)
+            //   2. Did a *previous* Never result collapse a pane we promised to bring back? If so, restore
+            //      it now that we've landed on a result that allows a preview. This is not the same as
+            //      check 1 — it fires precisely when the current result does NOT opt out.
+            if (_restorePreviewAfterNeverResult)
             {
-                _previewSuppressedBySelectedResult = false;
+                _restorePreviewAfterNeverResult = false;
                 if (!InternalPreviewVisible && !ExternalPreviewVisible)
                 {
                     await ShowPreviewAsync();
@@ -1234,10 +1247,10 @@ namespace Flow.Launcher.ViewModel
                 }
             }
 
-            // Per-result opt-in: results with markdown preview content pop the pane open on
+            // Per-result opt-in: results with PreviewVisibility.Always pop the pane open on
             // selection; leaving them closes it again, unless the pane was opened some other
             // way (F1 toggle or AlwaysPreview), which stays untouched.
-            if (PreviewSelectedItem?.IsMarkdownPreview == true)
+            if (PreviewSelectedItem?.ForcePreviewPane == true)
             {
                 if (!InternalPreviewVisible && !ExternalPreviewVisible)
                 {
