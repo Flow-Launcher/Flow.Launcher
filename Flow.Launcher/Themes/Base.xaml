@@ -614,7 +614,8 @@
                 <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
                 <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
                 <Setter Property="Margin" Value="0 4 14 12" />
-                <Setter Property="Padding" Value="12 10" />
+                <!--  Extra bottom padding reserves room for the horizontal scrollbar so it never overlaps the last line of code.  -->
+                <Setter Property="Padding" Value="12 10 12 20" />
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="avalonEdit:TextEditor">
