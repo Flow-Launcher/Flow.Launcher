@@ -1217,6 +1217,13 @@ namespace Flow.Launcher.ViewModel
                 case true:
                     ShowInternalPreview();
                     break;
+                case false when PreviewSelectedItem?.ForcePreviewPane == true:
+                    // Always Preview is off, but the selected result forces its own preview
+                    // (PreviewVisibility.Always). Honour it here so the pane is restored when the
+                    // window reopens, instead of staying hidden until the selection next changes.
+                    _previewAutoOpenedBySelectedResult = true;
+                    ShowInternalPreview();
+                    break;
                 case false:
                     HidePreview();
                     break;

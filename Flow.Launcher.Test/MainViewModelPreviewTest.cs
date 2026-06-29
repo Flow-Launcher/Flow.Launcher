@@ -197,6 +197,39 @@ namespace Flow.Launcher.Test
             ClassicAssert.IsTrue(viewModel.InternalPreviewVisible);
         }
 
+        [Test]
+        public void GivenAlwaysPreviewOffAndForcedResult_WhenPreviewReset_ThenInternalPreviewOpens()
+        {
+            // Reproduces the reopen bug: ResetPreview runs each time the main window is shown.
+            // With Always Preview off it must still honour a forced result instead of hiding the pane,
+            // otherwise the preview only reappears once the user hovers a result.
+            var settings = new Settings
+            {
+                AlwaysPreview = false
+            };
+            var viewModel = CreatePreviewViewModel(settings, ResultAreaColumnPreviewHidden);
+            viewModel.PreviewSelectedItem = ViewModel("Forced", PreviewVisibility.Always, settings);
+
+            viewModel.ResetPreview();
+
+            ClassicAssert.IsTrue(viewModel.InternalPreviewVisible);
+        }
+
+        [Test]
+        public void GivenAlwaysPreviewOffAndDefaultResult_WhenPreviewReset_ThenInternalPreviewStaysHidden()
+        {
+            var settings = new Settings
+            {
+                AlwaysPreview = false
+            };
+            var viewModel = CreatePreviewViewModel(settings, ResultAreaColumnPreviewShown);
+            viewModel.PreviewSelectedItem = ViewModel("Normal", PreviewVisibility.Default, settings);
+
+            viewModel.ResetPreview();
+
+            ClassicAssert.IsFalse(viewModel.InternalPreviewVisible);
+        }
+
         private static MainViewModel CreatePreviewViewModel(Settings settings, int resultAreaColumn)
         {
             var viewModel = (MainViewModel)RuntimeHelpers.GetUninitializedObject(typeof(MainViewModel));
