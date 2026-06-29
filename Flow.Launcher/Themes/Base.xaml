@@ -653,8 +653,7 @@
                 <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
                 <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
                 <Setter Property="Margin" Value="0 4 14 12" />
-                <!--  Extra bottom padding reserves room for the horizontal scrollbar so it never overlaps the last line of code.  -->
-                <Setter Property="Padding" Value="12 10 12 20" />
+                <Setter Property="Padding" Value="12 10" />
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="avalonEdit:TextEditor">
@@ -672,7 +671,52 @@
                                               HorizontalScrollBarVisibility="{TemplateBinding HorizontalScrollBarVisibility}"
                                               Padding="{TemplateBinding Padding}"
                                               VerticalContentAlignment="Top"
-                                              VerticalScrollBarVisibility="{TemplateBinding VerticalScrollBarVisibility}" />
+                                              VerticalScrollBarVisibility="{TemplateBinding VerticalScrollBarVisibility}">
+                                    <!--  Explicit grid template: the horizontal scrollbar gets its own row so it can
+                                          never overlap the last line of code, and both bars pick up the thin themed
+                                          ScrollBar style from this editor's Style.Resources above.  -->
+                                    <ScrollViewer.Template>
+                                        <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                                            <Grid Background="{TemplateBinding Background}">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="*" />
+                                                    <RowDefinition Height="Auto" />
+                                                </Grid.RowDefinitions>
+                                                <ScrollContentPresenter x:Name="PART_ScrollContentPresenter"
+                                                                        Grid.Row="0"
+                                                                        Grid.Column="0"
+                                                                        Margin="{TemplateBinding Padding}"
+                                                                        CanContentScroll="{TemplateBinding CanContentScroll}"
+                                                                        Content="{TemplateBinding Content}"
+                                                                        ContentTemplate="{TemplateBinding ContentTemplate}" />
+                                                <ScrollBar x:Name="PART_VerticalScrollBar"
+                                                           Grid.Row="0"
+                                                           Grid.Column="1"
+                                                           Cursor="Arrow"
+                                                           Maximum="{TemplateBinding ScrollableHeight}"
+                                                           Minimum="0"
+                                                           Orientation="Vertical"
+                                                           ViewportSize="{TemplateBinding ViewportHeight}"
+                                                           Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
+                                                           Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
+                                                <ScrollBar x:Name="PART_HorizontalScrollBar"
+                                                           Grid.Row="1"
+                                                           Grid.Column="0"
+                                                           Cursor="Arrow"
+                                                           Maximum="{TemplateBinding ScrollableWidth}"
+                                                           Minimum="0"
+                                                           Orientation="Horizontal"
+                                                           ViewportSize="{TemplateBinding ViewportWidth}"
+                                                           Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
+                                                           Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
+                                            </Grid>
+                                        </ControlTemplate>
+                                    </ScrollViewer.Template>
+                                </ScrollViewer>
                             </Border>
                         </ControlTemplate>
                     </Setter.Value>
