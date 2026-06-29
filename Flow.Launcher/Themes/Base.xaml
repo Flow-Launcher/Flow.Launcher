@@ -625,13 +625,14 @@
                                                 </Thumb>
                                             </Track.Thumb>
                                         </Track>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="Orientation" Value="Vertical">
-                                                <Setter TargetName="PART_Track" Property="IsDirectionReversed" Value="True" />
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Setter.Value>
+                                    </Grid>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="Orientation" Value="Vertical">
+                                            <Setter TargetName="PART_Track" Property="IsDirectionReversed" Value="True" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
                         </Setter>
                         <Style.Triggers>
                             <Trigger Property="Orientation" Value="Vertical">
