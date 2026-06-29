@@ -53,6 +53,7 @@ namespace Flow.Launcher.ViewModel
         private readonly Pinned _pinned;
         private CancellationTokenSource _updateSource; // Used to cancel old query flows
         private CancellationToken _updateToken; // Used to avoid ObjectDisposedException of _updateSource.Token
+        private CancellationToken _lastResultUpdateToken; // Used to clear results only once per query update session
 
         private ChannelWriter<ResultsForUpdate> _resultsUpdateChannelWriter;
         private Task _resultsViewUpdateTask;
@@ -291,7 +292,7 @@ namespace Flow.Launcher.ViewModel
                             // Indicate if to clear existing results so to show only ones from plugins with action keywords
                             var query = item.Query;
                             var currentIsHomeQuery = query.IsHomeQuery;
-                            var shouldClearExistingResults = ShouldClearExistingResultsForQuery(query, currentIsHomeQuery);
+                            var shouldClearExistingResults = ShouldClearExistingResultsForQuery(query, currentIsHomeQuery, item.Token);
                             _lastQuery = item.Query;
                             _previousIsHomeQuery = currentIsHomeQuery;
 
@@ -2185,9 +2186,18 @@ namespace Flow.Launcher.ViewModel
         /// </summary>
         /// <param name="query">The current query.</param>
         /// <param name="currentIsHomeQuery">A flag indicating if the current query is a home query.</param>
+        /// <param name="updateToken">Token for the current query update session.</param>
         /// <returns>True if the existing results should be cleared, false otherwise.</returns>
-        private bool ShouldClearExistingResultsForQuery(Query query, bool currentIsHomeQuery)
+        private bool ShouldClearExistingResultsForQuery(Query query, bool currentIsHomeQuery, CancellationToken updateToken)
         {
+            // Each query update session can publish multiple plugin batches.
+            // Only the first batch is allowed to clear existing results. Otherwise
+            // certain result batch could go missing on subsequent clears
+            if (updateToken == _lastResultUpdateToken)
+                return false;
+
+            _lastResultUpdateToken = updateToken;
+
             // If previous or current results are from home query, we need to clear them
             if (_previousIsHomeQuery || currentIsHomeQuery)
             {
