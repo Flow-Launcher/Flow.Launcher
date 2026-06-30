@@ -10,6 +10,7 @@ using Flow.Launcher.Plugin.BrowserBookmark.Commands;
 using Flow.Launcher.Plugin.BrowserBookmark.Models;
 using Flow.Launcher.Plugin.BrowserBookmark.Views;
 using Flow.Launcher.Plugin.SharedCommands;
+using System.Security.Policy;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark;
 
@@ -26,7 +27,7 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
     private static List<Bookmark> _cachedBookmarks = new();
 
     private static bool _initialized = false;
-    
+
     public void Init(PluginInitContext context)
     {
         Context = context;
@@ -93,49 +94,44 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
         {
             // Since we mixed chrome and firefox bookmarks, we should order them again
             return _cachedBookmarks
-                .Select(
-                    c => new Result
-                    {
-                        Title = c.Name,
-                        SubTitle = c.Url,
-                        IcoPath = !string.IsNullOrEmpty(c.FaviconPath) && File.Exists(c.FaviconPath)
-                            ? c.FaviconPath
-                            : @"Images\bookmark.png",
-                        Score = BookmarkLoader.MatchProgram(c, param).Score,
-                        Action = _ =>
-                        {
-                            Context.API.OpenUrl(c.Url);
-
-                            return true;
-                        },
-                        ContextData = new BookmarkAttributes { Url = c.Url }
-                    }
-                )
+                .Select(c => BookmarkToResult(bookmark: c, score: BookmarkLoader.MatchProgram(c, param).Score))
                 .Where(r => r.Score > 0)
                 .ToList();
         }
         else
         {
             return _cachedBookmarks
-                .Select(
-                    c => new Result
-                    {
-                        Title = c.Name,
-                        SubTitle = c.Url,
-                        IcoPath = !string.IsNullOrEmpty(c.FaviconPath) && File.Exists(c.FaviconPath)
-                            ? c.FaviconPath
-                            : @"Images\bookmark.png",
-                        Score = 5,
-                        Action = _ =>
-                        {
-                            Context.API.OpenUrl(c.Url);
-                            return true;
-                        },
-                        ContextData = new BookmarkAttributes { Url = c.Url }
-                    }
-                )
+                .Select(c => BookmarkToResult(bookmark: c, score: 5))
                 .ToList();
         }
+    }
+
+    private static Result BookmarkToResult(Bookmark bookmark, int score)
+    {
+        return new Result
+        {
+            Title = bookmark.Name,
+            SubTitle = bookmark.Url,
+            IcoPath = !string.IsNullOrEmpty(bookmark.FaviconPath) && File.Exists(bookmark.FaviconPath)
+                ? bookmark.FaviconPath
+                : @"Images\bookmark.png",
+            Score = score,
+            Action = _ =>
+            {
+                try
+                {
+                    Context.API.OpenWebUrl(bookmark.Url);
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    Context.API.LogException(ClassName, $"Failed to open bookmark: {bookmark.Url}", e);
+                    Context.API.ShowMsgError(Localize.flowlauncher_plugin_browserbookmark_open_failed(), bookmark.Url);
+                    return false;
+                }
+            },
+            ContextData = new BookmarkAttributes { Url = bookmark.Url }
+        };
     }
 
     private static readonly Channel<byte> _refreshQueue = Channel.CreateBounded<byte>(1);
