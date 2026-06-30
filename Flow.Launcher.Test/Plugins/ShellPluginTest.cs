@@ -77,7 +77,7 @@ namespace Flow.Launcher.Test.Plugins
                 closeShellAfterPress: true,
                 shell: Shell.Cmd);
 
-            Assert.That(info.Arguments, Is.EqualTo($"/c {command} && echo {ClosePrompt} && pause > nul /c"));
+            Assert.That(info.Arguments, Is.EqualTo($"/c {command} && echo {ClosePrompt} && pause > nul"));
         }
 
         [Test]

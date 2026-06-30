@@ -281,7 +281,7 @@ namespace Flow.Launcher.Plugin.Shell
             string closePrompt)
         {
             var shellSwitch = leaveShellOpen ? "/k" : "/c";
-            var commandToRun = $"{command}{(closeShellAfterPress ? $" && echo {closePrompt} && pause > nul /c" : "")}";
+            var commandToRun = $"{command}{(closeShellAfterPress ? $" && echo {closePrompt} && pause > nul" : "")}";
 
             if (useWindowsTerminal)
             {
