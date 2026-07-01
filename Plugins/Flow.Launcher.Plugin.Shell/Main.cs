@@ -379,23 +379,49 @@ namespace Flow.Launcher.Plugin.Shell
             ProcessStartInfo info,
             string command)
         {
-            var parts = command.Split([' '], 2);
-            if (parts.Length == 2)
+            string filename = null;
+            string arguments = null;
+
+            bool isQuotedPath = command.StartsWith("\"");
+
+            if (isQuotedPath)
             {
-                var filename = parts[0];
-                if (ExistInPath(filename))
+                // Quoted paths ("C:\Program Files\app.exe") can have spaces in the path. 
+                
+                // We know the command starts with a quote,
+                // So strip it off and split to see if theres a second one
+                var parts = command[1..].Split("\"", 2);
+                bool hasMatchingQuotes = parts.Length > 1;
+
+                if (hasMatchingQuotes)
                 {
-                    var arguments = parts[1];
-                    info.FileName = filename;
-                    info.ArgumentList.Add(arguments);
+                    filename = parts[0];
+                    arguments = parts[1];
                 }
-                else
-                {
-                    info.FileName = command;
-                }
+                // If there is no closing quote then we leave both as null
             }
             else
             {
+                // Without a quoted path,
+                // we split on the first space to get the filename and args
+                var parts = command.Split(' ', 2);
+                filename = parts[0];
+                arguments = parts.Length > 1 ? parts[1] : null;
+            }
+
+            if (filename != null && ExistInPath(filename))
+            {
+                info.FileName = filename;
+                
+                // catch unnecessary space or arguments that are just whitespace
+                var trimmedArgs = arguments?.TrimStart();
+                if (!string.IsNullOrEmpty(trimmedArgs))
+                    info.Arguments = trimmedArgs;
+            }
+            else
+            {
+                // Could not parse a valid filename or it was not found.
+                // Pass the whole command anyways so the OS produces a meaningful error.
                 info.FileName = command;
             }
         }

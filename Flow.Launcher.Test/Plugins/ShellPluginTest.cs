@@ -220,6 +220,7 @@ namespace Flow.Launcher.Test.Plugins
                 shell: Shell.RunCommand);
 
             Assert.That(info.FileName, Is.EqualTo("notepad"));
+            Assert.That(info.Arguments, Is.Empty);
         }
 
         [Test]
@@ -230,6 +231,63 @@ namespace Flow.Launcher.Test.Plugins
                 shell: Shell.RunCommand);
 
             Assert.That(info.FileName, Is.EqualTo("nonexistentapp123 argument"));
+        }
+
+        [Test]
+        public void RunCommand_UnknownQuotedExecutable_SetsWholeCommandAsFileName()
+        {
+            var info = Create(
+                command: "\"C:\\nonexistent\\app.exe\" --flag",
+                shell: Shell.RunCommand);
+
+            Assert.That(info.FileName, Is.EqualTo("\"C:\\nonexistent\\app.exe\" --flag"));
+        }
+
+        [Test]
+        public void RunCommand_QuotedPathNoArgs_ExtractsFileName()
+        {
+            var systemDir = Environment.SystemDirectory;
+            var info = Create(
+                command: $"\"{systemDir}\\cmd.exe\"",
+                shell: Shell.RunCommand);
+
+            Assert.That(info.FileName, Is.EqualTo($"{systemDir}\\cmd.exe"));
+            Assert.That(info.Arguments, Is.Empty);
+        }
+
+        [Test]
+        public void RunCommand_QuotedPath_WithQuotedArgs_Preserved()
+        {
+            var systemDir = Environment.SystemDirectory;
+            var info = Create(
+                command: $"\"{systemDir}\\cmd.exe\" /c echo \"hello world\"",
+                shell: Shell.RunCommand);
+
+            Assert.That(info.FileName, Is.EqualTo($"{systemDir}\\cmd.exe"));
+            Assert.That(info.Arguments, Is.EqualTo("/c echo \"hello world\""));
+        }
+
+        [Test]
+        public void RunCommand_UsesArgumentsForCommandTail()
+        {
+            var info = Create(
+                command: "cmd /c echo hello",
+                shell: Shell.RunCommand);
+
+            Assert.That(info.FileName, Is.EqualTo("cmd"));
+            Assert.That(info.Arguments, Is.EqualTo("/c echo hello"));
+        }
+
+        [Test]
+        public void RunCommand_QuotedExecutablePath_ExtractsFileName()
+        {
+            var systemDir = Environment.SystemDirectory;
+            var info = Create(
+                command: $"\"{systemDir}\\cmd.exe\" /c echo hello",
+                shell: Shell.RunCommand);
+
+            Assert.That(info.FileName, Is.EqualTo($"{systemDir}\\cmd.exe"));
+            Assert.That(info.Arguments, Is.EqualTo("/c echo hello"));
         }
 
         #endregion
