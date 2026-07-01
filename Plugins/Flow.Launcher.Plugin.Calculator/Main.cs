@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -130,13 +130,14 @@ namespace Flow.Launcher.Plugin.Calculator
                 {
                     double rawValue = Convert.ToDouble(result);
                     decimal decValue;
-                    try
-                    {
-                        decValue = decimal.Parse(rawValue.ToString("G14", CultureInfo.InvariantCulture), NumberStyles.Any, CultureInfo.InvariantCulture);
-                    }
-                    catch (FormatException)
+                    if (double.IsNaN(rawValue) || double.IsInfinity(rawValue))
                     {
                         decValue = (decimal)rawValue;
+                    }
+                    else
+                    {
+                        string format = (rawValue % 1 == 0) ? "G17" : "G14";
+                        decValue = decimal.Parse(rawValue.ToString(format, CultureInfo.InvariantCulture), NumberStyles.Any, CultureInfo.InvariantCulture);
                     }
                     decimal roundedResult = Math.Round(decValue, _settings.MaxDecimalPlaces, MidpointRounding.AwayFromZero);
                     string newResult = FormatResult(roundedResult);

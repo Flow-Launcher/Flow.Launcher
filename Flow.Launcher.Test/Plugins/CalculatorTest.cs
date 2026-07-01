@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Flow.Launcher.Plugin.Calculator;
@@ -116,6 +116,8 @@ namespace Flow.Launcher.Test.Plugins
         [TestCase(@"invalid_expression", "")]
         // Floating point precision
         [TestCase(@"3000000-2911111.82", "88888.18")]
+        [TestCase(@"123456789012345", "123456789012345")]
+        [TestCase(@"9007199254740991", "9007199254740991")]
         public void CalculatorTest(string expression, string result)
         {
             _settings.UseThousandsSeparator = false;
