@@ -114,6 +114,8 @@ namespace Flow.Launcher.Test.Plugins
         [TestCase(@"sqrt(-1)", "")]
         [TestCase(@"log(0)", "")]
         [TestCase(@"invalid_expression", "")]
+        // Floating point precision
+        [TestCase(@"3000000-2911111.82", "88888.18")]
         public void CalculatorTest(string expression, string result)
         {
             _settings.UseThousandsSeparator = false;

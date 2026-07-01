@@ -128,7 +128,17 @@ namespace Flow.Launcher.Plugin.Calculator
 
                 if (!string.IsNullOrEmpty(result.ToString()))
                 {
-                    decimal roundedResult = Math.Round(Convert.ToDecimal(result), _settings.MaxDecimalPlaces, MidpointRounding.AwayFromZero);
+                    double rawValue = Convert.ToDouble(result);
+                    decimal decValue;
+                    try
+                    {
+                        decValue = decimal.Parse(rawValue.ToString("G14", CultureInfo.InvariantCulture), NumberStyles.Any, CultureInfo.InvariantCulture);
+                    }
+                    catch (FormatException)
+                    {
+                        decValue = (decimal)rawValue;
+                    }
+                    decimal roundedResult = Math.Round(decValue, _settings.MaxDecimalPlaces, MidpointRounding.AwayFromZero);
                     string newResult = FormatResult(roundedResult);
 
                     return
@@ -138,7 +148,6 @@ namespace Flow.Launcher.Plugin.Calculator
                             Title = newResult,
                             IcoPath = IcoPath,
                             Score = 300,
-                            // Check context nullability for unit testing
                             SubTitle = Context == null ? string.Empty : Localize.flowlauncher_plugin_calculator_copy_number_to_clipboard(),
                             CopyText = newResult,
                             Action = c =>
