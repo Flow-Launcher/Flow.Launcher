@@ -166,7 +166,19 @@
                         <ui:SettingsCard.HeaderIcon>
                             <ui:FontIcon Glyph="&#xE8BD;" />
                         </ui:SettingsCard.HeaderIcon>
-                        <Button Command="{Binding OpenTestMessageBoxWindowCommand}" Content="{DynamicResource devtoolsOpenTestWindow}" />
+                        <Button>
+                            <ikw:SimpleStackPanel Orientation="Horizontal" Spacing="6">
+                                <TextBlock VerticalAlignment="Center" Text="{DynamicResource devtoolsOpenTestWindow}" />
+                            </ikw:SimpleStackPanel>
+                            <ui:FlyoutService.Flyout>
+                                <ui:MenuFlyout>
+                                    <MenuItem Command="{Binding OpenTestMessageBoxCommand}" CommandParameter="OK" Header="{DynamicResource devtoolsMessageBoxOkLabel}" />
+                                    <MenuItem Command="{Binding OpenTestMessageBoxCommand}" CommandParameter="OKCancel" Header="{DynamicResource devtoolsMessageBoxOkCancelLabel}" />
+                                    <MenuItem Command="{Binding OpenTestMessageBoxCommand}" CommandParameter="YesNo" Header="{DynamicResource devtoolsMessageBoxYesNoLabel}" />
+                                    <MenuItem Command="{Binding OpenTestMessageBoxCommand}" CommandParameter="YesNoCancel" Header="{DynamicResource devtoolsMessageBoxYesNoCancelLabel}" />
+                                </ui:MenuFlyout>
+                            </ui:FlyoutService.Flyout>
+                        </Button>
                     </ui:SettingsCard>
                 </ui:SettingsExpander.Items>
             </ui:SettingsExpander>

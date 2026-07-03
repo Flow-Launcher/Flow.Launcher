@@ -143,9 +143,43 @@ public partial class SettingsPaneAboutViewModel : BaseModel
     }
 
     [RelayCommand]
-    private void OpenTestMessageBoxWindow()
+    private void OpenTestMessageBox(string buttonType)
     {
-        MessageBoxEx.Show("Dev Tools test message", "Dev Tools Test", MessageBoxButton.OKCancel, MessageBoxImage.Information);
+        MessageBoxButton button;
+        string caption;
+        MessageBoxImage icon;
+
+        switch (buttonType)
+        {
+            case "OK":
+                button = MessageBoxButton.OK;
+                caption = Localize.devtoolsMessageBoxOkLabel();
+                icon = MessageBoxImage.Information;
+                break;
+            case "OKCancel":
+                button = MessageBoxButton.OKCancel;
+                caption = Localize.devtoolsMessageBoxOkCancelLabel();
+                icon = MessageBoxImage.Question;
+                break;
+            case "YesNo":
+                button = MessageBoxButton.YesNo;
+                caption = Localize.devtoolsMessageBoxYesNoLabel();
+                icon = MessageBoxImage.Question;
+                break;
+            case "YesNoCancel":
+                button = MessageBoxButton.YesNoCancel;
+                caption = Localize.devtoolsMessageBoxYesNoCancelLabel();
+                icon = MessageBoxImage.Question;
+                break;
+            default:
+                var ex = new ArgumentException($"Invalid button type: {buttonType}", nameof(buttonType));
+                App.API.LogException(ClassName, "Invalid button type passed for Test MessageBox", ex);
+                App.API.ShowMsg($"Invalid button type: {buttonType}");
+                return;
+        }
+
+        var result = MessageBoxEx.Show(Localize.devtoolsMessageBoxTestMessage(), caption, button, icon);
+        App.API.ShowMsg($"{buttonType} result: {result}");
     }
 
     [RelayCommand]
