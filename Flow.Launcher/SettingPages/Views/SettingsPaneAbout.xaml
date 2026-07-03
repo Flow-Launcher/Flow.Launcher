@@ -138,7 +138,7 @@
                         <ui:SettingsCard.HeaderIcon>
                             <ui:FontIcon Glyph="&#xe939;" />
                         </ui:SettingsCard.HeaderIcon>
-                        <Button Command="{Binding OpenWelcomeWindowCommand}" Content="{DynamicResource welcomewindow}" />
+                        <Button Command="{Binding OpenWelcomeWindowCommand}" Content="{DynamicResource openWelcomeWindow}" />
                     </ui:SettingsCard>
 
                     <ui:SettingsCard Header="{DynamicResource devtoolsReportWindow}">
