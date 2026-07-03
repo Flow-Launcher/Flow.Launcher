@@ -89,52 +89,99 @@
                 <ui:HyperlinkButton Content="icons8.com" NavigateUri="https://icons8.com/" />
             </ui:SettingsCard>
 
-            <ui:SettingsCard Margin="0 14 0 0" Header="{DynamicResource devtool}">
-                <ui:SettingsCard.HeaderIcon>
+            <ui:SettingsExpander Margin="0 14 0 0" Header="{DynamicResource devtool}">
+                <ui:SettingsExpander.HeaderIcon>
                     <ui:FontIcon Glyph="&#xf12b;" />
-                </ui:SettingsCard.HeaderIcon>
+                </ui:SettingsExpander.HeaderIcon>
 
-                <ikw:SimpleStackPanel Orientation="Horizontal" Spacing="12">
-                    <Button
-                        x:Name="AskClearCacheFolderConfirmationButton"
-                        Command="{Binding AskClearCacheFolderConfirmationCommand}"
-                        Content="{Binding CacheFolderSize, Mode=OneWay}" />
-                    <Button
-                        Height="{Binding ElementName=AskClearCacheFolderConfirmationButton, Path=ActualHeight}"
-                        Command="{Binding AskClearLogFolderConfirmationCommand}"
-                        Content="{Binding LogFolderSize, Mode=OneWay}" />
-                    <Button Height="{Binding ElementName=AskClearCacheFolderConfirmationButton, Path=ActualHeight}">
-                        <ui:FontIcon FontSize="16" Glyph="&#xec7a;" />
-                        <ui:FlyoutService.Flyout>
-                            <ui:MenuFlyout>
-                                <MenuItem Command="{Binding OpenWelcomeWindowCommand}" Header="{DynamicResource welcomewindow}">
-                                    <MenuItem.Icon>
-                                        <ui:FontIcon Glyph="&#xe939;" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsCard Header="{DynamicResource clearcachefolder}">
+                        <ui:SettingsCard.HeaderIcon>
+                            <ui:FontIcon Glyph="&#xe74d;" />
+                        </ui:SettingsCard.HeaderIcon>
+                        <Button
+                            Command="{Binding AskClearCacheFolderConfirmationCommand}"
+                            Content="{Binding CacheFolderSize, Mode=OneWay}" />
+                    </ui:SettingsCard>
 
-                                <MenuItem Command="{Binding OpenSettingsFolderCommand}" Header="{DynamicResource settingfolder}">
-                                    <MenuItem.Icon>
-                                        <ui:FontIcon Glyph="&#xe8b7;" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
+                    <ui:SettingsCard Header="{DynamicResource clearlogfolder}">
+                        <ui:SettingsCard.HeaderIcon>
+                            <ui:FontIcon Glyph="&#xe74d;" />
+                        </ui:SettingsCard.HeaderIcon>
+                        <Button
+                            Command="{Binding AskClearLogFolderConfirmationCommand}"
+                            Content="{Binding LogFolderSize, Mode=OneWay}" />
+                    </ui:SettingsCard>
 
-                                <MenuItem Command="{Binding OpenLogsFolderCommand}" Header="{DynamicResource logfolder}">
-                                    <MenuItem.Icon>
-                                        <ui:FontIcon Glyph="&#xe8b7;" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
+                    <ui:SettingsCard Header="{DynamicResource settingfolder}">
+                        <ui:SettingsCard.HeaderIcon>
+                            <ui:FontIcon Glyph="&#xe8b7;" />
+                        </ui:SettingsCard.HeaderIcon>
+                        <Button Command="{Binding OpenSettingsFolderCommand}" Content="{DynamicResource openFolderButton}" />
+                    </ui:SettingsCard>
 
-                                <MenuItem Command="{Binding OpenCacheFolderCommand}" Header="{DynamicResource cachefolder}">
-                                    <MenuItem.Icon>
-                                        <ui:FontIcon Glyph="&#xe8b7;" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                            </ui:MenuFlyout>
-                        </ui:FlyoutService.Flyout>
-                    </Button>
-                </ikw:SimpleStackPanel>
-            </ui:SettingsCard>
+                    <ui:SettingsCard Header="{DynamicResource logfolder}">
+                        <ui:SettingsCard.HeaderIcon>
+                            <ui:FontIcon Glyph="&#xe8b7;" />
+                        </ui:SettingsCard.HeaderIcon>
+                        <Button Command="{Binding OpenLogsFolderCommand}" Content="{DynamicResource openFolderButton}" />
+                    </ui:SettingsCard>
+
+                    <ui:SettingsCard Header="{DynamicResource cachefolder}">
+                        <ui:SettingsCard.HeaderIcon>
+                            <ui:FontIcon Glyph="&#xe8b7;" />
+                        </ui:SettingsCard.HeaderIcon>
+                        <Button Command="{Binding OpenCacheFolderCommand}" Content="{DynamicResource openFolderButton}" />
+                    </ui:SettingsCard>
+
+                    <ui:SettingsCard Header="{DynamicResource welcomewindow}">
+                        <ui:SettingsCard.HeaderIcon>
+                            <ui:FontIcon Glyph="&#xe939;" />
+                        </ui:SettingsCard.HeaderIcon>
+                        <Button Command="{Binding OpenWelcomeWindowCommand}" Content="{DynamicResource openWelcomeWindow}" />
+                    </ui:SettingsCard>
+
+                    <ui:SettingsCard Header="{DynamicResource devtoolsReportWindow}">
+                        <ui:SettingsCard.HeaderIcon>
+                            <ui:FontIcon Glyph="&#xe783;" />
+                        </ui:SettingsCard.HeaderIcon>
+                        <Button Command="{Binding OpenTestReportWindowCommand}" Content="{DynamicResource devtoolsOpenTestWindow}" />
+                    </ui:SettingsCard>
+
+                    <ui:SettingsCard Header="{DynamicResource devtoolsProgressWindow}">
+                        <ui:SettingsCard.HeaderIcon>
+                            <ui:FontIcon Glyph="&#xe895;" />
+                        </ui:SettingsCard.HeaderIcon>
+                        <Button Command="{Binding OpenTestProgressWindowCommand}" Content="{DynamicResource devtoolsOpenTestWindow}" />
+                    </ui:SettingsCard>
+
+                    <ui:SettingsCard Header="{DynamicResource devtoolsPluginUpdateWindow}">
+                        <ui:SettingsCard.HeaderIcon>
+                            <ui:FontIcon Glyph="&#xecc5;" />
+                        </ui:SettingsCard.HeaderIcon>
+                        <Button Command="{Binding OpenTestPluginUpdateWindowCommand}" Content="{DynamicResource devtoolsOpenTestWindow}" />
+                    </ui:SettingsCard>
+
+                    <ui:SettingsCard Header="{DynamicResource devtoolsMessageBoxWindow}">
+                        <ui:SettingsCard.HeaderIcon>
+                            <ui:FontIcon Glyph="&#xE8BD;" />
+                        </ui:SettingsCard.HeaderIcon>
+                        <Button>
+                            <ikw:SimpleStackPanel Orientation="Horizontal" Spacing="6">
+                                <TextBlock VerticalAlignment="Center" Text="{DynamicResource devtoolsOpenTestWindow}" />
+                            </ikw:SimpleStackPanel>
+                            <ui:FlyoutService.Flyout>
+                                <ui:MenuFlyout>
+                                    <MenuItem Command="{Binding OpenTestMessageBoxCommand}" CommandParameter="OK" Header="{DynamicResource devtoolsMessageBoxOkLabel}" />
+                                    <MenuItem Command="{Binding OpenTestMessageBoxCommand}" CommandParameter="OKCancel" Header="{DynamicResource devtoolsMessageBoxOkCancelLabel}" />
+                                    <MenuItem Command="{Binding OpenTestMessageBoxCommand}" CommandParameter="YesNo" Header="{DynamicResource devtoolsMessageBoxYesNoLabel}" />
+                                    <MenuItem Command="{Binding OpenTestMessageBoxCommand}" CommandParameter="YesNoCancel" Header="{DynamicResource devtoolsMessageBoxYesNoCancelLabel}" />
+                                </ui:MenuFlyout>
+                            </ui:FlyoutService.Flyout>
+                        </Button>
+                    </ui:SettingsCard>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
 
             <ui:SettingsExpander Margin="0 4 0 0" Header="{DynamicResource advanced}">
                 <ui:SettingsExpander.HeaderIcon>
