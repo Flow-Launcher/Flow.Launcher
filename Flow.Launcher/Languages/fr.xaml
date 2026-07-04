@@ -123,6 +123,9 @@
     <system:String x:Key="hideOnStartupToolTip">La fenêtre de recherche de Flow Launcher est cachée dans la barre d’état après le démarrage.</system:String>
     <system:String x:Key="hideNotifyIcon">Masquer l'icône de la barre des tâches</system:String>
     <system:String x:Key="hideNotifyIconToolTip">Lorsque l'icône est cachée dans la barre de tâches, le menu Paramètres peut être ouvert en faisant un clic droit sur la barre de recherche.</system:String>
+    <system:String x:Key="ignoreAccents">Ignorer les accents lors de la recherche</system:String>
+    <system:String x:Key="ignoreAccentsToolTip">Considérer les caractères accentués et non accentués comme équivalents.</system:String>
+    <system:String x:Key="promptIgnoreAccents">Voulez-vous activer l'option pour ignorer les accents lors de la recherche ?</system:String>
     <system:String x:Key="querySearchPrecision">Précision de la recherche</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Modifie le score de correspondance minimum requis pour les résultats.</system:String>
     <system:String x:Key="SearchPrecisionNone">Aucun</system:String>
@@ -142,6 +145,7 @@
     <system:String x:Key="DoublePinyinSchemasXingKongJianDao">Xing Kong Jian Dao</system:String>
     <system:String x:Key="DoublePinyinSchemasDaNiu">Da Niu</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoLang">Xiao Lang</system:String>
+    <system:String x:Key="HelpUsTranslateFlow">Aidez-nous à traduire Flow</system:String>
 
     <system:String x:Key="AlwaysPreview">Toujours prévisualiser</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Toujours ouvrir le panneau d'aperçu lorsque Flow s'active. Appuyez sur {0} pour activer/désactiver l'aperçu.</system:String>
@@ -247,6 +251,11 @@
     <system:String x:Key="pluginStore_RecentlyUpdated">Récemment mis à jour</system:String>
     <system:String x:Key="pluginStore_None">Modules</system:String>
     <system:String x:Key="pluginStore_Installed">Installé</system:String>
+    <system:String x:Key="PluginStoreSortModeDefault">Par défaut</system:String>
+    <system:String x:Key="PluginStoreSortModeName">Nom</system:String>
+    <system:String x:Key="PluginStoreSortModeReleaseDate">Date de publication</system:String>
+    <system:String x:Key="PluginStoreSortModeUpdatedDate">Date de mise à jour</system:String>
+    <system:String x:Key="PluginStoreSortingModeComboboxLabel">Mode de tri :</system:String>
     <system:String x:Key="refresh">Rafraîchir</system:String>
     <system:String x:Key="installbtn">Installer</system:String>
     <system:String x:Key="uninstallbtn">Désinstaller</system:String>
@@ -455,6 +464,7 @@
     <system:String x:Key="website">Site web</system:String>
     <system:String x:Key="github">Github</system:String>
     <system:String x:Key="docs">Documents</system:String>
+    <system:String x:Key="crowdin">Crowdin</system:String>
     <system:String x:Key="version">Version</system:String>
     <system:String x:Key="icons">Icônes</system:String>
     <system:String x:Key="about_activate_times">Vous avez utilisé Flow Launcher {0} fois</system:String>
@@ -488,6 +498,10 @@
     <system:String x:Key="LogLevelDEBUG">Débogage</system:String>
     <system:String x:Key="settingWindowFontTitle">Réglage de la police de la fenêtre</system:String>
 
+    <!--  Plugin Settings Window  -->
+    <system:String x:Key="pluginSettingsWindowTitle">Paramètres: {0}</system:String>
+    <system:String x:Key="pluginSettingsWindowOpenFailed">Échec de l'ouverture de la fenêtre des paramètres du plugin</system:String>
+
     <!--  Release Notes Window  -->
     <system:String x:Key="seeMoreReleaseNotes">Voir plus de notes de version sur GitHub</system:String>
     <system:String x:Key="checkNetworkConnectionTitle">Impossible de récupérer les notes de version</system:String>
@@ -518,6 +532,7 @@
     <system:String x:Key="defaultBrowser_newWindow">Nouvelle fenêtre</system:String>
     <system:String x:Key="defaultBrowser_newTab">Nouvel onglet</system:String>
     <system:String x:Key="defaultBrowser_parameter">Mode privé</system:String>
+    <system:String x:Key="defaultBrowser_extraArgs">Extra Args</system:String>
     <system:String x:Key="defaultBrowser_default">Par défaut</system:String>
     <system:String x:Key="defaultBrowser_new_profile">Nouveau profil</system:String>
 

@@ -10,4 +10,13 @@ SLR_FLAGS
 IShellItem
 SHCreateItemFromParsingName
 IShellLinkW
+ShellLink
 CoTaskMemFree
+IPropertyStore
+PROPERTYKEY
+PROPVARIANT
+PKEY_Link_Arguments
+PropVariantClear
+VARENUM
+INFOTIPSIZE
+MAX_PATH

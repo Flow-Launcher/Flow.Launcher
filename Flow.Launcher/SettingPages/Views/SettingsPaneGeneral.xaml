@@ -560,6 +560,20 @@
                 </ui:SettingsExpander.Items>
             </ui:SettingsExpander>
 
+            <ui:SettingsCard
+                Margin="0 4 0 0"
+                Description="{DynamicResource ignoreAccentsToolTip}"
+                Header="{DynamicResource ignoreAccents}">
+                <ui:SettingsCard.HeaderIcon>
+                    <TextBlock Text="áé" />
+                </ui:SettingsCard.HeaderIcon>
+
+                <ui:ToggleSwitch
+                    IsOn="{Binding IgnoreAccents}"
+                    OffContent="{DynamicResource disable}"
+                    OnContent="{DynamicResource enable}" />
+            </ui:SettingsCard>
+
             <ui:SettingsCard Margin="0 14 0 0" Header="{DynamicResource language}">
                 <ui:SettingsCard.HeaderIcon>
                     <ui:FontIcon Glyph="&#xf2b7;" />

@@ -49,6 +49,7 @@
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">Použít umístění výsledků vyhledávání jako pracovní adresář spustitelného souboru</system:String>
     <system:String x:Key="plugin_explorer_display_more_info_in_tooltip">Display more information like size and age in tooltips</system:String>
     <system:String x:Key="plugin_explorer_default_open_in_file_manager">Klepnutím na Enter otevřete složku ve výchozím správci souborů</system:String>
+    <system:String x:Key="plugin_explorer_boost_home_folder_score">Prioritize home folders (Documents, Desktop, Downloads, etc.) in search results</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">K vyhledání cesty použijte indexové vyhledávání</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Možnosti indexování</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">Hledat:</system:String>

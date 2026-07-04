@@ -39,9 +39,11 @@
   </ItemGroup>
   
   <ItemGroup>
+    <ProjectReference Include="..\Flow.Launcher\Flow.Launcher.csproj" />
     <ProjectReference Include="..\Plugins\Flow.Launcher.Plugin.Calculator\Flow.Launcher.Plugin.Calculator.csproj" />
     <ProjectReference Include="..\Plugins\Flow.Launcher.Plugin.Explorer\Flow.Launcher.Plugin.Explorer.csproj" AdditionalProperties="SkipAvaloniaPluginCopy=true" />
     <ProjectReference Include="..\Plugins\Flow.Launcher.Plugin.Program\Flow.Launcher.Plugin.Program.csproj" />
+    <ProjectReference Include="..\Plugins\Flow.Launcher.Plugin.Shell\Flow.Launcher.Plugin.Shell.csproj" />
     <ProjectReference Include="..\Plugins\Flow.Launcher.Plugin.Url\Flow.Launcher.Plugin.Url.csproj" />
     <ProjectReference Include="..\Flow.Launcher.Avalonia\Flow.Launcher.Avalonia.csproj" />
     <ProjectReference Include="..\Flow.Launcher.Core\Flow.Launcher.Core.csproj" />
@@ -57,6 +59,12 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\Flow.Launcher\Images\*.*" Link="Images\%(Filename)%(Extension)">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

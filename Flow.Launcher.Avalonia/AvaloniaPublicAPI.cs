@@ -43,6 +43,12 @@ public class AvaloniaPublicAPI : IPublicAPI
     public event VisibilityChangedEventHandler? VisibilityChanged;
     public event ActualApplicationThemeChangedEventHandler? ActualApplicationThemeChanged;
 #pragma warning restore CS0067
+    public event EventHandler StringMatcherBehaviorChanged
+    {
+        add => _settings.StringMatcherBehaviorChanged += value;
+        remove => _settings.StringMatcherBehaviorChanged -= value;
+    }
+
 
     // Essential for plugins
     public void ChangeQuery(string query, bool requery = false)
