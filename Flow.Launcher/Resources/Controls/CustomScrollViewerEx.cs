@@ -44,8 +44,7 @@ namespace Flow.Launcher.Resources.Controls
         #region AutoHideScrollBars
 
         public static readonly DependencyProperty AutoHideScrollBarsProperty =
-            ScrollViewerHelper.AutoHideScrollBarsProperty
-            .AddOwner(
+            ScrollViewerHelper.AutoHideScrollBarsProperty.AddOwner(
                 typeof(CustomScrollViewerEx),
                 new PropertyMetadata(true, OnAutoHideScrollBarsChanged));
 
@@ -86,6 +85,9 @@ namespace Flow.Launcher.Resources.Controls
         /// <inheritdoc/>
         protected override void OnMouseWheel(MouseWheelEventArgs e)
         {
+            if (ActualHeight <= 0)
+                return;
+
             var Direction = GetDirection();
             ScrollViewerBehavior.SetIsAnimating(this, true);
 

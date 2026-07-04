@@ -3,7 +3,7 @@
 
     <!--  Dialogues  -->
     <system:String x:Key="plugin_pluginsmanager_downloading_plugin">Pobieranie wtyczki</system:String>
-    <system:String x:Key="plugin_pluginsmanager_download_success">Successfully downloaded</system:String>
+    <system:String x:Key="plugin_pluginsmanager_download_success">Pomyślnie pobrano {0}</system:String>
     <system:String x:Key="plugin_pluginsmanager_download_error">Błąd: Nie udało się pobrać wtyczki</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_prompt">{0} autorstwa {1} {2}{3}Czy chcesz odinstalować tę wtyczkę? Po odinstalowaniu Flow automatycznie uruchomi się ponownie.</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_prompt_no_restart">{0} autorstwa {1} {2}{2}Czy chcesz odinstalować tę wtyczkę?</system:String>
@@ -15,7 +15,7 @@
     <system:String x:Key="plugin_pluginsmanager_uninstall_title">Odinstalowanie wtyczki</system:String>
     <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_title">Zachowaj ustawienia wtyczki</system:String>
     <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_subtitle">Czy chcesz zachować ustawienia wtyczki do następnego użycia?</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_success_restart">Plugin successfully installed. Restarting Flow, please wait...</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_success_restart">Wtyczka {0} została pomyślnie zainstalowana. Trwa ponowne uruchamianie Flow, proszę czekać...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_errormetadatafile">Nie można znaleźć pliku metadanych plugin.json z rozpakowanego pliku zip.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_duplicate">Błąd: Wtyczka o tej samej lub wyższej wersji co {0} już istnieje.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_title">Błąd podczas instalacji wtyczki</system:String>
@@ -43,15 +43,15 @@
     <system:String x:Key="plugin_pluginsmanager_update_success_no_restart">Wtyczka {0} została pomyślnie zaktualizowana. Proszę ponownie uruchomić Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_all_success_no_restart">{0} wtyczek zaktualizowano pomyślnie. Proszę ponownie uruchomić Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_modified_error">Wtyczka {0} została już zmodyfikowana. Proszę ponownie uruchomić Flow przed wprowadzeniem dalszych zmian.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_modified_error_title">{0} modified already</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_modified_error_message">Please restart Flow before making any further changes</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_modified_error_title">Wtyczka {0} została już zmodyfikowana</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_modified_error_message">Proszę ponownie uruchomić Flow przed wprowadzeniem dalszych zmian</system:String>
 
-    <system:String x:Key="plugin_pluginsmanager_invalid_zip_title">Invalid zip installer file</system:String>
-    <system:String x:Key="plugin_pluginsmanager_invalid_zip_subtitle">Please check if there is a plugin.json in {0}</system:String>
+    <system:String x:Key="plugin_pluginsmanager_invalid_zip_title">Nieprawidłowy plik instalatora zip</system:String>
+    <system:String x:Key="plugin_pluginsmanager_invalid_zip_subtitle">Sprawdź, czy w {0} znajduje się plik plugin.json</system:String>
 
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_pluginsmanager_plugin_name">Menadżer wtyczek</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_description">Install, uninstall or update Flow Launcher plugins via the search window</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_description">Instaluj, odinstalowuj i aktualizuj wtyczki Flow Launchera z poziomu okna wyszukiwania</system:String>
     <system:String x:Key="plugin_pluginsmanager_unknown_author">Nieznany autor</system:String>
 
     <!--  Context menu items  -->
@@ -66,5 +66,5 @@
 
     <!--  Settings menu items  -->
     <system:String x:Key="plugin_pluginsmanager_plugin_settings_unknown_source">Ostrzeżenie o instalacji z nieznanego źródła</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_settings_auto_restart">Restart Flow Launcher automatically after installing/uninstalling/updating plugin via Plugins Manager</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_settings_auto_restart">Automatycznie uruchamiaj ponownie Flow Launcher po zainstalowaniu/odinstalowaniu/zaktualizowaniu wtyczki za pomocą Menadżera wtyczek</system:String>
 </ResourceDictionary>

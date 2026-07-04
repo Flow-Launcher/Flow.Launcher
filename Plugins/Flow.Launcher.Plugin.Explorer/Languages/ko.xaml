@@ -49,6 +49,7 @@
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">검색 결과위치를 실행 가능한 작업 디렉토리(Working Directory)로 사용</system:String>
     <system:String x:Key="plugin_explorer_display_more_info_in_tooltip">Display more information like size and age in tooltips</system:String>
     <system:String x:Key="plugin_explorer_default_open_in_file_manager">Enter 키를 눌렀을 때 기본 파일 관리자에서 폴더 열기</system:String>
+    <system:String x:Key="plugin_explorer_boost_home_folder_score">Prioritize home folders (Documents, Desktop, Downloads, etc.) in search results</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Use Index Search For Path Search</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">색인 옵션</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">검색:</system:String>

@@ -49,6 +49,7 @@
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">Sử dụng vị trí của kết quả tìm kiếm làm thư mục làm việc của tệp thực thi</system:String>
     <system:String x:Key="plugin_explorer_display_more_info_in_tooltip">Display more information like size and age in tooltips</system:String>
     <system:String x:Key="plugin_explorer_default_open_in_file_manager">Chạy với tư cách quản trị viên / mở thư mục trong trình quản lý tệp tiêu chuẩn</system:String>
+    <system:String x:Key="plugin_explorer_boost_home_folder_score">Prioritize home folders (Documents, Desktop, Downloads, etc.) in search results</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Sử dụng Tìm kiếm Chỉ mục để Tìm kiếm Đường dẫn</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Tùy chọn lập chỉ mục</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">Tìm kiếm trên web với sự hỗ trợ của công cụ tìm kiếm khác</system:String>

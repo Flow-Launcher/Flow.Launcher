@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("Release build, https://github.com/Flow-Launcher/Flow.Launcher")]
 #endif
 
+[assembly: AssemblyTitle("Flow Launcher")]
 [assembly: AssemblyCompany("Flow Launcher")]
 [assembly: AssemblyProduct("Flow Launcher")]
 [assembly: AssemblyCopyright("The MIT License (MIT)")]

@@ -1,16 +1,16 @@
-﻿using CommunityToolkit.Mvvm.DependencyInjection;
-using Flow.Launcher.Plugin.SharedModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Plugin.SharedModels;
 
 namespace Flow.Launcher.Infrastructure
 {
     public class StringMatcher
     {
         private readonly MatchOption _defaultMatchOption = new();
-
+        private readonly Settings _settings;
         public SearchPrecisionScore UserSettingSearchPrecision { get; set; }
 
         private readonly IAlphabet _alphabet;
@@ -18,13 +18,8 @@ namespace Flow.Launcher.Infrastructure
         public StringMatcher(IAlphabet alphabet, Settings settings)
         {
             _alphabet = alphabet;
-            UserSettingSearchPrecision = settings.QuerySearchPrecision;
-        }
-
-        // This is a workaround to allow unit tests to set the instance
-        public StringMatcher(IAlphabet alphabet)
-        {
-            _alphabet = alphabet;
+            _settings = settings;
+            UserSettingSearchPrecision = _settings.QuerySearchPrecision;
         }
 
         public static MatchResult FuzzySearch(string query, string stringToCompare)
@@ -80,10 +75,20 @@ namespace Flow.Launcher.Infrastructure
             int acronymsTotalCount = 0;
             int acronymsMatched = 0;
 
-            var fullStringToCompareWithoutCase = opt.IgnoreCase ? stringToCompare.ToLower() : stringToCompare;
-            var queryWithoutCase = opt.IgnoreCase ? query.ToLower() : query;
+            var queryToCompare = query;
+            bool ignoreAccents = _settings.IgnoreAccents;
+            bool ignoreCase = opt.IgnoreCase;
 
-            var querySubstrings = queryWithoutCase.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            if (ignoreAccents)
+            {
+                queryToCompare = DiacriticsNormalizer.Normalize(queryToCompare);
+            }
+            else if (ignoreCase)
+            {
+                queryToCompare = queryToCompare.ToLower();
+            }
+
+            var querySubstrings = queryToCompare.Split([' '], StringSplitOptions.RemoveEmptyEntries);
             int currentQuerySubstringIndex = 0;
             var currentQuerySubstring = querySubstrings[currentQuerySubstringIndex];
             var currentQuerySubstringCharacterIndex = 0;
@@ -98,7 +103,7 @@ namespace Flow.Launcher.Infrastructure
             var indexList = new List<int>();
             List<int> spaceIndices = new List<int>();
 
-            for (var compareStringIndex = 0; compareStringIndex < fullStringToCompareWithoutCase.Length; compareStringIndex++)
+            for (var compareStringIndex = 0; compareStringIndex < stringToCompare.Length; compareStringIndex++)
             {
                 // If acronyms matching successfully finished, this gets the remaining not matched acronyms for score calculation
                 if (currentAcronymQueryIndex >= query.Length && acronymsMatched == query.Length)
@@ -112,16 +117,25 @@ namespace Flow.Launcher.Infrastructure
                     currentAcronymQueryIndex >= query.Length && allQuerySubstringsMatched)
                     break;
 
+                char compareChar = stringToCompare[compareStringIndex];
+                if (ignoreAccents)
+                {
+                    compareChar = DiacriticsNormalizer.NormalizeChar(compareChar);
+                }
+                else if (ignoreCase)
+                {
+                    compareChar = char.ToLower(compareChar);
+                }
+
                 // To maintain a list of indices which correspond to spaces in the string to compare
                 // To populate the list only for the first query substring
-                if (fullStringToCompareWithoutCase[compareStringIndex] == ' ' && currentQuerySubstringIndex == 0)
+                if (compareChar == ' ' && currentQuerySubstringIndex == 0)
                     spaceIndices.Add(compareStringIndex);
 
                 // Acronym Match
                 if (IsAcronym(stringToCompare, compareStringIndex))
                 {
-                    if (fullStringToCompareWithoutCase[compareStringIndex] ==
-                        queryWithoutCase[currentAcronymQueryIndex])
+                    if (compareChar == queryToCompare[currentAcronymQueryIndex])
                     {
                         acronymMatchData.Add(compareStringIndex);
                         acronymsMatched++;
@@ -133,7 +147,7 @@ namespace Flow.Launcher.Infrastructure
                 if (IsAcronymCount(stringToCompare, compareStringIndex))
                     acronymsTotalCount++;
 
-                if (allQuerySubstringsMatched || fullStringToCompareWithoutCase[compareStringIndex] !=
+                if (allQuerySubstringsMatched || compareChar !=
                     currentQuerySubstring[currentQuerySubstringCharacterIndex])
                 {
                     matchFoundInPreviousLoop = false;
@@ -160,7 +174,7 @@ namespace Flow.Launcher.Infrastructure
                     var startIndexToVerify = compareStringIndex - currentQuerySubstringCharacterIndex;
 
                     if (AllPreviousCharsMatched(startIndexToVerify, currentQuerySubstringCharacterIndex,
-                        fullStringToCompareWithoutCase, currentQuerySubstring))
+                            stringToCompare, currentQuerySubstring, ignoreAccents, ignoreCase))
                     {
                         matchFoundInPreviousLoop = true;
 
@@ -274,19 +288,25 @@ namespace Flow.Launcher.Infrastructure
         }
 
         private static bool AllPreviousCharsMatched(int startIndexToVerify, int currentQuerySubstringCharacterIndex,
-            string fullStringToCompareWithoutCase, string currentQuerySubstring)
+            string stringToCompare, string currentQuerySubstring, bool ignoreAccents, bool ignoreCase)
         {
-            var allMatch = true;
             for (int indexToCheck = 0; indexToCheck < currentQuerySubstringCharacterIndex; indexToCheck++)
             {
-                if (fullStringToCompareWithoutCase[startIndexToVerify + indexToCheck] !=
-                    currentQuerySubstring[indexToCheck])
+                char c = stringToCompare[startIndexToVerify + indexToCheck];
+                if (ignoreAccents)
                 {
-                    allMatch = false;
+                    c = DiacriticsNormalizer.NormalizeChar(c);
                 }
+                else if (ignoreCase)
+                {
+                    c = char.ToLower(c);
+                }
+
+                if (c != currentQuerySubstring[indexToCheck])
+                    return false;
             }
 
-            return allMatch;
+            return true;
         }
 
         private static List<int> GetUpdatedIndexList(int startIndexToVerify, int currentQuerySubstringCharacterIndex,

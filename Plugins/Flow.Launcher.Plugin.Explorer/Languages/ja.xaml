@@ -22,7 +22,7 @@
     <system:String x:Key="plugin_explorer_directoryinfosearch_error">Error occurred during search: {0}</system:String>
     <system:String x:Key="plugin_explorer_opendir_error">フォルダーを開けませんでした</system:String>
     <system:String x:Key="plugin_explorer_openfile_error">ファイルを開けませんでした</system:String>
-    <system:String x:Key="plugin_explorer_new_action_keyword_assigned">This new action keyword is already assigned to another plugin, please choose a different one</system:String>
+    <system:String x:Key="plugin_explorer_new_action_keyword_assigned">この新しいアクションキーワードは既に別のプラグインに割り当てられています。別のものを入力してください</system:String>
 
     <!--  Controls  -->
     <system:String x:Key="plugin_explorer_delete">削除</system:String>
@@ -30,7 +30,7 @@
     <system:String x:Key="plugin_explorer_add">追加</system:String>
     <system:String x:Key="plugin_explorer_generalsetting_header">一般設定</system:String>
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">アクションキーワードのカスタマイズ</system:String>
-    <system:String x:Key="plugin_explorer_manage_quick_access_links_header">Customise Quick Access</system:String>
+    <system:String x:Key="plugin_explorer_manage_quick_access_links_header">クイックアクセスのカスタマイズ</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Quick Access Links</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">Everything の設定</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_setting_header">プレビューパネル</system:String>
@@ -49,6 +49,7 @@
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">検索結果の場所を実行ファイルの作業ディレクトリとして使用</system:String>
     <system:String x:Key="plugin_explorer_display_more_info_in_tooltip">Display more information like size and age in tooltips</system:String>
     <system:String x:Key="plugin_explorer_default_open_in_file_manager">Enterキーで既定のファイルマネージャーでフォルダーを開く</system:String>
+    <system:String x:Key="plugin_explorer_boost_home_folder_score">検索結果でホームフォルダ（ドキュメント、デスクトップ、ダウンロードなど）を優先する</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Use Index Search For Path Search</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Indexing Options</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">Search:</system:String>
@@ -56,8 +57,8 @@
     <system:String x:Key="plugin_explorer_actionkeywordview_filecontentsearch">File Content Search:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_indexsearch">Index Search:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">Quick Access:</system:String>
-    <system:String x:Key="plugin_explorer_actionkeywordview_foldersearch">Folder Search:</system:String>
-    <system:String x:Key="plugin_explorer_actionkeywordview_filesearch">File Search:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_foldersearch">フォルダ検索：</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_filesearch">ファイル検索：</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_current">Current Action Keyword</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_done">完了</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled">Enabled</system:String>
@@ -134,7 +135,7 @@
     <system:String x:Key="plugin_explorer_openwith">アプリで開く</system:String>
     <system:String x:Key="plugin_explorer_openwith_subtitle">開くためのプログラムを選択します</system:String>
     <system:String x:Key="plugin_explorer_fail_to_delete">{0} の削除に失敗しました</system:String>
-    <system:String x:Key="plugin_explorer_file_not_found">File not found: {0}</system:String>
+    <system:String x:Key="plugin_explorer_file_not_found">ファイルが見つかりませんでした: {0}</system:String>
     <system:String x:Key="plugin_explorer_fail_to_open">{0} の削除に失敗しました</system:String>
     <system:String x:Key="plugin_explorer_fail_to_set_text">クリップボードにテキストをコピーできませんでした</system:String>
     <system:String x:Key="plugin_explorer_fail_to_set_files">ファイル/フォルダのコピーに失敗しました</system:String>
@@ -181,7 +182,7 @@
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_descending">↓</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">警告：これは高速な並べ替えオプションではありません。検索が遅くなる場合があります</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">Search Full Path</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">フルパスで検索</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_run_count">ファイル/フォルダの実行カウントを有効にする</system:String>
 
     <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">クリックして Everything を起動またはインストール</system:String>
