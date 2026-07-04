@@ -1,4 +1,5 @@
-﻿using System.Threading;
+using System;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -49,7 +50,7 @@ namespace Flow.Launcher
             lock (_lock)
             {
                 curItem = (ListBoxItem)sender;
-                var p = e.GetPosition((IInputElement)sender);
+                var p = e.GetPosition(null);
                 _lastpos = p;
             }
         }
@@ -58,12 +59,12 @@ namespace Flow.Launcher
         {
             lock (_lock)
             {
-                var p = e.GetPosition((IInputElement)sender);
-                if (_lastpos != p)
+                var p = e.GetPosition(null);
+                if (Math.Abs(_lastpos.X - p.X) > 3 || Math.Abs(_lastpos.Y - p.Y) > 3)
                 {
                     _lastpos = p;
-                    ((ListBoxItem)sender).IsSelected = true;
                     MouseSelectCommand?.Execute(true);
+                    ((ListBoxItem)sender).IsSelected = true;
                 }
             }
         }
@@ -74,8 +75,8 @@ namespace Flow.Launcher
             {
                 if (curItem != null)
                 {
-                    curItem.IsSelected = true;
                     MouseSelectCommand?.Execute(true);
+                    curItem.IsSelected = true;
                 }
             }
         }
