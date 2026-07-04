@@ -730,6 +730,13 @@
           "JetBrains.Annotations": "[2025.2.2, )"
         }
       }
+    },
+    "net10.0-windows10.0.19041/win-x64": {
+      "runtime.osx.10.10-x64.CoreCompat.System.Drawing": {
+        "type": "Transitive",
+        "resolved": "5.8.64",
+        "contentHash": "Ey7xQgWwixxdrmhzEUvaR4kxZDSQMWQScp8ViLvmL5xCBKG6U3TaMv/jzHilpfQXpHmJ4IylKGzzMvnYX2FwHQ=="
+      }
     }
   }
 }
