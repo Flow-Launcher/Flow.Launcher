@@ -70,6 +70,7 @@ public class History
 
                 if (Items.Count >= MaxItems)
                 {
+                    Items = Items.OrderByDescending(x => x.CalculatedAt).ToList();
                     Items.RemoveAt(0);
                 }
 
