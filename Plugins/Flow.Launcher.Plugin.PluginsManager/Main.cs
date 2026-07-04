@@ -25,6 +25,11 @@ namespace Flow.Launcher.Plugin.PluginsManager
             return new PluginsManagerSettings(viewModel);
         }
 
+        public object CreateSettingPanelAvalonia()
+        {
+            return new Views.Avalonia.PluginsManagerSettings(viewModel);
+        }
+
         public async Task InitAsync(PluginInitContext context)
         {
             Context = context;
