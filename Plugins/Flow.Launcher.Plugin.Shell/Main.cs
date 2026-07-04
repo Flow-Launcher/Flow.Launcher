@@ -451,6 +451,11 @@ namespace Flow.Launcher.Plugin.Shell
             return new CMDSetting(_settings);
         }
 
+        public object CreateSettingPanelAvalonia()
+        {
+            return new Flow.Launcher.Plugin.Shell.Views.Avalonia.ShellSetting(_settings);
+        }
+
         public string GetTranslatedPluginTitle()
         {
             return Localize.flowlauncher_plugin_cmd_plugin_name();

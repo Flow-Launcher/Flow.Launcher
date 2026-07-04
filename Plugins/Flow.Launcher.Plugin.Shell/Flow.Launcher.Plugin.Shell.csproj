@@ -60,6 +60,29 @@
   <ItemGroup>
     <PackageReference Include="Flow.Launcher.Localization" Version="0.0.6" />
     <PackageReference Include="InputSimulator" Version="1.0.4" NoWarn="NU1701" />
+    <PackageReference Include="Avalonia" Version="11.2.3" ExcludeAssets="runtime" />
+    <PackageReference Include="FluentAvaloniaUI" Version="2.2.0" ExcludeAssets="runtime" />
   </ItemGroup>
+
+  <!-- Copy plugin output to Avalonia build directory -->
+  <Target Name="RemoveAvaloniaSettingsNativeAssets" AfterTargets="Build" BeforeTargets="CopyToAvaloniaOutput">
+    <ItemGroup>
+      <AvaloniaSettingsNativeAssets Include="$(OutputPath)runtimes\**\libSkiaSharp.*;$(OutputPath)runtimes\**\libHarfBuzzSharp.*" />
+    </ItemGroup>
+    <Delete Files="@(AvaloniaSettingsNativeAssets)" />
+  </Target>
+
+  <Target Name="CopyToAvaloniaOutput" AfterTargets="Build">
+    <PropertyGroup>
+      <AvaloniaPluginDir>..\..\Output\Avalonia\$(Configuration)\Plugins\$(AssemblyName)\</AvaloniaPluginDir>
+      <PluginOutputDir>$([MSBuild]::EnsureTrailingSlash('$(OutputPath)'))</PluginOutputDir>
+    </PropertyGroup>
+    <ItemGroup>
+      <PluginFiles Include="$(PluginOutputDir)**\*.*" Exclude="$(PluginOutputDir)runtimes\**\*.*" />
+      <PluginWindowsRuntimeFiles Include="$(PluginOutputDir)runtimes\win*\**\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(PluginFiles)" DestinationFolder="$(AvaloniaPluginDir)%(RecursiveDir)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(PluginWindowsRuntimeFiles)" DestinationFiles="@(PluginWindowsRuntimeFiles->'$(AvaloniaPluginDir)runtimes\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+  </Target>
 
 </Project>
