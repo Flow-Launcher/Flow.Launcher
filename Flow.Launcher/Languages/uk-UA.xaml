@@ -123,6 +123,9 @@
     <system:String x:Key="hideOnStartupToolTip">Вікно пошуку Flow Launcher після запуску ховається в треї.</system:String>
     <system:String x:Key="hideNotifyIcon">Приховати значок в системному лотку</system:String>
     <system:String x:Key="hideNotifyIconToolTip">Коли піктограму приховано з трею, меню налаштувань можна відкрити, клацнувши правою кнопкою миші у вікні пошуку.</system:String>
+    <system:String x:Key="ignoreAccents">Ігнорувати наголоси при пошуку</system:String>
+    <system:String x:Key="ignoreAccentsToolTip">Вважати символи з наголосами та без них еквівалентними.</system:String>
+    <system:String x:Key="promptIgnoreAccents">Бажаєте ввімкнути ігнорування наголосів під час пошуку?</system:String>
     <system:String x:Key="querySearchPrecision">Точність пошуку запитів</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Змінює мінімальний бал збігів, необхідних для результатів.</system:String>
     <system:String x:Key="SearchPrecisionNone">Нема</system:String>
@@ -142,6 +145,7 @@
     <system:String x:Key="DoublePinyinSchemasXingKongJianDao">Сін Кон Цзянь Дао</system:String>
     <system:String x:Key="DoublePinyinSchemasDaNiu">Да Ню</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoLang">Сяо Лан</system:String>
+    <system:String x:Key="HelpUsTranslateFlow">Допоможіть нам перекласти Flow</system:String>
 
     <system:String x:Key="AlwaysPreview">Завжди переглядати</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Завжди відкривати панель попереднього перегляду при активації Flow. Натисніть {0}, щоб переключити попередній перегляд.</system:String>
@@ -247,6 +251,11 @@
     <system:String x:Key="pluginStore_RecentlyUpdated">Нещодавно оновлено</system:String>
     <system:String x:Key="pluginStore_None">Плагіни</system:String>
     <system:String x:Key="pluginStore_Installed">Встановлено</system:String>
+    <system:String x:Key="PluginStoreSortModeDefault">Типово</system:String>
+    <system:String x:Key="PluginStoreSortModeName">Назва</system:String>
+    <system:String x:Key="PluginStoreSortModeReleaseDate">Дата виходу</system:String>
+    <system:String x:Key="PluginStoreSortModeUpdatedDate">Дата оновлення</system:String>
+    <system:String x:Key="PluginStoreSortingModeComboboxLabel">Режим сортування:</system:String>
     <system:String x:Key="refresh">Оновити</system:String>
     <system:String x:Key="installbtn">Встановити</system:String>
     <system:String x:Key="uninstallbtn">Видалити</system:String>
@@ -455,6 +464,7 @@
     <system:String x:Key="website">Вебсайт</system:String>
     <system:String x:Key="github">GitHub</system:String>
     <system:String x:Key="docs">Документація</system:String>
+    <system:String x:Key="crowdin">Crowdin</system:String>
     <system:String x:Key="version">Версія</system:String>
     <system:String x:Key="icons">Іконки</system:String>
     <system:String x:Key="about_activate_times">Ви скористалися Flow Launcher вже {0} разів</system:String>
@@ -489,6 +499,10 @@
     <system:String x:Key="LogLevelDEBUG">Налагодження</system:String>
     <system:String x:Key="settingWindowFontTitle">Встановлення шрифту вікна</system:String>
 
+    <!--  Plugin Settings Window  -->
+    <system:String x:Key="pluginSettingsWindowTitle">Налаштування: {0}</system:String>
+    <system:String x:Key="pluginSettingsWindowOpenFailed">Не вдалося відкрити вікно налаштувань плагіну</system:String>
+
     <!--  Release Notes Window  -->
     <system:String x:Key="seeMoreReleaseNotes">Дізнатися більше про версію на GitHub</system:String>
     <system:String x:Key="checkNetworkConnectionTitle">Не вдалося отримати примітки до випуску</system:String>
@@ -519,6 +533,7 @@
     <system:String x:Key="defaultBrowser_newWindow">Нове вікно</system:String>
     <system:String x:Key="defaultBrowser_newTab">Нова вкладка</system:String>
     <system:String x:Key="defaultBrowser_parameter">Приватний режим</system:String>
+    <system:String x:Key="defaultBrowser_extraArgs">Додаткові аргументи</system:String>
     <system:String x:Key="defaultBrowser_default">Типово</system:String>
     <system:String x:Key="defaultBrowser_new_profile">Новий профіль</system:String>
 

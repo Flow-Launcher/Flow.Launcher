@@ -123,6 +123,9 @@
     <system:String x:Key="hideOnStartupToolTip">Søkevinduet for Flow Launcher er skjult i systemstatusfeltet etter oppstart.</system:String>
     <system:String x:Key="hideNotifyIcon">Skjul systemstatusfeltikon</system:String>
     <system:String x:Key="hideNotifyIconToolTip">Når ikonet er skjult fra systemstatusfeltet, kan Innstillinger-menyen åpnes ved å høyreklikke på søkevinduet.</system:String>
+    <system:String x:Key="ignoreAccents">Ignore accents when searching</system:String>
+    <system:String x:Key="ignoreAccentsToolTip">Treat accented and unaccented characters as equivalent.</system:String>
+    <system:String x:Key="promptIgnoreAccents">Would you like to turn on the option to ignore accents when searching?</system:String>
     <system:String x:Key="querySearchPrecision">Presisjon for spørringssøk</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Endrer minimum samsvarsresultat som kreves for resultater.</system:String>
     <system:String x:Key="SearchPrecisionNone">Ingen</system:String>
@@ -142,6 +145,7 @@
     <system:String x:Key="DoublePinyinSchemasXingKongJianDao">Xing Kong Jian Dao</system:String>
     <system:String x:Key="DoublePinyinSchemasDaNiu">Da Niu</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoLang">Xiao Lang</system:String>
+    <system:String x:Key="HelpUsTranslateFlow">Help us translate Flow</system:String>
 
     <system:String x:Key="AlwaysPreview">Alltid forhåndsvisning</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Åpne alltid forhåndsvisningspanel når Flow aktiveres. Trykk på {0} for å velge forhåndsvisning.</system:String>
@@ -247,6 +251,11 @@
     <system:String x:Key="pluginStore_RecentlyUpdated">Nylig oppdatert</system:String>
     <system:String x:Key="pluginStore_None">Programtillegg</system:String>
     <system:String x:Key="pluginStore_Installed">Installert</system:String>
+    <system:String x:Key="PluginStoreSortModeDefault">Default</system:String>
+    <system:String x:Key="PluginStoreSortModeName">Navn</system:String>
+    <system:String x:Key="PluginStoreSortModeReleaseDate">Release Date</system:String>
+    <system:String x:Key="PluginStoreSortModeUpdatedDate">Updated Date</system:String>
+    <system:String x:Key="PluginStoreSortingModeComboboxLabel">Sorting Mode:</system:String>
     <system:String x:Key="refresh">Oppfrisk</system:String>
     <system:String x:Key="installbtn">Installer</system:String>
     <system:String x:Key="uninstallbtn">Avinstaller</system:String>
@@ -455,6 +464,7 @@
     <system:String x:Key="website">Nettsted</system:String>
     <system:String x:Key="github">GitHub</system:String>
     <system:String x:Key="docs">Dokumenter</system:String>
+    <system:String x:Key="crowdin">Crowdin</system:String>
     <system:String x:Key="version">Versjon</system:String>
     <system:String x:Key="icons">Ikoner</system:String>
     <system:String x:Key="about_activate_times">Du har aktivert Flow Launcher {0} ganger</system:String>
@@ -489,6 +499,10 @@
     <system:String x:Key="LogLevelDEBUG">Debug</system:String>
     <system:String x:Key="settingWindowFontTitle">Setting Window Font</system:String>
 
+    <!--  Plugin Settings Window  -->
+    <system:String x:Key="pluginSettingsWindowTitle">Settings: {0}</system:String>
+    <system:String x:Key="pluginSettingsWindowOpenFailed">Failed to open plugin settings window</system:String>
+
     <!--  Release Notes Window  -->
     <system:String x:Key="seeMoreReleaseNotes">See more release notes on GitHub</system:String>
     <system:String x:Key="checkNetworkConnectionTitle">Failed to fetch release notes</system:String>
@@ -519,6 +533,7 @@
     <system:String x:Key="defaultBrowser_newWindow">Nytt vindu</system:String>
     <system:String x:Key="defaultBrowser_newTab">Ny fane</system:String>
     <system:String x:Key="defaultBrowser_parameter">Privat modus</system:String>
+    <system:String x:Key="defaultBrowser_extraArgs">Extra Args</system:String>
     <system:String x:Key="defaultBrowser_default">Default</system:String>
     <system:String x:Key="defaultBrowser_new_profile">New Profile</system:String>
 

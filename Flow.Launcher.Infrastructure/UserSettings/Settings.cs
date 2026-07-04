@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Text.Json.Serialization;
 using System.Windows;
 using System.Windows.Media;
@@ -18,6 +20,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         private FlowLauncherJsonStorage<Settings> _storage;
         private StringMatcher _stringMatcher = null;
 
+        public event EventHandler StringMatcherBehaviorChanged;
+
         public void SetStorage(FlowLauncherJsonStorage<Settings> storage)
         {
             _storage = storage;
@@ -32,6 +36,22 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             var settingWindowFont = new FontFamily(SettingWindowFont);
             Application.Current.Resources["SettingWindowFont"] = settingWindowFont;
             Application.Current.Resources["ContentControlThemeFontFamily"] = settingWindowFont;
+
+            PropertyChanged += Settings_PropertyChanged;
+        }
+
+        private void Settings_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case nameof(QuerySearchPrecision):
+                case nameof(ShouldUsePinyin):
+                case nameof(UseDoublePinyin):
+                case nameof(DoublePinyinSchema):
+                case nameof(IgnoreAccents):
+                    StringMatcherBehaviorChanged?.Invoke(this, EventArgs.Empty);
+                    break;
+            }
         }
 
         public void Save()
@@ -139,7 +159,19 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string ResultSubFontStretch { get; set; }
         public bool UseGlyphIcons { get; set; } = true;
         public bool UseAnimation { get; set; } = true;
-        public bool UseSound { get; set; } = true;
+        private bool _useSound = true;
+        public bool UseSound
+        {
+            get => _useSound;
+            set
+            {
+                if (_useSound != value)
+                {
+                    _useSound = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
         public double SoundVolume { get; set; } = 50;
         public bool ShowBadges { get; set; } = false;
         public bool ShowBadgesGlobalOnly { get; set; } = false;
@@ -345,7 +377,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         /// <summary>
         /// when false Alphabet static service will always return empty results
         /// </summary>
-        private bool _useAlphabet = true;
+        private bool _useAlphabet = false;
         public bool ShouldUsePinyin
         {
             get => _useAlphabet;
@@ -404,7 +436,24 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 {
                     _querySearchPrecision = value;
                     if (_stringMatcher != null)
+                    {
                         _stringMatcher.UserSettingSearchPrecision = value;
+                        OnPropertyChanged();
+                    }
+                }
+            }
+        }
+
+        private bool _ignoreAccents = false;
+        public bool IgnoreAccents
+        {
+            get => _ignoreAccents;
+            set
+            {
+                if (_ignoreAccents != value)
+                {
+                    _ignoreAccents = value;
+                    OnPropertyChanged();
                 }
             }
         }

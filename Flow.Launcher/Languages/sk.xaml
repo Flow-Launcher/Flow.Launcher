@@ -124,6 +124,9 @@ Nevykonali sa žiadne zmeny.</system:String>
     <system:String x:Key="hideOnStartupToolTip">Vyhľadávacie okno Flow launchera sa po spustení skryje v oblasti oznámení.</system:String>
     <system:String x:Key="hideNotifyIcon">Schovať ikonu z oblasti oznámení</system:String>
     <system:String x:Key="hideNotifyIconToolTip">Keď je ikona skrytá z oblasti oznámení, nastavenia možno otvoriť kliknutím pravým tlačidlom myši na okno vyhľadávania.</system:String>
+    <system:String x:Key="ignoreAccents">Pri vyhľadávaní ignorovať diakritiku</system:String>
+    <system:String x:Key="ignoreAccentsToolTip">Považovať písmená s diakritikou a bez diakritiky za rovnaké.</system:String>
+    <system:String x:Key="promptIgnoreAccents">Chcete zapnúť možnosť ignorovať diakritiku pri vyhľadávaní?</system:String>
     <system:String x:Key="querySearchPrecision">Presnosť vyhľadávania</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Mení minimálne skóre zhody potrebné na zobrazenie výsledkov.</system:String>
     <system:String x:Key="SearchPrecisionNone">Žiadna</system:String>
@@ -143,6 +146,7 @@ Nevykonali sa žiadne zmeny.</system:String>
     <system:String x:Key="DoublePinyinSchemasXingKongJianDao">Xing Kong Jian Dao</system:String>
     <system:String x:Key="DoublePinyinSchemasDaNiu">Da Niu</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoLang">Xiao Lang</system:String>
+    <system:String x:Key="HelpUsTranslateFlow">Pomôžte nám preložiť Flow</system:String>
 
     <system:String x:Key="AlwaysPreview">Vždy zobraziť náhľad</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Pri aktivácii Flowu vždy otvoriť panel s náhľadom. Stlačením klávesu {0} prepnete náhľad.</system:String>
@@ -248,6 +252,11 @@ Nevykonali sa žiadne zmeny.</system:String>
     <system:String x:Key="pluginStore_RecentlyUpdated">Nedávno aktualizované</system:String>
     <system:String x:Key="pluginStore_None">Pluginy</system:String>
     <system:String x:Key="pluginStore_Installed">Nainštalované</system:String>
+    <system:String x:Key="PluginStoreSortModeDefault">Predvolené</system:String>
+    <system:String x:Key="PluginStoreSortModeName">Názov</system:String>
+    <system:String x:Key="PluginStoreSortModeReleaseDate">Dátum vydania</system:String>
+    <system:String x:Key="PluginStoreSortModeUpdatedDate">Dátum aktualizácie</system:String>
+    <system:String x:Key="PluginStoreSortingModeComboboxLabel">Zoradiť podľa:</system:String>
     <system:String x:Key="refresh">Obnoviť</system:String>
     <system:String x:Key="installbtn">Inštalovať</system:String>
     <system:String x:Key="uninstallbtn">Odinštalovať</system:String>
@@ -261,9 +270,9 @@ Nevykonali sa žiadne zmeny.</system:String>
     <system:String x:Key="ErrorUpdatingPlugin">Chyba aktualizácie pluginu</system:String>
     <system:String x:Key="KeepPluginSettingsTitle">Ponechať nastavenia pluginu</system:String>
     <system:String x:Key="KeepPluginSettingsSubtitle">Chcete zachovať nastavenia pluginu na ďalšie použitie?</system:String>
-    <system:String x:Key="InstallSuccessNoRestart">Plugin {0} bol úspešne nainštalovaný. Prosím, reštartuje Flow.</system:String>
-    <system:String x:Key="UninstallSuccessNoRestart">Plugin {0} bol úspešne odinštalovaný. Prosím, reštartuje Flow.</system:String>
-    <system:String x:Key="UpdateSuccessNoRestart">Plugin {0} bol úspešne aktualizovaný. Prosím, reštartuje Flow.</system:String>
+    <system:String x:Key="InstallSuccessNoRestart">Plugin {0} bol úspešne nainštalovaný. Prosím, reštartujte Flow.</system:String>
+    <system:String x:Key="UninstallSuccessNoRestart">Plugin {0} bol úspešne odinštalovaný. Prosím, reštartujte Flow.</system:String>
+    <system:String x:Key="UpdateSuccessNoRestart">Plugin {0} bol úspešne aktualizovaný. Prosím, reštartujte Flow.</system:String>
     <system:String x:Key="InstallPromptTitle">Inštalácia pluginu</system:String>
     <system:String x:Key="InstallPromptSubtitle">{0} od {1} {2}{2}Chcete nainštalovať tento plugin?</system:String>
     <system:String x:Key="UninstallPromptTitle">Odinštalácia pluginu</system:String>
@@ -283,7 +292,7 @@ Nevykonali sa žiadne zmeny.</system:String>
     <system:String x:Key="updateAllPluginsTitle">Dostupná aktualizácia pluginu</system:String>
     <system:String x:Key="updateAllPluginsButtonContent">Aktualizovať pluginy</system:String>
     <system:String x:Key="checkPluginUpdatesTooltip">Skontrolovať dostupnosť aktualizácií</system:String>
-    <system:String x:Key="PluginsUpdateSuccessNoRestart">Pluginy boli úspešne aktualizované. Prosím, reštartuje Flow.</system:String>
+    <system:String x:Key="PluginsUpdateSuccessNoRestart">Pluginy boli úspešne aktualizované. Prosím, reštartujte Flow.</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Motív</system:String>
@@ -456,6 +465,7 @@ Nevykonali sa žiadne zmeny.</system:String>
     <system:String x:Key="website">Webstránka</system:String>
     <system:String x:Key="github">GitHub</system:String>
     <system:String x:Key="docs">Dokumentácia</system:String>
+    <system:String x:Key="crowdin">Crowdin</system:String>
     <system:String x:Key="version">Verzia</system:String>
     <system:String x:Key="icons">Ikony</system:String>
     <system:String x:Key="about_activate_times">Flow Launcher bol aktivovaný {0}-krát</system:String>
@@ -490,6 +500,10 @@ Nevykonali sa žiadne zmeny.</system:String>
     <system:String x:Key="LogLevelDEBUG">Debug</system:String>
     <system:String x:Key="settingWindowFontTitle">Nastavenie písma okna</system:String>
 
+    <!--  Plugin Settings Window  -->
+    <system:String x:Key="pluginSettingsWindowTitle">Nastavenia: {0}</system:String>
+    <system:String x:Key="pluginSettingsWindowOpenFailed">Nepodarilo sa otvoriť okno nastavení pluginu</system:String>
+
     <!--  Release Notes Window  -->
     <system:String x:Key="seeMoreReleaseNotes">Ďalšie poznámky k vydaniu na Githube</system:String>
     <system:String x:Key="checkNetworkConnectionTitle">Nepodarilo sa načítať poznámky k vydaniu</system:String>
@@ -520,6 +534,7 @@ Nevykonali sa žiadne zmeny.</system:String>
     <system:String x:Key="defaultBrowser_newWindow">Nové okno</system:String>
     <system:String x:Key="defaultBrowser_newTab">Nová karta</system:String>
     <system:String x:Key="defaultBrowser_parameter">Privátny režim</system:String>
+    <system:String x:Key="defaultBrowser_extraArgs">Ďalšie argumenty</system:String>
     <system:String x:Key="defaultBrowser_default">Predvolené</system:String>
     <system:String x:Key="defaultBrowser_new_profile">Nový profil</system:String>
 

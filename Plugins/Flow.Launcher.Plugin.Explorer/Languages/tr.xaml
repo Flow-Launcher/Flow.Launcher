@@ -49,6 +49,7 @@
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">Programın çalışma klasörü olarak sonuç klasörünü kullan</system:String>
     <system:String x:Key="plugin_explorer_display_more_info_in_tooltip">Araç ipuçlarında boyut ve yaş gibi daha fazla bilgi göster</system:String>
     <system:String x:Key="plugin_explorer_default_open_in_file_manager">Klasörü varsayılan Dosya Yöneticisi'nde açmak için Enter tuşuna basın</system:String>
+    <system:String x:Key="plugin_explorer_boost_home_folder_score">Prioritize home folders (Documents, Desktop, Downloads, etc.) in search results</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Yol Araması İçin Dizin Aramasını Kullan</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Dizin Oluşturma Seçenekleri</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">Ara:</system:String>

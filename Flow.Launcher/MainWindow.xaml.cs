@@ -75,6 +75,7 @@ namespace Flow.Launcher
         // Window Animation
         private const double DefaultRightMargin = 66; //* this value from base.xaml
         private bool _isClockPanelAnimating = false;
+        private Storyboard _progressBarStoryboard;
 
         // IDisposable
         private bool _disposed = false;
@@ -95,7 +96,7 @@ namespace Flow.Launcher
             InitializeComponent();
             UpdatePosition();
 
-            InitSoundEffects();
+            SyncSoundEffectsState();
             RegisterSoundEffectsEvent();
             DataObject.AddPastingHandler(QueryTextBox, QueryTextBox_OnPaste);
             _viewModel.ActualApplicationThemeChanged += ViewModel_ActualApplicationThemeChanged;
@@ -327,6 +328,9 @@ namespace Flow.Launcher
                         break;
                     case nameof(Settings.ShowAtTopmost):
                         Topmost = _settings.ShowAtTopmost;
+                        break;
+                    case nameof(Settings.UseSound):
+                        SyncSoundEffectsState();
                         break;
                 }
             };
@@ -707,14 +711,64 @@ namespace Flow.Launcher
             {
                 if (_settings.WMPInstalled)
                 {
+                    if (_animationSoundWMP == null)
+                    {
+                        return;
+                    }
+
                     _animationSoundWMP.Position = TimeSpan.Zero;
                     _animationSoundWMP.Volume = _settings.SoundVolume / 100.0;
                     _animationSoundWMP.Play();
                 }
                 else
                 {
+                    if (_animationSoundWPF == null)
+                    {
+                        return;
+                    }
+
                     _animationSoundWPF.Play();
                 }
+            }
+        }
+
+        private bool IsSoundEffectsInitialized()
+        {
+            lock (_soundLock)
+            {
+                return _animationSoundWMP != null || _animationSoundWPF != null;
+            }
+        }
+
+        private void DisposeSoundEffects()
+        {
+            lock (_soundLock)
+            {
+                _animationSoundWMP?.Stop();
+                _animationSoundWMP?.Close();
+                _animationSoundWMP = null;
+
+                _animationSoundWPF?.Stop();
+                _animationSoundWPF?.Dispose();
+                _animationSoundWPF = null;
+            }
+        }
+
+        private void SyncSoundEffectsState(bool forceReinitializeWhenEnabled = false)
+        {
+            if (!_settings.UseSound)
+            {
+                if (IsSoundEffectsInitialized())
+                {
+                    DisposeSoundEffects();
+                }
+
+                return;
+            }
+
+            if (forceReinitializeWhenEnabled || !IsSoundEffectsInitialized())
+            {
+                InitSoundEffects();
             }
         }
 
@@ -731,14 +785,14 @@ namespace Flow.Launcher
                         return;
                     }
 
-                    // We must run InitSoundEffects on UI thread because MediaPlayer is a DispatcherObject
+                    // We must run SyncSoundEffectsState on UI thread because MediaPlayer is a DispatcherObject
                     if (!Application.Current.Dispatcher.CheckAccess())
                     {
-                        Application.Current.Dispatcher.Invoke(InitSoundEffects);
+                        Application.Current.Dispatcher.Invoke(() => SyncSoundEffectsState(forceReinitializeWhenEnabled: true));
                         return;
                     }
 
-                    InitSoundEffects();
+                    SyncSoundEffectsState(forceReinitializeWhenEnabled: true);
                 });
             }
             catch (Exception e)
@@ -1067,49 +1121,58 @@ namespace Flow.Launcher
 
         private void InitProgressbarAnimation()
         {
-            var progressBarStoryBoard = new Storyboard();
+            _progressBarStoryboard = new Storyboard();
 
-            var da = new DoubleAnimation(ProgressBar.X2, ActualWidth + 100,
-                new Duration(new TimeSpan(0, 0, 0, 0, 1600)));
-            var da1 = new DoubleAnimation(ProgressBar.X1, ActualWidth + 0,
-                new Duration(new TimeSpan(0, 0, 0, 0, 1600)));
-            Storyboard.SetTargetProperty(da, new PropertyPath("(Line.X2)"));
-            Storyboard.SetTargetProperty(da1, new PropertyPath("(Line.X1)"));
-            progressBarStoryBoard.Children.Add(da);
-            progressBarStoryBoard.Children.Add(da1);
-            progressBarStoryBoard.RepeatBehavior = RepeatBehavior.Forever;
+            var animationDuration = new Duration(TimeSpan.FromMilliseconds(1600));
+            var progressBarLength = ProgressBar.X2 - ProgressBar.X1;
 
-            da.Freeze();
-            da1.Freeze();
-
-            const string progressBarAnimationName = "ProgressBarAnimation";
-            var beginStoryboard = new BeginStoryboard
+            var lineEndAnimation = new DoubleAnimation
             {
-                Name = progressBarAnimationName, Storyboard = progressBarStoryBoard
+                From = ProgressBar.X2,
+                To = ProgressBar.ActualWidth + progressBarLength,
+                Duration = animationDuration
             };
-
-            var stopStoryboard = new StopStoryboard()
+            var lineStartAnimation = new DoubleAnimation
             {
-                BeginStoryboardName = progressBarAnimationName
+                From = ProgressBar.X1,
+                To = ProgressBar.ActualWidth,
+                Duration = animationDuration
             };
+            
+            Storyboard.SetTarget(lineEndAnimation, ProgressBar);
+            Storyboard.SetTargetProperty(lineEndAnimation, new PropertyPath("(Line.X2)"));
+            
+            Storyboard.SetTarget(lineStartAnimation, ProgressBar);
+            Storyboard.SetTargetProperty(lineStartAnimation, new PropertyPath("(Line.X1)"));
+            
+            _progressBarStoryboard.Children.Add(lineEndAnimation);
+            _progressBarStoryboard.Children.Add(lineStartAnimation);
+            _progressBarStoryboard.RepeatBehavior = RepeatBehavior.Forever;
 
-            var trigger = new Trigger
-            {
-                Property = VisibilityProperty, Value = Visibility.Visible
-            };
-            trigger.EnterActions.Add(beginStoryboard);
-            trigger.ExitActions.Add(stopStoryboard);
+            lineEndAnimation.Freeze();
+            lineStartAnimation.Freeze();
 
-            var progressStyle = new Style(typeof(Line))
-            {
-                BasedOn = FindResource("PendingLineStyle") as Style
-            };
-            progressStyle.RegisterName(progressBarAnimationName, beginStoryboard);
-            progressStyle.Triggers.Add(trigger);
-
-            ProgressBar.Style = progressStyle;
+            ProgressBar.IsVisibleChanged -= ProgressBar_IsVisibleChanged;
+            ProgressBar.IsVisibleChanged += ProgressBar_IsVisibleChanged;
 
             _viewModel.ProgressBarVisibility = Visibility.Hidden;
+        }
+
+        private void ProgressBar_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (_progressBarStoryboard == null)
+            {
+                return;
+            }
+
+            if (ProgressBar.IsVisible)
+            {
+                _progressBarStoryboard.Begin(ProgressBar, true);
+            }
+            else
+            {
+                _progressBarStoryboard.Stop(ProgressBar);
+            }
         }
 
         private void WindowAnimation()
@@ -1480,10 +1543,9 @@ namespace Flow.Launcher
                 {
                     _hwndSource?.Dispose();
                     _notifyIcon?.Dispose();
-                    _animationSoundWMP?.Close();
-                    _animationSoundWPF?.Dispose();
-                    _viewModel.ActualApplicationThemeChanged -= ViewModel_ActualApplicationThemeChanged;
                     UnregisterSoundEffectsEvent();
+                    DisposeSoundEffects();
+                    _viewModel.ActualApplicationThemeChanged -= ViewModel_ActualApplicationThemeChanged;
                 }
 
                 _disposed = true;
