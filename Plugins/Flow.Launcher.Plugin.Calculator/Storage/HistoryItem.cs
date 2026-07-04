@@ -30,17 +30,12 @@ public class HistoryItem : Result
     }
 
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="HistoryItem"/> class from a <see cref="PendingHistoryItem"/>.
+    /// </summary>
+    /// <param name="item">The pending history item to copy properties from.</param>
     public HistoryItem(PendingHistoryItem item)
+        : this(item.Result, item.SubTitle, item.Expression, item.CalculatedAt)
     {
-        CalculatedAt = item.CalculatedAt;
-        Title = item.Expression;
-        SubTitle = item.SubTitle;
-        Score = 300;
-        IcoPath = item.Result.IcoPath;
-        Query = item.Expression;
-        BadgeIcoPath = BadgeIconPath;
-        ShowBadge = true;
-        CopyText = item.Result.Title;
-        Action = item.Action;
     }
 }

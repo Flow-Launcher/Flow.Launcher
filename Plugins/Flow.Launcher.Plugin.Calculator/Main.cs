@@ -243,24 +243,18 @@ namespace Flow.Launcher.Plugin.Calculator
             };
         }
 
-        private Func<ActionContext, bool> CreateClipboardActionWithHistory(Result resultObject ,string newResult, string expression)
+        private Func<ActionContext, bool> CreateClipboardActionWithHistory(Result resultObject, string newResult, string expression)
         {
-            return (_) =>
+            var baseAction = CreateClipboardAction(newResult);
+            return (actionContext) =>
             {
-                try
+                if (baseAction(actionContext))
                 {
-                    Context.API.CopyToClipboard(newResult);
-                    var item = new HistoryItem(resultObject,newResult, expression, DateTime.Now);
+                    var item = new HistoryItem(resultObject, newResult, expression, DateTime.Now);
                     History.AddOrUpdate(item);
                     return true;
                 }
-                catch (ExternalException)
-                {
-                    Context.API.ShowMsgBox(
-                        Localize.flowlauncher_plugin_calculator_failed_to_copy()
-                    );
-                    return false;
-                }
+                return false;
             };
         }
 
