@@ -1,4 +1,4 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <system:String x:Key="flowlauncher_plugin_calculator_plugin_name">Calculadora</system:String>
@@ -15,4 +15,10 @@
     <system:String x:Key="flowlauncher_plugin_calculator_use_thousands_separator">Show thousands separator in results</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_failed_to_copy">Copy failed, please try later</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_show_error_message">Show error message when calculation fails</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_enable_history">Habilitar Histórico</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_history_subtitle">Calculado em {0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_history_creation_mode">Modo de salvar no histórico</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_history_creation_mode_on_query">Salvar por query</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_history_creation_mode_on_enter">Salvar por enter</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_history_creation_mode_warning">Aviso: Devido à arquitetura do plugin, salvar por query pode registrar cálculos incompletos no histórico enquanto você digita.</system:String>
 </ResourceDictionary>

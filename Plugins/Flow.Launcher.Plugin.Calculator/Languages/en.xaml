@@ -19,4 +19,8 @@
     <system:String x:Key="flowlauncher_plugin_calculator_show_error_message">Show error message when calculation fails</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_enable_history">Enable History</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_history_subtitle">Calculated at {0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_history_creation_mode">History save mode</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_history_creation_mode_on_query">Save on query</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_history_creation_mode_on_enter">Save on Enter</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_history_creation_mode_warning">Warning: Due to the plugin's architecture, saving on query may register incomplete calculations in the history while you type.</system:String>
 </ResourceDictionary>
