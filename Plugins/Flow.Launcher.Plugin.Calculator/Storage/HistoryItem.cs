@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text.Json.Serialization;
 
 namespace Flow.Launcher.Plugin.Calculator.Storage;
@@ -14,6 +14,22 @@ public class HistoryItem : Result
     {
     }
 
+    public HistoryItem(Result item ,string result, string expression, DateTime calculatedAt)
+    {
+        CalculatedAt = calculatedAt;
+        Title = expression;
+        SubTitle = result;
+        Score = 300;
+        IcoPath = item.IcoPath;
+        Query = expression;
+        BadgeIcoPath = BadgeIconPath;
+        ShowBadge = true;
+        CopyText = item.Title;
+        Action = item.Action;
+
+    }
+
+
     public HistoryItem(PendingHistoryItem item)
     {
         CalculatedAt = item.CalculatedAt;
@@ -27,13 +43,4 @@ public class HistoryItem : Result
         CopyText = item.Result.Title;
         Action = item.Action;
     }
-
-    public void Refresh(PendingHistoryItem item)
-    {
-        CalculatedAt = item.CalculatedAt;
-        SubTitle = item.SubTitle;
-        CopyText = item.Result.Title;
-        Action = item.Action;
-    }
-
 }

@@ -18,9 +18,21 @@
     <system:String x:Key="flowlauncher_plugin_calculator_failed_to_copy">Copy failed, please try later</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_show_error_message">Show error message when calculation fails</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_enable_history">Enable History</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_history_subtitle">Calculated at {0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_history_subtitle">{0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_time_just_now">just now</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_time_minute_ago">1 minute ago</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_time_minutes_ago">{0} minutes ago</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_time_hour_ago">1 hour ago</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_time_hours_ago">{0} hours ago</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_time_day_ago">1 day ago</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_time_days_ago">{0} days ago</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_time_month_ago">1 month ago</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_time_months_ago">{0} months ago</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_time_year_ago">1 year ago</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_time_years_ago">{0} years ago</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_history_creation_mode">History save mode</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_history_creation_mode_on_query">Save on query</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_history_creation_mode_on_enter">Save on Enter</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_history_creation_mode_warning">Warning: Due to the plugin's architecture, saving on query may register incomplete calculations in the history while you type.</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_copy_result_to_clipboard">Copy the result of this expression to the clipboard</system:String>
 </ResourceDictionary>

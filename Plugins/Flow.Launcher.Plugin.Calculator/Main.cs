@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -138,7 +138,6 @@ namespace Flow.Launcher.Plugin.Calculator
                     string newResult = FormatResult(roundedResult);
                     
                     var results = new List<Result>();
-                    var action = CreateClipboardAction(newResult);
                     var resultObject = new Result
                     {
                         Title = newResult,
@@ -148,22 +147,43 @@ namespace Flow.Launcher.Plugin.Calculator
                         SubTitle = Context == null
                             ? string.Empty
                             : Localize.flowlauncher_plugin_calculator_copy_number_to_clipboard(),
-                        CopyText = newResult,
-                        Action = action
+                        CopyText = newResult
                     };
 
+                    resultObject.Action = BuildResultAction(resultObject, newResult, expression);
 
-                    if (isValidResultToAddHistory)
+                    if (_settings.EnableHistory && _settings.HistoryCreationMode == HistoryCreationMode.OnQuery)
                     {
-                        var item = CreatePendingHistoryItem(resultObject, newResult, expression, action);
+                        var item = HistoryHelper.CreatePendingHistoryItem(Context, resultObject, newResult, expression);
                         History.AddOrUpdate(item);
                     }
-
                     results.Add(resultObject);
                     var historyItems = _settings.EnableHistory
                         ? History.GetItemsExcluding(expression)
                         : [];
-                    return results.Concat(historyItems).ToList();
+                    var resultsToReturn = new List<Result>();
+                    if (_settings.EnableHistory)
+                    {
+                        foreach (var item in historyItems)
+                        {
+                            var timeDeltaStr = HistoryHelper.GetTimeDeltaString(Context, item.CalculatedAt);
+                            var historySubtitle = Context == null
+                                ? string.Format(CultureInfo.CurrentCulture, "{0}", timeDeltaStr)
+                                : Localize.flowlauncher_plugin_calculator_history_subtitle(timeDeltaStr);
+                            resultsToReturn.Add(new Result
+                            {
+                                Title = item.Query,
+                                SubTitle = $"{item.CopyText} - {historySubtitle}",
+                                IcoPath = item.IcoPath,
+                                BadgeIcoPath = item.BadgeIcoPath,
+                                ShowBadge = item.ShowBadge,
+                                Score = item.Score,
+                                CopyText = item.CopyText,
+                                Action = item.Action
+                            });
+                        }
+                    }
+                    return results.Concat(resultsToReturn).ToList();
 
                 }
             }
@@ -184,20 +204,23 @@ namespace Flow.Launcher.Plugin.Calculator
             return EmptyResults;
         }
 
-        private PendingHistoryItem CreatePendingHistoryItem(Result result, string calcResult, string expression,
-            Func<ActionContext, bool> action)
+
+
+        private Func<ActionContext, bool> BuildResultAction
+        (
+            Result result,
+            string newResult,
+            string expression
+        )
         {
-            var calculatedAt = DateTime.Now;
-            var copyToClipboard = Context == null
-                ? "Copy this number to the clipboard"
-                : Localize.flowlauncher_plugin_calculator_copy_number_to_clipboard();
-            var historySubtitle = Context == null
-                ? string.Format(CultureInfo.CurrentCulture, "Calculated at {0}", calculatedAt)
-                : Localize.flowlauncher_plugin_calculator_history_subtitle(calculatedAt);
-            var subtitle =
-                $"{calcResult} - {copyToClipboard}" +
-                $"\n{historySubtitle}";
-            return new PendingHistoryItem(result, expression, action, subtitle, calculatedAt);
+
+            var action = 
+                !_settings.EnableHistory || _settings.HistoryCreationMode == HistoryCreationMode.OnQuery
+                ? CreateClipboardAction(newResult) 
+                : CreateClipboardActionWithHistory(result, newResult, expression);
+
+            return action;
+                
         }
 
         private Func<ActionContext, bool> CreateClipboardAction(string newResult)
@@ -219,7 +242,28 @@ namespace Flow.Launcher.Plugin.Calculator
                 }
             };
         }
-        
+
+        private Func<ActionContext, bool> CreateClipboardActionWithHistory(Result resultObject ,string newResult, string expression)
+        {
+            return (_) =>
+            {
+                try
+                {
+                    Context.API.CopyToClipboard(newResult);
+                    var item = new HistoryItem(resultObject,newResult, expression, DateTime.Now);
+                    History.AddOrUpdate(item);
+                    return true;
+                }
+                catch (ExternalException)
+                {
+                    Context.API.ShowMsgBox(
+                        Localize.flowlauncher_plugin_calculator_failed_to_copy()
+                    );
+                    return false;
+                }
+            };
+        }
+
         private static string PowMatchEvaluator(Match m)
         {
             // m.Groups[1].Value will be `(...)` with parens
