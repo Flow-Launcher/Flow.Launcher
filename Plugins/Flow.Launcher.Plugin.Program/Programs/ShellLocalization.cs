@@ -3,6 +3,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using Windows.Win32;
 using Windows.Win32.Foundation;
+using Windows.Win32.UI.Shell;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
@@ -20,8 +21,9 @@ namespace Flow.Launcher.Plugin.Program.Programs
         /// <returns>The localized name as string or <see cref="string.Empty"/>.</returns>
         public static unsafe string GetLocalizedName(string path)
         {
-            int retCode = PInvoke.SHCreateItemFromParsingName(path, null, typeof(Windows.Win32.UI.Shell.IShellItem).GUID, out object shellItemObj);
-            if (retCode != 0 || shellItemObj is not Windows.Win32.UI.Shell.IShellItem shellItem)
+            var retCode = PInvoke.SHCreateItemFromParsingName<IShellItem>(path, null, out var shellItem);
+            
+            if (retCode != 0)
             {
                 return string.Empty;
             }
@@ -29,7 +31,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             try
             {
                 PWSTR displayName;
-                shellItem.GetDisplayName(Windows.Win32.UI.Shell.SIGDN.SIGDN_NORMALDISPLAY, &displayName);
+                shellItem.GetDisplayName(SIGDN.SIGDN_NORMALDISPLAY, &displayName);
                 string filename = displayName.ToString();
                 PInvoke.CoTaskMemFree(displayName);
                 return filename;
