@@ -217,9 +217,12 @@ namespace Flow.Launcher.Infrastructure.Storage
             // User may delete the directory, so we need to check it
             FilesFolders.ValidateDirectory(DirectoryPath);
 
-            await using var tempOutput = File.OpenWrite(TempFilePath);
-            await JsonSerializer.SerializeAsync(tempOutput, Data,
-                new JsonSerializerOptions { WriteIndented = true });
+            await using (var tempOutput = new FileStream(TempFilePath, FileMode.Create, FileAccess.Write, FileShare.None))
+            {
+                await JsonSerializer.SerializeAsync(tempOutput, Data,
+                    new JsonSerializerOptions { WriteIndented = true });
+            }
+
             AtomicWriteSetting();
         }
 
