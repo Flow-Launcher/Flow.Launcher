@@ -43,6 +43,7 @@ public readonly record struct QueryTextFocusRequest(bool ShowWindow, bool Activa
 public partial class MainViewModel : ObservableObject, IResultUpdateRegister
 {
     private static readonly string ClassName = nameof(MainViewModel);
+    private const int ProgressBarDelayMilliseconds = 200;
     private readonly Settings _settings;
     private readonly FlowLauncherJsonStorage<History> _historyItemsStorage;
     private readonly History _history;
@@ -52,6 +53,7 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
     private bool _pluginsReady;
     private int _lastHistoryIndex = 1;
     private string _currentQueryOriginalText = string.Empty;
+    private CancellationTokenSource? _progressBarDelayTokenSource;
 
     // Channel-based debouncing for result updates (matches WPF approach)
     private readonly Channel<ResultsForUpdate> _resultsUpdateChannel;
@@ -70,6 +72,9 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
 
     [ObservableProperty]
     private bool _isQueryRunning;
+
+    [ObservableProperty]
+    private bool _isProgressBarVisible;
 
     [ObservableProperty]
     private bool _hasResults;
@@ -256,7 +261,46 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
 
     partial void OnIsQueryRunningChanged(bool value)
     {
-        // ShowResultsArea no longer depends on IsQueryRunning - it uses QueryText instead
+        if (value)
+        {
+            StartProgressBarDelay();
+        }
+        else
+        {
+            StopProgressBarDelay();
+        }
+    }
+
+    private void StartProgressBarDelay()
+    {
+        StopProgressBarDelay();
+
+        var delayTokenSource = new CancellationTokenSource();
+        _progressBarDelayTokenSource = delayTokenSource;
+        _ = ShowProgressBarAfterDelayAsync(delayTokenSource.Token);
+    }
+
+    private void StopProgressBarDelay()
+    {
+        _progressBarDelayTokenSource?.Cancel();
+        _progressBarDelayTokenSource?.Dispose();
+        _progressBarDelayTokenSource = null;
+        IsProgressBarVisible = false;
+    }
+
+    private async Task ShowProgressBarAfterDelayAsync(CancellationToken token)
+    {
+        try
+        {
+            await Task.Delay(ProgressBarDelayMilliseconds, token);
+            if (!token.IsCancellationRequested && IsQueryRunning)
+            {
+                IsProgressBarVisible = true;
+            }
+        }
+        catch (OperationCanceledException)
+        {
+        }
     }
 
     [RelayCommand]
@@ -506,7 +550,14 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
             return;
         }
 
-        IsQueryRunning = true;
+        if (IsQueryRunning)
+        {
+            StartProgressBarDelay();
+        }
+        else
+        {
+            IsQueryRunning = true;
+        }
 
         try
         {

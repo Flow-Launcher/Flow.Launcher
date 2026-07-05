@@ -79,7 +79,7 @@
                 <ProgressBar Name="ProgressBar"
                              Classes="pendingLine"
                              IsIndeterminate="True"
-                             IsVisible="{Binding IsQueryRunning}"
+                             IsVisible="{Binding IsProgressBarVisible}"
                              VerticalAlignment="Bottom"
                              HorizontalAlignment="Stretch"
                              Height="2"
