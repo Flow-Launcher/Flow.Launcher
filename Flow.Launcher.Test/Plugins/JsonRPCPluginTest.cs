@@ -95,6 +95,35 @@ namespace Flow.Launcher.Test.Plugins
         }
 
         [Test]
+        public async Task GivenNoPreviewContentType_WhenDeserializeJsonRpcResult_ThenPreviewContentTypeIsImageWithTextAsync()
+        {
+            const string resultText =
+                """
+                {
+                  "result": [
+                    {
+                      "title": "Answer",
+                      "subTitle": "Plain result",
+                      "preview": {
+                        "description": "Plain description."
+                      }
+                    }
+                  ],
+                  "debugMessage": null
+                }
+                """;
+
+            var results = await QueryAsync(new Query
+            {
+                Search = resultText
+            }, default);
+
+            var result = results.Single();
+
+            ClassicAssert.AreEqual(PreviewContentType.ImageWithText, result.Preview.ContentType);
+        }
+
+        [Test]
         public async Task GivenPreviewVisibilityNever_WhenDeserializeJsonRpcResult_ThenPreviewVisibilityIsNeverAsync()
         {
             const string resultText =

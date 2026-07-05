@@ -447,6 +447,14 @@ namespace Flow.Launcher
 
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
+            // While a code block inside the markdown preview owns the keyboard (e.g. the user
+            // clicked into it to select text), leave the keys to the editor so arrows move its
+            // caret instead of changing the selected result or opening the context menu.
+            if (PreviewMarkdownScrollViewer.IsCodeBlockFocused(e.OriginalSource))
+            {
+                return;
+            }
+
             var specialKeyState = GlobalHotkey.CheckModifiers();
             switch (e.Key)
             {

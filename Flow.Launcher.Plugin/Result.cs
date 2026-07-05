@@ -423,7 +423,7 @@ namespace Flow.Launcher.Plugin
             /// Determines how <see cref="Description"/> should be rendered in Flow Launcher's preview panel.
             /// </summary>
             [JsonConverter(typeof(JsonStringEnumConverter<PreviewContentType>))]
-            public PreviewContentType ContentType { get; set; } = PreviewContentType.Text;
+            public PreviewContentType ContentType { get; set; } = PreviewContentType.ImageWithText;
 
             /// <summary>
             /// Default instance of <see cref="PreviewInfo"/>
@@ -435,7 +435,7 @@ namespace Flow.Launcher.Plugin
                 IsMedia = false,
                 PreviewDelegate = null,
                 FilePath = null,
-                ContentType = PreviewContentType.Text,
+                ContentType = PreviewContentType.ImageWithText,
             };
         }
     }
@@ -446,10 +446,10 @@ namespace Flow.Launcher.Plugin
     public enum PreviewContentType
     {
         /// <summary>
-        /// Render preview descriptions as plain text.
+        /// Show the default preview layout: the preview image with the plain-text description below it.
         /// </summary>
-        [JsonStringEnumMemberName("text")]
-        Text,
+        [JsonStringEnumMemberName("imageWithText")]
+        ImageWithText,
 
         /// <summary>
         /// Render preview descriptions as markdown.

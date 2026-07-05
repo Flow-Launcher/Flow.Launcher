@@ -1,10 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Threading;
 using ICSharpCode.AvalonEdit;
+using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Rendering;
 using MdXaml;
@@ -33,6 +35,28 @@ public class PreviewMarkdownScrollViewer : MarkdownScrollViewer
     /// <param name="isDark">Whether the app currently renders with a dark colour scheme.</param>
     public static void ApplyCodeHighlightTheme(string setting, bool isDark)
         => ActiveTheme = CodeHighlightTheme.Resolve(setting, isDark);
+
+    /// <summary>
+    /// Returns true when <paramref name="source"/> (typically the focused element of a routed key
+    /// event) sits inside one of the code blocks embedded in a markdown preview.
+    /// </summary>
+    public static bool IsCodeBlockFocused(object source)
+    {
+        var element = source as DependencyObject;
+        while (element is not null)
+        {
+            if (element is TextEditor)
+            {
+                return true;
+            }
+
+            element = element is Visual
+                ? VisualTreeHelper.GetParent(element)
+                : LogicalTreeHelper.GetParent(element);
+        }
+
+        return false;
+    }
 
     static PreviewMarkdownScrollViewer()
     {
@@ -231,25 +255,103 @@ public class PreviewMarkdownScrollViewer : MarkdownScrollViewer
         defaultForeground.Freeze();
         editor.Foreground = defaultForeground;
 
-        var changed = false;
-        foreach (var color in definition.NamedHighlightingColors)
+        var transformers = editor.TextArea.TextView.LineTransformers;
+        if (transformers.OfType<ThemedHighlightingColorizer>().Any(colorizer => colorizer.Theme == theme))
         {
-            if (color.Name is null || !theme.TryGetColor(color.Name, out var target))
-            {
-                continue;
-            }
-
-            var brush = new SolidHighlightingBrush(target);
-            if (!Equals(color.Foreground, brush))
-            {
-                color.Foreground = brush;
-                changed = true;
-            }
+            return;
         }
 
-        if (changed)
+        // Colorize through a per-editor transformer instead of mutating the shared highlighting
+        // definition, so the tint cannot leak into other consumers of the same definition.
+        foreach (var colorizer in transformers.OfType<HighlightingColorizer>().ToList())
         {
-            editor.TextArea.TextView.Redraw();
+            transformers.Remove(colorizer);
+        }
+
+        // Index 0 mirrors TextEditor's own colorizer placement: syntax colors must be applied
+        // before the selection colorizer so selected text still gets the selection foreground.
+        transformers.Insert(0, new ThemedHighlightingColorizer(definition, theme));
+    }
+
+    private sealed class ThemedHighlightingColorizer : HighlightingColorizer
+    {
+        private readonly Dictionary<HighlightingColor, HighlightingColor> _themedColors = new();
+
+        public ThemedHighlightingColorizer(IHighlightingDefinition definition, CodeHighlightTheme theme)
+            : base(definition)
+        {
+            Theme = theme;
+        }
+
+        public CodeHighlightTheme Theme { get; }
+
+        // Theme at the highlighter level rather than in ApplyColorToElement: the base colorizer
+        // skips styling-free colors (e.g. C#'s attribute-less "Punctuation") before they would
+        // ever reach ApplyColorToElement.
+        protected override IHighlighter CreateHighlighter(TextView textView, TextDocument document)
+            => new ThemedHighlighter(base.CreateHighlighter(textView, document), this);
+
+        private HighlightingColor ThemedColor(HighlightingColor color)
+        {
+            if (color?.Name is null || !Theme.TryGetColor(color.Name, out var target))
+            {
+                return color;
+            }
+
+            if (!_themedColors.TryGetValue(color, out var themed))
+            {
+                themed = color.Clone();
+                themed.Foreground = new SolidHighlightingBrush(target);
+                themed.Freeze();
+                _themedColors[color] = themed;
+            }
+
+            return themed;
+        }
+
+        private sealed class ThemedHighlighter : IHighlighter
+        {
+            private readonly IHighlighter _inner;
+            private readonly ThemedHighlightingColorizer _colorizer;
+
+            public ThemedHighlighter(IHighlighter inner, ThemedHighlightingColorizer colorizer)
+            {
+                _inner = inner;
+                _colorizer = colorizer;
+            }
+
+            public IDocument Document => _inner.Document;
+
+            public HighlightingColor DefaultTextColor => _colorizer.ThemedColor(_inner.DefaultTextColor);
+
+            public event HighlightingStateChangedEventHandler HighlightingStateChanged
+            {
+                add => _inner.HighlightingStateChanged += value;
+                remove => _inner.HighlightingStateChanged -= value;
+            }
+
+            public HighlightedLine HighlightLine(int lineNumber)
+            {
+                var line = _inner.HighlightLine(lineNumber);
+                foreach (var section in line.Sections)
+                {
+                    section.Color = _colorizer.ThemedColor(section.Color);
+                }
+
+                return line;
+            }
+
+            public IEnumerable<HighlightingColor> GetColorStack(int lineNumber) => _inner.GetColorStack(lineNumber);
+
+            public HighlightingColor GetNamedColor(string name) => _colorizer.ThemedColor(_inner.GetNamedColor(name));
+
+            public void UpdateHighlightingState(int lineNumber) => _inner.UpdateHighlightingState(lineNumber);
+
+            public void BeginHighlighting() => _inner.BeginHighlighting();
+
+            public void EndHighlighting() => _inner.EndHighlighting();
+
+            public void Dispose() => _inner.Dispose();
         }
     }
 

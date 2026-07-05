@@ -818,18 +818,9 @@
                 </Style.Triggers>
             </Style>
 
+            <!--  Links keep their underline as a non-colour cue for accessibility.  -->
             <Style TargetType="{x:Type Hyperlink}">
                 <Setter Property="Foreground" Value="{DynamicResource BasicSystemAccentColor}" />
-                <Setter Property="TextDecorations" Value="None" />
-                <Style.Triggers>
-                    <!--  Restore underline on hover/focus for users who rely on non-colour cues  -->
-                    <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="TextDecorations" Value="Underline" />
-                    </Trigger>
-                    <Trigger Property="IsFocused" Value="True">
-                        <Setter Property="TextDecorations" Value="Underline" />
-                    </Trigger>
-                </Style.Triggers>
             </Style>
 
             <Style TargetType="{x:Type List}">

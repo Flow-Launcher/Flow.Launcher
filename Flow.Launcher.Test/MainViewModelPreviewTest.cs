@@ -267,7 +267,7 @@ namespace Flow.Launcher.Test
             string title,
             PreviewVisibility visibility,
             Settings settings,
-            PreviewContentType contentType = PreviewContentType.Text)
+            PreviewContentType contentType = PreviewContentType.ImageWithText)
             => new(
                 new Result
                 {
