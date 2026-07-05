@@ -230,6 +230,29 @@ namespace Flow.Launcher.Test
             ClassicAssert.IsFalse(viewModel.InternalPreviewVisible);
         }
 
+        [Test]
+        public async Task GivenAlwaysPreviewOnAndManuallyClosedThenNeverResult_WhenDefaultResultSelected_ThenPreviewStaysHiddenAsync()
+        {
+            // Regression: user closes preview via F1, navigates through a Never result, then to a
+            // normal result — the AlwaysPreview restore path must not re-open the pane against
+            // the user's explicit intent.
+            var settings = new Settings
+            {
+                AlwaysPreview = true
+            };
+            var viewModel = CreatePreviewViewModel(settings, ResultAreaColumnPreviewHidden);
+            SetPreviewManuallyClosed(viewModel, true);
+
+            viewModel.PreviewSelectedItem = ViewModel("Never", PreviewVisibility.Never, settings);
+            await InvokeUpdatePreviewAsync(viewModel);
+            ClassicAssert.IsFalse(viewModel.InternalPreviewVisible);
+
+            viewModel.PreviewSelectedItem = ViewModel("Normal", PreviewVisibility.Default, settings);
+            await InvokeUpdatePreviewAsync(viewModel);
+
+            ClassicAssert.IsFalse(viewModel.InternalPreviewVisible);
+        }
+
         private static MainViewModel CreatePreviewViewModel(Settings settings, int resultAreaColumn)
         {
             var viewModel = (MainViewModel)RuntimeHelpers.GetUninitializedObject(typeof(MainViewModel));
@@ -279,5 +302,10 @@ namespace Flow.Launcher.Test
             => typeof(MainViewModel)
                 .GetField("<ExternalPreviewVisible>k__BackingField", BindingFlags.Instance | BindingFlags.NonPublic)
                 .SetValue(viewModel, visible);
+
+        private static void SetPreviewManuallyClosed(MainViewModel viewModel, bool value)
+            => typeof(MainViewModel)
+                .GetField("_previewManuallyClosed", BindingFlags.Instance | BindingFlags.NonPublic)
+                .SetValue(viewModel, value);
     }
 }

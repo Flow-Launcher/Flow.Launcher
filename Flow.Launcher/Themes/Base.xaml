@@ -397,7 +397,7 @@
                             x:Name="PART_Track"
                             DockPanel.Dock="Bottom">
                             <Track.Thumb>
-                                <Thumb Style="{StaticResource BaseHorizontalThumbStyle}" />
+                                <Thumb Style="{DynamicResource HorizontalThumbStyle}" />
                             </Track.Thumb>
                         </Track>
                     </DockPanel>
@@ -405,6 +405,16 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <!--  Dynamic-resource fallbacks for horizontal scrollbar — themes can override these keys.  -->
+    <Style
+        x:Key="HorizontalThumbStyle"
+        BasedOn="{StaticResource BaseHorizontalThumbStyle}"
+        TargetType="{x:Type Thumb}" />
+    <Style
+        x:Key="HorizontalScrollBarStyle"
+        BasedOn="{StaticResource BaseHorizontalScrollBarStyle}"
+        TargetType="{x:Type ScrollBar}" />
 
     <Style x:Key="BaseSeparatorStyle" TargetType="Rectangle" />
     <Style x:Key="HighlightStyle">
@@ -706,7 +716,7 @@
                                                            Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
                                                            Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
                                                 <ScrollBar x:Name="PART_HorizontalScrollBar"
-                                                           Style="{StaticResource BaseHorizontalScrollBarStyle}"
+                                                           Style="{DynamicResource HorizontalScrollBarStyle}"
                                                            Grid.Row="1"
                                                            Grid.Column="0"
                                                            Cursor="Arrow"
@@ -811,6 +821,15 @@
             <Style TargetType="{x:Type Hyperlink}">
                 <Setter Property="Foreground" Value="{DynamicResource BasicSystemAccentColor}" />
                 <Setter Property="TextDecorations" Value="None" />
+                <Style.Triggers>
+                    <!--  Restore underline on hover/focus for users who rely on non-colour cues  -->
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="TextDecorations" Value="Underline" />
+                    </Trigger>
+                    <Trigger Property="IsFocused" Value="True">
+                        <Setter Property="TextDecorations" Value="Underline" />
+                    </Trigger>
+                </Style.Triggers>
             </Style>
 
             <Style TargetType="{x:Type List}">

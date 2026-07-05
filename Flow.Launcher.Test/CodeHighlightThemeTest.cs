@@ -7,6 +7,14 @@ namespace Flow.Launcher.Test
     [TestFixture]
     internal class CodeHighlightThemeTest
     {
+        private string _savedThemeName;
+
+        [SetUp]
+        public void SetUp() => _savedThemeName = PreviewMarkdownScrollViewer.ActiveThemeName;
+
+        [TearDown]
+        public void TearDown() => PreviewMarkdownScrollViewer.ApplyCodeHighlightTheme(_savedThemeName, isDark: true);
+
         [Test]
         public void GivenAutoSetting_WhenAppIsDark_ThenActiveThemeIsADarkTheme()
         {
@@ -32,11 +40,19 @@ namespace Flow.Launcher.Test
         }
 
         [Test]
-        public void GivenUnknownOrEmptySetting_WhenApplied_ThenFallsBackToAutoBehaviour()
+        public void GivenEmptySetting_WhenApplied_ThenFallsBackToAutoBehaviour()
         {
             PreviewMarkdownScrollViewer.ApplyCodeHighlightTheme("", isDark: false);
 
             ClassicAssert.AreEqual("VS Code Light", PreviewMarkdownScrollViewer.ActiveThemeName);
+        }
+
+        [Test]
+        public void GivenUnrecognisedSetting_WhenApplied_ThenFallsBackToAutoBehaviour()
+        {
+            PreviewMarkdownScrollViewer.ApplyCodeHighlightTheme("BogusTheme", isDark: true);
+
+            ClassicAssert.AreEqual("VS Code Dark+", PreviewMarkdownScrollViewer.ActiveThemeName);
         }
     }
 }

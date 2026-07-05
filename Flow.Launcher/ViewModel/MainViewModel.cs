@@ -1043,6 +1043,11 @@ namespace Flow.Launcher.ViewModel
         // so it can be auto-closed again when the selection moves to a result that does not force it.
         private bool _previewAutoOpenedBySelectedResult;
 
+        // Set when the user explicitly closes the preview via the toggle hotkey (F1 / Alt+P).
+        // Prevents the AlwaysPreview restore path from re-opening the pane after the user passes
+        // through a Never result; cleared whenever the pane is shown.
+        private bool _previewManuallyClosed;
+
         private ResultViewModel _previewSelectedItem;
         public ResultViewModel PreviewSelectedItem
         {
@@ -1145,30 +1150,33 @@ namespace Flow.Launcher.ViewModel
                 _restorePreviewAfterNeverResult = !_previewAutoOpenedBySelectedResult;
                 _previewAutoOpenedBySelectedResult = false;
             }
-            else if (Settings.AlwaysPreview)
+            else if (Settings.AlwaysPreview && !_previewManuallyClosed)
             {
                 // With AlwaysPreview on, the pane reopens on the next query regardless, so
                 // arm the restore here too; otherwise a Never selection leaves it stuck closed.
+                // Skip when the user explicitly closed the preview — their intent should persist
+                // even when the selection passes through a Never result.
                 _restorePreviewAfterNeverResult = true;
             }
         }
 
         [RelayCommand]
-        private void TogglePreview()
+        private async Task TogglePreviewAsync()
         {
             if (ShouldSuppressPreview(PreviewSelectedItem))
             {
-                _ = SuppressPreviewAsync();
+                await SuppressPreviewAsync();
                 return;
             }
 
             if (InternalPreviewVisible || ExternalPreviewVisible)
             {
+                _previewManuallyClosed = true;
                 HidePreview();
             }
             else
             {
-                _ = ShowPreviewAsync();
+                await ShowPreviewAsync();
             }
         }
 
@@ -1191,6 +1199,7 @@ namespace Flow.Launcher.ViewModel
 
         private void ShowInternalPreview()
         {
+            _previewManuallyClosed = false;
             ResultAreaColumn = ResultAreaColumnPreviewShown;
             PreviewSelectedItem?.LoadPreviewImage();
         }
@@ -1221,6 +1230,8 @@ namespace Flow.Launcher.ViewModel
                     // Always Preview is off, but the selected result forces its own preview
                     // (PreviewVisibility.Always). Honour it here so the pane is restored when the
                     // window reopens, instead of staying hidden until the selection next changes.
+                    if (ExternalPreviewVisible)
+                        _ = CloseExternalPreviewAsync();
                     _previewAutoOpenedBySelectedResult = true;
                     ShowInternalPreview();
                     break;

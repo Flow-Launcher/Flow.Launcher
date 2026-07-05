@@ -18,6 +18,9 @@ public class PreviewMarkdownScrollViewer : MarkdownScrollViewer
 
     internal static CodeHighlightTheme ActiveTheme { get; private set; } = CodeHighlightTheme.VSCodeDarkPlus;
 
+    // Track in-flight BeginInvoke so rapid Markdown changes don't pile up traversals.
+    private DispatcherOperation _pendingFixOperation;
+
     /// <summary>
     /// Name of the code-highlight theme currently applied to embedded code blocks.
     /// </summary>
@@ -55,7 +58,7 @@ public class PreviewMarkdownScrollViewer : MarkdownScrollViewer
         if (e.Property == MarkdownProperty)
         {
             UpdateDocumentPageWidth(ActualWidth);
-            _ = Dispatcher.BeginInvoke(ApplyMarkdownCompatibilityFixes, DispatcherPriority.Loaded);
+            ScheduleCompatibilityFixes();
         }
     }
 
@@ -63,7 +66,16 @@ public class PreviewMarkdownScrollViewer : MarkdownScrollViewer
     {
         base.OnInitialized(e);
         UpdateDocumentPageWidth(ActualWidth);
-        _ = Dispatcher.BeginInvoke(ApplyMarkdownCompatibilityFixes, DispatcherPriority.Loaded);
+        ScheduleCompatibilityFixes();
+    }
+
+    private void ScheduleCompatibilityFixes()
+    {
+        // Coalesce: if a traversal is already queued, let it run rather than piling up more.
+        if (_pendingFixOperation is { Status: DispatcherOperationStatus.Pending })
+            return;
+
+        _pendingFixOperation = Dispatcher.BeginInvoke(ApplyMarkdownCompatibilityFixes, DispatcherPriority.Loaded);
     }
 
     protected override Size ArrangeOverride(Size arrangeSize)
@@ -254,5 +266,10 @@ public class PreviewMarkdownScrollViewer : MarkdownScrollViewer
         public override Brush GetBrush(ITextRunConstructionContext context) => _brush;
 
         public override string ToString() => _brush.Color.ToString();
+
+        public override bool Equals(object obj)
+            => obj is SolidHighlightingBrush other && _brush.Color == other._brush.Color;
+
+        public override int GetHashCode() => _brush.Color.GetHashCode();
     }
 }
