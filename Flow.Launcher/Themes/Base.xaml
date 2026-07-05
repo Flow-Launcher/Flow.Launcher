@@ -647,46 +647,6 @@
             </Style>
 
             <Style xmlns:avalonEdit="clr-namespace:ICSharpCode.AvalonEdit;assembly=ICSharpCode.AvalonEdit" TargetType="avalonEdit:TextEditor">
-                <Style.Resources>
-                    <!--  Thin themed scrollbar for code blocks (the editor's own scrollbars are nested in the
-                          FlowDocument and don't inherit the preview pane's scrollbar style, so theme them here).  -->
-                    <Style TargetType="{x:Type ScrollBar}">
-                        <Setter Property="Background" Value="Transparent" />
-                        <Setter Property="Stylus.IsFlicksEnabled" Value="false" />
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type ScrollBar}">
-                                    <Grid Background="{TemplateBinding Background}">
-                                        <Track x:Name="PART_Track">
-                                            <Track.Thumb>
-                                                <Thumb>
-                                                    <Thumb.Template>
-                                                        <ControlTemplate TargetType="{x:Type Thumb}">
-                                                            <Border Background="#66FFFFFF" CornerRadius="3" Margin="2" />
-                                                        </ControlTemplate>
-                                                    </Thumb.Template>
-                                                </Thumb>
-                                            </Track.Thumb>
-                                        </Track>
-                                    </Grid>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="Orientation" Value="Vertical">
-                                            <Setter TargetName="PART_Track" Property="IsDirectionReversed" Value="True" />
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                        <Style.Triggers>
-                            <Trigger Property="Orientation" Value="Vertical">
-                                <Setter Property="Width" Value="8" />
-                            </Trigger>
-                            <Trigger Property="Orientation" Value="Horizontal">
-                                <Setter Property="Height" Value="8" />
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </Style.Resources>
                 <Setter Property="Background" Value="{DynamicResource Color03B}" />
                 <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
                 <Setter Property="BorderBrush" Value="{DynamicResource SeparatorForeground}" />
@@ -716,9 +676,6 @@
                                               Padding="{TemplateBinding Padding}"
                                               VerticalContentAlignment="Top"
                                               VerticalScrollBarVisibility="{TemplateBinding VerticalScrollBarVisibility}">
-                                    <!--  Explicit grid template: the horizontal scrollbar gets its own row so it can
-                                          never overlap the last line of code, and both bars pick up the thin themed
-                                          ScrollBar style from this editor's Style.Resources above.  -->
                                     <ScrollViewer.Template>
                                         <ControlTemplate TargetType="{x:Type ScrollViewer}">
                                             <Grid Background="{TemplateBinding Background}">
@@ -738,6 +695,7 @@
                                                                         Content="{TemplateBinding Content}"
                                                                         ContentTemplate="{TemplateBinding ContentTemplate}" />
                                                 <ScrollBar x:Name="PART_VerticalScrollBar"
+                                                           Style="{DynamicResource ScrollBarStyle}"
                                                            Grid.Row="0"
                                                            Grid.Column="1"
                                                            Cursor="Arrow"
@@ -748,6 +706,7 @@
                                                            Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
                                                            Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
                                                 <ScrollBar x:Name="PART_HorizontalScrollBar"
+                                                           Style="{StaticResource BaseHorizontalScrollBarStyle}"
                                                            Grid.Row="1"
                                                            Grid.Column="0"
                                                            Cursor="Arrow"

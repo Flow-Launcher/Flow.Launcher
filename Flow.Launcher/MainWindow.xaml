@@ -539,45 +539,7 @@
                                     VerticalScrollBarVisibility="Auto"
                                     Visibility="{Binding IsMarkdownPreview, Converter={StaticResource BoolToVisibilityConverter}}">
                                     <FrameworkElement.Resources>
-                                        <!--  Thin themed scrollbar for the preview pane (its own scrollbar plus the
-                                              code-block scrollbars), matching Flow's main window instead of the default
-                                              chunky/light WPF scrollbar.  -->
-                                        <Style TargetType="{x:Type ScrollBar}">
-                                            <Setter Property="Background" Value="Transparent" />
-                                            <Setter Property="Stylus.IsFlicksEnabled" Value="false" />
-                                            <Setter Property="Template">
-                                                <Setter.Value>
-                                                    <ControlTemplate TargetType="{x:Type ScrollBar}">
-                                                        <Grid Background="{TemplateBinding Background}">
-                                                            <Track x:Name="PART_Track">
-                                                                <Track.Thumb>
-                                                                    <Thumb>
-                                                                        <Thumb.Template>
-                                                                            <ControlTemplate TargetType="{x:Type Thumb}">
-                                                                                <Border Background="#66FFFFFF" CornerRadius="3" Margin="2" />
-                                                                            </ControlTemplate>
-                                                                        </Thumb.Template>
-                                                                    </Thumb>
-                                                                </Track.Thumb>
-                                                            </Track>
-                                                        </Grid>
-                                                        <ControlTemplate.Triggers>
-                                                            <Trigger Property="Orientation" Value="Vertical">
-                                                                <Setter TargetName="PART_Track" Property="IsDirectionReversed" Value="True" />
-                                                            </Trigger>
-                                                        </ControlTemplate.Triggers>
-                                                    </ControlTemplate>
-                                                </Setter.Value>
-                                            </Setter>
-                                            <Style.Triggers>
-                                                <Trigger Property="Orientation" Value="Vertical">
-                                                    <Setter Property="Width" Value="8" />
-                                                </Trigger>
-                                                <Trigger Property="Orientation" Value="Horizontal">
-                                                    <Setter Property="Height" Value="8" />
-                                                </Trigger>
-                                            </Style.Triggers>
-                                        </Style>
+                                        <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource BaseScrollBarStyle}" />
                                     </FrameworkElement.Resources>
                                 </controls:PreviewMarkdownScrollViewer>
                                 <StackPanel Grid.Row="1" Visibility="{Binding IsMarkdownPreview, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=Inverted}">
