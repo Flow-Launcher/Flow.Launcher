@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Windows.Input;
 using System.Runtime.InteropServices;
 using Avalonia;
 using Avalonia.Controls;
@@ -296,8 +297,15 @@ public static class GlobalHotkey
                 case "return": key = VirtualKeys.Enter; break;
                 case "tab": key = VirtualKeys.Tab; break;
                 default:
-                    // Try single letter
-                    if (part.Length == 1 && char.IsLetter(part[0]))
+                    if (Enum.TryParse<Key>(part, true, out var parsedKey))
+                    {
+                        var virtualKey = KeyInterop.VirtualKeyFromKey(parsedKey);
+                        if (virtualKey != 0)
+                        {
+                            key = (uint)virtualKey;
+                        }
+                    }
+                    else if (part.Length == 1 && char.IsLetter(part[0]))
                     {
                         key = (uint)char.ToUpperInvariant(part[0]);
                     }

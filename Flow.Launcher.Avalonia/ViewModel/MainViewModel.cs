@@ -51,6 +51,7 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
     private string _queryTextBeforeHistory = string.Empty;
     private bool _pluginsReady;
     private int _lastHistoryIndex = 1;
+    private string _currentQueryOriginalText = string.Empty;
 
     // Channel-based debouncing for result updates (matches WPF approach)
     private readonly Channel<ResultsForUpdate> _resultsUpdateChannel;
@@ -166,36 +167,75 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
 
         while (await channelReader.WaitToReadAsync())
         {
-            // Wait 20ms to allow multiple plugin results to arrive
-            await Task.Delay(20);
-
-            // Get the latest snapshot from the channel (discard intermediate ones)
-            ResultsForUpdate? latestUpdate = null;
-
-            while (channelReader.TryRead(out var update))
+            try
             {
-                if (!update.Token.IsCancellationRequested)
+                // Wait 20ms to allow multiple plugin results to arrive
+                await Task.Delay(20);
+
+                var pendingUpdates = new List<ResultsForUpdate>();
+
+                while (channelReader.TryRead(out var update))
                 {
-                    latestUpdate = update;
+                    if (!update.Token.IsCancellationRequested)
+                    {
+                        pendingUpdates.Add(update);
+                    }
+                }
+
+                if (pendingUpdates.Count == 0)
+                {
+                    continue;
+                }
+
+                var latestFullUpdateIndex = pendingUpdates.FindLastIndex(update => !update.IsPluginUpdate);
+                if (latestFullUpdateIndex >= 0)
+                {
+                    await ApplyResultsUpdateAsync(pendingUpdates[latestFullUpdateIndex]);
+                    for (var i = latestFullUpdateIndex + 1; i < pendingUpdates.Count; i++)
+                    {
+                        await ApplyResultsUpdateAsync(pendingUpdates[i]);
+                    }
+                }
+                else
+                {
+                    foreach (var update in pendingUpdates)
+                    {
+                        await ApplyResultsUpdateAsync(update);
+                    }
                 }
             }
-
-            // Apply batched update on UI thread
-            if (latestUpdate.HasValue && !latestUpdate.Value.Token.IsCancellationRequested)
+            catch (Exception e)
             {
-                var update = latestUpdate.Value;
-                var sortedResults = update.Results
-                    .OrderByDescending(r => r.Score)
-                    .ToList();
-
-                await global::Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
-                {
-                    if (update.Token.IsCancellationRequested) return;
-                    Results.ReplaceResults(sortedResults);
-                    HasResults = Results.Results.Count > 0;
-                });
+                Log.Exception(ClassName, "Error processing result update batch", e);
             }
         }
+    }
+
+    private async Task ApplyResultsUpdateAsync(ResultsForUpdate update)
+    {
+        if (update.Token.IsCancellationRequested)
+        {
+            return;
+        }
+
+        var sortedResults = update.Results
+            .OrderByDescending(r => r.Score)
+            .ToList();
+
+        await global::Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
+        {
+            if (update.Token.IsCancellationRequested) return;
+            if (update.IsPluginUpdate)
+            {
+                Results.ReplaceResultsForPlugin(update.PluginId!, sortedResults);
+            }
+            else
+            {
+                Results.ReplaceResults(sortedResults);
+            }
+
+            HasResults = Results.Results.Count > 0;
+        });
     }
 
     partial void OnActiveViewChanged(ActiveView value)
@@ -248,7 +288,7 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
         plugin.ResultsUpdated += (_, e) =>
         {
             if (e.Token.IsCancellationRequested ||
-                !string.Equals(e.Query.OriginalQuery, QueryText, StringComparison.Ordinal))
+                !string.Equals(e.Query.OriginalQuery, _currentQueryOriginalText, StringComparison.Ordinal))
             {
                 return;
             }
@@ -260,7 +300,7 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
             }
 
             var results = CreateResultViewModels(e.Results, pair);
-            if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(results, token)))
+            if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(results, token, pair.Metadata.ID)))
             {
                 Log.Error(ClassName, "Unable to add item to Result Update Queue");
             }
@@ -442,6 +482,7 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
         _queryTokenSource = new CancellationTokenSource();
         var token = _queryTokenSource.Token;
         var queryText = QueryText.Trim();
+        _currentQueryOriginalText = queryText;
 
         if (ActiveView == ActiveView.History)
         {
@@ -476,6 +517,8 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
                 HasResults = false;
                 return;
             }
+
+            _currentQueryOriginalText = query.OriginalQuery;
 
             var plugins = PluginManager.ValidPluginsForQuery(query, dialogJump: false)
                 .Where(p => !p.Metadata.Disabled).ToList();
@@ -895,10 +938,13 @@ internal readonly struct ResultsForUpdate
 {
     public IReadOnlyList<ResultViewModel> Results { get; }
     public CancellationToken Token { get; }
+    public string? PluginId { get; }
+    public bool IsPluginUpdate => !string.IsNullOrEmpty(PluginId);
 
-    public ResultsForUpdate(IReadOnlyList<ResultViewModel> results, CancellationToken token)
+    public ResultsForUpdate(IReadOnlyList<ResultViewModel> results, CancellationToken token, string? pluginId = null)
     {
         Results = results;
         Token = token;
+        PluginId = pluginId;
     }
 }

@@ -63,8 +63,15 @@ public partial class PluginUpdateWindow : Window, INotifyPropertyChanged
             return;
         }
 
-        await PluginInstaller.UpdateAllPluginsAsync(selectedPlugins, Restart);
-        Close(true);
+        try
+        {
+            await PluginInstaller.UpdateAllPluginsAsync(selectedPlugins, Restart);
+            Close(true);
+        }
+        catch (Exception ex)
+        {
+            App.API?.ShowMsgError(Translate("updatePluginFailed", "Failed to update plugins"), ex.Message);
+        }
     }
 
     private void OnCancelClick(object? sender, RoutedEventArgs e)

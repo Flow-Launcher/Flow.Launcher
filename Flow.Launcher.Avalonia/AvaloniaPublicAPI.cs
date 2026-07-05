@@ -1,8 +1,12 @@
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Specialized;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -15,6 +19,7 @@ using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
+using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Avalonia.Views.Controls;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.ExternalPlugins;
@@ -35,6 +40,7 @@ public class AvaloniaPublicAPI : IPublicAPI
     private readonly object _saveSettingsLock = new();
     private readonly ConcurrentDictionary<Type, ISavable> _pluginJsonStorages = new();
     private readonly ConcurrentDictionary<(string, string, Type), ISavable> _pluginBinaryStorages = new();
+    private readonly object _globalKeyboardHandlersLock = new();
     private readonly List<Func<int, int, SpecialKeyState, bool>> _globalKeyboardHandlers = new();
     private Flow.Launcher.Core.Resource.Theme? _theme;
     private bool _gameModeStatus;
@@ -88,37 +94,194 @@ public class AvaloniaPublicAPI : IPublicAPI
     // Shell/URL operations
     public void ShellRun(string cmd, string filename = "cmd.exe") => 
         System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo { FileName = filename, Arguments = $"/c {cmd}", UseShellExecute = true });
-    public void OpenUrl(string url, bool? inPrivate = null) => 
-        System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo { FileName = url, UseShellExecute = true });
-    public void OpenUrl(Uri url, bool? inPrivate = null) => OpenUrl(url.ToString(), inPrivate);
-    public void OpenWebUrl(string url, bool? inPrivate = null) => OpenUrl(url, inPrivate);
-    public void OpenWebUrl(Uri url, bool? inPrivate = null) => OpenUrl(url.ToString(), inPrivate);
-    public void OpenAppUri(Uri appUri) => OpenUrl(appUri);
-    public void OpenAppUri(string appUri) => OpenUrl(appUri);
+    public void OpenUrl(string url, bool? inPrivate = null) => OpenUri(new Uri(url), inPrivate);
+    public void OpenUrl(Uri url, bool? inPrivate = null) => OpenUri(url, inPrivate);
+    public void OpenWebUrl(string url, bool? inPrivate = null) => OpenUri(new Uri(url), inPrivate, true);
+    public void OpenWebUrl(Uri url, bool? inPrivate = null) => OpenUri(url, inPrivate, true);
+    public void OpenAppUri(Uri appUri) => OpenUri(appUri);
+    public void OpenAppUri(string appUri) => OpenUri(new Uri(appUri));
+
     public void OpenDirectory(string DirectoryPath, string? FileNameOrFilePath = null)
     {
-        if (FileNameOrFilePath is null)
+        try
         {
-            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+            var explorerInfo = _settings.CustomExplorer;
+            var explorerPath = explorerInfo.Path.Trim().ToLowerInvariant();
+            var targetPath = FileNameOrFilePath is null
+                ? DirectoryPath
+                : Path.IsPathRooted(FileNameOrFilePath)
+                    ? FileNameOrFilePath
+                    : Path.Combine(DirectoryPath, FileNameOrFilePath);
+
+            if (Path.GetFileNameWithoutExtension(explorerPath) == "explorer")
             {
-                FileName = DirectoryPath,
-                UseShellExecute = true
-            });
+                if (FileNameOrFilePath is null)
+                {
+                    using var explorer = new Process();
+                    explorer.StartInfo = new ProcessStartInfo
+                    {
+                        FileName = DirectoryPath,
+                        UseShellExecute = true
+                    };
+                    explorer.Start();
+                }
+                else
+                {
+                    Win32Helper.OpenFolderAndSelectFile(targetPath);
+                }
+            }
+            else
+            {
+                using var explorer = new Process();
+                explorer.StartInfo = new ProcessStartInfo
+                {
+                    FileName = explorerInfo.Path.Replace("%d", DirectoryPath),
+                    UseShellExecute = true,
+                    Arguments = FileNameOrFilePath is null
+                        ? explorerInfo.DirectoryArgument.Replace("%d", DirectoryPath)
+                        : explorerInfo.FileArgument
+                            .Replace("%d", DirectoryPath)
+                            .Replace("%f", targetPath)
+                };
+                explorer.Start();
+            }
+        }
+        catch (COMException ex) when (ex.ErrorCode == unchecked((int)0x80004004))
+        {
+        }
+        catch (Win32Exception ex) when (ex.NativeErrorCode == 2)
+        {
+            LogException(nameof(AvaloniaPublicAPI), "File manager not found", ex);
+            ShowMsgError(GetTranslation("fileManagerNotFoundTitle"), GetTranslation("fileManagerNotFound"));
+        }
+        catch (Exception ex)
+        {
+            LogException(nameof(AvaloniaPublicAPI), "Failed to open folder", ex);
+            ShowMsgError(GetTranslation("errorTitle"), GetTranslation("folderOpenError"));
+        }
+    }
+
+    private void OpenUri(Uri uri, bool? inPrivate = null, bool forceBrowser = false)
+    {
+        if (uri.IsFile && !uri.LocalPath.FileOrLocationExists())
+        {
+            ShowMsgError(GetTranslation("errorTitle"), string.Format(GetTranslation("fileNotFoundError"), uri.LocalPath));
             return;
         }
 
-        var targetPath = Path.IsPathRooted(FileNameOrFilePath)
-            ? FileNameOrFilePath
-            : Path.Combine(DirectoryPath, FileNameOrFilePath);
+        if (forceBrowser || uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps)
+        {
+            var browserInfo = _settings.CustomBrowser;
+            var path = browserInfo.Path == "*" ? string.Empty : browserInfo.Path;
 
-        Win32Helper.OpenFolderAndSelectFile(targetPath);
+            try
+            {
+                if (browserInfo.OpenInTab)
+                {
+                    uri.AbsoluteUri.OpenInBrowserTab(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg, browserInfo.ExtraArgs);
+                }
+                else
+                {
+                    uri.AbsoluteUri.OpenInBrowserWindow(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg, browserInfo.ExtraArgs);
+                }
+            }
+            catch (Exception e)
+            {
+                var tabOrWindow = browserInfo.OpenInTab ? "tab" : "window";
+                var includesExtraArgs = string.IsNullOrWhiteSpace(browserInfo.ExtraArgs)
+                    ? string.Empty
+                    : ", [including omitted Extra Args]";
+                LogException(nameof(AvaloniaPublicAPI), $"Failed to open URL in browser {tabOrWindow}: {path}, {inPrivate ?? browserInfo.EnablePrivate}, {browserInfo.PrivateArg}{includesExtraArgs}", e);
+                ShowMsgError(GetTranslation("errorTitle"), GetTranslation("browserOpenError"));
+            }
+        }
+        else
+        {
+            try
+            {
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = uri.AbsoluteUri,
+                    UseShellExecute = true
+                })?.Dispose();
+            }
+            catch (Exception e)
+            {
+                LogException(nameof(AvaloniaPublicAPI), $"Failed to open: {uri.AbsoluteUri}", e);
+                ShowMsgError(GetTranslation("errorTitle"), e.Message);
+            }
+        }
     }
 
     // Clipboard
-    public void CopyToClipboard(string text, bool directCopy = false, bool showDefaultNotification = true)
+    public async void CopyToClipboard(string text, bool directCopy = false, bool showDefaultNotification = true)
     {
-        if (global::Avalonia.Application.Current?.ApplicationLifetime is global::Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime desktop)
-            desktop.MainWindow?.Clipboard?.SetTextAsync(text);
+        if (string.IsNullOrEmpty(text))
+        {
+            return;
+        }
+
+        var isFile = File.Exists(text);
+        if (directCopy && (isFile || Directory.Exists(text)))
+        {
+            var exception = await RetryActionOnStaThreadAsync(() =>
+            {
+                var paths = new StringCollection { text };
+                Clipboard.SetFileDropList(paths);
+            });
+
+            if (exception == null)
+            {
+                if (showDefaultNotification)
+                {
+                    ShowMsg($"{GetTranslation("copy")} {(isFile ? GetTranslation("fileTitle") : GetTranslation("folderTitle"))}", GetTranslation("completedSuccessfully"));
+                }
+            }
+            else
+            {
+                LogException(nameof(AvaloniaPublicAPI), "Failed to copy file/folder to clipboard", exception);
+                ShowMsgError(GetTranslation("failedToCopy"));
+            }
+
+            return;
+        }
+
+        var textException = await RetryActionOnStaThreadAsync(() => Clipboard.SetText(text));
+        if (textException == null)
+        {
+            if (showDefaultNotification)
+            {
+                ShowMsg($"{GetTranslation("copy")} {GetTranslation("textTitle")}", GetTranslation("completedSuccessfully"));
+            }
+        }
+        else
+        {
+            LogException(nameof(AvaloniaPublicAPI), "Failed to copy text to clipboard", textException);
+            ShowMsgError(GetTranslation("failedToCopy"));
+        }
+    }
+
+    private static async Task<Exception?> RetryActionOnStaThreadAsync(Action action, int retryCount = 6, int retryDelay = 150)
+    {
+        for (var i = 0; i < retryCount; i++)
+        {
+            try
+            {
+                await Win32Helper.StartSTATaskAsync(action).ConfigureAwait(false);
+                return null;
+            }
+            catch (Exception e)
+            {
+                if (i == retryCount - 1)
+                {
+                    return e;
+                }
+
+                await Task.Delay(retryDelay).ConfigureAwait(false);
+            }
+        }
+
+        return null;
     }
 
     // HTTP (delegate to Infrastructure)
@@ -237,11 +400,21 @@ public class AvaloniaPublicAPI : IPublicAPI
             return false;
         }
     }
-    public void RegisterGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback) =>
-        _globalKeyboardHandlers.Add(callback);
+    public void RegisterGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback)
+    {
+        lock (_globalKeyboardHandlersLock)
+        {
+            _globalKeyboardHandlers.Add(callback);
+        }
+    }
 
-    public void RemoveGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback) =>
-        _globalKeyboardHandlers.Remove(callback);
+    public void RemoveGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback)
+    {
+        lock (_globalKeyboardHandlersLock)
+        {
+            _globalKeyboardHandlers.Remove(callback);
+        }
+    }
 
     public T LoadSettingJsonStorage<T>() where T : new()
     {
@@ -341,7 +514,13 @@ public class AvaloniaPublicAPI : IPublicAPI
     private bool KListenerHookedKeyboardCallback(KeyEvent keyEvent, int vkCode, SpecialKeyState state)
     {
         var continueHook = true;
-        foreach (var callback in _globalKeyboardHandlers)
+        Func<int, int, SpecialKeyState, bool>[] handlers;
+        lock (_globalKeyboardHandlersLock)
+        {
+            handlers = _globalKeyboardHandlers.ToArray();
+        }
+
+        foreach (var callback in handlers)
         {
             continueHook &= callback((int)keyEvent, vkCode, state);
         }

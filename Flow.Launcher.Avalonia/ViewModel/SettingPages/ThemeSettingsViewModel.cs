@@ -78,9 +78,11 @@ public partial class ThemeSettingsViewModel : ObservableObject, IDisposable
                 return;
             }
 
-            _settings.Theme = value.FileNameWithoutExtension;
-            OnPropertyChanged();
-            OnPropertyChanged(nameof(IsBackdropEnabled));
+            if (App.API?.SetCurrentTheme(value) == true)
+            {
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(IsBackdropEnabled));
+            }
         }
     }
 
@@ -408,6 +410,8 @@ public partial class ThemeSettingsViewModel : ObservableObject, IDisposable
 
     public string DateText => DateTime.Now.ToString(DateFormat, CultureInfo.CurrentUICulture);
 
+    public string ClockAndDateText => $"{Translate("Clock", "Clock")} / {Translate("Date", "Date")}";
+
     public bool ShowPlaceholder
     {
         get => _settings.ShowPlaceholder;
@@ -601,6 +605,7 @@ public partial class ThemeSettingsViewModel : ObservableObject, IDisposable
         ColorSchemeOptions.ForEach(x => x.UpdateLabels());
         BackdropTypesList.ForEach(x => x.UpdateLabels());
         AnimationSpeedOptions.ForEach(x => x.UpdateLabels());
+        OnPropertyChanged(nameof(ClockAndDateText));
     }
 
     private void ApplyColorScheme(ColorSchemes scheme)

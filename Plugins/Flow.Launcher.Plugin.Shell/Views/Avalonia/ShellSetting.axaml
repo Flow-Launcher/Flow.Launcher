@@ -37,7 +37,7 @@
                     </ui:SettingsExpanderItem.Footer>
                 </ui:SettingsExpanderItem>
 
-                <ui:SettingsExpanderItem Content="Shell">
+                <ui:SettingsExpanderItem Content="{DynamicResource flowlauncher_plugin_cmd_plugin_name}">
                     <ui:SettingsExpanderItem.Footer>
                         <ComboBox ItemsSource="{Binding AllShells}"
                                   SelectedValue="{Binding SelectedShell}"

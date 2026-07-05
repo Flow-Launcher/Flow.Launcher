@@ -85,28 +85,37 @@ namespace Flow.Launcher.Avalonia.Views.Controls
                 HotKeyMapper.RemoveToggleHotkey();
             }
 
-            var dialog = new HotkeyRecorderDialog(Hotkey);
-            var result = await dialog.ShowAsync();
-
-            if (result == HotkeyRecorderDialog.EResultType.Save)
+            try
             {
-                Hotkey = dialog.ResultValue;
+                var dialog = new HotkeyRecorderDialog(Hotkey);
+                var result = await dialog.ShowAsync();
 
-                if (shouldUnregisterToggle)
+                if (result == HotkeyRecorderDialog.EResultType.Save)
                 {
-                    HotKeyMapper.SetToggleHotkey(dialog.ResultValue);
+                    Hotkey = dialog.ResultValue;
+
+                    if (shouldUnregisterToggle)
+                    {
+                        HotKeyMapper.SetToggleHotkey(dialog.ResultValue);
+                    }
+                }
+                else if (result == HotkeyRecorderDialog.EResultType.Delete)
+                {
+                    Hotkey = string.Empty;
+                }
+                else if (shouldUnregisterToggle)
+                {
+                    HotKeyMapper.SetToggleHotkey(originalHotkey);
                 }
             }
-            else if (result == HotkeyRecorderDialog.EResultType.Delete)
-            {
-                Hotkey = string.Empty;
-            }
-            else
+            catch
             {
                 if (shouldUnregisterToggle)
                 {
                     HotKeyMapper.SetToggleHotkey(originalHotkey);
                 }
+
+                throw;
             }
         }
     }

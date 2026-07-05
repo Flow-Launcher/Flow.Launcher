@@ -71,6 +71,7 @@ public partial class ResultViewModel : ObservableObject
         _imageTask = null;
         OnPropertyChanged(nameof(Image));
         OnPropertyChanged(nameof(ShowIcon));
+        OnPropertyChanged(nameof(ShowGlyph));
     }
 
     // Glyph support
@@ -92,8 +93,7 @@ public partial class ResultViewModel : ObservableObject
 
     public bool GlyphAvailable => Glyph != null;
 
-    public bool ShowGlyph => 
-        Settings?.UseGlyphIcons == true && GlyphAvailable;
+    public bool ShowGlyph => GlyphAvailable && (Settings?.UseGlyphIcons == true || !ShowIcon);
 
     /// <summary>
     /// Gets the FontFamily for the glyph icon, handling file paths and resource paths.

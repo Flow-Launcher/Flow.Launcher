@@ -156,35 +156,32 @@ public static class FontLoader
     {
         try
         {
-            var filePath = fontFamilyPath;
-            if (filePath.StartsWith("file:///", StringComparison.OrdinalIgnoreCase))
-                filePath = filePath.Substring(8);
-            else if (filePath.StartsWith("file://", StringComparison.OrdinalIgnoreCase))
-                filePath = filePath.Substring(7);
-            
-            var hashIndex = filePath.IndexOf('#');
+            var hashIndex = fontFamilyPath.IndexOf('#');
+            var fontSource = hashIndex >= 0 ? fontFamilyPath[..hashIndex] : fontFamilyPath;
+            var fontName = hashIndex >= 0 && hashIndex < fontFamilyPath.Length - 1
+                ? fontFamilyPath[(hashIndex + 1)..]
+                : null;
+
             string fontFilePath;
-            string? fontName;
-            
-            if (hashIndex >= 0)
+            Uri fontFileUri;
+            if (Uri.TryCreate(fontSource, UriKind.Absolute, out var uri) && uri.IsFile)
             {
-                fontFilePath = filePath.Substring(0, hashIndex);
-                fontName = filePath.Substring(hashIndex + 1);
+                fontFilePath = uri.LocalPath;
+                fontFileUri = uri;
             }
             else
             {
-                fontFilePath = filePath;
-                fontName = null;
+                fontFilePath = Path.GetFullPath(fontSource);
+                fontFileUri = new Uri(fontFilePath);
             }
 
             if (!File.Exists(fontFilePath))
                 return null;
 
-            // In Avalonia 11, for local files we should use absolute file URIs
-            var uriString = $"file:///{fontFilePath.Replace('\\', '/')}";
+            var uriString = fontFileUri.AbsoluteUri;
             if (!string.IsNullOrEmpty(fontName))
                 uriString += $"#{fontName}";
-            
+
             return SafeCreateFontFamily(uriString);
         }
         catch

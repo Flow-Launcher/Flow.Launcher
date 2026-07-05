@@ -182,18 +182,27 @@ namespace Flow.Launcher.Avalonia.ViewModel.SettingPages
         {
             await PluginInstaller.CheckForPluginUpdatesAsync((plugins) =>
             {
-                Dispatcher.UIThread.Post(async () =>
-                {
-                    if (global::Avalonia.Application.Current?.ApplicationLifetime is not global::Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime desktop ||
-                        desktop.MainWindow is null)
-                    {
-                        return;
-                    }
-
-                    var dialog = new PluginUpdateWindow(plugins);
-                    await dialog.ShowDialog<bool>(desktop.MainWindow);
-                });
+                Dispatcher.UIThread.Post(() => _ = ShowPluginUpdateWindowAsync(plugins));
             }, silentUpdate: false);
+        }
+
+        private static async Task ShowPluginUpdateWindowAsync(List<PluginUpdateInfo> plugins)
+        {
+            try
+            {
+                if (global::Avalonia.Application.Current?.ApplicationLifetime is not global::Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime desktop ||
+                    desktop.MainWindow is null)
+                {
+                    return;
+                }
+
+                var dialog = new PluginUpdateWindow(plugins);
+                await dialog.ShowDialog<bool>(desktop.MainWindow);
+            }
+            catch (Exception ex)
+            {
+                App.API?.LogException(nameof(PluginStoreSettingsViewModel), "Failed to show plugin update window", ex);
+            }
         }
         
         [RelayCommand]

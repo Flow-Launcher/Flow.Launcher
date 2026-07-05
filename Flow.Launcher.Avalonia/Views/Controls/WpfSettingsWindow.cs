@@ -1,7 +1,9 @@
 using System;
+using Avalonia.Controls.ApplicationLifetimes;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Interop;
 
 namespace Flow.Launcher.Avalonia.Views.Controls;
 
@@ -35,12 +37,30 @@ public class WpfSettingsWindow : Window
         Content = scrollViewer;
     }
 
+    private static void SetAvaloniaOwner(WpfSettingsWindow window)
+    {
+        if (global::Avalonia.Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop)
+        {
+            return;
+        }
+
+        var ownerHandle = desktop.MainWindow?.TryGetPlatformHandle()?.Handle ?? IntPtr.Zero;
+        if (ownerHandle == IntPtr.Zero)
+        {
+            return;
+        }
+
+        new WindowInteropHelper(window).Owner = ownerHandle;
+        window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+    }
+
     /// <summary>
     /// Shows the settings window for the given plugin.
     /// </summary>
     public static void Show(Control settingsControl, string pluginName)
     {
         var window = new WpfSettingsWindow(settingsControl, pluginName);
+        SetAvaloniaOwner(window);
         window.Show();
     }
 
@@ -50,6 +70,7 @@ public class WpfSettingsWindow : Window
     public static void ShowDialog(Control settingsControl, string pluginName)
     {
         var window = new WpfSettingsWindow(settingsControl, pluginName);
+        SetAvaloniaOwner(window);
         window.ShowDialog();
     }
 }
