@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using Avalonia.Threading;
 using Avalonia.VisualTree;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Avalonia.ViewModel;
@@ -36,7 +37,6 @@ public partial class MainWindow : Window
         _viewModel = Ioc.Default.GetRequiredService<MainViewModel>();
         _settings = Ioc.Default.GetRequiredService<Settings>();
         _viewModel.HideRequested += () => Hide();
-        _viewModel.ShowRequested += HandleShowRequested;
         _viewModel.QueryTextFocusRequested += HandleQueryTextFocusRequest;
         DataContext = _viewModel;
 
@@ -145,8 +145,8 @@ public partial class MainWindow : Window
         // Center the window on screen
         CenterOnScreen();
 
-        // Focus and select all text
-        ApplyQueryTextBoxFocus(QueryTextFocusMode.SelectAll);
+        // QueryTextFocusRequested applies the final select/caret behavior. Avoid a transient SelectAll here.
+        _queryTextBox?.Focus();
     }
 
     private void CenterOnScreen()
@@ -225,15 +225,6 @@ public partial class MainWindow : Window
         }
     }
 
-    /// <summary>
-    /// Shows and activates the window. Focus/caret behavior is handled by QueryTextFocusRequested.
-    /// </summary>
-    private void HandleShowRequested()
-    {
-        Show();
-        Activate();
-    }
-
     private void OnQueryTextBoxKeyDown(object? sender, KeyEventArgs e)
     {
         if (sender is not TextBox)
@@ -292,13 +283,31 @@ public partial class MainWindow : Window
 
     private void HandleQueryTextFocusRequest(QueryTextFocusRequest request)
     {
-        if (!request.ShowWindow && (!IsVisible || _queryTextBox?.IsVisible != true))
+        if (_queryTextBox == null)
         {
             return;
         }
 
+        if (!request.ShowWindow && !request.ActivateWindow)
+        {
+            ApplyQueryTextBoxSelection(request.Mode);
+            return;
+        }
+
+        if (!request.ShowWindow && (!IsVisible || _queryTextBox.IsVisible != true))
+        {
+            return;
+        }
+
+        var revealAfterFocus = request.ShowWindow && !IsVisible;
+        if (revealAfterFocus)
+        {
+            Opacity = 0;
+        }
+
         if (request.ShowWindow)
         {
+            SynchronizeQueryTextBoxText();
             Show();
         }
 
@@ -307,10 +316,34 @@ public partial class MainWindow : Window
             Activate();
         }
 
+        if (revealAfterFocus)
+        {
+            Dispatcher.UIThread.Post(() =>
+            {
+                SynchronizeQueryTextBoxText();
+                ApplyQueryTextBoxFocus(request.Mode);
+                Dispatcher.UIThread.Post(() => Opacity = 1, DispatcherPriority.Render);
+            }, DispatcherPriority.ContextIdle);
+            return;
+        }
+
         ApplyQueryTextBoxFocus(request.Mode);
     }
 
-    private void ApplyQueryTextBoxFocus(QueryTextFocusMode mode)
+    private void SynchronizeQueryTextBoxText()
+    {
+        if (_queryTextBox == null || _viewModel == null)
+        {
+            return;
+        }
+
+        if (_queryTextBox.Text != _viewModel.QueryText)
+        {
+            _queryTextBox.Text = _viewModel.QueryText;
+        }
+    }
+
+    private void ApplyQueryTextBoxFocus(QueryTextFocusMode mode, bool selectionAlreadyApplied = false)
     {
         if (_queryTextBox == null)
         {
@@ -319,9 +352,28 @@ public partial class MainWindow : Window
 
         _queryTextBox.Focus();
 
+        if (!selectionAlreadyApplied)
+        {
+            ApplyQueryTextBoxSelection(mode);
+        }
+    }
+
+    private void ApplyQueryTextBoxSelection(QueryTextFocusMode mode)
+    {
+        if (_queryTextBox == null)
+        {
+            return;
+        }
+
+        if (mode == QueryTextFocusMode.Focus)
+        {
+            return;
+        }
+
         if (mode == QueryTextFocusMode.SelectAll)
         {
-            _queryTextBox.SelectAll();
+            _queryTextBox.SelectionStart = 0;
+            _queryTextBox.SelectionEnd = _queryTextBox.Text?.Length ?? 0;
             return;
         }
 

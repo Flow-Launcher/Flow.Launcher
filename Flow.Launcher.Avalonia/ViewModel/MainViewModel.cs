@@ -31,6 +31,7 @@ public enum ActiveView
 
 public enum QueryTextFocusMode
 {
+    Focus,
     SelectAll,
     CaretAtEnd
 }
@@ -53,6 +54,7 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
     private bool _pluginsReady;
     private int _lastHistoryIndex = 1;
     private string _currentQueryOriginalText = string.Empty;
+    private string _lastQueryActionKeyword = string.Empty;
     private CancellationTokenSource? _progressBarDelayTokenSource;
 
     // Channel-based debouncing for result updates (matches WPF approach)
@@ -61,7 +63,6 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
     private readonly Task _resultsViewUpdateTask;
 
     public event Action? HideRequested;
-    public event Action? ShowRequested;
     public event Action<QueryTextFocusRequest>? QueryTextFocusRequested;
 
     [ObservableProperty]
@@ -119,6 +120,8 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
     public bool ShowResultsArea => ActiveView == ActiveView.History || !string.IsNullOrWhiteSpace(QueryText) || ContextMenu.Results.Count > 0;
 
     public Settings Settings => _settings;
+
+    public bool LastQuerySelected { get; set; }
 
     public MainViewModel(Settings settings)
     {
@@ -445,14 +448,11 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
     /// </summary>
     public void Hide()
     {
-        MainWindowVisibility = false;
-        _lastHistoryIndex = 1;
-        _queryTextBeforeHistory = string.Empty;
-        QueryText = "";
-        ActiveView = ActiveView.Results;
-        ContextMenu.Clear();
-        HistoryView.Clear();
+        PrepareLastQueryModeBeforeHide();
         HideRequested?.Invoke();
+        MainWindowVisibility = false;
+        ResetTransientViewState();
+        ApplyLastQueryModeForHide();
         Log.Info(ClassName, "Hide requested");
     }
 
@@ -461,16 +461,96 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
     /// </summary>
     public void Show()
     {
+        ResetTransientViewState();
+        var focusMode = ApplyLastQueryModeForShow();
+        RequestQueryTextFocus(new QueryTextFocusRequest(true, true, focusMode));
         MainWindowVisibility = true;
+        Log.Info(ClassName, "Show requested");
+    }
+
+    private void ResetTransientViewState()
+    {
         _lastHistoryIndex = 1;
         _queryTextBeforeHistory = string.Empty;
-        QueryText = "";
         ActiveView = ActiveView.Results;
         ContextMenu.Clear();
         HistoryView.Clear();
-        ShowRequested?.Invoke();
-        RequestQueryTextFocus(new QueryTextFocusRequest(true, true, QueryTextFocusMode.SelectAll));
-        Log.Info(ClassName, "Show requested");
+    }
+
+    private void PrepareLastQueryModeBeforeHide()
+    {
+        if (_settings.LastQueryMode != LastQueryMode.Selected)
+        {
+            return;
+        }
+
+        LastQuerySelected = true;
+        RequestQueryTextFocus(new QueryTextFocusRequest(false, false, QueryTextFocusMode.SelectAll));
+    }
+
+    private void ApplyLastQueryModeForHide()
+    {
+        switch (_settings.LastQueryMode)
+        {
+            case LastQueryMode.Empty:
+                QueryText = string.Empty;
+                break;
+            case LastQueryMode.Preserved:
+                LastQuerySelected = true;
+                break;
+            case LastQueryMode.Selected:
+                break;
+            case LastQueryMode.ActionKeywordPreserved:
+                ApplyLastActionKeywordQueryText();
+                LastQuerySelected = true;
+                break;
+            case LastQueryMode.ActionKeywordSelected:
+                ApplyLastActionKeywordQueryText();
+                LastQuerySelected = true;
+                break;
+        }
+    }
+
+    private QueryTextFocusMode ApplyLastQueryModeForShow()
+    {
+        switch (_settings.LastQueryMode)
+        {
+            case LastQueryMode.Empty:
+                QueryText = string.Empty;
+                return QueryTextFocusMode.SelectAll;
+            case LastQueryMode.Preserved:
+                LastQuerySelected = true;
+                return QueryTextFocusMode.CaretAtEnd;
+            case LastQueryMode.Selected:
+                return GetLastQueryFocusMode();
+            case LastQueryMode.ActionKeywordPreserved:
+                ApplyLastActionKeywordQueryText();
+                LastQuerySelected = true;
+                return QueryTextFocusMode.CaretAtEnd;
+            case LastQueryMode.ActionKeywordSelected:
+                ApplyLastActionKeywordQueryText();
+                return GetLastQueryFocusMode();
+            default:
+                return QueryTextFocusMode.SelectAll;
+        }
+    }
+
+    private QueryTextFocusMode GetLastQueryFocusMode()
+    {
+        if (LastQuerySelected)
+        {
+            return QueryTextFocusMode.Focus;
+        }
+
+        LastQuerySelected = true;
+        return QueryTextFocusMode.SelectAll;
+    }
+
+    private void ApplyLastActionKeywordQueryText()
+    {
+        QueryText = string.IsNullOrEmpty(_lastQueryActionKeyword)
+            ? string.Empty
+            : $"{_lastQueryActionKeyword}{Query.ActionKeywordSeparator}";
     }
 
     /// <summary>
@@ -478,15 +558,10 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
     /// </summary>
     public void ShowWithInjectedQuery(string queryText)
     {
-        MainWindowVisibility = true;
-        _lastHistoryIndex = 1;
-        _queryTextBeforeHistory = string.Empty;
-        ActiveView = ActiveView.Results;
-        ContextMenu.Clear();
-        HistoryView.Clear();
+        ResetTransientViewState();
         QueryText = queryText;
-        ShowRequested?.Invoke();
         RequestQueryTextFocus(new QueryTextFocusRequest(true, true, QueryTextFocusMode.CaretAtEnd));
+        MainWindowVisibility = true;
         Log.Info(ClassName, "Show with injected query requested");
     }
 
@@ -513,9 +588,20 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
             _ignoredQueryText = null;
         }
 
+        if (ActiveView == ActiveView.Results)
+        {
+            UpdateLastQueryActionKeyword(value);
+        }
+
         // Notify ShowResultsArea when query text changes (it depends on QueryText)
         OnPropertyChanged(nameof(ShowResultsArea));
         _ = QueryAsync(_settings.SearchQueryResultsWithDelay);
+    }
+
+    private void UpdateLastQueryActionKeyword(string queryText)
+    {
+        var query = QueryBuilder.Build(queryText, queryText.Trim(), PluginManager.GetNonGlobalPlugins());
+        _lastQueryActionKeyword = query?.ActionKeyword ?? string.Empty;
     }
 
     private async Task QueryAsync(bool searchDelay = false)
@@ -570,6 +656,7 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
             }
 
             _currentQueryOriginalText = query.OriginalQuery;
+            _lastQueryActionKeyword = query.ActionKeyword;
 
             var plugins = PluginManager.ValidPluginsForQuery(query, dialogJump: false)
                 .Where(p => !p.Metadata.Disabled).ToList();
