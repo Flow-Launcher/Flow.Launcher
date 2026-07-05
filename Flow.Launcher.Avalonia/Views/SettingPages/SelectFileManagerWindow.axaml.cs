@@ -162,7 +162,7 @@ public partial class SelectFileManagerWindow : Window, INotifyPropertyChanged
 
     private async System.Threading.Tasks.Task<bool> ConfirmInvalidFileManagerAsync()
     {
-        if (IsFileManagerValid(CurrentExplorer.Path))
+        if (await IsFileManagerValidAsync(CurrentExplorer.Path))
         {
             return true;
         }
@@ -182,7 +182,7 @@ public partial class SelectFileManagerWindow : Window, INotifyPropertyChanged
         return result == ContentDialogResult.Primary;
     }
 
-    private static bool IsFileManagerValid(string path)
+    private static async System.Threading.Tasks.Task<bool> IsFileManagerValidAsync(string path)
     {
         if (string.Equals(path, "explorer", StringComparison.OrdinalIgnoreCase))
         {
@@ -194,30 +194,44 @@ public partial class SelectFileManagerWindow : Window, INotifyPropertyChanged
             return File.Exists(path);
         }
 
-        try
+        return await System.Threading.Tasks.Task.Run(() =>
         {
-            using var process = new Process
+            try
             {
-                StartInfo = new ProcessStartInfo
+                using var process = new Process
                 {
-                    FileName = "where",
-                    Arguments = path,
-                    RedirectStandardOutput = true,
-                    UseShellExecute = false,
-                    CreateNoWindow = true
+                    StartInfo = new ProcessStartInfo
+                    {
+                        FileName = "where",
+                        Arguments = path,
+                        RedirectStandardOutput = true,
+                        UseShellExecute = false,
+                        CreateNoWindow = true
+                    }
+                };
+
+                process.Start();
+                if (!process.WaitForExit(3000))
+                {
+                    try
+                    {
+                        process.Kill();
+                    }
+                    catch
+                    {
+                    }
+
+                    return false;
                 }
-            };
 
-            process.Start();
-            var output = process.StandardOutput.ReadToEnd();
-            process.WaitForExit();
-
-            return !string.IsNullOrWhiteSpace(output);
-        }
-        catch
-        {
-            return false;
-        }
+                var output = process.StandardOutput.ReadToEnd();
+                return !string.IsNullOrWhiteSpace(output);
+            }
+            catch
+            {
+                return false;
+            }
+        });
     }
 
     private void RaiseCurrentExplorerChanged()

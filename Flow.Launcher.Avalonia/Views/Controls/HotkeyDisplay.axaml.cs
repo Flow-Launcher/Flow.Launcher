@@ -56,18 +56,10 @@ public partial class HotkeyDisplay : UserControl
         var hotkeys = Keys.Split(' ', System.StringSplitOptions.RemoveEmptyEntries);
         foreach (var hotkey in hotkeys)
         {
-            try
+            var parts = hotkey.Split('+', System.StringSplitOptions.RemoveEmptyEntries | System.StringSplitOptions.TrimEntries);
+            foreach (var part in parts)
             {
-                var model = new HotkeyModel(hotkey);
-                foreach (var key in model.EnumerateDisplayKeys())
-                {
-                    KeysToDisplay.Add(key);
-                }
-            }
-            catch
-            {
-                // If parsing fails, just display the raw string
-                KeysToDisplay.Add(hotkey);
+                KeysToDisplay.Add(part);
             }
         }
     }

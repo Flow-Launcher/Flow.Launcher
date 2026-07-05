@@ -501,15 +501,40 @@ public partial class PluginItemViewModel : ObservableObject, IDisposable
         var result = await dialog.ShowAsync();
         if (result == ContentDialogResult.Primary)
         {
-            var newKeywords = textBox.Text?.Split(Query.ActionKeywordSeparator, StringSplitOptions.RemoveEmptyEntries).Select(k => k.Trim()).ToList();
-            if (newKeywords != null)
+            var oldKeywords = _plugin.Metadata.ActionKeywords;
+            var newKeywords = textBox.Text?
+                .Split(Query.ActionKeywordSeparator, StringSplitOptions.RemoveEmptyEntries)
+                .Select(k => k.Trim())
+                .Where(k => !string.IsNullOrEmpty(k))
+                .Distinct(StringComparer.Ordinal)
+                .ToList() ?? [];
+
+            if (newKeywords.Count == 0)
             {
-                // Validate?
-                // For now just update
-                _plugin.Metadata.ActionKeywords = newKeywords;
-                PluginSettingsObject.ActionKeywords = newKeywords;
-                OnPropertyChanged(nameof(ActionKeywordsText));
+                newKeywords.Add(Query.GlobalPluginWildcardSign);
             }
+
+            var addedKeywords = newKeywords.Except(oldKeywords, StringComparer.Ordinal).ToList();
+            var removedKeywords = oldKeywords.Except(newKeywords, StringComparer.Ordinal).ToList();
+
+            var api = App.API;
+            if (api == null)
+            {
+                return;
+            }
+
+            foreach (var keyword in removedKeywords)
+            {
+                api.RemoveActionKeyword(_plugin.Metadata.ID, keyword);
+            }
+
+            foreach (var keyword in addedKeywords)
+            {
+                api.AddActionKeyword(_plugin.Metadata.ID, keyword);
+            }
+
+            PluginSettingsObject.ActionKeywords = _plugin.Metadata.ActionKeywords.ToList();
+            OnPropertyChanged(nameof(ActionKeywordsText));
         }
     }
 }

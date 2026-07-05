@@ -54,6 +54,7 @@ public partial class SelectBrowserWindow : Window, INotifyPropertyChanged
             }
 
             _selectedCustomBrowserIndex = clampedValue;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedCustomBrowserIndex)));
             RaiseCurrentBrowserChanged();
         }
     }

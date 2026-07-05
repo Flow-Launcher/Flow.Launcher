@@ -12,7 +12,8 @@
         Width="760"
         Height="560"
         CanResize="False"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        Topmost="True">
 
     <Grid RowDefinitions="Auto,*,Auto" Margin="20">
         <StackPanel Spacing="8">

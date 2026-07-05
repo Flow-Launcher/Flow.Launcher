@@ -5,6 +5,7 @@ using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using FluentAvalonia.UI.Controls;
 using Flow.Launcher.Avalonia.Helper;
+using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Plugin;
 using System;
@@ -32,13 +33,21 @@ namespace Flow.Launcher.Avalonia.Views.Controls
         private bool _ctrlDown;
         private bool _shiftDown;
         private bool _winDown;
+        private Func<KeyEvent, int, SpecialKeyState, bool>? _previousKeyboardCallback;
 
         public HotkeyRecorderDialog(string currentHotkey)
         {
             InitializeComponent();
             
-            var model = new HotkeyModel(currentHotkey);
-            UpdateKeysDisplay(model);
+            try
+            {
+                var model = new HotkeyModel(currentHotkey);
+                UpdateKeysDisplay(model);
+            }
+            catch (Exception e)
+            {
+                Log.Exception(nameof(HotkeyRecorderDialog), $"Failed to parse current hotkey '{currentHotkey}'", e);
+            }
 
             Opened += HotkeyRecorderDialog_Opened;
             Closing += HotkeyRecorderDialog_Closing;
@@ -63,18 +72,21 @@ namespace Flow.Launcher.Avalonia.Views.Controls
                 _shiftDown = state.ShiftPressed;
                 _winDown = state.WinPressed;
 
+                _previousKeyboardCallback = InfrastructureGlobalHotkey.hookedKeyboardCallback;
                 InfrastructureGlobalHotkey.hookedKeyboardCallback = GlobalKeyHook;
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Hook Error: {ex.Message}");
+                Log.Exception(nameof(HotkeyRecorderDialog), "Failed to attach global keyboard hook", ex);
             }
         }
 
         private void HotkeyRecorderDialog_Closing(object? sender, EventArgs args)
         {
-            // Clear the callback but DON'T dispose the static hook
-            InfrastructureGlobalHotkey.hookedKeyboardCallback = null;
+            if (InfrastructureGlobalHotkey.hookedKeyboardCallback == GlobalKeyHook)
+            {
+                InfrastructureGlobalHotkey.hookedKeyboardCallback = _previousKeyboardCallback;
+            }
         }
 
         private void InitializeComponent()

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Avalonia.ViewModel;
+using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
@@ -59,14 +60,6 @@ internal static class HotKeyMapper
             return;
         }
 
-        var (mods, key) = GlobalHotkey.ParseHotkeyString(hotkeyString);
-
-        if (key == 0)
-        {
-            Log.Error(ClassName, $"Failed to parse hotkey: {hotkeyString}");
-            return;
-        }
-
         var previousHotkeyId = _toggleHotkeyId;
         var previousHotkeyString = _toggleHotkeyString;
 
@@ -76,17 +69,15 @@ internal static class HotKeyMapper
             _toggleHotkeyId = -1;
         }
 
-        var newHotkeyId = GlobalHotkey.Register(mods, key, OnToggleHotkey);
-        if (newHotkeyId < 0)
+        if (!TryRegisterHotkey(hotkeyString, OnToggleHotkey, out var newHotkeyId))
         {
             Log.Error(ClassName, $"Failed to register hotkey: {hotkeyString}");
 
             if (!string.IsNullOrWhiteSpace(previousHotkeyString))
             {
-                var (previousMods, previousKey) = GlobalHotkey.ParseHotkeyString(previousHotkeyString);
-                if (previousKey != 0)
+                if (TryRegisterHotkey(previousHotkeyString, OnToggleHotkey, out var restoredHotkeyId))
                 {
-                    _toggleHotkeyId = GlobalHotkey.Register(previousMods, previousKey, OnToggleHotkey);
+                    _toggleHotkeyId = restoredHotkeyId;
                     if (_toggleHotkeyId >= 0)
                     {
                         _toggleHotkeyString = previousHotkeyString;
@@ -144,6 +135,11 @@ internal static class HotKeyMapper
 
         if (!TryRegisterHotkey(hotkey.Hotkey, () =>
             {
+                if (ShouldIgnoreHotkeys())
+                {
+                    return;
+                }
+
                 _mainViewModel?.ShowWithInjectedQuery(hotkey.ActionKeyword);
             }, out var hotkeyId))
         {
@@ -170,8 +166,20 @@ internal static class HotKeyMapper
 
     private static void OnToggleHotkey()
     {
+        if (ShouldIgnoreHotkeys())
+        {
+            Log.Info(ClassName, "Toggle hotkey ignored");
+            return;
+        }
+
         Log.Info(ClassName, "Toggle hotkey triggered");
         _mainViewModel?.ToggleFlowLauncher();
+    }
+
+    private static bool ShouldIgnoreHotkeys()
+    {
+        return _settings?.IgnoreHotkeysOnFullscreen == true && Win32Helper.IsForegroundWindowFullscreen()
+            || App.API?.IsGameModeOn() == true;
     }
 
     /// <summary>

@@ -48,7 +48,7 @@
                     <WrapPanel Orientation="Horizontal">
                         <Button Content="{i18n:Localize website}" Command="{Binding OpenWebsiteCommand}" Margin="0,0,8,8" />
                         <Button Content="{i18n:Localize documentation}" Command="{Binding OpenDocumentationCommand}" Margin="0,0,8,8" />
-                        <Button Content="GitHub" Command="{Binding OpenGitHubCommand}" Margin="0,0,8,8" />
+                        <Button Content="{i18n:Localize github}" Command="{Binding OpenGitHubCommand}" Margin="0,0,8,8" />
                         <Button Content="{i18n:Localize crowdin}" Command="{Binding OpenCrowdinCommand}" Margin="0,0,8,8" />
                         <Button Content="{i18n:Localize icons}" Command="{Binding OpenIconsWebsiteCommand}" Margin="0,0,8,8" />
                     </WrapPanel>

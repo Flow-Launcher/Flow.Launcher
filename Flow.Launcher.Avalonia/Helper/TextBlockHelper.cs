@@ -38,21 +38,46 @@ public static class TextBlockHelper
             // We need to copy the inlines because they can only belong to one parent
             foreach (var inline in inlines)
             {
-                if (inline is Run run)
+                var clone = CloneInline(inline);
+                if (clone != null)
                 {
-                    var newRun = new Run(run.Text)
-                    {
-                        FontWeight = run.FontWeight,
-                        Foreground = run.Foreground
-                    };
-                    textBlock.Inlines?.Add(newRun);
-                }
-                else
-                {
-                    // For other inline types, add directly (may need enhancement)
-                    textBlock.Inlines?.Add(inline);
+                    textBlock.Inlines?.Add(clone);
                 }
             }
         }
+    }
+
+    private static Inline? CloneInline(Inline inline)
+    {
+        if (inline is Run run)
+        {
+            return new Run(run.Text)
+            {
+                FontWeight = run.FontWeight,
+                Foreground = run.Foreground
+            };
+        }
+
+        if (inline is Span span)
+        {
+            var clone = new Span();
+            foreach (var child in span.Inlines)
+            {
+                var childClone = CloneInline(child);
+                if (childClone != null)
+                {
+                    clone.Inlines.Add(childClone);
+                }
+            }
+
+            return clone;
+        }
+
+        if (inline is LineBreak)
+        {
+            return new LineBreak();
+        }
+
+        return null;
     }
 }

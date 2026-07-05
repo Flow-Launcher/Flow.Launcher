@@ -123,17 +123,16 @@ public class Internationalization
 
     private void AddPluginLanguageDirectories()
     {
-        // Add plugin language directories (similar to WPF version)
-        var pluginsDir = Path.Combine(Constant.ProgramDirectory, "Plugins");
-        if (!Directory.Exists(pluginsDir)) return;
-
-        foreach (var dir in Directory.GetDirectories(pluginsDir))
+        foreach (var pluginsDir in PluginManager.Directories.Where(Directory.Exists).Distinct(StringComparer.OrdinalIgnoreCase))
         {
-            var pluginLanguageDir = Path.Combine(dir, LanguagesFolder);
-            if (Directory.Exists(pluginLanguageDir))
+            foreach (var dir in Directory.GetDirectories(pluginsDir))
             {
-                _languageDirectories.Add(pluginLanguageDir);
-                Log.Debug(ClassName, $"Added plugin language directory: {pluginLanguageDir}");
+                var pluginLanguageDir = Path.Combine(dir, LanguagesFolder);
+                if (Directory.Exists(pluginLanguageDir) && !_languageDirectories.Contains(pluginLanguageDir, StringComparer.OrdinalIgnoreCase))
+                {
+                    _languageDirectories.Add(pluginLanguageDir);
+                    Log.Debug(ClassName, $"Added plugin language directory: {pluginLanguageDir}");
+                }
             }
         }
     }

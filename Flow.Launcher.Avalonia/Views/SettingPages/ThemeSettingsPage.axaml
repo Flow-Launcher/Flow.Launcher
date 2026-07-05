@@ -208,7 +208,7 @@
                 </ui:SettingsExpanderItem>
             </ui:SettingsExpander>
 
-            <ui:SettingsExpander Header="{i18n:Localize Clock} / {i18n:Localize Date}"
+            <ui:SettingsExpander Header="{Binding ClockAndDateText}"
                                 IconSource="Clock"
                                 IsExpanded="False">
                 <ui:SettingsExpanderItem Content="{i18n:Localize Clock}">

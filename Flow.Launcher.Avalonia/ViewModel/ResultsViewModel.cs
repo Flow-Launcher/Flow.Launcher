@@ -66,7 +66,11 @@ public partial class ResultsViewModel : ObservableObject, IDisposable
         // This is necessary because EditDiff reuses existing ResultViewModel instances
         // based on Title+SubTitle equality, but highlight indices are query-specific.
         // For example, "Chrome" highlighted for "chr" [0,1,2] vs "chrome" [0,1,2,3,4,5].
-        var existingItems = _sourceList.Items.ToDictionary(ResultViewModelComparer.GetIdentityKey);
+        var existingItems = new Dictionary<(string PluginId, string RecordKey, string Query, string Title, string SubTitle), ResultViewModel>();
+        foreach (var existingItem in _sourceList.Items)
+        {
+            existingItems.TryAdd(ResultViewModelComparer.GetIdentityKey(existingItem), existingItem);
+        }
         foreach (var newItem in resultsList)
         {
             if (existingItems.TryGetValue(ResultViewModelComparer.GetIdentityKey(newItem), out var existing))
@@ -95,6 +99,16 @@ public partial class ResultsViewModel : ObservableObject, IDisposable
             SelectedItem = null;
             SelectedIndex = -1;
         }
+    }
+
+    public void ReplaceResultsForPlugin(string pluginId, IEnumerable<ResultViewModel> pluginResults)
+    {
+        var mergedResults = _sourceList.Items
+            .Where(result => !string.Equals(ResultViewModelComparer.GetPluginId(result), pluginId, StringComparison.Ordinal))
+            .Concat(pluginResults)
+            .ToList();
+
+        ReplaceResults(mergedResults);
     }
 
     public void AddResult(ResultViewModel result)
@@ -176,6 +190,11 @@ public partial class ResultsViewModel : ObservableObject, IDisposable
         public int GetHashCode(ResultViewModel obj)
         {
             return GetIdentityKey(obj).GetHashCode();
+        }
+
+        public static string GetPluginId(ResultViewModel item)
+        {
+            return item.PluginResult?.PluginID ?? item.HistoryItem?.PluginID ?? string.Empty;
         }
 
         public static (string PluginId, string RecordKey, string Query, string Title, string SubTitle) GetIdentityKey(ResultViewModel item)
