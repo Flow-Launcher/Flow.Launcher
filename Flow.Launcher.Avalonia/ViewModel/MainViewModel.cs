@@ -515,10 +515,10 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
 
         // Notify ShowResultsArea when query text changes (it depends on QueryText)
         OnPropertyChanged(nameof(ShowResultsArea));
-        _ = QueryAsync();
+        _ = QueryAsync(_settings.SearchQueryResultsWithDelay);
     }
 
-    private async Task QueryAsync()
+    private async Task QueryAsync(bool searchDelay = false)
     {
         var previousQueryTokenSource = _queryTokenSource;
         previousQueryTokenSource?.Cancel();
@@ -587,7 +587,7 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
             // Query all plugins in parallel - results shown progressively as each completes
             var tasks = plugins.Select(async plugin =>
             {
-                var pluginResults = await QueryPluginAsync(plugin, query, token);
+                var pluginResults = await QueryPluginAsync(plugin, query, token, searchDelay);
                 if (token.IsCancellationRequested) return;
 
                 // Add results to the bag
@@ -682,7 +682,7 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
         return resultViewModels;
     }
 
-    private Task<List<ResultViewModel>> QueryPluginAsync(PluginPair plugin, Query query, CancellationToken token)
+    private Task<List<ResultViewModel>> QueryPluginAsync(PluginPair plugin, Query query, CancellationToken token, bool searchDelay)
     {
         // Run entirely on thread pool to avoid blocking UI if plugin has synchronous code
         return Task.Run(async () =>
@@ -691,8 +691,15 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
 
             try
             {
-                var delay = plugin.Metadata.SearchDelayTime ?? _settings.SearchDelayTime;
-                if (delay > 0) await Task.Delay(delay, token);
+                if (searchDelay && !query.IsHomeQuery)
+                {
+                    var delay = plugin.Metadata.SearchDelayTime ?? _settings.SearchDelayTime;
+                    if (delay > 0)
+                    {
+                        await Task.Delay(delay, token);
+                    }
+                }
+
                 if (token.IsCancellationRequested) return resultList;
 
                 var results = await PluginManager.QueryForPluginAsync(plugin, query, token);

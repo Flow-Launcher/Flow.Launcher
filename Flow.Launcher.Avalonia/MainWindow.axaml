@@ -55,7 +55,7 @@
                         <!-- Main Query Text Box -->
                         <TextBox Name="QueryTextBox"
                                   Classes="queryBox"
-                                  Text="{Binding QueryText, Mode=TwoWay}"
+                                  Text="{Binding QueryText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                   FontSize="{Binding Settings.QueryBoxFontSize}"
                                   FontFamily="{Binding Settings.QueryBoxFont}"
                                   MinHeight="{Binding Settings.WindowHeightSize}"
