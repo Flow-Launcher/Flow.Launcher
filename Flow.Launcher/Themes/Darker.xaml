@@ -86,6 +86,14 @@
         BasedOn="{StaticResource BaseScrollBarStyle}"
         TargetType="{x:Type ScrollBar}" />
     <Style
+        x:Key="HorizontalScrollBarStyle"
+        BasedOn="{StaticResource BaseHorizontalScrollBarStyle}"
+        TargetType="{x:Type ScrollBar}" />
+    <Style
+        x:Key="HorizontalThumbStyle"
+        BasedOn="{StaticResource BaseHorizontalThumbStyle}"
+        TargetType="{x:Type Thumb}" />
+    <Style
         x:Key="SeparatorStyle"
         BasedOn="{StaticResource BaseSeparatorStyle}"
         TargetType="{x:Type Rectangle}">
