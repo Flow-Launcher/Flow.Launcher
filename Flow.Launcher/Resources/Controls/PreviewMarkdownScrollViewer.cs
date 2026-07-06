@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Documents;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
+using Flow.Launcher.Infrastructure.Logger;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Highlighting;
@@ -89,8 +91,54 @@ public class PreviewMarkdownScrollViewer : MarkdownScrollViewer
     protected override void OnInitialized(EventArgs e)
     {
         base.OnInitialized(e);
+        CommandBindings.Add(new CommandBinding(NavigationCommands.GoToPage, OpenHyperlink));
         UpdateDocumentPageWidth(ActualWidth);
         ScheduleCompatibilityFixes();
+    }
+
+    private static void OpenHyperlink(object sender, ExecutedRoutedEventArgs e)
+    {
+        string rawUrl = null;
+
+        var uri = e.Parameter as Uri;
+        if (uri is null && e.Parameter is string s)
+        {
+            rawUrl = s;
+
+            try { uri = new Uri(s); }
+            catch (UriFormatException) { }
+        }
+
+        if (uri is null)
+        {
+            if (rawUrl is not null)
+            {
+                Log.Warn(nameof(PreviewMarkdownScrollViewer),
+                    $"Unable to parse hyperlink URL: \"{rawUrl}\"",
+                    nameof(OpenHyperlink));
+            }
+
+            return;
+        }
+
+        if (uri.IsAbsoluteUri && IsSafeScheme(uri.Scheme))
+        {
+            App.API.OpenWebUrl(uri);
+            App.API.HideMainWindow();
+            e.Handled = true;
+        }
+        else
+        {
+            Log.Warn(nameof(PreviewMarkdownScrollViewer),
+                $"Skipping hyperlink with scheme \"{uri.Scheme}\": {uri}",
+                nameof(OpenHyperlink));
+        }
+    }
+
+    private static bool IsSafeScheme(string scheme)
+    {
+        var lowered = scheme?.ToLowerInvariant() ?? "";
+        return lowered is not "javascript" and not "vbscript";
     }
 
     private void ScheduleCompatibilityFixes()
