@@ -391,7 +391,7 @@ namespace Flow.Launcher.Plugin
         public record PreviewInfo
         {
             /// <summary>
-            /// Full image used for preview panel
+            /// Shown in the preview panel. Falls back to the result icon when not set. 
             /// </summary>
             public string PreviewImagePath { get; set; } = null;
 
@@ -401,7 +401,8 @@ namespace Flow.Launcher.Plugin
             public bool IsMedia { get; set; } = false;
 
             /// <summary>
-            /// Result description text that is shown at the bottom of the preview panel.
+            /// Text shown in the preview panel. How it is displayed depends on
+            /// <see cref="ContentType"/>.
             /// </summary>
             /// <remarks>
             /// When a value is not set, the <see cref="SubTitle"/> will be used.
@@ -420,7 +421,7 @@ namespace Flow.Launcher.Plugin
             public string FilePath { get; set; } = null;
 
             /// <summary>
-            /// Determines how <see cref="Description"/> should be rendered in Flow Launcher's preview panel.
+            /// Controls the preview rendering mode. See <see cref="PreviewContentType"/>.
             /// </summary>
             [JsonConverter(typeof(JsonStringEnumConverter<PreviewContentType>))]
             public PreviewContentType ContentType { get; set; } = PreviewContentType.ImageWithText;
@@ -446,13 +447,14 @@ namespace Flow.Launcher.Plugin
     public enum PreviewContentType
     {
         /// <summary>
-        /// Show the default preview layout: the preview image with the plain-text description below it.
+        /// Shows the preview image above the result title, with the description
+        /// rendered as plain text below a separator.
         /// </summary>
         [JsonStringEnumMemberName("imageWithText")]
         ImageWithText,
 
         /// <summary>
-        /// Render preview descriptions as markdown.
+        /// Shows a scrollable panel with the description rendered as formatted markdown.
         /// </summary>
         [JsonStringEnumMemberName("markdown")]
         Markdown,
