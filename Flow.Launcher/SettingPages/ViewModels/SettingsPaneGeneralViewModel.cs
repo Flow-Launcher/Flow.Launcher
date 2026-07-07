@@ -105,8 +105,6 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         get => Settings.EnableDeepLinkProtocol;
         set
         {
-            Settings.EnableDeepLinkProtocol = value;
-
             try
             {
                 if (value)
@@ -117,11 +115,14 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
                 {
                     DeepLinkRegistration.UnregisterUriScheme();
                 }
+
+                Settings.EnableDeepLinkProtocol = value;
             }
             catch (Exception e)
             {
                 App.API.LogError(ClassName, $"Failed to update deep link protocol registration: {e}");
                 App.API.ShowMsgError(Localize.enableDeepLinkProtocolFailed(), e.Message);
+                OnPropertyChanged();
             }
         }
     }

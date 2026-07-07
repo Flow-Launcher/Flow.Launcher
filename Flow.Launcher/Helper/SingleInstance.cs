@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using Flow.Launcher.Infrastructure.Logger;
 
 // http://blogs.microsoft.co.il/arik/2010/05/28/wpf-single-instance-application/
 // modified to allow single instace restart
@@ -113,22 +114,23 @@ namespace Flow.Launcher.Helper
                 string payload = null;
                 try
                 {
+                    // Guard against a client that connects but never writes or closes; cancelling the
+                    // read (rather than abandoning it) avoids it faulting later against the disposed reader
+                    using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(2));
                     using var reader = new StreamReader(pipeServer, Encoding.UTF8, false, 1024, leaveOpen: true);
-                    var readTask = reader.ReadLineAsync();
-                    // Guard against a client that connects but never writes or closes
-                    if (await Task.WhenAny(readTask, Task.Delay(2000)) == readTask)
-                    {
-                        payload = await readTask; // null when the client wrote nothing (plain activation)
-                    }
+                    payload = await reader.ReadLineAsync(cts.Token); // null when the client wrote nothing (plain activation)
                 }
                 catch
                 {
-                    // Treat any pipe read failure as a plain activation; never let it kill the server loop
+                    // Treat any pipe read failure/timeout as a plain activation; never let it kill the server loop
                 }
 
                 // Do an asynchronous call to ActivateFirstInstance function so a deep-link handler
                 // showing modal prompts cannot block this pipe accept loop and drop later activations
-                Application.Current?.Dispatcher.InvokeAsync(() => ActivateFirstInstance(payload));
+                var activation = Application.Current?.Dispatcher.InvokeAsync(() => ActivateFirstInstance(payload));
+                activation?.Task.ContinueWith(
+                    t => Log.Exception("SingleInstance", "Failed to activate first instance from second app", t.Exception),
+                    TaskContinuationOptions.OnlyOnFaulted);
 
                 // Disconect client
                 pipeServer.Disconnect();
@@ -147,8 +149,9 @@ namespace Flow.Launcher.Helper
             // Create a client pipe connected to server
             using NamedPipeClientStream pipeClient = new NamedPipeClientStream(".", channelName, PipeDirection.Out);
 
-            // Connect to the available pipe
-            await pipeClient.ConnectAsync(1000);
+            // Connect to the available pipe. Longer than the server's 2s read timeout so a stalled
+            // prior client can't starve this connection attempt.
+            await pipeClient.ConnectAsync(3000);
 
             // Send the deep link payload to the first instance if there is one
             if (!string.IsNullOrEmpty(args))

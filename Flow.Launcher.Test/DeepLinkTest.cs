@@ -17,7 +17,7 @@ namespace Flow.Launcher.Test
         [Test]
         public void FromCommandLineArgs_SingleDashQueryFlag_NormalizesToQueryUri()
         {
-            var result = DeepLink.FromCommandLineArgs(new[] { "-query", "foo" }, true);
+            var result = DeepLink.FromCommandLineArgs(new[] { "-q", "foo" }, true);
             Assert.That(result, Is.EqualTo("flow-launcher://query?q=foo"));
         }
 
@@ -57,6 +57,13 @@ namespace Flow.Launcher.Test
             Assert.That(DeepLink.FromCommandLineArgs(Array.Empty<string>(), true), Is.Null);
             Assert.That(DeepLink.FromCommandLineArgs(new[] { "--unrelated" }, true), Is.Null);
             Assert.That(DeepLink.FromCommandLineArgs(new[] { "--query" }, true), Is.Null); // flag without value
+        }
+
+        [Test]
+        public void FromCommandLineArgs_QueryFlagWithEmptyValue_ReturnsNull()
+        {
+            Assert.That(DeepLink.FromCommandLineArgs(new[] { "--query", "" }, true), Is.Null);
+            Assert.That(DeepLink.FromCommandLineArgs(new[] { "-q", "" }, true), Is.Null);
         }
 
         [TestCase("flow-launcher://query?q=hello%20world", "query", "q", "hello world")]

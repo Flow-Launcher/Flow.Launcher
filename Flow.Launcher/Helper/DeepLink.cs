@@ -32,14 +32,19 @@ public static class DeepLink
     /// <summary>
     /// Normalizes command line arguments to a single deep link URI string, or null for a normal launch.
     /// Raw flow-launcher:// arguments are dropped when <paramref name="allowSchemeArgs"/> is false
-    /// (URI scheme disabled in settings); --query and .flowplugin paths are always honored.
+    /// (URI scheme disabled in settings); --query/-q and .flowplugin paths are always honored.
     /// </summary>
     public static string FromCommandLineArgs(string[] args, bool allowSchemeArgs)
     {
         for (var i = 0; i < args.Length; i++)
         {
-            if ((args[i] == "--query" || args[i] == "-query") && i + 1 < args.Length)
+            if (args[i] == "--query" || args[i] == "-q")
             {
+                if (i + 1 >= args.Length || string.IsNullOrEmpty(args[i + 1]))
+                {
+                    return null;
+                }
+
                 return $"{SchemePrefix}query?q={Uri.EscapeDataString(args[i + 1])}";
             }
 
@@ -49,7 +54,9 @@ public static class DeepLink
                 {
                     // This runs in Main before App/App.API exist, so we use the static infrastructure
                     // logger directly (same pattern as ErrorReporting.cs) instead of App.API.LogWarn.
-                    Log.Warn(ClassName, $"Dropped raw deep link arg <{args[i]}> because the URI scheme protocol is disabled in settings.");
+                    // Only the fact of the drop is logged at Warn; the full arg may carry user data.
+                    Log.Warn(ClassName, "Dropped a raw deep link arg because the URI scheme protocol is disabled in settings.");
+                    Log.Debug(ClassName, $"Dropped raw deep link arg <{args[i]}>.");
                     return null;
                 }
 
@@ -116,7 +123,9 @@ public static class DeepLink
         }
         else
         {
-            App.API.LogWarn(ClassName, $"Unrecognized deep link verb <{verb}> in <{payload}>");
+            // Only the verb is logged at Warn; the full payload may carry user query text, paths, or URLs
+            App.API.LogWarn(ClassName, $"Unrecognized deep link verb <{verb}>");
+            App.API.LogDebug(ClassName, $"Unrecognized deep link payload <{payload}>");
             App.API.ShowMsgError(Localize.deepLinkUnrecognizedTitle(), Localize.deepLinkUnrecognizedSubtitle(payload));
         }
     }

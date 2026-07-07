@@ -159,9 +159,15 @@ public static class PluginInstaller
         // Derive the filename from the URI path so query strings (e.g. plugin.zip?token=x) don't end up
         // as part of a temp filename, which is invalid on Windows. Fall back to the naive split if the
         // URL somehow fails to parse as a URI (callers already validate https, this is defense in depth).
+        // uri.LocalPath is percent-decoded, so it can still contain characters that are invalid in
+        // Windows filenames (e.g. a literal "?" from an encoded "%3F"); strip those out.
         var filename = Uri.TryCreate(url, UriKind.Absolute, out var uri)
             ? Path.GetFileName(uri.LocalPath)
             : url.Split('/').Last();
+        foreach (var c in Path.GetInvalidFileNameChars())
+        {
+            filename = filename.Replace(c.ToString(), string.Empty);
+        }
         var name = filename.EndsWith(".zip", StringComparison.OrdinalIgnoreCase)
             ? filename[..^".zip".Length]
             : filename;
