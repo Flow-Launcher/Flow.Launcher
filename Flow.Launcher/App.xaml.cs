@@ -44,7 +44,7 @@ namespace Flow.Launcher
 
         private static bool _disposed;
         private static Settings _settings;
-        private static string _pendingQuery;
+        private static string _pendingDeepLink;
         private static MainWindow _mainWindow;
         private readonly MainViewModel _mainVM;
         private readonly Internationalization _internationalization;
@@ -152,26 +152,14 @@ namespace Flow.Launcher
             }
 
             // Start the application as a single instance
-            var query = ParseQueryArg(args);
-            if (SingleInstance<App>.InitializeAsFirstInstance(query))
+            var deepLink = DeepLink.FromCommandLineArgs(args, _settings.EnableDeepLinkProtocol);
+            if (SingleInstance<App>.InitializeAsFirstInstance(deepLink))
             {
-                _pendingQuery = query;
+                _pendingDeepLink = deepLink;
                 using var application = new App();
                 application.InitializeComponent();
                 application.Run();
             }
-        }
-
-        private static string ParseQueryArg(string[] args)
-        {
-            for (var i = 0; i < args.Length; i++)
-            {
-                if ((args[i] == "--query" || args[i] == "-query") && i + 1 < args.Length)
-                {
-                    return args[i + 1];
-                }
-            }
-            return null;
         }
 
         #endregion
@@ -258,6 +246,8 @@ namespace Flow.Launcher
 
                 RegisterExitEvents();
 
+                DeepLinkRegistration.EnsureRegistered(_settings.EnableDeepLinkProtocol);
+
                 AutoStartup();
                 AutoUpdates();
 
@@ -277,12 +267,11 @@ namespace Flow.Launcher
                     // Refresh the history results after plugins are initialized so that we can parse the absolute icon paths
                     _mainVM.RefreshLastOpenedHistoryResults();
 
-                    // Apply the query passed via the --query command line argument now that plugins can answer it
-                    if (!string.IsNullOrEmpty(_pendingQuery))
+                    // Dispatch the deep link passed on the command line now that plugins can answer it
+                    if (!string.IsNullOrEmpty(_pendingDeepLink))
                     {
-                        API.ChangeQuery(_pendingQuery, true);
-                        API.ShowMainWindow();
-                        _pendingQuery = null;
+                        DeepLink.Dispatch(_pendingDeepLink);
+                        _pendingDeepLink = null;
                     }
 
                     // Refresh home page after plugins are initialized because users may open main window during plugin initialization
@@ -488,15 +477,15 @@ namespace Flow.Launcher
 
         #region ISingleInstanceApp
 
-        public void OnSecondAppStarted(string query)
+        public void OnSecondAppStarted(string payload)
         {
-            API.ShowMainWindow();
-            if (!string.IsNullOrEmpty(query))
+            if (string.IsNullOrEmpty(payload))
             {
-                // Make sure to go back to the query results page first since it can cause issues if current page is context menu
-                API.BackToQueryResults();
-                API.ChangeQuery(query, true);
+                API.ShowMainWindow();
+                return;
             }
+
+            DeepLink.Dispatch(payload);
         }
 
         #endregion
