@@ -1,7 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
+using Flow.Launcher.Core.Plugin;
 
 namespace Flow.Launcher.Helper;
 
@@ -14,6 +18,15 @@ public static class DeepLink
     public const string Scheme = "flow-launcher";
     public const string SchemePrefix = Scheme + "://";
     public const string PluginFileExtension = ".flowplugin";
+
+    private static readonly string ClassName = nameof(DeepLink);
+
+    private static readonly Dictionary<string, Action<NameValueCollection>> Handlers = new()
+    {
+        ["query"] = HandleQuery,
+        ["settings"] = HandleSettings,
+        ["plugin/install"] = HandlePluginInstall,
+    };
 
     /// <summary>
     /// Normalizes command line arguments to a single deep link URI string, or null for a normal launch.
@@ -71,5 +84,103 @@ public static class DeepLink
 
         parameters = HttpUtility.ParseQueryString(uri.Query);
         return true;
+    }
+
+    /// <summary>
+    /// Routes a deep link payload to its verb handler. Payloads that are not
+    /// flow-launcher:// URIs are treated as plain query text for backward compatibility
+    /// with older second instances that sent the raw --query value.
+    /// </summary>
+    public static void Dispatch(string payload)
+    {
+        if (string.IsNullOrEmpty(payload)) return;
+
+        if (!TryParse(payload, out var verb, out var parameters))
+        {
+            ChangeQueryAndShow(payload);
+            return;
+        }
+
+        if (Handlers.TryGetValue(verb, out var handler))
+        {
+            handler(parameters);
+        }
+        else
+        {
+            App.API.LogWarn(ClassName, $"Unrecognized deep link verb <{verb}> in <{payload}>");
+            App.API.ShowMsgError(Localize.deepLinkUnrecognizedTitle(), Localize.deepLinkUnrecognizedSubtitle(payload));
+        }
+    }
+
+    private static void HandleQuery(NameValueCollection parameters)
+    {
+        ChangeQueryAndShow(parameters["q"]);
+    }
+
+    private static void ChangeQueryAndShow(string query)
+    {
+        App.API.ShowMainWindow();
+        if (string.IsNullOrEmpty(query)) return;
+
+        // Make sure to go back to the query results page first since it can cause issues if current page is context menu
+        App.API.BackToQueryResults();
+        App.API.ChangeQuery(query, true);
+    }
+
+    private static void HandleSettings(NameValueCollection parameters)
+    {
+        App.API.OpenSettingDialog();
+    }
+
+    private static void HandlePluginInstall(NameValueCollection parameters)
+    {
+        var path = parameters["path"];
+        var id = parameters["id"];
+        var url = parameters["url"];
+
+        if (new[] { path, id, url }.Count(x => !string.IsNullOrEmpty(x)) != 1)
+        {
+            App.API.ShowMsgError(Localize.deepLinkInstallInvalidTitle(), Localize.deepLinkInstallInvalidSubtitle());
+            return;
+        }
+
+        if (!string.IsNullOrEmpty(path))
+        {
+            if (!File.Exists(path))
+            {
+                App.API.ShowMsgError(Localize.deepLinkInstallInvalidTitle(), Localize.deepLinkInstallFileNotFound(path));
+                return;
+            }
+
+            _ = PluginInstaller.InstallPluginAndCheckRestartAsync(path);
+        }
+        else if (!string.IsNullOrEmpty(id))
+        {
+            _ = InstallByIdAsync(id);
+        }
+        else
+        {
+            if (!Uri.TryCreate(url, UriKind.Absolute, out var downloadUri) || downloadUri.Scheme != Uri.UriSchemeHttps)
+            {
+                App.API.ShowMsgError(Localize.deepLinkInstallInvalidTitle(), Localize.deepLinkInstallHttpsOnly());
+                return;
+            }
+
+            _ = PluginInstaller.InstallPluginFromWebAndCheckRestartAsync(url);
+        }
+    }
+
+    private static async Task InstallByIdAsync(string id)
+    {
+        await App.API.UpdatePluginManifestAsync();
+        var plugin = App.API.GetPluginManifest()
+            .FirstOrDefault(x => string.Equals(x.ID, id, StringComparison.OrdinalIgnoreCase));
+        if (plugin == null)
+        {
+            App.API.ShowMsgError(Localize.deepLinkInstallInvalidTitle(), Localize.deepLinkInstallPluginNotFound(id));
+            return;
+        }
+
+        await PluginInstaller.InstallPluginAndCheckRestartAsync(plugin);
     }
 }
