@@ -12,7 +12,7 @@ namespace Flow.Launcher.Helper
 {
     public interface ISingleInstanceApp
     {
-        void OnSecondAppStarted(string query);
+        void OnSecondAppStarted(string payload);
     }
 
     /// <summary>
@@ -73,7 +73,7 @@ namespace Flow.Launcher.Helper
             {
                 try
                 {
-                    // Block until the signal and query payload are delivered,
+                    // Block until the signal and deep link payload are delivered,
                     // because the second instance exits right after this returns
                     SignalFirstInstanceAsync(channelName, args).Wait(TimeSpan.FromSeconds(3));
                 }
@@ -110,7 +110,7 @@ namespace Flow.Launcher.Helper
                 // Wait for connection to the pipe
                 await pipeServer.WaitForConnectionAsync();
 
-                string query = null;
+                string payload = null;
                 try
                 {
                     using var reader = new StreamReader(pipeServer, Encoding.UTF8, false, 1024, leaveOpen: true);
@@ -118,7 +118,7 @@ namespace Flow.Launcher.Helper
                     // Guard against a client that connects but never writes or closes
                     if (await Task.WhenAny(readTask, Task.Delay(2000)) == readTask)
                     {
-                        query = await readTask; // null when the client wrote nothing (plain activation)
+                        payload = await readTask; // null when the client wrote nothing (plain activation)
                     }
                 }
                 catch
@@ -126,8 +126,9 @@ namespace Flow.Launcher.Helper
                     // Treat any pipe read failure as a plain activation; never let it kill the server loop
                 }
 
-                // Do an asynchronous call to ActivateFirstInstance function
-                Application.Current?.Dispatcher.Invoke(() => ActivateFirstInstance(query));
+                // Do an asynchronous call to ActivateFirstInstance function so a deep-link handler
+                // showing modal prompts cannot block this pipe accept loop and drop later activations
+                Application.Current?.Dispatcher.InvokeAsync(() => ActivateFirstInstance(payload));
 
                 // Disconect client
                 pipeServer.Disconnect();
@@ -139,7 +140,7 @@ namespace Flow.Launcher.Helper
         /// </summary>
         /// <param name="channelName">Application's IPC channel name.</param>
         /// <param name="args">
-        /// Command line arguments for the second instance, passed to the first instance to take appropriate action.
+        /// The deep link payload from the second instance, passed to the first instance to take appropriate action.
         /// </param>
         private static async Task SignalFirstInstanceAsync(string channelName, string args)
         {
@@ -149,7 +150,7 @@ namespace Flow.Launcher.Helper
             // Connect to the available pipe
             await pipeClient.ConnectAsync(1000);
 
-            // Send the query to the first instance if there is one
+            // Send the deep link payload to the first instance if there is one
             if (!string.IsNullOrEmpty(args))
             {
                 using var writer = new StreamWriter(pipeClient, Encoding.UTF8) { AutoFlush = true };
@@ -158,18 +159,18 @@ namespace Flow.Launcher.Helper
         }
 
         /// <summary>
-        /// Activates the first instance of the application with arguments from a second instance.
+        /// Activates the first instance of the application with the deep link payload from a second instance.
         /// </summary>
-        /// <param name="args">List of arguments to supply the first instance of the application.</param>
-        private static void ActivateFirstInstance(string args)
+        /// <param name="payload">The deep link payload to supply the first instance of the application.</param>
+        private static void ActivateFirstInstance(string payload)
         {
-            // Set main window state and process command line args
+            // Set main window state and process the deep link payload
             if (Application.Current == null)
             {
                 return;
             }
 
-            ((TApplication)Application.Current).OnSecondAppStarted(args);
+            ((TApplication)Application.Current).OnSecondAppStarted(payload);
         }
 
         #endregion

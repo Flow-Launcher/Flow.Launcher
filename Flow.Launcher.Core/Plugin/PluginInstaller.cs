@@ -156,7 +156,12 @@ public static class PluginInstaller
     /// <returns>A Task representing the asynchronous install operation.</returns>
     public static async Task InstallPluginFromWebAndCheckRestartAsync(string url)
     {
-        var filename = url.Split('/').Last();
+        // Derive the filename from the URI path so query strings (e.g. plugin.zip?token=x) don't end up
+        // as part of a temp filename, which is invalid on Windows. Fall back to the naive split if the
+        // URL somehow fails to parse as a URI (callers already validate https, this is defense in depth).
+        var filename = Uri.TryCreate(url, UriKind.Absolute, out var uri)
+            ? Path.GetFileName(uri.LocalPath)
+            : url.Split('/').Last();
         var name = filename.EndsWith(".zip", StringComparison.OrdinalIgnoreCase)
             ? filename[..^".zip".Length]
             : filename;

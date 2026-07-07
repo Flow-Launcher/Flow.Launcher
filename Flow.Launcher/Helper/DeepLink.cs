@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using Flow.Launcher.Core.Plugin;
+using Flow.Launcher.Infrastructure.Logger;
 
 namespace Flow.Launcher.Helper;
 
@@ -44,7 +45,15 @@ public static class DeepLink
 
             if (args[i].StartsWith(SchemePrefix, StringComparison.OrdinalIgnoreCase))
             {
-                return allowSchemeArgs ? args[i] : null;
+                if (!allowSchemeArgs)
+                {
+                    // This runs in Main before App/App.API exist, so we use the static infrastructure
+                    // logger directly (same pattern as ErrorReporting.cs) instead of App.API.LogWarn.
+                    Log.Warn(ClassName, $"Dropped raw deep link arg <{args[i]}> because the URI scheme protocol is disabled in settings.");
+                    return null;
+                }
+
+                return args[i];
             }
 
             if (args[i].EndsWith(PluginFileExtension, StringComparison.OrdinalIgnoreCase))
@@ -172,7 +181,13 @@ public static class DeepLink
 
     private static async Task InstallByIdAsync(string id)
     {
-        await App.API.UpdatePluginManifestAsync();
+        var manifestUpdated = await App.API.UpdatePluginManifestAsync();
+        if (!manifestUpdated && App.API.GetPluginManifest().Count == 0)
+        {
+            App.API.ShowMsgError(Localize.deepLinkInstallInvalidTitle(), Localize.deepLinkManifestUpdateFailed());
+            return;
+        }
+
         var plugin = App.API.GetPluginManifest()
             .FirstOrDefault(x => string.Equals(x.ID, id, StringComparison.OrdinalIgnoreCase));
         if (plugin == null)
