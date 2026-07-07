@@ -75,8 +75,10 @@ namespace Flow.Launcher.Helper
                 try
                 {
                     // Block until the signal and deep link payload are delivered,
-                    // because the second instance exits right after this returns
-                    SignalFirstInstanceAsync(channelName, args).Wait(TimeSpan.FromSeconds(3));
+                    // because the second instance exits right after this returns.
+                    // Budget beyond the 3s connect timeout below so a slow connect still
+                    // leaves room for the write to complete.
+                    SignalFirstInstanceAsync(channelName, args).Wait(TimeSpan.FromSeconds(5));
                 }
                 catch
                 {
@@ -120,9 +122,14 @@ namespace Flow.Launcher.Helper
                     using var reader = new StreamReader(pipeServer, Encoding.UTF8, false, 1024, leaveOpen: true);
                     payload = await reader.ReadLineAsync(cts.Token); // null when the client wrote nothing (plain activation)
                 }
-                catch
+                catch (OperationCanceledException)
                 {
-                    // Treat any pipe read failure/timeout as a plain activation; never let it kill the server loop
+                    // Client connected but never wrote/closed before the timeout; treat as a plain activation
+                }
+                catch (Exception e)
+                {
+                    // Never let a genuine pipe read failure kill the server loop, but still surface it
+                    Log.Exception("SingleInstance", "Failed to read deep link payload from second instance", e);
                 }
 
                 // Do an asynchronous call to ActivateFirstInstance function so a deep-link handler
