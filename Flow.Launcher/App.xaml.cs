@@ -44,6 +44,7 @@ namespace Flow.Launcher
 
         private static bool _disposed;
         private static Settings _settings;
+        private static string _pendingQuery;
         private static MainWindow _mainWindow;
         private readonly MainViewModel _mainVM;
         private readonly Internationalization _internationalization;
@@ -126,7 +127,7 @@ namespace Flow.Launcher
         #region Main
 
         [STAThread]
-        public static void Main()
+        public static void Main(string[] args)
         {
             // Initialize settings so that we can get language code
             try
@@ -151,12 +152,26 @@ namespace Flow.Launcher
             }
 
             // Start the application as a single instance
-            if (SingleInstance<App>.InitializeAsFirstInstance())
+            var query = ParseQueryArg(args);
+            if (SingleInstance<App>.InitializeAsFirstInstance(query))
             {
+                _pendingQuery = query;
                 using var application = new App();
                 application.InitializeComponent();
                 application.Run();
             }
+        }
+
+        private static string ParseQueryArg(string[] args)
+        {
+            for (var i = 0; i < args.Length; i++)
+            {
+                if ((args[i] == "--query" || args[i] == "-query") && i + 1 < args.Length)
+                {
+                    return args[i + 1];
+                }
+            }
+            return null;
         }
 
         #endregion
@@ -261,6 +276,14 @@ namespace Flow.Launcher
 
                     // Refresh the history results after plugins are initialized so that we can parse the absolute icon paths
                     _mainVM.RefreshLastOpenedHistoryResults();
+
+                    // Apply the query passed via the --query command line argument now that plugins can answer it
+                    if (!string.IsNullOrEmpty(_pendingQuery))
+                    {
+                        API.ChangeQuery(_pendingQuery, true);
+                        API.ShowMainWindow();
+                        _pendingQuery = null;
+                    }
 
                     // Refresh home page after plugins are initialized because users may open main window during plugin initialization
                     // And home page is created without full plugin list
@@ -465,9 +488,15 @@ namespace Flow.Launcher
 
         #region ISingleInstanceApp
 
-        public void OnSecondAppStarted()
+        public void OnSecondAppStarted(string query)
         {
             API.ShowMainWindow();
+            if (!string.IsNullOrEmpty(query))
+            {
+                // Make sure to go back to the query results page first since it can cause issues if current page is context menu
+                API.BackToQueryResults();
+                API.ChangeQuery(query, true);
+            }
         }
 
         #endregion

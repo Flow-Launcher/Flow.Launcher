@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using System.IO.Pipes;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -10,7 +12,7 @@ namespace Flow.Launcher.Helper
 {
     public interface ISingleInstanceApp
     {
-        void OnSecondAppStarted();
+        void OnSecondAppStarted(string query);
     }
 
     /// <summary>
@@ -53,7 +55,7 @@ namespace Flow.Launcher.Helper
         /// If not, activates the first instance.
         /// </summary>
         /// <returns>True if this is the first instance of the application.</returns>
-        public static bool InitializeAsFirstInstance()
+        public static bool InitializeAsFirstInstance(string args = null)
         {
             // Build unique application Id and the IPC channel name.
             string applicationIdentifier = InstanceMutexName + Environment.UserName;
@@ -69,7 +71,16 @@ namespace Flow.Launcher.Helper
             }
             else
             {
-                _ = SignalFirstInstanceAsync(channelName);
+                try
+                {
+                    // Block until the signal and query payload are delivered,
+                    // because the second instance exits right after this returns
+                    SignalFirstInstanceAsync(channelName, args).Wait(TimeSpan.FromSeconds(3));
+                }
+                catch
+                {
+                    // If the first instance cannot be reached there is nothing more to do
+                }
                 return false;
             }
         }
@@ -99,8 +110,24 @@ namespace Flow.Launcher.Helper
                 // Wait for connection to the pipe
                 await pipeServer.WaitForConnectionAsync();
 
+                string query = null;
+                try
+                {
+                    using var reader = new StreamReader(pipeServer, Encoding.UTF8, false, 1024, leaveOpen: true);
+                    var readTask = reader.ReadLineAsync();
+                    // Guard against a client that connects but never writes or closes
+                    if (await Task.WhenAny(readTask, Task.Delay(2000)) == readTask)
+                    {
+                        query = await readTask; // null when the client wrote nothing (plain activation)
+                    }
+                }
+                catch
+                {
+                    // Treat any pipe read failure as a plain activation; never let it kill the server loop
+                }
+
                 // Do an asynchronous call to ActivateFirstInstance function
-                Application.Current?.Dispatcher.Invoke(ActivateFirstInstance);
+                Application.Current?.Dispatcher.Invoke(() => ActivateFirstInstance(query));
 
                 // Disconect client
                 pipeServer.Disconnect();
@@ -114,20 +141,27 @@ namespace Flow.Launcher.Helper
         /// <param name="args">
         /// Command line arguments for the second instance, passed to the first instance to take appropriate action.
         /// </param>
-        private static async Task SignalFirstInstanceAsync(string channelName)
+        private static async Task SignalFirstInstanceAsync(string channelName, string args)
         {
             // Create a client pipe connected to server
             using NamedPipeClientStream pipeClient = new NamedPipeClientStream(".", channelName, PipeDirection.Out);
 
             // Connect to the available pipe
-            await pipeClient.ConnectAsync(0);
+            await pipeClient.ConnectAsync(1000);
+
+            // Send the query to the first instance if there is one
+            if (!string.IsNullOrEmpty(args))
+            {
+                using var writer = new StreamWriter(pipeClient, Encoding.UTF8) { AutoFlush = true };
+                await writer.WriteLineAsync(args);
+            }
         }
 
         /// <summary>
         /// Activates the first instance of the application with arguments from a second instance.
         /// </summary>
         /// <param name="args">List of arguments to supply the first instance of the application.</param>
-        private static void ActivateFirstInstance()
+        private static void ActivateFirstInstance(string args)
         {
             // Set main window state and process command line args
             if (Application.Current == null)
@@ -135,7 +169,7 @@ namespace Flow.Launcher.Helper
                 return;
             }
 
-            ((TApplication)Application.Current).OnSecondAppStarted();
+            ((TApplication)Application.Current).OnSecondAppStarted(args);
         }
 
         #endregion
