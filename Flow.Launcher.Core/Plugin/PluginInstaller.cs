@@ -149,6 +149,40 @@ public static class PluginInstaller
     }
 
     /// <summary>
+    /// Installs a plugin from a direct zip download URL and restarts the application if required by settings.
+    /// Applies the unknown source warning and prompts user for confirmation before installing.
+    /// </summary>
+    /// <param name="url">The https URL of the plugin zip file.</param>
+    /// <returns>A Task representing the asynchronous install operation.</returns>
+    public static async Task InstallPluginFromWebAndCheckRestartAsync(string url)
+    {
+        var filename = url.Split('/').Last();
+        var name = filename.EndsWith(".zip", StringComparison.OrdinalIgnoreCase)
+            ? filename[..^".zip".Length]
+            : filename;
+
+        var plugin = new UserPlugin
+        {
+            ID = string.Empty,
+            Name = name,
+            Version = string.Empty,
+            Author = Localize.UnknownPluginAuthor(),
+            UrlDownload = url
+        };
+
+        if (Settings.ShowUnknownSourceWarning)
+        {
+            if (!InstallSourceKnown(url)
+                && PublicApi.Instance.ShowMsgBox(Localize.InstallFromUnknownSourceSubtitle(Environment.NewLine),
+                    Localize.InstallFromUnknownSourceTitle(),
+                    MessageBoxButton.YesNo) == MessageBoxResult.No)
+                return;
+        }
+
+        await InstallPluginAndCheckRestartAsync(plugin);
+    }
+
+    /// <summary>
     /// Uninstalls a plugin and restarts the application if required by settings. Prompts user for confirmation and whether to keep plugin settings.
     /// </summary>
     /// <param name="oldPlugin">The plugin metadata to uninstall.</param>
