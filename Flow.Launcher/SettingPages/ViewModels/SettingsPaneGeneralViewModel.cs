@@ -17,6 +17,8 @@ namespace Flow.Launcher.SettingPages.ViewModels;
 
 public partial class SettingsPaneGeneralViewModel : BaseModel
 {
+    private static readonly string ClassName = nameof(SettingsPaneGeneralViewModel);
+
     public Settings Settings { get; }
 
     private readonly Updater _updater;
@@ -95,6 +97,32 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
                     App.API.ShowMsgError(Localize.setAutoStartFailed(), e.Message);
                 }
             } 
+        }
+    }
+
+    public bool EnableDeepLinkProtocol
+    {
+        get => Settings.EnableDeepLinkProtocol;
+        set
+        {
+            Settings.EnableDeepLinkProtocol = value;
+
+            try
+            {
+                if (value)
+                {
+                    DeepLinkRegistration.RegisterUriScheme();
+                }
+                else
+                {
+                    DeepLinkRegistration.UnregisterUriScheme();
+                }
+            }
+            catch (Exception e)
+            {
+                App.API.LogError(ClassName, $"Failed to update deep link protocol registration: {e}");
+                App.API.ShowMsgError(Localize.enableDeepLinkProtocolFailed(), e.Message);
+            }
         }
     }
 
