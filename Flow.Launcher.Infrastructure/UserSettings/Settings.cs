@@ -173,7 +173,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
         public double SoundVolume { get; set; } = 50;
-        public bool ShowBadges { get; set; } = false;
+        public bool ShowBadges { get; set; } = true;
         public bool ShowBadgesGlobalOnly { get; set; } = false;
 
         private string _settingWindowFont { get; set; } = Win32Helper.GetSystemDefaultFont(false);
