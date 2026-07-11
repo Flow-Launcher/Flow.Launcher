@@ -13,13 +13,14 @@ namespace Flow.Launcher.Test
     internal class MainViewModelPreviewTest
     {
         [Test]
-        public async Task GivenManualPreviewWasVisible_WhenNeverResultThenDefaultResultSelected_ThenInternalPreviewIsRestoredAsync()
+        public async Task GivenManualOverrideTrue_WhenNeverThenDefaultResultSelected_ThenInternalPreviewIsRestoredAsync()
         {
             var settings = new Settings
             {
                 AlwaysPreview = false
             };
             var viewModel = CreatePreviewViewModel(settings, ResultAreaColumnPreviewShown);
+            SetManualPreviewOverride(viewModel, true);
 
             viewModel.PreviewSelectedItem = ViewModel("Never", PreviewVisibility.Never, settings);
             await InvokeUpdatePreviewAsync(viewModel);
@@ -32,7 +33,7 @@ namespace Flow.Launcher.Test
         }
 
         [Test]
-        public async Task GivenExternalPreviewWasVisible_WhenNeverResultThenDefaultResultSelected_ThenPreviewIsRestoredAsync()
+        public async Task GivenManualOverrideTrueAndExternalPreviewVisible_WhenNeverThenDefaultResultSelected_ThenPreviewIsRestoredAsync()
         {
             var settings = new Settings
             {
@@ -40,6 +41,7 @@ namespace Flow.Launcher.Test
             };
             var viewModel = CreatePreviewViewModel(settings, ResultAreaColumnPreviewHidden);
             SetExternalPreviewVisible(viewModel, true);
+            SetManualPreviewOverride(viewModel, true);
 
             viewModel.PreviewSelectedItem = ViewModel("Never", PreviewVisibility.Never, settings);
             await InvokeUpdatePreviewAsync(viewModel);
@@ -86,7 +88,7 @@ namespace Flow.Launcher.Test
         }
 
         [Test]
-        public async Task GivenPreviewAutoOpenedForForcedResult_WhenDefaultResultSelected_ThenInternalPreviewAutoClosesAsync()
+        public async Task GivenAlwaysResultSelected_WhenDefaultResultSelected_ThenInternalPreviewAutoClosesAsync()
         {
             var settings = new Settings
             {
@@ -105,13 +107,14 @@ namespace Flow.Launcher.Test
         }
 
         [Test]
-        public async Task GivenPreviewManuallyVisible_WhenDefaultResultSelected_ThenInternalPreviewStaysVisibleAsync()
+        public async Task GivenManualOverrideTrue_WhenDefaultResultSelected_ThenInternalPreviewStaysVisibleAsync()
         {
             var settings = new Settings
             {
                 AlwaysPreview = false
             };
             var viewModel = CreatePreviewViewModel(settings, ResultAreaColumnPreviewShown);
+            SetManualPreviewOverride(viewModel, true);
 
             viewModel.PreviewSelectedItem = ViewModel("Normal", PreviewVisibility.Default, settings);
             await InvokeUpdatePreviewAsync(viewModel);
@@ -120,7 +123,7 @@ namespace Flow.Launcher.Test
         }
 
         [Test]
-        public async Task GivenPreviewAutoOpenedForForcedResult_WhenNeverThenDefaultResultSelected_ThenInternalPreviewStaysHiddenAsync()
+        public async Task GivenAlwaysResultThenNever_WhenNormalResultSelected_ThenInternalPreviewStaysHiddenAsync()
         {
             var settings = new Settings
             {
@@ -143,13 +146,17 @@ namespace Flow.Launcher.Test
         }
 
         [Test]
-        public async Task GivenAlwaysPreviewOnAndPreviewManuallyHidden_WhenDefaultResultSelected_ThenInternalPreviewStaysHiddenAsync()
+        public async Task GivenManualOverrideFalseAndAlwaysPreviewOn_WhenDefaultResultSelected_ThenInternalPreviewStaysHiddenAsync()
         {
+            // User closed the preview with F1 (_manualPreviewOverride = false) while
+            // AlwaysPreview is on. The manual override should still beat AlwaysPreview
+            // so selecting a normal result does not reopen the pane.
             var settings = new Settings
             {
                 AlwaysPreview = true
             };
             var viewModel = CreatePreviewViewModel(settings, ResultAreaColumnPreviewHidden);
+            SetManualPreviewOverride(viewModel, false);
 
             viewModel.PreviewSelectedItem = ViewModel("Normal", PreviewVisibility.Default, settings);
             await InvokeUpdatePreviewAsync(viewModel);
@@ -177,15 +184,16 @@ namespace Flow.Launcher.Test
         }
 
         [Test]
-        public async Task GivenAlwaysPreviewOnAndPreviewManuallyHidden_WhenAlwaysVisibilityResultSelected_ThenInternalPreviewReopensAsync()
+        public async Task GivenManualOverrideFalseAndAlwaysPreviewOn_WhenAlwaysResultSelected_ThenInternalPreviewReopensAsync()
         {
-            // Always must force the pane open for any content type, even when the user
-            // manually closed the pane while the global Always Preview setting is on.
+            // Always must force the pane open even when the user explicitly closed
+            // the preview with F1. Result-level visibility beats manual override.
             var settings = new Settings
             {
                 AlwaysPreview = true
             };
             var viewModel = CreatePreviewViewModel(settings, ResultAreaColumnPreviewHidden);
+            SetManualPreviewOverride(viewModel, false);
 
             viewModel.PreviewSelectedItem = ViewModel("Normal", PreviewVisibility.Default, settings);
             await InvokeUpdatePreviewAsync(viewModel);
@@ -198,11 +206,11 @@ namespace Flow.Launcher.Test
         }
 
         [Test]
-        public void GivenAlwaysPreviewOffAndForcedResult_WhenPreviewReset_ThenInternalPreviewOpens()
+        public void GivenManualOverrideUnsetAndAlwaysPreviewOffAndAlwaysResult_WhenPreviewReset_ThenInternalPreviewOpens()
         {
-            // Reproduces the reopen bug: ResetPreview runs each time the main window is shown.
-            // With Always Preview off it must still honour a forced result instead of hiding the pane,
-            // otherwise the preview only reappears once the user hovers a result.
+            // ResetPreview clears _manualPreviewOverride (sets to null) and re-evaluates.
+            // With AlwaysPreview off but the result forcing its own preview (Always),
+            // the pane should open when the window reopens.
             var settings = new Settings
             {
                 AlwaysPreview = false
@@ -216,7 +224,7 @@ namespace Flow.Launcher.Test
         }
 
         [Test]
-        public void GivenAlwaysPreviewOffAndDefaultResult_WhenPreviewReset_ThenInternalPreviewStaysHidden()
+        public void GivenManualOverrideUnsetAndAlwaysPreviewOffAndDefaultResult_WhenPreviewReset_ThenInternalPreviewStaysHidden()
         {
             var settings = new Settings
             {
@@ -231,17 +239,18 @@ namespace Flow.Launcher.Test
         }
 
         [Test]
-        public async Task GivenAlwaysPreviewOnAndManuallyClosedThenNeverResult_WhenDefaultResultSelected_ThenPreviewStaysHiddenAsync()
+        public async Task GivenManualOverrideFalseAndAlwaysPreviewOn_WhenNeverThenDefaultResult_ThenPreviewStaysHiddenAsync()
         {
-            // Regression: user closes preview via F1, navigates through a Never result, then to a
-            // normal result — the AlwaysPreview restore path must not re-open the pane against
+            // Regression: user closes preview via F1 (_manualOverride = false),
+            // navigates through a Never result, then to a normal result.
+            // The AlwaysPreview restore path must not re-open the pane against
             // the user's explicit intent.
             var settings = new Settings
             {
                 AlwaysPreview = true
             };
             var viewModel = CreatePreviewViewModel(settings, ResultAreaColumnPreviewHidden);
-            SetPreviewManuallyClosed(viewModel, true);
+            SetManualPreviewOverride(viewModel, false);
 
             viewModel.PreviewSelectedItem = ViewModel("Never", PreviewVisibility.Never, settings);
             await InvokeUpdatePreviewAsync(viewModel);
@@ -303,9 +312,9 @@ namespace Flow.Launcher.Test
                 .GetField("<ExternalPreviewVisible>k__BackingField", BindingFlags.Instance | BindingFlags.NonPublic)
                 .SetValue(viewModel, visible);
 
-        private static void SetPreviewManuallyClosed(MainViewModel viewModel, bool value)
+        private static void SetManualPreviewOverride(MainViewModel viewModel, bool? value)
             => typeof(MainViewModel)
-                .GetField("_previewManuallyClosed", BindingFlags.Instance | BindingFlags.NonPublic)
+                .GetField("_manualPreviewOverride", BindingFlags.Instance | BindingFlags.NonPublic)
                 .SetValue(viewModel, value);
     }
 }

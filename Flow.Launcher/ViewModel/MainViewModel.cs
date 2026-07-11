@@ -1033,20 +1033,9 @@ namespace Flow.Launcher.ViewModel
 
         private bool? _selectedItemFromQueryResults;
 
-        // Set when a PreviewVisibility.Never result collapsed a pane that the user (or Always Preview)
-        // had opened. It arms a one-shot restore so the pane comes back on the next selectable result.
-        // This is distinct from ShouldSuppressPreview(...), which asks whether the *current* result opts
-        // out — this flag is about restoring after a *previous* Never result hid the pane.
-        private bool _restorePreviewAfterNeverResult;
-
-        // Set when the pane was popped open solely because a PreviewVisibility.Always result was selected,
-        // so it can be auto-closed again when the selection moves to a result that does not force it.
-        private bool _previewAutoOpenedBySelectedResult;
-
-        // Set when the user explicitly closes the preview via the toggle hotkey (F1 / Alt+P).
-        // Prevents the AlwaysPreview restore path from re-opening the pane after the user passes
-        // through a Never result; cleared whenever the pane is shown.
-        private bool _previewManuallyClosed;
+        // User explicitly toggled the preview on or off via F1 / Alt+P.
+        // null = no manual override; the global AlwaysPreview setting decides.
+        private bool? _manualPreviewOverride;
 
         private ResultViewModel _previewSelectedItem;
         public ResultViewModel PreviewSelectedItem
@@ -1115,69 +1104,25 @@ namespace Flow.Launcher.ViewModel
 
         private void HidePreview()
         {
-            _restorePreviewAfterNeverResult = false;
-            _previewAutoOpenedBySelectedResult = false;
-
-            if (PluginManager.UseExternalPreview())
+            if (ExternalPreviewVisible)
                 _ = CloseExternalPreviewAsync();
 
             if (InternalPreviewVisible)
                 HideInternalPreview();
         }
 
-        // True when the currently selected result opts out of the preview pane (PreviewVisibility.Never).
-        internal static bool ShouldSuppressPreview(ResultViewModel previewSelectedItem)
-            => previewSelectedItem?.HidePreviewPane == true;
-
-        private async Task SuppressPreviewAsync()
-        {
-            var previewWasVisible = ExternalPreviewVisible || InternalPreviewVisible;
-
-            if (ExternalPreviewVisible)
-            {
-                await CloseExternalPreviewAsync();
-            }
-
-            if (InternalPreviewVisible)
-            {
-                HideInternalPreview();
-            }
-
-            if (previewWasVisible)
-            {
-                // A pane that was only auto-opened by a PreviewVisibility.Always result should not be
-                // restored on the next non-Never selection — only user-opened panes are.
-                _restorePreviewAfterNeverResult = !_previewAutoOpenedBySelectedResult;
-                _previewAutoOpenedBySelectedResult = false;
-            }
-            else if (Settings.AlwaysPreview && !_previewManuallyClosed)
-            {
-                // With AlwaysPreview on, the pane reopens on the next query regardless, so
-                // arm the restore here too; otherwise a Never selection leaves it stuck closed.
-                // Skip when the user explicitly closed the preview — their intent should persist
-                // even when the selection passes through a Never result.
-                _restorePreviewAfterNeverResult = true;
-            }
-        }
-
         [RelayCommand]
         private async Task TogglePreviewAsync()
         {
-            if (ShouldSuppressPreview(PreviewSelectedItem))
-            {
-                await SuppressPreviewAsync();
-                return;
-            }
-
+            // Flip the override, then re-evaluate through UpdatePreviewAsync.
+            // Never/Always results automatically override the toggle from
+            // ShouldShowPreview, so there is no special-casing needed here.
             if (InternalPreviewVisible || ExternalPreviewVisible)
-            {
-                _previewManuallyClosed = true;
-                HidePreview();
-            }
+                _manualPreviewOverride = false;
             else
-            {
-                await ShowPreviewAsync();
-            }
+                _manualPreviewOverride = true;
+
+            await UpdatePreviewAsync();
         }
 
         private async Task OpenExternalPreviewAsync(string path, bool sendFailToast = true)
@@ -1199,7 +1144,6 @@ namespace Flow.Launcher.ViewModel
 
         private void ShowInternalPreview()
         {
-            _previewManuallyClosed = false;
             ResultAreaColumn = ResultAreaColumnPreviewShown;
             PreviewSelectedItem?.LoadPreviewImage();
         }
@@ -1209,107 +1153,33 @@ namespace Flow.Launcher.ViewModel
             ResultAreaColumn = ResultAreaColumnPreviewHidden;
         }
 
-        public void ResetPreview()
+        // Pure decision: should the pane be visible right now?
+        private bool ShouldShowPreview()
         {
-            if (ShouldSuppressPreview(PreviewSelectedItem))
-            {
-                _ = SuppressPreviewAsync();
-                return;
-            }
-
-            switch (Settings.AlwaysPreview)
-            {
-                case true
-                    when PluginManager.AllowAlwaysPreview() && CanExternalPreviewSelectedResult(out var path):
-                    _ = OpenExternalPreviewAsync(path);
-                    break;
-                case true:
-                    ShowInternalPreview();
-                    break;
-                case false when PreviewSelectedItem?.ForcePreviewPane == true:
-                    // Always Preview is off, but the selected result forces its own preview
-                    // (PreviewVisibility.Always). Honour it here so the pane is restored when the
-                    // window reopens, instead of staying hidden until the selection next changes.
-                    if (ExternalPreviewVisible)
-                        _ = CloseExternalPreviewAsync();
-                    _previewAutoOpenedBySelectedResult = true;
-                    ShowInternalPreview();
-                    break;
-                case false:
-                    HidePreview();
-                    break;
-            }
+            if (PreviewSelectedItem?.HidePreviewPane == true) return false;
+            if (PreviewSelectedItem?.ForcePreviewPane == true) return true;
+            return _manualPreviewOverride ?? Settings.AlwaysPreview;
         }
 
+        // Called on every selection change. Never/Always results override the
+        // pane immediately. Normal results leave the pane as-is and refresh.
         private async Task UpdatePreviewAsync()
         {
-            // Two related-but-distinct checks follow, in order:
-            //   1. Does the *current* result opt out (PreviewVisibility.Never)? If so, collapse the pane
-            //      now and arm a restore for later. (e.g. Shorty's "Ask" placeholder.)
-            if (ShouldSuppressPreview(PreviewSelectedItem))
+            if (ShouldShowPreview())
             {
-                await SuppressPreviewAsync();
-                return;
-            }
-
-            //   2. Did a *previous* Never result collapse a pane we promised to bring back? If so, restore
-            //      it now that we've landed on a result that allows a preview. This is not the same as
-            //      check 1 — it fires precisely when the current result does NOT opt out.
-            if (_restorePreviewAfterNeverResult)
-            {
-                _restorePreviewAfterNeverResult = false;
                 if (!InternalPreviewVisible && !ExternalPreviewVisible)
-                {
                     await ShowPreviewAsync();
-                    return;
-                }
-            }
-
-            // Per-result opt-in: results with PreviewVisibility.Always pop the pane open on
-            // selection; leaving them closes it again, unless the pane was opened some other
-            // way (F1 toggle or AlwaysPreview), which stays untouched.
-            if (PreviewSelectedItem?.ForcePreviewPane == true)
-            {
-                if (!InternalPreviewVisible && !ExternalPreviewVisible)
-                {
-                    _previewAutoOpenedBySelectedResult = true;
-                    ShowInternalPreview();
-                }
-            }
-            else if (_previewAutoOpenedBySelectedResult)
-            {
-                _previewAutoOpenedBySelectedResult = false;
-                if (InternalPreviewVisible)
-                    HideInternalPreview();
-            }
-
-            switch (PluginManager.UseExternalPreview())
-            {
-                case true
-                    when CanExternalPreviewSelectedResult(out var path):
-                    if (ExternalPreviewVisible)
-                    {
-                        _ = SwitchExternalPreviewAsync(path, false);
-                    }
-                    else if (InternalPreviewVisible)
-                    {
-                        HideInternalPreview();
-                        _ = OpenExternalPreviewAsync(path);
-                    }
-
-                    break;
-                case true
-                    when !CanExternalPreviewSelectedResult(out var _):
-                    if (ExternalPreviewVisible)
-                    {
-                        await CloseExternalPreviewAsync();
-                        ShowInternalPreview();
-                    }
-                    break;
-                case false
-                    when InternalPreviewVisible:
+                else if (InternalPreviewVisible)
                     PreviewSelectedItem?.LoadPreviewImage();
-                    break;
+                else if (ExternalPreviewVisible
+                         && PluginManager.UseExternalPreview()
+                         && CanExternalPreviewSelectedResult(out var path))
+                    _ = SwitchExternalPreviewAsync(path, false);
+            }
+            else
+            {
+                if (InternalPreviewVisible || ExternalPreviewVisible)
+                    HidePreview();
             }
         }
 
@@ -1321,8 +1191,26 @@ namespace Flow.Launcher.ViewModel
 
         private bool QueryResultsPreviewed()
         {
-            var previewed = PreviewSelectedItem == Results.SelectedItem;
-            return previewed;
+            return PreviewSelectedItem == Results.SelectedItem;
+        }
+
+        // Called when the window reopens. Clears the manual F1 toggle then
+        // evaluates the pane state from scratch.
+        public void ResetPreview()
+        {
+            _manualPreviewOverride = null;
+
+            if (ShouldShowPreview())
+            {
+                if (PluginManager.AllowAlwaysPreview() && CanExternalPreviewSelectedResult(out var path))
+                    _ = OpenExternalPreviewAsync(path);
+                else
+                    ShowInternalPreview();
+            }
+            else
+            {
+                HidePreview();
+            }
         }
 
         #endregion
@@ -2313,6 +2201,9 @@ namespace Flow.Launcher.ViewModel
                 {
                     await CloseExternalPreviewAsync();
                 }
+
+                if (InternalPreviewVisible)
+                    HideInternalPreview();
 
                 BackToQueryResults();
 
