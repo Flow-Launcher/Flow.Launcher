@@ -60,6 +60,22 @@ public class PreviewMarkdownScrollViewer : MarkdownScrollViewer
         return false;
     }
 
+    /// <summary>
+    /// Returns true when <paramref name="key"/> is used by the code-block for caret movement
+    /// These should be captured by the code block exclusively when its in focus.
+    /// </summary>
+    /// <remarks>
+    /// Modifier variants (Shift+Up, Ctrl+Left) are covered here too since WPF reports the
+    /// base key regardless of modifiers.
+    /// </remarks>
+    public static bool IsCodeBlockNavigationKey(Key key)
+    {
+        return key is 
+            Key.Up or Key.Down or Key.Left or Key.Right
+            or Key.PageUp or Key.PageDown
+            or Key.Home or Key.End;
+    }
+
     static PreviewMarkdownScrollViewer()
     {
         // AvalonEdit ships no AHK highlighter; map AHK language tags to the C++ definition so
