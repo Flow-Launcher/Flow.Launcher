@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -189,6 +189,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
         public double SoundVolume { get; set; } = 50;
+        public bool ShowBadges { get; set; } = true;
+        public bool ShowBadgesGlobalOnly { get; set; } = false;
 
         private bool _showBadges = false;
         public bool ShowBadges
