@@ -216,7 +216,10 @@ namespace Flow.Launcher
             SetupResizeMode();
 
             // Reset preview
-            _viewModel.ResetPreview();
+            // Can't await in sync startup code; fire-and-forget but safely log any failure
+            _ = _viewModel.ResetPreviewAsync().ContinueWith(static t =>
+                    App.API.LogError(ClassName, $"ResetPreviewAsync failed: {t.Exception}"),
+                CancellationToken.None, TaskContinuationOptions.OnlyOnFaulted, TaskScheduler.Default);
 
             // Since the default main window visibility is visible, so we need set focus during startup
             QueryTextBox.Focus();
@@ -250,7 +253,10 @@ namespace Flow.Launcher
                                     Activate();
 
                                     // Reset preview
-                                    _viewModel.ResetPreview();
+                                    // Can't await in Dispatcher.Invoke; fire-and-forget but safely log any failure
+                                    _ = _viewModel.ResetPreviewAsync().ContinueWith(static t =>
+                                            App.API.LogError(ClassName, $"ResetPreviewAsync failed: {t.Exception}"),
+                                        CancellationToken.None, TaskContinuationOptions.OnlyOnFaulted, TaskScheduler.Default);
 
                                     // Select last query if need
                                     if (!_viewModel.LastQuerySelected)

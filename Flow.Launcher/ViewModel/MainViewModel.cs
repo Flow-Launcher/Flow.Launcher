@@ -178,29 +178,8 @@ namespace Flow.Launcher.ViewModel
             };
             _selectedResults = Results;
 
-            Results.PropertyChanged += (o, args) =>
-            {
-                switch (args.PropertyName)
-                {
-                    case nameof(Results.SelectedItem):
-                        _selectedItemFromQueryResults = true;
-                        PreviewSelectedItem = Results.SelectedItem;
-                        _ = UpdatePreviewAsync();
-                        break;
-                }
-            };
-
-            History.PropertyChanged += (o, args) =>
-            {
-                switch (args.PropertyName)
-                {
-                    case nameof(History.SelectedItem):
-                        _selectedItemFromQueryResults = false;
-                        PreviewSelectedItem = History.SelectedItem;
-                        _ = UpdatePreviewAsync();
-                        break;
-                }
-            };
+            Results.PropertyChanged += OnResultsPropertyChanged;
+            History.PropertyChanged += OnHistoryPropertyChanged;
 
             RegisterViewUpdate();
             _ = RegisterClockAndDateUpdateAsync();
@@ -350,7 +329,7 @@ namespace Flow.Launcher.ViewModel
         }
 
         [RelayCommand]
-        private void LoadHistory()
+        private async Task LoadHistoryAsync()
         {
             if (QueryResultsSelected())
             {
@@ -365,7 +344,7 @@ namespace Flow.Launcher.ViewModel
             {
                 SelectedResults = Results;
                 PreviewSelectedItem = Results.SelectedItem;
-                _ = UpdatePreviewAsync();
+                await UpdatePreviewAsync();
             }
         }
 
@@ -415,7 +394,7 @@ namespace Flow.Launcher.ViewModel
         }
 
         [RelayCommand]
-        private void LoadContextMenu()
+        private async Task LoadContextMenuAsync()
         {
             // For Dialog Jump and right click mode, we need to navigate to the path
             if (_isDialogJump && Settings.DialogJumpResultBehaviour == DialogJumpResultBehaviours.RightClick)
@@ -447,7 +426,7 @@ namespace Flow.Launcher.ViewModel
             {
                 SelectedResults = Results;
                 PreviewSelectedItem = Results.SelectedItem;
-                _ = UpdatePreviewAsync();
+                await UpdatePreviewAsync();
             }
         }
 
@@ -655,13 +634,13 @@ namespace Flow.Launcher.ViewModel
         }
 
         [RelayCommand]
-        private void Esc()
+        private async Task EscAsync()
         {
             if (!QueryResultsSelected())
             {
                 SelectedResults = Results;
                 PreviewSelectedItem = Results.SelectedItem;
-                _ = UpdatePreviewAsync();
+                await UpdatePreviewAsync();
             }
             else
             {
@@ -1026,6 +1005,30 @@ namespace Flow.Launcher.ViewModel
 
         #endregion
 
+        private async void OnResultsPropertyChanged(object sender, PropertyChangedEventArgs args)
+        {
+            switch (args.PropertyName)
+            {
+                case nameof(Results.SelectedItem):
+                    _selectedItemFromQueryResults = true;
+                    PreviewSelectedItem = Results.SelectedItem;
+                    await UpdatePreviewAsync();
+                    break;
+            }
+        }
+
+        private async void OnHistoryPropertyChanged(object sender, PropertyChangedEventArgs args)
+        {
+            switch (args.PropertyName)
+            {
+                case nameof(History.SelectedItem):
+                    _selectedItemFromQueryResults = false;
+                    PreviewSelectedItem = History.SelectedItem;
+                    await UpdatePreviewAsync();
+                    break;
+            }
+        }
+
         #region Preview
 
         private static readonly int ResultAreaColumnPreviewShown = 1;
@@ -1085,7 +1088,7 @@ namespace Flow.Launcher.ViewModel
                     if (InternalPreviewVisible)
                         HideInternalPreview();
 
-                    _ = OpenExternalPreviewAsync(path);
+                    await OpenExternalPreviewAsync(path);
                     break;
 
                 case true
@@ -1102,10 +1105,10 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private void HidePreview()
+        private async Task HidePreviewAsync()
         {
             if (ExternalPreviewVisible)
-                _ = CloseExternalPreviewAsync();
+                await CloseExternalPreviewAsync();
 
             if (InternalPreviewVisible)
                 HideInternalPreview();
@@ -1174,12 +1177,12 @@ namespace Flow.Launcher.ViewModel
                 else if (ExternalPreviewVisible
                          && PluginManager.UseExternalPreview()
                          && CanExternalPreviewSelectedResult(out var path))
-                    _ = SwitchExternalPreviewAsync(path, false);
+                    await SwitchExternalPreviewAsync(path, false);
             }
             else
             {
                 if (InternalPreviewVisible || ExternalPreviewVisible)
-                    HidePreview();
+                    await HidePreviewAsync();
             }
         }
 
@@ -1196,20 +1199,20 @@ namespace Flow.Launcher.ViewModel
 
         // Called when the window reopens. Clears the manual F1 toggle then
         // evaluates the pane state from scratch.
-        public void ResetPreview()
+        public async Task ResetPreviewAsync()
         {
             _manualPreviewOverride = null;
 
             if (ShouldShowPreview())
             {
                 if (PluginManager.AllowAlwaysPreview() && CanExternalPreviewSelectedResult(out var path))
-                    _ = OpenExternalPreviewAsync(path);
+                    await OpenExternalPreviewAsync(path);
                 else
                     ShowInternalPreview();
             }
             else
             {
-                HidePreview();
+                await HidePreviewAsync();
             }
         }
 
