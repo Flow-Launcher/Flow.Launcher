@@ -68,8 +68,8 @@ namespace Flow.Launcher.ViewModel
                             OnPropertyChanged(nameof(EnableListCurrentItemSync));
                             break;
                         case nameof(_mainVM.IsGridMode):
-                        case nameof(_mainVM.PreferResultsListOnHomePage):
                             OnPropertyChanged(nameof(EnableListCurrentItemSync));
+                            OnPropertyChanged(nameof(ResetScrollToTopWhenSelectionCleared));
                             break;
                     }
                 };
@@ -122,7 +122,7 @@ namespace Flow.Launcher.ViewModel
         /// Enabled in these cases:
         /// - <c>_mainVM == null</c>: this instance was created without <see cref="MainViewModel"/>, so home pinned-grid mode is unavailable; keep default sync.
         /// - <c>!_mainVM.ResultsSelected(this)</c>: this is not the active main results list, so no special sync override is needed.
-        /// - <c>!_mainVM.IsHomePinnedGridPreferred</c>: the app is not in the home pinned-grid mode scenario, so normal list sync is desired.
+        /// - <c>!_mainVM.IsHomePinnedGridActive</c>: the app is not in the home pinned-grid mode scenario, so normal list sync is desired.
         /// Disabled only when this is the active main results list and home pinned-grid mode is active.
         /// In that one scenario, WPF current-item sync can re-highlight a stale list item after query clear,
         /// causing both grid and list to appear highlighted; disabling sync prevents that.
@@ -133,9 +133,20 @@ namespace Flow.Launcher.ViewModel
             {
                 return _mainVM == null
                     || !_mainVM.ResultsSelected(this)
-                    || !_mainVM.IsHomePinnedGridPreferred;
+                    || !_mainVM.IsHomePinnedGridActive;
             }
         }
+
+        public bool ResetScrollToTopWhenSelectionCleared
+        {
+            get
+            {
+                return _mainVM != null
+                    && _mainVM.ResultsSelected(this)
+                    && _mainVM.IsHomePinnedGridActive;
+            }
+        }
+
         public Thickness Margin { get; set; }
         public Visibility Visibility { get; set; } = Visibility.Collapsed;
 
@@ -274,7 +285,7 @@ namespace Flow.Launcher.ViewModel
             var skipListReselectInHomeGrid = _mainVM != null
                                             && ReferenceEquals(this, _mainVM.Results)
                                             && _mainVM.ResultsSelected(this)
-                                            && _mainVM.IsHomePinnedGridPreferred;
+                                            && _mainVM.IsHomePinnedGridActive;
 
             lock (_collectionLock)
             {

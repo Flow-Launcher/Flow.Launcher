@@ -234,7 +234,7 @@ namespace Flow.Launcher
                             {
                                 if (_viewModel.MainWindowVisibilityStatus)
                                 {
-                                    _canEnterGridModeWithDown = !_viewModel.PreferResultsListOnHomePage;
+                                    _canEnterGridModeWithDown = _viewModel.IsHomePinnedGridActive;
 
                                     // Play sound effect before activing the window
                                     if (_settings.UseSound && !_viewModel.IsDialogJumpWindowUnderDialog())
@@ -479,7 +479,6 @@ namespace Flow.Launcher
                     if (CanNavigatePinnedGrid())
                     {
                         _canEnterGridModeWithDown = false;
-                        _viewModel.PreferResultsListOnHomePage = false;
                         _viewModel.ToggleGridMode();
                         e.Handled = true;
                         return;
@@ -491,7 +490,6 @@ namespace Flow.Launcher
                 case Key.Up:
                     if (CanMoveUpToPinnedGrid())
                     {
-                        _viewModel.PreferResultsListOnHomePage = false;
                         _viewModel.IsGridMode = true;
                         _viewModel.PinnedResults.SelectedIndex = 0;
                         _viewModel.PinnedResults.SelectedItem = _viewModel.PinnedResults.Results[0];
@@ -558,7 +556,7 @@ namespace Flow.Launcher
         private bool CanNavigatePinnedGrid()
         {
             return _canEnterGridModeWithDown
-                   && !_viewModel.PreferResultsListOnHomePage
+                   && _viewModel.IsHomePinnedGridActive
                    && IsPinnedGridAvailableForKeyboardNavigation();
         }
 
@@ -622,14 +620,12 @@ namespace Flow.Launcher
             }
 
             _canEnterGridModeWithDown = false;
-            _viewModel.PreferResultsListOnHomePage = true;
             _viewModel.ToggleGridMode();
         }
 
         private void SelectLastResultFromPinnedGrid()
         {
             _canEnterGridModeWithDown = false;
-            _viewModel.PreferResultsListOnHomePage = true;
             _viewModel.IsGridMode = false;
 
             if (_viewModel.Results.Results.Count > 0)
