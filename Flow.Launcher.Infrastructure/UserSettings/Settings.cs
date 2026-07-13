@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -191,34 +191,6 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public double SoundVolume { get; set; } = 50;
         public bool ShowBadges { get; set; } = true;
         public bool ShowBadgesGlobalOnly { get; set; } = false;
-
-        private bool _showBadges = false;
-        public bool ShowBadges
-        {
-            get => _showBadges;
-            set
-            {
-                if (_showBadges != value)
-                {
-                    _showBadges = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        private bool _showBadgesGlobalOnly = false;
-        public bool ShowBadgesGlobalOnly
-        {
-            get => _showBadgesGlobalOnly;
-            set
-            {
-                if (_showBadgesGlobalOnly != value)
-                {
-                    _showBadgesGlobalOnly = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
 
         private string _settingWindowFont { get; set; } = Win32Helper.GetSystemDefaultFont(false);
         public string SettingWindowFont
