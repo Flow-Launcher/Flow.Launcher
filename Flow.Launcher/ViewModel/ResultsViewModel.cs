@@ -137,6 +137,8 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        // When pinned grid mode is active, the highlight selection resets to the first item in the pinned grid,
+        // but the list selection remains on the previously selected item. This ensures that the list scrolls back to the top.
         public bool ResetScrollToTopWhenSelectionCleared
         {
             get

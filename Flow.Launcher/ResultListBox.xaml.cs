@@ -54,6 +54,8 @@ namespace Flow.Launcher
                 return;
             }
 
+            // When grid mode and home page plugin results are enabled, ensures the result list's scroll
+            // position is reset to the top so the first home page result is shown.
             if (e.AddedItems.Count == 0 && DataContext is ResultsViewModel { ResetScrollToTopWhenSelectionCleared: true } viewModel)
             {
                 if (viewModel.Results.Count > 0)
