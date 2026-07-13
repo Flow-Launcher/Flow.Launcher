@@ -65,6 +65,11 @@ namespace Flow.Launcher.ViewModel
                         // the PropertyChanged of PinnedGridHeightForEmptyQuery
                         case nameof(_mainVM.PinnedGridHeightForEmptyQuery):
                             OnPropertyChanged(nameof(MaxHeight));
+                            OnPropertyChanged(nameof(EnableListCurrentItemSync));
+                            break;
+                        case nameof(_mainVM.IsGridMode):
+                        case nameof(_mainVM.PreferResultsListOnHomePage):
+                            OnPropertyChanged(nameof(EnableListCurrentItemSync));
                             break;
                     }
                 };
@@ -111,6 +116,26 @@ namespace Flow.Launcher.ViewModel
         public int SelectedIndex { get; set; }
 
         public ResultViewModel SelectedItem { get; set; }
+        
+        /// <summary>
+        /// Controls whether the results list synchronizes selection with the WPF collection view current item.
+        /// Enabled in these cases:
+        /// - <c>_mainVM == null</c>: this instance was created without <see cref="MainViewModel"/>, so home pinned-grid mode is unavailable; keep default sync.
+        /// - <c>!_mainVM.ResultsSelected(this)</c>: this is not the active main results list, so no special sync override is needed.
+        /// - <c>!_mainVM.IsHomePinnedGridPreferred</c>: the app is not in the home pinned-grid mode scenario, so normal list sync is desired.
+        /// Disabled only when this is the active main results list and home pinned-grid mode is active.
+        /// In that one scenario, WPF current-item sync can re-highlight a stale list item after query clear,
+        /// causing both grid and list to appear highlighted; disabling sync prevents that.
+        /// </summary>
+        public bool EnableListCurrentItemSync
+        {
+            get
+            {
+                return _mainVM == null
+                    || !_mainVM.ResultsSelected(this)
+                    || !_mainVM.IsHomePinnedGridPreferred;
+            }
+        }
         public Thickness Margin { get; set; }
         public Visibility Visibility { get; set; } = Visibility.Collapsed;
 
@@ -246,11 +271,16 @@ namespace Flow.Launcher.ViewModel
 
         private void UpdateResults(List<ResultViewModel> newResults, bool reselect = true, CancellationToken token = default)
         {
+            var skipListReselectInHomeGrid = _mainVM != null
+                                            && ReferenceEquals(this, _mainVM.Results)
+                                            && _mainVM.ResultsSelected(this)
+                                            && _mainVM.IsHomePinnedGridPreferred;
+
             lock (_collectionLock)
             {
                 // update UI in one run, so it can avoid UI flickering
                 Results.Update(newResults, token);
-                if (reselect && Results.Any())
+                if (!skipListReselectInHomeGrid && reselect && Results.Any())
                     SelectedItem = Results[0];
             }
             OnPropertyChanged(nameof(IsEmpty));
@@ -264,7 +294,8 @@ namespace Flow.Launcher.ViewModel
                     if (_mainVM == null || // The results are for preview only in appearance page
                         _mainVM.ResultsSelected(this)) // The results are selected
                     {
-                        SelectedIndex = 0;
+                        if (!skipListReselectInHomeGrid)
+                            SelectedIndex = 0;
                         Visibility = Visibility.Visible;
                     }
                     break;

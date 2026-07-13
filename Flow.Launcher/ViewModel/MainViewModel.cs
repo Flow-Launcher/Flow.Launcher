@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -73,6 +73,7 @@ namespace Flow.Launcher.ViewModel
         };
 
         private bool _taskbarShownByFlow = false;
+        private bool _suppressNextHomeListMouseSelect;
         
         #endregion
 
@@ -620,6 +621,27 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void MouseSelect(bool isGridMode)
         {
+            var isHomePinnedGrid = QueryResultsSelected() && IsHomePinnedGrid;
+
+            // Only list/grid interactions on home pinned-grid page should affect layout mode/preference.
+            if (!isHomePinnedGrid)
+            {
+                PreviewSelectedItem = Results.SelectedItem;
+                return;
+            }
+
+            // Ignore one stale list hover event right after auto-selecting pinned grid on query clear.
+            if (!isGridMode && _suppressNextHomeListMouseSelect)
+            {
+                _suppressNextHomeListMouseSelect = false;
+                return;
+            }
+
+            if (isGridMode)
+            {
+                _suppressNextHomeListMouseSelect = false;
+            }
+
             PreferResultsListOnHomePage = !isGridMode;
             IsGridMode = isGridMode;
 
@@ -633,32 +655,49 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private bool ShouldSelectPinnedGridOnHomePage()
+        /// <summary>
+        /// Enforces a single highlighted item when query-results view is active and home pinned-grid mode is set.
+        /// This method is needed after transitions where stale selection can persist from a previous list/history state,
+        /// specifically:
+        /// - user clears query back to home (query refresh path),
+        /// - user returns from History to query results (for example via Esc),
+        /// - main window is shown and home pinned-grid should be restored.
+        /// In that scenario this method:
+        /// - forces <see cref="IsGridMode"/> on,
+        /// - clears <see cref="Results"/> and <see cref="History"/> selection,
+        /// - selects a pinned item (or first pinned item when requested),
+        /// so list/history items do not remain highlighted together with grid.
+        /// </summary>
+        /// <param name="forceFirstPinnedItem">When true, always select the first pinned item in home pinned-grid preferred mode.</param>
+        private void ApplyItemSelectionState(bool forceFirstPinnedItem = false)
         {
-            return QueryResultsSelected()
-                   && Settings.EnablePinnedResults
-                   && Settings.PinnedResultsLayout == PinnedLayoutOptions.Grid
-                   && string.IsNullOrEmpty(QueryText)
-                   && !PreferResultsListOnHomePage
-                   && PinnedResults.Results.Count > 0;
-        }
-
-        private void SelectPinnedGridOnHomePage()
-        {
-            if (!ShouldSelectPinnedGridOnHomePage()) return;
+            if (!QueryResultsSelected() || !IsHomePinnedGridPreferred || PinnedResults.Results.Count == 0)
+                return;
 
             IsGridMode = true;
+            _suppressNextHomeListMouseSelect = true;
 
-            if (PinnedResults.SelectedIndex < 0 || PinnedResults.SelectedIndex >= PinnedResults.Results.Count)
+            // Ensure list/history selection does not remain highlighted when grid mode becomes active.
+            Results.SelectedIndex = -1;
+            Results.SelectedItem = null;
+            History.SelectedIndex = -1;
+            History.SelectedItem = null;
+
+            if (forceFirstPinnedItem || PinnedResults.SelectedIndex < 0 || PinnedResults.SelectedIndex >= PinnedResults.Results.Count)
             {
                 PinnedResults.SelectedIndex = 0;
             }
 
             PinnedResults.SelectedItem = PinnedResults.Results[PinnedResults.SelectedIndex];
-            Results.SelectedIndex = -1;
-            Results.SelectedItem = null;
             PreviewSelectedItem = PinnedResults.SelectedItem;
         }
+
+        internal bool IsHomePinnedGrid =>
+            string.IsNullOrEmpty(QueryText)
+            && Settings.EnablePinnedResults
+            && Settings.PinnedResultsLayout == PinnedLayoutOptions.Grid;
+
+        internal bool IsHomePinnedGridPreferred => IsHomePinnedGrid && !PreferResultsListOnHomePage;
 
         private static IReadOnlyList<Result> DeepCloneResults(IReadOnlyList<Result> results, bool isDialogJump, CancellationToken token = default)
         {
@@ -760,7 +799,7 @@ namespace Flow.Launcher.ViewModel
                 IsGridMode = !IsGridMode;
                 if (IsGridMode)
                 {
-                    SelectPinnedGridOnHomePage();
+                    ApplyItemSelectionState();
                     // Reset the index so that preview will refresh when select any items
                     Results.SelectedIndex = -1;
                     Results.SelectedItem = null;
@@ -992,6 +1031,12 @@ namespace Flow.Launcher.ViewModel
                     ContextMenu.Visibility = Visibility.Collapsed;
                     History.Visibility = Visibility.Collapsed;
 
+                    if (isReturningFromHistory)
+                    {
+                        History.SelectedIndex = -1;
+                        History.SelectedItem = null;
+                    }
+
                     // QueryText setter (used in ChangeQueryText) runs the query again, resetting the selected
                     // result from the one that was selected before going into the context menu to the first result.
                     // The code below correctly restores QueryText and puts the text caret at the end without
@@ -1008,6 +1053,15 @@ namespace Flow.Launcher.ViewModel
                     else
                     {
                         ChangeQueryText(_queryTextBeforeLeaveResults);
+                    }
+
+                    // When returning from History to home query with pinned-grid preferred,
+                    // re-apply pinned-grid selection/cleanup even if IsGridMode is already true.
+                    // This prevents stale list-side selection from persisting across repeated
+                    // Ctrl+H -> mouse select -> Esc cycles.
+                    if (isReturningFromHistory && IsHomePinnedGridPreferred)
+                    {
+                        ApplyItemSelectionState(forceFirstPinnedItem: true);
                     }
 
                     // If we are returning from history and we have not set select item yet,
@@ -1068,6 +1122,12 @@ namespace Flow.Launcher.ViewModel
         public bool MainWindowVisibilityStatus { get; set; } = true;
 
         private bool _isGridMode;
+        /// <summary>
+        /// Indicates whether home pinned-results grid mode is active.
+        /// When enabled, list-side selection is cleared to keep grid as the active selection source.
+        /// When disabled, pinned-grid selection is cleared to return to list-side selection behavior.
+        /// This prevents stale selection from both areas appearing highlighted at the same time.
+        /// </summary>
         public bool IsGridMode
         {
             get => _isGridMode;
@@ -1076,6 +1136,11 @@ namespace Flow.Launcher.ViewModel
                 if (_isGridMode != value)
                 {
                     _isGridMode = value;
+
+                    // This cleanup only handles explicit mode transitions.
+                    // Other stale-selection guards (in other parts of the class) are still needed because
+                    // selection can also change through result refresh/reselect paths, WPF current-item
+                    // synchronization, and mouse hover timing events without toggling IsGridMode.
                     if (_isGridMode)
                     {
                         SelectedResults.SelectedIndex = -1;
@@ -2002,7 +2067,7 @@ namespace Flow.Launcher.ViewModel
                     // If switching from List to Grid, we should clear and add the results
                     PinnedResults.Clear();
                     PinnedResults.AddResults(results, "PinnedGrid");
-                    SelectPinnedGridOnHomePage();
+                    ApplyItemSelectionState(forceFirstPinnedItem: true);
 
                     // Force a refresh so that results will be updated when home page is disabled
                     if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(_emptyResult, _pinnedMetadata, query,
@@ -2551,7 +2616,7 @@ namespace Flow.Launcher.ViewModel
             // Update WPF properties
             MainWindowVisibility = Visibility.Visible;
             MainWindowVisibilityStatus = true;
-            SelectPinnedGridOnHomePage();
+            ApplyItemSelectionState(forceFirstPinnedItem: true);
             VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = true });
 
             // Switch keyboard layout
@@ -2737,10 +2802,7 @@ namespace Flow.Launcher.ViewModel
 
             Results.AddResults(resultsForUpdates, token, reSelect);
 
-            if (IsGridMode)
-            {
-                SelectPinnedGridOnHomePage();
-            }
+            ApplyItemSelectionState();
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>")]
