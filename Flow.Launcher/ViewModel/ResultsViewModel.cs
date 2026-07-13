@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
@@ -108,41 +108,9 @@ namespace Flow.Launcher.ViewModel
             set => _settings.ItemHeightSize = value;
         }
 
-        private int _selectedIndex = -1;
-        public int SelectedIndex
-        {
-            get => _selectedIndex;
-            set
-            {
-                if (_mainVM != null)
-                {
-                    if (_mainVM.IsGridMode && this == _mainVM.Results && value != -1)
-                        return;
-                    if (!_mainVM.IsGridMode && this == _mainVM.PinnedResults && value != -1)
-                        return;
-                }
-                _selectedIndex = value;
-                OnPropertyChanged(nameof(SelectedIndex));
-            }
-        }
+        public int SelectedIndex { get; set; }
 
-        private ResultViewModel _selectedItem;
-        public ResultViewModel SelectedItem
-        {
-            get => _selectedItem;
-            set
-            {
-                if (_mainVM != null)
-                {
-                    if (_mainVM.IsGridMode && this == _mainVM.Results && value != null)
-                        return;
-                    if (!_mainVM.IsGridMode && this == _mainVM.PinnedResults && value != null)
-                        return;
-                }
-                _selectedItem = value;
-                OnPropertyChanged(nameof(SelectedItem));
-            }
-        }
+        public ResultViewModel SelectedItem { get; set; }
         public Thickness Margin { get; set; }
         public Visibility Visibility { get; set; } = Visibility.Collapsed;
 
@@ -278,13 +246,11 @@ namespace Flow.Launcher.ViewModel
 
         private void UpdateResults(List<ResultViewModel> newResults, bool reselect = true, CancellationToken token = default)
         {
-            var isCurrentResultsInactiveGrid = _mainVM != null && _mainVM.IsGridMode && this == _mainVM.Results;
-
             lock (_collectionLock)
             {
                 // update UI in one run, so it can avoid UI flickering
                 Results.Update(newResults, token);
-                if (reselect && Results.Any() && !isCurrentResultsInactiveGrid)
+                if (reselect && Results.Any())
                     SelectedItem = Results[0];
             }
             OnPropertyChanged(nameof(IsEmpty));
@@ -298,10 +264,7 @@ namespace Flow.Launcher.ViewModel
                     if (_mainVM == null || // The results are for preview only in appearance page
                         _mainVM.ResultsSelected(this)) // The results are selected
                     {
-                        if (!isCurrentResultsInactiveGrid)
-                        {
-                            SelectedIndex = 0;
-                        }
+                        SelectedIndex = 0;
                         Visibility = Visibility.Visible;
                     }
                     break;
