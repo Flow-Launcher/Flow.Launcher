@@ -114,41 +114,65 @@ public class PreviewMarkdownScrollViewer : MarkdownScrollViewer
 
     private static void OpenHyperlink(object sender, ExecutedRoutedEventArgs e)
     {
-        string rawUrl = null;
-
         var uri = e.Parameter as Uri;
-        if (uri is null && e.Parameter is string s)
-        {
-            rawUrl = s;
-
-            try { uri = new Uri(s); }
-            catch (UriFormatException) { }
-        }
-
         if (uri is null)
         {
-            if (rawUrl is not null)
+            if (e.Parameter is not string s)
             {
                 Log.Warn(nameof(PreviewMarkdownScrollViewer),
-                    $"Unable to parse hyperlink URL: \"{rawUrl}\"",
+                    $"Unexpected hyperlink parameter type: {e.Parameter?.GetType().Name ?? "null"}",
                     nameof(OpenHyperlink));
+                return;
             }
+            else
+            {
+                try
+                {
+                    uri = new Uri(s);
+                }
+                catch (UriFormatException)
+                {
+                    Log.Warn(nameof(PreviewMarkdownScrollViewer),
+                        $"Unable to parse hyperlink URL: \"{s}\"",
+                        nameof(OpenHyperlink));
+                    return;
+                }
+            }
+        }
 
+        // Relative URIs have no base to resolve against so can't be used as web addresses.
+        if (!uri.IsAbsoluteUri)
+        {
+            Log.Warn(nameof(PreviewMarkdownScrollViewer),
+                $"Skipping relative hyperlink: {uri}",
+                nameof(OpenHyperlink));
             return;
         }
 
-        if (uri.IsAbsoluteUri && IsSafeScheme(uri.Scheme))
-        {
-            App.API.OpenWebUrl(uri);
-            App.API.HideMainWindow();
-            e.Handled = true;
-        }
-        else
+        if (!IsSafeScheme(uri.Scheme))
         {
             Log.Warn(nameof(PreviewMarkdownScrollViewer),
-                $"Skipping hyperlink with scheme \"{uri.Scheme}\": {uri}",
+                $"Skipping hyperlink with unsafe scheme \"{uri.Scheme}\": {uri}",
                 nameof(OpenHyperlink));
+            return;
         }
+
+        try
+        {
+            App.API.OpenWebUrl(uri);
+        }
+        catch (Exception ex)
+        {
+            Log.Error(nameof(PreviewMarkdownScrollViewer),
+                $"Failed to open URL \"{uri}\": {ex.Message}",
+                nameof(OpenHyperlink));
+            return;
+        }
+
+        // successfully parsed and opened the url link,
+        // so we can hide the window now
+        App.API.HideMainWindow();
+        e.Handled = true;
     }
 
     private static bool IsSafeScheme(string scheme)
