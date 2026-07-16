@@ -19,9 +19,15 @@
         }
 
         public bool AutoRestartAfterChanging
-        { 
+        {
             get => Settings.AutoRestartAfterChanging;
             set => Settings.AutoRestartAfterChanging = value;
+        }
+
+        public bool HotReloadAfterChanging
+        {
+            get => Settings.HotReloadAfterChanging;
+            set => Settings.HotReloadAfterChanging = value;
         }
     }
 }

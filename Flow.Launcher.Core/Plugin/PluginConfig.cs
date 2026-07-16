@@ -110,7 +110,7 @@ namespace Flow.Launcher.Core.Plugin
             return (unique_list, duplicate_list);
         }
 
-        private static PluginMetadata GetPluginMetadata(string pluginDirectory)
+        internal static PluginMetadata GetPluginMetadata(string pluginDirectory)
         {
             string configPath = Path.Combine(pluginDirectory, Constant.PluginMetadataFileName);
             if (!File.Exists(configPath))

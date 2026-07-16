@@ -91,7 +91,13 @@ public static class PluginInstaller
             return; // do not restart on failure
         }
 
-        if (Settings.AutoRestartAfterChanging)
+        if (Settings.HotReloadAfterChanging && await PluginManager.ReloadPluginAsync(newPlugin.ID))
+        {
+            PublicApi.Instance.ShowMsg(
+                Localize.installbtn(),
+                Localize.InstallSuccessHotReload(newPlugin.Name));
+        }
+        else if (Settings.AutoRestartAfterChanging)
         {
             PublicApi.Instance.RestartApp();
         }
@@ -186,7 +192,14 @@ public static class PluginInstaller
             return; // don not restart on failure
         }
 
-        if (Settings.AutoRestartAfterChanging)
+        if (Settings.HotReloadAfterChanging && !PublicApi.Instance.PluginModified(oldPlugin.ID))
+        {
+            // The plugin was fully unloaded and its directory deleted, so no restart is needed
+            PublicApi.Instance.ShowMsg(
+                Localize.uninstallbtn(),
+                Localize.UninstallSuccessHotReload(oldPlugin.Name));
+        }
+        else if (Settings.AutoRestartAfterChanging)
         {
             PublicApi.Instance.RestartApp();
         }
@@ -246,7 +259,13 @@ public static class PluginInstaller
             return; // do not restart on failure
         }
 
-        if (Settings.AutoRestartAfterChanging)
+        if (Settings.HotReloadAfterChanging && await PluginManager.ReloadPluginAsync(oldPlugin.ID))
+        {
+            PublicApi.Instance.ShowMsg(
+                Localize.updatebtn(),
+                Localize.UpdateSuccessHotReload(newPlugin.Name));
+        }
+        else if (Settings.AutoRestartAfterChanging)
         {
             PublicApi.Instance.RestartApp();
         }
@@ -328,6 +347,7 @@ public static class PluginInstaller
     public static async Task UpdateAllPluginsAsync(IEnumerable<PluginUpdateInfo> resultsForUpdate, bool restart)
     {
         var anyPluginSuccess = false;
+        var allPluginsHotReloaded = true;
         await Task.WhenAll(resultsForUpdate.Select(async plugin =>
         {
             var downloadToFilePath = Path.Combine(Path.GetTempPath(), $"{plugin.Name}-{plugin.NewVersion}.zip");
@@ -352,6 +372,11 @@ public static class PluginInstaller
                 }
 
                 anyPluginSuccess = true;
+
+                if (!Settings.HotReloadAfterChanging || !await PluginManager.ReloadPluginAsync(plugin.ID))
+                {
+                    allPluginsHotReloaded = false;
+                }
             }
             catch (Exception e)
             {
@@ -362,7 +387,13 @@ public static class PluginInstaller
 
         if (!anyPluginSuccess) return;
 
-        if (restart)
+        if (allPluginsHotReloaded)
+        {
+            PublicApi.Instance.ShowMsg(
+                Localize.updatebtn(),
+                Localize.PluginsUpdateSuccessHotReload());
+        }
+        else if (restart)
         {
             PublicApi.Instance.RestartApp();
         }

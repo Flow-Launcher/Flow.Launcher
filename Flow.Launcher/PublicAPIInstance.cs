@@ -626,6 +626,10 @@ namespace Flow.Launcher
         public Task<bool> UninstallPluginAsync(PluginMetadata pluginMetadata, bool removePluginSettings = false) =>
             PluginManager.UninstallPluginAsync(pluginMetadata, removePluginSettings);
 
+        public Task<bool> ReloadPluginAsync(string id) => PluginManager.ReloadPluginAsync(id);
+
+        public Task ReloadAllPluginsAsync() => PluginManager.ReloadAllPluginsAsync();
+
         public long StopwatchLogDebug(string className, string message, Action action, [CallerMemberName] string methodName = "") =>
             Stopwatch.Debug(className, message, action, methodName);
 

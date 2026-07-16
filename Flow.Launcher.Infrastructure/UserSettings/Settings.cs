@@ -265,6 +265,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public int MaxHistoryResultsToShowForHomePage { get; set; } = 5;
 
         public bool AutoRestartAfterChanging { get; set; } = false;
+        public bool HotReloadAfterChanging { get; set; } = true;
         public bool ShowUnknownSourceWarning { get; set; } = true;
         public bool AutoUpdatePlugins { get; set; } = true;
 

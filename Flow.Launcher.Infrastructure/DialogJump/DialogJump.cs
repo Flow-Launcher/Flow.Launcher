@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
@@ -143,6 +144,33 @@ namespace Flow.Launcher.Infrastructure.DialogJump
                     Metadata = pair.Metadata
                 };
                 _dialogJumpDialogs.TryAdd(dialogJumpDialog, null);
+            }
+        }
+
+        public static void RemoveDialogJumpPlugin(PluginPair pair)
+        {
+            foreach (var explorer in _dialogJumpExplorers.Keys.Where(e => e.Metadata.ID == pair.Metadata.ID).ToList())
+            {
+                if (_dialogJumpExplorers.TryRemove(explorer, out var explorerWindow))
+                {
+                    explorerWindow?.Dispose();
+                }
+
+                lock (_lastExplorerLock)
+                {
+                    if (_lastExplorer == explorer)
+                    {
+                        _lastExplorer = null;
+                    }
+                }
+            }
+
+            foreach (var dialog in _dialogJumpDialogs.Keys.Where(d => d.Metadata.ID == pair.Metadata.ID).ToList())
+            {
+                if (_dialogJumpDialogs.TryRemove(dialog, out var dialogWindow))
+                {
+                    dialogWindow?.Dispose();
+                }
             }
         }
 

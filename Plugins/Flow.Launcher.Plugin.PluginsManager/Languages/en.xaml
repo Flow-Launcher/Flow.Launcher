@@ -44,6 +44,10 @@
     <system:String x:Key="plugin_pluginsmanager_uninstall_success_no_restart">Plugin {0} successfully uninstalled. Please restart Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_success_no_restart">Plugin {0} successfully updated. Please restart Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_all_success_no_restart">{0} plugins successfully updated. Please restart Flow.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_success_hot_reload">Plugin {0} successfully installed and ready to use.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_uninstall_success_hot_reload">Plugin {0} successfully uninstalled.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_success_hot_reload">Plugin {0} successfully updated and ready to use.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_success_hot_reload">{0} plugins successfully updated and ready to use.</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_modified_error">Plugin {0} has already been modified. Please restart Flow before making any further changes.</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_modified_error_title">{0} modified already</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_modified_error_message">Please restart Flow before making any further changes</system:String>
@@ -69,4 +73,5 @@
     <!--  Settings menu items  -->
     <system:String x:Key="plugin_pluginsmanager_plugin_settings_unknown_source">Install from unknown source warning</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_settings_auto_restart">Restart Flow Launcher automatically after installing/uninstalling/updating plugin via Plugins Manager</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_settings_hot_reload">Reload plugins in place after installing/uninstalling/updating them via Plugins Manager, without restarting Flow Launcher</system:String>
 </ResourceDictionary>

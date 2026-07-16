@@ -12,6 +12,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
         <CheckBox
             Grid.Row="0"
@@ -23,5 +24,10 @@
             Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
             Content="{DynamicResource plugin_pluginsmanager_plugin_settings_auto_restart}"
             IsChecked="{Binding AutoRestartAfterChanging}" />
+        <CheckBox
+            Grid.Row="2"
+            Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
+            Content="{DynamicResource plugin_pluginsmanager_plugin_settings_hot_reload}"
+            IsChecked="{Binding HotReloadAfterChanging}" />
     </Grid>
 </UserControl>

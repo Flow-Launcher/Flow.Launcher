@@ -2,7 +2,9 @@
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.Loader;
+using System.Threading.Tasks;
 
 namespace Flow.Launcher.Core.Plugin
 {
@@ -13,9 +15,40 @@ namespace Flow.Launcher.Core.Plugin
         private readonly AssemblyName assemblyName;
 
         internal PluginAssemblyLoader(string assemblyFilePath)
+            : base(name: Path.GetFileNameWithoutExtension(assemblyFilePath), isCollectible: true)
         {
             dependencyResolver = new AssemblyDependencyResolver(assemblyFilePath);
             assemblyName = new AssemblyName(Path.GetFileNameWithoutExtension(assemblyFilePath));
+        }
+
+        /// <summary>
+        /// Initiates unload of the given load context and returns a weak reference that can be used to
+        /// verify the context has actually been collected. Kept in a separate non-inlined method so the
+        /// caller's stack frame holds no strong reference to the context that would prevent collection.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        internal static WeakReference UnloadAndGetWeakReference(PluginAssemblyLoader loader)
+        {
+            var weakReference = new WeakReference(loader);
+            loader.Unload();
+            return weakReference;
+        }
+
+        /// <summary>
+        /// Waits for an unloaded context to be collected. Returns false if the context is still alive
+        /// after all attempts, which means something (e.g. a cached delegate) is pinning the old assembly.
+        /// </summary>
+        internal static async Task<bool> WaitForUnloadAsync(WeakReference weakReference, int maxAttempts = 10)
+        {
+            for (var i = 0; i < maxAttempts && weakReference.IsAlive; i++)
+            {
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                if (!weakReference.IsAlive) return true;
+                await Task.Delay(100);
+            }
+
+            return !weakReference.IsAlive;
         }
 
         internal Assembly LoadAssemblyAndDependencies()

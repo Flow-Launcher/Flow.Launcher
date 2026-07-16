@@ -287,6 +287,20 @@
 
             <ui:SettingsCard
                 Margin="0 4 0 0"
+                Description="{DynamicResource hotReloadAfterChangingToolTip}"
+                Header="{DynamicResource hotReloadAfterChanging}">
+                <ui:SettingsCard.HeaderIcon>
+                    <ui:FontIcon Glyph="&#xE72C;" />
+                </ui:SettingsCard.HeaderIcon>
+
+                <ui:ToggleSwitch
+                    IsOn="{Binding Settings.HotReloadAfterChanging}"
+                    OffContent="{DynamicResource disable}"
+                    OnContent="{DynamicResource enable}" />
+            </ui:SettingsCard>
+
+            <ui:SettingsCard
+                Margin="0 4 0 0"
                 Description="{DynamicResource showUnknownSourceWarningToolTip}"
                 Header="{DynamicResource showUnknownSourceWarning}">
                 <ui:SettingsCard.HeaderIcon>
