@@ -1206,9 +1206,25 @@ namespace Flow.Launcher.ViewModel
             if (ShouldShowPreview())
             {
                 if (PluginManager.AllowAlwaysPreview() && CanExternalPreviewSelectedResult(out var path))
+                {
+                    // Close anything else first so we open external fresh.
+                    // OpenExternalPreviewAsync may not be safe when one is already showing.
+                    if (InternalPreviewVisible)
+                        HideInternalPreview();
+                    if (ExternalPreviewVisible)
+                        await CloseExternalPreviewAsync();
+
                     await OpenExternalPreviewAsync(path);
+                }
                 else
+                {
+                    // Close stale external then show internal.
+                    // ShowInternalPreview is safe to call even when already visible.
+                    if (ExternalPreviewVisible)
+                        await CloseExternalPreviewAsync();
+
                     ShowInternalPreview();
+                }
             }
             else
             {
