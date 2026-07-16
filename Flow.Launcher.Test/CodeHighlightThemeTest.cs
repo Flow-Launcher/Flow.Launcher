@@ -1,3 +1,4 @@
+using System.Reflection;
 using Flow.Launcher.Resources.Controls;
 using NUnit.Framework;
 using NUnit.Framework.Legacy;
@@ -7,13 +8,21 @@ namespace Flow.Launcher.Test
     [TestFixture]
     internal class CodeHighlightThemeTest
     {
-        private string _savedThemeName;
+        private static readonly PropertyInfo ActiveThemeProperty =
+            typeof(PreviewMarkdownScrollViewer).GetProperty("ActiveTheme",
+                BindingFlags.Static | BindingFlags.NonPublic);
+
+        private static readonly FieldInfo ActiveThemeBackingField =
+            typeof(PreviewMarkdownScrollViewer).GetField("<ActiveTheme>k__BackingField",
+                BindingFlags.Static | BindingFlags.NonPublic);
+
+        private object _savedTheme;
 
         [SetUp]
-        public void SetUp() => _savedThemeName = PreviewMarkdownScrollViewer.ActiveThemeName;
+        public void SetUp() => _savedTheme = ActiveThemeProperty.GetValue(null);
 
         [TearDown]
-        public void TearDown() => PreviewMarkdownScrollViewer.ApplyCodeHighlightTheme(_savedThemeName, isDark: true);
+        public void TearDown() => ActiveThemeBackingField.SetValue(null, _savedTheme);
 
         [Test]
         public void GivenAutoSetting_WhenAppIsDark_ThenActiveThemeIsADarkTheme()
