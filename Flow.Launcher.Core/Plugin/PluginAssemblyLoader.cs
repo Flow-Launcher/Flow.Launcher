@@ -45,7 +45,8 @@ namespace Flow.Launcher.Core.Plugin
                 GC.Collect();
                 GC.WaitForPendingFinalizers();
                 if (!weakReference.IsAlive) return true;
-                await Task.Delay(100);
+                // ConfigureAwait(false) keeps the blocking GC loop off the UI thread's context
+                await Task.Delay(100).ConfigureAwait(false);
             }
 
             return !weakReference.IsAlive;

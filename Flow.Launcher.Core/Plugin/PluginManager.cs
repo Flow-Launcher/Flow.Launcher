@@ -147,12 +147,10 @@ namespace Flow.Launcher.Core.Plugin
             try
             {
                 string pluginDirectory;
-                var fromPendingInstall = false;
                 if (_pendingInstallPaths.TryRemove(id, out var newDirectory) && Directory.Exists(newDirectory))
                 {
                     // Freshly installed or updated: unload the running version if any, load the new directory
                     pluginDirectory = newDirectory;
-                    fromPendingInstall = true;
                     if (_allLoadedPlugins.TryGetValue(id, out var oldPair))
                     {
                         await UnloadPluginAsync(oldPair);
@@ -171,7 +169,13 @@ namespace Flow.Launcher.Core.Plugin
                 var success = await LoadAndInitializePluginAsync(pluginDirectory);
                 if (success)
                 {
-                    ClearPluginModified(id);
+                    // A concurrent install may have recorded a newer version while this reload was
+                    // loading the old directory; keep the modified flag in that case so the
+                    // restart-required flow (or a later reload of the pending version) still applies
+                    if (!_pendingInstallPaths.ContainsKey(id))
+                    {
+                        ClearPluginModified(id);
+                    }
                 }
                 else
                 {
@@ -291,16 +295,12 @@ namespace Flow.Launcher.Core.Plugin
             // Since dotnet plugins need to get assembly name first, we should update plugin directory after loading plugins
             UpdatePluginDirectory(metadatas);
 
+            // Cannot race the earlier ContainsKey check: all callers hold the per-plugin
+            // lifecycle lock, which serializes every path that adds to _allLoadedPlugins
             if (!_allLoadedPlugins.TryAdd(metadata.ID, pair))
             {
                 PublicApi.Instance.LogError(ClassName, $"Plugin with ID {metadata.ID} already loaded");
-                // Clean up the just-created duplicate instance and its load context
                 await DisposePluginAsync(pair);
-                if (_assemblyLoaders.TryRemove(metadata.ID, out var duplicateLoader))
-                {
-                    pair.Plugin = null;
-                    PluginAssemblyLoader.UnloadAndGetWeakReference(duplicateLoader);
-                }
                 return false;
             }
 
@@ -1230,7 +1230,13 @@ namespace Flow.Launcher.Core.Plugin
                     return false;
                 }
 
-                if (!string.Equals(newMetadata.ID, plugin.ID, StringComparison.Ordinal))
+                if (string.IsNullOrEmpty(plugin.ID))
+                {
+                    // Install-from-URL requests do not know the plugin ID until the package is
+                    // downloaded, so adopt the ID from the package's plugin.json
+                    plugin.ID = newMetadata.ID;
+                }
+                else if (!string.Equals(newMetadata.ID, plugin.ID, StringComparison.Ordinal))
                 {
                     // A mismatched package would install and later load under a different identity
                     // than the plugin the user asked for
@@ -1430,7 +1436,7 @@ namespace Flow.Launcher.Core.Plugin
                 }
             }
 
-            if (!deleted)
+            if (!deleted && Directory.Exists(plugin.PluginDirectory))
             {
                 // Marked for deletion. Will be deleted on next start up
                 using var _ = File.CreateText(Path.Combine(plugin.PluginDirectory, DataLocation.PluginDeleteFile));
