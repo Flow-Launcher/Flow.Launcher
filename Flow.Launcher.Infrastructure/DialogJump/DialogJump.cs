@@ -169,14 +169,14 @@ namespace Flow.Launcher.Infrastructure.DialogJump
             {
                 if (_dialogJumpDialogs.TryRemove(dialog, out var dialogWindow))
                 {
-                    // Drop the cached active dialog window if it belongs to the removed plugin,
-                    // so later navigation cannot call into the disposed instance
+                    // Drop the cached active dialog window so later navigation cannot call into the
+                    // disposed instance. The cached window may have been created by foreground
+                    // detection without being stored in the dictionary, so it cannot be attributed
+                    // to a plugin by comparing values; clearing it is safe because the next
+                    // foreground event repopulates it from the remaining dialogs.
                     lock (_dialogWindowLock)
                     {
-                        if (_dialogWindow == dialogWindow)
-                        {
-                            _dialogWindow = null;
-                        }
+                        _dialogWindow = null;
                     }
 
                     dialogWindow?.Dispose();
@@ -556,8 +556,8 @@ namespace Flow.Launcher.Infrastructure.DialogJump
                         dialog.Metadata.Disabled) continue; // Plugin is disabled
 
                     IDialogJumpDialogWindow dialogWindow;
-                    // The dialog can be removed concurrently by a plugin hot reload
-                    _dialogJumpDialogs.TryGetValue(dialog, out var existingDialogWindow);
+                    // Skip dialogs removed concurrently by a plugin hot reload
+                    if (!_dialogJumpDialogs.TryGetValue(dialog, out var existingDialogWindow)) continue;
                     if (existingDialogWindow != null && existingDialogWindow.Handle == hwnd)
                     {
                         // If the dialog window is already in the list, no need to check again
@@ -978,8 +978,8 @@ namespace Flow.Launcher.Infrastructure.DialogJump
                     dialog.Metadata.Disabled) continue; // Plugin is disabled
 
                 IDialogJumpDialogWindow dialogWindow;
-                // The dialog can be removed concurrently by a plugin hot reload
-                _dialogJumpDialogs.TryGetValue(dialog, out var existingDialogWindow);
+                // Skip dialogs removed concurrently by a plugin hot reload
+                if (!_dialogJumpDialogs.TryGetValue(dialog, out var existingDialogWindow)) continue;
                 if (existingDialogWindow != null && existingDialogWindow.Handle == hwnd)
                 {
                     // If the dialog window is already in the list, no need to check again

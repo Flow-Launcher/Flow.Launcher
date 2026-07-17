@@ -619,7 +619,10 @@ namespace Flow.Launcher.Plugin
         /// Fully reload all loaded plugins, without restarting the app. Plugins already marked as
         /// modified are skipped. See <see cref="ReloadPluginAsync"/>.
         /// </summary>
-        public Task ReloadAllPluginsAsync();
+        /// <returns>
+        /// True if every reloaded plugin succeeded; false if any plugin failed to reload.
+        /// </returns>
+        public Task<bool> ReloadAllPluginsAsync();
 
         /// <summary>
         /// Log debug message of the time taken to execute a method

@@ -65,6 +65,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_settings_saved">All Flow Launcher settings saved</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded">Reloaded all applicable plugin data</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_plugins_reloaded">Reloaded all plugins</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_plugins_reload_failed">Some plugins failed to reload. A restart may be required.</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_shutdown_computer">Are you sure you want to shut the computer down?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer">Are you sure you want to restart the computer?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer_advanced">Are you sure you want to restart the computer with Advanced Boot Options?</system:String>

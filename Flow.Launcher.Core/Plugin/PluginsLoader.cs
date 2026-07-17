@@ -92,10 +92,11 @@ namespace Flow.Launcher.Core.Plugin
             {
                 Assembly assembly = null;
                 IAsyncPlugin plugin = null;
+                PluginAssemblyLoader assemblyLoader = null;
 
                 try
                 {
-                    var assemblyLoader = new PluginAssemblyLoader(metadata.ExecuteFilePath);
+                    assemblyLoader = new PluginAssemblyLoader(metadata.ExecuteFilePath);
                     assembly = assemblyLoader.LoadAssemblyAndDependencies();
 
                     var type = assemblyLoader.FromAssemblyGetTypeOfInterface(assembly,
@@ -104,10 +105,6 @@ namespace Flow.Launcher.Core.Plugin
                     plugin = Activator.CreateInstance(type) as IAsyncPlugin;
 
                     metadata.AssemblyName = assembly.GetName().Name;
-
-                    // Keep the load context around so the assembly can be unloaded when the plugin is
-                    // reloaded or uninstalled
-                    PluginManager.TrackAssemblyLoader(metadata.ID, assemblyLoader);
                 }
 #if DEBUG
                 catch (Exception)
@@ -134,6 +131,11 @@ namespace Flow.Launcher.Core.Plugin
 #endif
 
                 if (plugin == null) return;
+
+                // Track the load context only for an accepted plugin, so a rejected one cannot
+                // displace the running instance's context; it is used to unload the assembly when
+                // the plugin is reloaded or uninstalled
+                PluginManager.TrackAssemblyLoader(metadata.ID, assemblyLoader);
 
                 pair = new PluginPair { Plugin = plugin, Metadata = metadata };
             });

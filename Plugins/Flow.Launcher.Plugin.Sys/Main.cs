@@ -458,10 +458,20 @@ namespace Flow.Launcher.Plugin.Sys
                     {
                         // Hide the window first then show msg after done because the reload could take a while, so not to make user think it's frozen.
                         Context.API.HideMainWindow();
-                        _ = Context.API.ReloadAllPluginsAsync().ContinueWith(_ =>
-                            Context.API.ShowMsg(
-                                Localize.flowlauncher_plugin_sys_dlgtitle_success(),
-                                Localize.flowlauncher_plugin_sys_dlgtext_all_plugins_reloaded()),
+                        _ = Context.API.ReloadAllPluginsAsync().ContinueWith(t =>
+                            {
+                                if (t.Result)
+                                {
+                                    Context.API.ShowMsg(
+                                        Localize.flowlauncher_plugin_sys_dlgtitle_success(),
+                                        Localize.flowlauncher_plugin_sys_dlgtext_all_plugins_reloaded());
+                                }
+                                else
+                                {
+                                    Context.API.ShowMsgError(
+                                        Localize.flowlauncher_plugin_sys_dlgtext_all_plugins_reload_failed());
+                                }
+                            },
                             CancellationToken.None,
                             TaskContinuationOptions.OnlyOnRanToCompletion,
                             TaskScheduler.Current);

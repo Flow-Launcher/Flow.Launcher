@@ -191,16 +191,22 @@ namespace Flow.Launcher.Core.Plugin
         /// <summary>
         /// Fully reloads all loaded plugins. Plugins already flagged as modified are skipped because
         /// their on-disk directory is pending deletion or replacement and requires a restart.
+        /// Returns false if any plugin failed to reload.
         /// </summary>
-        public static async Task ReloadAllPluginsAsync()
+        public static async Task<bool> ReloadAllPluginsAsync()
         {
+            var allSucceeded = true;
             foreach (var pair in GetAllLoadedPlugins())
             {
                 var id = pair.Metadata.ID;
                 if (PluginModified(id)) continue;
 
-                await ReloadPluginAsync(id);
+                if (!await ReloadPluginAsync(id))
+                {
+                    allSucceeded = false;
+                }
             }
+            return allSucceeded;
         }
 
         /// <summary>
@@ -493,6 +499,9 @@ namespace Flow.Launcher.Core.Plugin
                     PublicApi.Instance.LogDebug(ClassName, $"Disable plugin <{pair.Metadata.Name}> because init failed");
                 }
 
+                // Do not leave a plugin that failed to initialize queryable via its action keywords
+                UnregisterPluginActionKeywords(pair.Metadata.ID);
+
                 // Even if the plugin cannot be initialized, we still need to add it in all plugin list so that
                 // we can remove the plugin from Plugin or Store page or Plugin Manager plugin.
                 _allInitializedPlugins.TryAdd(pair.Metadata.ID, pair);
@@ -500,19 +509,38 @@ namespace Flow.Launcher.Core.Plugin
                 return false;
             }
 
-            // Register ResultsUpdated event so that plugin query can use results updated interface
-            _register?.RegisterResultsUpdatedEvent(pair);
+            try
+            {
+                // Register ResultsUpdated event so that plugin query can use results updated interface
+                _register?.RegisterResultsUpdatedEvent(pair);
 
-            // Update plugin metadata translation after the plugin is initialized with IPublicAPI instance
-            Internationalization.UpdatePluginMetadataTranslation(pair);
+                // Update plugin metadata translation after the plugin is initialized with IPublicAPI instance
+                Internationalization.UpdatePluginMetadataTranslation(pair);
 
-            // Add plugin to Dialog Jump plugin list after the plugin is initialized
-            DialogJump.InitializeDialogJumpPlugin(pair);
+                // Add plugin to Dialog Jump plugin list after the plugin is initialized
+                DialogJump.InitializeDialogJumpPlugin(pair);
 
-            // Add plugin to lists after the plugin is initialized
-            AddPluginToLists(pair);
+                // Add plugin to lists after the plugin is initialized
+                AddPluginToLists(pair);
 
-            return true;
+                return true;
+            }
+            catch (Exception e)
+            {
+                // Roll back partial registrations so the failure surfaces as a clean init failure
+                // instead of a plugin that is half-registered
+                PublicApi.Instance.LogException(ClassName, $"Fail to register plugin: {pair.Metadata.Name}", e);
+                RemovePluginFromLists(pair.Metadata.ID);
+                UnregisterPluginActionKeywords(pair.Metadata.ID);
+                _register?.UnregisterResultsUpdatedEvent(pair);
+                DialogJump.RemoveDialogJumpPlugin(pair);
+
+                pair.Metadata.Disabled = true;
+                pair.Metadata.HomeDisabled = true;
+                _allInitializedPlugins.TryAdd(pair.Metadata.ID, pair);
+                _initFailedPlugins.TryAdd(pair.Metadata.ID, pair);
+                return false;
+            }
         }
 
         private static void RegisterPluginActionKeywords(PluginPair pair)
@@ -1202,6 +1230,17 @@ namespace Flow.Launcher.Core.Plugin
                     return false;
                 }
 
+                if (!string.Equals(newMetadata.ID, plugin.ID, StringComparison.Ordinal))
+                {
+                    // A mismatched package would install and later load under a different identity
+                    // than the plugin the user asked for
+                    PublicApi.Instance.ShowMsgError(Localize.failedToInstallPluginTitle(plugin.Name),
+                        Localize.pluginIDMismatchMessage());
+                    PublicApi.Instance.LogError(ClassName,
+                        $"Plugin package ID <{newMetadata.ID}> does not match the requested plugin ID <{plugin.ID}> for {plugin.Name}");
+                    return false;
+                }
+
                 if (SameOrLesserPluginVersionExists(newMetadata))
                 {
                     PublicApi.Instance.ShowMsgError(Localize.failedToInstallPluginTitle(plugin.Name),
@@ -1265,13 +1304,8 @@ namespace Flow.Launcher.Core.Plugin
                     ModifiedPlugins.TryAdd(plugin.ID, 0);
                 }
 
-                // Remember where this version was installed so a hot reload can load it without a
-                // restart. Skip packages whose plugin.json ID differs from the requested plugin ID:
-                // hot reloading those would activate a different plugin than the one requested.
-                if (string.Equals(newMetadata.ID, plugin.ID, StringComparison.OrdinalIgnoreCase))
-                {
-                    _pendingInstallPaths[plugin.ID] = newPluginPath;
-                }
+                // Remember where this version was installed so a hot reload can load it without a restart
+                _pendingInstallPaths[plugin.ID] = newPluginPath;
 
                 return true;
             }
@@ -1290,6 +1324,22 @@ namespace Flow.Launcher.Core.Plugin
         }
 
         internal static async Task<bool> UninstallPluginAsync(PluginMetadata plugin, bool removePluginFromSettings, bool removePluginSettings, bool checkModified)
+        {
+            // Take the same per-plugin lifecycle lock as ReloadPluginAsync so a concurrent reload
+            // cannot resurrect a plugin that is being uninstalled or race its file removal
+            var semaphore = _reloadLocks.GetOrAdd(plugin.ID, _ => new SemaphoreSlim(1, 1));
+            await semaphore.WaitAsync();
+            try
+            {
+                return await UninstallPluginUnlockedAsync(plugin, removePluginFromSettings, removePluginSettings, checkModified);
+            }
+            finally
+            {
+                semaphore.Release();
+            }
+        }
+
+        private static async Task<bool> UninstallPluginUnlockedAsync(PluginMetadata plugin, bool removePluginFromSettings, bool removePluginSettings, bool checkModified)
         {
             if (checkModified && PluginModified(plugin.ID))
             {
