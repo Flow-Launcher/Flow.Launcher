@@ -363,11 +363,13 @@ public static class PluginInstaller
                 // check if user cancelled download before installing plugin
                 if (cts.IsCancellationRequested)
                 {
+                    allPluginsHotReloaded = false;
                     return;
                 }
 
                 if (!await PublicApi.Instance.UpdatePluginAsync(plugin.PluginExistingMetadata, plugin.PluginNewUserPlugin, downloadToFilePath))
                 {
+                    allPluginsHotReloaded = false;
                     return;
                 }
 
@@ -380,6 +382,7 @@ public static class PluginInstaller
             }
             catch (Exception e)
             {
+                allPluginsHotReloaded = false;
                 PublicApi.Instance.LogException(ClassName, "Failed to update plugin", e);
                 PublicApi.Instance.ShowMsgError(Localize.ErrorUpdatingPlugin());
             }

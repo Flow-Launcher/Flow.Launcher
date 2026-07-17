@@ -175,11 +175,9 @@ namespace Flow.Launcher.Core.Plugin
                 }
                 else
                 {
-                    // Keep the new version discoverable so a later reload attempt can still pick it up
-                    if (fromPendingInstall)
-                    {
-                        _pendingInstallPaths.TryAdd(id, pluginDirectory);
-                    }
+                    // The plugin is unloaded at this point, so keep its directory discoverable
+                    // in either case: a later reload attempt can then still pick it up
+                    _pendingInstallPaths.TryAdd(id, pluginDirectory);
                     ModifiedPlugins.TryAdd(id, 0);
                 }
                 return success;
@@ -270,6 +268,13 @@ namespace Flow.Launcher.Core.Plugin
         {
             var metadata = PluginConfig.GetPluginMetadata(pluginDirectory);
             if (metadata == null) return false;
+
+            // Bail out before creating an assembly load context for a plugin that is already running
+            if (_allLoadedPlugins.ContainsKey(metadata.ID))
+            {
+                PublicApi.Instance.LogError(ClassName, $"Plugin with ID {metadata.ID} already loaded");
+                return false;
+            }
 
             var metadatas = new List<PluginMetadata> { metadata };
             Settings.UpdatePluginSettings(metadatas);
@@ -1260,8 +1265,13 @@ namespace Flow.Launcher.Core.Plugin
                     ModifiedPlugins.TryAdd(plugin.ID, 0);
                 }
 
-                // Remember where this version was installed so a hot reload can load it without a restart
-                _pendingInstallPaths[plugin.ID] = newPluginPath;
+                // Remember where this version was installed so a hot reload can load it without a
+                // restart. Skip packages whose plugin.json ID differs from the requested plugin ID:
+                // hot reloading those would activate a different plugin than the one requested.
+                if (string.Equals(newMetadata.ID, plugin.ID, StringComparison.OrdinalIgnoreCase))
+                {
+                    _pendingInstallPaths[plugin.ID] = newPluginPath;
+                }
 
                 return true;
             }

@@ -169,6 +169,16 @@ namespace Flow.Launcher.Infrastructure.DialogJump
             {
                 if (_dialogJumpDialogs.TryRemove(dialog, out var dialogWindow))
                 {
+                    // Drop the cached active dialog window if it belongs to the removed plugin,
+                    // so later navigation cannot call into the disposed instance
+                    lock (_dialogWindowLock)
+                    {
+                        if (_dialogWindow == dialogWindow)
+                        {
+                            _dialogWindow = null;
+                        }
+                    }
+
                     dialogWindow?.Dispose();
                 }
             }
@@ -381,7 +391,15 @@ namespace Flow.Launcher.Infrastructure.DialogJump
 
         public static string GetActiveExplorerPath()
         {
-            return RefreshLastExplorer() ? _dialogJumpExplorers[_lastExplorer].GetExplorerPath() : string.Empty;
+            if (!RefreshLastExplorer()) return string.Empty;
+
+            lock (_lastExplorerLock)
+            {
+                // The explorer can be removed concurrently by a plugin hot reload
+                return _lastExplorer != null && _dialogJumpExplorers.TryGetValue(_lastExplorer, out var explorerWindow)
+                    ? explorerWindow?.GetExplorerPath() ?? string.Empty
+                    : string.Empty;
+            }
         }
 
         #endregion
@@ -538,7 +556,8 @@ namespace Flow.Launcher.Infrastructure.DialogJump
                         dialog.Metadata.Disabled) continue; // Plugin is disabled
 
                     IDialogJumpDialogWindow dialogWindow;
-                    var existingDialogWindow = _dialogJumpDialogs[dialog];
+                    // The dialog can be removed concurrently by a plugin hot reload
+                    _dialogJumpDialogs.TryGetValue(dialog, out var existingDialogWindow);
                     if (existingDialogWindow != null && existingDialogWindow.Handle == hwnd)
                     {
                         // If the dialog window is already in the list, no need to check again
@@ -855,7 +874,10 @@ namespace Flow.Launcher.Infrastructure.DialogJump
             string path;
             lock (_lastExplorerLock)
             {
-                path = _dialogJumpExplorers[_lastExplorer]?.GetExplorerPath();
+                // The explorer can be removed concurrently by a plugin hot reload
+                path = _lastExplorer != null && _dialogJumpExplorers.TryGetValue(_lastExplorer, out var explorerWindow)
+                    ? explorerWindow?.GetExplorerPath()
+                    : null;
             }
 
             // Check path null or empty
@@ -941,7 +963,8 @@ namespace Flow.Launcher.Infrastructure.DialogJump
                 if (PublicApi.Instance.PluginModified(dialog.Metadata.ID) || // Plugin is modified
                     dialog.Metadata.Disabled) continue; // Plugin is disabled
 
-                var dialogWindow = _dialogJumpDialogs[dialog];
+                // The dialog can be removed concurrently by a plugin hot reload
+                _dialogJumpDialogs.TryGetValue(dialog, out var dialogWindow);
                 if (dialogWindow != null && dialogWindow.Handle == hwnd)
                 {
                     return dialogWindow;
@@ -955,7 +978,8 @@ namespace Flow.Launcher.Infrastructure.DialogJump
                     dialog.Metadata.Disabled) continue; // Plugin is disabled
 
                 IDialogJumpDialogWindow dialogWindow;
-                var existingDialogWindow = _dialogJumpDialogs[dialog];
+                // The dialog can be removed concurrently by a plugin hot reload
+                _dialogJumpDialogs.TryGetValue(dialog, out var existingDialogWindow);
                 if (existingDialogWindow != null && existingDialogWindow.Handle == hwnd)
                 {
                     // If the dialog window is already in the list, no need to check again

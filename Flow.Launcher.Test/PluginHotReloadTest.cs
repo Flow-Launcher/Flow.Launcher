@@ -66,7 +66,9 @@ namespace Flow.Launcher.Test
                     ActionKeywords = new List<string> { actionKeyword },
                     ActionKeyword = actionKeyword,
                     IcoPath = string.Empty,
-                    PluginDirectory = string.Empty
+                    // Must be set before PluginDirectory, whose setter combines it into ExecuteFilePath
+                    ExecuteFileName = "run.exe",
+                    PluginDirectory = Path.GetTempPath()
                 }
             };
         }

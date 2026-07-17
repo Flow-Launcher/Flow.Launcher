@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using Windows.Win32;
@@ -461,6 +462,8 @@ namespace Flow.Launcher.Plugin.Sys
                             Context.API.ShowMsg(
                                 Localize.flowlauncher_plugin_sys_dlgtitle_success(),
                                 Localize.flowlauncher_plugin_sys_dlgtext_all_plugins_reloaded()),
+                            CancellationToken.None,
+                            TaskContinuationOptions.OnlyOnRanToCompletion,
                             TaskScheduler.Current);
                         return true;
                     }

@@ -500,11 +500,16 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
                                 // check if user cancelled download before installing plugin
                                 if (cts.IsCancellationRequested)
+                                {
+                                    allPluginsHotReloaded = false;
                                     return;
-                                else
-                                    if (!await Context.API.UpdatePluginAsync(plugin.PluginExistingMetadata, plugin.PluginNewUserPlugin,
-                                        downloadToFilePath))
-                                       return;
+                                }
+                                else if (!await Context.API.UpdatePluginAsync(plugin.PluginExistingMetadata, plugin.PluginNewUserPlugin,
+                                    downloadToFilePath))
+                                {
+                                    allPluginsHotReloaded = false;
+                                    return;
+                                }
 
                                 anyPluginSuccess = true;
 
@@ -515,6 +520,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                             }
                             catch (Exception ex)
                             {
+                                allPluginsHotReloaded = false;
                                 Context.API.LogException(ClassName, $"Update failed for {plugin.Name}", ex.InnerException);
                                 Context.API.ShowMsgError(
                                     Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"),
