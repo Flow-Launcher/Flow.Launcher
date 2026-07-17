@@ -27,7 +27,7 @@ namespace Flow.Launcher.Test
             await InvokeUpdatePreviewAsync(viewModel);
             ClassicAssert.IsFalse(viewModel.InternalPreviewVisible);
 
-            viewModel.PreviewSelectedItem = ViewModel("Normal", PreviewVisibility.Default, settings);
+            viewModel.PreviewSelectedItem = ViewModel("Normal", PreviewVisibility.Optional, settings);
             await InvokeUpdatePreviewAsync(viewModel);
 
             ClassicAssert.IsTrue(viewModel.InternalPreviewVisible);
@@ -49,7 +49,7 @@ namespace Flow.Launcher.Test
             ClassicAssert.IsFalse(viewModel.ExternalPreviewVisible);
             ClassicAssert.IsFalse(viewModel.InternalPreviewVisible);
 
-            viewModel.PreviewSelectedItem = ViewModel("Normal", PreviewVisibility.Default, settings);
+            viewModel.PreviewSelectedItem = ViewModel("Normal", PreviewVisibility.Optional, settings);
             await InvokeUpdatePreviewAsync(viewModel);
 
             ClassicAssert.IsTrue(viewModel.InternalPreviewVisible);
@@ -82,7 +82,7 @@ namespace Flow.Launcher.Test
             var viewModel = CreatePreviewViewModel(settings, ResultAreaColumnPreviewHidden);
 
             viewModel.PreviewSelectedItem =
-                ViewModel("Markdown", PreviewVisibility.Default, settings, PreviewContentType.Markdown);
+                ViewModel("Markdown", PreviewVisibility.Optional, settings, PreviewContentType.Markdown);
             await InvokeUpdatePreviewAsync(viewModel);
 
             ClassicAssert.IsFalse(viewModel.InternalPreviewVisible);
@@ -101,7 +101,7 @@ namespace Flow.Launcher.Test
             await InvokeUpdatePreviewAsync(viewModel);
             ClassicAssert.IsTrue(viewModel.InternalPreviewVisible);
 
-            viewModel.PreviewSelectedItem = ViewModel("Normal", PreviewVisibility.Default, settings);
+            viewModel.PreviewSelectedItem = ViewModel("Normal", PreviewVisibility.Optional, settings);
             await InvokeUpdatePreviewAsync(viewModel);
 
             ClassicAssert.IsFalse(viewModel.InternalPreviewVisible);
@@ -117,7 +117,7 @@ namespace Flow.Launcher.Test
             var viewModel = CreatePreviewViewModel(settings, ResultAreaColumnPreviewShown);
             SetManualPreviewOverride(viewModel, true);
 
-            viewModel.PreviewSelectedItem = ViewModel("Normal", PreviewVisibility.Default, settings);
+            viewModel.PreviewSelectedItem = ViewModel("Normal", PreviewVisibility.Optional, settings);
             await InvokeUpdatePreviewAsync(viewModel);
 
             ClassicAssert.IsTrue(viewModel.InternalPreviewVisible);
@@ -140,7 +140,7 @@ namespace Flow.Launcher.Test
             await InvokeUpdatePreviewAsync(viewModel);
             ClassicAssert.IsFalse(viewModel.InternalPreviewVisible);
 
-            viewModel.PreviewSelectedItem = ViewModel("Normal", PreviewVisibility.Default, settings);
+            viewModel.PreviewSelectedItem = ViewModel("Normal", PreviewVisibility.Optional, settings);
             await InvokeUpdatePreviewAsync(viewModel);
 
             ClassicAssert.IsFalse(viewModel.InternalPreviewVisible);
@@ -159,7 +159,7 @@ namespace Flow.Launcher.Test
             var viewModel = CreatePreviewViewModel(settings, ResultAreaColumnPreviewHidden);
             SetManualPreviewOverride(viewModel, false);
 
-            viewModel.PreviewSelectedItem = ViewModel("Normal", PreviewVisibility.Default, settings);
+            viewModel.PreviewSelectedItem = ViewModel("Normal", PreviewVisibility.Optional, settings);
             await InvokeUpdatePreviewAsync(viewModel);
 
             ClassicAssert.IsFalse(viewModel.InternalPreviewVisible);
@@ -178,7 +178,7 @@ namespace Flow.Launcher.Test
             await InvokeUpdatePreviewAsync(viewModel);
             ClassicAssert.IsFalse(viewModel.InternalPreviewVisible);
 
-            viewModel.PreviewSelectedItem = ViewModel("Normal", PreviewVisibility.Default, settings);
+            viewModel.PreviewSelectedItem = ViewModel("Normal", PreviewVisibility.Optional, settings);
             await InvokeUpdatePreviewAsync(viewModel);
 
             ClassicAssert.IsTrue(viewModel.InternalPreviewVisible);
@@ -196,7 +196,7 @@ namespace Flow.Launcher.Test
             var viewModel = CreatePreviewViewModel(settings, ResultAreaColumnPreviewHidden);
             SetManualPreviewOverride(viewModel, false);
 
-            viewModel.PreviewSelectedItem = ViewModel("Normal", PreviewVisibility.Default, settings);
+            viewModel.PreviewSelectedItem = ViewModel("Normal", PreviewVisibility.Optional, settings);
             await InvokeUpdatePreviewAsync(viewModel);
             ClassicAssert.IsFalse(viewModel.InternalPreviewVisible);
 
@@ -238,7 +238,7 @@ namespace Flow.Launcher.Test
                 AlwaysPreview = false
             };
             var viewModel = CreatePreviewViewModel(settings, ResultAreaColumnPreviewShown);
-            viewModel.PreviewSelectedItem = ViewModel("Normal", PreviewVisibility.Default, settings);
+            viewModel.PreviewSelectedItem = ViewModel("Normal", PreviewVisibility.Optional, settings);
 
             // Setup correctness assertions
             ClassicAssert.IsNull(ReadManualPreviewOverride(viewModel)); // user has not manually toggled preview
@@ -288,7 +288,7 @@ namespace Flow.Launcher.Test
             };
             var viewModel = CreatePreviewViewModel(settings, ResultAreaColumnPreviewShown);
             SetExternalPreviewVisible(viewModel, true);
-            viewModel.PreviewSelectedItem = ViewModel("Normal", PreviewVisibility.Default, settings);
+            viewModel.PreviewSelectedItem = ViewModel("Normal", PreviewVisibility.Optional, settings);
 
             // Setup correctness assertions
             ClassicAssert.IsNull(ReadManualPreviewOverride(viewModel)); // user has not manually toggled preview
@@ -320,7 +320,7 @@ namespace Flow.Launcher.Test
             await InvokeUpdatePreviewAsync(viewModel);
             ClassicAssert.IsFalse(viewModel.InternalPreviewVisible);
 
-            viewModel.PreviewSelectedItem = ViewModel("Normal", PreviewVisibility.Default, settings);
+            viewModel.PreviewSelectedItem = ViewModel("Normal", PreviewVisibility.Optional, settings);
             await InvokeUpdatePreviewAsync(viewModel);
 
             ClassicAssert.IsFalse(viewModel.InternalPreviewVisible);

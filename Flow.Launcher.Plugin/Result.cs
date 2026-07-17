@@ -295,9 +295,9 @@ namespace Flow.Launcher.Plugin
         /// preview is rendered. Use this to force the pane open (for example a result whose whole purpose
         /// is its markdown preview) or to hide it on results that have nothing useful to preview.
         /// </remarks>
-        /// <default><see cref="Flow.Launcher.Plugin.PreviewVisibility.Default"/></default>
+        /// <default><see cref="Flow.Launcher.Plugin.PreviewVisibility.Optional"/></default>
         [JsonConverter(typeof(JsonStringEnumConverter<PreviewVisibility>))]
-        public PreviewVisibility PreviewVisibility { get; set; } = PreviewVisibility.Default;
+        public PreviewVisibility PreviewVisibility { get; set; } = PreviewVisibility.Optional;
 
         /// <summary>
         /// Determines if the user selection count should be added to the score. This can be useful when set to false to allow the result sequence order to be the same everytime instead of changing based on selection.
@@ -466,11 +466,11 @@ namespace Flow.Launcher.Plugin
     public enum PreviewVisibility
     {
         /// <summary>
-        /// Follow Flow Launcher's normal preview behaviour (the global "Always Preview" setting and the
-        /// user's manual preview toggle decide whether the pane is shown).
+        /// Only show the preview pane if the user requests it, 
+        /// either via the global "Always Preview" setting or the manual toggle.
         /// </summary>
-        [JsonStringEnumMemberName("default")]
-        Default,
+        [JsonStringEnumMemberName("optional")]
+        Optional,
 
         /// <summary>
         /// Never show the preview pane for this result, even when the global "Always Preview" setting is on.
