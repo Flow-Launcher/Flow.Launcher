@@ -291,9 +291,7 @@ namespace Flow.Launcher.Plugin
         /// Controls whether Flow Launcher's preview pane is shown for this result.
         /// </summary>
         /// <remarks>
-        /// This is independent of <see cref="PreviewInfo.ContentType"/>, which only decides how the
-        /// preview is rendered. Use this to force the pane open (for example a result whose whole purpose
-        /// is its markdown preview) or to hide it on results that have nothing useful to preview.
+        /// Changing this from the default <see cref="Flow.Launcher.Plugin.PreviewVisibility.Optional"/> will override the user's preferences for whether to show previews.
         /// </remarks>
         /// <default><see cref="Flow.Launcher.Plugin.PreviewVisibility.Optional"/></default>
         [JsonConverter(typeof(JsonStringEnumConverter<PreviewVisibility>))]

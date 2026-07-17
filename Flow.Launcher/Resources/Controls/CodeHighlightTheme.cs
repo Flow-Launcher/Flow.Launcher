@@ -127,8 +127,7 @@ internal sealed record CodeHighlightTheme(
         Decorator:         Color.FromRgb(0xC6, 0x78, 0xDD),
         Error:             Color.FromRgb(0xE0, 0x6C, 0x75));
 
-    // Light counterpart so "Auto" has something legible to fall back to on light colour schemes;
-    // the bundled dark themes wash out on a light background.
+    // This code theme is used in "Auto" mode when the app is set to a light theme
     public static CodeHighlightTheme VSCodeLight { get; } = new(
         Name: "VS Code Light",
         DefaultForeground: Color.FromRgb(0x1F, 0x1F, 0x1F),

@@ -1036,7 +1036,7 @@ namespace Flow.Launcher.ViewModel
 
         private bool? _selectedItemFromQueryResults;
 
-        // User explicitly toggled the preview on or off via F1 / Alt+P.
+        // User explicitly toggled the preview on or off via hotkey.
         // null = no manual override; the global AlwaysPreview setting decides.
         private bool? _manualPreviewOverride;
 
@@ -1071,9 +1071,8 @@ namespace Flow.Launcher.ViewModel
 
         public int ResultAreaColumn { get; set; } = ResultAreaColumnPreviewShown;
 
-        // This is not a reliable indicator of whether external preview is visible due to the
-        // ability of manually closing/exiting the external preview program which, does not inform flow that
-        // preview is no longer available.
+        // Tracks whether Flow opened an external preview.
+        // External programs can close without notifying Flow, so this can be stale.
         public bool ExternalPreviewVisible { get; private set; }
 
         private async Task ShowPreviewAsync()
@@ -1117,9 +1116,6 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private async Task TogglePreviewAsync()
         {
-            // Flip the override, then re-evaluate through UpdatePreviewAsync.
-            // Never/Always results automatically override the toggle from
-            // ShouldShowPreview, so there is no special-casing needed here.
             if (InternalPreviewVisible || ExternalPreviewVisible)
                 _manualPreviewOverride = false;
             else
@@ -1156,7 +1152,7 @@ namespace Flow.Launcher.ViewModel
             ResultAreaColumn = ResultAreaColumnPreviewHidden;
         }
 
-        // Pure decision: should the pane be visible right now?
+        // Determines whether the preview pane should be visible.
         private bool ShouldShowPreview()
         {
             if (PreviewSelectedItem?.HidePreviewPane == true) return false;
@@ -1164,8 +1160,7 @@ namespace Flow.Launcher.ViewModel
             return _manualPreviewOverride ?? Settings.AlwaysPreview;
         }
 
-        // Called on every selection change. Never/Always results override the
-        // pane immediately. Normal results leave the pane as-is and refresh.
+        // Shows or hides the correct preview panel. Called on each selection change.
         private async Task UpdatePreviewAsync()
         {
             if (ShouldShowPreview())
@@ -1197,8 +1192,8 @@ namespace Flow.Launcher.ViewModel
             return PreviewSelectedItem == Results.SelectedItem;
         }
 
-        // Called when the window reopens. Clears the manual F1 toggle then
-        // evaluates the pane state from scratch.
+        // Clears the manual toggle then reevaluates preview
+        // Called when the window reopens. 
         public async Task ResetPreviewAsync()
         {
             _manualPreviewOverride = null;
@@ -1207,7 +1202,6 @@ namespace Flow.Launcher.ViewModel
             {
                 if (PluginManager.AllowAlwaysPreview() && CanExternalPreviewSelectedResult(out var path))
                 {
-                    // Close anything else first so we open external fresh.
                     // OpenExternalPreviewAsync may not be safe when one is already showing.
                     if (InternalPreviewVisible)
                         HideInternalPreview();

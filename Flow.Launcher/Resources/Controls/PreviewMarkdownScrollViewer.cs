@@ -183,7 +183,7 @@ public class PreviewMarkdownScrollViewer : MarkdownScrollViewer
 
     private void ScheduleCompatibilityFixes()
     {
-        // Coalesce: if a traversal is already queued, let it run rather than piling up more.
+        // Skip if a traversal is already queued.
         if (_pendingFixOperation is { Status: DispatcherOperationStatus.Pending })
             return;
 
