@@ -1155,8 +1155,8 @@ namespace Flow.Launcher.ViewModel
         // Determines whether the preview pane should be visible.
         private bool ShouldShowPreview()
         {
-            if (PreviewSelectedItem?.HidePreviewPane == true) return false;
-            if (PreviewSelectedItem?.ForcePreviewPane == true) return true;
+            if (PreviewSelectedItem?.Result.PreviewVisibility == PreviewVisibility.Never) return false;
+            if (PreviewSelectedItem?.Result.PreviewVisibility == PreviewVisibility.Always) return true;
             return _manualPreviewOverride ?? Settings.AlwaysPreview;
         }
 

@@ -292,16 +292,6 @@ namespace Flow.Launcher.ViewModel
 
         public bool IsMarkdownPreview => Result.Preview?.ContentType == PreviewContentType.Markdown;
 
-        /// <summary>
-        /// True when <see cref="PreviewVisibility.Never"/> hides the pane for this result.
-        /// </summary>
-        public bool HidePreviewPane => Result.PreviewVisibility == PreviewVisibility.Never;
-
-        /// <summary>
-        /// True when <see cref="PreviewVisibility.Always"/> forces the pane open for this result.
-        /// </summary>
-        public bool ForcePreviewPane => Result.PreviewVisibility == PreviewVisibility.Always;
-
         public Result Result { get; }
         public int ResultProgress
         {
