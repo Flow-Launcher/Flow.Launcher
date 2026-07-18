@@ -18,7 +18,8 @@ namespace Flow.Launcher.Test.Plugins
             bool leaveShellOpen = false,
             bool closeShellAfterPress = false,
             bool useWindowsTerminal = false,
-            bool runAsAdmin = false)
+            bool runAsAdmin = false,
+            CustomTemplateShellConfig customConfig = null)
             => Main.CreateProcessStartInfo(
                 command,
                 shell,
@@ -26,7 +27,8 @@ namespace Flow.Launcher.Test.Plugins
                 closeShellAfterPress,
                 useWindowsTerminal,
                 runAsAdmin,
-                ClosePrompt);
+                ClosePrompt,
+                customConfig);
 
         #region CMD
 
@@ -292,6 +294,181 @@ namespace Flow.Launcher.Test.Plugins
 
         #endregion
 
+                #region CustomTemplate
+
+        [Test]
+        public void CustomTemplate_BasicExePath_WithDefaultTemplate()
+        {
+            var config = new CustomTemplateShellConfig
+            {
+                ExecutablePath = "pwsh.exe"
+            };
+            var info = Create(
+                command: "Get-Process",
+                shell: Shell.CustomTemplate,
+                customConfig: config);
+
+            Assert.That(info.FileName, Is.EqualTo("pwsh.exe"));
+            Assert.That(info.Arguments, Is.EqualTo("Get-Process"));
+        }
+
+        [Test]
+        public void CustomTemplate_NullConfig_FallsBackToRunCommand()
+        {
+            var info = Create(
+                command: "notepad",
+                shell: Shell.CustomTemplate);
+
+            Assert.That(info.FileName, Is.EqualTo("notepad"));
+        }
+
+        [Test]
+        public void CustomTemplate_EmptyConfig_FallsBackToRunCommand()
+        {
+            var config = new CustomTemplateShellConfig();
+            var info = Create(
+                command: "notepad test.txt",
+                shell: Shell.CustomTemplate,
+                customConfig: config);
+
+            Assert.That(info.FileName, Is.EqualTo("notepad"));
+            Assert.That(info.Arguments, Is.EqualTo("test.txt"));
+        }
+
+        [Test]
+        public void CustomTemplate_ReplacesCommandPlaceholder()
+        {
+            var config = new CustomTemplateShellConfig
+            {
+                ExecutablePath = "cmd.exe",
+                ArgumentsTemplate = "/c \"{command}\""
+            };
+            var info = Create(
+                command: "dir",
+                shell: Shell.CustomTemplate,
+                customConfig: config);
+
+            Assert.That(info.FileName, Is.EqualTo("cmd.exe"));
+            Assert.That(info.Arguments, Is.EqualTo("/c \"dir\""));
+        }
+
+        [Test]
+        public void CustomTemplate_WhitespaceExecutablePath_FallsBackToRunCommand()
+        {
+            var config = new CustomTemplateShellConfig
+            {
+                ExecutablePath = "  "
+            };
+            var info = Create(
+                command: "notepad",
+                shell: Shell.CustomTemplate,
+                customConfig: config);
+
+            Assert.That(info.FileName, Is.EqualTo("notepad"));
+        }
+
+        [Test]
+        public void CustomTemplate_EmptyTemplate_FallsBackToDefaultTemplate()
+        {
+            var config = new CustomTemplateShellConfig
+            {
+                ExecutablePath = "pwsh.exe",
+                ArgumentsTemplate = ""
+            };
+            var info = Create(
+                command: "ls",
+                shell: Shell.CustomTemplate,
+                customConfig: config);
+
+            Assert.That(info.FileName, Is.EqualTo("pwsh.exe"));
+            Assert.That(info.Arguments, Is.EqualTo("ls"));
+        }
+
+        [Test]
+        public void CustomTemplate_WhitespaceTemplate_FallsBackToDefaultTemplate()
+        {
+            var config = new CustomTemplateShellConfig
+            {
+                ExecutablePath = "pwsh.exe",
+                ArgumentsTemplate = "  "
+            };
+            var info = Create(
+                command: "ls",
+                shell: Shell.CustomTemplate,
+                customConfig: config);
+
+            Assert.That(info.FileName, Is.EqualTo("pwsh.exe"));
+            Assert.That(info.Arguments, Is.EqualTo("ls"));
+        }
+
+        [Test]
+        public void CustomTemplate_TrimsExecutablePath()
+        {
+            var config = new CustomTemplateShellConfig
+            {
+                ExecutablePath = "  pwsh.exe  ",
+                ArgumentsTemplate = "/c \"{command}\""
+            };
+            var info = Create(
+                command: "dir",
+                shell: Shell.CustomTemplate,
+                customConfig: config);
+
+            Assert.That(info.FileName, Is.EqualTo("pwsh.exe"));
+            Assert.That(info.Arguments, Is.EqualTo("/c \"dir\""));
+        }
+
+        [Test]
+        public void CustomTemplate_ExpandsEnvironmentVariablesInExecutablePath()
+        {
+            var config = new CustomTemplateShellConfig
+            {
+                ExecutablePath = "%USERPROFILE%\\pwsh.exe"
+            };
+            var info = Create(
+                command: "ls",
+                shell: Shell.CustomTemplate,
+                customConfig: config);
+
+            var expectedPath = Environment.ExpandEnvironmentVariables("%USERPROFILE%\\pwsh.exe");
+            Assert.That(info.FileName, Is.EqualTo(expectedPath));
+        }
+
+        [Test]
+        public void CustomTemplate_StripsQuotesFromExecutablePath()
+        {
+            var config = new CustomTemplateShellConfig
+            {
+                ExecutablePath = "\"C:\\Program Files\\pwsh.exe\""
+            };
+            var info = Create(
+                command: "ls",
+                shell: Shell.CustomTemplate,
+                customConfig: config);
+
+            Assert.That(info.FileName, Is.EqualTo("C:\\Program Files\\pwsh.exe"));
+            Assert.That(info.Arguments, Is.EqualTo("ls"));
+        }
+
+        [Test]
+        public void CustomTemplate_ExpandsEnvironmentVariablesInTemplate()
+        {
+            var config = new CustomTemplateShellConfig
+            {
+                ExecutablePath = "cmd.exe",
+                ArgumentsTemplate = "/c \"%USERPROFILE%\\{command}\""
+            };
+            var info = Create(
+                command: "test.cmd",
+                shell: Shell.CustomTemplate,
+                customConfig: config);
+
+            var expectedArg = $"/c \"{Environment.ExpandEnvironmentVariables("%USERPROFILE%")}\\test.cmd\"";
+            Assert.That(info.Arguments, Is.EqualTo(expectedArg));
+        }
+
+        #endregion
+
         #region Common
 
         [TestCase(false, "")]
@@ -307,6 +484,7 @@ namespace Flow.Launcher.Test.Plugins
         [TestCase(Shell.Powershell)]
         [TestCase(Shell.Pwsh)]
         [TestCase(Shell.RunCommand)]
+        [TestCase(Shell.CustomTemplate)]
         public void SetsWorkingDirectory(Shell shell)
         {
             var info = Create(shell: shell);
@@ -319,6 +497,7 @@ namespace Flow.Launcher.Test.Plugins
         [TestCase(Shell.Powershell)]
         [TestCase(Shell.Pwsh)]
         [TestCase(Shell.RunCommand)]
+        [TestCase(Shell.CustomTemplate)]
         public void SetsUseShellExecute(Shell shell)
         {
             var info = Create(shell: shell);
@@ -330,13 +509,25 @@ namespace Flow.Launcher.Test.Plugins
         [TestCase(Shell.Powershell)]
         [TestCase(Shell.Pwsh)]
         [TestCase(Shell.RunCommand)]
+        [TestCase(Shell.CustomTemplate)]
         public void ExpandsEnvironmentVariables(Shell shell)
         {
+            var expandedPath = Environment.ExpandEnvironmentVariables("%USERPROFILE%\\test");
+
+            CustomTemplateShellConfig config = null;
+            if (shell == Shell.CustomTemplate)
+            {
+                config = new CustomTemplateShellConfig
+                {
+                    ExecutablePath = "cmd.exe",
+                    ArgumentsTemplate = "/c \"{command}\""
+                };
+            }
+
             var info = Create(
                 command: "%USERPROFILE%\\test",
-                shell: shell);
-
-            var expandedPath = Environment.ExpandEnvironmentVariables("%USERPROFILE%\\test");
+                shell: shell,
+                customConfig: config);
 
             switch (shell)
             {
@@ -350,9 +541,14 @@ namespace Flow.Launcher.Test.Plugins
                 case Shell.RunCommand:
                     Assert.That(info.FileName, Is.EqualTo(expandedPath));
                     break;
+                case Shell.CustomTemplate:
+                    Assert.That(info.Arguments, Is.EqualTo($"/c \"{expandedPath}\""));
+                    break;
             }
         }
 
         #endregion
+
+
     }
 }

@@ -199,7 +199,8 @@ namespace Flow.Launcher.Plugin.Shell
                 _settings.CloseShellAfterPress,
                 _settings.UseWindowsTerminal,
                 runAsAdmin,
-                closePrompt);
+                closePrompt,
+                _settings.CustomTemplateShellConfig);
 
             _settings.AddCmdHistory(command);
             return info;
@@ -212,7 +213,8 @@ namespace Flow.Launcher.Plugin.Shell
             bool closeShellAfterPress,
             bool useWindowsTerminal,
             bool runAsAdmin,
-            string closePrompt)
+            string closePrompt,
+            CustomTemplateShellConfig customTemplateShellConfig = null)
         {
             command = command.Trim();
             command = Environment.ExpandEnvironmentVariables(command);
@@ -263,6 +265,13 @@ namespace Flow.Launcher.Plugin.Shell
                     ConfigureRunCommandStartInfo(
                         info,
                         command);
+                    break;
+
+                case Shell.CustomTemplate:
+                    ConfigureCustomTemplateShellStartInfo(
+                        info,
+                        command,
+                        customTemplateShellConfig);
                     break;
 
                 default:
@@ -424,6 +433,27 @@ namespace Flow.Launcher.Plugin.Shell
                 // Pass the whole command anyways so the OS produces a meaningful error.
                 info.FileName = command;
             }
+        }
+
+        private static void ConfigureCustomTemplateShellStartInfo(
+            ProcessStartInfo info,
+            string command,
+            CustomTemplateShellConfig config)
+        {
+            if (config == null || string.IsNullOrWhiteSpace(config.ExecutablePath))
+            {
+                // No valid custom shell configured, fall back to RunCommand behavior
+                ConfigureRunCommandStartInfo(info, command);
+                return;
+            }
+
+            info.FileName = Environment.ExpandEnvironmentVariables(config.ExecutablePath).Trim().Trim('"');;
+
+            var template = string.IsNullOrWhiteSpace(config.ArgumentsTemplate)
+                ? "{command}"
+                : Environment.ExpandEnvironmentVariables(config.ArgumentsTemplate).Trim();
+
+            info.Arguments = template.Replace("{command}", command);
         }
 
         private void Execute(Func<ProcessStartInfo, Process> startProcess, ProcessStartInfo info)
