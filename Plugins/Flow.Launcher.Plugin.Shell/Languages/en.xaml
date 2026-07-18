@@ -20,6 +20,9 @@
     <system:String x:Key="flowlauncher_plugin_cmd_command_not_found">Command not found: {0}</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_error_running_command">Error running the command: {0}</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_custom_template_exe_path">Executable path</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_custom_template_browse">Browse...</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_custom_template_browse_filter_exe">Executable files</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_custom_template_browse_filter_all">All files</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_custom_template_arguments">Arguments template</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_custom_template_exe_path_tooltip">Full path to the shell executable. Example: C:\Windows\System32\cmd.exe</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_custom_template_arguments_tooltip">Use {command} as a placeholder. Example: /k "{command}"</system:String>

@@ -111,6 +111,11 @@
                 VerticalAlignment="Center"
                 Text="{Binding Settings.CustomTemplateShellConfig.ExecutablePath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 ToolTip="{DynamicResource flowlauncher_plugin_cmd_custom_template_exe_path_tooltip}" />
+            <Button
+                Margin="{StaticResource SettingPanelItemLeftMargin}"
+                VerticalAlignment="Center"
+                Click="BrowseExecutablePath_Click"
+                Content="{DynamicResource flowlauncher_plugin_cmd_custom_template_browse}" />
         </StackPanel>
         <StackPanel
             Grid.Row="7"
