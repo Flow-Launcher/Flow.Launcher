@@ -472,6 +472,7 @@ namespace Flow.Launcher.Plugin.Sys
                                         Context.API.LogException(ClassName, "Failed to reload all plugins", t.Exception);
                                     }
                                     Context.API.ShowMsgError(
+                                        Localize.flowlauncher_plugin_sys_reload_all_plugins_cmd(),
                                         Localize.flowlauncher_plugin_sys_dlgtext_all_plugins_reload_failed());
                                 }
                             },

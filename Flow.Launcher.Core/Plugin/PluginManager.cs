@@ -1305,13 +1305,15 @@ namespace Flow.Launcher.Core.Plugin
                     PublicApi.Instance.LogException(ClassName, $"Failed to delete plugin marker file in {newPluginPath}", e);
                 }
 
+                // Remember where this version was installed so a hot reload can load it without a
+                // restart. Recorded before the modified flag so that a concurrent reload observing
+                // the flag always sees the pending path too and never clears the flag prematurely.
+                _pendingInstallPaths[plugin.ID] = newPluginPath;
+
                 if (checkModified)
                 {
                     ModifiedPlugins.TryAdd(plugin.ID, 0);
                 }
-
-                // Remember where this version was installed so a hot reload can load it without a restart
-                _pendingInstallPaths[plugin.ID] = newPluginPath;
 
                 return true;
             }
