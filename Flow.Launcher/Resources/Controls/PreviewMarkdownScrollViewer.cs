@@ -149,7 +149,7 @@ public class PreviewMarkdownScrollViewer : MarkdownScrollViewer
             return;
         }
 
-        if (!IsSafeScheme(uri.Scheme))
+        if (uri.Scheme != Uri.UriSchemeHttp && uri.Scheme != Uri.UriSchemeHttps)
         {
             Log.Warn(nameof(PreviewMarkdownScrollViewer),
                 $"Skipping hyperlink with unsafe scheme \"{uri.Scheme}\": {uri}",
@@ -169,16 +169,8 @@ public class PreviewMarkdownScrollViewer : MarkdownScrollViewer
             return;
         }
 
-        // successfully parsed and opened the url link,
-        // so we can hide the window now
         App.API.HideMainWindow();
         e.Handled = true;
-    }
-
-    private static bool IsSafeScheme(string scheme)
-    {
-        var lowered = scheme?.ToLowerInvariant() ?? "";
-        return lowered is not "javascript" and not "vbscript";
     }
 
     private void ScheduleCompatibilityFixes()
