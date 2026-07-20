@@ -285,7 +285,7 @@ namespace Flow.Launcher.Plugin
         /// <summary>
         /// Contains data used to populate the preview section of this result.
         /// </summary>
-        public PreviewInfo Preview { get; set; } = PreviewInfo.Default;
+        public PreviewInfo Preview { get; set; } = new PreviewInfo();
 
         /// <summary>
         /// Controls whether Flow Launcher's preview pane is shown for this result.
@@ -374,7 +374,7 @@ namespace Flow.Launcher.Plugin
                 PreviewPanel = PreviewPanel,
                 ProgressBar = ProgressBar,
                 ProgressBarColor = ProgressBarColor,
-                Preview = Preview,
+                Preview = Preview with { },
                 PreviewVisibility = PreviewVisibility,
                 AddSelectedCount = AddSelectedCount,
                 RecordKey = RecordKey,
