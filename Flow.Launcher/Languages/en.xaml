@@ -149,8 +149,8 @@
     <system:String x:Key="DoublePinyinSchemasXiaoLang">Xiao Lang</system:String>
     <system:String x:Key="HelpUsTranslateFlow">Help us translate Flow</system:String>
 
-    <system:String x:Key="AlwaysPreview">Always show optional previews</system:String>
-    <system:String x:Key="AlwaysPreviewToolTip">Show optional previews by default. Press {0} to toggle them. Some results always or never show previews regardless.</system:String>
+    <system:String x:Key="AlwaysPreview">Always Preview</system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Always open the preview panel. Press {0} to toggle. Some results may override this to always or never show their preview.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Shadow effect is not allowed while current theme has blur effect enabled</system:String>
     <system:String x:Key="searchDelay">Search Delay</system:String>
     <system:String x:Key="searchDelayToolTip">Adds a short delay while typing to reduce UI flicker and result load. Recommended if your typing speed is average.</system:String>
@@ -366,8 +366,8 @@
     <system:String x:Key="hotkeys">Hotkeys</system:String>
     <system:String x:Key="flowlauncherHotkey">Open Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Enter shortcut to show/hide Flow Launcher.</system:String>
-    <system:String x:Key="previewHotkey">Toggle Optional Previews</system:String>
-    <system:String x:Key="previewHotkeyToolTip">Enter shortcut to show/hide optional previews. Some results always or never show previews regardless.</system:String>
+    <system:String x:Key="previewHotkey">Toggle Preview</system:String>
+    <system:String x:Key="previewHotkeyToolTip">Enter shortcut to show/hide previews. Some results may override this to always or never show their preview.</system:String>
     <system:String x:Key="hotkeyPresets">Hotkey Presets</system:String>
     <system:String x:Key="hotkeyPresetsToolTip">List of currently registered hotkeys</system:String>
     <system:String x:Key="openResultModifiers">Open Result Modifier Key</system:String>
