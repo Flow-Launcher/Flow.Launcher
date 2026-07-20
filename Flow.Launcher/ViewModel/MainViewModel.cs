@@ -1012,7 +1012,16 @@ namespace Flow.Launcher.ViewModel
                 case nameof(Results.SelectedItem):
                     _selectedItemFromQueryResults = true;
                     PreviewSelectedItem = Results.SelectedItem;
-                    await UpdatePreviewAsync();
+                    try
+                    {
+                        await UpdatePreviewAsync();
+                    }
+                    catch (Exception e)
+                    {
+                        App.API.LogError(ClassName,
+                            $"Error updating preview on result selection: {e}");
+                    }
+
                     break;
             }
         }
@@ -1024,7 +1033,16 @@ namespace Flow.Launcher.ViewModel
                 case nameof(History.SelectedItem):
                     _selectedItemFromQueryResults = false;
                     PreviewSelectedItem = History.SelectedItem;
-                    await UpdatePreviewAsync();
+                    try
+                    {
+                        await UpdatePreviewAsync();
+                    }
+                    catch (Exception e)
+                    {
+                        App.API.LogError(ClassName,
+                            $"Error updating preview on history selection: {e}");
+                    }
+
                     break;
             }
         }
