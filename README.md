@@ -306,7 +306,7 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
 | <kbd>←</kbd>/<kbd>→</kbd>                                                 | Back to result / Open Context Menu              |
 | <kbd>Ctrl</kbd>+<kbd>O</kbd> , <kbd>Shift</kbd>+<kbd>Enter</kbd>          | Open Context Menu                               |
 | <kbd>Ctrl</kbd>+<kbd>Tab</kbd>                                            | Autocomplete                                    |
-| <kbd>F1</kbd>                                                             | Toggle optional previews                        |
+| <kbd>F1</kbd>                                                             | Toggle previews                                 |
 | <kbd>Esc</kbd>                                                            | Back to results / hide search window            |
 | <kbd>Ctrl</kbd>+<kbd>C</kbd>                                              | Copy folder / file                              |
 | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>C</kbd>                             | Copy folder / file path                         |
