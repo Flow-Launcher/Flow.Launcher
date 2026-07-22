@@ -1090,7 +1090,7 @@ namespace Flow.Launcher.ViewModel
         public int ResultAreaColumn { get; set; } = ResultAreaColumnPreviewShown;
 
         // Tracks whether Flow opened an external preview.
-        // External programs can close without notifying Flow, so this can be stale.
+        // This can be stale if external preview program closes the preview or exit without notifying Flow.
         public bool ExternalPreviewVisible { get; private set; }
 
         private async Task ShowPreviewAsync()
