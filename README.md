@@ -163,7 +163,7 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
 
 - Use <kbd>F1</kbd> to show or hide previews
 - Results can preview media files as large images, show an icon and description, or use markdown with code highlighting.
-- Show optional previews by default via Settings (Always Show Optional Previews).
+- Show previews by default via Settings (Always Preview).
 - Use <kbd>Ctrl</kbd>+<kbd>+</kbd>/<kbd>-</kbd> and <kbd>Ctrl</kbd>+<kbd>[</kbd>/<kbd>]</kbd> to adjust search window width and height quickly if the preview area is too narrow.
 
 ### Customizations
