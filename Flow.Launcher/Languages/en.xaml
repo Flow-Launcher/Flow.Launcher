@@ -150,7 +150,7 @@
     <system:String x:Key="HelpUsTranslateFlow">Help us translate Flow</system:String>
 
     <system:String x:Key="AlwaysPreview">Always Preview</system:String>
-    <system:String x:Key="AlwaysPreviewToolTip">Always open the preview panel. Press {0} to toggle. Some results may override this to always or never show their preview.</system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Always open the preview panel. Press {0} to toggle. Per their own requirements, plugins may override this to always or never for their results.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Shadow effect is not allowed while current theme has blur effect enabled</system:String>
     <system:String x:Key="searchDelay">Search Delay</system:String>
     <system:String x:Key="searchDelayToolTip">Adds a short delay while typing to reduce UI flicker and result load. Recommended if your typing speed is average.</system:String>
