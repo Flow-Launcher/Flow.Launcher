@@ -11,7 +11,7 @@ namespace Flow.Launcher.Plugin.Shell.Views
         public CMDSetting(Settings settings)
         {
             _settings = settings;
-            DataContext = new ViewModels.ShellSettingViewModel(settings);;
+            DataContext = new ViewModels.ShellSettingViewModel(settings);
             InitializeComponent();
         }
 

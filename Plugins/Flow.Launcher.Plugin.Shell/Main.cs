@@ -440,24 +440,28 @@ namespace Flow.Launcher.Plugin.Shell
             string command,
             CustomTemplateShellConfig config)
         {
-            if (config == null || string.IsNullOrWhiteSpace(config.ExecutablePath))
-            {
-                // No valid custom shell configured, fall back to RunCommand behavior
-                ConfigureRunCommandStartInfo(info, command);
+            if (config == null)
                 return;
+
+            if (!string.IsNullOrWhiteSpace(config.ExecutablePath))
+                info.FileName = Environment.ExpandEnvironmentVariables(config.ExecutablePath).Trim().Trim('"');
+
+            if (!string.IsNullOrWhiteSpace(config.ArgumentsTemplate))
+            {
+                var template = Environment.ExpandEnvironmentVariables(config.ArgumentsTemplate).Trim();
+                info.Arguments = template.Replace("{command}", command);
             }
-
-            info.FileName = Environment.ExpandEnvironmentVariables(config.ExecutablePath).Trim().Trim('"');;
-
-            var template = string.IsNullOrWhiteSpace(config.ArgumentsTemplate)
-                ? "{command}"
-                : Environment.ExpandEnvironmentVariables(config.ArgumentsTemplate).Trim();
-
-            info.Arguments = template.Replace("{command}", command);
         }
 
         private void Execute(Func<ProcessStartInfo, Process> startProcess, ProcessStartInfo info)
         {
+            if (string.IsNullOrEmpty(info.FileName))
+            {
+                Context.API.ShowMsgError(GetTranslatedPluginTitle(),
+                    Localize.flowlauncher_plugin_cmd_error_no_exe_path_set());
+                return;
+            }
+
             try
             {
                 ShellCommand.Execute(startProcess, info);

@@ -294,14 +294,60 @@ namespace Flow.Launcher.Test.Plugins
 
         #endregion
 
-                #region CustomTemplate
+        #region CustomTemplate
 
         [Test]
-        public void CustomTemplate_BasicExePath_WithDefaultTemplate()
+        public void CustomTemplate_NullConfig_LeavesFileNameAsEmptyString()
+        {
+            var info = Create(
+                command: "notepad",
+                shell: Shell.CustomTemplate);
+
+            Assert.That(info.FileName, Is.Empty);
+        }
+
+        [TestCase("")]
+        [TestCase("  ")]
+        public void CustomTemplate_EmptyExecutablePath_LeavesFileNameAsEmptyString(string exePath)
+        {
+            var config = new CustomTemplateShellConfig { ExecutablePath = exePath };
+            var info = Create(
+                command: "notepad",
+                shell: Shell.CustomTemplate,
+                customConfig: config);
+
+            Assert.That(info.FileName, Is.Empty);
+        }
+
+
+        [TestCase("cmd.exe", "/c \"{command}\"", "dir", "/c \"dir\"")]
+        [TestCase("powershell.exe", "-Command \"{command};\"", "Get-Process", "-Command \"Get-Process;\"")]
+        [TestCase("wsl.exe", "{command}", "ls", "ls")]
+        public void CustomTemplate_ReplacesCommandPlaceholder(
+            string exePath, string template, string command, string expectedArgs)
         {
             var config = new CustomTemplateShellConfig
             {
-                ExecutablePath = "pwsh.exe"
+                ExecutablePath = exePath,
+                ArgumentsTemplate = template
+            };
+            var info = Create(
+                command: command,
+                shell: Shell.CustomTemplate,
+                customConfig: config);
+
+            Assert.That(info.FileName, Is.EqualTo(exePath));
+            Assert.That(info.Arguments, Is.EqualTo(expectedArgs));
+        }
+
+        [TestCase("")]
+        [TestCase("  ")]
+        public void CustomTemplate_EmptyTemplate_DoesNotSetArguments(string template)
+        {
+            var config = new CustomTemplateShellConfig
+            {
+                ExecutablePath = "pwsh.exe",
+                ArgumentsTemplate = template
             };
             var info = Create(
                 command: "Get-Process",
@@ -309,96 +355,7 @@ namespace Flow.Launcher.Test.Plugins
                 customConfig: config);
 
             Assert.That(info.FileName, Is.EqualTo("pwsh.exe"));
-            Assert.That(info.Arguments, Is.EqualTo("Get-Process"));
-        }
-
-        [Test]
-        public void CustomTemplate_NullConfig_FallsBackToRunCommand()
-        {
-            var info = Create(
-                command: "notepad",
-                shell: Shell.CustomTemplate);
-
-            Assert.That(info.FileName, Is.EqualTo("notepad"));
-        }
-
-        [Test]
-        public void CustomTemplate_EmptyConfig_FallsBackToRunCommand()
-        {
-            var config = new CustomTemplateShellConfig();
-            var info = Create(
-                command: "notepad test.txt",
-                shell: Shell.CustomTemplate,
-                customConfig: config);
-
-            Assert.That(info.FileName, Is.EqualTo("notepad"));
-            Assert.That(info.Arguments, Is.EqualTo("test.txt"));
-        }
-
-        [Test]
-        public void CustomTemplate_ReplacesCommandPlaceholder()
-        {
-            var config = new CustomTemplateShellConfig
-            {
-                ExecutablePath = "cmd.exe",
-                ArgumentsTemplate = "/c \"{command}\""
-            };
-            var info = Create(
-                command: "dir",
-                shell: Shell.CustomTemplate,
-                customConfig: config);
-
-            Assert.That(info.FileName, Is.EqualTo("cmd.exe"));
-            Assert.That(info.Arguments, Is.EqualTo("/c \"dir\""));
-        }
-
-        [Test]
-        public void CustomTemplate_WhitespaceExecutablePath_FallsBackToRunCommand()
-        {
-            var config = new CustomTemplateShellConfig
-            {
-                ExecutablePath = "  "
-            };
-            var info = Create(
-                command: "notepad",
-                shell: Shell.CustomTemplate,
-                customConfig: config);
-
-            Assert.That(info.FileName, Is.EqualTo("notepad"));
-        }
-
-        [Test]
-        public void CustomTemplate_EmptyTemplate_FallsBackToDefaultTemplate()
-        {
-            var config = new CustomTemplateShellConfig
-            {
-                ExecutablePath = "pwsh.exe",
-                ArgumentsTemplate = ""
-            };
-            var info = Create(
-                command: "ls",
-                shell: Shell.CustomTemplate,
-                customConfig: config);
-
-            Assert.That(info.FileName, Is.EqualTo("pwsh.exe"));
-            Assert.That(info.Arguments, Is.EqualTo("ls"));
-        }
-
-        [Test]
-        public void CustomTemplate_WhitespaceTemplate_FallsBackToDefaultTemplate()
-        {
-            var config = new CustomTemplateShellConfig
-            {
-                ExecutablePath = "pwsh.exe",
-                ArgumentsTemplate = "  "
-            };
-            var info = Create(
-                command: "ls",
-                shell: Shell.CustomTemplate,
-                customConfig: config);
-
-            Assert.That(info.FileName, Is.EqualTo("pwsh.exe"));
-            Assert.That(info.Arguments, Is.EqualTo("ls"));
+            Assert.That(info.Arguments, Is.Empty);
         }
 
         [Test]
@@ -407,31 +364,14 @@ namespace Flow.Launcher.Test.Plugins
             var config = new CustomTemplateShellConfig
             {
                 ExecutablePath = "  pwsh.exe  ",
-                ArgumentsTemplate = "/c \"{command}\""
+                ArgumentsTemplate = "-Command \"{command};\""
             };
             var info = Create(
-                command: "dir",
+                command: "Get-Process",
                 shell: Shell.CustomTemplate,
                 customConfig: config);
 
             Assert.That(info.FileName, Is.EqualTo("pwsh.exe"));
-            Assert.That(info.Arguments, Is.EqualTo("/c \"dir\""));
-        }
-
-        [Test]
-        public void CustomTemplate_ExpandsEnvironmentVariablesInExecutablePath()
-        {
-            var config = new CustomTemplateShellConfig
-            {
-                ExecutablePath = "%USERPROFILE%\\pwsh.exe"
-            };
-            var info = Create(
-                command: "ls",
-                shell: Shell.CustomTemplate,
-                customConfig: config);
-
-            var expectedPath = Environment.ExpandEnvironmentVariables("%USERPROFILE%\\pwsh.exe");
-            Assert.That(info.FileName, Is.EqualTo(expectedPath));
         }
 
         [Test]
@@ -439,15 +379,32 @@ namespace Flow.Launcher.Test.Plugins
         {
             var config = new CustomTemplateShellConfig
             {
-                ExecutablePath = "\"C:\\Program Files\\pwsh.exe\""
+                ExecutablePath = "\"C:\\Program Files\\pwsh.exe\"",
+                ArgumentsTemplate = "-Command \"{command};\""
             };
             var info = Create(
-                command: "ls",
+                command: "Get-Process",
                 shell: Shell.CustomTemplate,
                 customConfig: config);
 
             Assert.That(info.FileName, Is.EqualTo("C:\\Program Files\\pwsh.exe"));
-            Assert.That(info.Arguments, Is.EqualTo("ls"));
+        }
+
+        [Test]
+        public void CustomTemplate_ExpandsEnvironmentVariablesInExecutablePath()
+        {
+            var config = new CustomTemplateShellConfig
+            {
+                ExecutablePath = "%USERPROFILE%\\pwsh.exe",
+                ArgumentsTemplate = "-Command \"{command};\""
+            };
+            var info = Create(
+                command: "Get-Process",
+                shell: Shell.CustomTemplate,
+                customConfig: config);
+
+            var expectedPath = Environment.ExpandEnvironmentVariables("%USERPROFILE%\\pwsh.exe");
+            Assert.That(info.FileName, Is.EqualTo(expectedPath));
         }
 
         [Test]

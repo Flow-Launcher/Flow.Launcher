@@ -144,7 +144,7 @@ namespace Flow.Launcher.Plugin.Shell
 
     public class CustomTemplateShellConfig : BaseModel
     {
-        private string _executablePath = "";
+        private string _executablePath = "cmd.exe";
         public string ExecutablePath
         {
             get => _executablePath;
@@ -158,7 +158,7 @@ namespace Flow.Launcher.Plugin.Shell
             }
         }
 
-        private string _argumentsTemplate = "{command}";
+        private string _argumentsTemplate = "/k \"{command}\"";
         public string ArgumentsTemplate
         {
             get => _argumentsTemplate;
