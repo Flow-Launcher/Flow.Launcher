@@ -1182,21 +1182,9 @@ namespace Flow.Launcher.ViewModel
         private async Task UpdatePreviewAsync()
         {
             if (ShouldShowPreview())
-            {
-                if (!InternalPreviewVisible && !ExternalPreviewVisible)
-                    await ShowPreviewAsync();
-                else if (InternalPreviewVisible)
-                    PreviewSelectedItem?.LoadPreviewImage();
-                else if (ExternalPreviewVisible
-                         && PluginManager.UseExternalPreview()
-                         && CanExternalPreviewSelectedResult(out var path))
-                    await SwitchExternalPreviewAsync(path, false);
-            }
-            else
-            {
-                if (InternalPreviewVisible || ExternalPreviewVisible)
-                    await HidePreviewAsync();
-            }
+                await ShowPreviewAsync();
+            else if (InternalPreviewVisible || ExternalPreviewVisible)
+                await HidePreviewAsync();
         }
 
         private bool CanExternalPreviewSelectedResult(out string path)
