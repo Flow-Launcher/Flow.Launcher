@@ -404,9 +404,9 @@
 
                 <Grid x:Name="ResultPreviewArea">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.6*" MinWidth="80" />
+                        <ColumnDefinition Width="*" MinWidth="80" />
                         <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="1.2*" MinWidth="320" />
+                        <ColumnDefinition Width="0.85*" MinWidth="244" />
                     </Grid.ColumnDefinitions>
 
                     <StackPanel
