@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Core.Plugin;
+using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher.Core.ExternalPlugins
 {
@@ -11,11 +12,7 @@ namespace Flow.Launcher.Core.ExternalPlugins
     {
         private static readonly string ClassName = nameof(PluginsManifest);
 
-        private static readonly CommunityPluginStore mainPluginStore =
-            new("https://raw.githubusercontent.com/Flow-Launcher/Flow.Launcher.PluginsManifest/main/plugins.json",
-                "https://fastly.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@main/plugins.json",
-                "https://gcore.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@main/plugins.json",
-                "https://cdn.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@main/plugins.json");
+        private static CommunityPluginStore mainPluginStore;
 
         private static readonly SemaphoreSlim manifestUpdateLock = new(1);
 
@@ -24,8 +21,24 @@ namespace Flow.Launcher.Core.ExternalPlugins
 
         public static List<UserPlugin> UserPlugins { get; private set; }
 
-        public static async Task<bool> UpdateManifestAsync(bool usePrimaryUrlOnly = false, CancellationToken token = default)
+        public static async Task<bool> UpdateManifestAsync(Settings settings, bool usePrimaryUrlOnly = false, CancellationToken token = default)
         {
+            string customUrl = settings.PluginSettings.PluginsManifestUrl;
+
+            string[] mainUrls = [
+                "https://raw.githubusercontent.com/Flow-Launcher/Flow.Launcher.PluginsManifest/main/plugins.json",
+                "https://fastly.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@main/plugins.json",
+                "https://gcore.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@main/plugins.json",
+                "https://cdn.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@main/plugins.json"
+            ];            
+
+            if (!string.IsNullOrWhiteSpace(customUrl))
+            {
+                mainPluginStore = new(customUrl, mainUrls);
+            } else {
+                mainPluginStore = new(mainUrls[0], mainUrls[1..]);
+            }
+
             bool lockAcquired = false;
             try
             {

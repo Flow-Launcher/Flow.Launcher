@@ -28,6 +28,17 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
 
+        private string pluginsManifestUrl = string.Empty;
+        public string PluginsManifestUrl
+        {
+            get => pluginsManifestUrl;
+            set
+            {
+                pluginsManifestUrl = value;
+                Constant.PluginsManifestURL = value;
+            }
+        }
+
         /// <summary>
         /// Only used for serialization
         /// </summary>

@@ -114,6 +114,7 @@
     <system:String x:Key="defaultBrowserToolTip">Setting for New Tab, New Window, Private Mode.</system:String>
     <system:String x:Key="pythonFilePath">Python Path</system:String>
     <system:String x:Key="nodeFilePath">Node.js Path</system:String>
+    <system:String x:Key="pluginManifestUrl">Custom plugins manifest URL</system:String>
     <system:String x:Key="selectNodeExecutable">Please select the Node.js executable</system:String>
     <system:String x:Key="selectPythonExecutable">Please select pythonw.exe</system:String>
     <system:String x:Key="typingStartEn">Always Start Typing in English Mode</system:String>

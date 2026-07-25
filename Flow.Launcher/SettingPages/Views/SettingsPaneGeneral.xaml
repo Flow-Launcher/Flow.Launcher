@@ -504,6 +504,15 @@
                 </StackPanel>
             </ui:SettingsCard>
 
+            <ui:SettingsCard Margin="0 4 0 0" Header="{DynamicResource pluginManifestUrl}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBox
+                        Width="370"
+                        Height="34"
+                        Text="{Binding Settings.PluginSettings.PluginsManifestUrl,TargetNullValue='None'}" />
+                </StackPanel>
+            </ui:SettingsCard>
+
             <ui:SettingsCard
                 Margin="0 14 0 0"
                 Description="{DynamicResource typingStartEnTooltip}"
