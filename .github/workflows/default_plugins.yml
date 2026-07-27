@@ -307,3 +307,4 @@ jobs:
           tag_name: "v${{steps.updated-version-windowssettings.outputs.prop}}"
           body: Visit Flow's [release notes](https://github.com/Flow-Launcher/Flow.Launcher/releases) for changes.
           token: ${{ secrets.PUBLISH_PLUGINS }}
+
