@@ -1135,11 +1135,15 @@ namespace Flow.Launcher.ViewModel
         private async Task TogglePreviewAsync()
         {
             if (InternalPreviewVisible || ExternalPreviewVisible)
+            {
                 _manualPreviewOverride = false;
+                await HidePreviewAsync();
+            }
             else
+            {
                 _manualPreviewOverride = true;
-
-            await UpdatePreviewAsync();
+                await ShowPreviewAsync();
+            }
         }
 
         private async Task OpenExternalPreviewAsync(string path, bool sendFailToast = true)
