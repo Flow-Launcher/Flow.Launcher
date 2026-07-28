@@ -1055,7 +1055,7 @@ namespace Flow.Launcher.ViewModel
         private bool? _selectedItemFromQueryResults;
 
         // User explicitly toggled the preview on or off via hotkey.
-        // null means its unset ( so will fall back to the global AlwaysPreview setting).
+        // null means it's unset (so will fall back to the global AlwaysPreview setting).
         private bool? _previewPreferenceFromToggle;
 
         private ResultViewModel _previewSelectedItem;
