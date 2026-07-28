@@ -1055,8 +1055,8 @@ namespace Flow.Launcher.ViewModel
         private bool? _selectedItemFromQueryResults;
 
         // User explicitly toggled the preview on or off via hotkey.
-        // null = no manual override; the global AlwaysPreview setting decides.
-        private bool? _manualPreviewOverride;
+        // null means its unset ( so will fall back to the global AlwaysPreview setting).
+        private bool? _previewPreferenceFromToggle;
 
         private ResultViewModel _previewSelectedItem;
         public ResultViewModel PreviewSelectedItem
@@ -1136,12 +1136,12 @@ namespace Flow.Launcher.ViewModel
         {
             if (InternalPreviewVisible || ExternalPreviewVisible)
             {
-                _manualPreviewOverride = false;
+                _previewPreferenceFromToggle = false;
                 await HidePreviewAsync();
             }
             else
             {
-                _manualPreviewOverride = true;
+                _previewPreferenceFromToggle = true;
                 await ShowPreviewAsync();
             }
         }
@@ -1179,7 +1179,7 @@ namespace Flow.Launcher.ViewModel
         {
             if (PreviewSelectedItem?.Result.PreviewVisibility == PreviewVisibility.Never) return false;
             if (PreviewSelectedItem?.Result.PreviewVisibility == PreviewVisibility.Always) return true;
-            return _manualPreviewOverride ?? Settings.AlwaysPreview;
+            return _previewPreferenceFromToggle ?? Settings.AlwaysPreview;
         }
 
         // Shows or hides the correct preview panel. Called on each selection change.
@@ -1206,7 +1206,7 @@ namespace Flow.Launcher.ViewModel
         // Called when the window reopens. 
         public async Task ResetPreviewAsync()
         {
-            _manualPreviewOverride = null;
+            _previewPreferenceFromToggle = null;
 
             if (ShouldShowPreview())
             {
