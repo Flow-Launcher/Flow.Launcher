@@ -120,16 +120,35 @@ public partial class SettingsPanePluginsViewModel : BaseModel
     // Get all plugins: Initializing & Initialized & Init failed plugins
     // Include init failed ones so that we can uninstall them
     // Include initializing ones so that we can change related settings like action keywords, etc.
-    public List<PluginViewModel> PluginViewModels => _pluginViewModels ??= App.API.GetAllPlugins()
-        .OrderBy(plugin => plugin.Metadata.Disabled)
-        .ThenBy(plugin => plugin.Metadata.Name)
-        .Select(plugin => new PluginViewModel
+    public List<PluginViewModel> PluginViewModels
+    {
+        get
         {
-            PluginPair = plugin,
-            PluginSettingsObject = _settings.PluginSettings.GetPluginSettings(plugin.Metadata.ID)
-        })
-        .Where(plugin => plugin.PluginSettingsObject != null)
-        .ToList();
+            if (_pluginViewModels == null)
+            {
+                _pluginViewModels = App.API.GetAllPlugins()
+                    .OrderBy(plugin => plugin.Metadata.Disabled)
+                    .ThenBy(plugin => plugin.Metadata.Name)
+                    .Select(plugin => new PluginViewModel
+                    {
+                        PluginPair = plugin,
+                        PluginSettingsObject = _settings.PluginSettings.GetPluginSettings(plugin.Metadata.ID)
+                    })
+                    .Where(plugin => plugin.PluginSettingsObject != null)
+                    .ToList();
+
+                foreach (var vm in _pluginViewModels)
+                {
+                    vm.UpdateStateChanged += _ =>
+                    {
+                        OnPropertyChanged(nameof(AvailableUpdatesCount));
+                        OnPropertyChanged(nameof(HasAvailableUpdates));
+                    };
+                }
+            }
+            return _pluginViewModels;
+        }
+    }
 
     public bool SatisfiesFilter(PluginViewModel plugin)
     {

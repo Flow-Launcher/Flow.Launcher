@@ -126,6 +126,8 @@ namespace Flow.Launcher.ViewModel
 
         private PluginUpdateInfo? _updateInfo;
 
+        public event Action<bool>? UpdateStateChanged;
+
         public PluginUpdateInfo? UpdateInfo
         {
             get => _updateInfo;
@@ -138,6 +140,7 @@ namespace Flow.Launcher.ViewModel
                     OnPropertyChanged(nameof(HasUpdate));
                     OnPropertyChanged(nameof(NewVersion));
                     OnPropertyChanged(nameof(UpdateButtonVisibility));
+                    UpdateStateChanged?.Invoke(HasUpdate);
                 }
             }
         }
@@ -245,9 +248,14 @@ namespace Flow.Launcher.ViewModel
         {
             if (_updateInfo != null)
             {
-                await PluginInstaller.UpdatePluginAndCheckRestartAsync(
+                var success = await PluginInstaller.UpdatePluginAndCheckRestartAsync(
                     _updateInfo.PluginNewUserPlugin,
                     _updateInfo.PluginExistingMetadata);
+
+                if (success)
+                {
+                    UpdateInfo = null;
+                }
             }
         }
 

@@ -203,13 +203,13 @@ public static class PluginInstaller
     /// </summary>
     /// <param name="newPlugin">The new plugin version to install.</param>
     /// <param name="oldPlugin">The existing plugin metadata to update.</param>
-    /// <returns>A Task representing the asynchronous update operation.</returns>
-    public static async Task UpdatePluginAndCheckRestartAsync(UserPlugin newPlugin, PluginMetadata oldPlugin)
+    /// <returns>True if the update was successful; otherwise false.</returns>
+    public static async Task<bool> UpdatePluginAndCheckRestartAsync(UserPlugin newPlugin, PluginMetadata oldPlugin)
     {
         if (PublicApi.Instance.ShowMsgBox(
             Localize.UpdatePromptSubtitle(oldPlugin.Name, oldPlugin.Author, Environment.NewLine),
             Localize.UpdatePromptTitle(),
-            button: MessageBoxButton.YesNo) != MessageBoxResult.Yes) return;
+            button: MessageBoxButton.YesNo) != MessageBoxResult.Yes) return false;
 
         try
         {
@@ -231,19 +231,19 @@ public static class PluginInstaller
             // check if user cancelled download before installing plugin
             if (cts.IsCancellationRequested)
             {
-                return;
+                return false;
             }
 
             if (!await PublicApi.Instance.UpdatePluginAsync(oldPlugin, newPlugin, filePath))
             {
-                return;
+                return false;
             }
         }
         catch (Exception e)
         {
             PublicApi.Instance.LogException(ClassName, "Failed to update plugin", e);
             PublicApi.Instance.ShowMsgError(Localize.ErrorUpdatingPlugin());
-            return; // do not restart on failure
+            return false; // do not restart on failure
         }
 
         if (Settings.AutoRestartAfterChanging)
@@ -256,6 +256,8 @@ public static class PluginInstaller
                 Localize.updatebtn(),
                 Localize.UpdateSuccessNoRestart(newPlugin.Name));
         }
+
+        return true;
     }
 
     /// <summary>
