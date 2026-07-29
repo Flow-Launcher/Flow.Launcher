@@ -11,6 +11,8 @@ using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Resources.Controls;
 
+#nullable enable
+
 namespace Flow.Launcher.ViewModel
 {
     public partial class PluginViewModel : BaseModel
@@ -122,6 +124,28 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        private PluginUpdateInfo? _updateInfo;
+
+        public PluginUpdateInfo? UpdateInfo
+        {
+            get => _updateInfo;
+            set
+            {
+                if (_updateInfo != value)
+                {
+                    _updateInfo = value;
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(HasUpdate));
+                    OnPropertyChanged(nameof(NewVersion));
+                    OnPropertyChanged(nameof(UpdateButtonVisibility));
+                }
+            }
+        }
+
+        public bool HasUpdate => _updateInfo != null;
+        public string? NewVersion => _updateInfo?.NewVersion;
+        public Visibility UpdateButtonVisibility => HasUpdate ? Visibility.Visible : Visibility.Collapsed;
+
         private Control _settingControl;
         private bool _isExpanded;
 
@@ -214,6 +238,17 @@ namespace Flow.Launcher.ViewModel
         {
             var changeKeywordsWindow = new ActionKeywords(this);
             changeKeywordsWindow.ShowDialog();
+        }
+
+        [RelayCommand]
+        private async Task UpdatePluginAsync()
+        {
+            if (_updateInfo != null)
+            {
+                await PluginInstaller.UpdatePluginAndCheckRestartAsync(
+                    _updateInfo.PluginNewUserPlugin,
+                    _updateInfo.PluginExistingMetadata);
+            }
         }
 
         private static UserControl CreateErrorSettingPanel(string text)

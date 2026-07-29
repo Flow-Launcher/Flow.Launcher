@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -195,6 +196,80 @@ public partial class SettingsPanePluginsViewModel : BaseModel
     private void UpdateEnumDropdownLocalizations()
     {
         DropdownDataGeneric<DisplayMode>.UpdateLabels(DisplayModes);
+    }
+
+    [RelayCommand]
+    private Task CheckPluginUpdatesAsync() => CheckForUpdatesCoreAsync();
+
+    public int AvailableUpdatesCount => PluginViewModels?.Count(vm => vm.HasUpdate) ?? 0;
+    public bool HasAvailableUpdates => AvailableUpdatesCount > 0;
+
+    [RelayCommand]
+    private async Task UpdateAllPluginsAsync()
+    {
+        var updates = PluginViewModels
+            .Where(vm => vm.HasUpdate)
+            .Select(vm => vm.UpdateInfo)
+            .ToList();
+    
+        Application.Current.Dispatcher.Invoke(() =>
+        {
+            var window = new PluginUpdateWindow(updates);
+            window.ShowDialog();
+        });
+    }
+
+    private bool _updatesChecked;
+
+    public async Task CheckForUpdatesSilentlyAsync()
+    {
+        if (_updatesChecked) return;
+        _updatesChecked = true;
+
+        await CheckForUpdatesCoreAsync();
+    }
+
+    private async Task CheckForUpdatesCoreAsync()
+    {
+        await PublicApi.Instance.UpdatePluginManifestAsync();
+
+        var manifest = PublicApi.Instance.GetPluginManifest();
+
+        foreach (var vm in PluginViewModels)
+        {
+            var manifestPlugin = manifest.FirstOrDefault(p => p.ID == vm.PluginPair.Metadata.ID);
+            if (manifestPlugin == null)
+            {
+                vm.UpdateInfo = null;
+                continue;
+            }
+
+            var currentVersion = vm.PluginPair.Metadata.Version;
+            var newVersion = manifestPlugin.Version;
+
+            if (string.Compare(currentVersion, newVersion, StringComparison.InvariantCulture) < 0
+                && !PublicApi.Instance.PluginModified(vm.PluginPair.Metadata.ID))
+            {
+                vm.UpdateInfo = new PluginUpdateInfo
+                {
+                    ID = vm.PluginPair.Metadata.ID,
+                    Name = vm.PluginPair.Metadata.Name,
+                    Author = vm.PluginPair.Metadata.Author,
+                    CurrentVersion = currentVersion,
+                    NewVersion = newVersion,
+                    IcoPath = vm.PluginPair.Metadata.IcoPath,
+                    PluginExistingMetadata = vm.PluginPair.Metadata,
+                    PluginNewUserPlugin = manifestPlugin
+                };
+            }
+            else
+            {
+                vm.UpdateInfo = null;
+            }
+        }
+
+        OnPropertyChanged(nameof(AvailableUpdatesCount));
+        OnPropertyChanged(nameof(HasAvailableUpdates));
     }
 
     private void UpdateDisplayModeFromSelection()
