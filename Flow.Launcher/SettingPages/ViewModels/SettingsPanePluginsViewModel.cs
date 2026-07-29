@@ -10,6 +10,7 @@ using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.ViewModel;
 using iNKORE.UI.WPF.Modern.Controls;
+using Version = SemanticVersioning.Version;
 
 #nullable enable
 
@@ -247,8 +248,10 @@ public partial class SettingsPanePluginsViewModel : BaseModel
             var currentVersion = vm.PluginPair.Metadata.Version;
             var newVersion = manifestPlugin.Version;
 
-            if (string.Compare(currentVersion, newVersion, StringComparison.InvariantCulture) < 0
-                && !PublicApi.Instance.PluginModified(vm.PluginPair.Metadata.ID))
+            if (Version.TryParse(currentVersion, out var current) &&
+                Version.TryParse(newVersion, out var latest) &&
+                current < latest &&
+                !PublicApi.Instance.PluginModified(vm.PluginPair.Metadata.ID))
             {
                 vm.UpdateInfo = new PluginUpdateInfo
                 {
