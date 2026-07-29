@@ -246,7 +246,15 @@ public partial class SettingsPanePluginsViewModel : BaseModel
         if (_updatesChecked) return;
         _updatesChecked = true;
 
-        await CheckForUpdatesCoreAsync();
+        try
+        {
+            await CheckForUpdatesCoreAsync();
+        }
+        catch (Exception e)
+        {
+            _updatesChecked = false;
+            App.API.LogException(nameof(SettingsPanePluginsViewModel), "Failed to check for plugin updates", e);
+        }
     }
 
     private async Task CheckForUpdatesCoreAsync()
