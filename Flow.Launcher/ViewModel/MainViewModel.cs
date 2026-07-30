@@ -1095,6 +1095,9 @@ namespace Flow.Launcher.ViewModel
 
         private async Task ShowPreviewAsync()
         {
+            if (PreviewSelectedItem == null)
+                return;
+
             var useExternalPreview = PluginManager.UseExternalPreview();
 
             switch (useExternalPreview)
