@@ -14,7 +14,7 @@ namespace Flow.Launcher.Test
     internal class MainViewModelPreviewTest
     {
         [Test]
-        public async Task GivenPreviewToggledOn_WhenNeverThenDefaultResultSelected_ThenInternalPreviewIsRestoredAsync()
+        public async Task GivenPreviewToggledOn_WhenNeverThenDefaultResultSelected_ThenInternalPreviewIsRestored_Async()
         {
             var settings = new Settings
             {
@@ -36,7 +36,7 @@ namespace Flow.Launcher.Test
         }
 
         [Test]
-        public async Task GivenPreviewToggledOnAndExternalPreviewVisible_WhenNeverThenDefaultResultSelected_ThenPreviewIsRestoredAsync()
+        public async Task GivenPreviewToggledOnAndExternalPreviewVisible_WhenNeverThenDefaultResultSelected_ThenPreviewIsRestored_Async()
         {
             var settings = new Settings
             {
@@ -62,7 +62,7 @@ namespace Flow.Launcher.Test
         }
 
         [Test]
-        public async Task GivenPreviewHidden_WhenAlwaysVisibilityResultSelected_ThenInternalPreviewAutoOpensAsync()
+        public async Task GivenPreviewHidden_WhenAlwaysVisibilityResultSelected_ThenInternalPreviewAutoOpens_Async()
         {
             var settings = new Settings
             {
@@ -77,7 +77,7 @@ namespace Flow.Launcher.Test
         }
 
         [Test]
-        public async Task GivenPreviewHidden_WhenMarkdownResultWithDefaultVisibilitySelected_ThenInternalPreviewStaysHiddenAsync()
+        public async Task GivenPreviewHidden_WhenMarkdownResultWithDefaultVisibilitySelected_ThenInternalPreviewStaysHidden_Async()
         {
             // Content type only controls rendering; it must not force the pane open.
             // Forcing is the job of PreviewVisibility.Always.
@@ -95,7 +95,7 @@ namespace Flow.Launcher.Test
         }
 
         [Test]
-        public async Task GivenAlwaysResultSelected_WhenDefaultResultSelected_ThenInternalPreviewAutoClosesAsync()
+        public async Task GivenAlwaysResultSelected_WhenDefaultResultSelected_ThenInternalPreviewAutoCloses_Async()
         {
             var settings = new Settings
             {
@@ -114,7 +114,7 @@ namespace Flow.Launcher.Test
         }
 
         [Test]
-        public async Task GivenPreviewToggledOn_WhenDefaultResultSelected_ThenInternalPreviewStaysVisibleAsync()
+        public async Task GivenPreviewToggledOn_WhenDefaultResultSelected_ThenInternalPreviewStaysVisible_Async()
         {
             var settings = new Settings
             {
@@ -132,7 +132,7 @@ namespace Flow.Launcher.Test
         }
 
         [Test]
-        public async Task GivenAlwaysResultThenNever_WhenNormalResultSelected_ThenInternalPreviewStaysHiddenAsync()
+        public async Task GivenAlwaysResultThenNever_WhenNormalResultSelected_ThenInternalPreviewStaysHidden_Async()
         {
             var settings = new Settings
             {
@@ -155,7 +155,7 @@ namespace Flow.Launcher.Test
         }
 
         [Test]
-        public async Task GivenPreviewToggledOffAndAlwaysPreviewOn_WhenDefaultResultSelected_ThenInternalPreviewStaysHiddenAsync()
+        public async Task GivenPreviewToggledOffAndAlwaysPreviewOn_WhenDefaultResultSelected_ThenInternalPreviewStaysHidden_Async()
         {
             // User pressed F1 to close the preview while AlwaysPreview is on.
             // The toggle should still beat AlwaysPreview so selecting a normal result does not reopen the pane.
@@ -175,7 +175,7 @@ namespace Flow.Launcher.Test
         }
 
         [Test]
-        public async Task GivenAlwaysPreviewOnAndPreviewHidden_WhenNeverThenDefaultResultSelected_ThenInternalPreviewReopensAsync()
+        public async Task GivenAlwaysPreviewOnAndPreviewHidden_WhenNeverThenDefaultResultSelected_ThenInternalPreviewReopens_Async()
         {
             var settings = new Settings
             {
@@ -194,7 +194,7 @@ namespace Flow.Launcher.Test
         }
 
         [Test]
-        public async Task GivenPreviewToggledOffAndAlwaysPreviewOn_WhenAlwaysResultSelected_ThenInternalPreviewReopensAsync()
+        public async Task GivenPreviewToggledOffAndAlwaysPreviewOn_WhenAlwaysResultSelected_ThenInternalPreviewReopens_Async()
         {
             // Always should force the pane open even when the user pressed F1 to close it.
             // A result's preview visibility beats the toggle preference.
@@ -218,7 +218,7 @@ namespace Flow.Launcher.Test
         }
 
         [Test]
-        public async Task GivenPreviewToggleUnsetAndAlwaysPreviewOffAndAlwaysResult_WhenPreviewReset_ThenInternalPreviewOpens()
+        public async Task GivenPreviewToggleUnsetAndAlwaysPreviewOffAndAlwaysResult_WhenPreviewReset_ThenInternalPreviewOpens_Async()
         {
             // With AlwaysPreview off but the result forcing the pane open,
             // ResetPreviewAsync should show the internal preview.
@@ -239,7 +239,7 @@ namespace Flow.Launcher.Test
         }
 
         [Test]
-        public async Task GivenNoToggleAndAlwaysPreviewOffAndDefaultResult_WhenPreviewReset_ThenInternalPreviewStaysHidden()
+        public async Task GivenNoToggleAndAlwaysPreviewOffAndDefaultResult_WhenPreviewReset_ThenInternalPreviewStaysHidden_Async()
         {
             // No override and nothing forcing the pane open,
             // so ResetPreviewAsync should close the internal preview.
@@ -262,7 +262,7 @@ namespace Flow.Launcher.Test
 
         [Test]
         public async Task
-            GivenExternalPreviewVisibleAndAlwaysResult_WhenPreviewReset_ThenExternalClosedAndInternalOpens()
+            GivenExternalPreviewVisibleAndAlwaysResult_WhenPreviewReset_ThenExternalClosedAndInternalOpens_Async()
         {
             // Stale external preview is visible but the result forces the pane open.
             // ResetPreviewAsync should close external then show internal.
@@ -286,7 +286,7 @@ namespace Flow.Launcher.Test
 
         [Test]
         public async Task
-            GivenExternalPreviewVisibleAndNormalResult_WhenPreviewReset_ThenExternalAndInternalAreBothHidden()
+            GivenExternalPreviewVisibleAndNormalResult_WhenPreviewReset_ThenExternalAndInternalAreBothHidden_Async()
         {
             // Stale external preview is visible but nothing is forcing the pane open,
             // so ResetPreviewAsync should close external and hide internal.
@@ -310,7 +310,7 @@ namespace Flow.Launcher.Test
         }
 
         [Test]
-        public async Task GivenPreviewToggledOffAndAlwaysPreviewOn_WhenNeverThenDefaultResult_ThenPreviewStaysHiddenAsync()
+        public async Task GivenPreviewToggledOffAndAlwaysPreviewOn_WhenNeverThenDefaultResult_ThenPreviewStaysHidden_Async()
         {
             // User pressed F1 to close the preview, navigates through a Never result, then to a normal result.
             // The AlwaysPreview restore path must not re-open the pane against the user's intent.
