@@ -68,6 +68,7 @@ namespace Flow.Launcher
         private readonly Lock _soundLock = new();
 
         // Window WndProc
+        private const int WmGetObject = 0x003D;
         private HwndSource _hwndSource;
         private int _initialWidth;
         private int _initialHeight;
@@ -595,8 +596,16 @@ namespace Flow.Launcher
 
         #region Window WndProc
 
+        private static bool ShouldSuppressWindowAutomationMessage(int msg) => msg == WmGetObject;
+
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled) 
         {
+            if (ShouldSuppressWindowAutomationMessage(msg))
+            {
+                handled = true;
+                return IntPtr.Zero;
+            }
+
             switch (msg)
             {
                 case Win32Helper.WM_ENTERSIZEMOVE:
