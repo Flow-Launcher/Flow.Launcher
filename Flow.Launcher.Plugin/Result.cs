@@ -374,7 +374,7 @@ namespace Flow.Launcher.Plugin
                 PreviewPanel = PreviewPanel,
                 ProgressBar = ProgressBar,
                 ProgressBarColor = ProgressBarColor,
-                Preview = Preview with { },
+                Preview = Preview is null ? null : Preview with { },
                 PreviewVisibility = PreviewVisibility,
                 AddSelectedCount = AddSelectedCount,
                 RecordKey = RecordKey,
