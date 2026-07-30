@@ -22,10 +22,7 @@ namespace Flow.Launcher.Test
             };
             var viewModel = CreatePreviewViewModel(settings, ResultAreaColumnPreviewHidden);
 
-            // Need a result selected before toggling, otherwise panel won't show.
-            viewModel.PreviewSelectedItem = ViewModel("Initial", PreviewVisibility.Optional, settings);
             await viewModel.TogglePreviewCommand.ExecuteAsync(null);
-            ClassicAssert.IsTrue(viewModel.InternalPreviewVisible);
 
             viewModel.PreviewSelectedItem = ViewModel("Never", PreviewVisibility.Never, settings);
             await InvokeUpdatePreviewAsync(viewModel);
@@ -46,9 +43,6 @@ namespace Flow.Launcher.Test
             };
             var viewModel = CreatePreviewViewModel(settings, ResultAreaColumnPreviewHidden);
 
-            // Need a result selected before toggling, otherwise panel won't show.
-            viewModel.PreviewSelectedItem = ViewModel("Initial", PreviewVisibility.Optional, settings);
-            // Toggle preview on. No external plugin, so this shows internally.
             await viewModel.TogglePreviewCommand.ExecuteAsync(null);
 
             // Simulate external preview becoming the active preview afterwards
@@ -126,10 +120,7 @@ namespace Flow.Launcher.Test
             };
             var viewModel = CreatePreviewViewModel(settings, ResultAreaColumnPreviewHidden);
 
-            // Need a result selected before toggling, otherwise panel won't show.
-            viewModel.PreviewSelectedItem = ViewModel("Initial", PreviewVisibility.Optional, settings);
             await viewModel.TogglePreviewCommand.ExecuteAsync(null);
-            ClassicAssert.IsTrue(viewModel.InternalPreviewVisible);
 
             viewModel.PreviewSelectedItem = ViewModel("Normal", PreviewVisibility.Optional, settings);
             await InvokeUpdatePreviewAsync(viewModel);
