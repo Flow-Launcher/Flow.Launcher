@@ -461,8 +461,7 @@ namespace Flow.Launcher
                     break;
                 case Key.Right:
                     if (_viewModel.QueryResultsSelected()
-                        && QueryTextBox.CaretIndex == QueryTextBox.Text.Length
-                        && !string.IsNullOrEmpty(QueryTextBox.Text))
+                        && QueryTextBox.CaretIndex == QueryTextBox.Text.Length)            
                     {
                         _viewModel.LoadContextMenuCommand.Execute(null);
                         e.Handled = true;
