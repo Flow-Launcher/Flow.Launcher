@@ -178,6 +178,8 @@ namespace Flow.Launcher.ViewModel
             };
             _selectedResults = Results;
 
+            ResultAreaColumn = Settings.AlwaysPreview ? ResultAreaColumnPreviewShown : ResultAreaColumnPreviewHidden;
+
             Results.PropertyChanged += OnResultsPropertyChanged;
             History.PropertyChanged += OnHistoryPropertyChanged;
 
