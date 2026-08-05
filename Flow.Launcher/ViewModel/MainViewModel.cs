@@ -878,6 +878,7 @@ namespace Flow.Launcher.ViewModel
                     // so we need manually call Query()
                     // http://stackoverflow.com/posts/25895769/revisions
                     QueryText = string.Empty;
+
                     // When we are changing query because selected results are changed to history or context menu,
                     // we should not delay the query
                     Query(false);
@@ -1253,22 +1254,25 @@ namespace Flow.Launcher.ViewModel
 
         public void Query(bool searchDelay, bool isReQuery = false)
         {
-            if (_ignoredQueryText != null)
-            {
-                if (_ignoredQueryText == QueryText)
-                {
-                    _ignoredQueryText = null;
-                    return;
-                }
-                else
-                {
-                    // If _ignoredQueryText does not match current QueryText, we should still execute Query
-                    _ignoredQueryText = null;
-                }
-            }
-
             if (QueryResultsSelected())
             {
+                // We use this to skip creating a new result set and keep the old results.
+                // This matching is used for programmatic QueryText changes (not user typing), 
+                // such as when returning to the results from the context menu
+                if (_ignoredQueryText != null)
+                {
+                    if (_ignoredQueryText == QueryText)
+                    {
+                        _ignoredQueryText = null;
+                        return;
+                    }
+                    else
+                    {
+                        // If _ignoredQueryText does not match current QueryText, we should still execute Query
+                        _ignoredQueryText = null;
+                    }
+                }
+
                 _ = QueryResultsAsync(searchDelay, isReQuery);
             }
             else if (ContextMenuSelected())

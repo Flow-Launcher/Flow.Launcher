@@ -364,7 +364,7 @@ namespace Flow.Launcher
                 .AddValueChanged(History, (s, e) => UpdateClockPanelVisibility());
 
             // Initialize query state
-            if (_settings.ShowHomePage && string.IsNullOrEmpty(_viewModel.QueryText))
+            if ((_settings.ShowHomePage || _settings.ShowHistoryResultsForHomePage) && string.IsNullOrEmpty(_viewModel.QueryText))
             {
                 _viewModel.QueryResults();
             }
@@ -485,8 +485,7 @@ namespace Flow.Launcher
                     break;
                 case Key.Right:
                     if (_viewModel.QueryResultsSelected()
-                        && QueryTextBox.CaretIndex == QueryTextBox.Text.Length
-                        && !string.IsNullOrEmpty(QueryTextBox.Text))
+                        && QueryTextBox.CaretIndex == QueryTextBox.Text.Length)            
                     {
                         _viewModel.LoadContextMenuCommand.Execute(null);
                         e.Handled = true;
