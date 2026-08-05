@@ -349,7 +349,7 @@ namespace Flow.Launcher
                 .AddValueChanged(History, (s, e) => UpdateClockPanelVisibility());
 
             // Initialize query state
-            if (_settings.ShowHomePage && string.IsNullOrEmpty(_viewModel.QueryText))
+            if ((_settings.ShowHomePage || _settings.ShowHistoryResultsForHomePage) && string.IsNullOrEmpty(_viewModel.QueryText))
             {
                 _viewModel.QueryResults();
             }
