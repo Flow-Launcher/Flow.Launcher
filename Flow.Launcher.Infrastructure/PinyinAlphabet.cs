@@ -117,17 +117,20 @@ namespace Flow.Launcher.Infrastructure
 
         private (string translation, TranslationMapping map) BuildCacheFromContent(string content)
         {
-            var resultList = WordsHelper.GetPinyinList(content);
             var resultBuilder = new StringBuilder(_settings.UseDoublePinyin ? 3 : 4); // Pre-allocate with estimated capacity
             var map = new TranslationMapping();
 
             var previousIsChinese = false;
 
-            for (var i = 0; i < resultList.Length; i++)
+            for (var i = 0; i < content.Length; i++)
             {
                 if (IsChineseCharacter(content[i]))
                 {
-                    var translated = _settings.UseDoublePinyin ? ToDoublePinyin(resultList[i]) : resultList[i];
+                    // Use GetAllPinyin per character to avoid incorrect context-sensitive pinyin disambiguation.
+                    // For example, GetPinyinList("核查") returns ["He","Zha"] but '查' should be "Cha" here.
+                    var allPinyins = WordsHelper.GetAllPinyin(content[i], false);
+                    var pinyin = allPinyins.Count > 0 ? allPinyins[0] : WordsHelper.GetPinyinList(content[i].ToString(), false)[0];
+                    var translated = _settings.UseDoublePinyin ? ToDoublePinyin(pinyin) : pinyin;
 
                     if (i > 0 && content[i - 1] != ' ')
                     {
