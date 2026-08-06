@@ -2235,9 +2235,6 @@ namespace Flow.Launcher.ViewModel
                     await CloseExternalPreviewAsync();
                 }
 
-                if (InternalPreviewVisible)
-                    HideInternalPreview();
-
                 BackToQueryResults();
 
                 switch (Settings.LastQueryMode)
