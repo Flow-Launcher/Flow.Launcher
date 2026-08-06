@@ -2,12 +2,13 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
-    <Nullable>warnings</Nullable>
+    <Nullable>enable</Nullable>
     <ApplicationIcon />
     <StartupObject />
   </PropertyGroup>
@@ -45,16 +46,28 @@
   </ItemGroup>
   
   <ItemGroup>
+    <PackageReference Include="Avalonia" Version="11.2.3" />
+    <PackageReference Include="FluentAvaloniaUI" Version="2.2.0" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="Droplex" Version="1.7.0" />
     <PackageReference Include="Flow.Launcher.Localization" Version="0.0.6" />
     <PackageReference Include="System.Data.OleDb" Version="9.0.9" />
-    <PackageReference Include="System.Linq.Async" Version="6.0.3" />
     <PackageReference Include="tlbimp-Microsoft.Search.Interop" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Flow.Launcher.Plugin\Flow.Launcher.Plugin.csproj" />
   </ItemGroup>
-  
+
+  <!-- Copy plugin output to Avalonia build directory -->
+  <Target Name="CopyToAvaloniaOutput" AfterTargets="Build" Condition="'$(SkipAvaloniaPluginCopy)' != 'true'">
+    <PropertyGroup>
+      <AvaloniaPluginDir>..\..\Output\$(Configuration)\Avalonia\Plugins\$(AssemblyName)\</AvaloniaPluginDir>
+    </PropertyGroup>
+    <ItemGroup>
+      <PluginFiles Include="$(OutputPath)**\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(PluginFiles)" DestinationFolder="$(AvaloniaPluginDir)%(RecursiveDir)" SkipUnchangedFiles="true" />
+  </Target>
+
 </Project>

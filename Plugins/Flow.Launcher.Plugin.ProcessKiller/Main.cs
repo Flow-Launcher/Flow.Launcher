@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
 using Flow.Launcher.Plugin.ProcessKiller.ViewModels;
 using Flow.Launcher.Plugin.ProcessKiller.Views;
+using AvaloniaControl = Avalonia.Controls.Control;
 
 namespace Flow.Launcher.Plugin.ProcessKiller
 {
@@ -217,5 +218,11 @@ namespace Flow.Launcher.Plugin.ProcessKiller
         {
             return new SettingsControl(_viewModel);
         }
+
+        public AvaloniaControl CreateSettingPanelAvalonia()
+        {
+            return new Views.Avalonia.SettingsControl(_viewModel);
+        }
     }
 }
+

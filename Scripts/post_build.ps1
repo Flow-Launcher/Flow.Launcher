@@ -31,9 +31,44 @@ function Build-Path {
     return $p
 }
 
+function Get-GlobalPackagesPath {
+    if (![string]::IsNullOrEmpty($env:NUGET_PACKAGES)) {
+        return $env:NUGET_PACKAGES
+    }
+
+    $globalPackages = dotnet nuget locals global-packages --list
+    return ($globalPackages -split ':', 2)[1].Trim()
+}
+
+function Get-SquirrelExePath {
+    return Join-Path (Get-GlobalPackagesPath) "squirrel.windows\1.9.0\tools\Squirrel.exe"
+}
+
+function Get-NuGetCommand {
+    $nuget = Get-Command nuget.exe -ErrorAction SilentlyContinue
+    if ($null -eq $nuget) {
+        $nuget = Get-Command nuget -ErrorAction SilentlyContinue
+    }
+
+    if ($null -ne $nuget) {
+        return $nuget.Source
+    }
+
+    $tools = Join-Path $PSScriptRoot "..\Output\Tools"
+    New-Item $tools -ItemType Directory -Force | Out-Null
+
+    $nugetExe = Join-Path $tools "nuget.exe"
+    if (!(Test-Path $nugetExe)) {
+        Write-Host "NuGet CLI not found on PATH. Downloading local copy to $nugetExe"
+        Invoke-WebRequest "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" -OutFile $nugetExe
+    }
+
+    return $nugetExe
+}
+
 function Copy-Resources ($path) {
     # making version static as multiple versions can exist in the nuget folder and in the case a breaking change is introduced.
-    Copy-Item -Force $env:USERPROFILE\.nuget\packages\squirrel.windows\1.9.0\tools\Squirrel.exe $path\Output\Update.exe
+    Copy-Item -Force (Get-SquirrelExePath) $path\Output\Update.exe
 }
 
 function Delete-Unused ($path, $config) {
@@ -55,6 +90,35 @@ function Remove-CreateDumpExe ($path, $config) {
     Remove-Item -Path $target -Include "*createdump.exe" -Recurse
 }
 
+function Remove-CreateDumpExe-Avalonia ($path, $config) {
+    $target = "$path\Output\$config\Avalonia"
+
+    if (Test-Path "$target\Flow.Launcher.Avalonia.deps.json") {
+        $depjson = Get-Content $target\Flow.Launcher.Avalonia.deps.json -raw
+        $depjson -replace '(?s)(.createdump.exe": {.*?}.*?\n)\s*', "" | Out-File $target\Flow.Launcher.Avalonia.deps.json -Encoding UTF8
+    }
+    Remove-Item -Path $target -Include "*createdump.exe" -Recurse -ErrorAction SilentlyContinue
+}
+
+function Delete-Unused-Avalonia ($path, $config) {
+    $target = "$path\Output\$config\Avalonia"
+    
+    if (!(Test-Path $target)) {
+        Write-Host "Avalonia output not found at $target, skipping..."
+        return
+    }
+    
+    $included = Get-ChildItem $target -Filter "*.dll"
+    if (Test-Path "$target\Plugins") {
+        foreach ($i in $included){
+            $deleteList = Get-ChildItem $target\Plugins -Include $i -Recurse | Where { $_.VersionInfo.FileVersion -eq $i.VersionInfo.FileVersion -And $_.Name -eq "$i" }
+            $deleteList | ForEach-Object{ Write-Host Deleting duplicated $_.Name with version $_.VersionInfo.FileVersion at location $_.Directory.FullName }
+            $deleteList | Remove-Item
+        }
+    }
+    Remove-Item -Path $target -Include "*.xml" -Recurse -ErrorAction SilentlyContinue
+}
+
 
 function Validate-Directory ($output) {
     New-Item $output -ItemType Directory -Force
@@ -72,19 +136,19 @@ function Pack-Squirrel-Installer ($path, $version, $output) {
     Write-Host "Input path:  $input"
 
     # dotnet pack is not used because ran into issues, need to test installation and starting up if to use it.
-    nuget pack $spec -Version $version -BasePath $input -OutputDirectory $output -Properties Configuration=Release
+    & (Get-NuGetCommand) pack $spec -Version $version -BasePath $input -OutputDirectory $output -Properties Configuration=Release
 
     $nupkg = "$output\FlowLauncher.$version.nupkg"
     Write-Host "nupkg path: $nupkg"
     $icon = "$path\Flow.Launcher\Resources\app.ico"
     Write-Host "icon: $icon"
     # Squirrel.com: https://github.com/Squirrel/Squirrel.Windows/issues/369
-    New-Alias Squirrel $env:USERPROFILE\.nuget\packages\squirrel.windows\1.9.0\tools\Squirrel.exe -Force
+    $squirrel = Get-SquirrelExePath
     # why we need Write-Output: https://github.com/Squirrel/Squirrel.Windows/issues/489#issuecomment-156039327
     # directory of releaseDir in squirrel can't be same as directory ($nupkg) in releasify
     $temp = "$output\Temp"
 
-    Squirrel --releasify $nupkg --releaseDir $temp --setupIcon $icon --no-msi | Write-Output
+    & $squirrel --releasify $nupkg --releaseDir $temp --setupIcon $icon --no-msi | Write-Output
     Move-Item $temp\* $output -Force
     Remove-Item $temp
 
@@ -94,6 +158,40 @@ function Pack-Squirrel-Installer ($path, $version, $output) {
     Move-Item "$output\Setup.exe" $file -Force
 
     Write-Host "End pack squirrel installer"
+}
+
+function Pack-Squirrel-Installer-Avalonia ($path, $version, $output) {
+    Write-Host "Begin pack Avalonia squirrel installer"
+
+    $spec = "$path\Scripts\flowlauncher.avalonia.nuspec"
+    $input = "$path\Output\Release\Avalonia"
+
+    if (!(Test-Path "$input\Flow.Launcher.Avalonia.exe")) {
+        throw "Avalonia executable not found at $input."
+    }
+
+    $icon = "$path\Flow.Launcher\Resources\app.ico"
+    $squirrel = Get-SquirrelExePath
+
+    $temp = "$output\Temp-Avalonia"
+    $releaseTemp = "$temp\Release"
+    if (Test-Path $temp) {
+        Remove-Item $temp -Recurse -Force
+    }
+
+    New-Item $temp -ItemType Directory -Force | Out-Null
+    New-Item $releaseTemp -ItemType Directory -Force | Out-Null
+
+    & (Get-NuGetCommand) pack $spec -Version $version -BasePath $input -OutputDirectory $temp -Properties Configuration=Release
+
+    $nupkg = "$temp\FlowLauncherAvalonia.$version.nupkg"
+    & $squirrel --releasify $nupkg --releaseDir $releaseTemp --setupIcon $icon --no-msi | Write-Output
+
+    $file = "$output\Flow-Launcher-Avalonia-Setup.exe"
+    Move-Item "$releaseTemp\Setup.exe" $file -Force
+    Remove-Item $temp -Recurse -Force
+
+    Write-Host "End pack Avalonia squirrel installer"
 }
 
 function Publish-Self-Contained ($p) {
@@ -106,11 +204,43 @@ function Publish-Self-Contained ($p) {
     dotnet publish -c Release $csproj /p:PublishProfile=$profile
 }
 
+function Publish-Self-Contained-Avalonia ($p) {
+    $csproj  = "$p\Flow.Launcher.Avalonia\Flow.Launcher.Avalonia.csproj"
+    $profile = "$p\Flow.Launcher.Avalonia\Properties\PublishProfiles\Net9.0-SelfContained.pubxml"
+
+    if (!(Test-Path $csproj)) {
+        throw "Avalonia project not found at $csproj."
+    }
+
+    if (!(Test-Path $profile)) {
+        throw "Avalonia publish profile not found at $profile."
+    }
+
+    Write-Host "Publishing Avalonia self-contained..."
+    dotnet publish -c Release $csproj /p:PublishProfile=$profile
+}
+
 function Publish-Portable ($outputLocation, $version) {
 
     & $outputLocation\Flow-Launcher-Setup.exe --silent | Out-Null
-    mkdir "$env:LocalAppData\FlowLauncher\app-$version\UserData"
+    New-Item "$env:LocalAppData\FlowLauncher\app-$version\UserData" -ItemType Directory -Force | Out-Null
+    if (Test-Path "$outputLocation\Flow-Launcher-Portable.zip") {
+        Remove-Item "$outputLocation\Flow-Launcher-Portable.zip" -Force
+    }
     Compress-Archive -Path $env:LocalAppData\FlowLauncher -DestinationPath $outputLocation\Flow-Launcher-Portable.zip
+}
+
+function Publish-Portable-Avalonia ($outputLocation, $version) {
+    if (!(Test-Path "$outputLocation\Flow-Launcher-Avalonia-Setup.exe")) {
+        throw "Avalonia setup installer not found at $outputLocation\Flow-Launcher-Avalonia-Setup.exe."
+    }
+
+    & $outputLocation\Flow-Launcher-Avalonia-Setup.exe --silent | Out-Null
+    New-Item "$env:LocalAppData\FlowLauncherAvalonia\app-$version\UserData" -ItemType Directory -Force | Out-Null
+    if (Test-Path "$outputLocation\Flow-Launcher-Avalonia-Portable.zip") {
+        Remove-Item "$outputLocation\Flow-Launcher-Avalonia-Portable.zip" -Force
+    }
+    Compress-Archive -Path $env:LocalAppData\FlowLauncherAvalonia -DestinationPath $outputLocation\Flow-Launcher-Avalonia-Portable.zip
 }
 
 function Main {
@@ -126,11 +256,18 @@ function Main {
 
         Remove-CreateDumpExe $p $config
 
+        # Process Avalonia build
+        Publish-Self-Contained-Avalonia $p
+        Delete-Unused-Avalonia $p $config
+        Remove-CreateDumpExe-Avalonia $p $config
+
         $o = "$p\Output\Packages"
         Validate-Directory $o
         Pack-Squirrel-Installer $p $v $o
+        Pack-Squirrel-Installer-Avalonia $p $v $o
 
         Publish-Portable $o $v
+        Publish-Portable-Avalonia $o $v
     }
 }
 

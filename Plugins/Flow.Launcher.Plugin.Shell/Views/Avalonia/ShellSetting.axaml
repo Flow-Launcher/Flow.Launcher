@@ -1,0 +1,91 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
+             xmlns:vm="using:Flow.Launcher.Plugin.Shell.ViewModels"
+             xmlns:converters="using:Flow.Launcher.Plugin.Shell.Converters.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+             x:Class="Flow.Launcher.Plugin.Shell.Views.Avalonia.ShellSetting"
+             x:DataType="vm:ShellSettingViewModel">
+
+    <UserControl.Resources>
+        <converters:LeaveShellOpenOrCloseShellAfterPressEnabledConverter x:Key="LeaveShellOpenOrCloseShellAfterPressEnabledConverter" />
+    </UserControl.Resources>
+
+    <StackPanel Spacing="10" Margin="0,0,10,0">
+        <ui:SettingsExpander Header="{DynamicResource flowlauncher_plugin_cmd_plugin_name}"
+                             IconSource="Code"
+                             Description="{DynamicResource flowlauncher_plugin_cmd_plugin_description}"
+                             IsExpanded="True">
+            <ui:SettingsExpander.Items>
+                <ui:SettingsExpanderItem Content="{DynamicResource flowlauncher_plugin_cmd_relace_winr}">
+                    <ui:SettingsExpanderItem.Footer>
+                        <ToggleSwitch IsChecked="{Binding Settings.ReplaceWinR}" OnContent="" OffContent="" />
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+
+                <ui:SettingsExpanderItem Content="{DynamicResource flowlauncher_plugin_cmd_always_run_as_administrator}">
+                    <ui:SettingsExpanderItem.Footer>
+                        <ToggleSwitch IsChecked="{Binding Settings.RunAsAdministrator}" OnContent="" OffContent="" />
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+
+                <ui:SettingsExpanderItem Content="{DynamicResource flowlauncher_plugin_cmd_use_windows_terminal}">
+                    <ui:SettingsExpanderItem.Footer>
+                        <ToggleSwitch IsChecked="{Binding Settings.UseWindowsTerminal}" OnContent="" OffContent="" />
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+
+                <ui:SettingsExpanderItem Content="Shell">
+                    <ui:SettingsExpanderItem.Footer>
+                        <ComboBox ItemsSource="{Binding AllShells}"
+                                  SelectedValue="{Binding SelectedShell}"
+                                  DisplayMemberBinding="{Binding Display}"
+                                  SelectedValueBinding="{Binding Value}"
+                                  MinWidth="150" />
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+
+                <ui:SettingsExpanderItem Content="{DynamicResource flowlauncher_plugin_cmd_close_cmd_after_press}">
+                    <ui:SettingsExpanderItem.Footer>
+                        <ToggleSwitch IsChecked="{Binding CloseShellAfterPress}" OnContent="" OffContent="">
+                            <ToggleSwitch.IsEnabled>
+                                <MultiBinding Converter="{StaticResource LeaveShellOpenOrCloseShellAfterPressEnabledConverter}">
+                                    <Binding Path="LeaveShellOpen" />
+                                    <Binding Path="SelectedShell" />
+                                </MultiBinding>
+                            </ToggleSwitch.IsEnabled>
+                        </ToggleSwitch>
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+
+                <ui:SettingsExpanderItem Content="{DynamicResource flowlauncher_plugin_cmd_leave_cmd_open}">
+                    <ui:SettingsExpanderItem.Footer>
+                        <ToggleSwitch IsChecked="{Binding LeaveShellOpen}" OnContent="" OffContent="">
+                            <ToggleSwitch.IsEnabled>
+                                <MultiBinding Converter="{StaticResource LeaveShellOpenOrCloseShellAfterPressEnabledConverter}">
+                                    <Binding Path="CloseShellAfterPress" />
+                                    <Binding Path="SelectedShell" />
+                                </MultiBinding>
+                            </ToggleSwitch.IsEnabled>
+                        </ToggleSwitch>
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+
+                <ui:SettingsExpanderItem Content="{DynamicResource flowlauncher_plugin_cmd_history}">
+                    <ui:SettingsExpanderItem.Footer>
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <ComboBox ItemsSource="{Binding OnlyMostUsedCMDsNumbers}"
+                                      SelectedItem="{Binding SelectedOnlyMostUsedCMDsNumber}"
+                                      IsEnabled="{Binding Settings.ShowOnlyMostUsedCMDs}"
+                                      MinWidth="60" />
+                            <ToggleSwitch IsChecked="{Binding Settings.ShowOnlyMostUsedCMDs}" OnContent="" OffContent="" />
+                        </StackPanel>
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+
+            </ui:SettingsExpander.Items>
+        </ui:SettingsExpander>
+    </StackPanel>
+</UserControl>

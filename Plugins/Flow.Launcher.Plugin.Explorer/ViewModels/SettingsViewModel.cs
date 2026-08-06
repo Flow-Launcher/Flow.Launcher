@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -6,20 +6,38 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Forms;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Plugin.Explorer.Helper;
 using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.Everything;
 using Flow.Launcher.Plugin.Explorer.Search.Everything.Exceptions;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
-using Flow.Launcher.Plugin.Explorer.Views;
+using Flow.Launcher.Plugin.Explorer.Views.Avalonia;
+using AvaloniaApp = Avalonia.Application;
 
 namespace Flow.Launcher.Plugin.Explorer.ViewModels
 {
     public partial class SettingsViewModel : BaseModel
     {
+        /// <summary>
+        /// Gets the current active Avalonia window to use as dialog owner
+        /// </summary>
+        private static global::Avalonia.Controls.Window? GetAvaloniaOwnerWindow()
+        {
+            if (AvaloniaApp.Current?.ApplicationLifetime is not global::Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime desktop)
+                return null;
+
+            // First try to find an active window
+            var activeWindow = desktop.Windows.FirstOrDefault(w => w.IsActive);
+            if (activeWindow != null)
+                return activeWindow;
+
+            // Fall back to main window
+            return desktop.MainWindow;
+        }
+
         public Settings Settings { get; set; }
 
         internal PluginInitContext Context { get; set; }
@@ -33,6 +51,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             Context = context;
             Settings = settings;
 
+            ActionKeywordModel.Init(settings);
             InitializeEngineSelection();
             InitializeActionKeywordModels();
         }
@@ -154,7 +173,6 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                 Settings.ShowCreatedDateInPreviewPanel = value;
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(ShowPreviewPanelDateTimeChoices));
-                OnPropertyChanged(nameof(PreviewPanelDateTimeChoicesVisibility));
             }
         }
 
@@ -166,7 +184,6 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                 Settings.ShowModifiedDateInPreviewPanel = value;
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(ShowPreviewPanelDateTimeChoices));
-                OnPropertyChanged(nameof(PreviewPanelDateTimeChoicesVisibility));
             }
         }
 
@@ -178,7 +195,6 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                 Settings.ShowFileAgeInPreviewPanel = value;
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(ShowPreviewPanelDateTimeChoices));
-                OnPropertyChanged(nameof(PreviewPanelDateTimeChoicesVisibility));
             }
         }
 
@@ -208,9 +224,6 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
         public string PreviewPanelTimeFormatDemo => DateTime.Now.ToString(PreviewPanelTimeFormat, CultureInfo.CurrentCulture);
 
         public bool ShowPreviewPanelDateTimeChoices => ShowCreatedDateInPreviewPanel || ShowModifiedDateInPreviewPanel;
-
-        public Visibility PreviewPanelDateTimeChoicesVisibility => ShowCreatedDateInPreviewPanel || ShowModifiedDateInPreviewPanel ? Visibility.Visible : Visibility.Collapsed;
-
 
         public List<string> TimeFormatList { get; } = new()
         {
@@ -292,7 +305,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
         public ActionKeywordModel? SelectedActionKeyword { get; set; }
 
         [RelayCommand]
-        private void EditActionKeyword(object obj)
+        private async Task EditActionKeywordAsync(object obj)
         {
             if (SelectedActionKeyword is not { } actionKeyword)
             {
@@ -300,14 +313,32 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                 return;
             }
 
-            var actionKeywordWindow = new ActionKeywordSetting(actionKeyword);
+            var dialog = new ActionKeywordSetting(actionKeyword);
+            var ownerWindow = GetAvaloniaOwnerWindow();
+            bool dialogResult;
+            if (ownerWindow != null)
+            {
+                dialogResult = await dialog.ShowDialog<bool?>(ownerWindow) ?? false;
+            }
+            else
+            {
+                // Fallback: show as normal window if owner is not available
+                dialog.Show();
+                var tcs = new TaskCompletionSource<bool?>();
+                dialog.Closed += (_, _) => tcs.TrySetResult(true);
+                await tcs.Task;
+                dialogResult = true;
+            }
 
-            if (!(actionKeywordWindow.ShowDialog() ?? false))
+            if (!dialogResult)
             {
                 return;
             }
 
-            switch (actionKeyword.Enabled, actionKeywordWindow.KeywordEnabled)
+            var newKeyword = dialog.ActionKeyword;
+            var newEnabled = dialog.KeywordEnabled;
+
+            switch (actionKeyword.Enabled, newEnabled)
             {
                 case (true, false):
                     Context.API.RemoveActionKeyword(Context.CurrentPluginMetadata.ID, actionKeyword.Keyword);
@@ -315,10 +346,10 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                 case (true, true):
                     // same keyword will have dialog result false
                     Context.API.RemoveActionKeyword(Context.CurrentPluginMetadata.ID, actionKeyword.Keyword);
-                    Context.API.AddActionKeyword(Context.CurrentPluginMetadata.ID, actionKeywordWindow.ActionKeyword);
+                    Context.API.AddActionKeyword(Context.CurrentPluginMetadata.ID, newKeyword);
                     break;
                 case (false, true):
-                    Context.API.AddActionKeyword(Context.CurrentPluginMetadata.ID, actionKeywordWindow.ActionKeyword);
+                    Context.API.AddActionKeyword(Context.CurrentPluginMetadata.ID, newKeyword);
                     break;
                 case (false, false):
                     // Keyword was disabled and remains disabled, but the keyword text was changed.
@@ -326,8 +357,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                     break;
             }
 
-            (actionKeyword.Keyword, actionKeyword.Enabled) = (actionKeywordWindow.ActionKeyword, actionKeywordWindow.KeywordEnabled);
-
+            (actionKeyword.Keyword, actionKeyword.Enabled) = (newKeyword, newEnabled);
         }
 
         #endregion
@@ -349,7 +379,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
         }
 
         [RelayCommand]
-        private void EditIndexSearchExcludePaths()
+        private async Task EditIndexSearchExcludePathsAsync()
         {
             var selectedLink = SelectedIndexSearchExcludedPath;
             var collection = Settings.IndexSearchExcludedSubdirectoryPaths;
@@ -360,7 +390,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                 return;
             }
 
-            var path = PromptUserSelectPath(selectedLink.Type,
+            var path = await PromptUserSelectPathAsync(selectedLink.Type,
                 selectedLink.Type == ResultType.Folder
                     ? selectedLink.Path
                     : Path.GetDirectoryName(selectedLink.Path));
@@ -377,21 +407,21 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
         }
 
         [RelayCommand]
-        private void AddIndexSearchExcludePaths()
+        private async Task AddIndexSearchExcludePathsAsync()
         {
             var container = Settings.IndexSearchExcludedSubdirectoryPaths;
 
             if (container is null) return;
-            
-            var folderBrowserDialog = new FolderBrowserDialog();
 
-            if (folderBrowserDialog.ShowDialog() != DialogResult.OK)
+            var path = await PromptUserSelectFolderAsync();
+
+            if (path is null)
                 return;
 
             var newAccessLink = new AccessLink
             {
-                Name = folderBrowserDialog.SelectedPath.GetPathName(),
-                Path = folderBrowserDialog.SelectedPath
+                Name = path.GetPathName(),
+                Path = path
             };
 
             container.Add(newAccessLink);
@@ -399,7 +429,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
         }
 
         [RelayCommand]
-        private void EditQuickAccessLink()
+        private async Task EditQuickAccessLinkAsync()
         {
             var selectedLink = SelectedQuickAccessLink;
             var collection = Settings.QuickAccessLinks;
@@ -410,18 +440,50 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                 return;
             }
 
-            var quickAccessLinkSettings = new QuickAccessLinkSettings(collection, SelectedQuickAccessLink);
-            if (quickAccessLinkSettings.ShowDialog() == true)
+            var dialog = new QuickAccessLinkSettings(collection, selectedLink);
+            var ownerWindow = GetAvaloniaOwnerWindow();
+            bool dialogResult;
+            if (ownerWindow != null)
+            {
+                dialogResult = await dialog.ShowDialog<bool?>(ownerWindow) ?? false;
+            }
+            else
+            {
+                // Fallback: show as normal window if owner is not available
+                dialog.Show();
+                var tcs = new TaskCompletionSource<bool?>();
+                dialog.Closed += (_, _) => tcs.TrySetResult(true);
+                await tcs.Task;
+                dialogResult = true;
+            }
+
+            if (dialogResult)
             {
                 Save();
             }
         }
-        
+
         [RelayCommand]
-        private void AddQuickAccessLink()
+        private async Task AddQuickAccessLinkAsync()
         {
-            var quickAccessLinkSettings = new QuickAccessLinkSettings(Settings.QuickAccessLinks);
-            if (quickAccessLinkSettings.ShowDialog() == true)
+            var dialog = new QuickAccessLinkSettings(Settings.QuickAccessLinks);
+            var ownerWindow = GetAvaloniaOwnerWindow();
+            bool dialogResult;
+            if (ownerWindow != null)
+            {
+                dialogResult = await dialog.ShowDialog<bool?>(ownerWindow) ?? false;
+            }
+            else
+            {
+                // Fallback: show as normal window if owner is not available
+                dialog.Show();
+                var tcs = new TaskCompletionSource<bool?>();
+                dialog.Closed += (_, _) => tcs.TrySetResult(true);
+                await tcs.Task;
+                dialogResult = true;
+            }
+
+            if (dialogResult)
             {
                 Save();
             }
@@ -459,43 +521,58 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             }
             Save();
         }
-        
+
         private void ShowUnselectedMessage()
         {
             var warning = Localize.plugin_explorer_make_selection_warning();
             Context.API.ShowMsgBox(warning);
         }
 
-        #endregion
-
-        private static string? PromptUserSelectPath(ResultType type, string? initialDirectory = null)
+        private static async Task<string?> PromptUserSelectPathAsync(ResultType type, string? initialDirectory = null)
         {
             string? path = null;
 
             if (type is ResultType.Folder)
             {
-                var folderBrowserDialog = new FolderBrowserDialog();
-
-                if (initialDirectory is not null)
-                    folderBrowserDialog.InitialDirectory = initialDirectory;
-
-                if (folderBrowserDialog.ShowDialog() != DialogResult.OK)
-                    return path;
-
-                path = folderBrowserDialog.SelectedPath;
+                path = await PromptUserSelectFolderAsync(initialDirectory);
             }
             else if (type is ResultType.File)
             {
-                var openFileDialog = new OpenFileDialog();
-                if (initialDirectory is not null)
-                    openFileDialog.InitialDirectory = initialDirectory;
-
-                if (openFileDialog.ShowDialog() != DialogResult.OK)
-                    return path;
-
-                path = openFileDialog.FileName;
+                path = await PromptUserSelectFileAsync(initialDirectory);
             }
             return path;
+        }
+
+        private static async Task<string?> PromptUserSelectFolderAsync(string? initialDirectory = null)
+        {
+            var mainWindow = AvaloniaApp.Current?.ApplicationLifetime is global::Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime desktop
+                ? desktop.MainWindow
+                : null;
+
+            if (mainWindow == null) return null;
+
+            var folders = await mainWindow.StorageProvider.OpenFolderPickerAsync(new global::Avalonia.Platform.Storage.FolderPickerOpenOptions
+            {
+                AllowMultiple = false
+            });
+
+            return folders.Count > 0 ? folders[0].Path.LocalPath : null;
+        }
+
+        private static async Task<string?> PromptUserSelectFileAsync(string? initialDirectory = null)
+        {
+            var mainWindow = AvaloniaApp.Current?.ApplicationLifetime is global::Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime desktop
+                ? desktop.MainWindow
+                : null;
+
+            if (mainWindow == null) return null;
+
+            var files = await mainWindow.StorageProvider.OpenFilePickerAsync(new global::Avalonia.Platform.Storage.FilePickerOpenOptions
+            {
+                AllowMultiple = false
+            });
+
+            return files.Count > 0 ? files[0].Path.LocalPath : null;
         }
 
         internal static void OpenWindowsIndexingOptions()
@@ -511,9 +588,9 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
         }
 
         [RelayCommand]
-        private void OpenFileEditorPath()
+        private async Task OpenFileEditorPathAsync()
         {
-            var path = PromptUserSelectPath(ResultType.File, Settings.EditorPath != null ? Path.GetDirectoryName(Settings.EditorPath) : null);
+            var path = await PromptUserSelectFileAsync(Settings.EditorPath != null ? Path.GetDirectoryName(Settings.EditorPath) : null);
             if (path is null)
                 return;
 
@@ -521,9 +598,9 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
         }
 
         [RelayCommand]
-        private void OpenFolderEditorPath()
+        private async Task OpenFolderEditorPathAsync()
         {
-            var path = PromptUserSelectPath(ResultType.File, Settings.FolderEditorPath != null ? Path.GetDirectoryName(Settings.FolderEditorPath) : null);
+            var path = await PromptUserSelectFolderAsync(Settings.FolderEditorPath != null ? Path.GetDirectoryName(Settings.FolderEditorPath) : null);
             if (path is null)
                 return;
 
@@ -531,9 +608,9 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
         }
 
         [RelayCommand]
-        private void OpenShellPath()
+        private async Task OpenShellPathAsync()
         {
-            var path = PromptUserSelectPath(ResultType.File, Settings.ShellPath != null ? Path.GetDirectoryName(Settings.ShellPath) : null);
+            var path = await PromptUserSelectFileAsync(Settings.ShellPath != null ? Path.GetDirectoryName(Settings.ShellPath) : null);
             if (path is null)
                 return;
 
@@ -595,6 +672,8 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             }
         }
 
+        #endregion
+
         #region Everything FastSortWarning
 
         public List<EverythingSortOptionLocalized> AllEverythingSortOptions { get; } = EverythingSortOptionLocalized.GetValues();
@@ -613,23 +692,23 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             }
         }
 
-        public Visibility FastSortWarningVisibility
+        public bool FastSortWarningVisibility
         {
             get
             {
                 try
                 {
-                    return EverythingApi.IsFastSortOption(Settings.SortOption) ? Visibility.Collapsed : Visibility.Visible;
+                    return !EverythingApi.IsFastSortOption(Settings.SortOption);
                 }
                 catch (IPCErrorException)
                 {
                     // this error occurs if the Everything service is not running, in this instance show the warning and
                     // update the message to let user know in the settings panel.
-                    return Visibility.Visible;
+                    return true;
                 }
                 catch (DllNotFoundException)
                 {
-                    return Visibility.Collapsed;
+                    return false;
                 }
             }
         }
