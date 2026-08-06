@@ -1357,6 +1357,7 @@ namespace Flow.Launcher.ViewModel
             foreach (var item in historyItems)
             {
                 var copiedItem = item.DeepCopyForHistoryStyle(Settings.HistoryStyle == HistoryStyle.LastOpened);
+                copiedItem.ContextData = item;
 
                 if (Settings.HistoryStyle == HistoryStyle.LastOpened)
                 {
@@ -1832,6 +1833,28 @@ namespace Flow.Launcher.ViewModel
             }
 
             return menu;
+        }
+
+        private Result ContextMenuDeleteHistory(LastOpenedHistoryResult historyItem)
+        {
+            return new Result
+            {
+                Title = Localize.delete(),
+                IcoPath = Constant.DeleteIcon,
+                Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE74D"),
+                PluginDirectory = Constant.ProgramDirectory,
+                Action = context =>
+                {
+                    var removeAllMatchingResults = Settings.HistoryStyle == HistoryStyle.LastOpened;
+                    if (_history.Remove(historyItem, removeAllMatchingResults) > 0)
+                    {
+                        _historyItemsStorage.Save();
+                    }
+
+                    return false;
+                },
+                OriginQuery = historyItem.OriginQuery
+            };
         }
 
         private static Result ContextMenuPluginSettings(Result result)
