@@ -135,6 +135,12 @@
           "System.ValueTuple": "4.5.0"
         }
       },
+      "PowerStatus": {
+        "type": "Direct",
+        "requested": "[1.0.3, )",
+        "resolved": "1.0.3",
+        "contentHash": "kDqm6puX7icNM9wX6OdmruBXZAM9bX2XwNNBB9KmQf9/D8wqyixYYVnZF6U3WGs+qtyNIpPIflRaQ4wwzoRfJQ=="
+      },
       "PropertyChanged.Fody": {
         "type": "Direct",
         "requested": "[4.1.0, )",
@@ -1619,7 +1625,7 @@
           "FSharp.Core": "[9.0.303, )",
           "Flow.Launcher.Infrastructure": "[1.0.0, )",
           "Flow.Launcher.Localization": "[0.0.6, )",
-          "Flow.Launcher.Plugin": "[5.0.0, )",
+          "Flow.Launcher.Plugin": "[5.2.0, )",
           "Meziantou.Framework.Win32.Jobs": "[3.4.5, )",
           "Microsoft.IO.RecyclableMemoryStream": "[3.0.1, )",
           "SemanticVersioning": "[3.0.0, )",
@@ -1634,7 +1640,7 @@
           "BitFaster.Caching": "[2.5.4, )",
           "CommunityToolkit.Mvvm": "[8.4.0, )",
           "Flow.Launcher.Localization": "[0.0.6, )",
-          "Flow.Launcher.Plugin": "[5.0.0, )",
+          "Flow.Launcher.Plugin": "[5.2.0, )",
           "InputSimulator": "[1.0.4, )",
           "MemoryPack": "[1.21.4, )",
           "Microsoft.VisualStudio.Threading": "[17.14.15, )",

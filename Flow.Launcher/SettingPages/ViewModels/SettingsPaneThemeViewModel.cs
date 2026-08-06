@@ -296,6 +296,14 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         set => Settings.UseDate = value;
     }
 
+    public bool UseBattery
+    {
+        get => Settings.UseBattery;
+        set => Settings.UseBattery = value;
+    }
+
+    public string BatteryText => "75%";
+
     public FontFamily ClockPanelFont { get; }
 
     public Brush PreviewBackground
