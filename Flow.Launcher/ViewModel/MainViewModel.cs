@@ -41,7 +41,11 @@ namespace Flow.Launcher.ViewModel
         private readonly ConcurrentDictionary<Guid, Query> _progressQueryDict = new(); // Used for QueryResultAsync
         private Query _updateQuery; // Used for ResultsUpdated
         private string _queryTextBeforeLeaveResults;
+        private string _queryTextBeforeContextMenu;
         private string _ignoredQueryText; // Used to ignore query text change when switching between context menu and query results
+
+        private ResultsViewModel _contextMenuSource;
+        private Result _contextMenuTarget;
 
         private readonly FlowLauncherJsonStorage<History> _historyItemsStorage;
         private readonly History _history;
@@ -432,23 +436,49 @@ namespace Flow.Launcher.ViewModel
                 return;
             }
 
-            // For query mode, we load context menu
-            if (QueryResultsSelected())
+            // If the context menu is already open, we need to return to the previous results view
+            if (ContextMenuSelected())
             {
-                // When switch to ContextMenu from QueryResults, but no item being chosen, should do nothing
-                // i.e. Shift+Enter/Ctrl+O right after Alt + Space should do nothing
-                if (SelectedResults.SelectedItem?.Result != null &&
-                    !string.IsNullOrEmpty(SelectedResults.SelectedItem.Result.PluginID))  // Do not show context menu for history results
-                {
-                    SelectedResults = ContextMenu;
-                }
+                ReturnFromContextMenu();
+                return;
             }
-            else
+
+            // Check if the selected result is a history result or a regular result
+            // Regular results need a valid plugin ID. History results use Flow's built-in context menu and
+            // can appear in either the dedicated history view or the home-page result list.
+            var selected = SelectedResults.SelectedItem?.Result;
+            if (selected == null) return;
+            var isHistoryResult = selected is LastOpenedHistoryResult
+                && selected.ContextData is LastOpenedHistoryResult;
+            if (!isHistoryResult && (!QueryResultsSelected() || string.IsNullOrEmpty(selected.PluginID))) return;
+
+            _contextMenuSource = SelectedResults;
+            _contextMenuTarget = selected;
+            _queryTextBeforeContextMenu = QueryText;
+
+            // Load context menu
+            SelectedResults = ContextMenu;
+        }
+
+        private void ReturnFromContextMenu()
+        {
+            var source = _contextMenuSource ?? Results;
+            var queryText = _queryTextBeforeContextMenu;
+
+            // Return to the previous results view and restore the query text
+            SelectedResults = source;
+            if (source == History)
             {
-                SelectedResults = Results;
-                PreviewSelectedItem = Results.SelectedItem;
-                _ = UpdatePreviewAsync();
+                ChangeQueryText(queryText);
             }
+
+            // Refresh the preview panel to show the previously selected result
+            PreviewSelectedItem = source.SelectedItem;
+            _ = UpdatePreviewAsync();
+
+            _contextMenuSource = null;
+            _contextMenuTarget = null;
+            _queryTextBeforeContextMenu = string.Empty;
         }
 
         [RelayCommand]
@@ -657,7 +687,11 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void Esc()
         {
-            if (!QueryResultsSelected())
+            if (ContextMenuSelected())
+            {
+                ReturnFromContextMenu();
+            }
+            else if (!QueryResultsSelected())
             {
                 SelectedResults = Results;
                 PreviewSelectedItem = Results.SelectedItem;
@@ -890,7 +924,10 @@ namespace Flow.Launcher.ViewModel
                         ContextMenu.Visibility = Visibility.Visible;
                         History.Visibility = Visibility.Collapsed;
                     }
-                    _queryTextBeforeLeaveResults = QueryText;
+                    if (isReturningFromQueryResults)
+                    {
+                        _queryTextBeforeLeaveResults = QueryText;
+                    }
 
                     // Because of Fody's optimization
                     // setter won't be called when property value is not changed.
@@ -1274,7 +1311,14 @@ namespace Flow.Launcher.ViewModel
             var query = QueryText.ToLower().Trim();
             ContextMenu.Clear();
 
-            var selected = Results.SelectedItem?.Result;
+            var selected = _contextMenuTarget;
+
+            if (selected is LastOpenedHistoryResult
+                && selected.ContextData is LastOpenedHistoryResult historyItem)
+            {
+                ContextMenu.AddResults([ContextMenuDeleteHistory(historyItem)], id);
+                return;
+            }
 
             if (selected != null && // SelectedItem returns null if selection is empty.
                 !string.IsNullOrEmpty(selected.PluginID))  // SelectedItem must have a valid PluginID, history results do not.
@@ -1845,10 +1889,20 @@ namespace Flow.Launcher.ViewModel
                 PluginDirectory = Constant.ProgramDirectory,
                 Action = context =>
                 {
+                    var source = _contextMenuSource;
                     var removeAllMatchingResults = Settings.HistoryStyle == HistoryStyle.LastOpened;
                     if (_history.Remove(historyItem, removeAllMatchingResults) > 0)
                     {
                         _historyItemsStorage.Save();
+                    }
+
+                    ReturnFromContextMenu();
+
+                    // Home-page history is part of the regular result list, so refresh it after deletion.
+                    // The dedicated history view is refreshed while returning from the context menu.
+                    if (source == Results)
+                    {
+                        _ = QueryResultsAsync(false, isReQuery: true);
                     }
 
                     return false;
