@@ -107,6 +107,26 @@
         TargetType="{x:Type ScrollBar}">
         <Setter Property="Width" Value="4" />
     </Style>
+    <Style
+        x:Key="HorizontalScrollBarStyle"
+        BasedOn="{StaticResource BaseHorizontalScrollBarStyle}"
+        TargetType="{x:Type ScrollBar}" />
+    <Style
+        x:Key="HorizontalThumbStyle"
+        BasedOn="{StaticResource BaseHorizontalThumbStyle}"
+        TargetType="{x:Type Thumb}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Border
+                        Background="#b88f3a"
+                        BorderBrush="Transparent"
+                        BorderThickness="0"
+                        CornerRadius="2" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
     <Style x:Key="HighlightStyle">
         <Setter Property="Inline.FontWeight" Value="Bold" />
     </Style>
