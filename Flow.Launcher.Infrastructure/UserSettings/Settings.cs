@@ -406,7 +406,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
 
-        private bool _usePolyphonicPhraseOverrides = false;
+        private bool _usePolyphonicPhraseOverrides = true;
         public bool UsePolyphonicPhraseOverrides
         {
             get => _usePolyphonicPhraseOverrides;
