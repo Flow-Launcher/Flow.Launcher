@@ -98,7 +98,7 @@ namespace Flow.Launcher.Test.Plugins
 
             // The system running this test could have a different content locale than the hard-coded 1033 LCID en-US.
             var queryContentLocale = baseQuery.QueryContentLocale;
-            expectedString = expectedString.Replace("1033", queryContentLocale.ToString());
+expectedString = expectedString.Replace("1033", queryContentLocale.ToString(System.Globalization.CultureInfo.InvariantCulture));
 
             // When
             var resultString = queryConstructor.FilesAndFolders(userSearchString);
