@@ -420,7 +420,7 @@ namespace Flow.Launcher.ViewModel
             // If the context menu is already open, we need to return to the previous results view
             if (ContextMenuSelected())
             {
-                ReturnFromContextMenu();
+                await ReturnFromContextMenuAsync();
                 return;
             }
 
@@ -441,7 +441,7 @@ namespace Flow.Launcher.ViewModel
             SelectedResults = ContextMenu;
         }
 
-        private void ReturnFromContextMenu()
+        private async Task ReturnFromContextMenuAsync()
         {
             var source = _contextMenuSource ?? Results;
             var queryText = _queryTextBeforeContextMenu;
@@ -450,12 +450,12 @@ namespace Flow.Launcher.ViewModel
             SelectedResults = source;
             if (source == History)
             {
-                ChangeQueryText(queryText);
+                await ChangeQueryTextAsync(queryText);
             }
 
             // Refresh the preview panel to show the previously selected result
             PreviewSelectedItem = source.SelectedItem;
-            _ = UpdatePreviewAsync();
+            await UpdatePreviewAsync();
 
             _contextMenuSource = null;
             _contextMenuTarget = null;
@@ -670,7 +670,7 @@ namespace Flow.Launcher.ViewModel
         {
             if (ContextMenuSelected())
             {
-                ReturnFromContextMenu();
+                await ReturnFromContextMenuAsync();
             }
             else if (!QueryResultsSelected())
             {
@@ -1923,7 +1923,7 @@ namespace Flow.Launcher.ViewModel
                 IcoPath = Constant.DeleteIcon,
                 Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE74D"),
                 PluginDirectory = Constant.ProgramDirectory,
-                Action = context =>
+                AsyncAction = async context =>
                 {
                     var source = _contextMenuSource;
                     var removeAllMatchingResults = Settings.HistoryStyle == HistoryStyle.LastOpened;
@@ -1932,13 +1932,13 @@ namespace Flow.Launcher.ViewModel
                         _historyItemsStorage.Save();
                     }
 
-                    ReturnFromContextMenu();
+                    await ReturnFromContextMenuAsync();
 
                     // Home-page history is part of the regular result list, so refresh it after deletion.
                     // The dedicated history view is refreshed while returning from the context menu.
                     if (source == Results)
                     {
-                        _ = QueryResultsAsync(false, isReQuery: true);
+                        await QueryResultsAsync(false, isReQuery: true);
                     }
 
                     return false;
