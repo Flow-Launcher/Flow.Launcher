@@ -1989,7 +1989,7 @@ namespace Flow.Launcher.ViewModel
             return selected;
         }
 
-        private bool HistorySelected()
+        internal bool HistorySelected()
         {
             var selected = SelectedResults == History;
             return selected;

@@ -460,8 +460,8 @@ namespace Flow.Launcher
                     e.Handled = true;
                     break;
                 case Key.Right:
-                    if (_viewModel.QueryResultsSelected()
-                        && QueryTextBox.CaretIndex == QueryTextBox.Text.Length)            
+                    if ((_viewModel.QueryResultsSelected() || _viewModel.HistorySelected())
+                        && QueryTextBox.CaretIndex == QueryTextBox.Text.Length)
                     {
                         _viewModel.LoadContextMenuCommand.Execute(null);
                         e.Handled = true;
