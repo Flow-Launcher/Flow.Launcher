@@ -2,6 +2,9 @@
 using Flow.Launcher.Infrastructure.UserSettings;
 using NUnit.Framework;
 using NUnit.Framework.Legacy;
+using System.Threading;
+using System.Threading.Tasks;
+using ToolGood.Words.Pinyin;
 
 namespace Flow.Launcher.Test
 {
@@ -119,6 +122,40 @@ namespace Flow.Launcher.Test
 
             ClassicAssert.True(overridePronunciation.Success);
             ClassicAssert.False(libraryPronunciation.Success);
+        }
+
+        [Test]
+        public async Task Translate_WhenConfigurationChangesDuringBuild_ShouldNotPublishStaleResultAsync()
+        {
+            var settings = new Settings
+            {
+                ShouldUsePinyin = true,
+                UsePolyphonicPhraseOverrides = true
+            };
+            using var oldConfigurationCaptured = new ManualResetEventSlim();
+            using var continueBuild = new ManualResetEventSlim();
+            var alphabet = new PinyinAlphabet(settings, content =>
+            {
+                oldConfigurationCaptured.Set();
+                continueBuild.Wait();
+                return WordsHelper.GetPinyinList(content);
+            });
+
+            var translationTask = Task.Run(() => alphabet.Translate("重启").translation);
+            try
+            {
+                ClassicAssert.True(oldConfigurationCaptured.Wait(5000), "The search worker did not start in time.");
+
+                settings.UsePolyphonicPhraseOverrides = false;
+                continueBuild.Set();
+
+                ClassicAssert.AreEqual("Zhong Qi", await translationTask);
+                ClassicAssert.AreEqual("Zhong Qi", alphabet.Translate("重启").translation);
+            }
+            finally
+            {
+                continueBuild.Set();
+            }
         }
     }
 }
