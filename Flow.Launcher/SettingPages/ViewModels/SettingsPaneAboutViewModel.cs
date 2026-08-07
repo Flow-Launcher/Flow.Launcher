@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core;
+using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
@@ -90,6 +92,94 @@ public partial class SettingsPaneAboutViewModel : BaseModel
     {
         var window = new WelcomeWindow();
         window.ShowDialog();
+    }
+
+    [RelayCommand]
+    private void OpenTestReportWindow()
+    {
+        var reportWindow = new ReportWindow(
+            new Exception("Dev Tools test exception")
+        );
+        reportWindow.Show();
+    }
+
+    [RelayCommand]
+    private async Task OpenTestProgressWindowAsync()
+    {
+        using var cancellationTokenSource = new CancellationTokenSource();
+
+        await ProgressBoxEx.ShowAsync(
+            Localize.devtoolsProgressWindow(),
+            async reportProgress =>
+            {
+                if (reportProgress == null)
+                    return;
+
+                var duration = TimeSpan.FromMinutes(1);
+                var updateInterval = TimeSpan.FromSeconds(0.5);
+                var totalSteps = (int)(duration.Ticks / updateInterval.Ticks);
+
+                try
+                {
+                    for (var currentStep = 1; currentStep <= totalSteps; currentStep++)
+                    {
+                        await Task.Delay(updateInterval, cancellationTokenSource.Token).ConfigureAwait(false);
+                        reportProgress((double)currentStep / totalSteps * 100);
+                    }
+                }
+                catch (OperationCanceledException)
+                {
+                    // Progress window cancel action triggers this path.
+                }
+            },
+            cancellationTokenSource.Cancel);
+    }
+
+    [RelayCommand]
+    private void OpenTestPluginUpdateWindow()
+    {
+        var window = new PluginUpdateWindow(new List<PluginUpdateInfo>());
+        window.ShowDialog();
+    }
+
+    [RelayCommand]
+    private void OpenTestMessageBox(string buttonType)
+    {
+        MessageBoxButton button;
+        string caption;
+        MessageBoxImage icon;
+
+        switch (buttonType)
+        {
+            case "OK":
+                button = MessageBoxButton.OK;
+                caption = Localize.devtoolsMessageBoxOkLabel();
+                icon = MessageBoxImage.Information;
+                break;
+            case "OKCancel":
+                button = MessageBoxButton.OKCancel;
+                caption = Localize.devtoolsMessageBoxOkCancelLabel();
+                icon = MessageBoxImage.Question;
+                break;
+            case "YesNo":
+                button = MessageBoxButton.YesNo;
+                caption = Localize.devtoolsMessageBoxYesNoLabel();
+                icon = MessageBoxImage.Question;
+                break;
+            case "YesNoCancel":
+                button = MessageBoxButton.YesNoCancel;
+                caption = Localize.devtoolsMessageBoxYesNoCancelLabel();
+                icon = MessageBoxImage.Question;
+                break;
+            default:
+                var ex = new ArgumentException($"Invalid button type: {buttonType}", nameof(buttonType));
+                App.API.LogException(ClassName, "Invalid button type passed for Test MessageBox", ex);
+                App.API.ShowMsg($"Invalid button type: {buttonType}");
+                return;
+        }
+
+        var result = MessageBoxEx.Show(Localize.devtoolsMessageBoxTestMessage(), caption, button, icon);
+        App.API.ShowMsg($"{buttonType} result: {result}");
     }
 
     [RelayCommand]
