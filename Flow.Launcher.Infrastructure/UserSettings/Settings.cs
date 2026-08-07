@@ -48,6 +48,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 case nameof(ShouldUsePinyin):
                 case nameof(UseDoublePinyin):
                 case nameof(DoublePinyinSchema):
+                case nameof(UsePolyphonicPhraseOverrides):
                 case nameof(IgnoreAccents):
                     StringMatcherBehaviorChanged?.Invoke(this, EventArgs.Empty);
                     break;
@@ -400,6 +401,20 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 if (_useDoublePinyin != value)
                 {
                     _useDoublePinyin = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private bool _usePolyphonicPhraseOverrides = false;
+        public bool UsePolyphonicPhraseOverrides
+        {
+            get => _usePolyphonicPhraseOverrides;
+            set
+            {
+                if (_usePolyphonicPhraseOverrides != value)
+                {
+                    _usePolyphonicPhraseOverrides = value;
                     OnPropertyChanged();
                 }
             }

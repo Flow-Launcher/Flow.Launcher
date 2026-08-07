@@ -14,14 +14,11 @@ namespace Flow.Launcher.Infrastructure
 {
     public class PinyinAlphabet : IAlphabet
     {
-        private static readonly IReadOnlyDictionary<string, string[]> PolyphonicPhraseOverrides = new Dictionary<string, string[]>
-        {
-            ["重启"] = ["Chong", "Qi"],
-        };
-
         private readonly ConcurrentDictionary<string, (string translation, TranslationMapping map)> _pinyinCache = new();
         private readonly Settings _settings;
         private ReadOnlyDictionary<string, string> currentDoublePinyinTable;
+        private ReadOnlyDictionary<string, string[]> currentPolyphonicPhraseOverrides;
+        private int maxPolyphonicPhraseLength;
 
         public PinyinAlphabet()
             : this(Ioc.Default.GetRequiredService<Settings>())
@@ -34,23 +31,29 @@ namespace Flow.Launcher.Infrastructure
 
             _settings = settings;
             LoadDoublePinyinTable();
+            LoadPolyphonicPhraseOverrides();
 
             _settings.PropertyChanged += (sender, e) =>
             {
                 switch (e.PropertyName)
                 {
                     case nameof(Settings.ShouldUsePinyin):
-                        if (_settings.ShouldUsePinyin)
-                        {
-                            Reload();
-                        }
+                        Reload();
                         break;
                     case nameof(Settings.UseDoublePinyin):
+                        LoadDoublePinyinTable();
+                        _pinyinCache.Clear();
+                        break;
                     case nameof(Settings.DoublePinyinSchema):
                         if (_settings.UseDoublePinyin)
                         {
-                            Reload();
+                            LoadDoublePinyinTable();
+                            _pinyinCache.Clear();
                         }
+                        break;
+                    case nameof(Settings.UsePolyphonicPhraseOverrides):
+                        LoadPolyphonicPhraseOverrides();
+                        _pinyinCache.Clear();
                         break;
                 }
             };
@@ -59,12 +62,61 @@ namespace Flow.Launcher.Infrastructure
         public void Reload()
         {
             LoadDoublePinyinTable();
+            LoadPolyphonicPhraseOverrides();
             _pinyinCache.Clear();
+        }
+
+        private static JsonSerializerOptions GetOptions()
+        {
+            return new JsonSerializerOptions
+            {
+                ReadCommentHandling = JsonCommentHandling.Skip
+            };
+        }
+
+        private void CreatePolyphonicPhraseOverridesFromStream(Stream jsonStream, JsonSerializerOptions options)
+        {
+            var overrides = JsonSerializer.Deserialize<Dictionary<string, string[]>>(jsonStream, options) ??
+                throw new InvalidOperationException("Failed to deserialize polyphonic pinyin phrase overrides: result is null");
+
+            currentPolyphonicPhraseOverrides = new ReadOnlyDictionary<string, string[]>(overrides);
+            maxPolyphonicPhraseLength = 0;
+            foreach (var phrase in overrides.Keys)
+            {
+                maxPolyphonicPhraseLength = Math.Max(maxPolyphonicPhraseLength, phrase.Length);
+            }
+        }
+
+        private void LoadPolyphonicPhraseOverrides()
+        {
+            if (!_settings.ShouldUsePinyin || !_settings.UsePolyphonicPhraseOverrides)
+            {
+                ResetPolyphonicPhraseOverrides();
+                return;
+            }
+
+            var overridesPath = Path.Combine(AppContext.BaseDirectory, "Resources", "polyphonic_pinyin.json");
+            try
+            {
+                using var fs = File.OpenRead(overridesPath);
+                CreatePolyphonicPhraseOverridesFromStream(fs, GetOptions());
+            }
+            catch (System.Exception e)
+            {
+                Log.Exception(nameof(PinyinAlphabet), $"Failed to load polyphonic pinyin phrase overrides from file: {overridesPath}", e);
+                ResetPolyphonicPhraseOverrides();
+            }
+        }
+
+        private void ResetPolyphonicPhraseOverrides()
+        {
+            currentPolyphonicPhraseOverrides = new ReadOnlyDictionary<string, string[]>(new Dictionary<string, string[]>());
+            maxPolyphonicPhraseLength = 0;
         }
 
         private void CreateDoublePinyinTableFromStream(Stream jsonStream)
         {
-            var table = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, string>>>(jsonStream) ??
+            var table = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, string>>>(jsonStream, GetOptions()) ??
                 throw new InvalidOperationException("Failed to deserialize double pinyin table: result is null");
 
             var schemaKey = _settings.DoublePinyinSchema.ToString();
@@ -177,25 +229,27 @@ namespace Flow.Launcher.Infrastructure
             return _pinyinCache[content] = result;
         }
 
-        private static void ApplyPolyphonicPhraseOverrides(string content, string[] resultList)
+        private void ApplyPolyphonicPhraseOverrides(string content, string[] resultList)
         {
-            foreach (var (phrase, pinyin) in PolyphonicPhraseOverrides)
+            for (var start = 0; start < content.Length; start++)
             {
-                var index = content.IndexOf(phrase, StringComparison.Ordinal);
-                while (index >= 0)
+                var longestCandidate = Math.Min(maxPolyphonicPhraseLength, content.Length - start);
+                for (var length = longestCandidate; length > 1; length--)
                 {
-                    if (pinyin.Length != phrase.Length || index + pinyin.Length > resultList.Length)
+                    var phrase = content.Substring(start, length);
+                    if (!currentPolyphonicPhraseOverrides.TryGetValue(phrase, out var pinyin) ||
+                        pinyin.Length != length || start + length > resultList.Length)
                     {
-                        index = content.IndexOf(phrase, index + phrase.Length, StringComparison.Ordinal);
                         continue;
                     }
 
-                    for (var i = 0; i < pinyin.Length; i++)
+                    for (var i = 0; i < length; i++)
                     {
-                        resultList[index + i] = pinyin[i];
+                        resultList[start + i] = pinyin[i];
                     }
 
-                    index = content.IndexOf(phrase, index + phrase.Length, StringComparison.Ordinal);
+                    start += length - 1;
+                    break;
                 }
             }
         }

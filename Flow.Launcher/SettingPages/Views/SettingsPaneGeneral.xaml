@@ -562,6 +562,23 @@
 
             <ui:SettingsCard
                 Margin="0 4 0 0"
+                Description="{DynamicResource UsePolyphonicPhraseOverridesToolTip}"
+                Header="{DynamicResource UsePolyphonicPhraseOverrides}"
+                Visibility="{ext:VisibleWhen {Binding ShouldUsePinyin},
+                                             IsEqualToBool=True}">
+                <ui:SettingsCard.HeaderIcon>
+                    <ui:FontIcon Glyph="&#xE8D7;" />
+                </ui:SettingsCard.HeaderIcon>
+
+                <ui:ToggleSwitch
+                    IsOn="{Binding UsePolyphonicPhraseOverrides}"
+                    OffContent="{DynamicResource disable}"
+                    OnContent="{DynamicResource enable}"
+                    ToolTip="{DynamicResource UsePolyphonicPhraseOverridesToolTip}" />
+            </ui:SettingsCard>
+
+            <ui:SettingsCard
+                Margin="0 4 0 0"
                 Description="{DynamicResource ignoreAccentsToolTip}"
                 Header="{DynamicResource ignoreAccents}">
                 <ui:SettingsCard.HeaderIcon>
