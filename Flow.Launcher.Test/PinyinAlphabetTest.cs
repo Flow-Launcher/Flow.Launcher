@@ -68,5 +68,57 @@ namespace Flow.Launcher.Test
 
             ClassicAssert.AreEqual("Zhong Qi", alphabet.Translate("重启").translation);
         }
+
+        [Test]
+        public void Translate_WithDoublePinyinAndPolyphonicPhraseOverrides_ShouldUseOverrideBeforeDoublePinyinConversion()
+        {
+            var alphabet = new PinyinAlphabet(new Settings
+            {
+                ShouldUsePinyin = true,
+                UseDoublePinyin = true,
+                UsePolyphonicPhraseOverrides = true,
+                DoublePinyinSchema = DoublePinyinSchemas.XiaoHe
+            });
+
+            var result = alphabet.Translate("重启");
+
+            ClassicAssert.AreEqual("is qi", result.translation);
+        }
+
+        [Test]
+        public void Translate_WhenDoublePinyinIsEnabledAfterCaching_ShouldKeepPolyphonicPhraseOverride()
+        {
+            var settings = new Settings
+            {
+                ShouldUsePinyin = true,
+                UsePolyphonicPhraseOverrides = true,
+                DoublePinyinSchema = DoublePinyinSchemas.XiaoHe
+            };
+            var alphabet = new PinyinAlphabet(settings);
+            ClassicAssert.AreEqual("Chong Qi", alphabet.Translate("重启").translation);
+
+            settings.UseDoublePinyin = true;
+
+            ClassicAssert.AreEqual("is qi", alphabet.Translate("重启").translation);
+        }
+
+        [Test]
+        public void FuzzyMatch_WithDoublePinyinAndPolyphonicPhraseOverrides_ShouldMatchOverridePronunciation()
+        {
+            var settings = new Settings
+            {
+                ShouldUsePinyin = true,
+                UseDoublePinyin = true,
+                UsePolyphonicPhraseOverrides = true,
+                DoublePinyinSchema = DoublePinyinSchemas.XiaoHe
+            };
+            var matcher = new StringMatcher(new PinyinAlphabet(settings), settings);
+
+            var overridePronunciation = matcher.FuzzyMatch("isqi", "重启");
+            var libraryPronunciation = matcher.FuzzyMatch("vsqi", "重启");
+
+            ClassicAssert.True(overridePronunciation.Success);
+            ClassicAssert.False(libraryPronunciation.Success);
+        }
     }
 }
