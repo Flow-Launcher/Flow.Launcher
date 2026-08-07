@@ -1316,7 +1316,10 @@ namespace Flow.Launcher.ViewModel
             if (selected is LastOpenedHistoryResult
                 && selected.ContextData is LastOpenedHistoryResult historyItem)
             {
-                ContextMenu.AddResults([ContextMenuDeleteHistory(historyItem)], id);
+                ContextMenu.AddResults([
+                    ContextMenuDeleteHistory(historyItem),
+                    ContextMenuHistoryInfo(historyItem)
+                ], id);
                 return;
             }
 
@@ -1907,6 +1910,19 @@ namespace Flow.Launcher.ViewModel
 
                     return false;
                 },
+                OriginQuery = historyItem.OriginQuery
+            };
+        }
+
+        private Result ContextMenuHistoryInfo(LastOpenedHistoryResult historyItem)
+        {
+            return new Result
+            {
+                Title = Settings.HistoryStyle == HistoryStyle.Query ? Localize.queryHistory() : Localize.executedHistory(),
+                IcoPath = Constant.HistoryIcon,
+                Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE81C"),
+                PluginDirectory = Constant.ProgramDirectory,
+                Action = _ => false,
                 OriginQuery = historyItem.OriginQuery
             };
         }
