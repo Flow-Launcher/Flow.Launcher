@@ -13,6 +13,7 @@ using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
+using Flow.Launcher.Resources.Controls;
 using Flow.Launcher.ViewModel;
 using iNKORE.UI.WPF.Modern;
 
@@ -146,6 +147,21 @@ public partial class SettingsPaneThemeViewModel : BaseModel
             Settings.ColorScheme = value;
             _ = _theme.RefreshFrameAsync();
             Win32Helper.EnableWin32DarkMode(value);
+        }
+    }
+
+    public class CodeHighlightThemeData : DropdownDataGeneric<CodeHighlightThemes> { }
+
+    public List<CodeHighlightThemeData> CodeHighlightThemes { get; } = DropdownDataGeneric<CodeHighlightThemes>.GetValues<CodeHighlightThemeData>("CodeHighlightTheme");
+    public string CodeHighlightTheme
+    {
+        get => Settings.CodeHighlightTheme;
+        set
+        {
+            Settings.CodeHighlightTheme = value;
+            PreviewMarkdownScrollViewer.ApplyCodeHighlightTheme(
+                value, ThemeManager.Current.ActualApplicationTheme == ApplicationTheme.Dark);
+            _ = _theme.RefreshFrameAsync();
         }
     }
 
