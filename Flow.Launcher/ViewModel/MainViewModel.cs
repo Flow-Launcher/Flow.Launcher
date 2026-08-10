@@ -1349,10 +1349,18 @@ namespace Flow.Launcher.ViewModel
             if (selected is LastOpenedHistoryResult
                 && selected.ContextData is LastOpenedHistoryResult historyItem)
             {
-                ContextMenu.AddResults([
+                var results = new List<Result>
+                {
                     ContextMenuDeleteHistory(historyItem),
                     ContextMenuHistoryInfo(historyItem)
-                ], id);
+                };
+                if (!string.IsNullOrEmpty(query))
+                {
+                    results = results.Where(r =>
+                        App.API.FuzzySearch(query, r.Title).IsSearchPrecisionScoreMet() ||
+                        App.API.FuzzySearch(query, r.SubTitle).IsSearchPrecisionScoreMet()).ToList();
+                }
+                ContextMenu.AddResults(results, id);
                 return;
             }
 
