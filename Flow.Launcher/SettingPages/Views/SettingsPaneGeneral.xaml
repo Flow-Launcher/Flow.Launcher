@@ -567,7 +567,7 @@
                 Visibility="{ext:VisibleWhen {Binding ShouldUsePinyin},
                                              IsEqualToBool=True}">
                 <ui:SettingsCard.HeaderIcon>
-                    <ui:FontIcon Glyph="&#xE8D7;" />
+                    <ui:FontIcon Glyph="&#xF87E;" />
                 </ui:SettingsCard.HeaderIcon>
 
                 <ui:ToggleSwitch
