@@ -224,6 +224,22 @@ namespace Flow.Launcher
             // Since the default main window visibility is visible, so we need set focus during startup
             QueryTextBox.Focus();
 
+            // When the window is shown on startup, focusing QueryTextBox is not enough: the window also
+            // has to be activated to actually take OS-level keyboard focus. Otherwise, when Flow Launcher
+            // is auto-started with Windows (Startup folder or logon task), the search box looks focused but
+            // keystrokes go elsewhere until the user clicks it.
+            // This is dispatched at Loaded priority because Activate() throws if the window has not finished
+            // being shown yet, and skipped entirely when the window starts hidden for the same reason.
+            if (!_settings.HideOnStartup)
+            {
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    if (!_viewModel.MainWindowVisibilityStatus) return;
+                    Activate();
+                    QueryTextBox.Focus();
+                }), DispatcherPriority.Loaded);
+            }
+
             // Set the initial state of the QueryTextBoxCursorMovedToEnd property
             // Without this part, when shown for the first time, switching the context menu does not move the cursor to the end.
             _viewModel.QueryTextCursorMovedToEnd = false;
