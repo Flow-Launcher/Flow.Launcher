@@ -232,7 +232,7 @@ namespace Flow.Launcher
             // being shown yet, and skipped entirely when the window starts hidden for the same reason.
             if (!_settings.HideOnStartup)
             {
-                Dispatcher.BeginInvoke(new Action(() =>
+                _ = Dispatcher.BeginInvoke((() =>
                 {
                     if (!_viewModel.MainWindowVisibilityStatus) return;
                     Activate();
