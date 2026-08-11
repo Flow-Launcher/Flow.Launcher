@@ -19,4 +19,12 @@
     <system:String x:Key="flowlauncher_plugin_cmd_history">Only show number of most used commands:</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_command_not_found">Command not found: {0}</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_error_running_command">Error running the command: {0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_error_no_exe_path_set">No executable path set. Check your shell plugin settings.</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_custom_template_exe_path">Executable path</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_custom_template_browse">Browse...</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_custom_template_browse_filter_exe">Executable files</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_custom_template_browse_filter_all">All files</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_custom_template_arguments">Arguments template</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_custom_template_exe_path_tooltip">Can be an absolute path or a name resolved via PATH. Example: cmd.exe</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_custom_template_arguments_tooltip">Use {command} as a placeholder. Example: /k "{command}"</system:String>
 </ResourceDictionary>

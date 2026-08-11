@@ -15,7 +15,7 @@ public class LeaveShellOpenOrCloseShellAfterPressEnabledConverter : IMultiValueC
         )
             return Binding.DoNothing;
 
-        return (!closeShellAfterPressOrLeaveShellOpen) && shell != Shell.RunCommand;
+        return (!closeShellAfterPressOrLeaveShellOpen) && shell != Shell.RunCommand && shell != Shell.CustomTemplate;
     }
 
     public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

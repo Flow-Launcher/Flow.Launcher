@@ -23,6 +23,8 @@
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
         </Grid.RowDefinitions>
         <CheckBox
             x:Name="ReplaceWinR"
@@ -72,7 +74,8 @@
             Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
             HorizontalAlignment="Left"
             Content="{DynamicResource flowlauncher_plugin_cmd_use_windows_terminal}"
-            IsChecked="{Binding Settings.UseWindowsTerminal, Mode=TwoWay}" />
+            IsChecked="{Binding Settings.UseWindowsTerminal, Mode=TwoWay}"
+            IsEnabled="{Binding IsWindowsTerminalEnabled}" />
         <ComboBox
             x:Name="ShellComboBox"
             Grid.Row="5"
@@ -82,7 +85,65 @@
             ItemsSource="{Binding AllShells, Mode=OneTime}"
             SelectedValue="{Binding SelectedShell, Mode=TwoWay}"
             SelectedValuePath="Value" />
-        <StackPanel Grid.Row="6" Orientation="Horizontal">
+
+        <!-- Custom Template fields: visible when CustomTemplate is selected -->
+        <StackPanel
+            Grid.Row="6"
+            Orientation="Horizontal">
+            <StackPanel.Style>
+                <Style TargetType="StackPanel">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsCustomTemplateShell}" Value="True">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Style>
+            <TextBlock
+                Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
+                VerticalAlignment="Center"
+                FontSize="14"
+                Text="{DynamicResource flowlauncher_plugin_cmd_custom_template_exe_path}" />
+            <TextBox
+                MinWidth="400"
+                Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
+                VerticalAlignment="Center"
+                Text="{Binding Settings.CustomTemplateShellConfig.ExecutablePath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                ToolTip="{DynamicResource flowlauncher_plugin_cmd_custom_template_exe_path_tooltip}" />
+            <Button
+                Margin="{StaticResource SettingPanelItemLeftMargin}"
+                VerticalAlignment="Center"
+                Click="BrowseExecutablePath_Click"
+                Content="{DynamicResource flowlauncher_plugin_cmd_custom_template_browse}" />
+        </StackPanel>
+        <StackPanel
+            Grid.Row="7"
+            Orientation="Horizontal">
+            <StackPanel.Style>
+                <Style TargetType="StackPanel">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsCustomTemplateShell}" Value="True">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Style>
+            <TextBlock
+                Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
+                VerticalAlignment="Center"
+                FontSize="14"
+                Text="{DynamicResource flowlauncher_plugin_cmd_custom_template_arguments}" />
+            <TextBox
+                MinWidth="400"
+                Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
+                VerticalAlignment="Center"
+                Text="{Binding Settings.CustomTemplateShellConfig.ArgumentsTemplate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                ToolTip="{DynamicResource flowlauncher_plugin_cmd_custom_template_arguments_tooltip}" />
+        </StackPanel>
+        
+        <StackPanel Grid.Row="8" Orientation="Horizontal">
             <CheckBox
                 x:Name="ShowOnlyMostUsedCMDs"
                 Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
