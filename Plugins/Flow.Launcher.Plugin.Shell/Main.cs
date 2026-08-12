@@ -190,146 +190,278 @@ namespace Flow.Launcher.Plugin.Shell
 
         private ProcessStartInfo PrepareProcessStartInfo(string command, bool runAsAdministrator = false)
         {
+            var runAsAdmin = runAsAdministrator || _settings.RunAsAdministrator;
+            var closePrompt = Localize.flowlauncher_plugin_cmd_press_any_key_to_close();
+            var info = CreateProcessStartInfo(
+                command,
+                _settings.Shell,
+                _settings.LeaveShellOpen,
+                _settings.CloseShellAfterPress,
+                _settings.UseWindowsTerminal,
+                runAsAdmin,
+                closePrompt,
+                _settings.CustomTemplateShellConfig);
+
+            _settings.AddCmdHistory(command);
+            return info;
+        }
+
+        internal static ProcessStartInfo CreateProcessStartInfo(
+            string command,
+            Shell shell,
+            bool leaveShellOpen,
+            bool closeShellAfterPress,
+            bool useWindowsTerminal,
+            bool runAsAdmin,
+            string closePrompt,
+            CustomTemplateShellConfig customTemplateShellConfig = null)
+        {
             command = command.Trim();
             command = Environment.ExpandEnvironmentVariables(command);
+
             var workingDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-            var runAsAdministratorArg = !runAsAdministrator && !_settings.RunAsAdministrator ? "" : "runas";
+            var runAsAdministratorArg = runAsAdmin ? "runas" : "";
 
             var info = new ProcessStartInfo()
             {
                 Verb = runAsAdministratorArg,
                 WorkingDirectory = workingDirectory,
+                UseShellExecute = true,
             };
-            var notifyStr = Localize.flowlauncher_plugin_cmd_press_any_key_to_close();
-            var addedCharacter = _settings.UseWindowsTerminal ? "\\" : "";
-            switch (_settings.Shell)
+
+            switch (shell)
             {
                 case Shell.Cmd:
-                    {
-                        if (_settings.UseWindowsTerminal)
-                        {
-                            info.FileName = "wt.exe";
-                            info.ArgumentList.Add("cmd");
-                        }
-                        else
-                        {
-                            info.FileName = "cmd.exe";
-                        }
-                        if (_settings.LeaveShellOpen)
-                        {
-                            info.ArgumentList.Add("/k");
-                        }
-                        else
-                        {
-                            info.ArgumentList.Add("/c");
-                        }
-                        info.ArgumentList.Add(
-                            $"{command}" +
-                            $"{(_settings.CloseShellAfterPress ?
-                                $" && echo {notifyStr} && pause > nul /c" :
-                                "")}");
-                        break;
-                    }
+                    ConfigureCmdProcessStartInfo(
+                        info,
+                        command,
+                        leaveShellOpen,
+                        closeShellAfterPress,
+                        useWindowsTerminal,
+                        closePrompt);
+                    break;
 
                 case Shell.Powershell:
-                    {
-                        // Using just a ; doesn't work with wt, as it's used to create a new tab for the terminal window
-                        // \\ must be escaped for it to work properly, or breaking it into multiple arguments
-                        if (_settings.UseWindowsTerminal)
-                        {
-                            info.FileName = "wt.exe";
-                            info.ArgumentList.Add("powershell");
-                        }
-                        else
-                        {
-                            info.FileName = "powershell.exe";
-                        }
-                        if (_settings.LeaveShellOpen)
-                        {
-                            info.ArgumentList.Add("-NoExit");
-                            info.ArgumentList.Add(command);
-                        }
-                        else
-                        {
-                            info.ArgumentList.Add("-Command");
-                            info.ArgumentList.Add(
-                                $"{command}{addedCharacter};" +
-                                $"{(_settings.CloseShellAfterPress ?
-                                    $" Write-Host '{notifyStr}'{addedCharacter}; [System.Console]::ReadKey(){addedCharacter}; exit" :
-                                    "")}");
-                        }
-                        break;
-                    }
+                    ConfigurePowershellProcessStartInfo(
+                        info,
+                        command,
+                        leaveShellOpen,
+                        closeShellAfterPress,
+                        useWindowsTerminal,
+                        closePrompt);
+                    break;
 
                 case Shell.Pwsh:
-                    {
-                        // Using just a ; doesn't work with wt, as it's used to create a new tab for the terminal window
-                        // \\ must be escaped for it to work properly, or breaking it into multiple arguments
-                        if (_settings.UseWindowsTerminal)
-                        {
-                            info.FileName = "wt.exe";
-                            info.ArgumentList.Add("pwsh");
-                        }
-                        else
-                        {
-                            info.FileName = "pwsh.exe";
-                        }
-                        if (_settings.LeaveShellOpen)
-                        {
-                            info.ArgumentList.Add("-NoExit");
-                        }
-                        info.ArgumentList.Add("-Command");
-                        info.ArgumentList.Add(
-                            $"{command}{addedCharacter};" +
-                            $"{(_settings.CloseShellAfterPress ?
-                                $" Write-Host '{notifyStr}'{addedCharacter}; [System.Console]::ReadKey(){addedCharacter}; exit" :
-                                "")}");
-                        break;
-                    }
+                    ConfigurePwshProcessStartInfo(
+                        info,
+                        command,
+                        leaveShellOpen,
+                        closeShellAfterPress,
+                        useWindowsTerminal,
+                        closePrompt);
+                    break;
 
                 case Shell.RunCommand:
-                    {
-                        var parts = command.Split(
-                        [
-                            ' '
-                        ], 2);
-                        if (parts.Length == 2)
-                        {
-                            var filename = parts[0];
-                            if (ExistInPath(filename))
-                            {
-                                var arguments = parts[1];
-                                info.FileName = filename;
-                                info.ArgumentList.Add(arguments);
-                            }
-                            else
-                            {
-                                info.FileName = command;
-                            }
-                        }
-                        else
-                        {
-                            info.FileName = command;
-                        }
+                    ConfigureRunCommandStartInfo(
+                        info,
+                        command);
+                    break;
 
-                        info.UseShellExecute = true;
-
-                        break;
-                    }
+                case Shell.CustomTemplate:
+                    ConfigureCustomTemplateShellStartInfo(
+                        info,
+                        command,
+                        customTemplateShellConfig);
+                    break;
 
                 default:
                     throw new NotImplementedException();
             }
 
-            info.UseShellExecute = true;
-
-            _settings.AddCmdHistory(command);
-
             return info;
+        }
+
+        private static void ConfigureCmdProcessStartInfo(
+            ProcessStartInfo info,
+            string command,
+            bool leaveShellOpen,
+            bool closeShellAfterPress,
+            bool useWindowsTerminal,
+            string closePrompt)
+        {
+            var shellSwitch = leaveShellOpen ? "/k" : "/c";
+            var commandToRun = $"{command}{(closeShellAfterPress ? $" && echo {closePrompt} && pause > nul" : "")}";
+
+            if (useWindowsTerminal)
+            {
+                // Windows Terminal takes individual arguments via ArgumentList.
+                info.FileName = "wt.exe";
+                info.ArgumentList.Add("cmd");
+                info.ArgumentList.Add(shellSwitch);
+                info.ArgumentList.Add(commandToRun);
+            }
+            else
+            {
+                // Must use Arguments (not ArgumentList) 
+                // so that quoted commands are passed to cmd.exe /c without backslash-escaping
+                info.FileName = "cmd.exe";
+                info.Arguments = $"{shellSwitch} {commandToRun}";
+            }
+        }
+
+        private static void ConfigurePowershellProcessStartInfo(
+            ProcessStartInfo info,
+            string command,
+            bool leaveShellOpen,
+            bool closeShellAfterPress,
+            bool useWindowsTerminal,
+            string closePrompt)
+        {
+            // Using just a ; doesn't work with wt, as it's used to create a new tab for the terminal window.
+            // \\ must be escaped for it to work properly, or breaking it into multiple arguments.
+            var escape = useWindowsTerminal ? "\\" : "";
+
+            if (useWindowsTerminal)
+            {
+                info.FileName = "wt.exe";
+                info.ArgumentList.Add("powershell");
+            }
+            else
+            {
+                info.FileName = "powershell.exe";
+            }
+
+            if (leaveShellOpen)
+            {
+                info.ArgumentList.Add("-NoExit");
+                info.ArgumentList.Add(command);
+            }
+            else
+            {
+                info.ArgumentList.Add("-Command");
+                var commandStr = $"{command}{escape};";
+                if (closeShellAfterPress)
+                {
+                    commandStr += $" Write-Host '{closePrompt}'{escape}; [System.Console]::ReadKey(){escape}; exit";
+                }
+                info.ArgumentList.Add(commandStr);
+            }
+        }
+
+        private static void ConfigurePwshProcessStartInfo(
+            ProcessStartInfo info,
+            string command,
+            bool leaveShellOpen,
+            bool closeShellAfterPress,
+            bool useWindowsTerminal,
+            string closePrompt)
+        {
+            // Using just a ; doesn't work with wt, as it's used to create a new tab for the terminal window.
+            // \\ must be escaped for it to work properly, or breaking it into multiple arguments.
+            var escape = useWindowsTerminal ? "\\" : "";
+
+            if (useWindowsTerminal)
+            {
+                info.FileName = "wt.exe";
+                info.ArgumentList.Add("pwsh");
+            }
+            else
+            {
+                info.FileName = "pwsh.exe";
+            }
+
+            if (leaveShellOpen)
+            {
+                info.ArgumentList.Add("-NoExit");
+            }
+
+            info.ArgumentList.Add("-Command");
+            var commandStr = $"{command}{escape};";
+            if (closeShellAfterPress)
+            {
+                commandStr += $" Write-Host '{closePrompt}'{escape}; [System.Console]::ReadKey(){escape}; exit";
+            }
+            info.ArgumentList.Add(commandStr);
+        }
+
+        private static void ConfigureRunCommandStartInfo(
+            ProcessStartInfo info,
+            string command)
+        {
+            string filename = null;
+            string arguments = null;
+
+            bool isQuotedPath = command.StartsWith("\"");
+
+            if (isQuotedPath)
+            {
+                // Quoted paths ("C:\Program Files\app.exe") can have spaces in the path. 
+                
+                // We know the command starts with a quote,
+                // So strip it off and split to see if theres a second one
+                var parts = command[1..].Split("\"", 2);
+                bool hasMatchingQuotes = parts.Length > 1;
+
+                if (hasMatchingQuotes)
+                {
+                    filename = parts[0];
+                    arguments = parts[1];
+                }
+                // If there is no closing quote then we leave both as null
+            }
+            else
+            {
+                // Without a quoted path,
+                // we split on the first space to get the filename and args
+                var parts = command.Split(' ', 2);
+                filename = parts[0];
+                arguments = parts.Length > 1 ? parts[1] : null;
+            }
+
+            if (filename != null && ExistInPath(filename))
+            {
+                info.FileName = filename;
+                
+                // catch unnecessary space or arguments that are just whitespace
+                var trimmedArgs = arguments?.TrimStart();
+                if (!string.IsNullOrEmpty(trimmedArgs))
+                    info.Arguments = trimmedArgs;
+            }
+            else
+            {
+                // Could not parse a valid filename or it was not found.
+                // Pass the whole command anyways so the OS produces a meaningful error.
+                info.FileName = command;
+            }
+        }
+
+        private static void ConfigureCustomTemplateShellStartInfo(
+            ProcessStartInfo info,
+            string command,
+            CustomTemplateShellConfig config)
+        {
+            if (config == null)
+                return;
+
+            if (!string.IsNullOrWhiteSpace(config.ExecutablePath))
+                info.FileName = Environment.ExpandEnvironmentVariables(config.ExecutablePath).Trim().Trim('"');
+
+            if (!string.IsNullOrWhiteSpace(config.ArgumentsTemplate))
+            {
+                var template = Environment.ExpandEnvironmentVariables(config.ArgumentsTemplate).Trim();
+                info.Arguments = template.Replace("{command}", command);
+            }
         }
 
         private void Execute(Func<ProcessStartInfo, Process> startProcess, ProcessStartInfo info)
         {
+            if (string.IsNullOrEmpty(info.FileName))
+            {
+                Context.API.ShowMsgError(GetTranslatedPluginTitle(),
+                    Localize.flowlauncher_plugin_cmd_error_no_exe_path_set());
+                return;
+            }
+
             try
             {
                 ShellCommand.Execute(startProcess, info);
@@ -346,7 +478,11 @@ namespace Flow.Launcher.Plugin.Shell
             }
             catch (Exception e)
             {
-                Context.API.LogException(ClassName, $"Error executing command: {info.FileName} {string.Join(" ", info.ArgumentList)}", e);
+                // ArgumentList and Arguments are mutually exclusive (https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.argumentlist?view=net-10.0#remarks).
+                var arguments = info.ArgumentList.Count > 0
+                    ? string.Join(" ", info.ArgumentList)
+                    : info.Arguments;
+                Context.API.LogException(ClassName, $"Error executing command: {info.FileName} {arguments}", e);
             }
         }
 

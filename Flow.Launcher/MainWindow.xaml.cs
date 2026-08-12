@@ -24,6 +24,7 @@ using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Plugin.SharedModels;
+using Flow.Launcher.Resources.Controls;
 using Flow.Launcher.ViewModel;
 using iNKORE.UI.WPF.Modern;
 using iNKORE.UI.WPF.Modern.Controls;
@@ -110,6 +111,8 @@ namespace Flow.Launcher
 
         private void ViewModel_ActualApplicationThemeChanged(object sender, ActualApplicationThemeChangedEventArgs args)
         {
+            // Keep the markdown preview's "Auto" code-highlight theme in step with the app colour scheme.
+            PreviewMarkdownScrollViewer.ApplyCodeHighlightTheme(_settings.CodeHighlightTheme, args.IsDark);
             _ = _theme.RefreshFrameAsync();
         }
 
@@ -200,6 +203,12 @@ namespace Flow.Launcher
                 ThemeManager.Current.ApplicationTheme = ApplicationTheme.Dark;
             }
 
+            // Initialize the markdown preview code-highlight theme from settings, resolving "Auto"
+            // against the colour scheme just applied above.
+            PreviewMarkdownScrollViewer.ApplyCodeHighlightTheme(
+                _settings.CodeHighlightTheme,
+                ThemeManager.Current.ActualApplicationTheme == ApplicationTheme.Dark);
+
             // Force update position
             UpdatePosition();
 
@@ -207,10 +216,29 @@ namespace Flow.Launcher
             SetupResizeMode();
 
             // Reset preview
-            _viewModel.ResetPreview();
+            // Can't await in sync startup code; fire-and-forget but safely log any failure
+            _ = _viewModel.ResetPreviewAsync().ContinueWith(static t =>
+                    App.API.LogError(ClassName, $"ResetPreviewAsync failed: {t.Exception}"),
+                CancellationToken.None, TaskContinuationOptions.OnlyOnFaulted, TaskScheduler.Default);
 
             // Since the default main window visibility is visible, so we need set focus during startup
             QueryTextBox.Focus();
+
+            // When the window is shown on startup, focusing QueryTextBox is not enough: the window also
+            // has to be activated to actually take OS-level keyboard focus. Otherwise, when Flow Launcher
+            // is auto-started with Windows (Startup folder or logon task), the search box looks focused but
+            // keystrokes go elsewhere until the user clicks it.
+            // This is dispatched at Loaded priority because Activate() throws if the window has not finished
+            // being shown yet, and skipped entirely when the window starts hidden for the same reason.
+            if (!_settings.HideOnStartup)
+            {
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    if (!_viewModel.MainWindowVisibilityStatus) return;
+                    Activate();
+                    QueryTextBox.Focus();
+                }), DispatcherPriority.Loaded);
+            }
 
             // Set the initial state of the QueryTextBoxCursorMovedToEnd property
             // Without this part, when shown for the first time, switching the context menu does not move the cursor to the end.
@@ -241,7 +269,10 @@ namespace Flow.Launcher
                                     Activate();
 
                                     // Reset preview
-                                    _viewModel.ResetPreview();
+                                    // Can't await in Dispatcher.Invoke; fire-and-forget but safely log any failure
+                                    _ = _viewModel.ResetPreviewAsync().ContinueWith(static t =>
+                                            App.API.LogError(ClassName, $"ResetPreviewAsync failed: {t.Exception}"),
+                                        CancellationToken.None, TaskContinuationOptions.OnlyOnFaulted, TaskScheduler.Default);
 
                                     // Select last query if need
                                     if (!_viewModel.LastQuerySelected)
@@ -349,7 +380,7 @@ namespace Flow.Launcher
                 .AddValueChanged(History, (s, e) => UpdateClockPanelVisibility());
 
             // Initialize query state
-            if (_settings.ShowHomePage && string.IsNullOrEmpty(_viewModel.QueryText))
+            if ((_settings.ShowHomePage || _settings.ShowHistoryResultsForHomePage) && string.IsNullOrEmpty(_viewModel.QueryText))
             {
                 _viewModel.QueryResults();
             }
@@ -438,6 +469,15 @@ namespace Flow.Launcher
 
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
+            // When a code-block in the markdown preview is focused
+            // Let it capture input of text navigation keys (arrows, page, home/end) instead
+            // Non-navigation keys pass through normally.
+            if (PreviewMarkdownScrollViewer.IsCodeBlockFocused(e.OriginalSource)
+                && PreviewMarkdownScrollViewer.IsCodeBlockNavigationKey(e.Key))
+            {
+                return;
+            }
+
             var specialKeyState = GlobalHotkey.CheckModifiers();
             switch (e.Key)
             {
@@ -461,8 +501,7 @@ namespace Flow.Launcher
                     break;
                 case Key.Right:
                     if (_viewModel.QueryResultsSelected()
-                        && QueryTextBox.CaretIndex == QueryTextBox.Text.Length
-                        && !string.IsNullOrEmpty(QueryTextBox.Text))
+                        && QueryTextBox.CaretIndex == QueryTextBox.Text.Length)            
                     {
                         _viewModel.LoadContextMenuCommand.Execute(null);
                         e.Handled = true;

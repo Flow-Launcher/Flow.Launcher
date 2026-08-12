@@ -17,9 +17,15 @@ public class ShellSettingViewModel : BaseModel
             {
                 Settings.Shell = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(IsCustomTemplateShell));
+                OnPropertyChanged(nameof(IsWindowsTerminalEnabled));
             }
         }
     }
+
+    public bool IsCustomTemplateShell => SelectedShell == Shell.CustomTemplate;
+
+    public bool IsWindowsTerminalEnabled => SelectedShell != Shell.CustomTemplate && SelectedShell != Shell.RunCommand;
 
     public List<int> OnlyMostUsedCMDsNumbers { get; } = [5, 10, 20];
     public int SelectedOnlyMostUsedCMDsNumber
