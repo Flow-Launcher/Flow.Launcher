@@ -29,6 +29,13 @@ namespace Flow.Launcher.Core.ExternalPlugins
             bool lockAcquired = false;
             try
             {
+                string[] defaultUrls = [
+                    "https://raw.githubusercontent.com/Flow-Launcher/Flow.Launcher.PluginsManifest/main/plugins.json",
+                    "https://fastly.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@main/plugins.json",
+                    "https://gcore.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@main/plugins.json",
+                    "https://cdn.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@main/plugins.json"
+                ];
+
                 await manifestUpdateLock.WaitAsync(token).ConfigureAwait(false);
                 lockAcquired = true;
 
@@ -44,23 +51,11 @@ namespace Flow.Launcher.Core.ExternalPlugins
                         {
                             PublicApi.Instance.LogWarn(ClassName, $"Invalid custom plugins manifest URL: {customUrl}. Using default URLs.");
                             customUrl = string.Empty;
-                            string[] defaultUrls = [
-                                "https://raw.githubusercontent.com/Flow-Launcher/Flow.Launcher.PluginsManifest/main/plugins.json",
-                                "https://fastly.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@main/plugins.json",
-                                "https://gcore.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@main/plugins.json",
-                                "https://cdn.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@main/plugins.json"
-                            ];
                             mainPluginStore = new(defaultUrls[0], defaultUrls[1..]);
                         }
                     }
                     else
                     {
-                        string[] defaultUrls = [
-                            "https://raw.githubusercontent.com/Flow-Launcher/Flow.Launcher.PluginsManifest/main/plugins.json",
-                            "https://fastly.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@main/plugins.json",
-                            "https://gcore.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@main/plugins.json",
-                            "https://cdn.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@main/plugins.json"
-                        ];
                         mainPluginStore = new(defaultUrls[0], defaultUrls[1..]);
                     }
                     lastCustomUrl = customUrl;
