@@ -38,7 +38,6 @@ namespace Flow.Launcher.Infrastructure
 
         public static string PythonPath;
         public static string NodePath;
-        public static string PluginsManifestURL;
 
         public static readonly string QueryTextBoxIconImagePath = $"{ProgramDirectory}\\Images\\mainsearch.svg";
 

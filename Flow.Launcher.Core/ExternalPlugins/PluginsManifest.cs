@@ -13,6 +13,7 @@ namespace Flow.Launcher.Core.ExternalPlugins
         private static readonly string ClassName = nameof(PluginsManifest);
 
         private static CommunityPluginStore mainPluginStore;
+        private static string lastCustomUrl = string.Empty;
 
         private static readonly SemaphoreSlim manifestUpdateLock = new(1);
 
@@ -23,27 +24,47 @@ namespace Flow.Launcher.Core.ExternalPlugins
 
         public static async Task<bool> UpdateManifestAsync(Settings settings, bool usePrimaryUrlOnly = false, CancellationToken token = default)
         {
-            string customUrl = settings.PluginSettings.PluginsManifestUrl;
-
-            string[] mainUrls = [
-                "https://raw.githubusercontent.com/Flow-Launcher/Flow.Launcher.PluginsManifest/main/plugins.json",
-                "https://fastly.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@main/plugins.json",
-                "https://gcore.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@main/plugins.json",
-                "https://cdn.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@main/plugins.json"
-            ];            
-
-            if (!string.IsNullOrWhiteSpace(customUrl))
-            {
-                mainPluginStore = new(customUrl, mainUrls);
-            } else {
-                mainPluginStore = new(mainUrls[0], mainUrls[1..]);
-            }
+            string customUrl = settings.PluginSettings.PluginsManifestUrl?.Trim() ?? string.Empty;
 
             bool lockAcquired = false;
             try
             {
                 await manifestUpdateLock.WaitAsync(token).ConfigureAwait(false);
                 lockAcquired = true;
+
+                if (mainPluginStore == null || lastCustomUrl != customUrl)
+                {
+                    if (!string.IsNullOrEmpty(customUrl))
+                    {
+                        if (Uri.TryCreate(customUrl, UriKind.Absolute, out var uri) && (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps))
+                        {
+                            mainPluginStore = new(customUrl);
+                        }
+                        else
+                        {
+                            PublicApi.Instance.LogWarn(ClassName, $"Invalid custom plugins manifest URL: {customUrl}. Using default URLs.");
+                            customUrl = string.Empty;
+                            string[] defaultUrls = [
+                                "https://raw.githubusercontent.com/Flow-Launcher/Flow.Launcher.PluginsManifest/main/plugins.json",
+                                "https://fastly.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@main/plugins.json",
+                                "https://gcore.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@main/plugins.json",
+                                "https://cdn.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@main/plugins.json"
+                            ];
+                            mainPluginStore = new(defaultUrls[0], defaultUrls[1..]);
+                        }
+                    }
+                    else
+                    {
+                        string[] defaultUrls = [
+                            "https://raw.githubusercontent.com/Flow-Launcher/Flow.Launcher.PluginsManifest/main/plugins.json",
+                            "https://fastly.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@main/plugins.json",
+                            "https://gcore.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@main/plugins.json",
+                            "https://cdn.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@main/plugins.json"
+                        ];
+                        mainPluginStore = new(defaultUrls[0], defaultUrls[1..]);
+                    }
+                    lastCustomUrl = customUrl;
+                }
 
                 if (UserPlugins == null || usePrimaryUrlOnly || DateTime.Now.Subtract(lastFetchedAt) >= fetchTimeout)
                 {

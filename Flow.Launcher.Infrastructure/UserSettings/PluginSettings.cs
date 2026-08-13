@@ -35,7 +35,6 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             set
             {
                 pluginsManifestUrl = value;
-                Constant.PluginsManifestURL = value;
             }
         }
 
