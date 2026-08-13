@@ -46,6 +46,7 @@ namespace Flow.Launcher.ViewModel
 
         private ResultsViewModel _contextMenuSource;
         private Result _contextMenuTarget;
+        private int _contextMenuTargetIndex = -1;
 
         private readonly FlowLauncherJsonStorage<History> _historyItemsStorage;
         private readonly History _history;
@@ -435,6 +436,7 @@ namespace Flow.Launcher.ViewModel
 
             _contextMenuSource = SelectedResults;
             _contextMenuTarget = selected;
+            _contextMenuTargetIndex = SelectedResults.SelectedIndex;
             _queryTextBeforeContextMenu = QueryText;
 
             // Load context menu
@@ -451,6 +453,23 @@ namespace Flow.Launcher.ViewModel
             if (source == History)
             {
                 await ChangeQueryTextAsync(queryText);
+
+                // Returning to History rebuilds its results and selects the first row. Locate the rebuilt
+                // context-menu target, falling back to its previous index if the history context menu changed meanwhile.
+                var restoredIndex = _contextMenuTarget == null
+                    ? -1
+                    : source.Results.FindIndex(result =>
+                        result.Result != null && 
+                        ResultEqual(result.Result, _contextMenuTarget));
+                if (restoredIndex < 0 && _contextMenuTargetIndex >= 0 && source.Results.Count > 0)
+                {
+                    restoredIndex = Math.Min(_contextMenuTargetIndex, source.Results.Count - 1);
+                }
+                if (restoredIndex >= 0)
+                {
+                    source.SelectedIndex = restoredIndex;
+                    source.SelectedItem = source.Results[restoredIndex];
+                }
             }
 
             // Refresh the preview panel to show the previously selected result
@@ -459,7 +478,23 @@ namespace Flow.Launcher.ViewModel
 
             _contextMenuSource = null;
             _contextMenuTarget = null;
+            _contextMenuTargetIndex = -1;
             _queryTextBeforeContextMenu = string.Empty;
+        }
+
+        private static bool ResultEqual(Result result1, Result result2)
+        {
+            if (string.IsNullOrEmpty(result1.RecordKey) || string.IsNullOrEmpty(result2.RecordKey))
+            {
+                return result1.Title == result2.Title
+                    && result1.SubTitle == result2.SubTitle
+                    && result1.PluginID == result2.PluginID;
+            }
+            else
+            {
+                return result1.RecordKey == result2.RecordKey
+                    && result1.PluginID == result2.PluginID;
+            }
         }
 
         [RelayCommand]
