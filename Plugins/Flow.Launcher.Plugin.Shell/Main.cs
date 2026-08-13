@@ -199,7 +199,8 @@ namespace Flow.Launcher.Plugin.Shell
                 _settings.CloseShellAfterPress,
                 _settings.UseWindowsTerminal,
                 runAsAdmin,
-                closePrompt);
+                closePrompt,
+                _settings.CustomTemplateShellConfig);
 
             _settings.AddCmdHistory(command);
             return info;
@@ -212,7 +213,8 @@ namespace Flow.Launcher.Plugin.Shell
             bool closeShellAfterPress,
             bool useWindowsTerminal,
             bool runAsAdmin,
-            string closePrompt)
+            string closePrompt,
+            CustomTemplateShellConfig customTemplateShellConfig = null)
         {
             command = command.Trim();
             command = Environment.ExpandEnvironmentVariables(command);
@@ -263,6 +265,13 @@ namespace Flow.Launcher.Plugin.Shell
                     ConfigureRunCommandStartInfo(
                         info,
                         command);
+                    break;
+
+                case Shell.CustomTemplate:
+                    ConfigureCustomTemplateShellStartInfo(
+                        info,
+                        command,
+                        customTemplateShellConfig);
                     break;
 
                 default:
@@ -426,8 +435,33 @@ namespace Flow.Launcher.Plugin.Shell
             }
         }
 
+        private static void ConfigureCustomTemplateShellStartInfo(
+            ProcessStartInfo info,
+            string command,
+            CustomTemplateShellConfig config)
+        {
+            if (config == null)
+                return;
+
+            if (!string.IsNullOrWhiteSpace(config.ExecutablePath))
+                info.FileName = Environment.ExpandEnvironmentVariables(config.ExecutablePath).Trim().Trim('"');
+
+            if (!string.IsNullOrWhiteSpace(config.ArgumentsTemplate))
+            {
+                var template = Environment.ExpandEnvironmentVariables(config.ArgumentsTemplate).Trim();
+                info.Arguments = template.Replace("{command}", command);
+            }
+        }
+
         private void Execute(Func<ProcessStartInfo, Process> startProcess, ProcessStartInfo info)
         {
+            if (string.IsNullOrEmpty(info.FileName))
+            {
+                Context.API.ShowMsgError(GetTranslatedPluginTitle(),
+                    Localize.flowlauncher_plugin_cmd_error_no_exe_path_set());
+                return;
+            }
+
             try
             {
                 ShellCommand.Execute(startProcess, info);
