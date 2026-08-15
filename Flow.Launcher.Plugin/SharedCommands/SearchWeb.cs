@@ -17,8 +17,16 @@ namespace Flow.Launcher.Plugin.SharedCommands
             var name = string.Empty;
             try
             {
-                using var regDefault = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\Shell\\Associations\\UrlAssociations\\http\\UserChoice", false);
-                var stringDefault = regDefault.GetValue("ProgId");
+                // Updating your default browser in Windows updates the following registry
+                using var regDefaultLatest = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\Shell\\Associations\\UrlAssociations\\http\\UserChoiceLatest\\ProgId", false);
+                var stringDefault = regDefaultLatest?.GetValue("ProgId");
+
+                if (stringDefault is null)
+                {
+                    // If the above registry key is not found, we will fallback to the older registry key which is used in Windows 10 and earlier versions of Windows 11
+                    using var regDefault = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\Shell\\Associations\\UrlAssociations\\http\\UserChoice", false);
+                    stringDefault = regDefault.GetValue("ProgId");
+                }
 
                 using var regKey = Registry.ClassesRoot.OpenSubKey(stringDefault + "\\shell\\open\\command", false);
                 name = regKey.GetValue(null).ToString().ToLower().Replace("\"", "");
