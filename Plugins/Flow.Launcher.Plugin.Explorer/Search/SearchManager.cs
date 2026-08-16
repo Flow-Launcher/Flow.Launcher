@@ -132,7 +132,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
                 case false
                     when CanUseIndexSearchByActionKeywords(activeActionKeywords):
-                    searchResults = Settings.IndexProvider.SearchAsync(query.Search, token);
+                    searchResults = Settings.IndexProvider.SearchAsync(query.Search, token, GetAllowedResultTypeByUsedActionKeyword(activeActionKeywords));
                     engineName = Enum.GetName(Settings.IndexSearchEngine);
                     break;
                 default:
@@ -148,9 +148,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             {
                 await foreach (var search in searchResults.WithCancellation(token).ConfigureAwait(false))
                 {
+                    // TODO exclude in quick access
                     if (search.Type == ResultType.File && IsExcludedFile(search))
                         continue;
-
+                    // TODO: Optimize filtering by action keyword at the provider level to reduce unnecessary searches.
+                    // 3. Filter in quick access
+                    // 
                     if (IsResultTypeFilteredByActionKeyword(search.Type, actions))
                         continue;
 
@@ -195,6 +198,13 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             ];
         }
 
+        /// <summary>
+        /// Path search logic. Don't apply filtering by file extensions as it's like ls command.
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        /// <exception cref="SearchException"></exception>
         private async Task<List<Result>> PathSearchAsync(Query query, CancellationToken token = default)
         {
             var querySearch = query.Search;
@@ -291,7 +301,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         private bool IsExcludedFile(SearchResult result)
         {
-            string[] excludedFileTypes = Settings.ExcludedFileTypes.Split([','], StringSplitOptions.RemoveEmptyEntries);
+            // TODO may remove this function
+            string[] excludedFileTypes = Settings.ExcludedFileTypes.Split([Constants.ExcludedFileTypesSeparator], StringSplitOptions.RemoveEmptyEntries);
             string fileExtension = Path.GetExtension(result.FullPath).TrimStart('.');
 
             return excludedFileTypes.Contains(fileExtension, StringComparer.OrdinalIgnoreCase);
@@ -324,6 +335,20 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             }
 
             return true;
+        }
+
+        private List<ResultType> GetAllowedResultTypeByUsedActionKeyword(Dictionary<ActionKeyword, string> activeActionKeywords)
+        {
+            List<ActionKeyword> activeKeywords = activeActionKeywords.Keys.ToList();
+            var allowedResultTypes = new List<ResultType>();
+            foreach (var actionKeyword in activeKeywords)
+            {
+                if (_allowedTypesByActionKeyword.TryGetValue(actionKeyword, out var resultTypes))
+                {
+                    allowedResultTypes.AddRange(resultTypes);
+                }
+            }
+            return allowedResultTypes.Distinct().ToList();
         }
 
         private bool CanUseIndexSearchByActionKeywords(Dictionary<ActionKeyword, string> actions)
