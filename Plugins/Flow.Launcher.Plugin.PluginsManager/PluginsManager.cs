@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using Flow.Launcher.Plugin.SharedCommands;
+using Version = SemanticVersioning.Version;
 
 namespace Flow.Launcher.Plugin.PluginsManager
 {
@@ -275,9 +276,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 from existingPlugin in Context.API.GetAllPlugins()
                 join pluginUpdateSource in updateSource
                     on existingPlugin.Metadata.ID equals pluginUpdateSource.ID
-                where string.Compare(existingPlugin.Metadata.Version, pluginUpdateSource.Version,
-                          StringComparison.InvariantCulture) <
-                      0 // if current version precedes version of the plugin from update source (e.g. PluginsManifest)
+                where IsUpdateAvailable(existingPlugin.Metadata.Version, pluginUpdateSource.Version)
                       && !Context.API.PluginModified(existingPlugin.Metadata.ID)
                 select
                     new
@@ -839,6 +838,13 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     string.Format(Context.API.GetTranslation("plugin_pluginsmanager_plugin_modified_error"), plugin.Name));
                 return false;
             }
+        }
+
+        private static bool IsUpdateAvailable(string currentVersion, string latestVersion)
+        {
+            return Version.TryParse(currentVersion, out var current) &&
+                   Version.TryParse(latestVersion, out var latest) &&
+                   current < latest;
         }
     }
 }

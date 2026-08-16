@@ -10,6 +10,7 @@ using System.Windows;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
+using Version = SemanticVersioning.Version;
 
 namespace Flow.Launcher.Core.Plugin;
 
@@ -280,9 +281,7 @@ public static class PluginInstaller
             from existingPlugin in PublicApi.Instance.GetAllPlugins()
             join pluginUpdateSource in PublicApi.Instance.GetPluginManifest()
                 on existingPlugin.Metadata.ID equals pluginUpdateSource.ID
-            where string.Compare(existingPlugin.Metadata.Version, pluginUpdateSource.Version,
-                      StringComparison.InvariantCulture) <
-                  0 // if current version precedes version of the plugin from update source (e.g. PluginsManifest)
+            where IsUpdateAvailable(existingPlugin.Metadata.Version, pluginUpdateSource.Version)
                   && !PublicApi.Instance.PluginModified(existingPlugin.Metadata.ID)
             select
                 new PluginUpdateInfo()
@@ -488,6 +487,19 @@ public static class PluginInstaller
             !string.IsNullOrEmpty(x.Metadata.Website) &&
             x.Metadata.Website.StartsWith(constructedUrlPart)
         );
+    }
+
+    /// <summary>
+    /// Determines if an update is available by comparing semantic versions.
+    /// </summary>
+    /// <param name="currentVersion">The currently installed version string.</param>
+    /// <param name="latestVersion">The latest available version string from the manifest.</param>
+    /// <returns>True if latestVersion is greater than currentVersion; otherwise false.</returns>
+    internal static bool IsUpdateAvailable(string currentVersion, string latestVersion)
+    {
+        return Version.TryParse(currentVersion, out var current) &&
+               Version.TryParse(latestVersion, out var latest) &&
+               current < latest;
     }
 }
 
