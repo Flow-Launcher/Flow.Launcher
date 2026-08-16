@@ -133,9 +133,9 @@ public partial class SettingsPanePluginStoreViewModel : BaseModel
     [RelayCommand]
     private async Task CheckPluginUpdatesAsync()
     {
-        await PluginInstaller.CheckForPluginUpdatesAsync((plugins) =>
+        await PluginInstaller.CheckForPluginUpdatesAsync(async (plugins) =>
         {
-            _ = Application.Current.Dispatcher.Invoke(async () =>
+            await Application.Current.Dispatcher.InvokeAsync(async () =>
             {
                 var pluginUpdateWindow = new PluginUpdateWindow(plugins);
                 if (pluginUpdateWindow.ShowDialog() is true)
@@ -146,7 +146,7 @@ public partial class SettingsPanePluginStoreViewModel : BaseModel
                         OnPropertyChanged(nameof(ExternalPlugins));
                     }
                 }
-            });
+            }).Task.Unwrap();
         }, silentUpdate: false);
     }
 

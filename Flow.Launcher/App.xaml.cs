@@ -332,30 +332,30 @@ namespace Flow.Launcher
                 {
                     // check plugin updates every 5 hour
                     var timer = new PeriodicTimer(TimeSpan.FromHours(5));
-                    await PluginInstaller.CheckForPluginUpdatesAsync((plugins) =>
+                    await PluginInstaller.CheckForPluginUpdatesAsync(async (plugins) =>
                     {
-                        Current.Dispatcher.Invoke(() =>
+                        await Current.Dispatcher.InvokeAsync(async () =>
                         {
                             var pluginUpdateWindow = new PluginUpdateWindow(plugins);
                             if (pluginUpdateWindow.ShowDialog() is true)
                             {
-                                _ = pluginUpdateWindow.UpdatePluginsAsync();
+                                await pluginUpdateWindow.UpdatePluginsAsync();
                             }
-                        });
+                        }).Task.Unwrap();
                     });
 
                     while (await timer.WaitForNextTickAsync())
                         // check updates on startup
-                        await PluginInstaller.CheckForPluginUpdatesAsync((plugins) =>
+                        await PluginInstaller.CheckForPluginUpdatesAsync(async (plugins) =>
                         {
-                            Current.Dispatcher.Invoke(() =>
+                            await Current.Dispatcher.InvokeAsync(async () =>
                             {
                                 var pluginUpdateWindow = new PluginUpdateWindow(plugins);
                                 if (pluginUpdateWindow.ShowDialog() is true)
                                 {
-                                    _ = pluginUpdateWindow.UpdatePluginsAsync();
+                                    await pluginUpdateWindow.UpdatePluginsAsync();
                                 }
-                            });
+                            }).Task.Unwrap();
                         });
                 }
             });

@@ -22,6 +22,8 @@ public static class PluginInstaller
 
     private static readonly Settings Settings = Ioc.Default.GetRequiredService<Settings>();
 
+    private static readonly SemaphoreSlim UpdatePluginsSemaphore = new(1, 1);
+
     /// <summary>
     /// Installs a plugin and restarts the application if required by settings. Prompts user for confirmation and handles download if needed.
     /// </summary>
@@ -263,12 +265,12 @@ public static class PluginInstaller
     /// <summary>
     /// Updates the plugin to the latest version available from its source.
     /// </summary>
-    /// <param name="updateAllPlugins">Action to execute when the user chooses to update all plugins.</param>
+    /// <param name="updateAllPlugins">Asynchronous action to execute when the user chooses to update all plugins.</param>
     /// <param name="silentUpdate">If true, do not show any messages when there is no update available.</param>
     /// <param name="usePrimaryUrlOnly">If true, only use the primary URL for updates.</param>
     /// <param name="token">Cancellation token to cancel the update operation.</param>
     /// <returns></returns>
-    public static async Task CheckForPluginUpdatesAsync(Action<List<PluginUpdateInfo>> updateAllPlugins, bool silentUpdate = true, bool usePrimaryUrlOnly = false, CancellationToken token = default)
+    public static async Task CheckForPluginUpdatesAsync(Func<List<PluginUpdateInfo>, Task> updateAllPlugins, bool silentUpdate = true, bool usePrimaryUrlOnly = false, CancellationToken token = default)
     {
         // Update the plugin manifest
         await PublicApi.Instance.UpdatePluginManifestAsync(usePrimaryUrlOnly, token);
@@ -317,7 +319,7 @@ public static class PluginInstaller
             Localize.updateAllPluginsButtonContent(),
             () =>
             {
-                updateAllPlugins(resultsForUpdate);
+                _ = updateAllPlugins(resultsForUpdate);
             },
             string.Join(", ", resultsForUpdate.Select(x => x.PluginExistingMetadata.Name)));
     }
@@ -329,6 +331,21 @@ public static class PluginInstaller
     /// <param name="restart"></param>
     /// <returns>The plugins that were updated successfully.</returns>
     public static async Task<IReadOnlyList<PluginUpdateInfo>> UpdateAllPluginsAsync(
+        IEnumerable<PluginUpdateInfo> resultsForUpdate,
+        bool restart)
+    {
+        await UpdatePluginsSemaphore.WaitAsync();
+        try
+        {
+            return await UpdateAllPluginsCoreAsync(resultsForUpdate, restart);
+        }
+        finally
+        {
+            UpdatePluginsSemaphore.Release();
+        }
+    }
+
+    private static async Task<IReadOnlyList<PluginUpdateInfo>> UpdateAllPluginsCoreAsync(
         IEnumerable<PluginUpdateInfo> resultsForUpdate,
         bool restart)
     {
