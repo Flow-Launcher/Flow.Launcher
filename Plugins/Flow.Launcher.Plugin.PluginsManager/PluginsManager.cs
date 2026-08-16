@@ -93,7 +93,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             if (PluginExists(plugin.ID))
             {
                 if (Context.API.GetAllPlugins()
-                    .Any(x => x.Metadata.ID == plugin.ID && x.Metadata.Version.CompareTo(plugin.Version) < 0))
+                    .Any(x => x.Metadata.ID == plugin.ID && IsUpdateAvailable(x.Metadata.Version, plugin.Version)))
                 {
                     var updateDetail = !plugin.IsFromLocalInstallPath ? plugin.Name : plugin.LocalInstallPath;
 
