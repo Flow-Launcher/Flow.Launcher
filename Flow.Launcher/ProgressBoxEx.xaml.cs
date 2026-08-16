@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using Flow.Launcher.Core.Resource;
 
 namespace Flow.Launcher
 {
@@ -22,19 +23,7 @@ namespace Flow.Launcher
             ProgressBoxEx progressBox = null;
             try
             {
-                if (!Application.Current.Dispatcher.CheckAccess())
-                {
-                    await Application.Current.Dispatcher.InvokeAsync(() =>
-                    {
-                        progressBox = new ProgressBoxEx(cancelProgress)
-                        {
-                            Title = caption
-                        };
-                        progressBox.TitleTextBlock.Text = caption;
-                        progressBox.Show();
-                    });
-                }
-                else
+                await DispatcherHelper.InvokeAsync(() =>
                 {
                     progressBox = new ProgressBoxEx(cancelProgress)
                     {
@@ -42,7 +31,7 @@ namespace Flow.Launcher
                     };
                     progressBox.TitleTextBlock.Text = caption;
                     progressBox.Show();
-                }
+                });
 
                 await reportProgressAsync(progressBox.ReportProgress).ConfigureAwait(false);
             }
@@ -54,28 +43,20 @@ namespace Flow.Launcher
             }
             finally
             {
-                if (!Application.Current.Dispatcher.CheckAccess())
-                {
-                    await Application.Current.Dispatcher.InvokeAsync(() =>
-                    {
-                        progressBox?.Close();
-                    });
-                }
-                else
+                await DispatcherHelper.InvokeAsync(() =>
                 {
                     progressBox?.Close();
-                }
+                });
             }
         }
 
         private void ReportProgress(double progress)
         {
-            if (!Application.Current.Dispatcher.CheckAccess())
-            {
-                Application.Current.Dispatcher.Invoke(() => ReportProgress(progress));
-                return;
-            }
+            DispatcherHelper.Invoke(() => ReportProgressCore(progress));
+        }
 
+        private void ReportProgressCore(double progress)
+        {
             if (progress < 0)
             {
                 ProgressBar.Value = 0;

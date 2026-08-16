@@ -635,7 +635,7 @@ namespace Flow.Launcher.Core.Resource
         /// </summary>
         public async Task RefreshFrameAsync()
         {
-            await Application.Current.Dispatcher.InvokeAsync(() =>
+            await DispatcherHelper.InvokeAsync(() =>
             {
                 // Get the actual backdrop type and drop shadow effect settings
                 var (backdropType, useDropShadowEffect) = GetActualValue();
@@ -650,7 +650,7 @@ namespace Flow.Launcher.Core.Resource
         /// </summary>
         public async Task SetBlurForWindowAsync()
         {
-            await Application.Current.Dispatcher.InvokeAsync(() =>
+            await DispatcherHelper.InvokeAsync(() =>
             {
                 // Get the actual backdrop type and drop shadow effect settings
                 var (backdropType, _) = GetActualValue();

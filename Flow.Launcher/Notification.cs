@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.IO;
-using System.Windows;
+using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure;
 using Microsoft.Toolkit.Uwp.Notifications;
 
@@ -41,7 +41,7 @@ namespace Flow.Launcher
 
         public static void Show(string title, string subTitle, string iconPath = null)
         {
-            Application.Current.Dispatcher.Invoke(() =>
+            DispatcherHelper.Invoke(() =>
             {
                 ShowInternal(title, subTitle, iconPath);
             });
@@ -91,7 +91,7 @@ namespace Flow.Launcher
 
         public static void ShowWithButton(string title, string buttonText, Action buttonAction, string subTitle, string iconPath = null)
         {
-            Application.Current.Dispatcher.Invoke(() =>
+            DispatcherHelper.Invoke(() =>
             {
                 ShowInternalWithButton(title, buttonText, buttonAction, subTitle, iconPath);
             });

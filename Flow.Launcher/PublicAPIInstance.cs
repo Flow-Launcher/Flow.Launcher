@@ -142,7 +142,7 @@ namespace Flow.Launcher
 
         public void OpenSettingDialog()
         {
-            Application.Current.Dispatcher.Invoke(() =>
+            DispatcherHelper.Invoke(() =>
             {
                 SettingWindow sw = SingletonWindowOpener.Open<SettingWindow>();
             });
@@ -150,7 +150,7 @@ namespace Flow.Launcher
 
         public bool OpenPluginSettingsWindow(string pluginId)
         {
-            return Application.Current.Dispatcher.Invoke(() =>
+            return DispatcherHelper.Invoke(() =>
             {
                 try
                 {

@@ -16,6 +16,7 @@ using System.Windows.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core.Plugin;
+using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.DialogJump;
@@ -753,12 +754,11 @@ namespace Flow.Launcher.ViewModel
         public void ChangeQueryText(string queryText, bool isReQuery = false)
         {
             // Must check access so that we will not block the UI thread which causes window visibility issue
-            if (!Application.Current.Dispatcher.CheckAccess())
-            {
-                Application.Current.Dispatcher.Invoke(() => ChangeQueryText(queryText, isReQuery));
-                return;
-            }
+            DispatcherHelper.Invoke(() => ChangeQueryTextCore(queryText, isReQuery));
+        }
 
+        private void ChangeQueryTextCore(string queryText, bool isReQuery = false)
+        {
             if (QueryText != queryText)
             {
                 // Change query text first
@@ -785,12 +785,11 @@ namespace Flow.Launcher.ViewModel
         private async Task ChangeQueryTextAsync(string queryText, bool isReQuery = false)
         {
             // Must check access so that we will not block the UI thread which causes window visibility issue
-            if (!Application.Current.Dispatcher.CheckAccess())
-            {
-                await Application.Current.Dispatcher.InvokeAsync(() => ChangeQueryTextAsync(queryText, isReQuery));
-                return;
-            }
+            await DispatcherHelper.InvokeAsync(() => ChangeQueryTextCoreAsync(queryText, isReQuery));
+        }
 
+        private async Task ChangeQueryTextCoreAsync(string queryText, bool isReQuery = false)
+        {
             if (QueryText != queryText)
             {
                 // Change query text first
@@ -2018,10 +2017,12 @@ namespace Flow.Launcher.ViewModel
                 if (dialogWindowHandleChanged)
                 {
                     // Only update the position
-                    Application.Current?.Dispatcher.Invoke(() =>
+#pragma warning disable VSTHRD103 // Call async methods when in an async method
+                    DispatcherHelper.Invoke(() =>
                     {
                         (Application.Current?.MainWindow as MainWindow)?.UpdatePosition();
                     });
+#pragma warning restore VSTHRD103 // Call async methods when in an async method
 
                     _ = ResetWindowAsync();
                 }
@@ -2116,7 +2117,7 @@ namespace Flow.Launcher.ViewModel
                 if (_previousMainWindowVisibilityStatus)
                 {
                     // Only update the position
-                    Application.Current?.Dispatcher.Invoke(() =>
+                    DispatcherHelper.Invoke(() =>
                     {
                         (Application.Current?.MainWindow as MainWindow)?.UpdatePosition();
                     });
@@ -2179,7 +2180,7 @@ namespace Flow.Launcher.ViewModel
             if (App.LoadingOrExiting) return;
 
             // When application is exiting, the Application.Current will be null
-            Application.Current?.Dispatcher.Invoke(() =>
+            DispatcherHelper.Invoke(() =>
             {
                 // When application is exiting, the Application.Current will be null
                 if (Application.Current?.MainWindow is MainWindow mainWindow)
@@ -2261,7 +2262,7 @@ namespace Flow.Launcher.ViewModel
             }
 
             // When application is exiting, the Application.Current will be null
-            Application.Current?.Dispatcher.Invoke(() =>
+            DispatcherHelper.Invoke(() =>
             {
                 // When application is exiting, the Application.Current will be null
                 if (Application.Current?.MainWindow is MainWindow mainWindow)
@@ -2395,7 +2396,7 @@ namespace Flow.Launcher.ViewModel
         public void FocusQueryTextBox()
         {
             // When application is exiting, the Application.Current will be null
-            Application.Current?.Dispatcher.Invoke(() =>
+            DispatcherHelper.Invoke(() =>
             {
                 // When application is exiting, the Application.Current will be null
                 if (Application.Current?.MainWindow is MainWindow window)

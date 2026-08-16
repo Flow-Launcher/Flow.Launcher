@@ -3,6 +3,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
+using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin.SharedModels;
 
@@ -82,12 +83,12 @@ namespace Flow.Launcher
 
             Show();
 
-            await Dispatcher.InvokeAsync(async () =>
+            await DispatcherHelper.InvokeAsync(async () =>
             {
                 if (!closing)
                 {
                     closing = true;
-                    await Dispatcher.InvokeAsync(fadeOutStoryboard.Begin);
+                    fadeOutStoryboard.Begin();
                 }
             });
         }
