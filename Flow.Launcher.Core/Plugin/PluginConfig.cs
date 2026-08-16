@@ -86,6 +86,9 @@ namespace Flow.Launcher.Core.Plugin
                 // to avoid cycles when mixing semantic and non-semantic versions.
                 var allSemantic = group.All(x => TryParseSemanticVersion(x.Version, out _));
 
+                // Use the same comparison strategy for both the sort and the tie check so
+                // that equal semantic precedence expressed with different text (e.g.
+                // "1.0" vs "1.0.0") is detected as a tie.
                 IOrderedEnumerable<PluginMetadata> sorted;
                 if (allSemantic)
                 {
@@ -104,7 +107,21 @@ namespace Flow.Launcher.Core.Plugin
 
                 // If the top two versions are tied, no single copy is uniquely highest,
                 // so treat all as duplicates (preserves original behavior).
-                var isTie = ordered.Count >= 2 && ordered[0].Version == ordered[1].Version;
+                bool isTie;
+                if (ordered.Count < 2)
+                {
+                    isTie = false;
+                }
+                else if (allSemantic)
+                {
+                    TryParseSemanticVersion(ordered[0].Version, out var v0);
+                    TryParseSemanticVersion(ordered[1].Version, out var v1);
+                    isTie = v0.Equals(v1);
+                }
+                else
+                {
+                    isTie = StringComparer.InvariantCulture.Equals(ordered[0].Version, ordered[1].Version);
+                }
 
                 if (!isTie)
                 {
