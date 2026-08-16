@@ -138,7 +138,10 @@ public partial class SettingsPanePluginStoreViewModel : BaseModel
             Application.Current.Dispatcher.Invoke(() =>
             {
                 var pluginUpdateWindow = new PluginUpdateWindow(plugins);
-                pluginUpdateWindow.ShowDialog();
+                if (pluginUpdateWindow.ShowDialog() is true)
+                {
+                    _ = pluginUpdateWindow.UpdatePluginsAsync();
+                }
             });
         }, silentUpdate: false);
     }

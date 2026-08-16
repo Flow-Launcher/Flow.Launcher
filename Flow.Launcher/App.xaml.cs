@@ -337,7 +337,10 @@ namespace Flow.Launcher
                         Current.Dispatcher.Invoke(() =>
                         {
                             var pluginUpdateWindow = new PluginUpdateWindow(plugins);
-                            pluginUpdateWindow.ShowDialog();
+                            if (pluginUpdateWindow.ShowDialog() is true)
+                            {
+                                _ = pluginUpdateWindow.UpdatePluginsAsync();
+                            }
                         });
                     });
 
@@ -348,7 +351,10 @@ namespace Flow.Launcher
                             Current.Dispatcher.Invoke(() =>
                             {
                                 var pluginUpdateWindow = new PluginUpdateWindow(plugins);
-                                pluginUpdateWindow.ShowDialog();
+                                if (pluginUpdateWindow.ShowDialog() is true)
+                                {
+                                    _ = pluginUpdateWindow.UpdatePluginsAsync();
+                                }
                             });
                         });
                 }

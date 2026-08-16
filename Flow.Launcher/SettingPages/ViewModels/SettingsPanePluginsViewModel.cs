@@ -231,12 +231,16 @@ public partial class SettingsPanePluginsViewModel : BaseModel
             .Where(vm => vm.HasUpdate)
             .Select(vm => vm.UpdateInfo)
             .ToList();
-    
-        Application.Current.Dispatcher.Invoke(() =>
+
+        var window = new PluginUpdateWindow(updates);
+        if (window.ShowDialog() is not true) return;
+
+        var successfulUpdates = (await window.UpdatePluginsAsync()).ToHashSet();
+        foreach (var vm in PluginViewModels.Where(vm =>
+                     vm.UpdateInfo is not null && successfulUpdates.Contains(vm.UpdateInfo)))
         {
-            var window = new PluginUpdateWindow(updates);
-            window.ShowDialog();
-        });
+            vm.UpdateInfo = null;
+        }
     }
 
     private bool _updatesChecked;

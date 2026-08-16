@@ -327,10 +327,12 @@ public static class PluginInstaller
     /// </summary>
     /// <param name="resultsForUpdate"></param>
     /// <param name="restart"></param>
-    public static async Task UpdateAllPluginsAsync(IEnumerable<PluginUpdateInfo> resultsForUpdate, bool restart)
+    /// <returns>The plugins that were updated successfully.</returns>
+    public static async Task<IReadOnlyList<PluginUpdateInfo>> UpdateAllPluginsAsync(
+        IEnumerable<PluginUpdateInfo> resultsForUpdate,
+        bool restart)
     {
-        var anyPluginSuccess = false;
-        await Task.WhenAll(resultsForUpdate.Select(async plugin =>
+        var updateResults = await Task.WhenAll(resultsForUpdate.Select(async plugin =>
         {
             var downloadToFilePath = Path.Combine(Path.GetTempPath(), $"{plugin.Name}-{plugin.NewVersion}.zip");
 
@@ -345,24 +347,29 @@ public static class PluginInstaller
                 // check if user cancelled download before installing plugin
                 if (cts.IsCancellationRequested)
                 {
-                    return;
+                    return null;
                 }
 
                 if (!await PublicApi.Instance.UpdatePluginAsync(plugin.PluginExistingMetadata, plugin.PluginNewUserPlugin, downloadToFilePath))
                 {
-                    return;
+                    return null;
                 }
 
-                anyPluginSuccess = true;
+                return plugin;
             }
             catch (Exception e)
             {
                 PublicApi.Instance.LogException(ClassName, "Failed to update plugin", e);
                 PublicApi.Instance.ShowMsgError(Localize.ErrorUpdatingPlugin());
+                return null;
             }
         }));
 
-        if (!anyPluginSuccess) return;
+        var successfulUpdates = updateResults
+            .OfType<PluginUpdateInfo>()
+            .ToList();
+
+        if (successfulUpdates.Count == 0) return successfulUpdates;
 
         if (restart)
         {
@@ -374,6 +381,8 @@ public static class PluginInstaller
                 Localize.updatebtn(),
                 Localize.PluginsUpdateSuccessNoRestart());
         }
+
+        return successfulUpdates;
     }
 
     /// <summary>
