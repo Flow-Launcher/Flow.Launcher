@@ -80,55 +80,53 @@ namespace Flow.Launcher.Core.Plugin
 
             var duplicateGroups = allPluginMetadata.GroupBy(x => x.ID).Where(g => g.Count() > 1).Select(y => y).ToList();
 
+            foreach (var group in duplicateGroups)
+            {
+                // Use a single consistent comparison strategy for the entire group
+                // to avoid cycles when mixing semantic and non-semantic versions.
+                var allSemantic = group.All(x => TryParseSemanticVersion(x.Version, out _));
+
+                IOrderedEnumerable<PluginMetadata> sorted;
+                if (allSemantic)
+                {
+                    sorted = group.OrderByDescending(x =>
+                    {
+                        TryParseSemanticVersion(x.Version, out var v);
+                        return v;
+                    });
+                }
+                else
+                {
+                    sorted = group.OrderByDescending(x => x.Version, StringComparer.InvariantCulture);
+                }
+
+                var ordered = sorted.ToList();
+
+                // If the top two versions are tied, no single copy is uniquely highest,
+                // so treat all as duplicates (preserves original behavior).
+                var isTie = ordered.Count >= 2 && ordered[0].Version == ordered[1].Version;
+
+                if (!isTie)
+                {
+                    unique_list.Add(ordered[0]);
+                    duplicate_list.AddRange(ordered.Skip(1));
+                }
+                else
+                {
+                    duplicate_list.AddRange(ordered);
+                }
+            }
+
+            // Add plugins that have no duplicates
             foreach (var metadata in allPluginMetadata)
             {
-                var duplicatesExist = false;
-                foreach (var group in duplicateGroups)
+                if (!duplicateGroups.Any(g => g.Key == metadata.ID))
                 {
-                    if (metadata.ID == group.Key)
-                    {
-                        duplicatesExist = true;
-
-                        // If metadata's version greater than each duplicate's version
-                        var count = group.Count(x => IsUpdateAvailable(x.Version, metadata.Version));
-                        
-                        // Only add if the meatadata's version is the highest of all duplicates in the group
-                        if (count == group.Count() - 1)
-                        {
-                            unique_list.Add(metadata);
-                        }
-                        else
-                        {
-                            duplicate_list.Add(metadata);
-                        }
-                    }
-                }
-                
-                if (!duplicatesExist)
                     unique_list.Add(metadata);
+                }
             }
 
             return (unique_list, duplicate_list);
-        }
-
-        /// <summary>
-        /// Determines if the latest version is greater than the current version by comparing semantic versions,
-        /// with invariant string comparison as a fallback.
-        /// </summary>
-        /// <param name="currentVersion">The currently installed version string.</param>
-        /// <param name="latestVersion">The latest available version string.</param>
-        /// <returns>True if latestVersion is greater than currentVersion; otherwise false.</returns>
-        private static bool IsUpdateAvailable(string currentVersion, string latestVersion)
-        {
-            if (TryParseSemanticVersion(currentVersion, out var current) &&
-                TryParseSemanticVersion(latestVersion, out var latest))
-            {
-                return current < latest;
-            }
-
-            // Third-party plugins may use version formats that are not valid semantic versions.
-            // Preserve the previous comparison behavior so those plugins are not silently omitted.
-            return string.Compare(currentVersion, latestVersion, StringComparison.InvariantCulture) < 0;
         }
 
         private static bool TryParseSemanticVersion(string value, out Version version)
