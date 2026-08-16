@@ -7,6 +7,7 @@ using Flow.Launcher.Plugin;
 using System.Text.Json;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.SharedCommands;
+using Version = SemanticVersioning.Version;
 
 namespace Flow.Launcher.Core.Plugin
 {
@@ -88,8 +89,8 @@ namespace Flow.Launcher.Core.Plugin
                     {
                         duplicatesExist = true;
 
-                        // If metadata's version greater than each duplicate's version, CompareTo > 0
-                        var count = group.Where(x => metadata.Version.CompareTo(x.Version) > 0).Count();
+                        // If metadata's version greater than each duplicate's version
+                        var count = group.Count(x => IsUpdateAvailable(x.Version, metadata.Version));
                         
                         // Only add if the meatadata's version is the highest of all duplicates in the group
                         if (count == group.Count() - 1)
@@ -108,6 +109,55 @@ namespace Flow.Launcher.Core.Plugin
             }
 
             return (unique_list, duplicate_list);
+        }
+
+        /// <summary>
+        /// Determines if the latest version is greater than the current version by comparing semantic versions,
+        /// with invariant string comparison as a fallback.
+        /// </summary>
+        /// <param name="currentVersion">The currently installed version string.</param>
+        /// <param name="latestVersion">The latest available version string.</param>
+        /// <returns>True if latestVersion is greater than currentVersion; otherwise false.</returns>
+        private static bool IsUpdateAvailable(string currentVersion, string latestVersion)
+        {
+            if (TryParseSemanticVersion(currentVersion, out var current) &&
+                TryParseSemanticVersion(latestVersion, out var latest))
+            {
+                return current < latest;
+            }
+
+            // Third-party plugins may use version formats that are not valid semantic versions.
+            // Preserve the previous comparison behavior so those plugins are not silently omitted.
+            return string.Compare(currentVersion, latestVersion, StringComparison.InvariantCulture) < 0;
+        }
+
+        private static bool TryParseSemanticVersion(string value, out Version version)
+        {
+            if (Version.TryParse(value, out version))
+            {
+                return true;
+            }
+
+            if (string.IsNullOrEmpty(value))
+            {
+                return false;
+            }
+
+            var suffixIndex = value.IndexOfAny(new[] { '-', '+' });
+            var coreLength = suffixIndex >= 0 ? suffixIndex : value.Length;
+            var componentCount = value[..coreLength].Split('.').Length;
+
+            if (componentCount is not (1 or 2))
+            {
+                return false;
+            }
+
+            var missingComponents = componentCount == 1 ? ".0.0" : ".0";
+            var normalized = suffixIndex >= 0
+                ? value.Insert(suffixIndex, missingComponents)
+                : value + missingComponents;
+
+            return Version.TryParse(normalized, out version);
         }
 
         private static PluginMetadata GetPluginMetadata(string pluginDirectory)
