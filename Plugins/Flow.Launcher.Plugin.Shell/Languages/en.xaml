@@ -27,4 +27,6 @@
     <system:String x:Key="flowlauncher_plugin_cmd_custom_template_arguments">Arguments template</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_custom_template_exe_path_tooltip">Can be an absolute path or a name resolved via PATH. Example: cmd.exe</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_custom_template_arguments_tooltip">Use {command} as a placeholder. Example: /k "{command}"</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_shell_settings">Shell Settings</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_other_settings">Other Settings</system:String>
 </ResourceDictionary>

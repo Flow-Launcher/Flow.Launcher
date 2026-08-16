@@ -13,110 +13,106 @@
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
+        <Style
+            x:Key="SectionHeaderStyle"
+            BasedOn="{StaticResource SettingTitleLabel}"
+            TargetType="TextBlock">
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Margin" Value="0 6 0 6" />
+        </Style>
     </UserControl.Resources>
 
-    <Grid Margin="{StaticResource SettingPanelMargin}" VerticalAlignment="Top">
-        <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-        </Grid.RowDefinitions>
-        <CheckBox
-            x:Name="ReplaceWinR"
-            Grid.Row="0"
-            Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
-            HorizontalAlignment="Left"
-            Content="{DynamicResource flowlauncher_plugin_cmd_relace_winr}"
-            IsChecked="{Binding Settings.ReplaceWinR, Mode=TwoWay}" />
-        <CheckBox
-            x:Name="CloseShellAfterPress"
-            Grid.Row="1"
-            Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
-            HorizontalAlignment="Left"
-            Content="{DynamicResource flowlauncher_plugin_cmd_close_cmd_after_press}"
-            IsChecked="{Binding CloseShellAfterPress, Mode=TwoWay}"
-            IsEnabled="{Binding LeaveShellOpen, Converter={StaticResource InverseBoolConverter}}"
-            Visibility="{Binding IsManagedShellSelected, Converter={StaticResource BooleanToVisibilityConverter}}" />
-        <CheckBox
-            x:Name="LeaveShellOpen"
-            Grid.Row="2"
-            Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
-            HorizontalAlignment="Left"
-            Content="{DynamicResource flowlauncher_plugin_cmd_leave_cmd_open}"
-            IsChecked="{Binding LeaveShellOpen, Mode=TwoWay}"
-            IsEnabled="{Binding CloseShellAfterPress, Converter={StaticResource InverseBoolConverter}}"
-            Visibility="{Binding IsManagedShellSelected, Converter={StaticResource BooleanToVisibilityConverter}}" />
-        <CheckBox
-            x:Name="AlwaysRunAsAdministrator"
-            Grid.Row="3"
-            Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
-            HorizontalAlignment="Left"
-            Content="{DynamicResource flowlauncher_plugin_cmd_always_run_as_administrator}"
-            IsChecked="{Binding Settings.RunAsAdministrator, Mode=TwoWay}" />
-        <CheckBox
-            x:Name="UseWindowsTerminal"
-            Grid.Row="4"
-            Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
-            HorizontalAlignment="Left"
-            Content="{DynamicResource flowlauncher_plugin_cmd_use_windows_terminal}"
-            IsChecked="{Binding Settings.UseWindowsTerminal, Mode=TwoWay}"
-            Visibility="{Binding IsManagedShellSelected, Converter={StaticResource BooleanToVisibilityConverter}}" />
+    <StackPanel Margin="{StaticResource SettingPanelMargin}" VerticalAlignment="Top">
+        <!-- Shell settings -->
+        <TextBlock
+            Style="{StaticResource SectionHeaderStyle}"
+            Text="{DynamicResource flowlauncher_plugin_cmd_shell_settings}" />
         <ComboBox
             x:Name="ShellComboBox"
-            Grid.Row="5"
             Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
             HorizontalAlignment="Left"
             DisplayMemberPath="Display"
             ItemsSource="{Binding AllShells, Mode=OneTime}"
             SelectedValue="{Binding SelectedShell, Mode=TwoWay}"
             SelectedValuePath="Value" />
+        <CheckBox
+            x:Name="AlwaysRunAsAdministrator"
+            Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
+            HorizontalAlignment="Left"
+            Content="{DynamicResource flowlauncher_plugin_cmd_always_run_as_administrator}"
+            IsChecked="{Binding Settings.RunAsAdministrator, Mode=TwoWay}" />
+        <!-- Managed shell settings -->
+        <StackPanel Visibility="{Binding IsManagedShellSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <CheckBox
+                x:Name="CloseShellAfterPress"
+                Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
+                HorizontalAlignment="Left"
+                Content="{DynamicResource flowlauncher_plugin_cmd_close_cmd_after_press}"
+                IsChecked="{Binding CloseShellAfterPress, Mode=TwoWay}"
+                IsEnabled="{Binding LeaveShellOpen, Converter={StaticResource InverseBoolConverter}}" />
+            <CheckBox
+                x:Name="LeaveShellOpen"
+                Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
+                HorizontalAlignment="Left"
+                Content="{DynamicResource flowlauncher_plugin_cmd_leave_cmd_open}"
+                IsChecked="{Binding LeaveShellOpen, Mode=TwoWay}"
+                IsEnabled="{Binding CloseShellAfterPress, Converter={StaticResource InverseBoolConverter}}" />
+            <CheckBox
+                x:Name="UseWindowsTerminal"
+                Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
+                HorizontalAlignment="Left"
+                Content="{DynamicResource flowlauncher_plugin_cmd_use_windows_terminal}"
+                IsChecked="{Binding Settings.UseWindowsTerminal, Mode=TwoWay}" />
+        </StackPanel>
 
-        <!-- Custom Template fields: visible when CustomTemplate is selected -->
-        <StackPanel
-            Grid.Row="6"
-            Orientation="Horizontal"
-            Visibility="{Binding IsCustomTemplateShell, Converter={StaticResource BooleanToVisibilityConverter}}">
-            <TextBlock
-                Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
-                VerticalAlignment="Center"
-                FontSize="14"
-                Text="{DynamicResource flowlauncher_plugin_cmd_custom_template_exe_path}" />
-            <TextBox
-                MinWidth="400"
-                Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
-                VerticalAlignment="Center"
-                Text="{Binding Settings.CustomTemplateShellConfig.ExecutablePath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                ToolTip="{DynamicResource flowlauncher_plugin_cmd_custom_template_exe_path_tooltip}" />
-            <Button
-                Margin="{StaticResource SettingPanelItemLeftMargin}"
-                VerticalAlignment="Center"
-                Click="BrowseExecutablePath_Click"
-                Content="{DynamicResource flowlauncher_plugin_cmd_custom_template_browse}" />
+        <!-- Custom template settings -->
+        <StackPanel Visibility="{Binding IsCustomTemplateShell, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock
+                    Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
+                    VerticalAlignment="Center"
+                    FontSize="14"
+                    Text="{DynamicResource flowlauncher_plugin_cmd_custom_template_exe_path}" />
+                <TextBox
+                    MinWidth="400"
+                    Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
+                    VerticalAlignment="Center"
+                    Text="{Binding Settings.CustomTemplateShellConfig.ExecutablePath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    ToolTip="{DynamicResource flowlauncher_plugin_cmd_custom_template_exe_path_tooltip}" />
+                <Button
+                    Margin="{StaticResource SettingPanelItemLeftMargin}"
+                    VerticalAlignment="Center"
+                    Click="BrowseExecutablePath_Click"
+                    Content="{DynamicResource flowlauncher_plugin_cmd_custom_template_browse}" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock
+                    Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
+                    VerticalAlignment="Center"
+                    FontSize="14"
+                    Text="{DynamicResource flowlauncher_plugin_cmd_custom_template_arguments}" />
+                <TextBox
+                    MinWidth="400"
+                    Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
+                    VerticalAlignment="Center"
+                    Text="{Binding Settings.CustomTemplateShellConfig.ArgumentsTemplate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    ToolTip="{DynamicResource flowlauncher_plugin_cmd_custom_template_arguments_tooltip}" />
+            </StackPanel>
         </StackPanel>
-        <StackPanel
-            Grid.Row="7"
-            Orientation="Horizontal"
-            Visibility="{Binding IsCustomTemplateShell, Converter={StaticResource BooleanToVisibilityConverter}}">
-            <TextBlock
-                Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
-                VerticalAlignment="Center"
-                FontSize="14"
-                Text="{DynamicResource flowlauncher_plugin_cmd_custom_template_arguments}" />
-            <TextBox
-                MinWidth="400"
-                Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
-                VerticalAlignment="Center"
-                Text="{Binding Settings.CustomTemplateShellConfig.ArgumentsTemplate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                ToolTip="{DynamicResource flowlauncher_plugin_cmd_custom_template_arguments_tooltip}" />
-        </StackPanel>
-        
-        <StackPanel Grid.Row="8" Orientation="Horizontal">
+
+        <!-- Other settings -->
+        <Separator Style="{StaticResource SettingPanelSeparatorStyle}" />
+        <TextBlock
+            Style="{StaticResource SectionHeaderStyle}"
+            Text="{DynamicResource flowlauncher_plugin_cmd_other_settings}" />
+        <CheckBox
+            x:Name="ReplaceWinR"
+            Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
+            HorizontalAlignment="Left"
+            Content="{DynamicResource flowlauncher_plugin_cmd_relace_winr}"
+            IsChecked="{Binding Settings.ReplaceWinR, Mode=TwoWay}" />
+        <StackPanel Orientation="Horizontal">
             <CheckBox
                 x:Name="ShowOnlyMostUsedCMDs"
                 Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
@@ -130,5 +126,5 @@
                 ItemsSource="{Binding OnlyMostUsedCMDsNumbers, Mode=OneTime}"
                 SelectedItem="{Binding SelectedOnlyMostUsedCMDsNumber, Mode=TwoWay}" />
         </StackPanel>
-    </Grid>
+    </StackPanel>
 </UserControl>
