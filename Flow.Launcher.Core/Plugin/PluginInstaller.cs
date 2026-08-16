@@ -319,9 +319,23 @@ public static class PluginInstaller
             Localize.updateAllPluginsButtonContent(),
             () =>
             {
-                _ = updateAllPlugins(resultsForUpdate);
+                _ = UpdateAllPluginsFromNotificationAsync(updateAllPlugins, resultsForUpdate);
             },
             string.Join(", ", resultsForUpdate.Select(x => x.PluginExistingMetadata.Name)));
+    }
+
+    private static async Task UpdateAllPluginsFromNotificationAsync(
+        Func<List<PluginUpdateInfo>, Task> updateAllPlugins,
+        List<PluginUpdateInfo> resultsForUpdate)
+    {
+        try
+        {
+            await updateAllPlugins(resultsForUpdate);
+        }
+        catch (Exception e)
+        {
+            PublicApi.Instance.LogException(ClassName, "Failed to update plugins from notification", e);
+        }
     }
 
     /// <summary>
