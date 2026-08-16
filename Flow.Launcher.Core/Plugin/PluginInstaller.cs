@@ -22,6 +22,8 @@ public static class PluginInstaller
 
     private static readonly Settings Settings = Ioc.Default.GetRequiredService<Settings>();
 
+    private static readonly SemaphoreSlim UpdatePluginsSemaphore = new(1, 1);
+
     /// <summary>
     /// Installs a plugin and restarts the application if required by settings. Prompts user for confirmation and handles download if needed.
     /// </summary>
@@ -203,13 +205,13 @@ public static class PluginInstaller
     /// </summary>
     /// <param name="newPlugin">The new plugin version to install.</param>
     /// <param name="oldPlugin">The existing plugin metadata to update.</param>
-    /// <returns>A Task representing the asynchronous update operation.</returns>
-    public static async Task UpdatePluginAndCheckRestartAsync(UserPlugin newPlugin, PluginMetadata oldPlugin)
+    /// <returns>True if the update was successful; otherwise false.</returns>
+    public static async Task<bool> UpdatePluginAndCheckRestartAsync(UserPlugin newPlugin, PluginMetadata oldPlugin)
     {
         if (PublicApi.Instance.ShowMsgBox(
             Localize.UpdatePromptSubtitle(oldPlugin.Name, oldPlugin.Author, Environment.NewLine),
             Localize.UpdatePromptTitle(),
-            button: MessageBoxButton.YesNo) != MessageBoxResult.Yes) return;
+            button: MessageBoxButton.YesNo) != MessageBoxResult.Yes) return false;
 
         try
         {
@@ -231,19 +233,19 @@ public static class PluginInstaller
             // check if user cancelled download before installing plugin
             if (cts.IsCancellationRequested)
             {
-                return;
+                return false;
             }
 
             if (!await PublicApi.Instance.UpdatePluginAsync(oldPlugin, newPlugin, filePath))
             {
-                return;
+                return false;
             }
         }
         catch (Exception e)
         {
             PublicApi.Instance.LogException(ClassName, "Failed to update plugin", e);
             PublicApi.Instance.ShowMsgError(Localize.ErrorUpdatingPlugin());
-            return; // do not restart on failure
+            return false; // do not restart on failure
         }
 
         if (Settings.AutoRestartAfterChanging)
@@ -256,17 +258,19 @@ public static class PluginInstaller
                 Localize.updatebtn(),
                 Localize.UpdateSuccessNoRestart(newPlugin.Name));
         }
+
+        return true;
     }
 
     /// <summary>
     /// Updates the plugin to the latest version available from its source.
     /// </summary>
-    /// <param name="updateAllPlugins">Action to execute when the user chooses to update all plugins.</param>
+    /// <param name="updateAllPlugins">Asynchronous action to execute when the user chooses to update all plugins.</param>
     /// <param name="silentUpdate">If true, do not show any messages when there is no update available.</param>
     /// <param name="usePrimaryUrlOnly">If true, only use the primary URL for updates.</param>
     /// <param name="token">Cancellation token to cancel the update operation.</param>
     /// <returns></returns>
-    public static async Task CheckForPluginUpdatesAsync(Action<List<PluginUpdateInfo>> updateAllPlugins, bool silentUpdate = true, bool usePrimaryUrlOnly = false, CancellationToken token = default)
+    public static async Task CheckForPluginUpdatesAsync(Func<List<PluginUpdateInfo>, Task> updateAllPlugins, bool silentUpdate = true, bool usePrimaryUrlOnly = false, CancellationToken token = default)
     {
         // Update the plugin manifest
         await PublicApi.Instance.UpdatePluginManifestAsync(usePrimaryUrlOnly, token);
@@ -315,9 +319,23 @@ public static class PluginInstaller
             Localize.updateAllPluginsButtonContent(),
             () =>
             {
-                updateAllPlugins(resultsForUpdate);
+                _ = UpdateAllPluginsFromNotificationAsync(updateAllPlugins, resultsForUpdate);
             },
             string.Join(", ", resultsForUpdate.Select(x => x.PluginExistingMetadata.Name)));
+    }
+
+    private static async Task UpdateAllPluginsFromNotificationAsync(
+        Func<List<PluginUpdateInfo>, Task> updateAllPlugins,
+        List<PluginUpdateInfo> resultsForUpdate)
+    {
+        try
+        {
+            await updateAllPlugins(resultsForUpdate);
+        }
+        catch (Exception e)
+        {
+            PublicApi.Instance.LogException(ClassName, "Failed to update plugins from notification", e);
+        }
     }
 
     /// <summary>
@@ -325,10 +343,27 @@ public static class PluginInstaller
     /// </summary>
     /// <param name="resultsForUpdate"></param>
     /// <param name="restart"></param>
-    public static async Task UpdateAllPluginsAsync(IEnumerable<PluginUpdateInfo> resultsForUpdate, bool restart)
+    /// <returns>The plugins that were updated successfully.</returns>
+    public static async Task<IReadOnlyList<PluginUpdateInfo>> UpdateAllPluginsAsync(
+        IEnumerable<PluginUpdateInfo> resultsForUpdate,
+        bool restart)
     {
-        var anyPluginSuccess = false;
-        await Task.WhenAll(resultsForUpdate.Select(async plugin =>
+        await UpdatePluginsSemaphore.WaitAsync();
+        try
+        {
+            return await UpdateAllPluginsCoreAsync(resultsForUpdate, restart);
+        }
+        finally
+        {
+            UpdatePluginsSemaphore.Release();
+        }
+    }
+
+    private static async Task<IReadOnlyList<PluginUpdateInfo>> UpdateAllPluginsCoreAsync(
+        IEnumerable<PluginUpdateInfo> resultsForUpdate,
+        bool restart)
+    {
+        var updateResults = await Task.WhenAll(resultsForUpdate.Select(async plugin =>
         {
             var downloadToFilePath = Path.Combine(Path.GetTempPath(), $"{plugin.Name}-{plugin.NewVersion}.zip");
 
@@ -343,24 +378,29 @@ public static class PluginInstaller
                 // check if user cancelled download before installing plugin
                 if (cts.IsCancellationRequested)
                 {
-                    return;
+                    return null;
                 }
 
                 if (!await PublicApi.Instance.UpdatePluginAsync(plugin.PluginExistingMetadata, plugin.PluginNewUserPlugin, downloadToFilePath))
                 {
-                    return;
+                    return null;
                 }
 
-                anyPluginSuccess = true;
+                return plugin;
             }
             catch (Exception e)
             {
                 PublicApi.Instance.LogException(ClassName, "Failed to update plugin", e);
                 PublicApi.Instance.ShowMsgError(Localize.ErrorUpdatingPlugin());
+                return null;
             }
         }));
 
-        if (!anyPluginSuccess) return;
+        var successfulUpdates = updateResults
+            .OfType<PluginUpdateInfo>()
+            .ToList();
+
+        if (successfulUpdates.Count == 0) return successfulUpdates;
 
         if (restart)
         {
@@ -372,6 +412,8 @@ public static class PluginInstaller
                 Localize.updatebtn(),
                 Localize.PluginsUpdateSuccessNoRestart());
         }
+
+        return successfulUpdates;
     }
 
     /// <summary>
