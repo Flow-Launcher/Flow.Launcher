@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 
 namespace Flow.Launcher.Plugin
 {
@@ -6,6 +7,7 @@ namespace Flow.Launcher.Plugin
     /// Context provided as a parameter when invoking a
     /// <see cref="Result.Action"/> or <see cref="Result.AsyncAction"/>
     /// </summary>
+    [Obsolete("ActionContext support is deprecated and will be removed in a future release. Please use IPluginHotkey instead.")]
     public class ActionContext
     {
         /// <summary>

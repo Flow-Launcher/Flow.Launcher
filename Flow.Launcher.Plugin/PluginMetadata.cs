@@ -158,6 +158,11 @@ namespace Flow.Launcher.Plugin
         public string PluginCacheDirectoryPath { get; internal set; }
 
         /// <summary>
+        /// List of registered plugin hotkeys.
+        /// </summary>
+        public List<PluginHotkey> PluginHotkeys { get; set; } = new List<PluginHotkey>();
+
+        /// <summary>
         /// Convert <see cref="PluginMetadata"/> to string.
         /// </summary>
         /// <returns></returns>

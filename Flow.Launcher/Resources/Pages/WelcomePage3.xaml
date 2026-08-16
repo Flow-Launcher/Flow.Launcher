@@ -90,7 +90,9 @@
                     Background="Transparent"
                     BorderThickness="0 0 0 0"
                     Header="{DynamicResource HotkeyRunDesc}">
-                    <cc:HotkeyDisplay Keys="ENTER" Type="Small" />
+                    <StackPanel Orientation="Horizontal">
+                        <cc:HotkeyDisplay Keys="ENTER" Type="Small" />
+                    </StackPanel>
                 </ui:SettingsCard>
                 <Border
                     Height="1"
@@ -100,7 +102,7 @@
                 <ui:SettingsCard
                     Background="Transparent"
                     BorderThickness="0 0 0 0"
-                    Header="{DynamicResource HotkeyShiftEnterDesc}">
+                    Header="{DynamicResource OpenContextMenuHotkey}">
                     <StackPanel Orientation="Horizontal">
                         <cc:HotkeyDisplay Keys="SHIFT+ENTER" Type="Small" />
                     </StackPanel>
@@ -113,9 +115,9 @@
                 <ui:SettingsCard
                     Background="Transparent"
                     BorderThickness="0 0 0 0"
-                    Header="{DynamicResource HotkeyCtrlEnterDesc}">
+                    Header="{DynamicResource ReloadPluginHotkey}">
                     <StackPanel Orientation="Horizontal">
-                        <cc:HotkeyDisplay Keys="CTRL+ENTER" Type="Small" />
+                        <cc:HotkeyDisplay Keys="F5" Type="Small" />
                     </StackPanel>
                 </ui:SettingsCard>
                 <Border
@@ -126,9 +128,95 @@
                 <ui:SettingsCard
                     Background="Transparent"
                     BorderThickness="0 0 0 0"
-                    Header="{DynamicResource HotkeyCtrlShiftEnterDesc}">
+                    Header="{DynamicResource HotkeySelectFirstResult}">
                     <StackPanel Orientation="Horizontal">
-                        <cc:HotkeyDisplay Keys="CTRL+SHIFT+ENTER" Type="Small" />
+                        <cc:HotkeyDisplay Keys="Alt+Home" Type="Small" />
+                    </StackPanel>
+                </ui:SettingsCard>
+                <Border
+                    Height="1"
+                    Background="{DynamicResource Color03B}"
+                    BorderThickness="0" />
+
+                <ui:SettingsCard
+                    Background="Transparent"
+                    BorderThickness="0 0 0 0"
+                    Header="{DynamicResource HotkeySelectLastResult}">
+                    <StackPanel Orientation="Horizontal">
+                        <cc:HotkeyDisplay Keys="Alt+End" Type="Small" />
+                    </StackPanel>
+                </ui:SettingsCard>
+                <Border
+                    Height="1"
+                    Background="{DynamicResource Color03B}"
+                    BorderThickness="0" />
+
+                <ui:SettingsCard
+                    Background="Transparent"
+                    BorderThickness="0 0 0 0"
+                    Header="{DynamicResource HotkeyRequery}">
+                    <StackPanel Orientation="Horizontal">
+                        <cc:HotkeyDisplay Keys="Ctrl+R" Type="Small" />
+                    </StackPanel>
+                </ui:SettingsCard>
+                <Border
+                    Height="1"
+                    Background="{DynamicResource Color03B}"
+                    BorderThickness="0" />
+
+                <ui:SettingsCard
+                    Background="Transparent"
+                    BorderThickness="0 0 0 0"
+                    Header="{DynamicResource ToggleGameModeHotkey}">
+                    <StackPanel Orientation="Horizontal">
+                        <cc:HotkeyDisplay Keys="Ctrl+F12" Type="Small" />
+                    </StackPanel>
+                </ui:SettingsCard>
+                <Border
+                    Height="1"
+                    Background="{DynamicResource Color03B}"
+                    BorderThickness="0" />
+
+                <ui:SettingsCard
+                    Background="Transparent"
+                    BorderThickness="0 0 0 0"
+                    Header="{DynamicResource CopyFilePathHotkey}">
+                    <StackPanel Orientation="Horizontal">
+                        <cc:HotkeyDisplay Keys="Ctrl+Shift+C" Type="Small" />
+                    </StackPanel>
+                </ui:SettingsCard>
+                <Border
+                    Height="1"
+                    Background="{DynamicResource Color03B}"
+                    BorderThickness="0" />
+
+                <ui:SettingsCard
+                    Background="Transparent"
+                    BorderThickness="0 0 0 0"
+                    Header="{DynamicResource QuickWidthHotkey}">
+                    <StackPanel Orientation="Horizontal">
+                        <cc:HotkeyDisplay Keys="Ctrl+[" Type="Small" />
+                        <cc:HotkeyDisplay
+                            Margin="4 0 0 0"
+                            Keys="Ctrl+]"
+                            Type="Small" />
+                    </StackPanel>
+                </ui:SettingsCard>
+                <Border
+                    Height="1"
+                    Background="{DynamicResource Color03B}"
+                    BorderThickness="0" />
+
+                <ui:SettingsCard
+                    Background="Transparent"
+                    BorderThickness="0 0 0 0"
+                    Header="{DynamicResource QuickHeightHotkey}">
+                    <StackPanel Orientation="Horizontal">
+                        <cc:HotkeyDisplay Keys="Ctrl+Minus" Type="Small" />
+                        <cc:HotkeyDisplay
+                            Margin="4 0 0 0"
+                            Keys="Ctrl+Plus"
+                            Type="Small" />
                     </StackPanel>
                 </ui:SettingsCard>
             </StackPanel>
