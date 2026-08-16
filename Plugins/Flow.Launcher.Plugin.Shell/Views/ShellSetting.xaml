@@ -11,7 +11,8 @@
     d:DesignWidth="300"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <converters:LeaveShellOpenOrCloseShellAfterPressEnabledConverter x:Key="LeaveShellOpenOrCloseShellAfterPressEnabledConverter" />
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
     </UserControl.Resources>
 
     <Grid Margin="{StaticResource SettingPanelMargin}" VerticalAlignment="Top">
@@ -39,28 +40,18 @@
             Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
             HorizontalAlignment="Left"
             Content="{DynamicResource flowlauncher_plugin_cmd_close_cmd_after_press}"
-            IsChecked="{Binding CloseShellAfterPress, Mode=TwoWay}">
-            <CheckBox.IsEnabled>
-                <MultiBinding Converter="{StaticResource LeaveShellOpenOrCloseShellAfterPressEnabledConverter}">
-                    <Binding Mode="OneWay" Path="LeaveShellOpen" />
-                    <Binding Mode="OneWay" Path="SelectedShell" />
-                </MultiBinding>
-            </CheckBox.IsEnabled>
-        </CheckBox>
+            IsChecked="{Binding CloseShellAfterPress, Mode=TwoWay}"
+            IsEnabled="{Binding LeaveShellOpen, Converter={StaticResource InverseBoolConverter}}"
+            Visibility="{Binding IsManagedShellSelected, Converter={StaticResource BooleanToVisibilityConverter}}" />
         <CheckBox
             x:Name="LeaveShellOpen"
             Grid.Row="2"
             Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
             HorizontalAlignment="Left"
             Content="{DynamicResource flowlauncher_plugin_cmd_leave_cmd_open}"
-            IsChecked="{Binding LeaveShellOpen, Mode=TwoWay}">
-            <CheckBox.IsEnabled>
-                <MultiBinding Converter="{StaticResource LeaveShellOpenOrCloseShellAfterPressEnabledConverter}">
-                    <Binding Mode="OneWay" Path="CloseShellAfterPress" />
-                    <Binding Mode="OneWay" Path="SelectedShell" />
-                </MultiBinding>
-            </CheckBox.IsEnabled>
-        </CheckBox>
+            IsChecked="{Binding LeaveShellOpen, Mode=TwoWay}"
+            IsEnabled="{Binding CloseShellAfterPress, Converter={StaticResource InverseBoolConverter}}"
+            Visibility="{Binding IsManagedShellSelected, Converter={StaticResource BooleanToVisibilityConverter}}" />
         <CheckBox
             x:Name="AlwaysRunAsAdministrator"
             Grid.Row="3"
@@ -75,7 +66,7 @@
             HorizontalAlignment="Left"
             Content="{DynamicResource flowlauncher_plugin_cmd_use_windows_terminal}"
             IsChecked="{Binding Settings.UseWindowsTerminal, Mode=TwoWay}"
-            IsEnabled="{Binding IsWindowsTerminalEnabled}" />
+            Visibility="{Binding IsManagedShellSelected, Converter={StaticResource BooleanToVisibilityConverter}}" />
         <ComboBox
             x:Name="ShellComboBox"
             Grid.Row="5"
@@ -89,17 +80,8 @@
         <!-- Custom Template fields: visible when CustomTemplate is selected -->
         <StackPanel
             Grid.Row="6"
-            Orientation="Horizontal">
-            <StackPanel.Style>
-                <Style TargetType="StackPanel">
-                    <Setter Property="Visibility" Value="Collapsed" />
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsCustomTemplateShell}" Value="True">
-                            <Setter Property="Visibility" Value="Visible" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </StackPanel.Style>
+            Orientation="Horizontal"
+            Visibility="{Binding IsCustomTemplateShell, Converter={StaticResource BooleanToVisibilityConverter}}">
             <TextBlock
                 Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
                 VerticalAlignment="Center"
@@ -119,17 +101,8 @@
         </StackPanel>
         <StackPanel
             Grid.Row="7"
-            Orientation="Horizontal">
-            <StackPanel.Style>
-                <Style TargetType="StackPanel">
-                    <Setter Property="Visibility" Value="Collapsed" />
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsCustomTemplateShell}" Value="True">
-                            <Setter Property="Visibility" Value="Visible" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </StackPanel.Style>
+            Orientation="Horizontal"
+            Visibility="{Binding IsCustomTemplateShell, Converter={StaticResource BooleanToVisibilityConverter}}">
             <TextBlock
                 Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
                 VerticalAlignment="Center"
