@@ -11,7 +11,7 @@ using Version = SemanticVersioning.Version;
 
 namespace Flow.Launcher.Plugin.PluginsManager
 {
-    internal class PluginsManager
+    public class PluginsManager
     {
         private const string ZipSuffix = "zip";
 
@@ -840,7 +840,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             }
         }
 
-        private static bool IsUpdateAvailable(string currentVersion, string latestVersion)
+        public static bool IsUpdateAvailable(string currentVersion, string latestVersion)
         {
             if (TryParseSemanticVersion(currentVersion, out var current) &&
                 TryParseSemanticVersion(latestVersion, out var latest))
