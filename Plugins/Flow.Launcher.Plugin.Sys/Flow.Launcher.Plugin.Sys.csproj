@@ -64,4 +64,19 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
+
+  <!-- Copy plugin output to Avalonia build directory -->
+  <Target Name="CopyToAvaloniaOutput" AfterTargets="Build">
+    <PropertyGroup>
+      <AvaloniaPluginDir>..\..\Output\Avalonia\$(Configuration)\Plugins\$(AssemblyName)\</AvaloniaPluginDir>
+      <PluginOutputDir>$([MSBuild]::EnsureTrailingSlash('$(OutputPath)'))</PluginOutputDir>
+    </PropertyGroup>
+    <ItemGroup>
+      <PluginFiles Include="$(PluginOutputDir)**\*.*" Exclude="$(PluginOutputDir)runtimes\**\*.*" />
+      <PluginWindowsRuntimeFiles Include="$(PluginOutputDir)runtimes\**\*.*"
+                                 Exclude="$(PluginOutputDir)runtimes\linux*\**\*.*;$(PluginOutputDir)runtimes\osx*\**\*.*;$(PluginOutputDir)runtimes\unix*\**\*.*;$(PluginOutputDir)runtimes\browser*\**\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(PluginFiles)" DestinationFolder="$(AvaloniaPluginDir)%(RecursiveDir)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(PluginWindowsRuntimeFiles)" DestinationFolder="$(AvaloniaPluginDir)runtimes\%(RecursiveDir)" SkipUnchangedFiles="true" />
+  </Target>
 </Project>

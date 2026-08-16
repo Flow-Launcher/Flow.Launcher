@@ -19,7 +19,12 @@ namespace Flow.Launcher.Infrastructure.Hotkey
         private static readonly UnhookWindowsHookExSafeHandle hookId;
 
         public delegate bool KeyboardCallback(KeyEvent keyEvent, int vkCode, SpecialKeyState state);
-        internal static Func<KeyEvent, int, SpecialKeyState, bool> hookedKeyboardCallback;
+        public static Func<KeyEvent, int, SpecialKeyState, bool> hookedKeyboardCallback;
+
+        public static System.Windows.Input.Key GetKeyFromVk(int vkCode)
+        {
+            return System.Windows.Input.KeyInterop.KeyFromVirtualKey(vkCode);
+        }
 
         static GlobalHotkey()
         {
