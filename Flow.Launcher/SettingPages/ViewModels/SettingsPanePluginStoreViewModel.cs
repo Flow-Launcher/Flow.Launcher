@@ -135,12 +135,16 @@ public partial class SettingsPanePluginStoreViewModel : BaseModel
     {
         await PluginInstaller.CheckForPluginUpdatesAsync((plugins) =>
         {
-            Application.Current.Dispatcher.Invoke(() =>
+            _ = Application.Current.Dispatcher.Invoke(async () =>
             {
                 var pluginUpdateWindow = new PluginUpdateWindow(plugins);
                 if (pluginUpdateWindow.ShowDialog() is true)
                 {
-                    _ = pluginUpdateWindow.UpdatePluginsAsync();
+                    var successfulUpdates = await pluginUpdateWindow.UpdatePluginsAsync();
+                    if (successfulUpdates.Count > 0)
+                    {
+                        OnPropertyChanged(nameof(ExternalPlugins));
+                    }
                 }
             });
         }, silentUpdate: false);
