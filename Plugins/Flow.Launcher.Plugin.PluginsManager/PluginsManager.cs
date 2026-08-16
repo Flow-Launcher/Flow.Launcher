@@ -842,9 +842,15 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         private static bool IsUpdateAvailable(string currentVersion, string latestVersion)
         {
-            return Version.TryParse(currentVersion, out var current) &&
-                   Version.TryParse(latestVersion, out var latest) &&
-                   current < latest;
+            if (Version.TryParse(currentVersion, out var current) &&
+                Version.TryParse(latestVersion, out var latest))
+            {
+                return current < latest;
+            }
+
+            // Third-party plugins may use version formats that are not valid semantic versions.
+            // Preserve the previous comparison behavior so those plugins are not silently omitted.
+            return string.Compare(currentVersion, latestVersion, StringComparison.InvariantCulture) < 0;
         }
     }
 }

@@ -490,16 +490,22 @@ public static class PluginInstaller
     }
 
     /// <summary>
-    /// Determines if an update is available by comparing semantic versions.
+    /// Determines if an update is available by comparing semantic versions, with invariant string comparison as a fallback.
     /// </summary>
     /// <param name="currentVersion">The currently installed version string.</param>
     /// <param name="latestVersion">The latest available version string from the manifest.</param>
     /// <returns>True if latestVersion is greater than currentVersion; otherwise false.</returns>
     internal static bool IsUpdateAvailable(string currentVersion, string latestVersion)
     {
-        return Version.TryParse(currentVersion, out var current) &&
-               Version.TryParse(latestVersion, out var latest) &&
-               current < latest;
+        if (Version.TryParse(currentVersion, out var current) &&
+            Version.TryParse(latestVersion, out var latest))
+        {
+            return current < latest;
+        }
+
+        // Third-party plugins may use version formats that are not valid semantic versions.
+        // Preserve the previous comparison behavior so those plugins are not silently omitted.
+        return string.Compare(currentVersion, latestVersion, StringComparison.InvariantCulture) < 0;
     }
 }
 
