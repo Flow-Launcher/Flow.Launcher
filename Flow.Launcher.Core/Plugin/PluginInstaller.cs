@@ -497,8 +497,8 @@ public static class PluginInstaller
     /// <returns>True if latestVersion is greater than currentVersion; otherwise false.</returns>
     internal static bool IsUpdateAvailable(string currentVersion, string latestVersion)
     {
-        if (Version.TryParse(currentVersion, out var current) &&
-            Version.TryParse(latestVersion, out var latest))
+        if (TryParseSemanticVersion(currentVersion, out var current) &&
+            TryParseSemanticVersion(latestVersion, out var latest))
         {
             return current < latest;
         }
@@ -506,6 +506,35 @@ public static class PluginInstaller
         // Third-party plugins may use version formats that are not valid semantic versions.
         // Preserve the previous comparison behavior so those plugins are not silently omitted.
         return string.Compare(currentVersion, latestVersion, StringComparison.InvariantCulture) < 0;
+    }
+
+    private static bool TryParseSemanticVersion(string value, out Version version)
+    {
+        if (Version.TryParse(value, out version))
+        {
+            return true;
+        }
+
+        if (string.IsNullOrEmpty(value))
+        {
+            return false;
+        }
+
+        var suffixIndex = value.IndexOfAny(new[] { '-', '+' });
+        var coreLength = suffixIndex >= 0 ? suffixIndex : value.Length;
+        var componentCount = value[..coreLength].Split('.').Length;
+
+        if (componentCount is not (1 or 2))
+        {
+            return false;
+        }
+
+        var missingComponents = componentCount == 1 ? ".0.0" : ".0";
+        var normalized = suffixIndex >= 0
+            ? value.Insert(suffixIndex, missingComponents)
+            : value + missingComponents;
+
+        return Version.TryParse(normalized, out version);
     }
 }
 
