@@ -24,20 +24,21 @@ namespace Flow.Launcher.Core.ExternalPlugins
 
         public static async Task<bool> UpdateManifestAsync(Settings settings, bool usePrimaryUrlOnly = false, CancellationToken token = default)
         {
-            string customUrl = settings.PluginSettings.PluginsManifestUrl?.Trim() ?? string.Empty;
-
-            bool lockAcquired = false;
+            var lockAcquired = false;
             try
             {
-                string[] defaultUrls = [
+                var defaultUrls = new[]
+                {
                     "https://raw.githubusercontent.com/Flow-Launcher/Flow.Launcher.PluginsManifest/main/plugins.json",
                     "https://fastly.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@main/plugins.json",
                     "https://gcore.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@main/plugins.json",
                     "https://cdn.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@main/plugins.json"
-                ];
+                };
 
                 await manifestUpdateLock.WaitAsync(token).ConfigureAwait(false);
                 lockAcquired = true;
+
+                var customUrl = settings.PluginSettings.PluginsManifestUrl?.Trim() ?? string.Empty;
 
                 if (mainPluginStore == null || lastCustomUrl != customUrl)
                 {
