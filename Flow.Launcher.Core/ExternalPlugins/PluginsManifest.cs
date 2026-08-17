@@ -59,6 +59,7 @@ namespace Flow.Launcher.Core.ExternalPlugins
                         mainPluginStore = new(defaultUrls[0], defaultUrls[1..]);
                     }
                     lastCustomUrl = customUrl;
+                    lastFetchedAt = DateTime.MinValue;
                 }
 
                 if (UserPlugins == null || usePrimaryUrlOnly || DateTime.Now.Subtract(lastFetchedAt) >= fetchTimeout)
