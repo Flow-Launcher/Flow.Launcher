@@ -2,6 +2,12 @@
   "version": 1,
   "dependencies": {
     "net9.0-windows10.0.19041": {
+      "AvalonEdit": {
+        "type": "Direct",
+        "requested": "[6.3.0.90, )",
+        "resolved": "6.3.0.90",
+        "contentHash": "WVTb5MxwGqKdeasd3nG5udlV4t6OpvkFanziwI133K0/QJ5FvZmfzRQgpAjGTJhQfIA8GP7AzKQ3sTY9JOFk8Q=="
+      },
       "ChefKeys": {
         "type": "Direct",
         "requested": "[0.1.2, )",
@@ -166,11 +172,6 @@
         "requested": "[2.3.1, )",
         "resolved": "2.3.1",
         "contentHash": "imph3SJqFFgX8vc7XRBcftfgzIL7Q+uE0Tvk7dbY0KY0tcqUCs0ZmKV3Gt9QX2745v6bSw6ns8UHpXtiptHqdA=="
-      },
-      "AvalonEdit": {
-        "type": "Transitive",
-        "resolved": "6.3.0.90",
-        "contentHash": "WVTb5MxwGqKdeasd3nG5udlV4t6OpvkFanziwI133K0/QJ5FvZmfzRQgpAjGTJhQfIA8GP7AzKQ3sTY9JOFk8Q=="
       },
       "Ben.Demystifier": {
         "type": "Transitive",
@@ -1619,7 +1620,7 @@
           "FSharp.Core": "[9.0.303, )",
           "Flow.Launcher.Infrastructure": "[1.0.0, )",
           "Flow.Launcher.Localization": "[0.0.6, )",
-          "Flow.Launcher.Plugin": "[5.0.0, )",
+          "Flow.Launcher.Plugin": "[5.3.0, )",
           "Meziantou.Framework.Win32.Jobs": "[3.4.5, )",
           "Microsoft.IO.RecyclableMemoryStream": "[3.0.1, )",
           "SemanticVersioning": "[3.0.0, )",
@@ -1634,7 +1635,7 @@
           "BitFaster.Caching": "[2.5.4, )",
           "CommunityToolkit.Mvvm": "[8.4.0, )",
           "Flow.Launcher.Localization": "[0.0.6, )",
-          "Flow.Launcher.Plugin": "[5.0.0, )",
+          "Flow.Launcher.Plugin": "[5.3.0, )",
           "InputSimulator": "[1.0.4, )",
           "MemoryPack": "[1.21.4, )",
           "Microsoft.VisualStudio.Threading": "[17.14.15, )",
