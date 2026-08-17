@@ -43,7 +43,9 @@ namespace Flow.Launcher.Core.ExternalPlugins
                 {
                     if (!string.IsNullOrEmpty(customUrl))
                     {
-                        if (Uri.TryCreate(customUrl, UriKind.Absolute, out var uri) && (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps))
+                        if (Uri.TryCreate(customUrl, UriKind.Absolute, out var uri)
+                            && (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps)
+                            && !string.IsNullOrEmpty(uri.Host))
                         {
                             mainPluginStore = new(customUrl);
                         }
