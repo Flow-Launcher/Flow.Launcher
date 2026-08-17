@@ -50,7 +50,6 @@ namespace Flow.Launcher.Core.ExternalPlugins
                         else
                         {
                             PublicApi.Instance.LogWarn(ClassName, $"Invalid custom plugins manifest URL: {customUrl}. Using default URLs.");
-                            customUrl = string.Empty;
                             mainPluginStore = new(defaultUrls[0], defaultUrls[1..]);
                         }
                     }
