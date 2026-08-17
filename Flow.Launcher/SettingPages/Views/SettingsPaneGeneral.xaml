@@ -509,7 +509,7 @@
                     <TextBox
                         Width="370"
                         Height="34"
-                        Text="{Binding Settings.PluginSettings.PluginsManifestUrl,TargetNullValue='None'}" />
+                        Text="{Binding Settings.PluginSettings.PluginsManifestUrl, TargetNullValue='None', UpdateSourceTrigger=PropertyChanged}" />
                 </StackPanel>
             </ui:SettingsCard>
 
