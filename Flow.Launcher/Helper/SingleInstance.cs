@@ -56,7 +56,7 @@ namespace Flow.Launcher.Helper
         /// If not, activates the first instance.
         /// </summary>
         /// <returns>True if this is the first instance of the application.</returns>
-        public static bool InitializeAsFirstInstance(string args = null)
+        public static bool InitializeAsFirstInstance(string payload = null)
         {
             // Build unique application Id and the IPC channel name.
             string applicationIdentifier = InstanceMutexName + Environment.UserName;
@@ -78,7 +78,7 @@ namespace Flow.Launcher.Helper
                     // because the second instance exits right after this returns.
                     // Budget beyond the 3s connect timeout below so a slow connect still
                     // leaves room for the write to complete.
-                    SignalFirstInstanceAsync(channelName, args).Wait(TimeSpan.FromSeconds(5));
+                    SignalFirstInstanceAsync(channelName, payload).Wait(TimeSpan.FromSeconds(5));
                 }
                 catch
                 {
@@ -148,10 +148,10 @@ namespace Flow.Launcher.Helper
         /// Creates a client pipe and sends a signal to server to launch first instance
         /// </summary>
         /// <param name="channelName">Application's IPC channel name.</param>
-        /// <param name="args">
+        /// <param name="payload">
         /// The deep link payload from the second instance, passed to the first instance to take appropriate action.
         /// </param>
-        private static async Task SignalFirstInstanceAsync(string channelName, string args)
+        private static async Task SignalFirstInstanceAsync(string channelName, string payload)
         {
             // Create a client pipe connected to server
             using NamedPipeClientStream pipeClient = new NamedPipeClientStream(".", channelName, PipeDirection.Out);
@@ -161,10 +161,10 @@ namespace Flow.Launcher.Helper
             await pipeClient.ConnectAsync(3000);
 
             // Send the deep link payload to the first instance if there is one
-            if (!string.IsNullOrEmpty(args))
+            if (!string.IsNullOrEmpty(payload))
             {
                 using var writer = new StreamWriter(pipeClient, Encoding.UTF8) { AutoFlush = true };
-                await writer.WriteLineAsync(args);
+                await writer.WriteLineAsync(payload);
             }
         }
 

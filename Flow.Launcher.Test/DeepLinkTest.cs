@@ -86,5 +86,23 @@ namespace Flow.Launcher.Test
         {
             Assert.That(DeepLink.TryParse(payload, out _, out _), Is.False);
         }
+
+        [TestCase("plugin.flowplugin", null, null)]
+        [TestCase(null, "abc123", null)]
+        [TestCase(null, null, "https://example.com/plugin.zip")]
+        public void HasExactlyOneInstallIdentifier_SingleIdentifier_ReturnsTrue(string path, string id, string url)
+        {
+            Assert.That(DeepLink.HasExactlyOneInstallIdentifier(path, id, url), Is.True);
+        }
+
+        [TestCase(null, null, null)]     // none
+        [TestCase("", "", "")]           // none (empty counts as absent)
+        [TestCase("plugin.flowplugin", "abc123", null)]                       // path + id
+        [TestCase(null, "abc123", "https://example.com/plugin.zip")]          // id + url
+        [TestCase("plugin.flowplugin", "abc123", "https://example.com/x.zip")] // all three
+        public void HasExactlyOneInstallIdentifier_NoneOrMultiple_ReturnsFalse(string path, string id, string url)
+        {
+            Assert.That(DeepLink.HasExactlyOneInstallIdentifier(path, id, url), Is.False);
+        }
     }
 }

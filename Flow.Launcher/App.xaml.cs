@@ -45,6 +45,11 @@ namespace Flow.Launcher
         private static bool _disposed;
         private static Settings _settings;
         private static string _pendingDeepLink;
+        private static bool _pluginsInitialized;
+
+        // Guards _pendingDeepLink/_pluginsInitialized: a second-instance link can arrive on the UI
+        // thread while the plugin initialization continuation flushes the pending link elsewhere.
+        private static readonly object _pendingDeepLinkLock = new();
         private static MainWindow _mainWindow;
         private readonly MainViewModel _mainVM;
         private readonly Internationalization _internationalization;
@@ -267,11 +272,18 @@ namespace Flow.Launcher
                     // Refresh the history results after plugins are initialized so that we can parse the absolute icon paths
                     _mainVM.RefreshLastOpenedHistoryResults();
 
-                    // Dispatch the deep link passed on the command line now that plugins can answer it
-                    if (!string.IsNullOrEmpty(_pendingDeepLink))
+                    // Dispatch the deep link passed on the command line, or one queued by a second
+                    // instance during startup, now that plugins can answer it
+                    string pendingDeepLink;
+                    lock (_pendingDeepLinkLock)
                     {
-                        DeepLink.Dispatch(_pendingDeepLink);
+                        _pluginsInitialized = true;
+                        pendingDeepLink = _pendingDeepLink;
                         _pendingDeepLink = null;
+                    }
+                    if (!string.IsNullOrEmpty(pendingDeepLink))
+                    {
+                        DeepLink.Dispatch(pendingDeepLink);
                     }
 
                     // Refresh home page after plugins are initialized because users may open main window during plugin initialization
@@ -483,6 +495,19 @@ namespace Flow.Launcher
             {
                 API.ShowMainWindow();
                 return;
+            }
+
+            lock (_pendingDeepLinkLock)
+            {
+                if (!_pluginsInitialized)
+                {
+                    // Hold links that arrive while the first instance is still starting; dispatching
+                    // now would race plugin initialization (query activation is suppressed while
+                    // loading, and install handlers need an initialized PluginManager). The startup
+                    // path flushes this once plugins are ready; the latest link wins.
+                    _pendingDeepLink = payload;
+                    return;
+                }
             }
 
             DeepLink.Dispatch(payload);

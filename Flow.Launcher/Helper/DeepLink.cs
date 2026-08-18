@@ -156,7 +156,7 @@ public static class DeepLink
         var id = parameters["id"];
         var url = parameters["url"];
 
-        if (new[] { path, id, url }.Count(x => !string.IsNullOrEmpty(x)) != 1)
+        if (!HasExactlyOneInstallIdentifier(path, id, url))
         {
             App.API.ShowMsgError(Localize.deepLinkInstallInvalidTitle(), Localize.deepLinkInstallInvalidSubtitle());
             return;
@@ -186,6 +186,15 @@ public static class DeepLink
 
             _ = PluginInstaller.InstallPluginFromWebAndCheckRestartAsync(url);
         }
+    }
+
+    /// <summary>
+    /// A plugin install deep link must carry exactly one identifier — a local file path, a manifest
+    /// id, or a download url. Zero identifiers leaves nothing to install; more than one is ambiguous.
+    /// </summary>
+    public static bool HasExactlyOneInstallIdentifier(string path, string id, string url)
+    {
+        return new[] { path, id, url }.Count(x => !string.IsNullOrEmpty(x)) == 1;
     }
 
     private static async Task InstallByIdAsync(string id)
