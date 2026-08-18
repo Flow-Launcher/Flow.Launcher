@@ -178,29 +178,10 @@ namespace Flow.Launcher.ViewModel
             };
             _selectedResults = Results;
 
-            Results.PropertyChanged += (o, args) =>
-            {
-                switch (args.PropertyName)
-                {
-                    case nameof(Results.SelectedItem):
-                        _selectedItemFromQueryResults = true;
-                        PreviewSelectedItem = Results.SelectedItem;
-                        _ = UpdatePreviewAsync();
-                        break;
-                }
-            };
+            ResultAreaColumn = Settings.AlwaysPreview ? ResultAreaColumnPreviewShown : ResultAreaColumnPreviewHidden;
 
-            History.PropertyChanged += (o, args) =>
-            {
-                switch (args.PropertyName)
-                {
-                    case nameof(History.SelectedItem):
-                        _selectedItemFromQueryResults = false;
-                        PreviewSelectedItem = History.SelectedItem;
-                        _ = UpdatePreviewAsync();
-                        break;
-                }
-            };
+            Results.PropertyChanged += OnResultsPropertyChanged;
+            History.PropertyChanged += OnHistoryPropertyChanged;
 
             RegisterViewUpdate();
             _ = RegisterClockAndDateUpdateAsync();
@@ -350,7 +331,7 @@ namespace Flow.Launcher.ViewModel
         }
 
         [RelayCommand]
-        private void LoadHistory()
+        private async Task LoadHistoryAsync()
         {
             if (QueryResultsSelected())
             {
@@ -365,7 +346,7 @@ namespace Flow.Launcher.ViewModel
             {
                 SelectedResults = Results;
                 PreviewSelectedItem = Results.SelectedItem;
-                _ = UpdatePreviewAsync();
+                await UpdatePreviewAsync();
             }
         }
 
@@ -415,7 +396,7 @@ namespace Flow.Launcher.ViewModel
         }
 
         [RelayCommand]
-        private void LoadContextMenu()
+        private async Task LoadContextMenuAsync()
         {
             // For Dialog Jump and right click mode, we need to navigate to the path
             if (_isDialogJump && Settings.DialogJumpResultBehaviour == DialogJumpResultBehaviours.RightClick)
@@ -447,7 +428,7 @@ namespace Flow.Launcher.ViewModel
             {
                 SelectedResults = Results;
                 PreviewSelectedItem = Results.SelectedItem;
-                _ = UpdatePreviewAsync();
+                await UpdatePreviewAsync();
             }
         }
 
@@ -655,13 +636,13 @@ namespace Flow.Launcher.ViewModel
         }
 
         [RelayCommand]
-        private void Esc()
+        private async Task EscAsync()
         {
             if (!QueryResultsSelected())
             {
                 SelectedResults = Results;
                 PreviewSelectedItem = Results.SelectedItem;
-                _ = UpdatePreviewAsync();
+                await UpdatePreviewAsync();
             }
             else
             {
@@ -897,6 +878,7 @@ namespace Flow.Launcher.ViewModel
                     // so we need manually call Query()
                     // http://stackoverflow.com/posts/25895769/revisions
                     QueryText = string.Empty;
+
                     // When we are changing query because selected results are changed to history or context menu,
                     // we should not delay the query
                     Query(false);
@@ -1026,12 +1008,58 @@ namespace Flow.Launcher.ViewModel
 
         #endregion
 
+        private async void OnResultsPropertyChanged(object sender, PropertyChangedEventArgs args)
+        {
+            switch (args.PropertyName)
+            {
+                case nameof(Results.SelectedItem):
+                    _selectedItemFromQueryResults = true;
+                    PreviewSelectedItem = Results.SelectedItem;
+                    try
+                    {
+                        await UpdatePreviewAsync();
+                    }
+                    catch (Exception e)
+                    {
+                        App.API.LogError(ClassName,
+                            $"Error updating preview on result selection: {e}");
+                    }
+
+                    break;
+            }
+        }
+
+        private async void OnHistoryPropertyChanged(object sender, PropertyChangedEventArgs args)
+        {
+            switch (args.PropertyName)
+            {
+                case nameof(History.SelectedItem):
+                    _selectedItemFromQueryResults = false;
+                    PreviewSelectedItem = History.SelectedItem;
+                    try
+                    {
+                        await UpdatePreviewAsync();
+                    }
+                    catch (Exception e)
+                    {
+                        App.API.LogError(ClassName,
+                            $"Error updating preview on history selection: {e}");
+                    }
+
+                    break;
+            }
+        }
+
         #region Preview
 
         private static readonly int ResultAreaColumnPreviewShown = 1;
         private static readonly int ResultAreaColumnPreviewHidden = 3;
 
         private bool? _selectedItemFromQueryResults;
+
+        // User explicitly toggled the preview on or off via hotkey.
+        // null means it's unset (so will fall back to the global AlwaysPreview setting).
+        private bool? _previewPreferenceFromToggle;
 
         private ResultViewModel _previewSelectedItem;
         public ResultViewModel PreviewSelectedItem
@@ -1064,13 +1092,15 @@ namespace Flow.Launcher.ViewModel
 
         public int ResultAreaColumn { get; set; } = ResultAreaColumnPreviewShown;
 
-        // This is not a reliable indicator of whether external preview is visible due to the
-        // ability of manually closing/exiting the external preview program which, does not inform flow that
-        // preview is no longer available.
+        // Tracks whether Flow opened an external preview.
+        // This can be stale if external preview program closes the preview or exit without notifying Flow.
         public bool ExternalPreviewVisible { get; private set; }
 
         private async Task ShowPreviewAsync()
         {
+            if (PreviewSelectedItem == null)
+                return;
+
             var useExternalPreview = PluginManager.UseExternalPreview();
 
             switch (useExternalPreview)
@@ -1081,7 +1111,7 @@ namespace Flow.Launcher.ViewModel
                     if (InternalPreviewVisible)
                         HideInternalPreview();
 
-                    _ = OpenExternalPreviewAsync(path);
+                    await OpenExternalPreviewAsync(path);
                     break;
 
                 case true
@@ -1098,25 +1128,27 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private void HidePreview()
+        private async Task HidePreviewAsync()
         {
-            if (PluginManager.UseExternalPreview())
-                _ = CloseExternalPreviewAsync();
+            if (ExternalPreviewVisible)
+                await CloseExternalPreviewAsync();
 
             if (InternalPreviewVisible)
                 HideInternalPreview();
         }
 
         [RelayCommand]
-        private void TogglePreview()
+        private async Task TogglePreviewAsync()
         {
             if (InternalPreviewVisible || ExternalPreviewVisible)
             {
-                HidePreview();
+                _previewPreferenceFromToggle = false;
+                await HidePreviewAsync();
             }
             else
             {
-                _ = ShowPreviewAsync();
+                _previewPreferenceFromToggle = true;
+                await ShowPreviewAsync();
             }
         }
 
@@ -1148,53 +1180,22 @@ namespace Flow.Launcher.ViewModel
             ResultAreaColumn = ResultAreaColumnPreviewHidden;
         }
 
-        public void ResetPreview()
+        // Determines whether the preview pane should be visible.
+        private bool ShouldShowPreview()
         {
-            switch (Settings.AlwaysPreview)
-            {
-                case true
-                    when PluginManager.AllowAlwaysPreview() && CanExternalPreviewSelectedResult(out var path):
-                    _ = OpenExternalPreviewAsync(path);
-                    break;
-                case true:
-                    ShowInternalPreview();
-                    break;
-                case false:
-                    HidePreview();
-                    break;
-            }
+            if (PreviewSelectedItem == null) return false;
+            if (PreviewSelectedItem.Result.PreviewVisibility == PreviewVisibility.Never) return false;
+            if (PreviewSelectedItem.Result.PreviewVisibility == PreviewVisibility.Always) return true;
+            return _previewPreferenceFromToggle ?? Settings.AlwaysPreview;
         }
 
+        // Shows or hides the correct preview panel. Called on each selection change.
         private async Task UpdatePreviewAsync()
         {
-            switch (PluginManager.UseExternalPreview())
-            {
-                case true
-                    when CanExternalPreviewSelectedResult(out var path):
-                    if (ExternalPreviewVisible)
-                    {
-                        _ = SwitchExternalPreviewAsync(path, false);
-                    }
-                    else if (InternalPreviewVisible)
-                    {
-                        HideInternalPreview();
-                        _ = OpenExternalPreviewAsync(path);
-                    }
-
-                    break;
-                case true
-                    when !CanExternalPreviewSelectedResult(out var _):
-                    if (ExternalPreviewVisible)
-                    {
-                        await CloseExternalPreviewAsync();
-                        ShowInternalPreview();
-                    }
-                    break;
-                case false
-                    when InternalPreviewVisible:
-                    PreviewSelectedItem?.LoadPreviewImage();
-                    break;
-            }
+            if (ShouldShowPreview())
+                await ShowPreviewAsync();
+            else if (InternalPreviewVisible || ExternalPreviewVisible)
+                await HidePreviewAsync();
         }
 
         private bool CanExternalPreviewSelectedResult(out string path)
@@ -1205,8 +1206,41 @@ namespace Flow.Launcher.ViewModel
 
         private bool QueryResultsPreviewed()
         {
-            var previewed = PreviewSelectedItem == Results.SelectedItem;
-            return previewed;
+            return PreviewSelectedItem == Results.SelectedItem;
+        }
+
+        // Clears the manual toggle then reevaluates preview
+        // Called when the window reopens. 
+        public async Task ResetPreviewAsync()
+        {
+            _previewPreferenceFromToggle = null;
+
+            if (ShouldShowPreview())
+            {
+                if (PluginManager.AllowAlwaysPreview() && CanExternalPreviewSelectedResult(out var path))
+                {
+                    // OpenExternalPreviewAsync may not be safe when one is already showing.
+                    if (InternalPreviewVisible)
+                        HideInternalPreview();
+                    if (ExternalPreviewVisible)
+                        await CloseExternalPreviewAsync();
+
+                    await OpenExternalPreviewAsync(path);
+                }
+                else
+                {
+                    // Close stale external then show internal.
+                    // ShowInternalPreview is safe to call even when already visible.
+                    if (ExternalPreviewVisible)
+                        await CloseExternalPreviewAsync();
+
+                    ShowInternalPreview();
+                }
+            }
+            else
+            {
+                await HidePreviewAsync();
+            }
         }
 
         #endregion
@@ -1220,22 +1254,25 @@ namespace Flow.Launcher.ViewModel
 
         public void Query(bool searchDelay, bool isReQuery = false)
         {
-            if (_ignoredQueryText != null)
-            {
-                if (_ignoredQueryText == QueryText)
-                {
-                    _ignoredQueryText = null;
-                    return;
-                }
-                else
-                {
-                    // If _ignoredQueryText does not match current QueryText, we should still execute Query
-                    _ignoredQueryText = null;
-                }
-            }
-
             if (QueryResultsSelected())
             {
+                // We use this to skip creating a new result set and keep the old results.
+                // This matching is used for programmatic QueryText changes (not user typing), 
+                // such as when returning to the results from the context menu
+                if (_ignoredQueryText != null)
+                {
+                    if (_ignoredQueryText == QueryText)
+                    {
+                        _ignoredQueryText = null;
+                        return;
+                    }
+                    else
+                    {
+                        // If _ignoredQueryText does not match current QueryText, we should still execute Query
+                        _ignoredQueryText = null;
+                    }
+                }
+
                 _ = QueryResultsAsync(searchDelay, isReQuery);
             }
             else if (ContextMenuSelected())

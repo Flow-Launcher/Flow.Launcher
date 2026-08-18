@@ -424,6 +424,12 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         public bool AlwaysPreview { get; set; } = false;
 
+        /// <summary>
+        /// Name of the syntax-highlighting theme used for code blocks in the markdown preview.
+        /// "Auto" follows the app colour scheme (light/dark); otherwise a <see cref="CodeHighlightThemes"/> name.
+        /// </summary>
+        public string CodeHighlightTheme { get; set; } = "Auto";
+
         public bool AlwaysStartEn { get; set; } = false;
 
         private SearchPrecisionScore _querySearchPrecision = SearchPrecisionScore.Regular;
@@ -695,6 +701,15 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         System,
         Light,
         Dark
+    }
+
+    public enum CodeHighlightThemes
+    {
+        Auto,
+        VSCodeLight,
+        VSCodeDarkPlus,
+        CatppuccinMacchiato,
+        OneDark
     }
 
     public enum SearchWindowScreens
