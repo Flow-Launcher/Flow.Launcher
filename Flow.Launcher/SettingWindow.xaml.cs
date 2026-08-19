@@ -53,21 +53,22 @@ public partial class SettingWindow
         switch (e.PropertyName)
         {
             case nameof(SettingWindowViewModel.PageType):
-                var selectedIndex = _viewModel.PageType.Name switch
-                {
-                    nameof(SettingsPaneGeneral) => 0,
-                    nameof(SettingsPanePlugins) => 1,
-                    nameof(SettingsPanePluginStore) => 2,
-                    nameof(SettingsPaneTheme) => 3,
-                    nameof(SettingsPaneHotkey) => 4,
-                    nameof(SettingsPaneProxy) => 5,
-                    nameof(SettingsPaneAbout) => 6,
-                    _ => 0
-                };
-                NavView.SelectedItem = NavView.MenuItems[selectedIndex];
+                NavView.SelectedItem = NavView.MenuItems[PageIndexOf(_viewModel.PageType)];
                 break;
         }
     }
+
+    private static int PageIndexOf(Type pageType) => pageType?.Name switch
+    {
+        nameof(SettingsPaneGeneral) => 0,
+        nameof(SettingsPanePlugins) => 1,
+        nameof(SettingsPanePluginStore) => 2,
+        nameof(SettingsPaneTheme) => 3,
+        nameof(SettingsPaneHotkey) => 4,
+        nameof(SettingsPaneProxy) => 5,
+        nameof(SettingsPaneAbout) => 6,
+        _ => 0
+    };
 
     private void OnClosed(object sender, EventArgs e)
     {
@@ -242,8 +243,36 @@ public partial class SettingWindow
 
     private void ContentFrame_Loaded(object sender, RoutedEventArgs e)
     {
+        var pendingPage = _viewModel.ConsumePendingPageType();
+        if (pendingPage != null)
+        {
+            NavView.SelectedItem = NavView.MenuItems[PageIndexOf(pendingPage)];
+            return;
+        }
+
         _viewModel.SetPageType(null); // Set page type to null so that NavigationView_SelectionChanged can navigate the frame
         NavView.SelectedItem = NavView.MenuItems[0]; /* Set First Page */
+    }
+
+    /// <summary>
+    /// Navigates an already open window to the pending deep link destination.
+    /// Re-navigating to the current pane still goes through the frame so the pane's
+    /// OnNavigatedTo runs and consumes any pending filter text.
+    /// </summary>
+    public void NavigateToPendingPage()
+    {
+        var pendingPage = _viewModel.ConsumePendingPageType();
+        if (pendingPage == null) return;
+
+        var targetItem = NavView.MenuItems[PageIndexOf(pendingPage)];
+        if (ReferenceEquals(NavView.SelectedItem, targetItem))
+        {
+            ContentFrame.Navigate(pendingPage);
+        }
+        else
+        {
+            NavView.SelectedItem = targetItem;
+        }
     }
 
     #endregion
