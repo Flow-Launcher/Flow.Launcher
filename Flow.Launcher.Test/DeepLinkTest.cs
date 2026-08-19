@@ -104,5 +104,47 @@ namespace Flow.Launcher.Test
         {
             Assert.That(DeepLink.HasExactlyOneInstallIdentifier(path, id, url), Is.False);
         }
+
+        [TestCase("flow-launcher://settings", "settings")]
+        [TestCase("flow-launcher://settings/general", "settings/general")]
+        [TestCase("flow-launcher://settings/plugins", "settings/plugins")]
+        [TestCase("flow-launcher://settings/store", "settings/store")]
+        [TestCase("flow-launcher://settings/theme", "settings/theme")]
+        [TestCase("flow-launcher://settings/hotkey", "settings/hotkey")]
+        [TestCase("flow-launcher://settings/proxy", "settings/proxy")]
+        [TestCase("flow-launcher://settings/about", "settings/about")]
+        [TestCase("FLOW-LAUNCHER://Settings/Plugins", "settings/plugins")]
+        public void SettingsPages_EveryDocumentedLink_MapsToAPane(string payload, string expectedVerb)
+        {
+            var ok = DeepLink.TryParse(payload, out var verb, out _);
+            Assert.That(ok, Is.True);
+            Assert.That(verb, Is.EqualTo(expectedVerb));
+            Assert.That(DeepLink.SettingsPages.ContainsKey(verb), Is.True);
+        }
+
+        [Test]
+        public void SettingsPages_UnknownSubpage_NotMapped()
+        {
+            DeepLink.TryParse("flow-launcher://settings/nope", out var verb, out _);
+            Assert.That(DeepLink.SettingsPages.ContainsKey(verb), Is.False);
+        }
+
+        [Test]
+        public void TryParse_SettingsPluginsWithPluginId_ExtractsParameter()
+        {
+            var ok = DeepLink.TryParse("flow-launcher://settings/plugins?plugin=abc-123", out var verb, out var parameters);
+            Assert.That(ok, Is.True);
+            Assert.That(verb, Is.EqualTo("settings/plugins"));
+            Assert.That(parameters["plugin"], Is.EqualTo("abc-123"));
+        }
+
+        [Test]
+        public void TryParse_SettingsStoreWithQuery_ExtractsParameter()
+        {
+            var ok = DeepLink.TryParse("flow-launcher://settings/store?q=clipboard%20history", out var verb, out var parameters);
+            Assert.That(ok, Is.True);
+            Assert.That(verb, Is.EqualTo("settings/store"));
+            Assert.That(parameters["q"], Is.EqualTo("clipboard history"));
+        }
     }
 }

@@ -48,6 +48,8 @@
     <system:String x:Key="deepLinkInstallInvalidSubtitle">A plugin install link must contain exactly one of: path, id, or url.</system:String>
     <system:String x:Key="deepLinkInstallFileNotFound">Plugin package not found: {0}</system:String>
     <system:String x:Key="deepLinkInstallPluginNotFound">No plugin with id "{0}" was found in the plugin store.</system:String>
+    <system:String x:Key="deepLinkSettingsPluginNotInstalledTitle">Plugin not installed</system:String>
+    <system:String x:Key="deepLinkSettingsPluginNotInstalledSubtitle">No installed plugin with id "{0}" was found.</system:String>
     <system:String x:Key="deepLinkInstallHttpsOnly">Plugin install links must use an https download URL.</system:String>
     <system:String x:Key="deepLinkManifestUpdateFailed">Could not load the plugin store manifest. Check your internet connection and try again.</system:String>
     <system:String x:Key="couldnotStartCmd">Could not start {0}</system:String>

@@ -5,8 +5,12 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using System.Windows;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.SettingPages.Views;
+using Flow.Launcher.ViewModel;
 
 namespace Flow.Launcher.Helper;
 
@@ -22,12 +26,43 @@ public static class DeepLink
 
     private static readonly string ClassName = nameof(DeepLink);
 
-    private static readonly Dictionary<string, Action<NameValueCollection>> Handlers = new()
+    /// <summary>
+    /// Maps settings deep link verbs to the settings pane each one opens.
+    /// </summary>
+    public static readonly IReadOnlyDictionary<string, Type> SettingsPages = new Dictionary<string, Type>
     {
-        ["query"] = HandleQuery,
-        ["settings"] = HandleSettings,
-        ["plugin/install"] = HandlePluginInstall,
+        ["settings"] = typeof(SettingsPaneGeneral),
+        ["settings/general"] = typeof(SettingsPaneGeneral),
+        ["settings/plugins"] = typeof(SettingsPanePlugins),
+        ["settings/store"] = typeof(SettingsPanePluginStore),
+        ["settings/theme"] = typeof(SettingsPaneTheme),
+        ["settings/hotkey"] = typeof(SettingsPaneHotkey),
+        ["settings/proxy"] = typeof(SettingsPaneProxy),
+        ["settings/about"] = typeof(SettingsPaneAbout),
     };
+
+    private static readonly Dictionary<string, Action<NameValueCollection>> Handlers = BuildHandlers();
+
+    private static Dictionary<string, Action<NameValueCollection>> BuildHandlers()
+    {
+        var handlers = new Dictionary<string, Action<NameValueCollection>>
+        {
+            ["query"] = HandleQuery,
+            ["plugin/install"] = HandlePluginInstall,
+        };
+
+        foreach (var (verb, paneType) in SettingsPages)
+        {
+            handlers[verb] = verb switch
+            {
+                "settings/plugins" => HandleSettingsPlugins,
+                "settings/store" => parameters => OpenSettingsPage(paneType, parameters["q"]),
+                _ => _ => OpenSettingsPage(paneType),
+            };
+        }
+
+        return handlers;
+    }
 
     /// <summary>
     /// Normalizes command line arguments to a single deep link URI string, or null for a normal launch.
@@ -145,9 +180,44 @@ public static class DeepLink
         App.API.ChangeQuery(query, true);
     }
 
-    private static void HandleSettings(NameValueCollection parameters)
+    private static void HandleSettingsPlugins(NameValueCollection parameters)
     {
-        App.API.OpenSettingDialog();
+        var pluginId = parameters["plugin"];
+        string filterText = null;
+
+        if (!string.IsNullOrEmpty(pluginId))
+        {
+            var plugin = PluginManager.GetPluginForId(pluginId);
+            if (plugin == null)
+            {
+                App.API.ShowMsgError(Localize.deepLinkSettingsPluginNotInstalledTitle(),
+                    Localize.deepLinkSettingsPluginNotInstalledSubtitle(pluginId));
+            }
+            else
+            {
+                filterText = plugin.Metadata.Name;
+            }
+        }
+
+        OpenSettingsPage(typeof(SettingsPanePlugins), filterText);
+    }
+
+    /// <summary>
+    /// Opens the settings window at a specific pane. The destination is stashed on the
+    /// singleton view model; a freshly created window consumes it when its frame loads,
+    /// an already open window is navigated immediately.
+    /// </summary>
+    private static void OpenSettingsPage(Type paneType, string filterText = null)
+    {
+        Application.Current.Dispatcher.Invoke(() =>
+        {
+            Ioc.Default.GetRequiredService<SettingWindowViewModel>().SetPendingNavigation(paneType, filterText);
+            var window = SingletonWindowOpener.Open<SettingWindow>();
+            if (window.IsLoaded)
+            {
+                window.NavigateToPendingPage();
+            }
+        });
     }
 
     private static void HandlePluginInstall(NameValueCollection parameters)
