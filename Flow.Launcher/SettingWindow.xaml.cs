@@ -246,6 +246,10 @@ public partial class SettingWindow
         var pendingPage = _viewModel.ConsumePendingPageType();
         if (pendingPage != null)
         {
+            // Reset the stale page type left over from the last time this singleton window was open,
+            // otherwise SetPageType below returns false when the deep link targets the same pane and
+            // NavigationView_SelectionChanged never navigates the frame (mirrors the branch below).
+            _viewModel.SetPageType(null);
             NavView.SelectedItem = NavView.MenuItems[PageIndexOf(pendingPage)];
             return;
         }

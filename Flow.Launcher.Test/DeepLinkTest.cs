@@ -125,7 +125,9 @@ namespace Flow.Launcher.Test
         [Test]
         public void SettingsPages_UnknownSubpage_NotMapped()
         {
-            DeepLink.TryParse("flow-launcher://settings/nope", out var verb, out _);
+            var ok = DeepLink.TryParse("flow-launcher://settings/nope", out var verb, out _);
+            Assert.That(ok, Is.True);
+            Assert.That(verb, Is.EqualTo("settings/nope"));
             Assert.That(DeepLink.SettingsPages.ContainsKey(verb), Is.False);
         }
 

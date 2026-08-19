@@ -30,7 +30,7 @@ public partial class SettingsPanePluginStore
             InitializeComponent();
         }
         var pendingFilter = _settingViewModel.ConsumePendingFilterText();
-        if (!string.IsNullOrEmpty(pendingFilter))
+        if (!string.IsNullOrWhiteSpace(pendingFilter))
         {
             _viewModel.FilterText = pendingFilter;
         }

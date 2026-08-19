@@ -26,6 +26,9 @@ public static class DeepLink
 
     private static readonly string ClassName = nameof(DeepLink);
 
+    private const string SettingsPluginsVerb = "settings/plugins";
+    private const string SettingsStoreVerb = "settings/store";
+
     /// <summary>
     /// Maps settings deep link verbs to the settings pane each one opens.
     /// </summary>
@@ -33,8 +36,8 @@ public static class DeepLink
     {
         ["settings"] = typeof(SettingsPaneGeneral),
         ["settings/general"] = typeof(SettingsPaneGeneral),
-        ["settings/plugins"] = typeof(SettingsPanePlugins),
-        ["settings/store"] = typeof(SettingsPanePluginStore),
+        [SettingsPluginsVerb] = typeof(SettingsPanePlugins),
+        [SettingsStoreVerb] = typeof(SettingsPanePluginStore),
         ["settings/theme"] = typeof(SettingsPaneTheme),
         ["settings/hotkey"] = typeof(SettingsPaneHotkey),
         ["settings/proxy"] = typeof(SettingsPaneProxy),
@@ -55,8 +58,8 @@ public static class DeepLink
         {
             handlers[verb] = verb switch
             {
-                "settings/plugins" => HandleSettingsPlugins,
-                "settings/store" => parameters => OpenSettingsPage(paneType, parameters["q"]),
+                SettingsPluginsVerb => HandleSettingsPlugins,
+                SettingsStoreVerb => parameters => OpenSettingsPage(paneType, NormalizeFilter(parameters["q"])),
                 _ => _ => OpenSettingsPage(paneType),
             };
         }
@@ -165,6 +168,12 @@ public static class DeepLink
         }
     }
 
+    /// <summary>
+    /// Treats a whitespace-only filter value the same as an absent one.
+    /// </summary>
+    private static string NormalizeFilter(string filterText) =>
+        string.IsNullOrWhiteSpace(filterText) ? null : filterText;
+
     private static void HandleQuery(NameValueCollection parameters)
     {
         ChangeQueryAndShow(parameters["q"]);
@@ -185,9 +194,10 @@ public static class DeepLink
         var pluginId = parameters["plugin"];
         string filterText = null;
 
-        if (!string.IsNullOrEmpty(pluginId))
+        if (!string.IsNullOrWhiteSpace(pluginId))
         {
-            var plugin = PluginManager.GetPluginForId(pluginId);
+            var plugin = PluginManager.GetAllLoadedPlugins()
+                .FirstOrDefault(p => string.Equals(p.Metadata.ID, pluginId, StringComparison.OrdinalIgnoreCase));
             if (plugin == null)
             {
                 App.API.ShowMsgError(Localize.deepLinkSettingsPluginNotInstalledTitle(),
