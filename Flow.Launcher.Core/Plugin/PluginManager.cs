@@ -1306,24 +1306,25 @@ namespace Flow.Launcher.Core.Plugin
                     PublicApi.Instance.LogException(ClassName, $"Failed to delete plugin marker file in {newPluginPath}", e);
                 }
 
-                // Publish under the same per-plugin lock ReloadPluginAsync holds while it reads
-                // _pendingInstallPaths and clears the modified flag, so a concurrent reload can never
-                // observe the pending path without the modified flag (or vice versa) and re-set a
-                // modified flag that a reload already cleared for this install.
-                var semaphore = _reloadLocks.GetOrAdd(plugin.ID, _ => new SemaphoreSlim(1, 1));
-                semaphore.Wait();
-                try
-                {
-                    _pendingInstallPaths[plugin.ID] = newPluginPath;
+                _pendingInstallPaths[plugin.ID] = newPluginPath;
 
-                    if (checkModified)
-                    {
-                        ModifiedPlugins.TryAdd(plugin.ID, 0);
-                    }
-                }
-                finally
+                if (checkModified)
                 {
-                    semaphore.Release();
+                    ModifiedPlugins.TryAdd(plugin.ID, 0);
+
+                    // A concurrent reload may have picked up newPluginPath between the write above and
+                    // here, already loaded it, and cleared the modified flag before we set it just now.
+                    // This runs lock-free (InstallPlugin is called synchronously from the UI thread, so
+                    // it must not block on the per-plugin reload lock, which can be held for the full
+                    // duration of a reload) and self-heals instead: if nothing is left pending for this
+                    // plugin and the currently loaded instance is already running from the path we just
+                    // installed, a reload got there first, so the modified flag we just set is stale.
+                    if (!_pendingInstallPaths.ContainsKey(plugin.ID) &&
+                        _allLoadedPlugins.TryGetValue(plugin.ID, out var loadedPair) &&
+                        loadedPair.Metadata.PluginDirectory == newPluginPath)
+                    {
+                        ClearPluginModified(plugin.ID);
+                    }
                 }
 
                 return true;
