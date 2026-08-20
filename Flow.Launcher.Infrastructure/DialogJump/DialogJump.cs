@@ -566,6 +566,14 @@ namespace Flow.Launcher.Infrastructure.DialogJump
                     else
                     {
                         dialogWindow = dialog.Plugin.CheckDialogWindow(hwnd);
+                        if (dialogWindow != null)
+                        {
+                            // Keep the dialog registry as the source of truth for this instance so a
+                            // plugin hot reload can find and dispose it instead of it living only in
+                            // _dialogWindow, unreachable from the dictionary-based disposal in
+                            // RemoveDialogJumpPlugin
+                            _dialogJumpDialogs[dialog] = dialogWindow;
+                        }
                     }
 
                     // If the dialog window is found, set it

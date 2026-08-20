@@ -193,17 +193,18 @@ namespace Flow.Launcher.Core.Plugin
         }
 
         /// <summary>
-        /// Fully reloads all loaded plugins. Plugins already flagged as modified are skipped because
-        /// their on-disk directory is pending deletion or replacement and requires a restart.
-        /// Returns false if any plugin failed to reload.
+        /// Fully reloads all loaded plugins, plus any plugin that failed a previous reload attempt and
+        /// still has a pending install path waiting to be retried. Plugins flagged as modified without a
+        /// pending install path are skipped because their on-disk directory is pending deletion or
+        /// replacement and requires a restart. Returns false if any plugin failed to reload.
         /// </summary>
         public static async Task<bool> ReloadAllPluginsAsync()
         {
             var allSucceeded = true;
-            foreach (var pair in GetAllLoadedPlugins())
+            var ids = GetAllLoadedPlugins().Select(p => p.Metadata.ID).Union(_pendingInstallPaths.Keys).Distinct();
+            foreach (var id in ids)
             {
-                var id = pair.Metadata.ID;
-                if (PluginModified(id)) continue;
+                if (PluginModified(id) && !_pendingInstallPaths.ContainsKey(id)) continue;
 
                 if (!await ReloadPluginAsync(id))
                 {
@@ -1305,14 +1306,24 @@ namespace Flow.Launcher.Core.Plugin
                     PublicApi.Instance.LogException(ClassName, $"Failed to delete plugin marker file in {newPluginPath}", e);
                 }
 
-                // Remember where this version was installed so a hot reload can load it without a
-                // restart. Recorded before the modified flag so that a concurrent reload observing
-                // the flag always sees the pending path too and never clears the flag prematurely.
-                _pendingInstallPaths[plugin.ID] = newPluginPath;
-
-                if (checkModified)
+                // Publish under the same per-plugin lock ReloadPluginAsync holds while it reads
+                // _pendingInstallPaths and clears the modified flag, so a concurrent reload can never
+                // observe the pending path without the modified flag (or vice versa) and re-set a
+                // modified flag that a reload already cleared for this install.
+                var semaphore = _reloadLocks.GetOrAdd(plugin.ID, _ => new SemaphoreSlim(1, 1));
+                semaphore.Wait();
+                try
                 {
-                    ModifiedPlugins.TryAdd(plugin.ID, 0);
+                    _pendingInstallPaths[plugin.ID] = newPluginPath;
+
+                    if (checkModified)
+                    {
+                        ModifiedPlugins.TryAdd(plugin.ID, 0);
+                    }
+                }
+                finally
+                {
+                    semaphore.Release();
                 }
 
                 return true;
