@@ -134,6 +134,13 @@ namespace Flow.Launcher.Core.Plugin
         // so that ReloadPluginAsync knows to load the new version instead of the running one
         private static readonly ConcurrentDictionary<string, string> _pendingInstallPaths = new();
 
+        // Guards the handful of _pendingInstallPaths/ModifiedPlugins writes shared between InstallPlugin
+        // and ReloadPluginAsync's completion so the two can't interleave and clobber each other's state.
+        // Deliberately narrower than _reloadLocks: it is only ever held across plain dictionary writes,
+        // never across the unload/load/init work, so InstallPlugin (called synchronously from the UI
+        // thread) can never block on it for more than a few dictionary operations.
+        private static readonly Lock _pendingInstallStateLock = new();
+
         /// <summary>
         /// Fully reloads one plugin in place: disposes the instance, unloads its assembly (for dotnet
         /// plugins), and loads and initializes the plugin again from disk. If the plugin was just
@@ -169,20 +176,30 @@ namespace Flow.Launcher.Core.Plugin
                 var success = await LoadAndInitializePluginAsync(pluginDirectory);
                 if (success)
                 {
-                    // A concurrent install may have recorded a newer version while this reload was
-                    // loading the old directory; keep the modified flag in that case so the
-                    // restart-required flow (or a later reload of the pending version) still applies
-                    if (!_pendingInstallPaths.ContainsKey(id))
+                    // Guard against a concurrent InstallPlugin call publishing a newer pending path and
+                    // modified flag between the check and the clear below (both sides take the same
+                    // lock only for these few dictionary writes, never across the unload/load above, so
+                    // it can't block a caller for more than a few dictionary operations)
+                    lock (_pendingInstallStateLock)
                     {
-                        ClearPluginModified(id);
+                        // A concurrent install may have recorded a newer version while this reload was
+                        // loading the old directory; keep the modified flag in that case so the
+                        // restart-required flow (or a later reload of the pending version) still applies
+                        if (!_pendingInstallPaths.ContainsKey(id))
+                        {
+                            ClearPluginModified(id);
+                        }
                     }
                 }
                 else
                 {
-                    // The plugin is unloaded at this point, so keep its directory discoverable
-                    // in either case: a later reload attempt can then still pick it up
-                    _pendingInstallPaths.TryAdd(id, pluginDirectory);
-                    ModifiedPlugins.TryAdd(id, 0);
+                    lock (_pendingInstallStateLock)
+                    {
+                        // The plugin is unloaded at this point, so keep its directory discoverable
+                        // in either case: a later reload attempt can then still pick it up
+                        _pendingInstallPaths.TryAdd(id, pluginDirectory);
+                        ModifiedPlugins.TryAdd(id, 0);
+                    }
                 }
                 return success;
             }
@@ -1306,24 +1323,18 @@ namespace Flow.Launcher.Core.Plugin
                     PublicApi.Instance.LogException(ClassName, $"Failed to delete plugin marker file in {newPluginPath}", e);
                 }
 
-                _pendingInstallPaths[plugin.ID] = newPluginPath;
-
-                if (checkModified)
+                // Takes the same short-lived lock ReloadPluginAsync's completion uses around its own
+                // _pendingInstallPaths/ModifiedPlugins writes, so the two compound read-then-write
+                // sequences can't interleave. Never held across I/O or the unload/load/init work, so
+                // this can't block the UI thread (InstallPlugin is called synchronously from it) for
+                // more than a few dictionary operations.
+                lock (_pendingInstallStateLock)
                 {
-                    ModifiedPlugins.TryAdd(plugin.ID, 0);
+                    _pendingInstallPaths[plugin.ID] = newPluginPath;
 
-                    // A concurrent reload may have picked up newPluginPath between the write above and
-                    // here, already loaded it, and cleared the modified flag before we set it just now.
-                    // This runs lock-free (InstallPlugin is called synchronously from the UI thread, so
-                    // it must not block on the per-plugin reload lock, which can be held for the full
-                    // duration of a reload) and self-heals instead: if nothing is left pending for this
-                    // plugin and the currently loaded instance is already running from the path we just
-                    // installed, a reload got there first, so the modified flag we just set is stale.
-                    if (!_pendingInstallPaths.ContainsKey(plugin.ID) &&
-                        _allLoadedPlugins.TryGetValue(plugin.ID, out var loadedPair) &&
-                        loadedPair.Metadata.PluginDirectory == newPluginPath)
+                    if (checkModified)
                     {
-                        ClearPluginModified(plugin.ID);
+                        ModifiedPlugins.TryAdd(plugin.ID, 0);
                     }
                 }
 

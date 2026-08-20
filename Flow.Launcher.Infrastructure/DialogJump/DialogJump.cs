@@ -571,11 +571,18 @@ namespace Flow.Launcher.Infrastructure.DialogJump
                             // Keep the dialog registry as the source of truth for this instance so a
                             // plugin hot reload can find and dispose it instead of it living only in
                             // _dialogWindow, unreachable from the dictionary-based disposal in
-                            // RemoveDialogJumpPlugin. Compare-and-swap against the value read above so a
-                            // concurrent hot reload that already removed this dialog's entry (or replaced
-                            // it) makes the update fail instead of re-registering a window for a plugin
-                            // instance that is no longer loaded.
-                            if (!_dialogJumpDialogs.TryUpdate(dialog, dialogWindow, existingDialogWindow))
+                            // RemoveDialogJumpPlugin. DialogJumpDialogPair equality is by plugin ID only,
+                            // so a hot reload that swapped in a new pair for this ID makes TryUpdate's
+                            // value-CAS alone insufficient: it would still match the new pair's entry by
+                            // ID and could publish a window built from the now-stale dialog.Plugin above.
+                            // Require dialog to still be one of the live key *instances* (not just
+                            // ID-equal) before attempting the update.
+                            if (_dialogJumpDialogs.Keys.Any(k => ReferenceEquals(k, dialog)) &&
+                                _dialogJumpDialogs.TryUpdate(dialog, dialogWindow, existingDialogWindow))
+                            {
+                                // Published
+                            }
+                            else
                             {
                                 dialogWindow.Dispose();
                                 dialogWindow = null;
