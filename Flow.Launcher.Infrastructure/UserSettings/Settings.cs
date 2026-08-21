@@ -173,7 +173,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
         public double SoundVolume { get; set; } = 50;
-        public bool ShowBadges { get; set; } = false;
+        public bool ShowBadges { get; set; } = true;
         public bool ShowBadgesGlobalOnly { get; set; } = false;
 
         private string _settingWindowFont { get; set; } = Win32Helper.GetSystemDefaultFont(false);
@@ -423,6 +423,12 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         }
 
         public bool AlwaysPreview { get; set; } = false;
+
+        /// <summary>
+        /// Name of the syntax-highlighting theme used for code blocks in the markdown preview.
+        /// "Auto" follows the app colour scheme (light/dark); otherwise a <see cref="CodeHighlightThemes"/> name.
+        /// </summary>
+        public string CodeHighlightTheme { get; set; } = "Auto";
 
         public bool AlwaysStartEn { get; set; } = false;
 
@@ -695,6 +701,15 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         System,
         Light,
         Dark
+    }
+
+    public enum CodeHighlightThemes
+    {
+        Auto,
+        VSCodeLight,
+        VSCodeDarkPlus,
+        CatppuccinMacchiato,
+        OneDark
     }
 
     public enum SearchWindowScreens

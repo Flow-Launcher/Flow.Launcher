@@ -7,6 +7,7 @@ using Flow.Launcher.Plugin;
 using System.Text.Json;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.SharedCommands;
+using Version = SemanticVersioning.Version;
 
 namespace Flow.Launcher.Core.Plugin
 {
@@ -79,35 +80,99 @@ namespace Flow.Launcher.Core.Plugin
 
             var duplicateGroups = allPluginMetadata.GroupBy(x => x.ID).Where(g => g.Count() > 1).Select(y => y).ToList();
 
+            foreach (var group in duplicateGroups)
+            {
+                // Use a single consistent comparison strategy for the entire group
+                // to avoid cycles when mixing semantic and non-semantic versions.
+                var allSemantic = group.All(x => TryParseSemanticVersion(x.Version, out _));
+
+                // Use the same comparison strategy for both the sort and the tie check so
+                // that equal semantic precedence expressed with different text (e.g.
+                // "1.0" vs "1.0.0") is detected as a tie.
+                IOrderedEnumerable<PluginMetadata> sorted;
+                if (allSemantic)
+                {
+                    sorted = group.OrderByDescending(x =>
+                    {
+                        TryParseSemanticVersion(x.Version, out var v);
+                        return v;
+                    });
+                }
+                else
+                {
+                    sorted = group.OrderByDescending(x => x.Version, StringComparer.InvariantCulture);
+                }
+
+                var ordered = sorted.ToList();
+
+                // If the top two versions are tied, no single copy is uniquely highest,
+                // so treat all as duplicates (preserves original behavior).
+                bool isTie;
+                if (ordered.Count < 2)
+                {
+                    isTie = false;
+                }
+                else if (allSemantic)
+                {
+                    TryParseSemanticVersion(ordered[0].Version, out var v0);
+                    TryParseSemanticVersion(ordered[1].Version, out var v1);
+                    isTie = v0.Equals(v1);
+                }
+                else
+                {
+                    isTie = StringComparer.InvariantCulture.Equals(ordered[0].Version, ordered[1].Version);
+                }
+
+                if (!isTie)
+                {
+                    unique_list.Add(ordered[0]);
+                    duplicate_list.AddRange(ordered.Skip(1));
+                }
+                else
+                {
+                    duplicate_list.AddRange(ordered);
+                }
+            }
+
+            // Add plugins that have no duplicates
             foreach (var metadata in allPluginMetadata)
             {
-                var duplicatesExist = false;
-                foreach (var group in duplicateGroups)
+                if (!duplicateGroups.Any(g => g.Key == metadata.ID))
                 {
-                    if (metadata.ID == group.Key)
-                    {
-                        duplicatesExist = true;
-
-                        // If metadata's version greater than each duplicate's version, CompareTo > 0
-                        var count = group.Where(x => metadata.Version.CompareTo(x.Version) > 0).Count();
-                        
-                        // Only add if the meatadata's version is the highest of all duplicates in the group
-                        if (count == group.Count() - 1)
-                        {
-                            unique_list.Add(metadata);
-                        }
-                        else
-                        {
-                            duplicate_list.Add(metadata);
-                        }
-                    }
-                }
-                
-                if (!duplicatesExist)
                     unique_list.Add(metadata);
+                }
             }
 
             return (unique_list, duplicate_list);
+        }
+
+        private static bool TryParseSemanticVersion(string value, out Version version)
+        {
+            if (Version.TryParse(value, out version))
+            {
+                return true;
+            }
+
+            if (string.IsNullOrEmpty(value))
+            {
+                return false;
+            }
+
+            var suffixIndex = value.IndexOfAny(new[] { '-', '+' });
+            var coreLength = suffixIndex >= 0 ? suffixIndex : value.Length;
+            var componentCount = value[..coreLength].Split('.').Length;
+
+            if (componentCount is not (1 or 2))
+            {
+                return false;
+            }
+
+            var missingComponents = componentCount == 1 ? ".0.0" : ".0";
+            var normalized = suffixIndex >= 0
+                ? value.Insert(suffixIndex, missingComponents)
+                : value + missingComponents;
+
+            return Version.TryParse(normalized, out version);
         }
 
         internal static PluginMetadata GetPluginMetadata(string pluginDirectory)

@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - name: Setup .NET
-        uses: actions/setup-dotnet@v5
+        uses: actions/setup-dotnet@v6
         with:
           dotnet-version: 9.0.x
 
@@ -307,3 +307,4 @@ jobs:
           tag_name: "v${{steps.updated-version-windowssettings.outputs.prop}}"
           body: Visit Flow's [release notes](https://github.com/Flow-Launcher/Flow.Launcher/releases) for changes.
           token: ${{ secrets.PUBLISH_PLUGINS }}
+
