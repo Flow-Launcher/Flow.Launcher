@@ -273,6 +273,8 @@
     <system:String x:Key="pluginIDMismatchMessage">The ID in the package's plugin.json does not match the plugin being installed.</system:String>
     <system:String x:Key="UninstallSuccessHotReload">Plugin {0} successfully uninstalled.</system:String>
     <system:String x:Key="UpdateSuccessHotReload">Plugin {0} successfully updated and ready to use.</system:String>
+    <system:String x:Key="pluginHotReloadFailedTitle">Plugin Reload Failed</system:String>
+    <system:String x:Key="pluginHotReloadFailedMessage">Plugin {0} could not be hot reloaded. Please restart Flow to finish applying it.</system:String>
     <system:String x:Key="InstallPromptTitle">Plugin install</system:String>
     <system:String x:Key="InstallPromptSubtitle">{0} by {1} {2}{2}Would you like to install this plugin?</system:String>
     <system:String x:Key="UninstallPromptTitle">Plugin uninstall</system:String>

@@ -94,7 +94,8 @@ public static class PluginInstaller
             return; // do not restart on failure
         }
 
-        if (Settings.HotReloadAfterChanging && await PluginManager.ReloadPluginAsync(newPlugin.ID))
+        var hotReloaded = Settings.HotReloadAfterChanging && await PluginManager.ReloadPluginAsync(newPlugin.ID);
+        if (hotReloaded)
         {
             PublicApi.Instance.ShowMsg(
                 Localize.installbtn(),
@@ -104,12 +105,13 @@ public static class PluginInstaller
         {
             PublicApi.Instance.RestartApp();
         }
-        else
+        else if (!Settings.HotReloadAfterChanging)
         {
             PublicApi.Instance.ShowMsg(
                 Localize.installbtn(),
                 Localize.InstallSuccessNoRestart(newPlugin.Name));
         }
+        // Hot reload was attempted and failed: PluginManager.ReloadPluginAsync already notified the user
     }
 
     /// <summary>
@@ -262,7 +264,8 @@ public static class PluginInstaller
             return false; // do not restart on failure
         }
 
-        if (Settings.HotReloadAfterChanging && await PluginManager.ReloadPluginAsync(oldPlugin.ID))
+        var hotReloaded = Settings.HotReloadAfterChanging && await PluginManager.ReloadPluginAsync(oldPlugin.ID);
+        if (hotReloaded)
         {
             PublicApi.Instance.ShowMsg(
                 Localize.updatebtn(),
@@ -272,12 +275,13 @@ public static class PluginInstaller
         {
             PublicApi.Instance.RestartApp();
         }
-        else
+        else if (!Settings.HotReloadAfterChanging)
         {
             PublicApi.Instance.ShowMsg(
                 Localize.updatebtn(),
                 Localize.UpdateSuccessNoRestart(newPlugin.Name));
         }
+        // Hot reload was attempted and failed: PluginManager.ReloadPluginAsync already notified the user
 
         return true;
     }
@@ -382,6 +386,10 @@ public static class PluginInstaller
         bool restart)
     {
         var allPluginsHotReloaded = true;
+        // Set only for failures PluginManager.ReloadPluginAsync doesn't already notify the user about
+        // (download/update failures, or hot reload being off) so the aggregate message below doesn't
+        // duplicate the per-plugin notification a failed reload attempt already showed
+        var anyUnnotifiedFailure = false;
         var updateResults = await Task.WhenAll(resultsForUpdate.Select(async plugin =>
         {
             var downloadToFilePath = Path.Combine(Path.GetTempPath(), $"{plugin.Name}-{plugin.NewVersion}.zip");
@@ -398,18 +406,25 @@ public static class PluginInstaller
                 if (cts.IsCancellationRequested)
                 {
                     allPluginsHotReloaded = false;
+                    anyUnnotifiedFailure = true;
                     return null;
                 }
 
                 if (!await PublicApi.Instance.UpdatePluginAsync(plugin.PluginExistingMetadata, plugin.PluginNewUserPlugin, downloadToFilePath))
                 {
                     allPluginsHotReloaded = false;
+                    anyUnnotifiedFailure = true;
                     return null;
                 }
 
                 if (!Settings.HotReloadAfterChanging || !await PluginManager.ReloadPluginAsync(plugin.ID))
                 {
                     allPluginsHotReloaded = false;
+                    if (!Settings.HotReloadAfterChanging)
+                    {
+                        anyUnnotifiedFailure = true;
+                    }
+                    // else: reload was attempted and failed, and PluginManager already notified the user
                 }
 
                 return plugin;
@@ -417,6 +432,7 @@ public static class PluginInstaller
             catch (Exception e)
             {
                 allPluginsHotReloaded = false;
+                anyUnnotifiedFailure = true;
                 PublicApi.Instance.LogException(ClassName, "Failed to update plugin", e);
                 PublicApi.Instance.ShowMsgError(Localize.ErrorUpdatingPlugin());
                 return null;
@@ -439,7 +455,7 @@ public static class PluginInstaller
         {
             PublicApi.Instance.RestartApp();
         }
-        else
+        else if (anyUnnotifiedFailure)
         {
             PublicApi.Instance.ShowMsg(
                 Localize.updatebtn(),

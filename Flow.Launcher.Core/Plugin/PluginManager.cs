@@ -154,18 +154,21 @@ namespace Flow.Launcher.Core.Plugin
             try
             {
                 string pluginDirectory;
+                string pluginName = null;
                 if (_pendingInstallPaths.TryRemove(id, out var newDirectory) && Directory.Exists(newDirectory))
                 {
                     // Freshly installed or updated: unload the running version if any, load the new directory
                     pluginDirectory = newDirectory;
                     if (_allLoadedPlugins.TryGetValue(id, out var oldPair))
                     {
+                        pluginName = oldPair.Metadata.Name;
                         await UnloadPluginAsync(oldPair);
                     }
                 }
                 else if (_allLoadedPlugins.TryGetValue(id, out var pair))
                 {
                     pluginDirectory = pair.Metadata.PluginDirectory;
+                    pluginName = pair.Metadata.Name;
                     await UnloadPluginAsync(pair);
                 }
                 else
@@ -200,6 +203,14 @@ namespace Flow.Launcher.Core.Plugin
                         _pendingInstallPaths.TryAdd(id, pluginDirectory);
                         ModifiedPlugins.TryAdd(id, 0);
                     }
+
+                    // The plugin is unloaded and won't run again until a restart, so callers that don't
+                    // surface their own outcome-specific message (e.g. a plugin calling the public
+                    // ReloadPluginAsync/ReloadAllPluginsAsync API directly) still leave the user informed
+                    pluginName ??= PluginConfig.GetPluginMetadata(pluginDirectory)?.Name ?? id;
+                    PublicApi.Instance.ShowMsgError(
+                        Localize.pluginHotReloadFailedTitle(),
+                        Localize.pluginHotReloadFailedMessage(pluginName));
                 }
                 return success;
             }
