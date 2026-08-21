@@ -191,7 +191,8 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 return;
             }
 
-            if (Settings.HotReloadAfterChanging && await Context.API.ReloadPluginAsync(plugin.ID))
+            var hotReloaded = Settings.HotReloadAfterChanging && await Context.API.ReloadPluginAsync(plugin.ID);
+            if (hotReloaded)
             {
                 Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_installing_plugin"),
                     string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_success_hot_reload"),
@@ -204,12 +205,13 @@ namespace Flow.Launcher.Plugin.PluginsManager
                         plugin.Name));
                 Context.API.RestartApp();
             }
-            else
+            else if (!Settings.HotReloadAfterChanging)
             {
                 Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_installing_plugin"),
                     string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_success_no_restart"),
                         plugin.Name));
             }
+            // Hot reload was attempted and failed: PluginManager.ReloadPluginAsync already notified the user
         }
 
         private async Task DownloadFileAsync(string progressBoxTitle, string downloadUrl, string filePath, CancellationTokenSource cts, bool deleteFile = true, bool showProgress = true)
@@ -381,7 +383,8 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                             return;
                                         }
 
-                                        if (Settings.HotReloadAfterChanging && await Context.API.ReloadPluginAsync(x.ID))
+                                        var hotReloaded = Settings.HotReloadAfterChanging && await Context.API.ReloadPluginAsync(x.ID);
+                                        if (hotReloaded)
                                         {
                                             Context.API.ShowMsg(
                                                 Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
@@ -400,7 +403,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                                     x.Name));
                                             Context.API.RestartApp();
                                         }
-                                        else
+                                        else if (!Settings.HotReloadAfterChanging)
                                         {
                                             Context.API.ShowMsg(
                                                 Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
@@ -409,6 +412,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                                         "plugin_pluginsmanager_update_success_no_restart"),
                                                     x.Name));
                                         }
+                                        // Hot reload was attempted and failed: PluginManager.ReloadPluginAsync already notified the user
                                     }
                                 }
                                 catch (HttpRequestException e)
@@ -484,6 +488,10 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
                         var anyPluginSuccess = false;
                         var allPluginsHotReloaded = true;
+                        // Set only for failures ReloadPluginAsync doesn't already notify the user about
+                        // (download/update failures, or hot reload being off) so the aggregate message
+                        // below doesn't duplicate the per-plugin notification a failed reload already showed
+                        var anyUnnotifiedFailure = false;
                         await Task.WhenAll(resultsForUpdate.Select(async plugin =>
                         {
                             var downloadToFilePath = Path.Combine(Path.GetTempPath(),
@@ -501,12 +509,14 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                 if (cts.IsCancellationRequested)
                                 {
                                     allPluginsHotReloaded = false;
+                                    anyUnnotifiedFailure = true;
                                     return;
                                 }
                                 else if (!await Context.API.UpdatePluginAsync(plugin.PluginExistingMetadata, plugin.PluginNewUserPlugin,
                                     downloadToFilePath))
                                 {
                                     allPluginsHotReloaded = false;
+                                    anyUnnotifiedFailure = true;
                                     return;
                                 }
 
@@ -515,11 +525,17 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                 if (!Settings.HotReloadAfterChanging || !await Context.API.ReloadPluginAsync(plugin.ID))
                                 {
                                     allPluginsHotReloaded = false;
+                                    if (!Settings.HotReloadAfterChanging)
+                                    {
+                                        anyUnnotifiedFailure = true;
+                                    }
+                                    // else: reload was attempted and failed, and ReloadPluginAsync already notified the user
                                 }
                             }
                             catch (Exception ex)
                             {
                                 allPluginsHotReloaded = false;
+                                anyUnnotifiedFailure = true;
                                 Context.API.LogException(ClassName, $"Update failed for {plugin.Name}", ex.InnerException);
                                 Context.API.ShowMsgError(
                                     Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"),
@@ -546,7 +562,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                     resultsForUpdate.Count));
                             Context.API.RestartApp();
                         }
-                        else
+                        else if (anyUnnotifiedFailure)
                         {
                             Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
                                 string.Format(

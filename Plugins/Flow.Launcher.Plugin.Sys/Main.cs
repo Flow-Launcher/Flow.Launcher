@@ -465,12 +465,12 @@ namespace Flow.Launcher.Plugin.Sys
                                         Localize.flowlauncher_plugin_sys_dlgtitle_success(),
                                         Localize.flowlauncher_plugin_sys_dlgtext_all_plugins_reloaded());
                                 }
-                                else
+                                else if (t.Exception != null)
                                 {
-                                    if (t.Exception != null)
-                                    {
-                                        Context.API.LogException(ClassName, "Failed to reload all plugins", t.Exception);
-                                    }
+                                    // An unexpected exception escaped the per-plugin reload loop, so no
+                                    // individual plugin notification fired for it; ReloadPluginAsync's own
+                                    // per-plugin failure message already covers every plain reload failure
+                                    Context.API.LogException(ClassName, "Failed to reload all plugins", t.Exception);
                                     Context.API.ShowMsgError(
                                         Localize.flowlauncher_plugin_sys_reload_all_plugins_cmd(),
                                         Localize.flowlauncher_plugin_sys_dlgtext_all_plugins_reload_failed());
