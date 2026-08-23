@@ -631,6 +631,8 @@
                     VerticalAlignment="Center"
                     Foreground="{DynamicResource Color05B}"
                     Text="{DynamicResource plugin_explorer_everything_15_instance_name}"
+                    ToolTip="{DynamicResource plugin_explorer_everything_15_instance_name_tooltip}"
+                    ToolTipService.ShowOnDisabled="True"
                     Visibility="{Binding EnableEverything15Support, Converter={StaticResource BooleanToVisibilityConverter}}" />
                 <TextBox
                     Grid.Row="1"
@@ -639,6 +641,8 @@
                     Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
                     HorizontalAlignment="Left"
                     Text="{Binding Everything15InstanceName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, TargetNullValue=''}"
+                    ToolTip="{DynamicResource plugin_explorer_everything_15_instance_name_tooltip}"
+                    ToolTipService.ShowOnDisabled="True"
                     Visibility="{Binding EnableEverything15Support, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                 <TextBlock

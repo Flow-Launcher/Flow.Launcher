@@ -43,6 +43,14 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         const uint EVERYTHING3_ERROR_INVALID_PARAMETER = 0xE0000004;
         const uint EVERYTHING3_ERROR_PROPERTY_NOT_FOUND = 0xE0000007;
 
+        private static void LogIfEverything3CallFailed(string callName, bool succeeded)
+        {
+            if (!succeeded)
+            {
+                Main.Context?.API?.LogDebug(nameof(EverythingApiV3), $"{callName} failed");
+            }
+        }
+
         public async IAsyncEnumerable<SearchResult> SearchAsync(EverythingSearchOption option, [EnumeratorCancellation] CancellationToken token = default)
         {
             await foreach (var result in SearchCoreAsync(option, token))
@@ -175,12 +183,18 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                     yield break;
                 }
 
-                _ = Everything3ApiDllImport.Everything3_SetSearchRegex(searchState, option.UseRegex);
-                _ = Everything3ApiDllImport.Everything3_SetSearchMatchPath(searchState, option.IsFullPathSearch);
-                _ = Everything3ApiDllImport.Everything3_SetSearchTextW(searchState, query.SearchText);
-                _ = Everything3ApiDllImport.Everything3_SetSearchHideResultOmissions(searchState, true);
-                _ = Everything3ApiDllImport.Everything3_SetSearchViewportOffset(searchState, (nuint)option.Offset);
-                _ = Everything3ApiDllImport.Everything3_SetSearchViewportCount(searchState, (nuint)option.MaxCount);
+                LogIfEverything3CallFailed(nameof(Everything3ApiDllImport.Everything3_SetSearchRegex),
+                    Everything3ApiDllImport.Everything3_SetSearchRegex(searchState, option.UseRegex));
+                LogIfEverything3CallFailed(nameof(Everything3ApiDllImport.Everything3_SetSearchMatchPath),
+                    Everything3ApiDllImport.Everything3_SetSearchMatchPath(searchState, option.IsFullPathSearch));
+                LogIfEverything3CallFailed(nameof(Everything3ApiDllImport.Everything3_SetSearchTextW),
+                    Everything3ApiDllImport.Everything3_SetSearchTextW(searchState, query.SearchText));
+                LogIfEverything3CallFailed(nameof(Everything3ApiDllImport.Everything3_SetSearchHideResultOmissions),
+                    Everything3ApiDllImport.Everything3_SetSearchHideResultOmissions(searchState, true));
+                LogIfEverything3CallFailed(nameof(Everything3ApiDllImport.Everything3_SetSearchViewportOffset),
+                    Everything3ApiDllImport.Everything3_SetSearchViewportOffset(searchState, (nuint)option.Offset));
+                LogIfEverything3CallFailed(nameof(Everything3ApiDllImport.Everything3_SetSearchViewportCount),
+                    Everything3ApiDllImport.Everything3_SetSearchViewportCount(searchState, (nuint)option.MaxCount));
 
                 if (TryConvertSortOption(option.SortOption, out var sortPropertyId, out var ascending))
                 {
@@ -193,11 +207,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
                 _ = Everything3ApiDllImport.Everything3_ClearSearchPropertyRequests(searchState);
                 _ = Everything3ApiDllImport.Everything3_AddSearchPropertyRequestHighlighted(searchState, EVERYTHING3_PROPERTY_ID_NAME);
-                //_ = Everything3ApiDllImport.Everything3_AddSearchPropertyRequestHighlighted(searchState, EVERYTHING3_PROPERTY_ID_PATH);
                 _ = Everything3ApiDllImport.Everything3_AddSearchPropertyRequest(searchState, EVERYTHING3_PROPERTY_ID_PATH_AND_NAME);
                 if (includeRunCount)
                     _ = Everything3ApiDllImport.Everything3_AddSearchPropertyRequest(searchState, EVERYTHING3_PROPERTY_ID_RUN_COUNT);
-
                 if (token.IsCancellationRequested)
                     yield break;
 
