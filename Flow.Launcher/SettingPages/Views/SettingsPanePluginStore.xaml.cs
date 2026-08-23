@@ -29,6 +29,11 @@ public partial class SettingsPanePluginStore
         {
             InitializeComponent();
         }
+        var pendingFilter = _settingViewModel.ConsumePendingFilterText();
+        if (!string.IsNullOrWhiteSpace(pendingFilter))
+        {
+            _viewModel.FilterText = pendingFilter;
+        }
         UpdateCategoryGrouping();
         _viewModel.PropertyChanged += ViewModel_PropertyChanged;
         base.OnNavigatedTo(e);

@@ -35,6 +35,34 @@ public partial class SettingWindowViewModel : BaseModel
         }
     }
 
+    private Type _pendingPageType;
+    private string _pendingFilterText;
+
+    /// <summary>
+    /// Stores a one-shot navigation destination for the settings window, set before
+    /// the window is opened (deep links). Consumed once by the window and panes so a
+    /// later manual visit does not re-apply a stale destination or filter.
+    /// </summary>
+    public void SetPendingNavigation(Type pageType, string filterText = null)
+    {
+        _pendingPageType = pageType;
+        _pendingFilterText = filterText;
+    }
+
+    public Type ConsumePendingPageType()
+    {
+        var pageType = _pendingPageType;
+        _pendingPageType = null;
+        return pageType;
+    }
+
+    public string ConsumePendingFilterText()
+    {
+        var filterText = _pendingFilterText;
+        _pendingFilterText = null;
+        return filterText;
+    }
+
     public double SettingWindowWidth
     {
         get => _settings.SettingWindowWidth;
