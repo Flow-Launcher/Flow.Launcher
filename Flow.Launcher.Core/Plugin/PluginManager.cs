@@ -176,7 +176,18 @@ namespace Flow.Launcher.Core.Plugin
                     return false;
                 }
 
-                var success = await LoadAndInitializePluginAsync(pluginDirectory);
+                bool success;
+                try
+                {
+                    success = await LoadAndInitializePluginAsync(pluginDirectory);
+                }
+                catch (Exception e)
+                {
+                    // Must not escape: the plugin is already unloaded, so an uncaught exception here
+                    // would skip the failure bookkeeping below and detonate the install/update flow
+                    PublicApi.Instance.LogException(ClassName, $"Failed to reload plugin {id}", e);
+                    success = false;
+                }
                 if (success)
                 {
                     // Guard against a concurrent InstallPlugin call publishing a newer pending path and

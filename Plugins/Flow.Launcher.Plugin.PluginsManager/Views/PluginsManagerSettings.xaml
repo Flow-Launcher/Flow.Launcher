@@ -22,7 +22,8 @@
         <CheckBox
             Grid.Row="1"
             Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
-            Content="{DynamicResource plugin_pluginsmanager_plugin_settings_hot_reload}"
-            IsChecked="{Binding HotReloadAfterChanging}" />
+            IsChecked="{Binding HotReloadAfterChanging}">
+            <TextBlock Text="{DynamicResource plugin_pluginsmanager_plugin_settings_hot_reload}" TextWrapping="Wrap" />
+        </CheckBox>
     </Grid>
 </UserControl>
