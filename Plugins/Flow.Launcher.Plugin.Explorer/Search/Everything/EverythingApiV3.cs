@@ -275,6 +275,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             // if there is any error then set score to zero (this also covers PROPERTY_NOT_FOUND when run count is not requested)
             if (lastError != EVERYTHING3_OK)
             {
+                Main.Context?.API?.LogDebug(nameof(EverythingApiV3), $"{nameof(Everything3ApiDllImport.Everything3_GetResultRunCount)} failed with error 0x{lastError:X8}");
                 return 0;
             }
 
