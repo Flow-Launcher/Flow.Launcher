@@ -17,11 +17,5 @@
             get => Settings.WarnFromUnknownSource;
             set => Settings.WarnFromUnknownSource = value;
         }
-
-        public bool HotReloadAfterChanging
-        {
-            get => Settings.HotReloadAfterChanging;
-            set => Settings.HotReloadAfterChanging = value;
-        }
     }
 }

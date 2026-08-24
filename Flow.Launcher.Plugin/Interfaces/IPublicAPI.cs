@@ -604,6 +604,16 @@ namespace Flow.Launcher.Plugin
         public Task<bool> UninstallPluginAsync(PluginMetadata pluginMetadata, bool removePluginSettings = false);
 
         /// <summary>
+        /// Whether the user has enabled hot reload after installing, uninstalling or updating a plugin.
+        /// When false, plugin changes require an app restart to take effect and callers should tell the
+        /// user so instead of calling <see cref="ReloadPluginAsync"/>.
+        /// </summary>
+        /// <returns>
+        /// True if plugin changes should be applied by hot reloading, false if they require a restart.
+        /// </returns>
+        public bool IsHotReloadAfterChangingEnabled();
+
+        /// <summary>
         /// Fully reload one plugin in place, without restarting the app: dispose the running instance,
         /// unload its assembly (for .NET plugins), and load and initialize the plugin again from disk.
         /// If the plugin was just installed or updated, the newly installed version is loaded.

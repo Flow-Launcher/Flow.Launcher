@@ -181,14 +181,14 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 return;
             }
 
-            var hotReloaded = Settings.HotReloadAfterChanging && await Context.API.ReloadPluginAsync(plugin.ID);
+            var hotReloaded = Context.API.IsHotReloadAfterChangingEnabled() && await Context.API.ReloadPluginAsync(plugin.ID);
             if (hotReloaded)
             {
                 Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_installing_plugin"),
                     string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_success_hot_reload"),
                         plugin.Name));
             }
-            else if (!Settings.HotReloadAfterChanging)
+            else if (!Context.API.IsHotReloadAfterChangingEnabled())
             {
                 Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_installing_plugin"),
                     string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_success_no_restart"),
@@ -355,7 +355,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                             return;
                                         }
 
-                                        var hotReloaded = Settings.HotReloadAfterChanging && await Context.API.ReloadPluginAsync(x.ID);
+                                        var hotReloaded = Context.API.IsHotReloadAfterChangingEnabled() && await Context.API.ReloadPluginAsync(x.ID);
                                         if (hotReloaded)
                                         {
                                             Context.API.ShowMsg(
@@ -365,7 +365,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                                         "plugin_pluginsmanager_update_success_hot_reload"),
                                                     x.Name));
                                         }
-                                        else if (!Settings.HotReloadAfterChanging)
+                                        else if (!Context.API.IsHotReloadAfterChangingEnabled())
                                         {
                                             Context.API.ShowMsg(
                                                 Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
@@ -474,10 +474,10 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
                                 anyPluginSuccess = true;
 
-                                if (!Settings.HotReloadAfterChanging || !await Context.API.ReloadPluginAsync(plugin.ID))
+                                if (!Context.API.IsHotReloadAfterChangingEnabled() || !await Context.API.ReloadPluginAsync(plugin.ID))
                                 {
                                     allPluginsHotReloaded = false;
-                                    if (!Settings.HotReloadAfterChanging)
+                                    if (!Context.API.IsHotReloadAfterChangingEnabled())
                                     {
                                         anyUnnotifiedFailure = true;
                                     }
@@ -780,7 +780,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                 {
                                     return false;
                                 }
-                                if (Settings.HotReloadAfterChanging && !Context.API.PluginModified(x.Metadata.ID))
+                                if (!Context.API.PluginModified(x.Metadata.ID))
                                 {
                                     // The plugin was fully unloaded and removed, so no restart is needed
                                     Context.API.ShowMsg(
