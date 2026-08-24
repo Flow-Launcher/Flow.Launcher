@@ -282,11 +282,6 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                     ? PluginModifiedAction.AutoRestart
                     : PluginModifiedAction.Manual;
             }
-            else if (HotReloadAfterChanging == null && AutoRestartAfterChanging == true)
-            {
-                // Config predates the hot reload feature; keep the explicit auto restart preference
-                PluginModifiedAction = PluginModifiedAction.AutoRestart;
-            }
             AutoRestartAfterChanging = null;
             HotReloadAfterChanging = null;
         }
