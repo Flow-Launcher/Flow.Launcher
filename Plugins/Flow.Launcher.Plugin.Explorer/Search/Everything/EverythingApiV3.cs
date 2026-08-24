@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Runtime.CompilerServices;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using Flow.Launcher.Plugin.Explorer.Exceptions;
 using Flow.Launcher.Plugin.Explorer.Search.Everything.Exceptions;
@@ -16,10 +16,33 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         private static readonly StringBuilder _buffer = new(BufferSize);
 
         private readonly string _instanceName;
+        private readonly Func<string, IntPtr> _connectClient;
+        private readonly Func<IntPtr, bool> _shutdownClient;
+        private readonly Func<IntPtr, bool> _destroyClient;
+        private IntPtr _client;
 
         public EverythingApiV3(string instanceName)
+            : this(instanceName,
+                Everything3ApiDllImport.Everything3_ConnectW,
+                Everything3ApiDllImport.Everything3_ShutdownClient,
+                Everything3ApiDllImport.Everything3_DestroyClient)
+        {
+        }
+
+        internal EverythingApiV3(string instanceName,
+            Func<string, IntPtr> connectClient,
+            Func<IntPtr, bool> shutdownClient,
+            Func<IntPtr, bool> destroyClient)
         {
             _instanceName = instanceName;
+            _connectClient = connectClient;
+            _shutdownClient = shutdownClient;
+            _destroyClient = destroyClient;
+        }
+
+        ~EverythingApiV3()
+        {
+            DisconnectClient();
         }
 
         const uint EVERYTHING3_PROPERTY_ID_NAME = 0;
@@ -70,9 +93,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
             try
             {
-                if (!TryConnectEverything3(out var client))
+                if (!EnsureConnected(out var client))
                     throw new IPCErrorException();
-                _ = Everything3ApiDllImport.Everything3_DestroyClient(client);
+
+                _ = Everything3ApiDllImport.Everything3_GetMajorVersion(client);
+                CheckAndThrowExceptionOnErrorFromEverything3(disconnectOnIpcError: true);
             }
             finally
             {
@@ -99,7 +124,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 if (token.IsCancellationRequested)
                     yield break;
 
-                if (!TryConnectEverything3(out var client))
+                if (!EnsureConnected(out var client))
                     throw new IPCErrorException();
 
                 await foreach (var result in SearchWithEverything3Async(client, preparedOption, query, token))
@@ -121,16 +146,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             }
             try
             {
-                if (TryConnectEverything3(out var client))
+                if (EnsureConnected(out var client))
                 {
-                    try
-                    {
-                        Everything3ApiDllImport.Everything3_IncRunCountFromFilenameW(client, fileOrFolder);
-                    }
-                    finally
-                    {
-                        _ = Everything3ApiDllImport.Everything3_DestroyClient(client);
-                    }
+                    _ = Everything3ApiDllImport.Everything3_IncRunCountFromFilenameW(client, fileOrFolder);
+                    CheckAndThrowExceptionOnErrorFromEverything3(disconnectOnIpcError: true);
                 }
             }
             catch (Exception)
@@ -145,27 +164,28 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
         public bool IsFastSortOption(EverythingSortOption sortOption)
         {
-            if (!TryConnectEverything3(out var client))
-                throw new IPCErrorException();
-
+            _semaphore.Wait();
             try
             {
+                if (!EnsureConnected(out var client))
+                    throw new IPCErrorException();
+
                 if (TryConvertSortOption(sortOption, out var propertyId, out _))
                 {
                     var isFastSort = Everything3ApiDllImport.Everything3_IsPropertyFastSort(client, propertyId);
-                    CheckAndThrowExceptionOnErrorFromEverything3();
+                    CheckAndThrowExceptionOnErrorFromEverything3(disconnectOnIpcError: true);
                     return isFastSort;
                 }
             }
             finally
             {
-                _ = Everything3ApiDllImport.Everything3_DestroyClient(client);
+                _semaphore.Release();
             }
 
             return false;
         }
 
-        private static async IAsyncEnumerable<SearchResult> SearchWithEverything3Async(IntPtr client,
+        private async IAsyncEnumerable<SearchResult> SearchWithEverything3Async(IntPtr client,
             EverythingSearchOption option,
             EverythingHelper.PreparedQuery query,
             [EnumeratorCancellation] CancellationToken token)
@@ -179,7 +199,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 searchState = Everything3ApiDllImport.Everything3_CreateSearchState();
                 if (searchState == IntPtr.Zero)
                 {
-                    CheckAndThrowExceptionOnErrorFromEverything3();
+                    CheckAndThrowExceptionOnErrorFromEverything3(disconnectOnIpcError: true);
                     yield break;
                 }
 
@@ -200,7 +220,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 {
                     if (!Everything3ApiDllImport.Everything3_AddSearchSort(searchState, sortPropertyId, ascending))
                     {
-                        CheckAndThrowExceptionOnErrorFromEverything3();
+                        CheckAndThrowExceptionOnErrorFromEverything3(disconnectOnIpcError: true);
                         yield break;
                     }
                 }
@@ -216,7 +236,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 resultList = Everything3ApiDllImport.Everything3_Search(client, searchState);
                 if (resultList == IntPtr.Zero)
                 {
-                    CheckAndThrowExceptionOnErrorFromEverything3();
+                    CheckAndThrowExceptionOnErrorFromEverything3(disconnectOnIpcError: true);
                     yield break;
                 }
 
@@ -241,8 +261,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
                 if (searchState != IntPtr.Zero)
                     _ = Everything3ApiDllImport.Everything3_DestroySearchState(searchState);
-
-                _ = Everything3ApiDllImport.Everything3_DestroyClient(client);
             }
 
             await Task.CompletedTask;
@@ -272,7 +290,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             var fullPathLength = Everything3ApiDllImport.Everything3_GetResultFullPathNameW(resultList, resultIndex, _buffer, BufferSize);
             if (fullPathLength == 0)
             {
-                CheckAndThrowExceptionOnErrorFromEverything3();
+                CheckAndThrowExceptionOnErrorFromEverything3(disconnectOnIpcError: true);
                 fullPath = string.Empty;
                 return false;
             }
@@ -305,10 +323,45 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 : [];
         }
 
-        private bool TryConnectEverything3(out IntPtr client)
+        internal bool EnsureConnected() => EnsureConnected(out _);
+
+        internal bool HasConnectedClient => _client != IntPtr.Zero;
+
+        internal void DisconnectClient()
         {
-            client = Everything3ApiDllImport.Everything3_ConnectW(_instanceName);
-            return client != IntPtr.Zero;
+            var client = Interlocked.Exchange(ref _client, IntPtr.Zero);
+            if (client == IntPtr.Zero)
+                return;
+
+            try
+            {
+                _ = _shutdownClient(client);
+            }
+            catch (Exception)
+            {
+            }
+
+            try
+            {
+                _ = _destroyClient(client);
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        private bool EnsureConnected(out IntPtr client)
+        {
+            client = _client;
+            if (client != IntPtr.Zero)
+                return true;
+
+            client = _connectClient(_instanceName);
+            if (client == IntPtr.Zero)
+                return false;
+
+            _client = client;
+            return true;
         }
 
         /// <summary>
@@ -429,7 +482,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             }
         }
 
-        private static void CheckAndThrowExceptionOnErrorFromEverything3()
+        private void CheckAndThrowExceptionOnErrorFromEverything3(bool disconnectOnIpcError = false)
         {
             switch (Everything3ApiDllImport.Everything3_GetLastError())
             {
@@ -437,6 +490,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                     throw new MemoryErrorException();
                 case EVERYTHING3_ERROR_IPC_PIPE_NOT_FOUND:
                 case EVERYTHING3_ERROR_DISCONNECTED:
+                    if (disconnectOnIpcError)
+                        DisconnectClient();
                     throw new IPCErrorException();
                 case EVERYTHING3_ERROR_INVALID_PARAMETER:
                     throw new InvalidCallException();
