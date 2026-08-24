@@ -1,4 +1,4 @@
-<ResourceDictionary
+﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:system="clr-namespace:System;assembly=mscorlib">
@@ -183,10 +183,11 @@
     <system:String x:Key="homeToggleBoxToolTip">This can only be edited if plugin supports Home feature and Home Page is enabled.</system:String>
     <system:String x:Key="showAtTopmost">Show Search Window at Foremost</system:String>
     <system:String x:Key="showAtTopmostToolTip">Overrides other programs' 'Always on Top' setting and displays Flow in the foremost position.</system:String>
-    <system:String x:Key="autoRestartAfterChanging">Restart after modifying plugin via Plugin Store</system:String>
-    <system:String x:Key="autoRestartAfterChangingToolTip">Restart Flow Launcher automatically after installing/uninstalling/updating plugin via Plugin Store</system:String>
-    <system:String x:Key="hotReloadAfterChanging">Hot reload after modifying plugin via Plugin Store</system:String>
-    <system:String x:Key="hotReloadAfterChangingToolTip">Reload plugins in place after installing/uninstalling/updating them via Plugin Store, without restarting Flow Launcher. If a reload fails, a restart is still required.</system:String>
+    <system:String x:Key="pluginModifiedAction">Action after modifying plugins via Plugin Store</system:String>
+    <system:String x:Key="pluginModifiedActionToolTip">What to do after installing, uninstalling, or updating a plugin. Hot reload applies the change in place; if a reload fails, a restart is still required.</system:String>
+    <system:String x:Key="PluginModifiedActionHotReload">Hot reload the plugin</system:String>
+    <system:String x:Key="PluginModifiedActionAutoRestart">Restart Flow Launcher automatically</system:String>
+    <system:String x:Key="PluginModifiedActionManual">Do nothing (restart manually)</system:String>
     <system:String x:Key="showUnknownSourceWarning">Show unknown source warning</system:String>
     <system:String x:Key="showUnknownSourceWarningToolTip">Show warning when installing plugins from unknown sources</system:String>
     <system:String x:Key="autoUpdatePlugins">Auto update plugins</system:String>

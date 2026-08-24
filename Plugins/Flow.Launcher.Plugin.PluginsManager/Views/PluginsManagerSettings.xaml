@@ -19,15 +19,18 @@
             Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
             Content="{DynamicResource plugin_pluginsmanager_plugin_settings_unknown_source}"
             IsChecked="{Binding WarnFromUnknownSource}" />
-        <CheckBox
+        <StackPanel
             Grid.Row="1"
             Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
-            Content="{DynamicResource plugin_pluginsmanager_plugin_settings_auto_restart}"
-            IsChecked="{Binding AutoRestartAfterChanging}" />
-        <CheckBox
-            Grid.Row="2"
-            Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
-            Content="{DynamicResource plugin_pluginsmanager_plugin_settings_hot_reload}"
-            IsChecked="{Binding HotReloadAfterChanging}" />
+            Orientation="Horizontal">
+            <TextBlock VerticalAlignment="Center" Text="{DynamicResource plugin_pluginsmanager_plugin_settings_modified_action}" />
+            <ComboBox
+                Margin="10 0 0 0"
+                VerticalAlignment="Center"
+                DisplayMemberPath="Display"
+                ItemsSource="{Binding PluginModifiedActions}"
+                SelectedValue="{Binding PluginModifiedAction}"
+                SelectedValuePath="Value" />
+        </StackPanel>
     </Grid>
 </UserControl>

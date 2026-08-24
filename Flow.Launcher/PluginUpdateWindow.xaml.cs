@@ -18,7 +18,7 @@ namespace Flow.Launcher
 
         public PluginUpdateWindow(List<PluginUpdateInfo> allPlugins)
         {
-            Restart = _settings.AutoRestartAfterChanging;
+            Restart = _settings.PluginModifiedAction == Plugin.PluginModifiedAction.AutoRestart;
             InitializeComponent();
             foreach (var plugin in allPlugins)
             {

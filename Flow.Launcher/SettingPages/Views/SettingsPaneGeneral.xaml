@@ -1,4 +1,4 @@
-<ui:Page
+﻿<ui:Page
     x:Class="Flow.Launcher.SettingPages.Views.SettingsPaneGeneral"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -273,30 +273,18 @@
 
             <ui:SettingsCard
                 Margin="0 14 0 0"
-                Description="{DynamicResource autoRestartAfterChangingToolTip}"
-                Header="{DynamicResource autoRestartAfterChanging}">
-                <ui:SettingsCard.HeaderIcon>
-                    <ui:FontIcon Glyph="&#xF83E;" />
-                </ui:SettingsCard.HeaderIcon>
-
-                <ui:ToggleSwitch
-                    IsOn="{Binding Settings.AutoRestartAfterChanging}"
-                    OffContent="{DynamicResource disable}"
-                    OnContent="{DynamicResource enable}" />
-            </ui:SettingsCard>
-
-            <ui:SettingsCard
-                Margin="0 4 0 0"
-                Description="{DynamicResource hotReloadAfterChangingToolTip}"
-                Header="{DynamicResource hotReloadAfterChanging}">
+                Description="{DynamicResource pluginModifiedActionToolTip}"
+                Header="{DynamicResource pluginModifiedAction}">
                 <ui:SettingsCard.HeaderIcon>
                     <ui:FontIcon Glyph="&#xE72C;" />
                 </ui:SettingsCard.HeaderIcon>
 
-                <ui:ToggleSwitch
-                    IsOn="{Binding Settings.HotReloadAfterChanging}"
-                    OffContent="{DynamicResource disable}"
-                    OnContent="{DynamicResource enable}" />
+                <ComboBox
+                    MaxWidth="250"
+                    DisplayMemberPath="Display"
+                    ItemsSource="{Binding PluginModifiedActions}"
+                    SelectedValue="{Binding Settings.PluginModifiedAction}"
+                    SelectedValuePath="Value" />
             </ui:SettingsCard>
 
             <ui:SettingsCard
