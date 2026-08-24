@@ -259,11 +259,30 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             {
                 FullPath = fullPath,
                 Type = GetResultType(resultList, resultIndex),
-                Score = Convert.ToInt32(Everything3ApiDllImport.Everything3_GetResultRunCount(resultList, resultIndex)),
+                Score = GetResultScore(resultList, resultIndex),
                 HighlightData = GetHighlightData(resultList, resultIndex)
             };
 
             return true;
+        }
+
+        private static int GetResultScore(IntPtr resultList, nuint resultIndex)
+        {
+            var runCount = Everything3ApiDllImport.Everything3_GetResultRunCount(resultList, resultIndex);
+            var lastError = Everything3ApiDllImport.Everything3_GetLastError();
+            var propertyNotFound = runCount == uint.MaxValue && lastError == EVERYTHING3_ERROR_PROPERTY_NOT_FOUND;
+
+            if (propertyNotFound)
+            {
+                return 0;
+            }
+
+            if (runCount > int.MaxValue)
+            {
+                return int.MaxValue;
+            }
+
+            return (int)runCount;
         }
 
         private static bool TryGetResultFullPath(IntPtr resultList, nuint resultIndex, out string fullPath)
