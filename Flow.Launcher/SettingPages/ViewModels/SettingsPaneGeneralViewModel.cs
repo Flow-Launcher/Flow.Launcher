@@ -37,7 +37,6 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     public class SearchPrecisionData : DropdownDataGeneric<SearchPrecisionScore> { }
     public class LastQueryModeData : DropdownDataGeneric<LastQueryMode> { }
     public class DoublePinyinSchemaData : DropdownDataGeneric<DoublePinyinSchemas> { }
-    public class PluginModifiedActionData : DropdownDataGeneric<PluginModifiedAction> { }
 
     public bool StartFlowLauncherOnSystemStartup
     {
@@ -150,9 +149,6 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
 
     public List<HistoryStyleLocalized> HistoryStyles { get; } = HistoryStyleLocalized.GetValues();
 
-    public List<PluginModifiedActionData> PluginModifiedActions { get; } =
-        DropdownDataGeneric<PluginModifiedAction>.GetValues<PluginModifiedActionData>("PluginModifiedAction");
-
     public bool EnableDialogJump
     {
         get => Settings.EnableDialogJump;
@@ -234,7 +230,6 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         DropdownDataGeneric<SearchPrecisionScore>.UpdateLabels(SearchPrecisionScores);
         DropdownDataGeneric<LastQueryMode>.UpdateLabels(LastQueryModes);
         HistoryStyleLocalized.UpdateLabels(HistoryStyles);
-        DropdownDataGeneric<PluginModifiedAction>.UpdateLabels(PluginModifiedActions);
         DropdownDataGeneric<DoublePinyinSchemas>.UpdateLabels(DoublePinyinSchemas);
         DropdownDataGeneric<DialogJumpWindowPositions>.UpdateLabels(DialogJumpWindowPositions);
         DropdownDataGeneric<DialogJumpResultBehaviours>.UpdateLabels(DialogJumpResultBehaviours);

@@ -273,18 +273,16 @@
 
             <ui:SettingsCard
                 Margin="0 14 0 0"
-                Description="{DynamicResource pluginModifiedActionToolTip}"
-                Header="{DynamicResource pluginModifiedAction}">
+                Description="{DynamicResource hotReloadAfterChangingToolTip}"
+                Header="{DynamicResource hotReloadAfterChanging}">
                 <ui:SettingsCard.HeaderIcon>
                     <ui:FontIcon Glyph="&#xE72C;" />
                 </ui:SettingsCard.HeaderIcon>
 
-                <ComboBox
-                    MaxWidth="250"
-                    DisplayMemberPath="Display"
-                    ItemsSource="{Binding PluginModifiedActions}"
-                    SelectedValue="{Binding Settings.PluginModifiedAction}"
-                    SelectedValuePath="Value" />
+                <ui:ToggleSwitch
+                    IsOn="{Binding Settings.HotReloadAfterChanging}"
+                    OffContent="{DynamicResource disable}"
+                    OnContent="{DynamicResource enable}" />
             </ui:SettingsCard>
 
             <ui:SettingsCard

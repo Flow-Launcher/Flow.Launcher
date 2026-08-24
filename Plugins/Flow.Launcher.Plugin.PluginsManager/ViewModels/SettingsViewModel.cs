@@ -18,10 +18,10 @@
             set => Settings.WarnFromUnknownSource = value;
         }
 
-        public PluginModifiedAction PluginModifiedAction
+        public bool HotReloadAfterChanging
         {
-            get => Settings.PluginModifiedAction;
-            set => Settings.PluginModifiedAction = value;
+            get => Settings.HotReloadAfterChanging;
+            set => Settings.HotReloadAfterChanging = value;
         }
     }
 }

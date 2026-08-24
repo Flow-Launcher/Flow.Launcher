@@ -2,7 +2,6 @@
     x:Class="Flow.Launcher.Plugin.PluginsManager.Views.PluginsManagerSettings"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:plugin="clr-namespace:Flow.Launcher.Plugin;assembly=Flow.Launcher.Plugin"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="450"
@@ -20,25 +19,10 @@
             Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
             Content="{DynamicResource plugin_pluginsmanager_plugin_settings_unknown_source}"
             IsChecked="{Binding WarnFromUnknownSource}" />
-        <Grid Grid.Row="1" Margin="{StaticResource SettingPanelItemRightTopBottomMargin}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <TextBlock
-                VerticalAlignment="Center"
-                Text="{DynamicResource plugin_pluginsmanager_plugin_settings_modified_action}"
-                TextWrapping="Wrap" />
-            <ComboBox
-                Grid.Column="1"
-                Margin="10 0 0 0"
-                VerticalAlignment="Center"
-                SelectedValue="{Binding PluginModifiedAction}"
-                SelectedValuePath="Tag">
-                <ComboBoxItem Content="{DynamicResource plugin_pluginsmanager_plugin_settings_modified_action_hot_reload}" Tag="{x:Static plugin:PluginModifiedAction.HotReload}" />
-                <ComboBoxItem Content="{DynamicResource plugin_pluginsmanager_plugin_settings_modified_action_auto_restart}" Tag="{x:Static plugin:PluginModifiedAction.AutoRestart}" />
-                <ComboBoxItem Content="{DynamicResource plugin_pluginsmanager_plugin_settings_modified_action_manual}" Tag="{x:Static plugin:PluginModifiedAction.Manual}" />
-            </ComboBox>
-        </Grid>
+        <CheckBox
+            Grid.Row="1"
+            Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
+            Content="{DynamicResource plugin_pluginsmanager_plugin_settings_hot_reload}"
+            IsChecked="{Binding HotReloadAfterChanging}" />
     </Grid>
 </UserControl>

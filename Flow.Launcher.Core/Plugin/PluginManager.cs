@@ -59,7 +59,7 @@ namespace Flow.Launcher.Core.Plugin
         }
 
         private static bool HotReloadEnabled =>
-            Ioc.Default.GetRequiredService<Infrastructure.UserSettings.Settings>().PluginModifiedAction == PluginModifiedAction.HotReload;
+            Ioc.Default.GetRequiredService<Infrastructure.UserSettings.Settings>().HotReloadAfterChanging;
 
         #region Save & Dispose & Reload Plugin
 

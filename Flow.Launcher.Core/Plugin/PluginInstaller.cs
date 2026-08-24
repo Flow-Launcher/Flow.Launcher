@@ -94,18 +94,14 @@ public static class PluginInstaller
             return; // do not restart on failure
         }
 
-        var hotReloaded = Settings.PluginModifiedAction == PluginModifiedAction.HotReload && await PluginManager.ReloadPluginAsync(newPlugin.ID);
+        var hotReloaded = Settings.HotReloadAfterChanging && await PluginManager.ReloadPluginAsync(newPlugin.ID);
         if (hotReloaded)
         {
             PublicApi.Instance.ShowMsg(
                 Localize.installbtn(),
                 Localize.InstallSuccessHotReload(newPlugin.Name));
         }
-        else if (Settings.PluginModifiedAction == PluginModifiedAction.AutoRestart)
-        {
-            PublicApi.Instance.RestartApp();
-        }
-        else if (Settings.PluginModifiedAction == PluginModifiedAction.Manual)
+        else if (!Settings.HotReloadAfterChanging)
         {
             PublicApi.Instance.ShowMsg(
                 Localize.installbtn(),
@@ -197,16 +193,12 @@ public static class PluginInstaller
             return; // don not restart on failure
         }
 
-        if (Settings.PluginModifiedAction == PluginModifiedAction.HotReload && !PublicApi.Instance.PluginModified(oldPlugin.ID))
+        if (Settings.HotReloadAfterChanging && !PublicApi.Instance.PluginModified(oldPlugin.ID))
         {
             // The plugin was fully unloaded and its directory deleted, so no restart is needed
             PublicApi.Instance.ShowMsg(
                 Localize.uninstallbtn(),
                 Localize.UninstallSuccessHotReload(oldPlugin.Name));
-        }
-        else if (Settings.PluginModifiedAction == PluginModifiedAction.AutoRestart)
-        {
-            PublicApi.Instance.RestartApp();
         }
         else
         {
@@ -264,18 +256,14 @@ public static class PluginInstaller
             return false; // do not restart on failure
         }
 
-        var hotReloaded = Settings.PluginModifiedAction == PluginModifiedAction.HotReload && await PluginManager.ReloadPluginAsync(oldPlugin.ID);
+        var hotReloaded = Settings.HotReloadAfterChanging && await PluginManager.ReloadPluginAsync(oldPlugin.ID);
         if (hotReloaded)
         {
             PublicApi.Instance.ShowMsg(
                 Localize.updatebtn(),
                 Localize.UpdateSuccessHotReload(newPlugin.Name));
         }
-        else if (Settings.PluginModifiedAction == PluginModifiedAction.AutoRestart)
-        {
-            PublicApi.Instance.RestartApp();
-        }
-        else if (Settings.PluginModifiedAction == PluginModifiedAction.Manual)
+        else if (!Settings.HotReloadAfterChanging)
         {
             PublicApi.Instance.ShowMsg(
                 Localize.updatebtn(),
@@ -417,10 +405,10 @@ public static class PluginInstaller
                     return null;
                 }
 
-                if (Settings.PluginModifiedAction != PluginModifiedAction.HotReload || !await PluginManager.ReloadPluginAsync(plugin.ID))
+                if (!Settings.HotReloadAfterChanging || !await PluginManager.ReloadPluginAsync(plugin.ID))
                 {
                     allPluginsHotReloaded = false;
-                    if (Settings.PluginModifiedAction != PluginModifiedAction.HotReload)
+                    if (!Settings.HotReloadAfterChanging)
                     {
                         anyUnnotifiedFailure = true;
                     }

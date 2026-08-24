@@ -123,19 +123,9 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 return;
             }
 
-            string message;
-            if (Settings.PluginModifiedAction == PluginModifiedAction.AutoRestart)
-            {
-                message = string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_prompt"),
-                    plugin.Name, plugin.Author,
-                    Environment.NewLine, Environment.NewLine);
-            }
-            else
-            {
-                message = string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_prompt_no_restart"),
-                    plugin.Name, plugin.Author,
-                    Environment.NewLine);
-            }
+            var message = string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_prompt_no_restart"),
+                plugin.Name, plugin.Author,
+                Environment.NewLine);
 
             if (Context.API.ShowMsgBox(message, Context.API.GetTranslation("plugin_pluginsmanager_install_title"),
                     MessageBoxButton.YesNo) == MessageBoxResult.No)
@@ -191,21 +181,14 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 return;
             }
 
-            var hotReloaded = Settings.PluginModifiedAction == PluginModifiedAction.HotReload && await Context.API.ReloadPluginAsync(plugin.ID);
+            var hotReloaded = Settings.HotReloadAfterChanging && await Context.API.ReloadPluginAsync(plugin.ID);
             if (hotReloaded)
             {
                 Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_installing_plugin"),
                     string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_success_hot_reload"),
                         plugin.Name));
             }
-            else if (Settings.PluginModifiedAction == PluginModifiedAction.AutoRestart)
-            {
-                Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_installing_plugin"),
-                    string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_success_restart"),
-                        plugin.Name));
-                Context.API.RestartApp();
-            }
-            else if (Settings.PluginModifiedAction == PluginModifiedAction.Manual)
+            else if (!Settings.HotReloadAfterChanging)
             {
                 Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_installing_plugin"),
                     string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_success_no_restart"),
@@ -327,21 +310,10 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                 return false;
                             }
 
-                            string message;
-                            if (Settings.PluginModifiedAction == PluginModifiedAction.AutoRestart)
-                            {
-                                message = string.Format(
-                                    Context.API.GetTranslation("plugin_pluginsmanager_update_prompt"),
-                                    x.Name, x.Author,
-                                    Environment.NewLine, Environment.NewLine);
-                            }
-                            else
-                            {
-                                message = string.Format(
-                                    Context.API.GetTranslation("plugin_pluginsmanager_update_prompt_no_restart"),
-                                    x.Name, x.Author,
-                                    Environment.NewLine);
-                            }
+                            var message = string.Format(
+                                Context.API.GetTranslation("plugin_pluginsmanager_update_prompt_no_restart"),
+                                x.Name, x.Author,
+                                Environment.NewLine);
 
                             if (Context.API.ShowMsgBox(message,
                                     Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
@@ -383,7 +355,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                             return;
                                         }
 
-                                        var hotReloaded = Settings.PluginModifiedAction == PluginModifiedAction.HotReload && await Context.API.ReloadPluginAsync(x.ID);
+                                        var hotReloaded = Settings.HotReloadAfterChanging && await Context.API.ReloadPluginAsync(x.ID);
                                         if (hotReloaded)
                                         {
                                             Context.API.ShowMsg(
@@ -393,17 +365,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                                         "plugin_pluginsmanager_update_success_hot_reload"),
                                                     x.Name));
                                         }
-                                        else if (Settings.PluginModifiedAction == PluginModifiedAction.AutoRestart)
-                                        {
-                                            Context.API.ShowMsg(
-                                                Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
-                                                string.Format(
-                                                    Context.API.GetTranslation(
-                                                        "plugin_pluginsmanager_update_success_restart"),
-                                                    x.Name));
-                                            Context.API.RestartApp();
-                                        }
-                                        else if (Settings.PluginModifiedAction == PluginModifiedAction.Manual)
+                                        else if (!Settings.HotReloadAfterChanging)
                                         {
                                             Context.API.ShowMsg(
                                                 Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
@@ -465,19 +427,9 @@ namespace Flow.Launcher.Plugin.PluginsManager
                             return false;
                         }
 
-                        string message;
-                        if (Settings.PluginModifiedAction == PluginModifiedAction.AutoRestart)
-                        {
-                            message = string.Format(
-                                Context.API.GetTranslation("plugin_pluginsmanager_update_all_prompt"),
-                                resultsForUpdate.Count, Environment.NewLine);
-                        }
-                        else
-                        {
-                            message = string.Format(
-                                Context.API.GetTranslation("plugin_pluginsmanager_update_all_prompt_no_restart"),
-                                resultsForUpdate.Count);
-                        }
+                        var message = string.Format(
+                            Context.API.GetTranslation("plugin_pluginsmanager_update_all_prompt_no_restart"),
+                            resultsForUpdate.Count);
 
                         if (Context.API.ShowMsgBox(message,
                                 Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
@@ -522,10 +474,10 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
                                 anyPluginSuccess = true;
 
-                                if (Settings.PluginModifiedAction != PluginModifiedAction.HotReload || !await Context.API.ReloadPluginAsync(plugin.ID))
+                                if (!Settings.HotReloadAfterChanging || !await Context.API.ReloadPluginAsync(plugin.ID))
                                 {
                                     allPluginsHotReloaded = false;
-                                    if (Settings.PluginModifiedAction != PluginModifiedAction.HotReload)
+                                    if (!Settings.HotReloadAfterChanging)
                                     {
                                         anyUnnotifiedFailure = true;
                                     }
@@ -553,14 +505,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                 string.Format(
                                     Context.API.GetTranslation("plugin_pluginsmanager_update_all_success_hot_reload"),
                                     resultsForUpdate.Count));
-                        }
-                        else if (Settings.PluginModifiedAction == PluginModifiedAction.AutoRestart)
-                        {
-                            Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
-                                string.Format(
-                                    Context.API.GetTranslation("plugin_pluginsmanager_update_all_success_restart"),
-                                    resultsForUpdate.Count));
-                            Context.API.RestartApp();
                         }
                         else if (anyUnnotifiedFailure)
                         {
@@ -822,21 +766,10 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                 return false;
                             }
 
-                            string message;
-                            if (Settings.PluginModifiedAction == PluginModifiedAction.AutoRestart)
-                            {
-                                message = string.Format(
-                                    Context.API.GetTranslation("plugin_pluginsmanager_uninstall_prompt"),
-                                    x.Metadata.Name, x.Metadata.Author,
-                                    Environment.NewLine, Environment.NewLine);
-                            }
-                            else
-                            {
-                                message = string.Format(
-                                    Context.API.GetTranslation("plugin_pluginsmanager_uninstall_prompt_no_restart"),
-                                    x.Metadata.Name, x.Metadata.Author,
-                                    Environment.NewLine);
-                            }
+                            var message = string.Format(
+                                Context.API.GetTranslation("plugin_pluginsmanager_uninstall_prompt_no_restart"),
+                                x.Metadata.Name, x.Metadata.Author,
+                                Environment.NewLine);
 
                             if (Context.API.ShowMsgBox(message,
                                     Context.API.GetTranslation("plugin_pluginsmanager_uninstall_title"),
@@ -847,7 +780,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                 {
                                     return false;
                                 }
-                                if (Settings.PluginModifiedAction == PluginModifiedAction.HotReload && !Context.API.PluginModified(x.Metadata.ID))
+                                if (Settings.HotReloadAfterChanging && !Context.API.PluginModified(x.Metadata.ID))
                                 {
                                     // The plugin was fully unloaded and removed, so no restart is needed
                                     Context.API.ShowMsg(
@@ -856,10 +789,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                             Context.API.GetTranslation(
                                                 "plugin_pluginsmanager_uninstall_success_hot_reload"),
                                             x.Metadata.Name));
-                                }
-                                else if (Settings.PluginModifiedAction == PluginModifiedAction.AutoRestart)
-                                {
-                                    Context.API.RestartApp();
                                 }
                                 else
                                 {

@@ -15,7 +15,7 @@ using Flow.Launcher.Plugin.SharedModels;
 
 namespace Flow.Launcher.Infrastructure.UserSettings
 {
-    public class Settings : BaseModel, IHotkeySettings, IJsonOnDeserialized
+    public class Settings : BaseModel, IHotkeySettings
     {
         private FlowLauncherJsonStorage<Settings> _storage;
         private StringMatcher _stringMatcher = null;
@@ -264,27 +264,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         public int MaxHistoryResultsToShowForHomePage { get; set; } = 5;
 
-        [JsonConverter(typeof(JsonStringEnumConverter))]
-        public PluginModifiedAction PluginModifiedAction { get; set; } = PluginModifiedAction.HotReload;
-
-        // Legacy flags replaced by PluginModifiedAction; kept only so OnDeserialized can migrate old config files
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public bool? AutoRestartAfterChanging { get; set; }
-
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public bool? HotReloadAfterChanging { get; set; }
-
-        void IJsonOnDeserialized.OnDeserialized()
-        {
-            if (HotReloadAfterChanging == false)
-            {
-                PluginModifiedAction = AutoRestartAfterChanging == true
-                    ? PluginModifiedAction.AutoRestart
-                    : PluginModifiedAction.Manual;
-            }
-            AutoRestartAfterChanging = null;
-            HotReloadAfterChanging = null;
-        }
+        public bool HotReloadAfterChanging { get; set; } = true;
 
         public bool ShowUnknownSourceWarning { get; set; } = true;
         public bool AutoUpdatePlugins { get; set; } = true;

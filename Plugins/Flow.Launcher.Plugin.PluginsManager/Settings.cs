@@ -1,8 +1,6 @@
-﻿using System.Text.Json.Serialization;
-
-namespace Flow.Launcher.Plugin.PluginsManager
+﻿namespace Flow.Launcher.Plugin.PluginsManager
 {
-    internal class Settings : IJsonOnDeserialized
+    internal class Settings
     {
         internal const string InstallCommand = "install";
 
@@ -12,26 +10,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         public bool WarnFromUnknownSource { get; set; } = true;
 
-        [JsonConverter(typeof(JsonStringEnumConverter))]
-        public PluginModifiedAction PluginModifiedAction { get; set; } = PluginModifiedAction.HotReload;
-
-        // Legacy flags replaced by PluginModifiedAction; kept only so OnDeserialized can migrate old config files
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public bool? AutoRestartAfterChanging { get; set; }
-
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public bool? HotReloadAfterChanging { get; set; }
-
-        void IJsonOnDeserialized.OnDeserialized()
-        {
-            if (HotReloadAfterChanging == false)
-            {
-                PluginModifiedAction = AutoRestartAfterChanging == true
-                    ? PluginModifiedAction.AutoRestart
-                    : PluginModifiedAction.Manual;
-            }
-            AutoRestartAfterChanging = null;
-            HotReloadAfterChanging = null;
-        }
+        public bool HotReloadAfterChanging { get; set; } = true;
     }
 }
