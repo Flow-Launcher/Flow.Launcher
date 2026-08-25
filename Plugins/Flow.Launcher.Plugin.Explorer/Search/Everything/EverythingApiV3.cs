@@ -42,6 +42,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         const uint EVERYTHING3_ERROR_DISCONNECTED = 0xE0000003;
         const uint EVERYTHING3_ERROR_INVALID_PARAMETER = 0xE0000004;
         const uint EVERYTHING3_ERROR_PROPERTY_NOT_FOUND = 0xE0000007;
+        const uint EVERYTHING3_OK = 0;
 
         private static void LogIfEverything3CallFailed(string callName, bool succeeded)
         {
@@ -228,7 +229,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                         yield break;
                     }
 
-                    if (!TryCreateSearchResult(resultList, idx, out var result))
+                    if (!TryCreateSearchResult(resultList, idx, includeRunCount, out var result))
                         continue;
 
                     yield return result;
@@ -248,7 +249,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             await Task.CompletedTask;
         }
 
-        private static bool TryCreateSearchResult(IntPtr resultList, nuint resultIndex, out SearchResult result)
+        private static bool TryCreateSearchResult(IntPtr resultList, nuint resultIndex, bool includeRunCount, out SearchResult result)
         {
             result = default;
 
@@ -259,11 +260,32 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             {
                 FullPath = fullPath,
                 Type = GetResultType(resultList, resultIndex),
-                Score = Convert.ToInt32(Everything3ApiDllImport.Everything3_GetResultRunCount(resultList, resultIndex)),
+                Score = includeRunCount ? GetResultScore(resultList, resultIndex) : 0,
                 HighlightData = GetHighlightData(resultList, resultIndex)
             };
 
             return true;
+        }
+
+        private static int GetResultScore(IntPtr resultList, nuint resultIndex)
+        {
+            var runCount = Everything3ApiDllImport.Everything3_GetResultRunCount(resultList, resultIndex);
+            var lastError = Everything3ApiDllImport.Everything3_GetLastError();
+
+            // if there is any error then set score to zero (this also covers PROPERTY_NOT_FOUND when run count is not requested)
+            if (lastError != EVERYTHING3_OK)
+            {
+                Main.Context?.API?.LogDebug(nameof(EverythingApiV3), $"{nameof(Everything3ApiDllImport.Everything3_GetResultRunCount)} failed with error 0x{lastError:X8}");
+                return 0;
+            }
+
+            // if genuinely a value too large for int then clamp it
+            if (runCount > int.MaxValue)
+            {
+                return int.MaxValue;
+            }
+
+            return (int)runCount;
         }
 
         private static bool TryGetResultFullPath(IntPtr resultList, nuint resultIndex, out string fullPath)
