@@ -14,6 +14,7 @@ namespace Flow.Launcher.Test
         [TestCase("重启", "Chong Qi")]
         [TestCase("重启 Flow Launcher", "Chong Qi Flow Launcher")]
         [TestCase("重庆", "Chong Qing")]
+        [TestCase("核查", "He Cha")]
         public void Translate_ShouldUseExpectedPinyinForPolyphonicPhrases(string content, string expected)
         {
             var alphabet = new PinyinAlphabet(new Settings
