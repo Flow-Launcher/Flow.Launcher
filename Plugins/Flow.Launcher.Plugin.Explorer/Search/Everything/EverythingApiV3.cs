@@ -229,7 +229,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                         yield break;
                     }
 
-                    if (!TryCreateSearchResult(resultList, idx, out var result))
+                    if (!TryCreateSearchResult(resultList, idx, includeRunCount, out var result))
                         continue;
 
                     yield return result;
@@ -249,7 +249,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             await Task.CompletedTask;
         }
 
-        private static bool TryCreateSearchResult(IntPtr resultList, nuint resultIndex, out SearchResult result)
+        private static bool TryCreateSearchResult(IntPtr resultList, nuint resultIndex, bool includeRunCount, out SearchResult result)
         {
             result = default;
 
@@ -260,7 +260,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             {
                 FullPath = fullPath,
                 Type = GetResultType(resultList, resultIndex),
-                Score = GetResultScore(resultList, resultIndex),
+                Score = includeRunCount ? GetResultScore(resultList, resultIndex) : 0,
                 HighlightData = GetHighlightData(resultList, resultIndex)
             };
 
