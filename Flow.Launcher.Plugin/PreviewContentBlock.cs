@@ -8,6 +8,7 @@ namespace Flow.Launcher.Plugin
     /// </summary>
     [JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
     [JsonDerivedType(typeof(MarkdownPreviewBlock), "markdown")]
+    [JsonDerivedType(typeof(SeparatorPreviewBlock), "separator")]
     public abstract record PreviewContentBlock
     {
     }
@@ -21,5 +22,12 @@ namespace Flow.Launcher.Plugin
         /// The inline markdown source to render.
         /// </summary>
         public string InlineMarkdown { get; set; }
+    }
+
+    /// <summary>
+    /// A horizontal line shown in the preview panel.
+    /// </summary>
+    public sealed record SeparatorPreviewBlock : PreviewContentBlock
+    {
     }
 }

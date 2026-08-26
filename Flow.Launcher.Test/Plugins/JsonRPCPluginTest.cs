@@ -100,6 +100,40 @@ namespace Flow.Launcher.Test.Plugins
         }
 
         [Test]
+        public async Task GivenSeparatorContentBlock_WhenDeserializeJsonRpcResult_ThenContentBlockIsSeparator()
+        {
+            const string resultText =
+                """
+                {
+                  "result": [
+                    {
+                      "title": "Answer",
+                      "subTitle": "Answer with sections",
+                      "richPreview": {
+                        "contentBlocks": [
+                          {
+                            "type": "separator"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "debugMessage": null
+                }
+                """;
+
+            var results = await QueryAsync(new Query
+            {
+                Search = resultText
+            }, default);
+
+            var result = results.Single();
+
+            var block = result.RichPreview.ContentBlocks.Single();
+            ClassicAssert.IsInstanceOf<SeparatorPreviewBlock>(block);
+        }
+
+        [Test]
         public async Task GivenPreviewVisibilityNever_WhenDeserializeJsonRpcResult_ThenPreviewVisibilityIsNeverAsync()
         {
             const string resultText =

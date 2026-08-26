@@ -52,6 +52,13 @@
                 PreviewMouseWheel="ForwardPreviewBlockMouseWheel"
                 VerticalScrollBarVisibility="Disabled" />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type plugin:SeparatorPreviewBlock}">
+            <Rectangle
+                Height="1"
+                Margin="0 0 5 0"
+                HorizontalAlignment="Stretch"
+                Style="{DynamicResource SeparatorStyle}" />
+        </DataTemplate>
         <converters:QuerySuggestionBoxConverter x:Key="QuerySuggestionBoxConverter" />
         <converters:BorderClipConverter x:Key="BorderClipConverter" />
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
