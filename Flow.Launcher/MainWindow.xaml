@@ -59,6 +59,16 @@
                 HorizontalAlignment="Stretch"
                 Style="{DynamicResource SeparatorStyle}" />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type plugin:TextPreviewBlock}">
+            <TextBox
+                Margin="0"
+                IsReadOnly="True"
+                IsTabStop="False"
+                MouseWheel="ForwardPreviewBlockMouseWheel"
+                PreviewMouseWheel="ForwardPreviewBlockMouseWheel"
+                Style="{DynamicResource PreviewBlockTextStyle}"
+                Text="{Binding Text, Mode=OneWay}" />
+        </DataTemplate>
         <converters:QuerySuggestionBoxConverter x:Key="QuerySuggestionBoxConverter" />
         <converters:BorderClipConverter x:Key="BorderClipConverter" />
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />

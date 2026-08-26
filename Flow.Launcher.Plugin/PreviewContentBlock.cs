@@ -9,6 +9,7 @@ namespace Flow.Launcher.Plugin
     [JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
     [JsonDerivedType(typeof(MarkdownPreviewBlock), "markdown")]
     [JsonDerivedType(typeof(SeparatorPreviewBlock), "separator")]
+    [JsonDerivedType(typeof(TextPreviewBlock), "text")]
     public abstract record PreviewContentBlock
     {
     }
@@ -29,5 +30,16 @@ namespace Flow.Launcher.Plugin
     /// </summary>
     public sealed record SeparatorPreviewBlock : PreviewContentBlock
     {
+    }
+
+    /// <summary>
+    /// Preview content rendered as plain wrapped text.
+    /// </summary>
+    public sealed record TextPreviewBlock : PreviewContentBlock
+    {
+        /// <summary>
+        /// The plain text to display.
+        /// </summary>
+        public string Text { get; set; }
     }
 }

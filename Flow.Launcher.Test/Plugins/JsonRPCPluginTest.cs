@@ -134,6 +134,42 @@ namespace Flow.Launcher.Test.Plugins
         }
 
         [Test]
+        public async Task GivenTextContentBlock_WhenDeserializeJsonRpcResult_ThenContentBlockIsText()
+        {
+            const string resultText =
+                """
+                {
+                  "result": [
+                    {
+                      "title": "Answer",
+                      "subTitle": "Answer with sections",
+                      "richPreview": {
+                        "contentBlocks": [
+                          {
+                            "type": "text",
+                            "text": "A plain line of text."
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "debugMessage": null
+                }
+                """;
+
+            var results = await QueryAsync(new Query
+            {
+                Search = resultText
+            }, default);
+
+            var result = results.Single();
+
+            var block = result.RichPreview.ContentBlocks.Single();
+            ClassicAssert.IsInstanceOf<TextPreviewBlock>(block);
+            ClassicAssert.AreEqual("A plain line of text.", ((TextPreviewBlock)block).Text);
+        }
+
+        [Test]
         public async Task GivenPreviewVisibilityNever_WhenDeserializeJsonRpcResult_ThenPreviewVisibilityIsNeverAsync()
         {
             const string resultText =
