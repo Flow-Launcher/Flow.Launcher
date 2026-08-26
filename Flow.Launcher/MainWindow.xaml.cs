@@ -467,6 +467,19 @@ namespace Flow.Launcher
             }
         }
 
+        private void ForwardPreviewBlockMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            e.Handled = true; // Prevent the block's own scroll viewer from handling the event
+
+            var forwarded = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta)
+            {
+                RoutedEvent = UIElement.MouseWheelEvent,
+                Source = e.OriginalSource
+            };
+
+            PreviewBlockScroll.RaiseEvent(forwarded);
+        }
+
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
             // When a code-block in the markdown preview is focused
