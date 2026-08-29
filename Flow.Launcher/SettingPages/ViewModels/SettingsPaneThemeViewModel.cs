@@ -530,6 +530,8 @@ public partial class SettingsPaneThemeViewModel : BaseModel
 
         WindowHeightSize = 42;
         ItemHeightSize = 58;
+        Settings.WindowSize = Settings.DefaultWindowSize;
+        Settings.MaxResultsToShow = Settings.DefaultMaxResultsToShow;
     }
     
     [RelayCommand]

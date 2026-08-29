@@ -91,7 +91,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
 
-        public double WindowSize { get; set; } = 580;
+        public const double DefaultWindowSize = 580;
+        public double WindowSize { get; set; } = DefaultWindowSize;
         public string PreviewHotkey { get; set; } = $"F1";
         public string AutoCompleteHotkey { get; set; } = $"{KeyConstant.Ctrl} + Tab";
         public string AutoCompleteHotkey2 { get; set; } = $"";
@@ -500,7 +501,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
 
-        public int MaxResultsToShow { get; set; } = 5;
+        public const int DefaultMaxResultsToShow = 5;
+        public int MaxResultsToShow { get; set; } = DefaultMaxResultsToShow;
 
         public int ActivateTimes { get; set; }
 
