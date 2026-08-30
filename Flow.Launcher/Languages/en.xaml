@@ -138,6 +138,8 @@
     <system:String x:Key="ShouldUseDoublePinyin">Use Double Pinyin</system:String>
     <system:String x:Key="ShouldUseDoublePinyinToolTip">Use Double Pinyin instead of Full Pinyin to search.</system:String>
     <system:String x:Key="DoublePinyinSchema">Double Pinyin Schema</system:String>
+    <system:String x:Key="UsePolyphonicPhraseOverrides">Use polyphonic phrase pronunciations</system:String>
+    <system:String x:Key="UsePolyphonicPhraseOverridesToolTip">Use phrase-level pronunciation data to improve Pinyin conversion for polyphonic Chinese characters. This may use additional memory.</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoHe">Xiao He</system:String>
     <system:String x:Key="DoublePinyinSchemasZiRanMa">Zi Ran Ma</system:String>
     <system:String x:Key="DoublePinyinSchemasWeiRuan">Wei Ruan</system:String>
