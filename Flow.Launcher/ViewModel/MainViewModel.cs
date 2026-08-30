@@ -166,19 +166,19 @@ namespace Flow.Launcher.ViewModel
             ContextMenu = new ResultsViewModel(Settings, this)
             {
                 LeftClickResultCommand = OpenResultCommand,
-                RightClickResultCommand = LoadContextMenuCommand,
+                RightClickResultCommand = ToggleContextMenuCommand,
                 IsPreviewOn = Settings.AlwaysPreview
             };
             Results = new ResultsViewModel(Settings, this)
             {
                 LeftClickResultCommand = OpenResultCommand,
-                RightClickResultCommand = LoadContextMenuCommand,
+                RightClickResultCommand = ToggleContextMenuCommand,
                 IsPreviewOn = Settings.AlwaysPreview
             };
             History = new ResultsViewModel(Settings, this)
             {
                 LeftClickResultCommand = OpenResultCommand,
-                RightClickResultCommand = LoadContextMenuCommand,
+                RightClickResultCommand = ToggleContextMenuCommand,
                 IsPreviewOn = Settings.AlwaysPreview
             };
             _selectedResults = Results;
@@ -401,7 +401,19 @@ namespace Flow.Launcher.ViewModel
         }
 
         [RelayCommand]
-        private async Task LoadContextMenuAsync()
+        private async Task ToggleContextMenuAsync()
+        {
+            if (ContextMenuSelected())
+            {
+                await ReturnFromContextMenuAsync();
+            }
+            else
+            {
+                EnterContextMenu();
+            }
+        }
+
+        private void EnterContextMenu()
         {
             // For Dialog Jump and right click mode, we need to navigate to the path
             if (_isDialogJump && Settings.DialogJumpResultBehaviour == DialogJumpResultBehaviours.RightClick)
@@ -415,13 +427,6 @@ namespace Flow.Launcher.ViewModel
                         _ = Task.Run(() => DialogJump.JumpToPathAsync(DialogWindowHandle, dialogJumpResult.DialogJumpPath));
                     }
                 }
-                return;
-            }
-
-            // If the context menu is already open, we need to return to the previous results view
-            if (ContextMenuSelected())
-            {
-                await ReturnFromContextMenuAsync();
                 return;
             }
 

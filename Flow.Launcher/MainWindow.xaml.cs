@@ -503,7 +503,7 @@ namespace Flow.Launcher
                     if ((_viewModel.QueryResultsSelected() || _viewModel.HistorySelected())
                         && QueryTextBox.CaretIndex == QueryTextBox.Text.Length)
                     {
-                        _viewModel.LoadContextMenuCommand.Execute(null);
+                        _viewModel.ToggleContextMenuCommand.Execute(null);
                         e.Handled = true;
                     }
                     break;
