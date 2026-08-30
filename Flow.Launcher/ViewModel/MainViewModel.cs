@@ -41,12 +41,9 @@ namespace Flow.Launcher.ViewModel
         private readonly ConcurrentDictionary<Guid, Query> _progressQueryDict = new(); // Used for QueryResultAsync
         private Query _updateQuery; // Used for ResultsUpdated
         private string _queryTextBeforeLeaveResults;
-        private string _queryTextBeforeContextMenu;
         private string _ignoredQueryText; // Used to ignore query text change when switching between context menu and query results
 
-        private ResultsViewModel _contextMenuSource;
-        private Result _contextMenuTarget;
-        private int _contextMenuTargetIndex = -1;
+        private ResultsQuerySelection _selectionBeforeContextMenu;
 
         private readonly FlowLauncherJsonStorage<History> _historyItemsStorage;
         private readonly History _history;
@@ -71,6 +68,12 @@ namespace Flow.Launcher.ViewModel
         };
 
         private bool _taskbarShownByFlow = false;
+
+        private sealed record ResultsQuerySelection(
+            ResultsViewModel Source,
+            string QueryText,
+            Result SelectedResult,
+            int SelectedIndex);
 
         #endregion
 
@@ -439,10 +442,11 @@ namespace Flow.Launcher.ViewModel
                 && selected.ContextData is LastOpenedHistoryResult;
             if (!isHistoryResult && (!QueryResultsSelected() || string.IsNullOrEmpty(selected.PluginID))) return;
 
-            _contextMenuSource = SelectedResults;
-            _contextMenuTarget = selected;
-            _contextMenuTargetIndex = SelectedResults.SelectedIndex;
-            _queryTextBeforeContextMenu = QueryText;
+            _selectionBeforeContextMenu = new ResultsQuerySelection(
+                SelectedResults,
+                QueryText,
+                selected,
+                SelectedResults.SelectedIndex);
 
             // Load context menu
             SelectedResults = ContextMenu;
@@ -450,25 +454,25 @@ namespace Flow.Launcher.ViewModel
 
         private async Task ReturnFromContextMenuAsync()
         {
-            var source = _contextMenuSource ?? Results;
-            var queryText = _queryTextBeforeContextMenu;
+            var previousSelection = _selectionBeforeContextMenu;
+            var source = previousSelection?.Source ?? Results;
 
             // Return to the previous results view and restore the query text
             SelectedResults = source;
             if (source == History)
             {
-                await ChangeQueryTextAsync(queryText);
+                await ChangeQueryTextAsync(previousSelection?.QueryText);
 
                 // Returning to History rebuilds its results and selects the first row. Locate the rebuilt
                 // context-menu target, falling back to its previous index if the history context menu changed meanwhile.
-                var restoredIndex = _contextMenuTarget == null
+                var restoredIndex = previousSelection?.SelectedResult == null
                     ? -1
                     : source.Results.FindIndex(result =>
-                        result.Result != null && 
-                        ResultEqual(result.Result, _contextMenuTarget));
-                if (restoredIndex < 0 && _contextMenuTargetIndex >= 0 && source.Results.Count > 0)
+                        result.Result != null &&
+                        ResultEqual(result.Result, previousSelection.SelectedResult));
+                if (restoredIndex < 0 && previousSelection?.SelectedIndex >= 0 && source.Results.Count > 0)
                 {
-                    restoredIndex = Math.Min(_contextMenuTargetIndex, source.Results.Count - 1);
+                    restoredIndex = Math.Min(previousSelection.SelectedIndex, source.Results.Count - 1);
                 }
                 if (restoredIndex >= 0)
                 {
@@ -481,10 +485,7 @@ namespace Flow.Launcher.ViewModel
             PreviewSelectedItem = source.SelectedItem;
             await UpdatePreviewAsync();
 
-            _contextMenuSource = null;
-            _contextMenuTarget = null;
-            _contextMenuTargetIndex = -1;
-            _queryTextBeforeContextMenu = string.Empty;
+            _selectionBeforeContextMenu = null;
         }
 
         private static bool ResultEqual(Result result1, Result result2)
@@ -1384,7 +1385,7 @@ namespace Flow.Launcher.ViewModel
             var query = QueryText.ToLower().Trim();
             ContextMenu.Clear();
 
-            var selected = _contextMenuTarget;
+            var selected = _selectionBeforeContextMenu?.SelectedResult;
 
             if (selected is LastOpenedHistoryResult
                 && selected.ContextData is LastOpenedHistoryResult historyItem)
@@ -1973,7 +1974,7 @@ namespace Flow.Launcher.ViewModel
                 PluginDirectory = Constant.ProgramDirectory,
                 AsyncAction = async context =>
                 {
-                    var source = _contextMenuSource;
+                    var source = _selectionBeforeContextMenu?.Source;
                     var removeAllMatchingResults = Settings.HistoryStyle == HistoryStyle.LastOpened;
                     if (_history.Remove(historyItem, removeAllMatchingResults) > 0)
                     {
