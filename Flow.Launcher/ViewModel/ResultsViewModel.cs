@@ -21,6 +21,8 @@ namespace Flow.Launcher.ViewModel
 
         public ResultCollection Results { get; }
 
+        public bool IsEmpty => Results.Count == 0;
+
         private readonly object _collectionLock = new();
         private readonly Settings _settings;
         private readonly MainViewModel _mainVM;
@@ -41,6 +43,8 @@ namespace Flow.Launcher.ViewModel
                 switch (e.PropertyName)
                 {
                     case nameof(_settings.MaxResultsToShow):
+                    case nameof(_settings.EnablePinnedResults):
+                    case nameof(_settings.PinnedResultsLayout):
                         OnPropertyChanged(nameof(MaxHeight));
                         break;
                     case nameof(_settings.ItemHeightSize):
@@ -49,6 +53,27 @@ namespace Flow.Launcher.ViewModel
                         break;
                 }
             };
+            if (_mainVM != null)
+            {
+                _mainVM.PropertyChanged += (s, e) =>
+                {
+                    switch (e.PropertyName)
+                    {
+                        case nameof(_mainVM.QueryText):
+                        // Here we use PinnedGridHeightForEmptyQuery instead of PinnedGridReservedResultCount is because
+                        // in PinnedGridReservedResultCount getter it will check if it really changes and trigger
+                        // the PropertyChanged of PinnedGridHeightForEmptyQuery
+                        case nameof(_mainVM.PinnedGridHeightForEmptyQuery):
+                            OnPropertyChanged(nameof(MaxHeight));
+                            OnPropertyChanged(nameof(EnableListCurrentItemSync));
+                            break;
+                        case nameof(_mainVM.IsGridMode):
+                            OnPropertyChanged(nameof(EnableListCurrentItemSync));
+                            OnPropertyChanged(nameof(ResetScrollToTopWhenSelectionCleared));
+                            break;
+                    }
+                };
+            }
         }
 
         #endregion
@@ -61,6 +86,14 @@ namespace Flow.Launcher.ViewModel
         {
             get
             {
+                if (_mainVM != null &&
+                    _mainVM.ResultsSelected(this) &&  // Results are selected
+                    _mainVM.QueryResultsSelected() &&  // Is query results
+                    _mainVM.PinnedGridReservedResultCount > 0)
+                {
+                    return Math.Max(0, MaxResults - Math.Floor(_mainVM.PinnedGridReservedResultCount)) * _settings.ItemHeightSize;
+                }
+
                 var newResultsCount = MaxResults;
                 if (IsPreviewOn)
                 {
@@ -83,11 +116,45 @@ namespace Flow.Launcher.ViewModel
         public int SelectedIndex { get; set; }
 
         public ResultViewModel SelectedItem { get; set; }
+        
+        /// <summary>
+        /// Controls whether the results list synchronizes selection with the WPF collection view current item.
+        /// Enabled in these cases:
+        /// - <c>_mainVM == null</c>: this instance was created without <see cref="MainViewModel"/>, so home pinned-grid mode is unavailable; keep default sync.
+        /// - <c>!_mainVM.ResultsSelected(this)</c>: this is not the active main results list, so no special sync override is needed.
+        /// - <c>!_mainVM.IsHomePinnedGridActive</c>: the app is not in the home pinned-grid mode scenario, so normal list sync is desired.
+        /// Disabled only when this is the active main results list and home pinned-grid mode is active.
+        /// In that one scenario, WPF current-item sync can re-highlight a stale list item after query clear,
+        /// causing both grid and list to appear highlighted; disabling sync prevents that.
+        /// </summary>
+        public bool EnableListCurrentItemSync
+        {
+            get
+            {
+                return _mainVM == null
+                    || !_mainVM.ResultsSelected(this)
+                    || !_mainVM.IsHomePinnedGridActive;
+            }
+        }
+
+        // When pinned grid mode is active, the highlight selection resets to the first item in the pinned grid,
+        // but the list selection remains on the previously selected item. This ensures that the list scrolls back to the top.
+        public bool ResetScrollToTopWhenSelectionCleared
+        {
+            get
+            {
+                return _mainVM != null
+                    && _mainVM.ResultsSelected(this)
+                    && _mainVM.IsHomePinnedGridActive;
+            }
+        }
+
         public Thickness Margin { get; set; }
         public Visibility Visibility { get; set; } = Visibility.Collapsed;
 
         public ICommand RightClickResultCommand { get; init; }
         public ICommand LeftClickResultCommand { get; init; }
+        public ICommand MouseSelectCommand { get; init; }
 
         #endregion
 
@@ -132,6 +199,26 @@ namespace Flow.Launcher.ViewModel
         }
 
         public void SelectPrevResult()
+        {
+            SelectedIndex = NewIndex(SelectedIndex - 1);
+        }
+
+        public void SelectNextRow(int columns)
+        {
+            SelectedIndex = NewIndex(SelectedIndex + columns);
+        }
+
+        public void SelectPrevRow(int columns)
+        {
+            SelectedIndex = NewIndex(SelectedIndex - columns);
+        }
+
+        public void SelectNextColumn()
+        {
+            SelectedIndex = NewIndex(SelectedIndex + 1);
+        }
+
+        public void SelectPrevColumn()
         {
             SelectedIndex = NewIndex(SelectedIndex - 1);
         }
@@ -197,13 +284,19 @@ namespace Flow.Launcher.ViewModel
 
         private void UpdateResults(List<ResultViewModel> newResults, bool reselect = true, CancellationToken token = default)
         {
+            var skipListReselectInHomeGrid = _mainVM != null
+                                            && ReferenceEquals(this, _mainVM.Results)
+                                            && _mainVM.ResultsSelected(this)
+                                            && _mainVM.IsHomePinnedGridActive;
+
             lock (_collectionLock)
             {
                 // update UI in one run, so it can avoid UI flickering
                 Results.Update(newResults, token);
-                if (reselect && Results.Any())
+                if (!skipListReselectInHomeGrid && reselect && Results.Any())
                     SelectedItem = Results[0];
             }
+            OnPropertyChanged(nameof(IsEmpty));
 
             if (token.IsCancellationRequested)
                 return;
@@ -214,7 +307,8 @@ namespace Flow.Launcher.ViewModel
                     if (_mainVM == null || // The results are for preview only in appearance page
                         _mainVM.ResultsSelected(this)) // The results are selected
                     {
-                        SelectedIndex = 0;
+                        if (!skipListReselectInHomeGrid)
+                            SelectedIndex = 0;
                         Visibility = Visibility.Visible;
                     }
                     break;

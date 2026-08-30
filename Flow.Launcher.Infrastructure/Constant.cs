@@ -34,6 +34,8 @@ namespace Flow.Launcher.Infrastructure
         public static readonly string LoadingImgIcon = Path.Combine(ImagesDirectory, "loading.png");
         public static readonly string HistoryIcon = Path.Combine(ImagesDirectory, "history.png");
         public static readonly string SettingsIcon = Path.Combine(ImagesDirectory, "settings.png");
+        public static readonly string ResultsIcon = Path.Combine(ImagesDirectory, "results.png");
+        public static readonly string SearchIcon = Path.Combine(ImagesDirectory, "search.png");
         public static readonly string FolderIcon = Path.Combine(ImagesDirectory, "folder.png");
 
         public static string PythonPath;
