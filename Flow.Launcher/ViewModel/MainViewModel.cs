@@ -1996,6 +1996,9 @@ namespace Flow.Launcher.ViewModel
             };
         }
 
+        /// <summary>
+        /// Creates a result to label the history context menu, based on the HistoryStyle
+        /// </summary>
         private Result ContextMenuHistoryInfo(LastOpenedHistoryResult historyItem)
         {
             return new Result
