@@ -1067,6 +1067,11 @@ namespace Flow.Launcher.ViewModel
             get => _previewSelectedItem;
             set
             {
+                if (!ReferenceEquals(_previewSelectedItem, value))
+                {
+                    _previewSelectedItem?.CancelPreviewContentLoad();
+                }
+
                 _previewSelectedItem = value;
                 OnPropertyChanged();
             }
@@ -1173,6 +1178,7 @@ namespace Flow.Launcher.ViewModel
         {
             ResultAreaColumn = ResultAreaColumnPreviewShown;
             PreviewSelectedItem?.LoadPreviewImage();
+            PreviewSelectedItem?.LoadPreviewContent();
         }
 
         private void HideInternalPreview()
