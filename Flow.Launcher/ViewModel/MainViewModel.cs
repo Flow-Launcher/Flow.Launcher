@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -1270,6 +1270,14 @@ namespace Flow.Launcher.ViewModel
             switch (args.PropertyName)
             {
                 case nameof(Results.SelectedItem):
+                    // In home pinned-grid mode, the grid owns preview selection.
+                    // The list can still emit a stale deselection/reselection during query-clear refresh,
+                    // which would otherwise overwrite the pinned preview target.
+                    if (IsHomePinnedGridActive && IsGridMode)
+                    {
+                        break;
+                    }
+
                     _selectedItemFromQueryResults = true;
                     PreviewSelectedItem = Results.SelectedItem;
                     try
