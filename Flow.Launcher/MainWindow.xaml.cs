@@ -21,6 +21,7 @@ using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.DialogJump;
 using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Helper;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Plugin.SharedModels;
@@ -469,15 +470,8 @@ namespace Flow.Launcher
 
         private void ForwardPreviewBlockMouseWheel(object sender, MouseWheelEventArgs e)
         {
-            e.Handled = true; // Prevent the block's own scroll viewer from handling the event
-
-            var forwarded = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta)
-            {
-                RoutedEvent = UIElement.MouseWheelEvent,
-                Source = e.OriginalSource
-            };
-
-            PreviewBlockScroll.RaiseEvent(forwarded);
+            // Preview blocks can contain their own scroll viewers, so the main preview scroll viewer must handle the wheel input.
+            MouseWheelHelper.ForwardMouseWheelToScrollViewer(e, PreviewBlockScroll, e.OriginalSource);
         }
 
         private void OnKeyDown(object sender, KeyEventArgs e)
