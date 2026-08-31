@@ -2203,11 +2203,15 @@ namespace Flow.Launcher.ViewModel
                 switch (Settings.LastQueryMode)
                 {
                     case LastQueryMode.Empty:
-                        await ChangeQueryTextAsync(string.Empty);
+                        await ChangeQueryTextAsync(string.Empty, isReQuery: true);
                         break;
                     case LastQueryMode.Preserved:
                     case LastQueryMode.Selected:
                         LastQuerySelected = Settings.LastQueryMode == LastQueryMode.Preserved;
+                        if (string.IsNullOrEmpty(QueryText))
+                        {
+                            await ChangeQueryTextAsync(string.Empty, isReQuery: true);
+                        }
                         break;
                     case LastQueryMode.ActionKeywordPreserved:
                     case LastQueryMode.ActionKeywordSelected:
@@ -2215,7 +2219,7 @@ namespace Flow.Launcher.ViewModel
 
                         if (!string.IsNullOrEmpty(newQuery))
                             newQuery += " ";
-                        await ChangeQueryTextAsync(newQuery);
+                        await ChangeQueryTextAsync(newQuery, isReQuery: true);
 
                         if (Settings.LastQueryMode == LastQueryMode.ActionKeywordSelected)
                             LastQuerySelected = false;
