@@ -25,7 +25,8 @@ Dedicated to making your workflow more seamless. Search everything from applicat
 
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
-<h4 align="center">
+<h4 align="center">  
+  <a href="#-official-channels">Official Channels</a> •
   <a href="#-getting-started">Getting Started</a> •
   <a href="#-features">Features</a> •
   <a href="#-plugins">Plugins</a> •
@@ -35,6 +36,19 @@ Dedicated to making your workflow more seamless. Search everything from applicat
   <a href="#development">Development</a> •
   <a href="https://flowlauncher.com/docs">Docs</a>
 </h4>
+
+<img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
+
+## 📣 Official Channels
+
+- Website: [https://flowlauncher.com](https://flowlauncher.com)
+- GitHub Organization: [https://github.com/Flow-Launcher](https://github.com/Flow-Launcher)
+- Discord: [https://discord.gg/AvgAQgh](https://discord.gg/AvgAQgh)
+- Reddit: [https://www.reddit.com/r/FlowLauncher/](https://www.reddit.com/r/FlowLauncher/)
+
+⚠️ Only trust official channels for downloads and announcements, and be careful of similar-looking domains.
+
+For installation, use the official methods listed below.
 
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
@@ -147,9 +161,9 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
 
 <img src="https://user-images.githubusercontent.com/6903107/207159213-662999d3-2c18-4256-b473-c417efca0069.png" width="400">
 
-- Use <kbd>F1</kbd> to toggle the preview panel.
-- Media files will be displayed as large images, otherwise a large icon and full path will be displayed.
-- Turn on preview permanently via Settings (Always Preview).
+- Use <kbd>F1</kbd> to show or hide previews
+- Results can preview media files as large images, show an icon and description, or use markdown with code highlighting.
+- Show previews by default via Settings (Always Preview).
 - Use <kbd>Ctrl</kbd>+<kbd>+</kbd>/<kbd>-</kbd> and <kbd>Ctrl</kbd>+<kbd>[</kbd>/<kbd>]</kbd> to adjust search window width and height quickly if the preview area is too narrow.
 
 ### Customizations
@@ -292,7 +306,7 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
 | <kbd>←</kbd>/<kbd>→</kbd>                                                 | Back to result / Open Context Menu              |
 | <kbd>Ctrl</kbd>+<kbd>O</kbd> , <kbd>Shift</kbd>+<kbd>Enter</kbd>          | Open Context Menu                               |
 | <kbd>Ctrl</kbd>+<kbd>Tab</kbd>                                            | Autocomplete                                    |
-| <kbd>F1</kbd>                                                             | Toggle Preview Panel (default and configurable) |
+| <kbd>F1</kbd>                                                             | Toggle previews                                 |
 | <kbd>Esc</kbd>                                                            | Back to results / hide search window            |
 | <kbd>Ctrl</kbd>+<kbd>C</kbd>                                              | Copy folder / file                              |
 | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>C</kbd>                             | Copy folder / file path                         |

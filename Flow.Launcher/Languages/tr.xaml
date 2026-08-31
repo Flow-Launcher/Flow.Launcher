@@ -145,7 +145,7 @@
     <system:String x:Key="DoublePinyinSchemasXingKongJianDao">Xing Kong Jian Dao</system:String>
     <system:String x:Key="DoublePinyinSchemasDaNiu">Da Niu</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoLang">Xiao Lang</system:String>
-    <system:String x:Key="HelpUsTranslateFlow">Help us translate Flow</system:String>
+    <system:String x:Key="HelpUsTranslateFlow">Flow'u çevirmemize yardım edin</system:String>
 
     <system:String x:Key="AlwaysPreview">Önizleme</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Önizleme panelini her zaman aç. Önizlemeyi bu ayardan bağımsız {0} kısayolu ile açıp kapatabilirsiniz.</system:String>
@@ -241,9 +241,9 @@
     <system:String x:Key="fileNotFoundMessage">plugin.json dosyası çıkarılan zip dosyasında bulunamadı veya {0} yolu mevcut değil</system:String>
     <system:String x:Key="pluginExistAlreadyMessage">Bu eklentiyle aynı ID ve sürüme sahip bir eklenti zaten var, ya da mevcut sürüm daha yüksek</system:String>
     <system:String x:Key="errorCreatingSettingPanel">Eklenti {0} için ayar paneli oluşturulurken hata oluştu: {1}{2}</system:String>
-    <system:String x:Key="pluginMinimumAppVersionUnsatisfiedTitle">{0} requires Flow version {1} to run</system:String>
-    <system:String x:Key="pluginMinimumAppVersionUnsatisfiedMessage">Flow does not meet the minimum version requirements for {0} to run. Do you want to continue installing it?{1}{1}We recommend updating Flow to the latest version to ensure that {0} works without issues.</system:String>
-    <system:String x:Key="pluginJsonInvalidOrCorrupted">Failed to install plugin because plugin.json is invalid or corrupted</system:String>
+    <system:String x:Key="pluginMinimumAppVersionUnsatisfiedTitle">{0} çalışmak için {1} Flow sürümünü gerektiriyor</system:String>
+    <system:String x:Key="pluginMinimumAppVersionUnsatisfiedMessage">Flow, {0}'ın çalışması için gereken minimum sürüm gereksinimlerini karşılamıyor. Yüklemeye devam etmek istiyor musunuz? {1}{1} {0}'ın sorunsuz çalıştığından emin olmak için Flow'u en son sürüme güncellemenizi öneririz.</system:String>
+    <system:String x:Key="pluginJsonInvalidOrCorrupted">plugin.json dosyası geçersiz veya bozuk olduğu için eklenti yüklenemedi</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Eklenti Mağazası</system:String>
@@ -253,9 +253,9 @@
     <system:String x:Key="pluginStore_Installed">Yüklü</system:String>
     <system:String x:Key="PluginStoreSortModeDefault">Varsayılan</system:String>
     <system:String x:Key="PluginStoreSortModeName">Ad</system:String>
-    <system:String x:Key="PluginStoreSortModeReleaseDate">Release Date</system:String>
-    <system:String x:Key="PluginStoreSortModeUpdatedDate">Updated Date</system:String>
-    <system:String x:Key="PluginStoreSortingModeComboboxLabel">Sorting Mode:</system:String>
+    <system:String x:Key="PluginStoreSortModeReleaseDate">Yayın Tarihi</system:String>
+    <system:String x:Key="PluginStoreSortModeUpdatedDate">Güncelleme Tarihi</system:String>
+    <system:String x:Key="PluginStoreSortingModeComboboxLabel">Sıralama Modu:</system:String>
     <system:String x:Key="refresh">Yenile</system:String>
     <system:String x:Key="installbtn">Yükle</system:String>
     <system:String x:Key="uninstallbtn">Kaldır</system:String>
@@ -500,8 +500,8 @@
     <system:String x:Key="settingWindowFontTitle">Pencere Yazı Tipini Ayarla</system:String>
 
     <!--  Plugin Settings Window  -->
-    <system:String x:Key="pluginSettingsWindowTitle">Settings: {0}</system:String>
-    <system:String x:Key="pluginSettingsWindowOpenFailed">Failed to open plugin settings window</system:String>
+    <system:String x:Key="pluginSettingsWindowTitle">Ayarlar: {0}</system:String>
+    <system:String x:Key="pluginSettingsWindowOpenFailed">Eklenti ayarları penceresi açılamadı</system:String>
 
     <!--  Release Notes Window  -->
     <system:String x:Key="seeMoreReleaseNotes">GitHub'da daha fazla sürüm notlarını gör</system:String>
@@ -533,7 +533,7 @@
     <system:String x:Key="defaultBrowser_newWindow">Yeni Pencere</system:String>
     <system:String x:Key="defaultBrowser_newTab">Yeni Sekme</system:String>
     <system:String x:Key="defaultBrowser_parameter">Gizli Mod için Bağımsız Değişken</system:String>
-    <system:String x:Key="defaultBrowser_extraArgs">Extra Args</system:String>
+    <system:String x:Key="defaultBrowser_extraArgs">Ekstra Argümanlar</system:String>
     <system:String x:Key="defaultBrowser_default">Varsayılan</system:String>
     <system:String x:Key="defaultBrowser_new_profile">Yeni Profil</system:String>
 

@@ -413,7 +413,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         private static void IncrementEverythingRunCounterIfNeeded(string fileOrFolder)
         {
             if (Settings.EverythingEnabled && Settings.EverythingEnableRunCount)
-                _ = Task.Run(() => EverythingApi.IncrementRunCounterAsync(fileOrFolder));
+                _ = Task.Run(() => Settings.EverythingManagerInstance.IncrementRunCounterAsync(fileOrFolder));
         }
 
         private static string GetFileMoreInfoTooltip(string filePath)

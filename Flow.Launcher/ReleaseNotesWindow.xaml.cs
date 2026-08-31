@@ -47,7 +47,6 @@ namespace Flow.Launcher
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            RefreshMaximizeRestoreButton();
             ThemeManager_ActualApplicationThemeChanged(null, null);
         }
 
@@ -59,48 +58,6 @@ namespace Flow.Launcher
         private void Window_Closed(object sender, EventArgs e)
         {
             ThemeManager.Current.ActualApplicationThemeChanged -= ThemeManager_ActualApplicationThemeChanged;
-        }
-
-        #endregion
-
-        #region Window Custom TitleBar
-
-        private void OnMinimizeButtonClick(object sender, RoutedEventArgs e)
-        {
-            WindowState = WindowState.Minimized;
-        }
-
-        private void OnMaximizeRestoreButtonClick(object sender, RoutedEventArgs e)
-        {
-            WindowState = WindowState switch
-            {
-                WindowState.Maximized => WindowState.Normal,
-                _ => WindowState.Maximized
-            };
-        }
-
-        private void OnCloseButtonClick(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
-
-        private void RefreshMaximizeRestoreButton()
-        {
-            if (WindowState == WindowState.Maximized)
-            {
-                MaximizeButton.Visibility = Visibility.Hidden;
-                RestoreButton.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                MaximizeButton.Visibility = Visibility.Visible;
-                RestoreButton.Visibility = Visibility.Hidden;
-            }
-        }
-
-        private void Window_StateChanged(object sender, EventArgs e)
-        {
-            RefreshMaximizeRestoreButton();
         }
 
         #endregion

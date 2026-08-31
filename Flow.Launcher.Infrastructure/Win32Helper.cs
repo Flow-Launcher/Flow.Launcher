@@ -21,6 +21,7 @@ using Windows.Win32.Foundation;
 using Windows.Win32.Graphics.Dwm;
 using Windows.Win32.System.Power;
 using Windows.Win32.System.Threading;
+using Windows.Win32.UI.Controls;
 using Windows.Win32.UI.Input.KeyboardAndMouse;
 using Windows.Win32.UI.Shell.Common;
 using Windows.Win32.UI.WindowsAndMessaging;
@@ -60,6 +61,14 @@ namespace Flow.Launcher.Infrastructure
                 BackdropTypes.MicaAlt => DWM_SYSTEMBACKDROP_TYPE.DWMSBT_TABBEDWINDOW,
                 _ => DWM_SYSTEMBACKDROP_TYPE.DWMSBT_AUTO
             };
+
+            // The backdrop renders in the non-client frame area. WindowStyle=None
+            // removes that area, so we extend it across the entire client area.
+            // This is harmless when backdrop is None or blur not enabled
+            // as DWM has nothing to render in the extended area.
+            // https://learn.microsoft.com/en-us/windows/win32/api/dwmapi/nf-dwmapi-dwmextendframeintoclientarea
+            var margins = new MARGINS { cxLeftWidth = -1, cxRightWidth = -1, cyTopHeight = -1, cyBottomHeight = -1 };
+            PInvoke.DwmExtendFrameIntoClientArea(GetWindowHandle(window), in margins);
 
             return PInvoke.DwmSetWindowAttribute(
                 GetWindowHandle(window),
@@ -283,18 +292,27 @@ namespace Flow.Launcher.Infrastructure
                 return appBounds.top < 0 && appBounds.bottom < 0;
             }
 
-            // For desktop (Progman or WorkerW, depends on the system), we have to check
+            // For desktop (Progman or WorkerW, depends on the system),
+            // we have to check for this hierarchy:
+            // Progman/WorkerW -> SHELLDLL_DefView -> SysListView32("FolderView")
             if (windowClass is WINDOW_CLASS_PROGMAN or WINDOW_CLASS_WORKERW)
             {
-                var hWndDesktop = PInvoke.FindWindowEx(hWnd, HWND.Null, "SHELLDLL_DefView", null);
-                hWndDesktop = PInvoke.FindWindowEx(hWndDesktop, HWND.Null, "SysListView32", "FolderView");
-                if (hWndDesktop != HWND.Null)
+                var hWndDefView = PInvoke.FindWindowEx(hWnd, HWND.Null, "SHELLDLL_DefView", null);
+                if (hWndDefView != HWND.Null)
                 {
-                    return false;
+                    var hWndFolderView = PInvoke.FindWindowEx(hWndDefView, HWND.Null, "SysListView32", "FolderView");
+                    if (hWndFolderView != HWND.Null)
+                    {
+                        return false;
+                    }
                 }
             }
 
             var monitorInfo = MonitorInfo.GetNearestDisplayMonitor(hWnd);
+            if (monitorInfo == null)
+            {
+                return false;
+            }
             return (appBounds.bottom - appBounds.top) == monitorInfo.Bounds.Height &&
                    (appBounds.right - appBounds.left) == monitorInfo.Bounds.Width;
         }

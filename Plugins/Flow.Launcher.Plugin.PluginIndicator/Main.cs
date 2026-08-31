@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Flow.Launcher.Plugin.PluginIndicator
 {
-    public class Main : IPlugin, IPluginI18n, IHomeQuery
+    public class Main : IPlugin, IPluginI18n, IHomeQuery, IContextMenu
     {
         internal static PluginInitContext Context { get; private set; }
 
@@ -24,7 +24,8 @@ namespace Flow.Launcher.Plugin.PluginIndicator
 
             var results =
                 from keyword in nonGlobalPlugins.Keys
-                let plugin = nonGlobalPlugins[keyword].Metadata
+                from pluginPair in nonGlobalPlugins[keyword]
+                let plugin = pluginPair.Metadata
                 let keywordSearchResult = Context.API.FuzzySearch(querySearch, keyword)
                 let searchResult = keywordSearchResult.IsSearchPrecisionScoreMet() ? keywordSearchResult : Context.API.FuzzySearch(querySearch, plugin.Name)
                 let score = searchResult.Score
@@ -37,6 +38,7 @@ namespace Flow.Launcher.Plugin.PluginIndicator
                     SubTitle = Localize.flowlauncher_plugin_pluginindicator_result_subtitle(plugin.Name),
                     Score = score,
                     IcoPath = plugin.IcoPath,
+                    ContextData = plugin,
                     AutoCompleteText = $"{keyword}{Plugin.Query.TermSeparator}",
                     Action = c =>
                     {
@@ -47,9 +49,26 @@ namespace Flow.Launcher.Plugin.PluginIndicator
             return [.. results];
         }
 
-        private static Dictionary<string, PluginPair> GetNonGlobalPlugins()
+        public List<Result> LoadContextMenus(Result selectedResult)
         {
-            var nonGlobalPlugins = new Dictionary<string, PluginPair>();
+            if (selectedResult.ContextData is not PluginMetadata plugin)
+                return [];
+
+            return new List<Result>
+            {
+                new Result
+                {
+                    Title = Localize.flowlauncher_plugin_pluginindicator_plugin_settings_title(plugin.Name),
+                    SubTitle = Localize.flowlauncher_plugin_pluginindicator_plugin_settings_subtitle(plugin.Name),
+                    IcoPath = plugin.IcoPath, // icon of indicated plugin
+                    Action = _ => Context.API.OpenPluginSettingsWindow(plugin.ID)
+                }
+            };
+        }
+
+        private static Dictionary<string, List<PluginPair>> GetNonGlobalPlugins()
+        {
+            var nonGlobalPlugins = new Dictionary<string, List<PluginPair>>();
             foreach (var plugin in Context.API.GetAllPlugins())
             {
                 foreach (var actionKeyword in plugin.Metadata.ActionKeywords)
@@ -57,10 +76,17 @@ namespace Flow.Launcher.Plugin.PluginIndicator
                     // Skip global keywords
                     if (actionKeyword == Plugin.Query.GlobalPluginWildcardSign) continue;
 
-                    // Skip dulpicated keywords
-                    if (nonGlobalPlugins.ContainsKey(actionKeyword)) continue;
+                    // See if we already assigned plugins to this keyword
+                    if (!nonGlobalPlugins.TryGetValue(actionKeyword, out var pluginsForKeyword))
+                    {
+                        pluginsForKeyword = [];
+                        nonGlobalPlugins[actionKeyword] = pluginsForKeyword;
+                    }
 
-                    nonGlobalPlugins.Add(actionKeyword, plugin);
+                    // We allow the same keyword to have multiple different plugins and
+                    // there is no need to check for the same plugin having the same keyword multiple times,
+                    // as plugin manager and UI should prevent this - we can still display this state regardless
+                    pluginsForKeyword.Add(plugin);
                 }
             }
             return nonGlobalPlugins;

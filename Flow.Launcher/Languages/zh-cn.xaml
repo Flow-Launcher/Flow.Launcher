@@ -123,9 +123,9 @@
     <system:String x:Key="hideOnStartupToolTip">Flow Launcher 启动后搜索窗口隐藏在托盘中。</system:String>
     <system:String x:Key="hideNotifyIcon">隐藏任务栏图标</system:String>
     <system:String x:Key="hideNotifyIconToolTip">任务栏图标被隐藏时，右键点击搜索窗口即可打开设置菜单。</system:String>
-    <system:String x:Key="ignoreAccents">Ignore accents when searching</system:String>
-    <system:String x:Key="ignoreAccentsToolTip">Treat accented and unaccented characters as equivalent.</system:String>
-    <system:String x:Key="promptIgnoreAccents">Would you like to turn on the option to ignore accents when searching?</system:String>
+    <system:String x:Key="ignoreAccents">搜索时候忽视重音</system:String>
+    <system:String x:Key="ignoreAccentsToolTip">将重音以及非重音视作相同的字符。</system:String>
+    <system:String x:Key="promptIgnoreAccents">你希望启用在搜索时候忽视重音的选项吗？</system:String>
     <system:String x:Key="querySearchPrecision">查询搜索精度</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">更改匹配成功所需的最低分数。</system:String>
     <system:String x:Key="SearchPrecisionNone">无</system:String>
