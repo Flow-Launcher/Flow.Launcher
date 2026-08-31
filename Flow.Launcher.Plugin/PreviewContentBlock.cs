@@ -20,9 +20,16 @@ namespace Flow.Launcher.Plugin
     public sealed record MarkdownPreviewBlock : PreviewContentBlock
     {
         /// <summary>
-        /// The inline markdown source to render.
+        /// The inline markdown source to render. When this is not null or empty, it is used instead of <see cref="FilePath"/>.
         /// </summary>
         public string InlineMarkdown { get; set; }
+
+        /// <summary>
+        /// The path to a markdown file to load when the preview is shown.
+        /// It is used only when <see cref="InlineMarkdown"/> is null or empty.
+        /// Absolute paths are supported. Relative paths are resolved from the plugin directory.
+        /// </summary>
+        public string FilePath { get; set; }
     }
 
     /// <summary>
@@ -38,8 +45,15 @@ namespace Flow.Launcher.Plugin
     public sealed record TextPreviewBlock : PreviewContentBlock
     {
         /// <summary>
-        /// The plain text to display.
+        /// The plain text to display. When this is not null or empty, it is used instead of <see cref="FilePath"/>.
         /// </summary>
         public string Text { get; set; }
+
+        /// <summary>
+        /// The path to a text file to load when the preview is shown.
+        /// It is used only when <see cref="Text"/> is null or empty.
+        /// Absolute paths are supported. Relative paths are resolved from the plugin directory.
+        /// </summary>
+        public string FilePath { get; set; }
     }
 }

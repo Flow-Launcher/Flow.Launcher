@@ -43,23 +43,24 @@
         <WindowChrome CaptionHeight="9" />
     </WindowChrome.WindowChrome>
     <Window.Resources>
-        <DataTemplate DataType="{x:Type plugin:MarkdownPreviewBlock}">
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <DataTemplate x:Key="{x:Type plugin:MarkdownPreviewBlock}">
             <controls:PreviewMarkdownScrollViewer
                 Margin="0"
                 HorizontalScrollBarVisibility="Disabled"
-                Markdown="{Binding InlineMarkdown}"
+                Markdown="{Binding RenderedContent}"
                 MarkdownStyle="{DynamicResource PreviewMarkdownStyle}"
                 PreviewMouseWheel="ForwardPreviewBlockMouseWheel"
                 VerticalScrollBarVisibility="Disabled" />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type plugin:SeparatorPreviewBlock}">
+        <DataTemplate x:Key="{x:Type plugin:SeparatorPreviewBlock}">
             <Rectangle
                 Height="1"
                 Margin="0 0 5 0"
                 HorizontalAlignment="Stretch"
                 Style="{DynamicResource SeparatorStyle}" />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type plugin:TextPreviewBlock}">
+        <DataTemplate x:Key="{x:Type plugin:TextPreviewBlock}">
             <TextBox
                 Margin="0"
                 IsReadOnly="True"
@@ -67,11 +68,37 @@
                 MouseWheel="ForwardPreviewBlockMouseWheel"
                 PreviewMouseWheel="ForwardPreviewBlockMouseWheel"
                 Style="{DynamicResource PreviewBlockTextStyle}"
-                Text="{Binding Text, Mode=OneWay}" />
+                Text="{Binding RenderedContent, Mode=OneWay}" />
+        </DataTemplate>
+        <vm:PreviewContentBlockTemplateSelector x:Key="PreviewContentBlockTemplateSelector" />
+        <DataTemplate DataType="{x:Type vm:PreviewContentBlockViewModel}">
+            <Grid>
+                <ContentControl
+                    Content="{Binding}"
+                    ContentTemplateSelector="{StaticResource PreviewContentBlockTemplateSelector}"
+                    Visibility="{Binding IsContentVisible, Converter={StaticResource BoolToVisibilityConverter}}" />
+                <ui:ProgressRing
+                    IsActive="{Binding IsLoading}"
+                    Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}" />
+                <Border
+                    HorizontalAlignment="Center"
+                    Margin="12"
+                    MinHeight="48"
+                    VerticalAlignment="Center"
+                    Visibility="{Binding IsErrorVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <TextBlock
+                        FontSize="16"
+                        FontWeight="SemiBold"
+                        Foreground="{DynamicResource Color10B}"
+                        Style="{DynamicResource SettingTitleLabel}"
+                        Text="{DynamicResource previewContentLoadError}"
+                        TextWrapping="Wrap"
+                        VerticalAlignment="Center" />
+                </Border>
+            </Grid>
         </DataTemplate>
         <converters:QuerySuggestionBoxConverter x:Key="QuerySuggestionBoxConverter" />
         <converters:BorderClipConverter x:Key="BorderClipConverter" />
-        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         <converters:SplitterConverter x:Key="SplitterConverter" />
         <converters:BoolToIMEConversionModeConverter x:Key="BoolToIMEConversionModeConverter" />
         <converters:BoolToIMEStateConverter x:Key="BoolToIMEStateConverter" />
