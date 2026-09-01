@@ -35,7 +35,8 @@ public partial class HotkeyControlDialog : ContentDialog
     public string ResultValue { get; private set; } = string.Empty;
     public static string EmptyHotkey => Localize.none();
 
-    private static bool isOpenFlowHotkey;
+    private bool isOpenFlowHotkey;
+    private Func<int, int, SpecialKeyState, bool>? _winComboInterceptor;
 
     public HotkeyControlDialog(string hotkey, string defaultHotkey, string windowTitle = "")
     {
@@ -52,11 +53,55 @@ public partial class HotkeyControlDialog : ContentDialog
 
         // TODO: This is a temporary way to enforce changing only the open flow hotkey to Win, and will be removed by PR #3157
         isOpenFlowHotkey = _hotkeySettings.RegisteredHotkeys
-                             .Any(x => x.DescriptionResourceKey == "flowlauncherHotkey" 
+                             .Any(x => x.DescriptionResourceKey == "flowlauncherHotkey"
                                     && x.Hotkey.ToString() == hotkey);
 
         ChefKeysManager.StartMenuEnableBlocking = true;
         ChefKeysManager.Start();
+
+        // Cancel/Save explicitly clean up ChefKeys before calling Hide(). The Closed handler
+        // covers the X-button path where neither Cancel nor Save runs.
+        this.Closed += (_, _) =>
+        {
+            ChefKeysManager.StartMenuEnableBlocking = false;
+            ChefKeysManager.Stop();
+        };
+
+        if (isOpenFlowHotkey)
+        {
+            _winComboInterceptor = (keyEvent, vkCode, state) =>
+            {
+                const int VK_LWIN = 0x5B;
+                const int VK_RWIN = 0x5C;
+                if ((keyEvent == (int)KeyEvent.WM_KEYDOWN || keyEvent == (int)KeyEvent.WM_SYSKEYDOWN)
+                    && state.WinPressed
+                    && vkCode != VK_LWIN && vkCode != VK_RWIN)
+                {
+                    var key = KeyInterop.KeyFromVirtualKey(vkCode);
+                    if (key is Key.None
+                        or Key.LeftCtrl or Key.RightCtrl
+                        or Key.LeftAlt or Key.RightAlt
+                        or Key.LeftShift or Key.RightShift
+                        or Key.LWin or Key.RWin)
+                    {
+                        // Pass unrecognised/modifier keys through — suppressing them would
+                        // silently eat media keys and other unmapped VK codes system-wide.
+                        return true;
+                    }
+                    _ = App.Current.Dispatcher.InvokeAsync(() =>
+                    {
+                        if (!IsLoaded) return;
+                        var hotkeyModel = new HotkeyModel(state.AltPressed, state.ShiftPressed, state.WinPressed, state.CtrlPressed, key);
+                        CurrentHotkey = hotkeyModel;
+                        SetKeysToDisplay(CurrentHotkey);
+                    });
+                    return false;
+                }
+                return true;
+            };
+            App.API.RegisterGlobalKeyboardCallback(_winComboInterceptor);
+            this.Closed += (_, _) => UnregisterWinComboInterceptor();
+        }
     }
 
     private void Reset(object sender, RoutedEventArgs routedEventArgs)
@@ -70,10 +115,20 @@ public partial class HotkeyControlDialog : ContentDialog
         KeysToDisplay.Add(EmptyHotkey);
     }
 
+    private void UnregisterWinComboInterceptor()
+    {
+        if (_winComboInterceptor != null)
+        {
+            App.API.RemoveGlobalKeyboardCallback(_winComboInterceptor);
+            _winComboInterceptor = null;
+        }
+    }
+
     private void Cancel(object sender, RoutedEventArgs routedEventArgs)
     {
         ChefKeysManager.StartMenuEnableBlocking = false;
         ChefKeysManager.Stop();
+        UnregisterWinComboInterceptor();
 
         ResultType = EResultType.Cancel;
         Hide();
@@ -83,6 +138,7 @@ public partial class HotkeyControlDialog : ContentDialog
     {
         ChefKeysManager.StartMenuEnableBlocking = false;
         ChefKeysManager.Stop();
+        UnregisterWinComboInterceptor();
 
         if (KeysToDisplay.Count == 1 && KeysToDisplay[0] == EmptyHotkey)
         {
@@ -182,10 +238,11 @@ public partial class HotkeyControlDialog : ContentDialog
         }
     }
 
-    private static bool CheckHotkeyAvailability(HotkeyModel hotkey, bool validateKeyGesture)
+    private bool CheckHotkeyAvailability(HotkeyModel hotkey, bool validateKeyGesture)
     {
-        if (isOpenFlowHotkey && (hotkey.ToString() == "LWin" || hotkey.ToString() == "RWin"))
-            return true;
+        if (isOpenFlowHotkey && (hotkey.ToString() == "LWin" || hotkey.ToString() == "RWin"
+            || (hotkey.Win && hotkey.CharKey != Key.None)))
+            return hotkey.Validate(validateKeyGesture);
 
         return hotkey.Validate(validateKeyGesture) && HotKeyMapper.CheckAvailability(hotkey);
     }
