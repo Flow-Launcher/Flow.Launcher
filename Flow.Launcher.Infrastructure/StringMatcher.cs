@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -262,8 +262,10 @@ namespace Flow.Launcher.Infrastructure
             if (IsAcronymChar(stringToCompare, compareStringIndex))
                 return true;
 
+            // Count only the first digit of a contiguous digit run as a single acronym group,
+            // matching the same grouping logic used by CountDistinctAcronymGroups.
             if (IsAcronymNumber(stringToCompare, compareStringIndex))
-                return compareStringIndex == 0 || char.IsWhiteSpace(stringToCompare[compareStringIndex - 1]);
+                return compareStringIndex == 0 || !IsAcronymNumber(stringToCompare, compareStringIndex - 1);
 
             return false;
         }

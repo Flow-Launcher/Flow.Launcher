@@ -377,6 +377,8 @@ namespace Flow.Launcher.Test
         [TestCase("vs19",  "Visual Studio 2018", 0)]
         // Shorter digit run treated identically: V S 19-run = 3/3
         [TestCase("vs19",  "Visual Studio 19", 100)]
+        [TestCase("vs2019", "VisualStudio2019", 100)]
+        [TestCase("vs2019", "visualStudio2019", 100)]
         public void WhenGivenAnAcronymQuery_ShouldReturnAcronymScore(string queryString, string compareString,
             int desiredScore)
         {
