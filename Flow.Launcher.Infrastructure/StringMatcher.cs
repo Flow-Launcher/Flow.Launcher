@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -43,6 +43,8 @@ namespace Flow.Launcher.Infrastructure
         /// 4. Character that is number
         /// 
         /// Acronym Match will succeed when all query characters match with acronyms in stringToCompare.
+        /// Contiguous digit characters are considered as one acronym group -> e.g. vs19 for Visual Studio 2019 is
+        /// considered 3 matched groups [v][s][19].
         /// If any of the characters in the query isn't matched with stringToCompare, Acronym Match will fail.
         /// Score will be calculated based the percentage of all query characters matched with total acronyms in stringToCompare.
         /// 
