@@ -3,7 +3,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Plugin;
-using Flow.Launcher.Storage;
 
 namespace Flow.Launcher.Helper;
 
@@ -11,9 +10,9 @@ namespace Flow.Launcher.Helper;
 
 public static class ResultHelper
 {
-    public static async Task<Result?> PopulateResultsAsync(LastOpenedHistoryResult item)
+    public static async Task<Result?> PopulateResultsAsync<T>(T item, string query) where T : Result
     {
-        return await PopulateResultsAsync(item.PluginID, item.Query, item.Title, item.SubTitle, item.RecordKey);
+        return await PopulateResultsAsync(item.PluginID, query, item.Title, item.SubTitle, item.RecordKey);
     }
 
     public static async Task<Result?> PopulateResultsAsync(string pluginId, string trimmedQuery, string title, string subTitle, string recordKey)

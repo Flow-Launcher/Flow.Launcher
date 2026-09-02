@@ -138,8 +138,6 @@
     <system:String x:Key="ShouldUseDoublePinyin">Use Double Pinyin</system:String>
     <system:String x:Key="ShouldUseDoublePinyinToolTip">Use Double Pinyin instead of Full Pinyin to search.</system:String>
     <system:String x:Key="DoublePinyinSchema">Double Pinyin Schema</system:String>
-    <system:String x:Key="UsePolyphonicPhraseOverrides">Use polyphonic phrase pronunciations</system:String>
-    <system:String x:Key="UsePolyphonicPhraseOverridesToolTip">Use phrase-level pronunciation data to improve Pinyin conversion for polyphonic Chinese characters. This may use additional memory.</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoHe">Xiao He</system:String>
     <system:String x:Key="DoublePinyinSchemasZiRanMa">Zi Ran Ma</system:String>
     <system:String x:Key="DoublePinyinSchemasWeiRuan">Wei Ruan</system:String>
@@ -180,8 +178,8 @@
     <system:String x:Key="historyResultsCountForHomePage">Maximum History Results Shown in Home Page</system:String>
     <system:String x:Key="historyStyle">History Style</system:String>
     <system:String x:Key="historyStyleTooltip">Choose the type of history to show in the History and Home Page</system:String>
-    <system:String x:Key="queryHistory">Query History</system:String>
-    <system:String x:Key="executedHistory">Last Opened History</system:String>
+    <system:String x:Key="queryHistory">Query history</system:String>
+    <system:String x:Key="executedHistory">Last opened history</system:String>
     <system:String x:Key="homeToggleBoxToolTip">This can only be edited if plugin supports Home feature and Home Page is enabled.</system:String>
     <system:String x:Key="showAtTopmost">Show Search Window at Foremost</system:String>
     <system:String x:Key="showAtTopmostToolTip">Overrides other programs' 'Always on Top' setting and displays Flow in the foremost position.</system:String>
@@ -192,6 +190,17 @@
     <system:String x:Key="autoUpdatePlugins">Auto update plugins</system:String>
     <system:String x:Key="autoUpdatePluginsToolTip">Automatically check plugin updates and notify if there are any updates available</system:String>
 
+    <system:String x:Key="pinnedResults">Pinned Results</system:String>
+    <system:String x:Key="showPinnedResultsOnHomePage">Show pinned results on home page</system:String>
+    <system:String x:Key="pinnedResultsLayout">Pinned Results Layout</system:String>
+    <system:String x:Key="pinToFlow">Pin to Flow</system:String>
+    <system:String x:Key="unpinFromFlow">Unpin from Flow</system:String>
+    <system:String x:Key="pinResult">Pin Result</system:String>
+    <system:String x:Key="pinQuery">Pin Query</system:String>
+    <system:String x:Key="PinnedLayoutList">List</system:String>
+    <system:String x:Key="PinnedLayoutGrid">Grid</system:String>
+    <system:String x:Key="lastPinnedAt">Added to pinned: {0}</system:String>
+    <system:String x:Key="pinnedResultsEmpty">No pinned results yet</system:String>
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Search Plugin</system:String>
     <system:String x:Key="searchpluginToolTip">Ctrl+F to search plugins</system:String>
@@ -309,6 +318,7 @@
     <system:String x:Key="queryBoxFont">Query Box Font</system:String>
     <system:String x:Key="resultItemFont">Result Title Font</system:String>
     <system:String x:Key="resultSubItemFont">Result Subtitle Font</system:String>
+    <system:String x:Key="homeScreenFontSize">Home Font Size</system:String>
     <system:String x:Key="resetCustomize">Reset</system:String>
     <system:String x:Key="resetCustomizeToolTip">Reset to the recommended font and size settings.</system:String>
     <system:String x:Key="ImportThemeSize">Import Theme Size</system:String>

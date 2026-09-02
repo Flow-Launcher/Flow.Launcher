@@ -10,9 +10,9 @@ namespace Flow.Launcher
 {
     public partial class ResultListBox
     {
-        protected Lock _lock = new();
-        private Point _lastpos;
-        private ListBoxItem curItem = null;
+        private readonly ResultMouseSelectionHandler _mouseSelectionHandler =
+            new(SelectionSurfaceNames.Results);
+
         public ResultListBox()
         {
             InitializeComponent();
@@ -23,14 +23,8 @@ namespace Flow.Launcher
 
         public ICommand RightClickResultCommand
         {
-            get
-            {
-                return (ICommand)GetValue(RightClickResultCommandProperty);
-            }
-            set
-            {
-                SetValue(RightClickResultCommandProperty, value);
-            }
+            get => (ICommand)GetValue(RightClickResultCommandProperty);
+            set => SetValue(RightClickResultCommandProperty, value);
         }
 
         public static readonly DependencyProperty LeftClickResultCommandProperty =
@@ -38,14 +32,17 @@ namespace Flow.Launcher
 
         public ICommand LeftClickResultCommand
         {
-            get
-            {
-                return (ICommand)GetValue(LeftClickResultCommandProperty);
-            }
-            set
-            {
-                SetValue(LeftClickResultCommandProperty, value);
-            }
+            get => (ICommand)GetValue(LeftClickResultCommandProperty);
+            set => SetValue(LeftClickResultCommandProperty, value);
+        }
+
+        public static readonly DependencyProperty MouseSelectCommandProperty =
+            DependencyProperty.Register("MouseSelectCommand", typeof(ICommand), typeof(ResultListBox), new UIPropertyMetadata(null));
+
+        public ICommand MouseSelectCommand
+        {
+            get => (ICommand)GetValue(MouseSelectCommandProperty);
+            set => SetValue(MouseSelectCommandProperty, value);
         }
 
         private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -53,41 +50,28 @@ namespace Flow.Launcher
             if (e.AddedItems.Count > 0 && e.AddedItems[0] != null)
             {
                 ScrollIntoView(e.AddedItems[0]);
+                return;
+            }
+
+            // When grid mode and home page plugin results are enabled, ensures the result list's scroll
+            // position is reset to the top so the first home page result is shown.
+            if (e.AddedItems.Count == 0 && DataContext is ResultsViewModel { ResetScrollToTopWhenSelectionCleared: true } viewModel)
+            {
+                if (viewModel.Results.Count > 0)
+                {
+                    ScrollIntoView(viewModel.Results[0]);
+                }
             }
         }
 
         private void OnMouseEnter(object sender, MouseEventArgs e)
-        {
-            lock (_lock)
-            {
-                curItem = (ListBoxItem)sender;
-                var p = e.GetPosition((IInputElement)sender);
-                _lastpos = p;
-            }
-        }
+            => _mouseSelectionHandler.OnMouseEnter(sender, e);
 
         private void OnMouseMove(object sender, MouseEventArgs e)
-        {
-            lock (_lock)
-            {
-                var p = e.GetPosition((IInputElement)sender);
-                if (_lastpos != p)
-                {
-                    ((ListBoxItem)sender).IsSelected = true;
-                }
-            }
-        }
+            => _mouseSelectionHandler.OnMouseMove(sender, e, MouseSelectCommand);
 
         private void ListBox_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            lock (_lock)
-            {
-                if (curItem != null)
-                {
-                    curItem.IsSelected = true;
-                }
-            }
-        }
+            => _mouseSelectionHandler.OnPreviewMouseDown(MouseSelectCommand);
 
         private Point _start;
         private string _path;
@@ -155,7 +139,8 @@ namespace Flow.Launcher
 
         private void ResultListBox_OnPreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (Mouse.DirectlyOver is not FrameworkElement { DataContext: ResultViewModel result })
+            var result = ResultMouseSelectionHandler.ResultUnderMouse();
+            if (result == null)
                 return;
 
             RightClickResultCommand?.Execute(result.Result);
@@ -163,7 +148,8 @@ namespace Flow.Launcher
 
         private void ResultListBox_OnPreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
-            if (Mouse.DirectlyOver is not FrameworkElement { DataContext: ResultViewModel result })
+            var result = ResultMouseSelectionHandler.ResultUnderMouse();
+            if (result == null)
                 return;
 
             LeftClickResultCommand?.Execute(null);

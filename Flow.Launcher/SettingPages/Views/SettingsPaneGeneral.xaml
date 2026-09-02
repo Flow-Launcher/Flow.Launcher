@@ -418,6 +418,31 @@
                     OnContent="{DynamicResource enable}" />
             </ui:SettingsCard>
 
+            <ui:SettingsExpander 
+                Margin="0 14 0 0" 
+                Header="{DynamicResource pinnedResults}">
+                <ui:SettingsExpander.HeaderIcon>
+                    <ui:FontIcon Glyph="&#xE840;" />
+                </ui:SettingsExpander.HeaderIcon>
+
+                <ui:ToggleSwitch
+                    x:Name="PinnedResultsToggle"
+                    IsOn="{Binding Settings.EnablePinnedResults}"
+                    OffContent="{DynamicResource disable}"
+                    OnContent="{DynamicResource enable}" />
+
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsCard Header="{DynamicResource pinnedResultsLayout}">
+                        <ComboBox
+                            MinWidth="120"
+                            DisplayMemberPath="Display"
+                            ItemsSource="{Binding PinnedLayouts}"
+                            SelectedValue="{Binding Settings.PinnedResultsLayout}"
+                            SelectedValuePath="Value" />
+                    </ui:SettingsCard>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
+
             <ui:SettingsExpander Margin="0 4 0 0" Header="{DynamicResource historyResultsForHomePage}">
                 <ui:SettingsExpander.HeaderIcon>
                     <ui:FontIcon Glyph="&#xE81C;" />
@@ -559,23 +584,6 @@
                     </ui:SettingsCard>
                 </ui:SettingsExpander.Items>
             </ui:SettingsExpander>
-
-            <ui:SettingsCard
-                Margin="0 4 0 0"
-                Description="{DynamicResource UsePolyphonicPhraseOverridesToolTip}"
-                Header="{DynamicResource UsePolyphonicPhraseOverrides}"
-                Visibility="{ext:VisibleWhen {Binding ShouldUsePinyin},
-                                             IsEqualToBool=True}">
-                <ui:SettingsCard.HeaderIcon>
-                    <ui:FontIcon Glyph="&#xF87E;" />
-                </ui:SettingsCard.HeaderIcon>
-
-                <ui:ToggleSwitch
-                    IsOn="{Binding UsePolyphonicPhraseOverrides}"
-                    OffContent="{DynamicResource disable}"
-                    OnContent="{DynamicResource enable}"
-                    ToolTip="{DynamicResource UsePolyphonicPhraseOverridesToolTip}" />
-            </ui:SettingsCard>
 
             <ui:SettingsCard
                 Margin="0 4 0 0"

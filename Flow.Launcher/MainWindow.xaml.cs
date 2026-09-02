@@ -62,6 +62,9 @@ namespace Flow.Launcher
 
         // Window Event: Key Event
         private bool _isArrowKeyPressed = false;
+        private const double PinnedGridItemWidth = 84;
+        private const double PinnedGridItemHorizontalMargin = 4;
+        private const double PinnedGridHorizontalChrome = 16;
 
         // Window Sound Effects
         private MediaPlayer _animationSoundWMP;
@@ -232,7 +235,7 @@ namespace Flow.Launcher
             // being shown yet, and skipped entirely when the window starts hidden for the same reason.
             if (!_settings.HideOnStartup)
             {
-                _ = Dispatcher.BeginInvoke((() =>
+                Dispatcher.BeginInvoke(new Action(() =>
                 {
                     if (!_viewModel.MainWindowVisibilityStatus) return;
                     Activate();
@@ -258,6 +261,8 @@ namespace Flow.Launcher
                             {
                                 if (_viewModel.MainWindowVisibilityStatus)
                                 {
+                                    _viewModel.ResetSelectionNavigationState();
+
                                     // Play sound effect before activing the window
                                     if (_settings.UseSound && !_viewModel.IsDialogJumpWindowUnderDialog())
                                     {
@@ -479,31 +484,30 @@ namespace Flow.Launcher
             }
 
             var specialKeyState = GlobalHotkey.CheckModifiers();
+            if (_viewModel.HandleSelectionNavigationKey(e.Key, GetPinnedGridColumnCount()))
+            {
+                if (e.Key == Key.Up || e.Key == Key.Down)
+                {
+                    _isArrowKeyPressed = true;
+                }
+
+                e.Handled = true;
+                return;
+            }
+
             switch (e.Key)
             {
-                case Key.Down:
-                    _isArrowKeyPressed = true;
-                    _viewModel.SelectNextItemCommand.Execute(null);
-                    e.Handled = true;
-                    break;
-                case Key.Up:
-                    _isArrowKeyPressed = true;
-                    _viewModel.SelectPrevItemCommand.Execute(null);
-                    e.Handled = true;
-                    break;
-                case Key.PageDown:
-                    _viewModel.SelectNextPageCommand.Execute(null);
-                    e.Handled = true;
-                    break;
-                case Key.PageUp:
-                    _viewModel.SelectPrevPageCommand.Execute(null);
-                    e.Handled = true;
-                    break;
                 case Key.Right:
-                    if ((_viewModel.QueryResultsSelected() || _viewModel.HistorySelected())
-                        && QueryTextBox.CaretIndex == QueryTextBox.Text.Length)
+                    if (_viewModel.IsSelectedResultPinned())
                     {
-                        _viewModel.ToggleContextMenuCommand.Execute(null);
+                        _viewModel.LoadContextMenuCommand.Execute(null);
+                        e.Handled = true;
+                        break;
+                    }
+                    if (_viewModel.QueryResultsSelected()
+                        && QueryTextBox.CaretIndex == QueryTextBox.Text.Length)            
+                    {
+                        _viewModel.LoadContextMenuCommand.Execute(null);
                         e.Handled = true;
                     }
                     break;
@@ -535,6 +539,13 @@ namespace Flow.Launcher
                 default:
                     break;
             }
+        }
+
+        private int GetPinnedGridColumnCount()
+        {
+            var availableWidth = Math.Max(0, PinnedResultGrid.ActualWidth - PinnedGridHorizontalChrome);
+            var itemWidth = PinnedGridItemWidth + PinnedGridItemHorizontalMargin;
+            return Math.Max(1, (int)Math.Floor(availableWidth / itemWidth));
         }
 
         private void OnKeyUp(object sender, KeyEventArgs e)

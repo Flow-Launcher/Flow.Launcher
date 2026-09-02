@@ -48,7 +48,6 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 case nameof(ShouldUsePinyin):
                 case nameof(UseDoublePinyin):
                 case nameof(DoublePinyinSchema):
-                case nameof(UsePolyphonicPhraseOverrides):
                 case nameof(IgnoreAccents):
                     StringMatcherBehaviorChanged?.Invoke(this, EventArgs.Empty);
                     break;
@@ -105,6 +104,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string OpenContextMenuHotkey { get; set; } = $"Ctrl+O";
         public string SettingWindowHotkey { get; set; } = $"Ctrl+I";
         public string OpenHistoryHotkey { get; set; } = $"Ctrl+H";
+        public string GridModeHotkey { get; set; } = $"{KeyConstant.Ctrl} + G";
         public string CycleHistoryUpHotkey { get; set; } = $"{KeyConstant.Alt} + Up";
         public string CycleHistoryDownHotkey { get; set; } = $"{KeyConstant.Alt} + Down";
         public string DialogJumpHotkey { get; set; } = $"{KeyConstant.Alt} + G";
@@ -146,6 +146,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public double QueryBoxFontSize { get; set; } = 16;
         public double ResultItemFontSize { get; set; } = 16;
         public double ResultSubItemFontSize { get; set; } = 13;
+        public double HomeScreenFontSize { get; set; } = 12;
         public string QueryBoxFont { get; set; } = Win32Helper.GetSystemDefaultFont();
         public string QueryBoxFontStyle { get; set; }
         public string QueryBoxFontWeight { get; set; }
@@ -158,7 +159,21 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string ResultSubFontStyle { get; set; }
         public string ResultSubFontWeight { get; set; }
         public string ResultSubFontStretch { get; set; }
-        public bool UseGlyphIcons { get; set; } = true;
+
+        private bool _useGlyphIcons = true;
+        public bool UseGlyphIcons
+        {
+            get => _useGlyphIcons;
+            set
+            {
+                if (_useGlyphIcons != value)
+                {
+                    _useGlyphIcons = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public bool UseAnimation { get; set; } = true;
         private bool _useSound = true;
         public bool UseSound
@@ -406,20 +421,6 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
 
-        private bool _usePolyphonicPhraseOverrides = true;
-        public bool UsePolyphonicPhraseOverrides
-        {
-            get => _usePolyphonicPhraseOverrides;
-            set
-            {
-                if (_usePolyphonicPhraseOverrides != value)
-                {
-                    _usePolyphonicPhraseOverrides = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
         private DoublePinyinSchemas _doublePinyinSchema = DoublePinyinSchemas.XiaoHe;
 
         [JsonInclude, JsonConverter(typeof(JsonStringEnumConverter))]
@@ -431,6 +432,59 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 if (_doublePinyinSchema != value)
                 {
                     _doublePinyinSchema = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private bool _enablePinnedResults = false;
+        public bool EnablePinnedResults
+        {
+            get => _enablePinnedResults;
+            set
+            {
+                if (_enablePinnedResults != value)
+                {
+                    _enablePinnedResults = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private bool _shouldCleanPinnedResultsFromUninstalledPlugins = false;
+        /// <summary>
+        /// Flag that indicates whether to automatically clean pinned results that belong to uninstalled plugins.
+        /// When it is true, it means some plugins are uninstalled.
+        /// And we need to clean results of any pinned results associated with plugins that have been uninstalled.
+        /// </summary>
+        /// <remarks>
+        /// It does not need to be included in the settings since after restarting,
+        /// the results of uninstalled plugins cannot be constructed.
+        /// </remarks>
+        [JsonIgnore]
+        public bool ShouldCleanPinnedResultsFromUninstalledPlugins
+        {
+            get => _shouldCleanPinnedResultsFromUninstalledPlugins;
+            set
+            {
+                if (_shouldCleanPinnedResultsFromUninstalledPlugins != value)
+                {
+                    _shouldCleanPinnedResultsFromUninstalledPlugins = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private PinnedLayoutOptions _pinnedResultsLayout = PinnedLayoutOptions.List;
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public PinnedLayoutOptions PinnedResultsLayout
+        {
+            get => _pinnedResultsLayout;
+            set
+            {
+                if (_pinnedResultsLayout != value)
+                {
+                    _pinnedResultsLayout = value;
                     OnPropertyChanged();
                 }
             }
@@ -638,6 +692,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                     list.Add(new(SettingWindowHotkey, "SettingWindowHotkey", () => SettingWindowHotkey = ""));
                 if (!string.IsNullOrEmpty(OpenHistoryHotkey))
                     list.Add(new(OpenHistoryHotkey, "OpenHistoryHotkey", () => OpenHistoryHotkey = ""));
+                if (!string.IsNullOrEmpty(GridModeHotkey))
+                    list.Add(new(GridModeHotkey, "GridModeHotkey", () => GridModeHotkey = ""));
                 if (!string.IsNullOrEmpty(OpenContextMenuHotkey))
                     list.Add(new(OpenContextMenuHotkey, "OpenContextMenuHotkey", () => OpenContextMenuHotkey = ""));
                 if (!string.IsNullOrEmpty(SelectNextPageHotkey))
@@ -800,5 +856,11 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         [EnumLocalizeKey(nameof(Localize.executedHistory))]
         LastOpened
+    }
+
+    public enum PinnedLayoutOptions
+    {
+        List,
+        Grid
     }
 }

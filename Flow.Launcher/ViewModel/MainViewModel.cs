@@ -43,17 +43,17 @@ namespace Flow.Launcher.ViewModel
         private string _queryTextBeforeLeaveResults;
         private string _ignoredQueryText; // Used to ignore query text change when switching between context menu and query results
 
-        private ResultsQuerySelection _selectionBeforeContextMenu;
-
         private readonly FlowLauncherJsonStorage<History> _historyItemsStorage;
         private readonly History _history;
         private int lastHistoryIndex = 1;
         private readonly FlowLauncherJsonStorage<UserSelectedRecord> _userSelectedRecordStorage;
         private readonly FlowLauncherJsonStorageTopMostRecord _topMostRecord;
         private readonly UserSelectedRecord _userSelectedRecord;
-
+        private readonly FlowLauncherJsonStorage<Pinned> _pinnedStorage;
+        private readonly Pinned _pinned;
         private CancellationTokenSource _updateSource; // Used to cancel old query flows
         private CancellationToken _updateToken; // Used to avoid ObjectDisposedException of _updateSource.Token
+        private CancellationToken _lastResultUpdateToken; // Used to clear results only once per query update session
 
         private ChannelWriter<ResultsForUpdate> _resultsUpdateChannelWriter;
         private Task _resultsViewUpdateTask;
@@ -67,14 +67,25 @@ namespace Flow.Launcher.ViewModel
             Priority = 0 // Priority is for calculating scores in UpdateResultView
         };
 
+        private readonly PluginMetadata _pinnedMetadata = new()
+        {
+            ID = "F8D7B8E9D0C14B2A8A7B6C5D4E3F2G1H", // Custom ID for Pinned Results
+            Priority = 100 // Higher priority to stay on top
+        };
+
         private bool _taskbarShownByFlow = false;
+        private bool _suppressNextHomeListMouseSelect;
+        private bool _canEnterGridModeWithDown = true;
+        private bool _updatingSelectionState;
 
-        private sealed record ResultsQuerySelection(
-            ResultsViewModel Source,
-            string QueryText,
-            Result SelectedResult,
-            int SelectedIndex);
-
+        private enum SelectionSurface
+        {
+            Results,
+            PinnedResults,
+            History,
+            ContextMenu
+        }
+        
         #endregion
 
         #region Constructor
@@ -102,6 +113,7 @@ namespace Flow.Launcher.ViewModel
                         break;
                     case nameof(Settings.ItemHeightSize):
                         OnPropertyChanged(nameof(ItemHeightSize));
+                        OnPropertyChanged(nameof(PinnedGridReservedResultCount));
                         break;
                     case nameof(Settings.ResultItemFontSize):
                         OnPropertyChanged(nameof(ResultItemFontSize));
@@ -157,6 +169,24 @@ namespace Flow.Launcher.ViewModel
                     case nameof(Settings.OpenHistoryHotkey):
                         OnPropertyChanged(nameof(OpenHistoryHotkey));
                         break;
+                    case nameof(Settings.UseGlyphIcons):
+                    case nameof(Settings.ShowBadges):
+                    case nameof(Settings.ShowBadgesGlobalOnly):
+                        QueryResults();
+                        break;
+                    case nameof(Settings.MaxResultsToShow):
+                    case nameof(Settings.EnablePinnedResults):
+                    case nameof(Settings.PinnedResultsLayout):
+                        OnPropertyChanged(nameof(PinnedGridReservedResultCount));
+                        QueryResults();
+                        break;
+                    case nameof(Settings.ShouldCleanPinnedResultsFromUninstalledPlugins):
+                        if (Settings.ShouldCleanPinnedResultsFromUninstalledPlugins)
+                        {
+                            Settings.ShouldCleanPinnedResultsFromUninstalledPlugins = false;
+                            QueryResults();
+                        }
+                        break;
                 }
             };
 
@@ -165,23 +195,34 @@ namespace Flow.Launcher.ViewModel
             _userSelectedRecordStorage = new FlowLauncherJsonStorage<UserSelectedRecord>();
             _userSelectedRecord = _userSelectedRecordStorage.Load();
             _topMostRecord = new FlowLauncherJsonStorageTopMostRecord();
-
+            _pinnedStorage = new FlowLauncherJsonStorage<Pinned>();
+            _pinned = _pinnedStorage.Load();
             ContextMenu = new ResultsViewModel(Settings, this)
             {
                 LeftClickResultCommand = OpenResultCommand,
-                RightClickResultCommand = ToggleContextMenuCommand,
+                RightClickResultCommand = LoadContextMenuCommand,
+                MouseSelectCommand = MouseSelectCommand,
                 IsPreviewOn = Settings.AlwaysPreview
             };
             Results = new ResultsViewModel(Settings, this)
             {
                 LeftClickResultCommand = OpenResultCommand,
-                RightClickResultCommand = ToggleContextMenuCommand,
+                RightClickResultCommand = LoadContextMenuCommand,
+                MouseSelectCommand = MouseSelectCommand,
                 IsPreviewOn = Settings.AlwaysPreview
             };
             History = new ResultsViewModel(Settings, this)
             {
                 LeftClickResultCommand = OpenResultCommand,
-                RightClickResultCommand = ToggleContextMenuCommand,
+                RightClickResultCommand = LoadContextMenuCommand,
+                MouseSelectCommand = MouseSelectCommand,
+                IsPreviewOn = Settings.AlwaysPreview
+            };
+            PinnedResults = new ResultsViewModel(Settings, this)
+            {
+                LeftClickResultCommand = OpenResultCommand,
+                RightClickResultCommand = LoadContextMenuCommand,
+                MouseSelectCommand = MouseSelectCommand,
                 IsPreviewOn = Settings.AlwaysPreview
             };
             _selectedResults = Results;
@@ -190,6 +231,7 @@ namespace Flow.Launcher.ViewModel
 
             Results.PropertyChanged += OnResultsPropertyChanged;
             History.PropertyChanged += OnHistoryPropertyChanged;
+            PinnedResults.PropertyChanged += OnPinnedResultsPropertyChanged;
 
             RegisterViewUpdate();
             _ = RegisterClockAndDateUpdateAsync();
@@ -231,7 +273,7 @@ namespace Flow.Launcher.ViewModel
                             // Indicate if to clear existing results so to show only ones from plugins with action keywords
                             var query = item.Query;
                             var currentIsHomeQuery = query.IsHomeQuery;
-                            var shouldClearExistingResults = ShouldClearExistingResultsForQuery(query, currentIsHomeQuery);
+                            var shouldClearExistingResults = ShouldClearExistingResultsForQuery(query, currentIsHomeQuery, item.Token);
                             _lastQuery = item.Query;
                             _previousIsHomeQuery = currentIsHomeQuery;
 
@@ -343,18 +385,16 @@ namespace Flow.Launcher.ViewModel
         {
             if (QueryResultsSelected())
             {
-                SelectedResults = History;
+                ActivateHistorySurface();
                 if (History.Results.Count > 0)
                 {
-                    SelectedResults.SelectedIndex = 0;
-                    SelectedResults.SelectedItem = History.Results[0];
+                    SelectSurfaceItem(SelectionSurface.History, 0);
                 }
             }
             else
             {
-                SelectedResults = Results;
-                PreviewSelectedItem = Results.SelectedItem;
-                await UpdatePreviewAsync();
+                ActivateResultsSurface();
+                UpdatePreviewSelection(SelectionSurface.Results);
             }
         }
 
@@ -404,19 +444,7 @@ namespace Flow.Launcher.ViewModel
         }
 
         [RelayCommand]
-        private async Task ToggleContextMenuAsync()
-        {
-            if (ContextMenuSelected())
-            {
-                await ReturnFromContextMenuAsync();
-            }
-            else
-            {
-                EnterContextMenu();
-            }
-        }
-
-        private void EnterContextMenu()
+        private async Task LoadContextMenuAsync()
         {
             // For Dialog Jump and right click mode, we need to navigate to the path
             if (_isDialogJump && Settings.DialogJumpResultBehaviour == DialogJumpResultBehaviours.RightClick)
@@ -433,73 +461,27 @@ namespace Flow.Launcher.ViewModel
                 return;
             }
 
-            // Check if the selected result is a history result or a regular result
-            // Regular results need a valid plugin ID. History results use Flow's built-in context menu and
-            // can appear in either the dedicated history view or the home-page result list.
-            var selected = SelectedResults.SelectedItem?.Result;
-            if (selected == null) return;
-            var isHistoryResult = selected is LastOpenedHistoryResult
-                && selected.ContextData is LastOpenedHistoryResult;
-            if (!isHistoryResult && (!QueryResultsSelected() || string.IsNullOrEmpty(selected.PluginID))) return;
-
-            _selectionBeforeContextMenu = new ResultsQuerySelection(
-                SelectedResults,
-                QueryText,
-                selected,
-                SelectedResults.SelectedIndex);
-
-            // Load context menu
-            SelectedResults = ContextMenu;
-        }
-
-        private async Task ReturnFromContextMenuAsync()
-        {
-            var previousSelection = _selectionBeforeContextMenu;
-            var source = previousSelection?.Source ?? Results;
-
-            // Return to the previous results view and restore the query text
-            SelectedResults = source;
-            if (source == History)
+            // For query mode, we load context menu
+            if (QueryResultsSelected())
             {
-                await ChangeQueryTextAsync(previousSelection?.QueryText);
-
-                // Returning to History rebuilds its results and selects the first row. Locate the rebuilt
-                // context-menu target, falling back to its previous index if the history context menu changed meanwhile.
-                var restoredIndex = previousSelection?.SelectedResult == null
-                    ? -1
-                    : source.Results.FindIndex(result =>
-                        result.Result != null &&
-                        ResultEqual(result.Result, previousSelection.SelectedResult));
-                if (restoredIndex < 0 && previousSelection?.SelectedIndex >= 0 && source.Results.Count > 0)
+                var selectedResult = SelectedResults.SelectedItem?.Result;
+                if (selectedResult == null)
                 {
-                    restoredIndex = Math.Min(previousSelection.SelectedIndex, source.Results.Count - 1);
+                    selectedResult = GetSelectedGridPinnedResult();
                 }
-                if (restoredIndex >= 0)
+
+                // When switch to ContextMenu from QueryResults, but no item being chosen, should do nothing
+                // i.e. Shift+Enter/Ctrl+O right after Alt + Space should do nothing
+                if (selectedResult != null &&
+                    !string.IsNullOrEmpty(selectedResult.PluginID)) // Do not show context menu for history results
                 {
-                    source.SelectedIndex = restoredIndex;
-                    source.SelectedItem = source.Results[restoredIndex];
+                    ActivateContextMenuSurface();
                 }
-            }
-
-            // Refresh the preview panel to show the previously selected result
-            PreviewSelectedItem = source.SelectedItem;
-            await UpdatePreviewAsync();
-
-            _selectionBeforeContextMenu = null;
-        }
-
-        private static bool ResultEqual(Result result1, Result result2)
-        {
-            if (string.IsNullOrEmpty(result1.RecordKey) || string.IsNullOrEmpty(result2.RecordKey))
-            {
-                return result1.Title == result2.Title
-                    && result1.SubTitle == result2.SubTitle
-                    && result1.PluginID == result2.PluginID;
             }
             else
             {
-                return result1.RecordKey == result2.RecordKey
-                    && result1.PluginID == result2.PluginID;
+                ActivateResultsSurface();
+                UpdatePreviewSelection(SelectionSurface.Results);
             }
         }
 
@@ -555,7 +537,10 @@ namespace Flow.Launcher.ViewModel
         {
             // Must check query results selected before executing the action
             var queryResultsSelected = QueryResultsSelected();
-            var results = SelectedResults;
+            
+            // If we are in grid mode, we should use PinnedResults instead of SelectedResults
+            var results = IsGridMode ? PinnedResults : SelectedResults;
+            
             if (index is not null)
             {
                 results.SelectedIndex = int.Parse(index);
@@ -613,6 +598,407 @@ namespace Flow.Launcher.ViewModel
             // Record user selected result for result ranking
             _userSelectedRecord.Add(result);
         }
+
+        private static SelectionSurface ParseSelectionSurface(string surfaceName) => surfaceName switch
+        {
+            nameof(SelectionSurface.PinnedResults) => SelectionSurface.PinnedResults,
+            nameof(SelectionSurface.History) => SelectionSurface.History,
+            nameof(SelectionSurface.ContextMenu) => SelectionSurface.ContextMenu,
+            _ => SelectionSurface.Results
+        };
+
+        private ResultsViewModel GetResultsViewModel(SelectionSurface surface) => surface switch
+        {
+            SelectionSurface.PinnedResults => PinnedResults,
+            SelectionSurface.History => History,
+            SelectionSurface.ContextMenu => ContextMenu,
+            _ => Results
+        };
+
+        private static bool IsQuerySurface(SelectionSurface surface)
+            => surface is SelectionSurface.Results or SelectionSurface.PinnedResults;
+
+        private static bool IsSelectionChanged(PropertyChangedEventArgs args)
+            => args.PropertyName == nameof(ResultsViewModel.SelectedItem);
+
+        private ResultViewModel GetSelectedItem(SelectionSurface surface)
+            => GetResultsViewModel(surface).SelectedItem;
+
+        private void RunSelectionUpdate(Action update)
+        {
+            var previous = _updatingSelectionState;
+            _updatingSelectionState = true;
+            try
+            {
+                update();
+            }
+            finally
+            {
+                _updatingSelectionState = previous;
+            }
+        }
+
+        private static void ClearSelection(ResultsViewModel resultsViewModel)
+        {
+            resultsViewModel.SelectedIndex = -1;
+            resultsViewModel.SelectedItem = null;
+        }
+
+        private void SetGridMode(bool isGridMode, bool clearInactiveQuerySelection = true)
+        {
+            if (_isGridMode == isGridMode)
+            {
+                if (clearInactiveQuerySelection)
+                {
+                    RunSelectionUpdate(() => ClearSelection(isGridMode ? Results : PinnedResults));
+                }
+
+                return;
+            }
+
+            _isGridMode = isGridMode;
+            if (clearInactiveQuerySelection)
+            {
+                RunSelectionUpdate(() => ClearSelection(isGridMode ? Results : PinnedResults));
+            }
+
+            OnPropertyChanged(nameof(IsGridMode));
+        }
+
+        private void SelectSurfaceItem(SelectionSurface surface, int index, bool clearInactiveSelections = false, bool wrap = false)
+        {
+            var resultsViewModel = GetResultsViewModel(surface);
+            if (resultsViewModel.Results.Count == 0)
+            {
+                RunSelectionUpdate(() => ClearSelection(resultsViewModel));
+                UpdatePreviewSelection(null);
+                return;
+            }
+
+            var boundedIndex = wrap
+                ? (resultsViewModel.Results.Count + index) % resultsViewModel.Results.Count
+                : Math.Max(0, Math.Min(index, resultsViewModel.Results.Count - 1));
+
+            RunSelectionUpdate(() =>
+            {
+                if (IsQuerySurface(surface))
+                {
+                    SetGridMode(surface == SelectionSurface.PinnedResults);
+                }
+
+                if (clearInactiveSelections)
+                {
+                    if (surface != SelectionSurface.Results)
+                    {
+                        ClearSelection(Results);
+                    }
+
+                    if (surface != SelectionSurface.PinnedResults)
+                    {
+                        ClearSelection(PinnedResults);
+                    }
+
+                    if (surface != SelectionSurface.History)
+                    {
+                        ClearSelection(History);
+                    }
+                }
+
+                resultsViewModel.SelectedIndex = boundedIndex;
+                resultsViewModel.SelectedItem = resultsViewModel.Results[boundedIndex];
+            });
+
+            _selectedItemFromQueryResults = IsQuerySurface(surface);
+            UpdatePreviewSelection(surface);
+        }
+
+        private void UpdatePreviewSelection(SelectionSurface surface)
+            => UpdatePreviewSelection(GetSelectedItem(surface));
+
+        private void UpdatePreviewSelection(ResultViewModel item, bool refresh = true)
+        {
+            PreviewSelectedItem = item;
+            if (refresh)
+            {
+                _ = UpdatePreviewSafelyAsync();
+            }
+        }
+
+        private async Task UpdatePreviewSafelyAsync()
+        {
+            try
+            {
+                await UpdatePreviewAsync();
+            }
+            catch (Exception e)
+            {
+                App.API.LogError(ClassName, $"Error updating preview: {e}");
+            }
+        }
+
+        private void HandleSelectionChanged(SelectionSurface surface)
+        {
+            if (_updatingSelectionState)
+            {
+                return;
+            }
+
+            if (surface == SelectionSurface.Results && !QueryResultsSelected())
+            {
+                return;
+            }
+
+            if (surface == SelectionSurface.PinnedResults && !QueryResultsSelected())
+            {
+                return;
+            }
+
+            if (surface == SelectionSurface.History && !HistorySelected())
+            {
+                return;
+            }
+
+            if (surface == SelectionSurface.Results && IsHomePinnedGridActive && IsGridMode)
+            {
+                return;
+            }
+
+            if (surface == SelectionSurface.PinnedResults && PinnedResults.SelectedItem == null)
+            {
+                return;
+            }
+
+            if (IsQuerySurface(surface))
+            {
+                SetGridMode(surface == SelectionSurface.PinnedResults);
+                _selectedItemFromQueryResults = true;
+            }
+            else if (surface == SelectionSurface.History)
+            {
+                _selectedItemFromQueryResults = false;
+            }
+
+            UpdatePreviewSelection(surface);
+        }
+
+        [RelayCommand]
+        private void MouseSelect(string surfaceName)
+        {
+            var surface = ParseSelectionSurface(surfaceName);
+            var isHomePinnedGrid = QueryResultsSelected() && IsHomePinnedGridActive;
+
+            if (!isHomePinnedGrid)
+            {
+                HandleSelectionChanged(surface);
+                return;
+            }
+
+            if (surface == SelectionSurface.Results && _suppressNextHomeListMouseSelect)
+            {
+                _suppressNextHomeListMouseSelect = false;
+                return;
+            }
+
+            if (surface == SelectionSurface.PinnedResults)
+            {
+                _suppressNextHomeListMouseSelect = false;
+            }
+
+            HandleSelectionChanged(surface);
+        }
+
+        private void ApplyHomePinnedSelectionState()
+        {
+            if (!QueryResultsSelected() || !IsHomePinnedGridActive || PinnedResults.Results.Count == 0)
+            {
+                return;
+            }
+
+            _suppressNextHomeListMouseSelect = true;
+            SelectSurfaceItem(SelectionSurface.PinnedResults, 0, clearInactiveSelections: true);
+        }
+
+        private void RestoreResultsSelectionFromPinnedGrid()
+        {
+            if (Results.Results.Count == 0)
+            {
+                SetGridMode(false);
+                UpdatePreviewSelection(null);
+                return;
+            }
+
+            var index = Results.SelectedIndex == -1 ? 0 : Results.SelectedIndex;
+            SelectSurfaceItem(SelectionSurface.Results, index);
+        }
+
+        private void ActivateResultsSurface()
+        {
+            if (!QueryResultsSelected())
+            {
+                ActivateResultsSurface();
+            }
+        }
+
+        private void ActivateHistorySurface()
+        {
+            if (!HistorySelected())
+            {
+                SelectedResults = History;
+            }
+        }
+
+        private void ActivateContextMenuSurface()
+        {
+            if (!ContextMenuSelected())
+            {
+                SelectedResults = ContextMenu;
+            }
+        }
+
+        internal void ResetSelectionNavigationState()
+        {
+            _canEnterGridModeWithDown = IsHomePinnedGridActive;
+        }
+
+        internal bool HandleSelectionNavigationKey(Key key, int pinnedGridColumnCount)
+        {
+            if (IsGridMode && QueryResultsSelected())
+            {
+                switch (key)
+                {
+                    case Key.Right:
+                        SelectSurfaceItem(SelectionSurface.PinnedResults, PinnedResults.SelectedIndex + 1, wrap: true);
+                        return true;
+                    case Key.Left:
+                        SelectSurfaceItem(SelectionSurface.PinnedResults, PinnedResults.SelectedIndex - 1, wrap: true);
+                        return true;
+                    case Key.Up:
+                        SelectPreviousPinnedGridRow(pinnedGridColumnCount);
+                        return true;
+                    case Key.Down:
+                        SelectNextPinnedGridRowOrResults(pinnedGridColumnCount);
+                        return true;
+                    case Key.Enter:
+                        PinnedResults.LeftClickResultCommand?.Execute(null);
+                        return true;
+                }
+            }
+
+            switch (key)
+            {
+                case Key.Down:
+                    if (CanEnterPinnedGridWithDown())
+                    {
+                        _canEnterGridModeWithDown = false;
+                        ApplyHomePinnedSelectionState();
+                    }
+                    else
+                    {
+                        SelectNextItemCommand.Execute(null);
+                    }
+
+                    return true;
+                case Key.Up:
+                    if (CanMoveUpToPinnedGrid())
+                    {
+                        SelectSurfaceItem(SelectionSurface.PinnedResults, 0, clearInactiveSelections: true);
+                    }
+                    else
+                    {
+                        SelectPrevItemCommand.Execute(null);
+                    }
+
+                    return true;
+                case Key.PageDown:
+                    SelectNextPageCommand.Execute(null);
+                    return true;
+                case Key.PageUp:
+                    SelectPrevPageCommand.Execute(null);
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        private bool CanEnterPinnedGridWithDown()
+        {
+            return _canEnterGridModeWithDown
+                   && IsHomePinnedGridActive
+                   && IsPinnedGridAvailableForKeyboardNavigation();
+        }
+
+        private bool CanMoveUpToPinnedGrid()
+        {
+            return IsPinnedGridAvailableForKeyboardNavigation()
+                   && QueryResultsSelected()
+                   && Results.SelectedIndex == 0;
+        }
+
+        private bool IsPinnedGridAvailableForKeyboardNavigation()
+        {
+            return Settings.EnablePinnedResults
+                   && Settings.PinnedResultsLayout == PinnedLayoutOptions.Grid
+                   && string.IsNullOrEmpty(QueryText)
+                   && PinnedResults.Results.Count > 0
+                   && ContextMenu.Visibility == Visibility.Collapsed
+                   && History.Visibility == Visibility.Collapsed;
+        }
+
+        private void SelectPreviousPinnedGridRow(int pinnedGridColumnCount)
+        {
+            if (PinnedResults.SelectedIndex < 0)
+            {
+                SelectSurfaceItem(SelectionSurface.PinnedResults, PinnedResults.Results.Count - 1);
+                return;
+            }
+
+            var previousRowIndex = PinnedResults.SelectedIndex - pinnedGridColumnCount;
+            if (previousRowIndex >= 0)
+            {
+                SelectSurfaceItem(SelectionSurface.PinnedResults, previousRowIndex);
+                return;
+            }
+
+            SelectLastResultsItem();
+        }
+
+        private void SelectNextPinnedGridRowOrResults(int pinnedGridColumnCount)
+        {
+            if (PinnedResults.SelectedIndex < 0)
+            {
+                SelectSurfaceItem(SelectionSurface.PinnedResults, 0);
+                return;
+            }
+
+            var nextRowIndex = PinnedResults.SelectedIndex + pinnedGridColumnCount;
+            if (nextRowIndex < PinnedResults.Results.Count)
+            {
+                SelectSurfaceItem(SelectionSurface.PinnedResults, nextRowIndex);
+                return;
+            }
+
+            _canEnterGridModeWithDown = false;
+            RestoreResultsSelectionFromPinnedGrid();
+        }
+
+        private void SelectLastResultsItem()
+        {
+            _canEnterGridModeWithDown = false;
+
+            if (Results.Results.Count == 0)
+            {
+                SetGridMode(false);
+                UpdatePreviewSelection(null);
+                return;
+            }
+
+            SelectSurfaceItem(SelectionSurface.Results, Results.Results.Count - 1);
+        }
+
+        internal bool IsHomePinnedGridActive =>
+            string.IsNullOrEmpty(QueryText)
+            && Settings.EnablePinnedResults
+            && Settings.PinnedResultsLayout == PinnedLayoutOptions.Grid;
 
         private static IReadOnlyList<Result> DeepCloneResults(IReadOnlyList<Result> results, bool isDialogJump, CancellationToken token = default)
         {
@@ -707,29 +1093,40 @@ namespace Flow.Launcher.ViewModel
         }
 
         [RelayCommand]
+        public void ToggleGridMode()
+        {
+            if (Settings.EnablePinnedResults && Settings.PinnedResultsLayout == PinnedLayoutOptions.Grid && string.IsNullOrEmpty(QueryText))
+            {
+                if (IsGridMode)
+                {
+                    RestoreResultsSelectionFromPinnedGrid();
+                }
+                else
+                {
+                    ApplyHomePinnedSelectionState();
+                }
+            }
+        }
+
+        [RelayCommand]
         private async Task EscAsync()
         {
-            if (ContextMenuSelected())
+            if (!QueryResultsSelected())
             {
-                await ReturnFromContextMenuAsync();
+                ActivateResultsSurface();
+                UpdatePreviewSelection(SelectionSurface.Results);
             }
-            else if (!QueryResultsSelected())
-            {
-                SelectedResults = Results;
-                PreviewSelectedItem = Results.SelectedItem;
-                await UpdatePreviewAsync();
-            }
-            else
-            {
-                Hide();
-            }
+
+            SetGridMode(false);
+
+            Hide();
         }
 
         public void BackToQueryResults()
         {
             if (!QueryResultsSelected())
             {
-                SelectedResults = Results;
+                ActivateResultsSurface();
             }
         }
 
@@ -760,6 +1157,8 @@ namespace Flow.Launcher.ViewModel
 
         public ResultsViewModel Results { get; private set; }
 
+        public ResultsViewModel PinnedResults { get; private set; }
+
         public ResultsViewModel ContextMenu { get; private set; }
 
         public ResultsViewModel History { get; private set; }
@@ -773,7 +1172,12 @@ namespace Flow.Launcher.ViewModel
             set
             {
                 _queryText = value;
+                if (!string.IsNullOrEmpty(value))
+                {
+                    SetGridMode(false);
+                }
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(PinnedGridReservedResultCount));
             }
         }
 
@@ -902,11 +1306,17 @@ namespace Flow.Launcher.ViewModel
                 var isReturningFromContextMenu = ContextMenuSelected();
                 var isReturningFromHistory = HistorySelected();
                 _selectedResults = value;
+
                 if (QueryResultsSelected())
                 {
                     Results.Visibility = Visibility.Visible;
                     ContextMenu.Visibility = Visibility.Collapsed;
                     History.Visibility = Visibility.Collapsed;
+
+                    if (isReturningFromHistory)
+                    {
+                        RunSelectionUpdate(() => ClearSelection(History));
+                    }
 
                     // QueryText setter (used in ChangeQueryText) runs the query again, resetting the selected
                     // result from the one that was selected before going into the context menu to the first result.
@@ -926,11 +1336,20 @@ namespace Flow.Launcher.ViewModel
                         ChangeQueryText(_queryTextBeforeLeaveResults);
                     }
 
+                    // When returning from History to home query with pinned-grid preferred,
+                    // re-apply pinned-grid selection/cleanup even if IsGridMode is already true.
+                    // This prevents stale list-side selection from persisting across repeated
+                    // Ctrl+H -> mouse select -> Esc cycles.
+                    if (isReturningFromHistory && IsHomePinnedGridActive)
+                    {
+                        ApplyHomePinnedSelectionState();
+                    }
+
                     // If we are returning from history and we have not set select item yet,
                     // we need to clear the preview selected item
                     if (isReturningFromHistory && _selectedItemFromQueryResults.HasValue && (!_selectedItemFromQueryResults.Value))
                     {
-                        PreviewSelectedItem = null;
+                        UpdatePreviewSelection(null);
                     }
                 }
                 else
@@ -946,10 +1365,7 @@ namespace Flow.Launcher.ViewModel
                         ContextMenu.Visibility = Visibility.Visible;
                         History.Visibility = Visibility.Collapsed;
                     }
-                    if (isReturningFromQueryResults)
-                    {
-                        _queryTextBeforeLeaveResults = QueryText;
-                    }
+                    _queryTextBeforeLeaveResults = QueryText;
 
                     // Because of Fody's optimization
                     // setter won't be called when property value is not changed.
@@ -967,7 +1383,7 @@ namespace Flow.Launcher.ViewModel
                         // we need to clear the preview selected item
                         if (isReturningFromQueryResults && _selectedItemFromQueryResults.HasValue && _selectedItemFromQueryResults.Value)
                         {
-                            PreviewSelectedItem = null;
+                            UpdatePreviewSelection(null);
                         }
                     }
                 }
@@ -986,6 +1402,19 @@ namespace Flow.Launcher.ViewModel
         // This is to be used for determining the visibility status of the main window instead of MainWindowVisibility
         // because it is more accurate and reliable representation than using Visibility as a condition check
         public bool MainWindowVisibilityStatus { get; set; } = true;
+
+        private bool _isGridMode;
+        /// <summary>
+        /// Indicates whether home pinned-results grid mode is active.
+        /// When enabled, list-side selection is cleared to keep grid as the active selection source.
+        /// When disabled, pinned-grid selection is cleared to return to list-side selection behavior.
+        /// This prevents stale selection from both areas appearing highlighted at the same time.
+        /// </summary>
+        public bool IsGridMode
+        {
+            get => _isGridMode;
+            set => SetGridMode(value);
+        }
 
         public event VisibilityChangedEventHandler VisibilityChanged;
         public event ActualApplicationThemeChangedEventHandler ActualApplicationThemeChanged;
@@ -1020,6 +1449,38 @@ namespace Flow.Launcher.ViewModel
         {
             get => Settings.WindowHeightSize;
             set => Settings.WindowHeightSize = value;
+        }
+
+        private double _pinnedGridReservedResultCount = -1;
+        public double PinnedGridReservedResultCount
+        {
+            get
+            {
+                double value = 0;
+                if (string.IsNullOrEmpty(QueryText) &&
+                    Settings.EnablePinnedResults &&
+                    Settings.PinnedResultsLayout == PinnedLayoutOptions.Grid)
+                {
+                    value = Math.Max(1, Settings.MaxResultsToShow * 0.25);
+                }
+
+                if (value != _pinnedGridReservedResultCount)
+                {
+                    _pinnedGridReservedResultCount = value;
+                    OnPropertyChanged(nameof(PinnedGridHeightForEmptyQuery));
+                }
+
+                return _pinnedGridReservedResultCount;
+            }
+        }
+
+        public double PinnedGridHeightForEmptyQuery
+        {
+            get
+            {
+                // 10 is the sum of the top and bottom margin of the pinned result grid
+                return Math.Max(0, (Settings.ItemHeightSize * PinnedGridReservedResultCount) - 8);
+            }
         }
 
         public double QueryBoxFontSize
@@ -1086,45 +1547,27 @@ namespace Flow.Launcher.ViewModel
 
         #endregion
 
-        private async void OnResultsPropertyChanged(object sender, PropertyChangedEventArgs args)
+        private void OnResultsPropertyChanged(object sender, PropertyChangedEventArgs args)
         {
-            switch (args.PropertyName)
+            if (IsSelectionChanged(args))
             {
-                case nameof(Results.SelectedItem):
-                    _selectedItemFromQueryResults = true;
-                    PreviewSelectedItem = Results.SelectedItem;
-                    try
-                    {
-                        await UpdatePreviewAsync();
-                    }
-                    catch (Exception e)
-                    {
-                        App.API.LogError(ClassName,
-                            $"Error updating preview on result selection: {e}");
-                    }
-
-                    break;
+                HandleSelectionChanged(SelectionSurface.Results);
             }
         }
 
-        private async void OnHistoryPropertyChanged(object sender, PropertyChangedEventArgs args)
+        private void OnPinnedResultsPropertyChanged(object sender, PropertyChangedEventArgs args)
         {
-            switch (args.PropertyName)
+            if (IsSelectionChanged(args))
             {
-                case nameof(History.SelectedItem):
-                    _selectedItemFromQueryResults = false;
-                    PreviewSelectedItem = History.SelectedItem;
-                    try
-                    {
-                        await UpdatePreviewAsync();
-                    }
-                    catch (Exception e)
-                    {
-                        App.API.LogError(ClassName,
-                            $"Error updating preview on history selection: {e}");
-                    }
+                HandleSelectionChanged(SelectionSurface.PinnedResults);
+            }
+        }
 
-                    break;
+        private void OnHistoryPropertyChanged(object sender, PropertyChangedEventArgs args)
+        {
+            if (IsSelectionChanged(args))
+            {
+                HandleSelectionChanged(SelectionSurface.History);
             }
         }
 
@@ -1145,8 +1588,11 @@ namespace Flow.Launcher.ViewModel
             get => _previewSelectedItem;
             set
             {
-                _previewSelectedItem = value;
-                OnPropertyChanged();
+                if (_previewSelectedItem != value)
+                {
+                    _previewSelectedItem = value;
+                    OnPropertyChanged();
+                }
             }
         }
 
@@ -1278,13 +1724,8 @@ namespace Flow.Launcher.ViewModel
 
         private bool CanExternalPreviewSelectedResult(out string path)
         {
-            path = QueryResultsPreviewed() ? Results.SelectedItem?.Result?.Preview.FilePath : string.Empty;
+            path = PreviewSelectedItem?.Result?.Preview.FilePath ?? string.Empty;
             return !string.IsNullOrEmpty(path);
-        }
-
-        private bool QueryResultsPreviewed()
-        {
-            return PreviewSelectedItem == Results.SelectedItem;
         }
 
         // Clears the manual toggle then reevaluates preview
@@ -1332,6 +1773,11 @@ namespace Flow.Launcher.ViewModel
 
         public void Query(bool searchDelay, bool isReQuery = false)
         {
+            if (IsSelectedResultPinned() && ContextMenuSelected())
+            {
+                QueryContextMenu();
+                return;
+            }
             if (QueryResultsSelected())
             {
                 // We use this to skip creating a new result set and keep the old results.
@@ -1376,7 +1822,7 @@ namespace Flow.Launcher.ViewModel
             else if (HistorySelected())
             {
                 QueryHistory();
-            }
+            } 
         }
 
         private void QueryContextMenu()
@@ -1385,32 +1831,18 @@ namespace Flow.Launcher.ViewModel
             var query = QueryText.ToLower().Trim();
             ContextMenu.Clear();
 
-            var selected = _selectionBeforeContextMenu?.SelectedResult;
-
-            if (selected is LastOpenedHistoryResult
-                && selected.ContextData is LastOpenedHistoryResult historyItem)
+            var selected = Results.SelectedItem?.Result;
+            if (selected == null)
             {
-                var results = new List<Result>
-                {
-                    ContextMenuDeleteHistory(historyItem),
-                    ContextMenuHistoryInfo(historyItem)
-                };
-                if (!string.IsNullOrEmpty(query))
-                {
-                    results = results.Where(r =>
-                        App.API.FuzzySearch(query, r.Title).IsSearchPrecisionScoreMet() ||
-                        App.API.FuzzySearch(query, r.SubTitle).IsSearchPrecisionScoreMet()).ToList();
-                }
-                ContextMenu.AddResults(results, id);
-                return;
+                selected = GetSelectedGridPinnedResult();
             }
-
             if (selected != null && // SelectedItem returns null if selection is empty.
                 !string.IsNullOrEmpty(selected.PluginID))  // SelectedItem must have a valid PluginID, history results do not.
             {
                 List<Result> results = PluginManager.GetContextMenusForPlugin(selected);
                 results.Add(ContextMenuTopMost(selected));
                 results.Add(ContextMenuPluginSettings(selected));
+                results.AddRange(ContextMenuPinActions(selected));
                 results.Add(ContextMenuPluginInfo(selected));
 
                 if (!string.IsNullOrEmpty(query))
@@ -1439,6 +1871,46 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        private List<Result> ContextMenuPinActions(Result selected)
+        {
+            var queryToPin = selected.OriginQuery?.TrimmedQuery ?? QueryText;
+            var isQueryPinned = _pinned.Exists(selected, queryToPin);
+            var isResultPinned = _pinned.Exists(selected);
+            var actions = new List<Result>
+            {
+                new()
+                {
+                    Title = isResultPinned ? Localize.unpinFromFlow() : Localize.pinResult(),
+                    SubTitle = selected.Title,
+                    IcoPath = Constant.ResultsIcon,
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE8BC"),
+                    Action = _ =>
+                    {
+                        _pinned.AddOrRemove(selected, string.Empty, isResultPinned);
+                        App.API.ShowMsg(Localize.success());
+                        App.API.ReQuery();
+                        return false;
+                    }
+                },
+                new()
+                {
+                    Title = isQueryPinned ? Localize.unpinFromFlow() : Localize.pinQuery(),
+                    SubTitle = queryToPin,
+                    IcoPath = Constant.SearchIcon,
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE721"),
+                    Action = _ =>
+                    {
+                        _pinned.AddOrRemove(selected, queryToPin, isQueryPinned);
+                        App.API.ShowMsg(Localize.success());
+                        App.API.ReQuery();
+                        return false;
+                    }
+                }
+            };
+
+            return actions;
+        }
+
         private void QueryHistory()
         {
             const string id = "Query History ID";
@@ -1460,6 +1932,69 @@ namespace Flow.Launcher.ViewModel
             {
                 History.AddResults(results, id);
             }
+        }
+
+
+        private Result GetSelectedGridPinnedResult()
+        {
+            if (Settings.EnablePinnedResults)
+            {
+                return PinnedResults.SelectedItem?.Result;
+
+            }
+            return null;
+        }
+
+        public bool IsSelectedResultPinned()
+        {
+            if (!Settings.EnablePinnedResults)
+            {
+                return false;
+            }
+
+            var selected = Results.SelectedItem?.Result;
+            if (selected == null)
+            {
+                selected = GetSelectedGridPinnedResult();
+            }
+            return selected != null && _pinned.Exists(selected);
+        }
+
+        private static List<Result> GetPinnedResultItems(IEnumerable<PinnedResultItem> items)
+        {
+            if (!items.Any()) return [];
+
+            var results = new List<Result>();
+
+            var itemsCopy = items.Select(x => x.DeepCopy()).OrderByDescending(x => x.LastPinnedAt);
+
+            foreach (var item in itemsCopy) 
+            {
+                // Only keep the results from the plugin that is initialized and unmodified
+                if (!PluginManager.PluginInitializedAndUnmodified(item.PluginID))
+                    continue;
+                
+                if (!item.IsQuery)
+                {
+                    item.AsyncAction = async c =>
+                    {
+                        // Use original pinned item to reflect correct result because properties like subtitle have been modified in copiedItem
+                        var reflectResult = await ResultHelper.PopulateResultsAsync(item, item.Query);
+                        if (reflectResult != null)
+                        {
+                            // Since some actions may need to hide the Flow window to execute
+                            // So let us populate the results of them
+                            return await reflectResult.ExecuteAsync(c);
+                        }
+
+                        // If we cannot get the result, do nothing
+                        return false;
+                    };
+                }
+                results.Add(item);
+
+            }
+            return results;
         }
 
         private List<Result> GetHistoryItems(IEnumerable<LastOpenedHistoryResult> historyItems, int? maxResult = null)
@@ -1486,14 +2021,13 @@ namespace Flow.Launcher.ViewModel
             foreach (var item in historyItems)
             {
                 var copiedItem = item.DeepCopyForHistoryStyle(Settings.HistoryStyle == HistoryStyle.LastOpened);
-                copiedItem.ContextData = item;
 
                 if (Settings.HistoryStyle == HistoryStyle.LastOpened)
                 {
                     copiedItem.AsyncAction = async c =>
                     {
                         // Use original history item to reflect correct result because properties like subtitle have been modified in copiedItem
-                        var reflectResult = await ResultHelper.PopulateResultsAsync(item);
+                        var reflectResult = await ResultHelper.PopulateResultsAsync(item, item.Query);
                         if (reflectResult != null)
                         {
                             // Since some actions may need to hide the Flow window to execute
@@ -1530,8 +2064,12 @@ namespace Flow.Launcher.ViewModel
         internal void RefreshLastOpenedHistoryResults()
         {
             _history.PopulateHistoryFromLegacyHistory();
-
             _history.UpdateIcoPathAbsolute();
+        }
+
+        internal void RefreshPinnedResults()
+        {
+            _pinned.UpdateIcoPathAbsolute();
         }
 
         private async Task QueryResultsAsync(bool searchDelay, bool isReQuery = false, bool reSelect = true)
@@ -1642,6 +2180,7 @@ namespace Flow.Launcher.ViewModel
                 // plugins are ICollection, meaning LINQ will get the Count and preallocate Array
 
                 Task[] tasks;
+                var refreshed = false;
                 if (currentIsHomeQuery)
                 {
                     if (ShouldClearExistingResultsForNonQuery(plugins))
@@ -1657,10 +2196,18 @@ namespace Flow.Launcher.ViewModel
                         true => Task.CompletedTask
                     }).ToArray();
 
-                    // Query history results for home page firstly so it will be put on top of the results
-                    if (Settings.ShowHistoryResultsForHomePage)
+                    // Query pinned results for home page before history results so it will be put on top of the results
+                    if (Settings.EnablePinnedResults)
+                    {
+                        QueryPinnedTask(Settings.PinnedResultsLayout, currentCancellationToken);
+                        refreshed = true;
+                    }
+
+                    // Query history results for home page firstly so it will be put before other plugin results
+                    if (Settings.ShowHomePage && Settings.ShowHistoryResultsForHomePage)
                     {
                         QueryHistoryTask(currentCancellationToken);
+                        refreshed = true;
                     }
                 }
                 else
@@ -1672,14 +2219,22 @@ namespace Flow.Launcher.ViewModel
                     }).ToArray();
                 }
 
-                try
+                if (tasks.Length > 0)
                 {
-                    // Check the code, WhenAll will translate all type of IEnumerable or Collection to Array, so make an array at first
-                    await Task.WhenAll(tasks);
+                    try
+                    {
+                        // Check the code, WhenAll will translate all type of IEnumerable or Collection to Array, so make an array at first
+                        await Task.WhenAll(tasks);
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        // nothing to do here
+                    }
                 }
-                catch (OperationCanceledException)
+                else if (!refreshed)
                 {
-                    // nothing to do here
+                    // Force a refresh when no tasks are executed
+                    QueryEmptyTask(currentCancellationToken);
                 }
 
                 if (currentCancellationToken.IsCancellationRequested) return;
@@ -1788,6 +2343,52 @@ namespace Flow.Launcher.ViewModel
                     App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
                 }
             }
+
+            void QueryPinnedTask(PinnedLayoutOptions layout, CancellationToken token)
+            {
+                var results = GetPinnedResultItems(_pinned.Items);
+
+                if (token.IsCancellationRequested) return;
+
+                App.API.LogDebug(ClassName, $"Update results for pinned items in {layout} mode");
+
+                if (layout == PinnedLayoutOptions.Grid)
+                {
+                    // If switching from List to Grid, we should clear and add the results
+                    PinnedResults.Clear();
+                    PinnedResults.AddResults(results, "PinnedGrid");
+                    ApplyHomePinnedSelectionState();
+
+                    // Force a refresh so that results will be updated when home page is disabled
+                    if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(_emptyResult, _pinnedMetadata, query,
+                        token, reSelect)))
+                    {
+                        App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
+                    }
+                }
+                else
+                {
+                    // If switching from Grid to List, we should clear the Grid
+                    PinnedResults.Clear();
+
+                    if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(results, _pinnedMetadata, query,
+                        token, reSelect)))
+                    {
+                        App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
+                    }
+                }
+            }
+
+            void QueryEmptyTask(CancellationToken token)
+            {
+                if (token.IsCancellationRequested) return;
+
+                if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(_emptyResult, _pinnedMetadata, query,
+                        token, reSelect)))
+                {
+                    App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
+                }
+            }
         }
 
         private async Task<Query> ConstructQueryAsync(string queryText, IEnumerable<CustomShortcutModel> customShortcuts,
@@ -1881,9 +2482,18 @@ namespace Flow.Launcher.ViewModel
         /// </summary>
         /// <param name="query">The current query.</param>
         /// <param name="currentIsHomeQuery">A flag indicating if the current query is a home query.</param>
+        /// <param name="updateToken">Token for the current query update session.</param>
         /// <returns>True if the existing results should be cleared, false otherwise.</returns>
-        private bool ShouldClearExistingResultsForQuery(Query query, bool currentIsHomeQuery)
+        private bool ShouldClearExistingResultsForQuery(Query query, bool currentIsHomeQuery, CancellationToken updateToken)
         {
+            // Each query update session can publish multiple plugin batches.
+            // Only the first batch is allowed to clear existing results. Otherwise
+            // certain result batch could go missing on subsequent clears
+            if (updateToken == _lastResultUpdateToken)
+                return false;
+
+            _lastResultUpdateToken = updateToken;
+
             // If previous or current results are from home query, we need to clear them
             if (_previousIsHomeQuery || currentIsHomeQuery)
             {
@@ -1912,7 +2522,7 @@ namespace Flow.Launcher.ViewModel
         /// <returns>True if existing results should be cleared, false otherwise.</returns>
         private bool ShouldClearExistingResultsForNonQuery(ICollection<PluginPair> plugins)
         {
-            if (!Settings.ShowHistoryResultsForHomePage && (plugins.Count == 0 || plugins.All(x => x.Metadata.HomeDisabled == true)))
+            if (!Settings.ShowHistoryResultsForHomePage && !Settings.EnablePinnedResults && (plugins.Count == 0 || plugins.All(x => x.Metadata.HomeDisabled == true)))
             {
                 App.API.LogDebug(ClassName, $"Existing results should be cleared for non-query");
                 return true;
@@ -1962,54 +2572,6 @@ namespace Flow.Launcher.ViewModel
             }
 
             return menu;
-        }
-
-        private Result ContextMenuDeleteHistory(LastOpenedHistoryResult historyItem)
-        {
-            return new Result
-            {
-                Title = Localize.delete(),
-                IcoPath = Constant.DeleteIcon,
-                Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE74D"),
-                PluginDirectory = Constant.ProgramDirectory,
-                AsyncAction = async context =>
-                {
-                    var source = _selectionBeforeContextMenu?.Source;
-                    var removeAllMatchingResults = Settings.HistoryStyle == HistoryStyle.LastOpened;
-                    if (_history.Remove(historyItem, removeAllMatchingResults) > 0)
-                    {
-                        _historyItemsStorage.Save();
-                    }
-
-                    await ReturnFromContextMenuAsync();
-
-                    // Home-page history is part of the regular result list, so refresh it after deletion.
-                    // The dedicated history view is refreshed while returning from the context menu.
-                    if (source == Results)
-                    {
-                        await QueryResultsAsync(false, isReQuery: true);
-                    }
-
-                    return false;
-                },
-                OriginQuery = historyItem.OriginQuery
-            };
-        }
-
-        /// <summary>
-        /// Creates a result to label the history context menu, based on the HistoryStyle
-        /// </summary>
-        private Result ContextMenuHistoryInfo(LastOpenedHistoryResult historyItem)
-        {
-            return new Result
-            {
-                Title = Settings.HistoryStyle == HistoryStyle.Query ? Localize.queryHistory() : Localize.executedHistory(),
-                IcoPath = Constant.HistoryIcon,
-                Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE81C"),
-                PluginDirectory = Constant.ProgramDirectory,
-                Action = _ => false,
-                OriginQuery = historyItem.OriginQuery
-            };
         }
 
         private static Result ContextMenuPluginSettings(Result result)
@@ -2074,7 +2636,7 @@ namespace Flow.Launcher.ViewModel
             return selected;
         }
 
-        internal bool HistorySelected()
+        private bool HistorySelected()
         {
             var selected = SelectedResults == History;
             return selected;
@@ -2306,7 +2868,7 @@ namespace Flow.Launcher.ViewModel
 
             if (!QueryResultsSelected())
             {
-                SelectedResults = Results;
+                ActivateResultsSurface();
             }
 
             await ChangeQueryTextAsync(string.Empty, true);
@@ -2353,6 +2915,7 @@ namespace Flow.Launcher.ViewModel
             // Update WPF properties
             MainWindowVisibility = Visibility.Visible;
             MainWindowVisibilityStatus = true;
+            ApplyHomePinnedSelectionState();
             VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = true });
 
             // Switch keyboard layout
@@ -2371,6 +2934,8 @@ namespace Flow.Launcher.ViewModel
 
         public async void Hide(bool reset = true)
         {
+            SetGridMode(false);
+
             if (reset)
             {
                 lastHistoryIndex = 1;
@@ -2461,6 +3026,7 @@ namespace Flow.Launcher.ViewModel
             _historyItemsStorage.Save();
             _userSelectedRecordStorage.Save();
             _topMostRecord.Save();
+            _pinnedStorage.Save();
         }
 
         /// <summary>
@@ -2534,6 +3100,8 @@ namespace Flow.Launcher.ViewModel
             bool reSelect = resultsForUpdates.First().ReSelectFirstResult;
 
             Results.AddResults(resultsForUpdates, token, reSelect);
+
+            ApplyHomePinnedSelectionState();
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>")]

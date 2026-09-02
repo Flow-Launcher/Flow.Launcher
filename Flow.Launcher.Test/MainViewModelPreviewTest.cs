@@ -1,6 +1,8 @@
-using System.Reflection;
+﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
@@ -292,11 +294,12 @@ namespace Flow.Launcher.Test
                 AlwaysPreview = false
             };
             var viewModel = CreatePreviewViewModel(settings, ResultAreaColumnPreviewShown);
-            SetExternalPreviewVisible(viewModel, true);
             viewModel.PreviewSelectedItem = ViewModel("Normal", PreviewVisibility.Optional, settings);
+            SetExternalPreviewVisible(viewModel, true);
 
             // Setup correctness assertions
             ClassicAssert.IsTrue(viewModel.ExternalPreviewVisible); // external is marked visible
+            ClassicAssert.IsFalse(viewModel.InternalPreviewVisible); // internal is marked hidden
             ClassicAssert.IsFalse(PluginManager.UseExternalPreview()); // no plugin that provides external previews
             ClassicAssert.IsFalse(settings.AlwaysPreview); // global AlwaysPreview setting is off
 
@@ -330,6 +333,60 @@ namespace Flow.Launcher.Test
             ClassicAssert.IsFalse(viewModel.InternalPreviewVisible);
         }
 
+        [Test]
+        public void GivenPreviewSelectedPinnedResult_WhenExternalPreviewPathChecked_ThenPreviewUsesPreviewTarget()
+        {
+            var settings = new Settings
+            {
+                AlwaysPreview = true
+            };
+
+            var viewModel = CreateSelectionViewModel(settings);
+            var pinnedPreview = ViewModel("Pinned", PreviewVisibility.Optional, settings);
+            pinnedPreview.Result.Preview.FilePath = @"C:\preview.txt";
+            viewModel.PreviewSelectedItem = pinnedPreview;
+
+            var parameters = new object[] { null };
+            var canPreview = (bool)typeof(MainViewModel)
+                .GetMethod("CanExternalPreviewSelectedResult", BindingFlags.NonPublic | BindingFlags.Instance)
+                .Invoke(viewModel, parameters);
+
+            ClassicAssert.IsTrue(canPreview);
+            ClassicAssert.AreEqual(@"C:\preview.txt", parameters[0]);
+        }
+
+        [Test]
+        public void GivenHomePinnedGrid_WhenNavigatingDown_ThenPinnedSelectionOwnsPreview()
+        {
+            var settings = new Settings
+            {
+                EnablePinnedResults = true,
+                PinnedResultsLayout = PinnedLayoutOptions.Grid
+            };
+
+            var viewModel = CreateSelectionViewModel(settings);
+            viewModel.Results.AddResults(
+                [new Result { Title = "Result 1", PreviewVisibility = PreviewVisibility.Optional }],
+                "Results");
+            viewModel.PinnedResults.AddResults(
+                [new Result { Title = "Pinned 1", PreviewVisibility = PreviewVisibility.Optional }],
+                "Pinned");
+
+            typeof(MainViewModel)
+                .GetMethod("ResetSelectionNavigationState", BindingFlags.Instance | BindingFlags.NonPublic)
+                .Invoke(viewModel, null);
+
+            var handled = (bool)typeof(MainViewModel)
+                .GetMethod("HandleSelectionNavigationKey", BindingFlags.Instance | BindingFlags.NonPublic)
+                .Invoke(viewModel, [Key.Down, 1]);
+
+            ClassicAssert.IsTrue(handled);
+            ClassicAssert.IsTrue(viewModel.IsGridMode);
+            ClassicAssert.AreEqual("Pinned 1", viewModel.PreviewSelectedItem?.Result.Title);
+            ClassicAssert.AreEqual(0, viewModel.PinnedResults.SelectedIndex);
+            ClassicAssert.IsNull(viewModel.Results.SelectedItem);
+        }
+
         private static MainViewModel CreatePreviewViewModel(Settings settings, int resultAreaColumn)
         {
             var viewModel = (MainViewModel)RuntimeHelpers.GetUninitializedObject(typeof(MainViewModel));
@@ -337,6 +394,41 @@ namespace Flow.Launcher.Test
                 .GetField("<Settings>k__BackingField", BindingFlags.Instance | BindingFlags.NonPublic)
                 .SetValue(viewModel, settings);
             viewModel.ResultAreaColumn = resultAreaColumn;
+            return viewModel;
+        }
+
+        private static MainViewModel CreateSelectionViewModel(Settings settings)
+        {
+            var viewModel = CreatePreviewViewModel(settings, ResultAreaColumnPreviewHidden);
+            var results = new ResultsViewModel(settings, viewModel);
+            var pinnedResults = new ResultsViewModel(settings, viewModel);
+            var history = new ResultsViewModel(settings, viewModel);
+            var contextMenu = new ResultsViewModel(settings, viewModel);
+
+            typeof(MainViewModel)
+                .GetField("<Results>k__BackingField", BindingFlags.Instance | BindingFlags.NonPublic)
+                .SetValue(viewModel, results);
+            typeof(MainViewModel)
+                .GetField("<PinnedResults>k__BackingField", BindingFlags.Instance | BindingFlags.NonPublic)
+                .SetValue(viewModel, pinnedResults);
+            typeof(MainViewModel)
+                .GetField("<History>k__BackingField", BindingFlags.Instance | BindingFlags.NonPublic)
+                .SetValue(viewModel, history);
+            typeof(MainViewModel)
+                .GetField("<ContextMenu>k__BackingField", BindingFlags.Instance | BindingFlags.NonPublic)
+                .SetValue(viewModel, contextMenu);
+            typeof(MainViewModel)
+                .GetField("_selectedResults", BindingFlags.Instance | BindingFlags.NonPublic)
+                .SetValue(viewModel, results);
+            typeof(MainViewModel)
+                .GetField("_queryText", BindingFlags.Instance | BindingFlags.NonPublic)
+                .SetValue(viewModel, string.Empty);
+
+            results.Visibility = Visibility.Visible;
+            history.Visibility = Visibility.Collapsed;
+            contextMenu.Visibility = Visibility.Collapsed;
+            pinnedResults.Visibility = Visibility.Visible;
+
             return viewModel;
         }
 
