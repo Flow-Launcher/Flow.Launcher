@@ -86,10 +86,7 @@ namespace Flow.Launcher.ViewModel
         {
             get
             {
-                if (_mainVM != null &&
-                    _mainVM.ResultsSelected(this) &&  // Results are selected
-                    _mainVM.QueryResultsSelected() &&  // Is query results
-                    _mainVM.PinnedGridReservedResultCount > 0)
+                if (ReserveHeightForPinnedGrid())
                 {
                     return Math.Max(0, MaxResults - Math.Floor(_mainVM.PinnedGridReservedResultCount)) * _settings.ItemHeightSize;
                 }
@@ -129,24 +126,14 @@ namespace Flow.Launcher.ViewModel
         /// </summary>
         public bool EnableListCurrentItemSync
         {
-            get
-            {
-                return _mainVM == null
-                    || !_mainVM.ResultsSelected(this)
-                    || !_mainVM.IsHomePinnedGridActive;
-            }
+            get => !DisableListCurrentItemSync();
         }
 
         // When pinned grid mode is active, the highlight selection resets to the first item in the pinned grid,
         // but the list selection remains on the previously selected item. This ensures that the list scrolls back to the top.
         public bool ResetScrollToTopWhenSelectionCleared
         {
-            get
-            {
-                return _mainVM != null
-                    && _mainVM.ResultsSelected(this)
-                    && _mainVM.IsHomePinnedGridActive;
-            }
+            get => ShouldResetScrollToTop();
         }
 
         public Thickness Margin { get; set; }
@@ -187,6 +174,33 @@ namespace Flow.Launcher.ViewModel
                 // SelectedIndex returns -1 if selection is empty.
                 return -1;
             }
+        }
+
+        private bool ReserveHeightForPinnedGrid()
+        {
+            return _mainVM != null
+                   && _mainVM.ResultsSelected(this)
+                   && _mainVM.QueryResultsSelected()
+                   && _mainVM.PinnedGridReservedResultCount > 0;
+        }
+
+        private bool DisableListCurrentItemSync()
+        {
+            return _mainVM != null
+                   && _mainVM.ResultsSelected(this)
+                   && _mainVM.IsHomePinnedGridActive;
+        }
+
+        private bool ShouldResetScrollToTop()
+        {
+            return _mainVM != null
+                   && _mainVM.ResultsSelected(this)
+                   && _mainVM.IsHomePinnedGridActive;
+        }
+
+        private bool ShouldAutoSelectFirstResult(bool reselect)
+        {
+            return reselect && Results.Any() && !(ReferenceEquals(this, _mainVM?.Results) && _mainVM.IsHomePinnedGridActive);
         }
 
         #endregion
@@ -284,16 +298,11 @@ namespace Flow.Launcher.ViewModel
 
         private void UpdateResults(List<ResultViewModel> newResults, bool reselect = true, CancellationToken token = default)
         {
-            var skipListReselectInHomeGrid = _mainVM != null
-                                            && ReferenceEquals(this, _mainVM.Results)
-                                            && _mainVM.ResultsSelected(this)
-                                            && _mainVM.IsHomePinnedGridActive;
-
             lock (_collectionLock)
             {
                 // update UI in one run, so it can avoid UI flickering
                 Results.Update(newResults, token);
-                if (!skipListReselectInHomeGrid && reselect && Results.Any())
+                if (ShouldAutoSelectFirstResult(reselect))
                     SelectedItem = Results[0];
             }
             OnPropertyChanged(nameof(IsEmpty));
@@ -307,7 +316,7 @@ namespace Flow.Launcher.ViewModel
                     if (_mainVM == null || // The results are for preview only in appearance page
                         _mainVM.ResultsSelected(this)) // The results are selected
                     {
-                        if (!skipListReselectInHomeGrid)
+                        if (ShouldAutoSelectFirstResult(reselect))
                             SelectedIndex = 0;
                         Visibility = Visibility.Visible;
                     }

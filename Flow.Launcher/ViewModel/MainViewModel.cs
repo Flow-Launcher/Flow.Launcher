@@ -835,7 +835,7 @@ namespace Flow.Launcher.ViewModel
         {
             if (!QueryResultsSelected())
             {
-                ActivateResultsSurface();
+                SelectedResults = Results;
             }
         }
 
