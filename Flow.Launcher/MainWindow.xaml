@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:flowlauncher="clr-namespace:Flow.Launcher"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:plugin="clr-namespace:Flow.Launcher.Plugin;assembly=Flow.Launcher.Plugin"
     xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
     xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
     Name="FlowMainWindow"
@@ -42,9 +43,62 @@
         <WindowChrome CaptionHeight="9" />
     </WindowChrome.WindowChrome>
     <Window.Resources>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <DataTemplate x:Key="{x:Type plugin:MarkdownPreviewBlock}">
+            <controls:PreviewMarkdownScrollViewer
+                Margin="0"
+                HorizontalScrollBarVisibility="Disabled"
+                Markdown="{Binding RenderedContent}"
+                MarkdownStyle="{DynamicResource PreviewMarkdownStyle}"
+                PreviewMouseWheel="ForwardPreviewBlockMouseWheel"
+                VerticalScrollBarVisibility="Disabled" />
+        </DataTemplate>
+        <DataTemplate x:Key="{x:Type plugin:SeparatorPreviewBlock}">
+            <Rectangle
+                Height="1"
+                Margin="0 0 5 0"
+                HorizontalAlignment="Stretch"
+                Style="{DynamicResource SeparatorStyle}" />
+        </DataTemplate>
+        <DataTemplate x:Key="{x:Type plugin:TextPreviewBlock}">
+            <TextBox
+                Margin="0"
+                IsReadOnly="True"
+                IsTabStop="False"
+                MouseWheel="ForwardPreviewBlockMouseWheel"
+                PreviewMouseWheel="ForwardPreviewBlockMouseWheel"
+                Style="{DynamicResource PreviewBlockTextStyle}"
+                Text="{Binding RenderedContent, Mode=OneWay}" />
+        </DataTemplate>
+        <vm:PreviewContentBlockTemplateSelector x:Key="PreviewContentBlockTemplateSelector" />
+        <DataTemplate DataType="{x:Type vm:PreviewContentBlockViewModel}">
+            <Grid>
+                <ContentControl
+                    Content="{Binding}"
+                    ContentTemplateSelector="{StaticResource PreviewContentBlockTemplateSelector}"
+                    Visibility="{Binding IsContentVisible, Converter={StaticResource BoolToVisibilityConverter}}" />
+                <ui:ProgressRing
+                    IsActive="{Binding IsLoading}"
+                    Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}" />
+                <Border
+                    HorizontalAlignment="Center"
+                    Margin="12"
+                    MinHeight="48"
+                    VerticalAlignment="Center"
+                    Visibility="{Binding IsErrorVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <TextBlock
+                        FontSize="16"
+                        FontWeight="SemiBold"
+                        Foreground="{DynamicResource Color10B}"
+                        Style="{DynamicResource SettingTitleLabel}"
+                        Text="{DynamicResource previewContentLoadError}"
+                        TextWrapping="Wrap"
+                        VerticalAlignment="Center" />
+                </Border>
+            </Grid>
+        </DataTemplate>
         <converters:QuerySuggestionBoxConverter x:Key="QuerySuggestionBoxConverter" />
         <converters:BorderClipConverter x:Key="BorderClipConverter" />
-        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         <converters:SplitterConverter x:Key="SplitterConverter" />
         <converters:BoolToIMEConversionModeConverter x:Key="BoolToIMEConversionModeConverter" />
         <converters:BoolToIMEStateConverter x:Key="BoolToIMEStateConverter" />
@@ -470,86 +524,107 @@
                                 Margin="0 0 10 5"
                                 VerticalAlignment="Stretch"
                                 Background="Transparent">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                <Grid
-                                    Grid.Row="0"
-                                    VerticalAlignment="Center"
-                                    Visibility="{Binding IsMarkdownPreview, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=Inverted}">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                    </Grid.RowDefinitions>
-                                    <TextBlock
-                                        x:Name="PreviewGlyphIcon"
-                                        Grid.Row="0"
-                                        Height="Auto"
-                                        Margin="0 16 0 0"
-                                        FontFamily="{Binding Glyph.FontFamily}"
-                                        Style="{DynamicResource PreviewGlyph}"
-                                        Text="{Binding Glyph.Glyph}"
-                                        Visibility="{Binding ShowGlyph}" />
-                                    <Image
-                                        x:Name="PreviewImageIcon"
-                                        Grid.Row="0"
-                                        MaxHeight="320"
-                                        Margin="0 16 0 0"
-                                        HorizontalAlignment="Center"
-                                        Source="{Binding PreviewImage}"
-                                        StretchDirection="DownOnly"
-                                        Visibility="{Binding ShowPreviewImage}">
-                                        <Image.Style>
-                                            <Style TargetType="{x:Type Image}">
-                                                <Setter Property="MaxWidth" Value="96" />
+                                <!--  Rich preview content blocks  -->
+                                <ui:ScrollViewerEx
+                                    x:Name="PreviewBlockScroll"
+                                    Margin="8 10 0 10"
+                                    HorizontalScrollBarVisibility="Disabled"
+                                    VerticalScrollBarVisibility="Auto"
+                                    Visibility="{Binding ShowContentBlocksPreview}">
+                                    <ui:ScrollViewerEx.Resources>
+                                        <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource BaseScrollBarStyle}" />
+                                    </ui:ScrollViewerEx.Resources>
+                                    <ItemsControl
+                                        AlternationCount="2147483647"
+                                        Focusable="False"
+                                        ItemsSource="{Binding PreviewContentBlocks}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemContainerStyle>
+                                            <Style TargetType="{x:Type ContentPresenter}">
+                                                <Setter Property="Margin" Value="0 12 0 0" />
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding UseBigThumbnail}" Value="True">
-                                                        <Setter Property="MaxWidth" Value="{Binding ElementName=Preview, Path=ActualWidth}" />
+                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(ItemsControl.AlternationIndex)}" Value="0">
+                                                        <Setter Property="Margin" Value="0" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
-                                        </Image.Style>
-                                    </Image>
-                                    <TextBlock
-                                        x:Name="PreviewTitle"
-                                        Grid.Row="1"
-                                        Margin="0 6 0 16"
-                                        HorizontalAlignment="Stretch"
-                                        Style="{DynamicResource PreviewItemTitleStyle}"
-                                        Text="{Binding Result.Title}"
-                                        TextAlignment="Center"
-                                        TextWrapping="Wrap" />
+                                        </ItemsControl.ItemContainerStyle>
+                                    </ItemsControl>
+                                </ui:ScrollViewerEx>
+
+                                <!--  Legacy image and text preview  -->
+                                <Grid Visibility="{Binding ShowLegacyPreview}">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid
+                                        Grid.Row="0"
+                                        VerticalAlignment="Center">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <TextBlock
+                                            x:Name="PreviewGlyphIcon"
+                                            Grid.Row="0"
+                                            Height="Auto"
+                                            Margin="0 16 0 0"
+                                            FontFamily="{Binding Glyph.FontFamily}"
+                                            Style="{DynamicResource PreviewGlyph}"
+                                            Text="{Binding Glyph.Glyph}"
+                                            Visibility="{Binding ShowGlyph}" />
+                                        <Image
+                                            x:Name="PreviewImageIcon"
+                                            Grid.Row="0"
+                                            MaxHeight="320"
+                                            Margin="0 16 0 0"
+                                            HorizontalAlignment="Center"
+                                            Source="{Binding PreviewImage}"
+                                            StretchDirection="DownOnly"
+                                            Visibility="{Binding ShowPreviewImage}">
+                                            <Image.Style>
+                                                <Style TargetType="{x:Type Image}">
+                                                    <Setter Property="MaxWidth" Value="96" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding UseBigThumbnail}" Value="True">
+                                                            <Setter Property="MaxWidth" Value="{Binding ElementName=Preview, Path=ActualWidth}" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Image.Style>
+                                        </Image>
+                                        <TextBlock
+                                            x:Name="PreviewTitle"
+                                            Grid.Row="1"
+                                            Margin="0 6 0 16"
+                                            HorizontalAlignment="Stretch"
+                                            Style="{DynamicResource PreviewItemTitleStyle}"
+                                            Text="{Binding Result.Title}"
+                                            TextAlignment="Center"
+                                            TextWrapping="Wrap" />
+                                    </Grid>
+                                    <StackPanel Grid.Row="1">
+                                        <StackPanel.Style>
+                                            <Style TargetType="{x:Type StackPanel}">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding ElementName=PreviewSubTitle, UpdateSourceTrigger=PropertyChanged, Path=Text.Length}" Value="0">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </StackPanel.Style>
+                                        <Separator Style="{DynamicResource PreviewSep}" />
+                                        <TextBlock
+                                            x:Name="PreviewSubTitle"
+                                            Style="{DynamicResource PreviewItemSubTitleStyle}"
+                                            Text="{Binding PreviewDescription}" />
+                                    </StackPanel>
                                 </Grid>
-                                <controls:PreviewMarkdownScrollViewer
-                                    Grid.Row="0"
-                                    Grid.RowSpan="2"
-                                    Margin="8 10 0 10"
-                                    HorizontalScrollBarVisibility="Disabled"
-                                    Markdown="{Binding PreviewDescription}"
-                                    MarkdownStyle="{DynamicResource PreviewMarkdownStyle}"
-                                    VerticalScrollBarVisibility="Auto"
-                                    Visibility="{Binding IsMarkdownPreview, Converter={StaticResource BoolToVisibilityConverter}}">
-                                    <FrameworkElement.Resources>
-                                        <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource BaseScrollBarStyle}" />
-                                    </FrameworkElement.Resources>
-                                </controls:PreviewMarkdownScrollViewer>
-                                <StackPanel Grid.Row="1" Visibility="{Binding IsMarkdownPreview, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=Inverted}">
-                                    <StackPanel.Style>
-                                        <Style TargetType="{x:Type StackPanel}">
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding ElementName=PreviewSubTitle, UpdateSourceTrigger=PropertyChanged, Path=Text.Length}" Value="0">
-                                                    <Setter Property="Visibility" Value="Collapsed" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </StackPanel.Style>
-                                    <Separator Style="{DynamicResource PreviewSep}" />
-                                    <TextBlock
-                                        x:Name="PreviewSubTitle"
-                                        Style="{DynamicResource PreviewItemSubTitleStyle}"
-                                        Text="{Binding PreviewDescription}" />
-                                </StackPanel>
                             </Grid>
                         </Border>
                         <Border

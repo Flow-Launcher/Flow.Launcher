@@ -21,6 +21,7 @@ using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.DialogJump;
 using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Helper;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Plugin.SharedModels;
@@ -465,6 +466,12 @@ namespace Flow.Launcher
                     _viewModel.Hide();
                 }
             }
+        }
+
+        private void ForwardPreviewBlockMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            // Preview blocks can contain their own scroll viewers, so the main preview scroll viewer must handle the wheel input.
+            MouseWheelHelper.ForwardMouseWheelToScrollViewer(e, PreviewBlockScroll, e.OriginalSource);
         }
 
         private void OnKeyDown(object sender, KeyEventArgs e)
