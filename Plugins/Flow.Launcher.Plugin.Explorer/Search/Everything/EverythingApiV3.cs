@@ -51,7 +51,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             {
                 Main.Context?.API?.LogDebug(nameof(EverythingApiV3), $"{callName} failed");
                 CheckAndThrowExceptionOnErrorFromEverything3();
-                throw new InvalidCallException();
             }
         }
 
@@ -508,6 +507,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                     throw new InvalidCallException();
                 case EVERYTHING3_ERROR_PROPERTY_NOT_FOUND:
                     throw new ArgumentException("EVERYTHING3_ERROR_PROPERTY_NOT_FOUND");
+                default:
+                    throw new InvalidCallException();
             }
         }
     }
