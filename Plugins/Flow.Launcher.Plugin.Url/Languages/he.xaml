@@ -7,16 +7,16 @@
     <system:String x:Key="flowlauncher_plugin_url_plugin_name">כתובת URL</system:String>
     <system:String x:Key="flowlauncher_plugin_url_plugin_description">פתח את כתובת ה-URL שהוזנה מתוך Flow Launcher</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_url_plugin_choose">בח</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_plugin_choose">בחר</system:String>
     <system:String x:Key="flowlauncher_plugin_url_plugin_filter">יישומים (*.exe)|*.exe|כל הקבצים|*.*</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_url_use_custom_browser">Use custom instead of Flow's default web browser</system:String>
-    <system:String x:Key="flowlauncher_plugin_url_browser_path">Browser path</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_use_custom_browser">השתמש בדפדפן מותאם אישית במקום בדפדפן ברירת המחדל של Flow Launcher</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_browser_path">נתיב הדפדפן</system:String>
 
     <system:String x:Key="flowlauncher_plugin_url_new_tab">כרטיסייה חדשה</system:String>
-    <system:String x:Key="flowlauncher_plugin_url_new_window">חלון חד</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_new_window">חלון חדש</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_url_private_mode">Private mode</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_private_mode">מצב פרטי</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_url_usehttps">Prefer https over http</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_usehttps">העדף https על פני http</system:String>
 </ResourceDictionary>
