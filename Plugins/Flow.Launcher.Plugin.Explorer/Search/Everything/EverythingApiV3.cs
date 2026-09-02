@@ -133,7 +133,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 {
                     try
                     {
-                        Everything3ApiDllImport.Everything3_IncRunCountFromFilenameW(_client, fileOrFolder);
+                        var incremented = Everything3ApiDllImport.Everything3_IncRunCountFromFilenameW(_client, fileOrFolder) != 0;
+                        CheckEverything3Call(nameof(Everything3ApiDllImport.Everything3_IncRunCountFromFilenameW), incremented);
                     }
                     catch (IPCErrorException)
                     {
@@ -154,7 +155,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
         public bool IsFastSortOption(EverythingSortOption sortOption)
         {
-            _semaphore.Wait();
+            if (!_semaphore.Wait(TimeSpan.FromSeconds(1)))
+                return false;
 
             try
             {
@@ -363,7 +365,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 _client = Everything3ApiDllImport.Everything3_ConnectW(_instanceName);
             }
 
-            return _client != IntPtr.Zero && Everything3ApiDllImport.Everything3_GetMajorVersion(_client) != 0;
+            return _client != IntPtr.Zero;
         }
 
         private void DestroyEverythingClient(IntPtr client)
