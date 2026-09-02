@@ -507,6 +507,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                     throw new InvalidCallException();
                 case EVERYTHING3_ERROR_PROPERTY_NOT_FOUND:
                     throw new ArgumentException("EVERYTHING3_ERROR_PROPERTY_NOT_FOUND");
+                case EVERYTHING3_OK:
+                    return;
                 default:
                     throw new InvalidCallException();
             }
