@@ -347,6 +347,12 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         get => Settings.UseDoublePinyin;
     }
 
+    public bool UsePolyphonicPhraseOverrides
+    {
+        set => Settings.UsePolyphonicPhraseOverrides = value;
+        get => Settings.UsePolyphonicPhraseOverrides;
+    }
+
     public List<DoublePinyinSchemaData> DoublePinyinSchemas { get; } =
         DropdownDataGeneric<DoublePinyinSchemas>.GetValues<DoublePinyinSchemaData>("DoublePinyinSchemas");
 

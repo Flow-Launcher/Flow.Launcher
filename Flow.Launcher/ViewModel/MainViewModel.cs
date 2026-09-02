@@ -43,6 +43,8 @@ namespace Flow.Launcher.ViewModel
         private string _queryTextBeforeLeaveResults;
         private string _ignoredQueryText; // Used to ignore query text change when switching between context menu and query results
 
+        private ResultsQuerySelection _selectionBeforeContextMenu;
+
         private readonly FlowLauncherJsonStorage<History> _historyItemsStorage;
         private readonly History _history;
         private int lastHistoryIndex = 1;
@@ -75,7 +77,13 @@ namespace Flow.Launcher.ViewModel
 
         private bool _taskbarShownByFlow = false;
         private bool _suppressNextHomeListMouseSelect;
-        
+
+        private sealed record ResultsQuerySelection(
+            ResultsViewModel Source,
+            string QueryText,
+            Result SelectedResult,
+            int SelectedIndex);
+
         #endregion
 
         #region Constructor
@@ -190,28 +198,28 @@ namespace Flow.Launcher.ViewModel
             ContextMenu = new ResultsViewModel(Settings, this)
             {
                 LeftClickResultCommand = OpenResultCommand,
-                RightClickResultCommand = LoadContextMenuCommand,
+                RightClickResultCommand = ToggleContextMenuCommand,
                 MouseSelectCommand = MouseSelectCommand,
                 IsPreviewOn = Settings.AlwaysPreview
             };
             Results = new ResultsViewModel(Settings, this)
             {
                 LeftClickResultCommand = OpenResultCommand,
-                RightClickResultCommand = LoadContextMenuCommand,
+                RightClickResultCommand = ToggleContextMenuCommand,
                 MouseSelectCommand = MouseSelectCommand,
                 IsPreviewOn = Settings.AlwaysPreview
             };
             History = new ResultsViewModel(Settings, this)
             {
                 LeftClickResultCommand = OpenResultCommand,
-                RightClickResultCommand = LoadContextMenuCommand,
+                RightClickResultCommand = ToggleContextMenuCommand,
                 MouseSelectCommand = MouseSelectCommand,
                 IsPreviewOn = Settings.AlwaysPreview
             };
             PinnedResults = new ResultsViewModel(Settings, this)
             {
                 LeftClickResultCommand = OpenResultCommand,
-                RightClickResultCommand = LoadContextMenuCommand,
+                RightClickResultCommand = ToggleContextMenuCommand,
                 MouseSelectCommand = MouseSelectCommand,
                 IsPreviewOn = Settings.AlwaysPreview
             };
@@ -446,7 +454,19 @@ namespace Flow.Launcher.ViewModel
         }
 
         [RelayCommand]
-        private async Task LoadContextMenuAsync()
+        private async Task ToggleContextMenuAsync()
+        {
+            if (ContextMenuSelected())
+            {
+                await ReturnFromContextMenuAsync();
+            }
+            else
+            {
+                EnterContextMenu();
+            }
+        }
+
+        private void EnterContextMenu()
         {
             // For Dialog Jump and right click mode, we need to navigate to the path
             if (_isDialogJump && Settings.DialogJumpResultBehaviour == DialogJumpResultBehaviours.RightClick)
@@ -463,28 +483,73 @@ namespace Flow.Launcher.ViewModel
                 return;
             }
 
-            // For query mode, we load context menu
-            if (QueryResultsSelected())
-            {
-                var selectedResult = SelectedResults.SelectedItem?.Result;
-                if (selectedResult == null)
-                {
-                    selectedResult = GetSelectedGridPinnedResult();
-                }
+            // Check if the selected result is a history result or a regular result
+            // Regular results need a valid plugin ID. History results use Flow's built-in context menu and
+            // can appear in either the dedicated history view or the home-page result list.
+            var selected = SelectedResults.SelectedItem?.Result;
+            if (selected == null) return;
+            var isHistoryResult = selected is LastOpenedHistoryResult
+                && selected.ContextData is LastOpenedHistoryResult;
+            if (!isHistoryResult && (!QueryResultsSelected() || string.IsNullOrEmpty(selected.PluginID))) return;
 
-                // When switch to ContextMenu from QueryResults, but no item being chosen, should do nothing
-                // i.e. Shift+Enter/Ctrl+O right after Alt + Space should do nothing
-                if (selectedResult != null &&
-                    !string.IsNullOrEmpty(selectedResult.PluginID)) // Do not show context menu for history results
+            _selectionBeforeContextMenu = new ResultsQuerySelection(
+                SelectedResults,
+                QueryText,
+                selected,
+                SelectedResults.SelectedIndex);
+
+            // Load context menu
+            SelectedResults = ContextMenu;
+        }
+
+        private async Task ReturnFromContextMenuAsync()
+        {
+            var previousSelection = _selectionBeforeContextMenu;
+            var source = previousSelection?.Source ?? Results;
+
+            // Return to the previous results view and restore the query text
+            SelectedResults = source;
+            if (source == History)
+            {
+                await ChangeQueryTextAsync(previousSelection?.QueryText);
+
+                // Returning to History rebuilds its results and selects the first row. Locate the rebuilt
+                // context-menu target, falling back to its previous index if the history context menu changed meanwhile.
+                var restoredIndex = previousSelection?.SelectedResult == null
+                    ? -1
+                    : source.Results.FindIndex(result =>
+                        result.Result != null &&
+                        ResultEqual(result.Result, previousSelection.SelectedResult));
+                if (restoredIndex < 0 && previousSelection?.SelectedIndex >= 0 && source.Results.Count > 0)
                 {
-                    SelectedResults = ContextMenu;
+                    restoredIndex = Math.Min(previousSelection.SelectedIndex, source.Results.Count - 1);
                 }
+                if (restoredIndex >= 0)
+                {
+                    source.SelectedIndex = restoredIndex;
+                    source.SelectedItem = source.Results[restoredIndex];
+                }
+            }
+
+            // Refresh the preview panel to show the previously selected result
+            PreviewSelectedItem = source.SelectedItem;
+            await UpdatePreviewAsync();
+
+            _selectionBeforeContextMenu = null;
+        }
+
+        private static bool ResultEqual(Result result1, Result result2)
+        {
+            if (string.IsNullOrEmpty(result1.RecordKey) || string.IsNullOrEmpty(result2.RecordKey))
+            {
+                return result1.Title == result2.Title
+                    && result1.SubTitle == result2.SubTitle
+                    && result1.PluginID == result2.PluginID;
             }
             else
             {
-                SelectedResults = Results;
-                PreviewSelectedItem = Results.SelectedItem;
-                await UpdatePreviewAsync();
+                return result1.RecordKey == result2.RecordKey
+                    && result1.PluginID == result2.PluginID;
             }
         }
 
@@ -802,19 +867,25 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private async Task EscAsync()
         {
-
-            if (!QueryResultsSelected())
+            if (ContextMenuSelected())
+            {
+                await ReturnFromContextMenuAsync();
+            }
+            else if (!QueryResultsSelected())
             {
                 SelectedResults = Results;
                 PreviewSelectedItem = Results.SelectedItem;
                 await UpdatePreviewAsync();
             }
+            else
+            {
+                Hide();
+            }
+
             if (IsGridMode)
             {
                 IsGridMode = false;
             }
-
-            Hide();
         }
 
         public void BackToQueryResults()
@@ -1061,7 +1132,10 @@ namespace Flow.Launcher.ViewModel
                         ContextMenu.Visibility = Visibility.Visible;
                         History.Visibility = Visibility.Collapsed;
                     }
-                    _queryTextBeforeLeaveResults = QueryText;
+                    if (isReturningFromQueryResults)
+                    {
+                        _queryTextBeforeLeaveResults = QueryText;
+                    }
 
                     // Because of Fody's optimization
                     // setter won't be called when property value is not changed.
@@ -1582,11 +1656,30 @@ namespace Flow.Launcher.ViewModel
             var query = QueryText.ToLower().Trim();
             ContextMenu.Clear();
 
-            var selected = Results.SelectedItem?.Result;
+            var selected = _selectionBeforeContextMenu?.SelectedResult;
             if (selected == null)
             {
                 selected = GetSelectedGridPinnedResult();
             }
+
+            if (selected is LastOpenedHistoryResult
+                && selected.ContextData is LastOpenedHistoryResult historyItem)
+            {
+                var results = new List<Result>
+                {
+                    ContextMenuDeleteHistory(historyItem),
+                    ContextMenuHistoryInfo(historyItem)
+                };
+                if (!string.IsNullOrEmpty(query))
+                {
+                    results = results.Where(r =>
+                        App.API.FuzzySearch(query, r.Title).IsSearchPrecisionScoreMet() ||
+                        App.API.FuzzySearch(query, r.SubTitle).IsSearchPrecisionScoreMet()).ToList();
+                }
+                ContextMenu.AddResults(results, id);
+                return;
+            }
+
             if (selected != null && // SelectedItem returns null if selection is empty.
                 !string.IsNullOrEmpty(selected.PluginID))  // SelectedItem must have a valid PluginID, history results do not.
             {
@@ -1772,6 +1865,7 @@ namespace Flow.Launcher.ViewModel
             foreach (var item in historyItems)
             {
                 var copiedItem = item.DeepCopyForHistoryStyle(Settings.HistoryStyle == HistoryStyle.LastOpened);
+                copiedItem.ContextData = item;
 
                 if (Settings.HistoryStyle == HistoryStyle.LastOpened)
                 {
@@ -2325,6 +2419,54 @@ namespace Flow.Launcher.ViewModel
             return menu;
         }
 
+        private Result ContextMenuDeleteHistory(LastOpenedHistoryResult historyItem)
+        {
+            return new Result
+            {
+                Title = Localize.delete(),
+                IcoPath = Constant.DeleteIcon,
+                Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE74D"),
+                PluginDirectory = Constant.ProgramDirectory,
+                AsyncAction = async context =>
+                {
+                    var source = _selectionBeforeContextMenu?.Source;
+                    var removeAllMatchingResults = Settings.HistoryStyle == HistoryStyle.LastOpened;
+                    if (_history.Remove(historyItem, removeAllMatchingResults) > 0)
+                    {
+                        _historyItemsStorage.Save();
+                    }
+
+                    await ReturnFromContextMenuAsync();
+
+                    // Home-page history is part of the regular result list, so refresh it after deletion.
+                    // The dedicated history view is refreshed while returning from the context menu.
+                    if (source == Results)
+                    {
+                        await QueryResultsAsync(false, isReQuery: true);
+                    }
+
+                    return false;
+                },
+                OriginQuery = historyItem.OriginQuery
+            };
+        }
+
+        /// <summary>
+        /// Creates a result to label the history context menu, based on the HistoryStyle
+        /// </summary>
+        private Result ContextMenuHistoryInfo(LastOpenedHistoryResult historyItem)
+        {
+            return new Result
+            {
+                Title = Settings.HistoryStyle == HistoryStyle.Query ? Localize.queryHistory() : Localize.executedHistory(),
+                IcoPath = Constant.HistoryIcon,
+                Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE81C"),
+                PluginDirectory = Constant.ProgramDirectory,
+                Action = _ => false,
+                OriginQuery = historyItem.OriginQuery
+            };
+        }
+
         private static Result ContextMenuPluginSettings(Result result)
         {
             var id = result.PluginID;
@@ -2387,7 +2529,7 @@ namespace Flow.Launcher.ViewModel
             return selected;
         }
 
-        private bool HistorySelected()
+        internal bool HistorySelected()
         {
             var selected = SelectedResults == History;
             return selected;
