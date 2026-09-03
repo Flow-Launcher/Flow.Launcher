@@ -504,6 +504,19 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public const int DefaultMaxResultsToShow = 5;
         public int MaxResultsToShow { get; set; } = DefaultMaxResultsToShow;
 
+        public void ResetSearchWindowSize()
+        {
+            if (WindowSize == DefaultWindowSize)
+                OnPropertyChanged(nameof(WindowSize));
+            else
+                WindowSize = DefaultWindowSize;
+
+            if (MaxResultsToShow == DefaultMaxResultsToShow)
+                OnPropertyChanged(nameof(MaxResultsToShow));
+            else
+                MaxResultsToShow = DefaultMaxResultsToShow;
+        }
+
         public int ActivateTimes { get; set; }
 
         public ObservableCollection<CustomPluginHotkey> CustomPluginHotkeys { get; set; } = new ObservableCollection<CustomPluginHotkey>();
