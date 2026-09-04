@@ -14,4 +14,11 @@ public interface IHotkeySettings
     /// unregister them.
     /// </summary>
     public List<RegisteredHotkeyData> RegisteredHotkeys { get; }
+
+    /// <summary>
+    /// The maximum interval in milliseconds between two key presses for double-tap detection.
+    /// Used by <see cref="HotkeyControlDialog"/> to set the detection timer interval
+    /// so that capture and runtime detection agree on the same threshold.
+    /// </summary>
+    public int DoubleTapHotkeyInterval { get; }
 }

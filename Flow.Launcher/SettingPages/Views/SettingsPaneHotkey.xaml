@@ -96,6 +96,44 @@
                     WindowTitle="{DynamicResource dialogJumpHotkey}" />
             </ui:SettingsCard>
 
+            <ui:SettingsCard
+                Margin="0 4 0 0"
+                Description="{DynamicResource doubleTapHotkeyToolTip}"
+                Header="{DynamicResource doubleTapHotkey}">
+                <ui:SettingsCard.HeaderIcon>
+                    <ui:FontIcon Glyph="&#xE8AB;" />
+                </ui:SettingsCard.HeaderIcon>
+
+                <flowlauncher:HotkeyControl
+                    DefaultHotkey=""
+                    Type="DoubleTapHotkey"
+                    ValidateKeyGesture="False"
+                    WindowTitle="{DynamicResource doubleTapHotkey}" />
+            </ui:SettingsCard>
+
+            <ui:SettingsCard
+                Margin="0 4 0 0"
+                Description="{DynamicResource doubleTapHotkeyIntervalToolTip}"
+                Header="{DynamicResource doubleTapHotkeyInterval}">
+                <ui:SettingsCard.HeaderIcon>
+                    <ui:FontIcon Glyph="&#xE9D9;" />
+                </ui:SettingsCard.HeaderIcon>
+
+                <StackPanel Orientation="Horizontal">
+                    <Slider
+                        Width="150"
+                        Minimum="100"
+                        Maximum="500"
+                        IsSnapToTickEnabled="True"
+                        TickFrequency="50"
+                        Value="{Binding Settings.DoubleTapHotkeyInterval}" />
+                    <TextBlock
+                        Margin="8 0 0 0"
+                        VerticalAlignment="Center"
+                        Text="{Binding Settings.DoubleTapHotkeyInterval, StringFormat={}{0}ms}" />
+                </StackPanel>
+            </ui:SettingsCard>
+
             <ui:SettingsExpander
                 Margin="0 14 0 0"
                 Description="{DynamicResource hotkeyPresetsToolTip}"
