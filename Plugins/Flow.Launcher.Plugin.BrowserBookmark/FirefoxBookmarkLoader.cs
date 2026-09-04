@@ -267,10 +267,7 @@ public class FirefoxBookmarkLoader : FirefoxBookmarkLoaderBase
             return string.Empty;
 
         // get firefox default profile directory from profiles.ini
-        using var sReader = new StreamReader(profileIni);
-        var ini = sReader.ReadToEnd();
-
-        var lines = ini.Split("\r\n").ToList();
+        var lines = File.ReadAllLines(profileIni).ToList();
 
         var defaultProfileFolderNameRaw = lines.FirstOrDefault(x => x.Contains("Default=") && x != "Default=1") ?? string.Empty;
 
