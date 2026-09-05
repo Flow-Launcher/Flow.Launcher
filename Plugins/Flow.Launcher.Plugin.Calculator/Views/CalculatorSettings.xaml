@@ -11,8 +11,15 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
 
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
+
     <Grid Margin="{StaticResource SettingPanelMargin}">
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
@@ -79,5 +86,49 @@
             VerticalAlignment="Center"
             Content="{DynamicResource flowlauncher_plugin_calculator_show_error_message}"
             IsChecked="{Binding Settings.ShowErrorMessage, Mode=TwoWay}" />
+
+        <CheckBox
+            Grid.Row="4"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Margin="{StaticResource SettingPanelItemTopBottomMargin}"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Content="{DynamicResource flowlauncher_plugin_calculator_enable_history}"
+            IsChecked="{Binding EnableHistory, Mode=TwoWay}" />
+
+        <TextBlock
+            Grid.Row="5"
+            Grid.Column="0"
+            Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
+            VerticalAlignment="Center"
+            FontSize="14"
+            Text="{DynamicResource flowlauncher_plugin_calculator_history_creation_mode}"
+            IsEnabled="{Binding EnableHistory}" />
+        <ComboBox
+            x:Name="HistoryCreationModeComboBox"
+            Grid.Row="5"
+            Grid.Column="1"
+            MaxWidth="300"
+            Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            DisplayMemberPath="Display"
+            ItemsSource="{Binding AllHistoryCreationMode}"
+            SelectedValue="{Binding SelectedHistoryCreationMode, Mode=TwoWay}"
+            SelectedValuePath="Value"
+            IsEnabled="{Binding EnableHistory}" />
+
+        <TextBlock
+            Grid.Row="6"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Margin="{StaticResource SettingPanelItemTopBottomMargin}"
+            VerticalAlignment="Center"
+            Foreground="Orange"
+            Text="{DynamicResource flowlauncher_plugin_calculator_history_creation_mode_warning}"
+            TextAlignment="Left"
+            TextWrapping="Wrap"
+            Visibility="{Binding ShowHistoryQueryWarning, Converter={StaticResource BooleanToVisibilityConverter}}" />
     </Grid>
 </UserControl>

@@ -1,4 +1,4 @@
-﻿namespace Flow.Launcher.Plugin.Calculator;
+namespace Flow.Launcher.Plugin.Calculator;
 
 public class Settings
 {
@@ -9,4 +9,8 @@ public class Settings
     public bool ShowErrorMessage { get; set; } = false;
 
     public bool UseThousandsSeparator { get; set; } = true;
+
+    public bool EnableHistory { get; set; } = false;
+
+    public HistoryCreationMode HistoryCreationMode { get; set; } = HistoryCreationMode.OnQuery;
 }
