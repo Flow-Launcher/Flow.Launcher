@@ -44,6 +44,12 @@ namespace Flow.Launcher
 
         private static bool _disposed;
         private static Settings _settings;
+        private static string _pendingDeepLink;
+        private static bool _pluginsInitialized;
+
+        // Guards _pendingDeepLink/_pluginsInitialized: a second-instance link can arrive on the UI
+        // thread while the plugin initialization continuation flushes the pending link elsewhere.
+        private static readonly object _pendingDeepLinkLock = new();
         private static MainWindow _mainWindow;
         private readonly MainViewModel _mainVM;
         private readonly Internationalization _internationalization;
@@ -126,7 +132,7 @@ namespace Flow.Launcher
         #region Main
 
         [STAThread]
-        public static void Main()
+        public static void Main(string[] args)
         {
             // Initialize settings so that we can get language code
             try
@@ -151,8 +157,10 @@ namespace Flow.Launcher
             }
 
             // Start the application as a single instance
-            if (SingleInstance<App>.InitializeAsFirstInstance())
+            var deepLink = DeepLink.FromCommandLineArgs(args, _settings.EnableDeepLinkProtocol);
+            if (SingleInstance<App>.InitializeAsFirstInstance(deepLink))
             {
+                _pendingDeepLink = deepLink;
                 using var application = new App();
                 application.InitializeComponent();
                 application.Run();
@@ -243,6 +251,8 @@ namespace Flow.Launcher
 
                 RegisterExitEvents();
 
+                DeepLinkRegistration.EnsureRegistered(_settings.EnableDeepLinkProtocol);
+
                 AutoStartup();
                 AutoUpdates();
 
@@ -261,6 +271,20 @@ namespace Flow.Launcher
 
                     // Refresh the history results after plugins are initialized so that we can parse the absolute icon paths
                     _mainVM.RefreshLastOpenedHistoryResults();
+
+                    // Dispatch the deep link passed on the command line, or one queued by a second
+                    // instance during startup, now that plugins can answer it
+                    string pendingDeepLink;
+                    lock (_pendingDeepLinkLock)
+                    {
+                        _pluginsInitialized = true;
+                        pendingDeepLink = _pendingDeepLink;
+                        _pendingDeepLink = null;
+                    }
+                    if (!string.IsNullOrEmpty(pendingDeepLink))
+                    {
+                        DeepLink.Dispatch(pendingDeepLink);
+                    }
 
                     // Refresh home page after plugins are initialized because users may open main window during plugin initialization
                     // And home page is created without full plugin list
@@ -471,9 +495,28 @@ namespace Flow.Launcher
 
         #region ISingleInstanceApp
 
-        public void OnSecondAppStarted()
+        public void OnSecondAppStarted(string payload)
         {
-            API.ShowMainWindow();
+            if (string.IsNullOrEmpty(payload))
+            {
+                API.ShowMainWindow();
+                return;
+            }
+
+            lock (_pendingDeepLinkLock)
+            {
+                if (!_pluginsInitialized)
+                {
+                    // Hold links that arrive while the first instance is still starting; dispatching
+                    // now would race plugin initialization (query activation is suppressed while
+                    // loading, and install handlers need an initialized PluginManager). The startup
+                    // path flushes this once plugins are ready; the latest link wins.
+                    _pendingDeepLink = payload;
+                    return;
+                }
+            }
+
+            DeepLink.Dispatch(payload);
         }
 
         #endregion
