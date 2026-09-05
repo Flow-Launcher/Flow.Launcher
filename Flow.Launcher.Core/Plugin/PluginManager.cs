@@ -7,6 +7,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure;
@@ -33,12 +34,16 @@ namespace Flow.Launcher.Core.Plugin
         private static readonly ConcurrentDictionary<string, List<PluginPair>> _nonGlobalPlugins = [];
 
         private static PluginsSettings Settings;
-        private static readonly ConcurrentBag<string> ModifiedPlugins = [];
+        private static IResultUpdateRegister _register;
+        private static readonly ConcurrentDictionary<string, byte> ModifiedPlugins = [];
 
-        private static readonly ConcurrentBag<PluginPair> _contextMenuPlugins = [];
-        private static readonly ConcurrentBag<PluginPair> _homePlugins = [];
-        private static readonly ConcurrentBag<PluginPair> _translationPlugins = [];
-        private static readonly ConcurrentBag<PluginPair> _externalPreviewPlugins = [];
+        // Load contexts of dotnet plugins, kept so their assemblies can be unloaded on reload/uninstall
+        private static readonly ConcurrentDictionary<string, PluginAssemblyLoader> _assemblyLoaders = [];
+
+        private static readonly ConcurrentDictionary<string, PluginPair> _contextMenuPlugins = [];
+        private static readonly ConcurrentDictionary<string, PluginPair> _homePlugins = [];
+        private static readonly ConcurrentDictionary<string, PluginPair> _translationPlugins = [];
+        private static readonly ConcurrentDictionary<string, PluginPair> _externalPreviewPlugins = [];
 
         /// <summary>
         /// Directories that will hold Flow Launcher plugin directory
@@ -47,6 +52,14 @@ namespace Flow.Launcher.Core.Plugin
         [
             Constant.PreinstalledDirectory, DataLocation.PluginsDirectory
         ];
+
+        internal static void TrackAssemblyLoader(string id, PluginAssemblyLoader loader)
+        {
+            _assemblyLoaders[id] = loader;
+        }
+
+        private static bool HotReloadEnabled =>
+            Ioc.Default.GetRequiredService<Infrastructure.UserSettings.Settings>().HotReloadAfterChanging;
 
         #region Save & Dispose & Reload Plugin
 
@@ -113,6 +126,229 @@ namespace Flow.Launcher.Core.Plugin
 
         #endregion
 
+        #region Hot Reload Plugin
+
+        private static readonly ConcurrentDictionary<string, SemaphoreSlim> _reloadLocks = new();
+
+        // Directories of freshly installed or updated plugins that have not been loaded yet,
+        // so that ReloadPluginAsync knows to load the new version instead of the running one
+        private static readonly ConcurrentDictionary<string, string> _pendingInstallPaths = new();
+
+        // Guards the handful of _pendingInstallPaths/ModifiedPlugins writes shared between InstallPlugin
+        // and ReloadPluginAsync's completion so the two can't interleave and clobber each other's state.
+        // Deliberately narrower than _reloadLocks: it is only ever held across plain dictionary writes,
+        // never across the unload/load/init work, so InstallPlugin (called synchronously from the UI
+        // thread) can never block on it for more than a few dictionary operations.
+        private static readonly Lock _pendingInstallStateLock = new();
+
+        /// <summary>
+        /// Fully reloads one plugin in place: disposes the instance, unloads its assembly (for dotnet
+        /// plugins), and loads and initializes the plugin again from disk. If the plugin was just
+        /// installed or updated, the newly installed version is loaded. On failure the plugin is
+        /// flagged as modified so the existing restart-required flow takes over.
+        /// </summary>
+        public static async Task<bool> ReloadPluginAsync(string id)
+        {
+            var semaphore = _reloadLocks.GetOrAdd(id, _ => new SemaphoreSlim(1, 1));
+            await semaphore.WaitAsync();
+            try
+            {
+                string pluginDirectory;
+                string pluginName = null;
+                if (_pendingInstallPaths.TryRemove(id, out var newDirectory) && Directory.Exists(newDirectory))
+                {
+                    // Freshly installed or updated: unload the running version if any, load the new directory
+                    pluginDirectory = newDirectory;
+                    if (_allLoadedPlugins.TryGetValue(id, out var oldPair))
+                    {
+                        pluginName = oldPair.Metadata.Name;
+                        await UnloadPluginAsync(oldPair);
+                    }
+                }
+                else if (_allLoadedPlugins.TryGetValue(id, out var pair))
+                {
+                    pluginDirectory = pair.Metadata.PluginDirectory;
+                    pluginName = pair.Metadata.Name;
+                    await UnloadPluginAsync(pair);
+                }
+                else
+                {
+                    return false;
+                }
+
+                bool success;
+                try
+                {
+                    success = await LoadAndInitializePluginAsync(pluginDirectory);
+                }
+                catch (Exception e)
+                {
+                    // Must not escape: the plugin is already unloaded, so an uncaught exception here
+                    // would skip the failure bookkeeping below and detonate the install/update flow
+                    PublicApi.Instance.LogException(ClassName, $"Failed to reload plugin {id}", e);
+                    success = false;
+                }
+                if (success)
+                {
+                    // Guard against a concurrent InstallPlugin call publishing a newer pending path and
+                    // modified flag between the check and the clear below (both sides take the same
+                    // lock only for these few dictionary writes, never across the unload/load above, so
+                    // it can't block a caller for more than a few dictionary operations)
+                    lock (_pendingInstallStateLock)
+                    {
+                        // A concurrent install may have recorded a newer version while this reload was
+                        // loading the old directory; keep the modified flag in that case so the
+                        // restart-required flow (or a later reload of the pending version) still applies
+                        if (!_pendingInstallPaths.ContainsKey(id))
+                        {
+                            ClearPluginModified(id);
+                        }
+                    }
+                }
+                else
+                {
+                    lock (_pendingInstallStateLock)
+                    {
+                        // The plugin is unloaded at this point, so keep its directory discoverable
+                        // in either case: a later reload attempt can then still pick it up
+                        _pendingInstallPaths.TryAdd(id, pluginDirectory);
+                        ModifiedPlugins.TryAdd(id, 0);
+                    }
+
+                    // The plugin is unloaded and won't run again until a restart, so callers that don't
+                    // surface their own outcome-specific message (e.g. a plugin calling the public
+                    // ReloadPluginAsync/ReloadAllPluginsAsync API directly) still leave the user informed
+                    pluginName ??= PluginConfig.GetPluginMetadata(pluginDirectory)?.Name ?? id;
+                    PublicApi.Instance.ShowMsgError(
+                        Localize.pluginHotReloadFailedTitle(),
+                        Localize.pluginHotReloadFailedMessage(pluginName));
+                }
+                return success;
+            }
+            finally
+            {
+                semaphore.Release();
+            }
+        }
+
+        /// <summary>
+        /// Fully reloads all loaded plugins, plus any plugin that failed a previous reload attempt and
+        /// still has a pending install path waiting to be retried. Plugins flagged as modified without a
+        /// pending install path are skipped because their on-disk directory is pending deletion or
+        /// replacement and requires a restart. Returns false if any plugin failed to reload.
+        /// </summary>
+        public static async Task<bool> ReloadAllPluginsAsync()
+        {
+            var allSucceeded = true;
+            var ids = GetAllLoadedPlugins().Select(p => p.Metadata.ID).Union(_pendingInstallPaths.Keys).Distinct();
+            foreach (var id in ids)
+            {
+                if (PluginModified(id) && !_pendingInstallPaths.ContainsKey(id)) continue;
+
+                if (!await ReloadPluginAsync(id))
+                {
+                    allSucceeded = false;
+                }
+            }
+            return allSucceeded;
+        }
+
+        /// <summary>
+        /// Removes a plugin from every runtime registry, disposes it and, for dotnet plugins, unloads
+        /// its assembly load context. Returns false if the assembly could not be verified as unloaded,
+        /// in which case it stays in memory (and its files locked) until the app restarts.
+        /// </summary>
+        internal static async Task<bool> UnloadPluginAsync(PluginPair pair)
+        {
+            var metadata = pair.Metadata;
+            var id = metadata.ID;
+
+            // Save plugin settings before the instance is disposed
+            try
+            {
+                (pair.Plugin as ISavable)?.Save();
+            }
+            catch (Exception e)
+            {
+                PublicApi.Instance.LogException(ClassName, $"Failed to save plugin {metadata.Name} before unload", e);
+            }
+
+            // Removing the plugin from the initialized list first makes in-flight queries treat it as
+            // still initializing, so they show a placeholder result instead of touching a dead instance
+            RemovePluginFromLists(id);
+            UnregisterPluginActionKeywords(id);
+            _register?.UnregisterResultsUpdatedEvent(pair);
+            DialogJump.RemoveDialogJumpPlugin(pair);
+            _allLoadedPlugins.TryRemove(id, out _);
+
+            // For JsonRPC V2 plugins this kills the child process, releasing its file locks
+            await DisposePluginAsync(pair);
+
+            if (!_assemblyLoaders.TryRemove(id, out var loader)) return true;
+
+            // Persist and evict the Type-keyed storages that would otherwise pin the collectible load context
+            PublicApi.Instance.SavePluginSettings();
+            PublicApi.Instance.SavePluginCaches();
+            if (PublicApi.Instance is IRemovable removable)
+            {
+                removable.RemovePluginSettings(metadata.AssemblyName);
+                removable.RemovePluginCaches(metadata.PluginCacheDirectoryPath);
+            }
+
+            pair.Plugin = null;
+
+            var weakReference = PluginAssemblyLoader.UnloadAndGetWeakReference(loader);
+            loader = null;
+            var unloaded = await PluginAssemblyLoader.WaitForUnloadAsync(weakReference);
+            if (!unloaded)
+            {
+                PublicApi.Instance.LogWarn(ClassName,
+                    $"Assembly of plugin <{metadata.Name}> could not be fully unloaded, e.g. because results " +
+                    $"or event handlers still reference it. Its memory will be reclaimed on restart.");
+            }
+
+            return unloaded;
+        }
+
+        /// <summary>
+        /// Loads and initializes a single plugin from its directory, registering it in every runtime
+        /// registry, the same way startup does for all plugins.
+        /// </summary>
+        internal static async Task<bool> LoadAndInitializePluginAsync(string pluginDirectory)
+        {
+            var metadata = PluginConfig.GetPluginMetadata(pluginDirectory);
+            if (metadata == null) return false;
+
+            // Bail out before creating an assembly load context for a plugin that is already running
+            if (_allLoadedPlugins.ContainsKey(metadata.ID))
+            {
+                PublicApi.Instance.LogError(ClassName, $"Plugin with ID {metadata.ID} already loaded");
+                return false;
+            }
+
+            var metadatas = new List<PluginMetadata> { metadata };
+            Settings.UpdatePluginSettings(metadatas);
+
+            var pair = PluginsLoader.LoadPlugin(metadata, Settings);
+            if (pair?.Plugin == null) return false;
+
+            // Since dotnet plugins need to get assembly name first, we should update plugin directory after loading plugins
+            UpdatePluginDirectory(metadatas);
+
+            // Cannot race the earlier ContainsKey check: all callers hold the per-plugin
+            // lifecycle lock, which serializes every path that adds to _allLoadedPlugins
+            if (!_allLoadedPlugins.TryAdd(metadata.ID, pair))
+            {
+                PublicApi.Instance.LogError(ClassName, $"Plugin with ID {metadata.ID} already loaded");
+                await DisposePluginAsync(pair);
+                return false;
+            }
+
+            return await InitializePluginAsync(pair);
+        }
+
+        #endregion
+
         #region External Preview
 
         public static async Task OpenExternalPreviewAsync(string path, bool sendFailToast = true)
@@ -159,7 +395,7 @@ namespace Flow.Launcher.Core.Plugin
 
         private static IList<PluginPair> GetExternalPreviewPlugins()
         {
-            return [.. _externalPreviewPlugins.Where(p => !PluginModified(p.Metadata.ID))];
+            return [.. _externalPreviewPlugins.Values.Where(p => !PluginModified(p.Metadata.ID))];
         }
 
         #endregion
@@ -255,57 +491,9 @@ namespace Flow.Launcher.Core.Plugin
         /// <returns>return the list of failed to init plugins or null for none</returns>
         public static async Task InitializePluginsAsync(IResultUpdateRegister register)
         {
-            var initTasks = _allLoadedPlugins.Select(x => Task.Run(async () =>
-            {
-                var pair = x.Value;
+            _register = register;
 
-                // Register plugin action keywords so that plugins can be queried in results
-                RegisterPluginActionKeywords(pair);
-
-                try
-                {
-                    var milliseconds = await PublicApi.Instance.StopwatchLogDebugAsync(ClassName, $"Init method time cost for <{pair.Metadata.Name}>",
-                        () => pair.Plugin.InitAsync(new PluginInitContext(pair.Metadata, PublicApi.Instance)));
-
-                    pair.Metadata.InitTime += milliseconds;
-                    PublicApi.Instance.LogInfo(ClassName,
-                        $"Total init cost for <{pair.Metadata.Name}> is <{pair.Metadata.InitTime}ms>");
-                }
-                catch (Exception e)
-                {
-                    PublicApi.Instance.LogException(ClassName, $"Fail to Init plugin: {pair.Metadata.Name}", e);
-                    if (pair.Metadata.Disabled && pair.Metadata.HomeDisabled)
-                    {
-                        // If this plugin is already disabled, do not show error message again
-                        // Or else it will be shown every time
-                        PublicApi.Instance.LogDebug(ClassName, $"Skipped init for <{pair.Metadata.Name}> due to error");
-                    }
-                    else
-                    {
-                        pair.Metadata.Disabled = true;
-                        pair.Metadata.HomeDisabled = true;
-                        PublicApi.Instance.LogDebug(ClassName, $"Disable plugin <{pair.Metadata.Name}> because init failed");
-                    }
-
-                    // Even if the plugin cannot be initialized, we still need to add it in all plugin list so that
-                    // we can remove the plugin from Plugin or Store page or Plugin Manager plugin.
-                    _allInitializedPlugins.TryAdd(pair.Metadata.ID, pair);
-                    _initFailedPlugins.TryAdd(pair.Metadata.ID, pair);
-                    return;
-                }
-
-                // Register ResultsUpdated event so that plugin query can use results updated interface
-                register.RegisterResultsUpdatedEvent(pair);
-
-                // Update plugin metadata translation after the plugin is initialized with IPublicAPI instance
-                Internationalization.UpdatePluginMetadataTranslation(pair);
-
-                // Add plugin to Dialog Jump plugin list after the plugin is initialized
-                DialogJump.InitializeDialogJumpPlugin(pair);
-
-                // Add plugin to lists after the plugin is initialized
-                AddPluginToLists(pair);
-            }));
+            var initTasks = _allLoadedPlugins.Select(x => Task.Run(() => InitializePluginAsync(x.Value)));
 
             await Task.WhenAll(initTasks);
 
@@ -318,6 +506,80 @@ namespace Flow.Launcher.Core.Plugin
                     "",
                     false
                 );
+            }
+        }
+
+        internal static async Task<bool> InitializePluginAsync(PluginPair pair)
+        {
+            // Register plugin action keywords so that plugins can be queried in results
+            RegisterPluginActionKeywords(pair);
+
+            try
+            {
+                var milliseconds = await PublicApi.Instance.StopwatchLogDebugAsync(ClassName, $"Init method time cost for <{pair.Metadata.Name}>",
+                    () => pair.Plugin.InitAsync(new PluginInitContext(pair.Metadata, PublicApi.Instance)));
+
+                pair.Metadata.InitTime += milliseconds;
+                PublicApi.Instance.LogInfo(ClassName,
+                    $"Total init cost for <{pair.Metadata.Name}> is <{pair.Metadata.InitTime}ms>");
+            }
+            catch (Exception e)
+            {
+                PublicApi.Instance.LogException(ClassName, $"Fail to Init plugin: {pair.Metadata.Name}", e);
+                if (pair.Metadata.Disabled && pair.Metadata.HomeDisabled)
+                {
+                    // If this plugin is already disabled, do not show error message again
+                    // Or else it will be shown every time
+                    PublicApi.Instance.LogDebug(ClassName, $"Skipped init for <{pair.Metadata.Name}> due to error");
+                }
+                else
+                {
+                    pair.Metadata.Disabled = true;
+                    pair.Metadata.HomeDisabled = true;
+                    PublicApi.Instance.LogDebug(ClassName, $"Disable plugin <{pair.Metadata.Name}> because init failed");
+                }
+
+                // Do not leave a plugin that failed to initialize queryable via its action keywords
+                UnregisterPluginActionKeywords(pair.Metadata.ID);
+
+                // Even if the plugin cannot be initialized, we still need to add it in all plugin list so that
+                // we can remove the plugin from Plugin or Store page or Plugin Manager plugin.
+                _allInitializedPlugins.TryAdd(pair.Metadata.ID, pair);
+                _initFailedPlugins.TryAdd(pair.Metadata.ID, pair);
+                return false;
+            }
+
+            try
+            {
+                // Register ResultsUpdated event so that plugin query can use results updated interface
+                _register?.RegisterResultsUpdatedEvent(pair);
+
+                // Update plugin metadata translation after the plugin is initialized with IPublicAPI instance
+                Internationalization.UpdatePluginMetadataTranslation(pair);
+
+                // Add plugin to Dialog Jump plugin list after the plugin is initialized
+                DialogJump.InitializeDialogJumpPlugin(pair);
+
+                // Add plugin to lists after the plugin is initialized
+                AddPluginToLists(pair);
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                // Roll back partial registrations so the failure surfaces as a clean init failure
+                // instead of a plugin that is half-registered
+                PublicApi.Instance.LogException(ClassName, $"Fail to register plugin: {pair.Metadata.Name}", e);
+                RemovePluginFromLists(pair.Metadata.ID);
+                UnregisterPluginActionKeywords(pair.Metadata.ID);
+                _register?.UnregisterResultsUpdatedEvent(pair);
+                DialogJump.RemoveDialogJumpPlugin(pair);
+
+                pair.Metadata.Disabled = true;
+                pair.Metadata.HomeDisabled = true;
+                _allInitializedPlugins.TryAdd(pair.Metadata.ID, pair);
+                _initFailedPlugins.TryAdd(pair.Metadata.ID, pair);
+                return false;
             }
         }
 
@@ -355,21 +617,49 @@ namespace Flow.Launcher.Core.Plugin
         {
             if (pair.Plugin is IContextMenu)
             {
-                _contextMenuPlugins.Add(pair);
+                _contextMenuPlugins.TryAdd(pair.Metadata.ID, pair);
             }
             if (pair.Plugin is IAsyncHomeQuery)
             {
-                _homePlugins.Add(pair);
+                _homePlugins.TryAdd(pair.Metadata.ID, pair);
             }
             if (pair.Plugin is IPluginI18n)
             {
-                _translationPlugins.Add(pair);
+                _translationPlugins.TryAdd(pair.Metadata.ID, pair);
             }
             if (pair.Plugin is IAsyncExternalPreview)
             {
-                _externalPreviewPlugins.Add(pair);
+                _externalPreviewPlugins.TryAdd(pair.Metadata.ID, pair);
             }
             _allInitializedPlugins.TryAdd(pair.Metadata.ID, pair);
+        }
+
+        private static void RemovePluginFromLists(string id)
+        {
+            _contextMenuPlugins.TryRemove(id, out _);
+            _homePlugins.TryRemove(id, out _);
+            _translationPlugins.TryRemove(id, out _);
+            _externalPreviewPlugins.TryRemove(id, out _);
+            _allInitializedPlugins.TryRemove(id, out _);
+            _initFailedPlugins.TryRemove(id, out _);
+        }
+
+        private static void UnregisterPluginActionKeywords(string id)
+        {
+            _globalPlugins.TryRemove(id, out _);
+
+            foreach (var entry in _nonGlobalPlugins.ToList())
+            {
+                lock (entry.Value)
+                {
+                    entry.Value.RemoveAll(p => p.Metadata.ID == id);
+
+                    if (entry.Value.Count == 0)
+                    {
+                        _nonGlobalPlugins.TryRemove(new KeyValuePair<string, List<PluginPair>>(entry.Key, entry.Value));
+                    }
+                }
+            }
         }
 
         #endregion
@@ -412,7 +702,7 @@ namespace Flow.Launcher.Core.Plugin
 
         public static ICollection<PluginPair> ValidPluginsForHomeQuery()
         {
-            return [.. _homePlugins.Where(p => !PluginModified(p.Metadata.ID))];
+            return [.. _homePlugins.Values.Where(p => !PluginModified(p.Metadata.ID))];
         }
 
         public static async Task<List<Result>> QueryForPluginAsync(PluginPair pair, Query query, CancellationToken token)
@@ -616,7 +906,7 @@ namespace Flow.Launcher.Core.Plugin
 
         public static List<PluginPair> GetTranslationPlugins()
         {
-            return [.. _translationPlugins.Where(p => !PluginModified(p.Metadata.ID))];
+            return [.. _translationPlugins.Values.Where(p => !PluginModified(p.Metadata.ID))];
         }
 
         #endregion
@@ -658,7 +948,7 @@ namespace Flow.Launcher.Core.Plugin
         public static List<Result> GetContextMenusForPlugin(Result result)
         {
             var results = new List<Result>();
-            var pluginPair = _contextMenuPlugins.Where(p => !PluginModified(p.Metadata.ID)).FirstOrDefault(o => o.Metadata.ID == result.PluginID);
+            var pluginPair = _contextMenuPlugins.Values.Where(p => !PluginModified(p.Metadata.ID)).FirstOrDefault(o => o.Metadata.ID == result.PluginID);
             if (pluginPair != null)
             {
                 var plugin = (IContextMenu)pluginPair.Plugin;
@@ -690,7 +980,7 @@ namespace Flow.Launcher.Core.Plugin
 
         public static bool IsHomePlugin(string id)
         {
-            return _homePlugins.Where(p => !PluginModified(p.Metadata.ID)).Any(p => p.Metadata.ID == id);
+            return _homePlugins.Values.Where(p => !PluginModified(p.Metadata.ID)).Any(p => p.Metadata.ID == id);
         }
 
         #endregion
@@ -893,7 +1183,12 @@ namespace Flow.Launcher.Core.Plugin
 
         public static bool PluginModified(string id)
         {
-            return ModifiedPlugins.Contains(id);
+            return ModifiedPlugins.ContainsKey(id);
+        }
+
+        internal static void ClearPluginModified(string id)
+        {
+            ModifiedPlugins.TryRemove(id, out _);
         }
 
         public static async Task<bool> UpdatePluginAsync(PluginMetadata existingVersion, UserPlugin newVersion, string zipFilePath)
@@ -911,7 +1206,7 @@ namespace Flow.Launcher.Core.Plugin
             var uninstallSuccess = await UninstallPluginAsync(existingVersion, removePluginFromSettings: false, removePluginSettings: false, checkModified: false);
             if (!uninstallSuccess) return false;
 
-            ModifiedPlugins.Add(existingVersion.ID);
+            ModifiedPlugins.TryAdd(existingVersion.ID, 0);
             return true;
         }
 
@@ -975,6 +1270,23 @@ namespace Flow.Launcher.Core.Plugin
                     return false;
                 }
 
+                if (string.IsNullOrEmpty(plugin.ID))
+                {
+                    // Install-from-URL requests do not know the plugin ID until the package is
+                    // downloaded, so adopt the ID from the package's plugin.json
+                    plugin.ID = newMetadata.ID;
+                }
+                else if (!string.Equals(newMetadata.ID, plugin.ID, StringComparison.Ordinal))
+                {
+                    // A mismatched package would install and later load under a different identity
+                    // than the plugin the user asked for
+                    PublicApi.Instance.ShowMsgError(Localize.failedToInstallPluginTitle(plugin.Name),
+                        Localize.pluginIDMismatchMessage());
+                    PublicApi.Instance.LogError(ClassName,
+                        $"Plugin package ID <{newMetadata.ID}> does not match the requested plugin ID <{plugin.ID}> for {plugin.Name}");
+                    return false;
+                }
+
                 if (SameOrLesserPluginVersionExists(newMetadata))
                 {
                     PublicApi.Instance.ShowMsgError(Localize.failedToInstallPluginTitle(plugin.Name),
@@ -1033,9 +1345,19 @@ namespace Flow.Launcher.Core.Plugin
                     PublicApi.Instance.LogException(ClassName, $"Failed to delete plugin marker file in {newPluginPath}", e);
                 }
 
-                if (checkModified)
+                // Takes the same short-lived lock ReloadPluginAsync's completion uses around its own
+                // _pendingInstallPaths/ModifiedPlugins writes, so the two compound read-then-write
+                // sequences can't interleave. Never held across I/O or the unload/load/init work, so
+                // this can't block the UI thread (InstallPlugin is called synchronously from it) for
+                // more than a few dictionary operations.
+                lock (_pendingInstallStateLock)
                 {
-                    ModifiedPlugins.Add(plugin.ID);
+                    _pendingInstallPaths[plugin.ID] = newPluginPath;
+
+                    if (checkModified)
+                    {
+                        ModifiedPlugins.TryAdd(plugin.ID, 0);
+                    }
                 }
 
                 return true;
@@ -1056,12 +1378,32 @@ namespace Flow.Launcher.Core.Plugin
 
         internal static async Task<bool> UninstallPluginAsync(PluginMetadata plugin, bool removePluginFromSettings, bool removePluginSettings, bool checkModified)
         {
+            // Take the same per-plugin lifecycle lock as ReloadPluginAsync so a concurrent reload
+            // cannot resurrect a plugin that is being uninstalled or race its file removal
+            var semaphore = _reloadLocks.GetOrAdd(plugin.ID, _ => new SemaphoreSlim(1, 1));
+            await semaphore.WaitAsync();
+            try
+            {
+                return await UninstallPluginUnlockedAsync(plugin, removePluginFromSettings, removePluginSettings, checkModified);
+            }
+            finally
+            {
+                semaphore.Release();
+            }
+        }
+
+        private static async Task<bool> UninstallPluginUnlockedAsync(PluginMetadata plugin, bool removePluginFromSettings, bool removePluginSettings, bool checkModified)
+        {
             if (checkModified && PluginModified(plugin.ID))
             {
                 PublicApi.Instance.ShowMsgError(Localize.pluginModifiedAlreadyTitle(plugin.Name),
                     Localize.pluginModifiedAlreadyMessage());
                 return false;
             }
+
+            // Fully unloaded plugins release all file handles, so their directory can be deleted
+            // immediately instead of being marked for deletion on the next startup
+            var fullyUnloaded = false;
 
             if (removePluginSettings || removePluginFromSettings)
             {
@@ -1071,7 +1413,14 @@ namespace Flow.Launcher.Core.Plugin
                 var pluginPairs = GetAllInitializedPlugins(includeFailed: true).Where(p => p.Metadata.ID == plugin.ID).ToList();
                 foreach (var pluginPair in pluginPairs)
                 {
-                    await DisposePluginAsync(pluginPair);
+                    if (removePluginFromSettings && HotReloadEnabled)
+                    {
+                        fullyUnloaded = await UnloadPluginAsync(pluginPair);
+                    }
+                    else
+                    {
+                        await DisposePluginAsync(pluginPair);
+                    }
                 }
             }
 
@@ -1113,39 +1462,36 @@ namespace Flow.Launcher.Core.Plugin
                         Localize.failedToRemovePluginCacheMessage(plugin.Name));
                 }
                 Settings.RemovePluginSettings(plugin.ID);
-                {
-                    _allLoadedPlugins.TryRemove(plugin.ID, out var _);
-                }
-                {
-                    _allInitializedPlugins.TryRemove(plugin.ID, out var _);
-                }
-                {
-                    _initFailedPlugins.TryRemove(plugin.ID, out var _);
-                }
-                {
-                    _globalPlugins.TryRemove(plugin.ID, out var _);
-                }
-                var entriesToUpdate = _nonGlobalPlugins.ToList();
-                foreach (var entry in entriesToUpdate)
-                {
-                    lock (entry.Value)
-                    {
-                        entry.Value.RemoveAll(p => p.Metadata.ID == plugin.ID);
+                _allLoadedPlugins.TryRemove(plugin.ID, out var _);
+                RemovePluginFromLists(plugin.ID);
+                UnregisterPluginActionKeywords(plugin.ID);
+            }
 
-                        if (entry.Value.Count == 0)
-                        {
-                            _nonGlobalPlugins.TryRemove(new KeyValuePair<string, List<PluginPair>>(entry.Key, entry.Value));
-                        }
-                    }
+            // When the plugin was fully unloaded, its directory can be removed right away and
+            // no restart is needed; otherwise mark it for deletion on next startup
+            var deleted = false;
+            if (fullyUnloaded)
+            {
+                try
+                {
+                    deleted = FilesFolders.TryDeleteDirectoryRobust(plugin.PluginDirectory);
+                }
+                catch (Exception e)
+                {
+                    PublicApi.Instance.LogException(ClassName,
+                        $"Failed to delete plugin folder for {plugin.Name}, marking it for deletion on next startup", e);
                 }
             }
 
-            // Marked for deletion. Will be deleted on next start up
-            using var _ = File.CreateText(Path.Combine(plugin.PluginDirectory, DataLocation.PluginDeleteFile));
-
-            if (checkModified)
+            if (!deleted && Directory.Exists(plugin.PluginDirectory))
             {
-                ModifiedPlugins.Add(plugin.ID);
+                // Marked for deletion. Will be deleted on next start up
+                using var _ = File.CreateText(Path.Combine(plugin.PluginDirectory, DataLocation.PluginDeleteFile));
+
+                if (checkModified)
+                {
+                    ModifiedPlugins.TryAdd(plugin.ID, 0);
+                }
             }
 
             return true;

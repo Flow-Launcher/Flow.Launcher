@@ -94,16 +94,20 @@ public static class PluginInstaller
             return; // do not restart on failure
         }
 
-        if (Settings.AutoRestartAfterChanging)
+        var hotReloaded = Settings.HotReloadAfterChanging && await PluginManager.ReloadPluginAsync(newPlugin.ID);
+        if (hotReloaded)
         {
-            PublicApi.Instance.RestartApp();
+            PublicApi.Instance.ShowMsg(
+                Localize.installbtn(),
+                Localize.InstallSuccessHotReload(newPlugin.Name));
         }
-        else
+        else if (!Settings.HotReloadAfterChanging)
         {
             PublicApi.Instance.ShowMsg(
                 Localize.installbtn(),
                 Localize.InstallSuccessNoRestart(newPlugin.Name));
         }
+        // Hot reload was attempted and failed: PluginManager.ReloadPluginAsync already notified the user
     }
 
     /// <summary>
@@ -189,9 +193,12 @@ public static class PluginInstaller
             return; // don not restart on failure
         }
 
-        if (Settings.AutoRestartAfterChanging)
+        if (Settings.HotReloadAfterChanging && !PublicApi.Instance.PluginModified(oldPlugin.ID))
         {
-            PublicApi.Instance.RestartApp();
+            // The plugin was fully unloaded and its directory deleted, so no restart is needed
+            PublicApi.Instance.ShowMsg(
+                Localize.uninstallbtn(),
+                Localize.UninstallSuccessHotReload(oldPlugin.Name));
         }
         else
         {
@@ -249,16 +256,20 @@ public static class PluginInstaller
             return false; // do not restart on failure
         }
 
-        if (Settings.AutoRestartAfterChanging)
+        var hotReloaded = Settings.HotReloadAfterChanging && await PluginManager.ReloadPluginAsync(oldPlugin.ID);
+        if (hotReloaded)
         {
-            PublicApi.Instance.RestartApp();
+            PublicApi.Instance.ShowMsg(
+                Localize.updatebtn(),
+                Localize.UpdateSuccessHotReload(newPlugin.Name));
         }
-        else
+        else if (!Settings.HotReloadAfterChanging)
         {
             PublicApi.Instance.ShowMsg(
                 Localize.updatebtn(),
                 Localize.UpdateSuccessNoRestart(newPlugin.Name));
         }
+        // Hot reload was attempted and failed: PluginManager.ReloadPluginAsync already notified the user
 
         return true;
     }
@@ -362,6 +373,11 @@ public static class PluginInstaller
         IEnumerable<PluginUpdateInfo> resultsForUpdate,
         bool restart)
     {
+        var allPluginsHotReloaded = true;
+        // Set only for failures PluginManager.ReloadPluginAsync doesn't already notify the user about
+        // (download/update failures, or hot reload being off) so the aggregate message below doesn't
+        // duplicate the per-plugin notification a failed reload attempt already showed
+        var anyUnnotifiedFailure = false;
         var updateResults = await Task.WhenAll(resultsForUpdate.Select(async plugin =>
         {
             var downloadToFilePath = Path.Combine(Path.GetTempPath(), $"{plugin.Name}-{plugin.NewVersion}.zip");
@@ -377,18 +393,34 @@ public static class PluginInstaller
                 // check if user cancelled download before installing plugin
                 if (cts.IsCancellationRequested)
                 {
+                    allPluginsHotReloaded = false;
+                    anyUnnotifiedFailure = true;
                     return null;
                 }
 
                 if (!await PublicApi.Instance.UpdatePluginAsync(plugin.PluginExistingMetadata, plugin.PluginNewUserPlugin, downloadToFilePath))
                 {
+                    allPluginsHotReloaded = false;
+                    anyUnnotifiedFailure = true;
                     return null;
+                }
+
+                if (!Settings.HotReloadAfterChanging || !await PluginManager.ReloadPluginAsync(plugin.ID))
+                {
+                    allPluginsHotReloaded = false;
+                    if (!Settings.HotReloadAfterChanging)
+                    {
+                        anyUnnotifiedFailure = true;
+                    }
+                    // else: reload was attempted and failed, and PluginManager already notified the user
                 }
 
                 return plugin;
             }
             catch (Exception e)
             {
+                allPluginsHotReloaded = false;
+                anyUnnotifiedFailure = true;
                 PublicApi.Instance.LogException(ClassName, "Failed to update plugin", e);
                 PublicApi.Instance.ShowMsgError(Localize.ErrorUpdatingPlugin());
                 return null;
@@ -401,11 +433,17 @@ public static class PluginInstaller
 
         if (successfulUpdates.Count == 0) return successfulUpdates;
 
-        if (restart)
+        if (allPluginsHotReloaded)
+        {
+            PublicApi.Instance.ShowMsg(
+                Localize.updatebtn(),
+                Localize.PluginsUpdateSuccessHotReload());
+        }
+        else if (restart)
         {
             PublicApi.Instance.RestartApp();
         }
-        else
+        else if (anyUnnotifiedFailure)
         {
             PublicApi.Instance.ShowMsg(
                 Localize.updatebtn(),

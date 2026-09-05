@@ -56,6 +56,8 @@ namespace Flow.Launcher.ViewModel
         private CancellationToken _updateToken; // Used to avoid ObjectDisposedException of _updateSource.Token
 
         private ChannelWriter<ResultsForUpdate> _resultsUpdateChannelWriter;
+
+        private readonly ConcurrentDictionary<string, (IResultUpdated Plugin, ResultUpdatedEventHandler Handler)> _resultsUpdatedHandlers = new();
         private Task _resultsViewUpdateTask;
 
         private readonly IReadOnlyList<Result> _emptyResult = new List<Result>();
@@ -273,7 +275,7 @@ namespace Flow.Launcher.ViewModel
         {
             if (pair.Plugin is not IResultUpdated plugin) return;
 
-            plugin.ResultsUpdated += (s, e) =>
+            ResultUpdatedEventHandler handler = (s, e) =>
             {
                 if (_updateQuery == null || e.Query.OriginalQuery != _updateQuery.OriginalQuery || e.Token.IsCancellationRequested)
                 {
@@ -313,6 +315,22 @@ namespace Flow.Launcher.ViewModel
                     App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
                 }
             };
+
+            // Detach any stale handler left by a previous instance that was not unloaded through
+            // the hot reload path, so the new instance always ends up subscribed exactly once
+            UnregisterResultsUpdatedEvent(pair);
+
+            // Track the handler so it can be detached when the plugin is unloaded or reloaded
+            _resultsUpdatedHandlers[pair.Metadata.ID] = (plugin, handler);
+            plugin.ResultsUpdated += handler;
+        }
+
+        public void UnregisterResultsUpdatedEvent(PluginPair pair)
+        {
+            if (_resultsUpdatedHandlers.TryRemove(pair.Metadata.ID, out var entry))
+            {
+                entry.Plugin.ResultsUpdated -= entry.Handler;
+            }
         }
 
         private async Task RegisterClockAndDateUpdateAsync()

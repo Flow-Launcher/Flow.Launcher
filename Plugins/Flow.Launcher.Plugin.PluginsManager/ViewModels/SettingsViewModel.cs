@@ -12,16 +12,10 @@
             Settings = settings;
         }
 
-        public bool WarnFromUnknownSource 
+        public bool WarnFromUnknownSource
         {
             get => Settings.WarnFromUnknownSource;
             set => Settings.WarnFromUnknownSource = value;
-        }
-
-        public bool AutoRestartAfterChanging
-        { 
-            get => Settings.AutoRestartAfterChanging;
-            set => Settings.AutoRestartAfterChanging = value;
         }
     }
 }

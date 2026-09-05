@@ -92,6 +92,11 @@ public class Settings : BaseModel
         },
         new()
         {
+            Key = "Reload All Plugins",
+            Keyword = "Reload All Plugins"
+        },
+        new()
+        {
             Key = "Check For Update",
             Keyword = "Check For Update"
         },
