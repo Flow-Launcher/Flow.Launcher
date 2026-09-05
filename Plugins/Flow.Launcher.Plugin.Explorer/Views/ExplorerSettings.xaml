@@ -1,4 +1,4 @@
-<UserControl
+﻿<UserControl
     x:Class="Flow.Launcher.Plugin.Explorer.Views.ExplorerSettings"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -190,6 +190,8 @@
             <!--  Margin="32 -10 0 0" is to make sure elements is left aligned to the text in the expander text  -->
             <Grid Margin="32 -10 0 0">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -418,6 +420,24 @@
                     Margin="{StaticResource SettingPanelItemTopBottomMargin}"
                     Click="btnOpenIndexingOptions_Click"
                     Content="{DynamicResource plugin_explorer_Open_Window_Index_Option}" />
+
+                <CheckBox
+                    Grid.Row="13"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Margin="{StaticResource SettingPanelItemTopBottomMargin}"
+                    HorizontalAlignment="Left"
+                    Content="{DynamicResource plugin_explorer_move_deleted_items_to_recycle_bin}"
+                    IsChecked="{Binding Settings.DeleteToRecycleBin}" />
+
+                <CheckBox
+                    Grid.Row="14"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Margin="{StaticResource SettingPanelItemTopBottomMargin}"
+                    HorizontalAlignment="Left"
+                    Content="{DynamicResource plugin_explorer_confirm_before_deleting}"
+                    IsChecked="{Binding Settings.ConfirmBeforeDeleting}" />
             </Grid>
         </Expander>
 
