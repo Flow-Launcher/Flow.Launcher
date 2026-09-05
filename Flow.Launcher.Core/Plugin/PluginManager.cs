@@ -312,11 +312,9 @@ namespace Flow.Launcher.Core.Plugin
             if (!_initFailedPlugins.IsEmpty)
             {
                 var failed = string.Join(",", _initFailedPlugins.Values.Select(x => x.Metadata.Name));
-                PublicApi.Instance.ShowMsg(
+                PublicApi.Instance.ShowMsgError(
                     Localize.failedToInitializePluginsTitle(),
-                    Localize.failedToInitializePluginsMessage(failed),
-                    "",
-                    false
+                    Localize.failedToInitializePluginsMessage(failed)
                 );
             }
         }

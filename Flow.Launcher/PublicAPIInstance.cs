@@ -53,7 +53,7 @@ namespace Flow.Launcher
         private Updater _updater;
         private Updater Updater => _updater ??= Ioc.Default.GetRequiredService<Updater>();
 
-        private readonly object _saveSettingsLock = new();
+        private readonly Lock _saveSettingsLock = new();
 
         #region Constructor
 
@@ -119,21 +119,30 @@ namespace Flow.Launcher
         public Task ReloadAllPluginData() => PluginManager.ReloadDataAsync();
 
         public void ShowMsgError(string title, string subTitle = "") =>
-            ShowMsg(title, subTitle, Constant.ErrorIcon, true);
+            ShowMsg(title, subTitle, Constant.ErrorIcon, useMainWindowAsOwner: true, forceShown:true);
 
         public void ShowMsgErrorWithButton(string title, string buttonText, Action buttonAction, string subTitle = "") =>
-            ShowMsgWithButton(title, buttonText, buttonAction, subTitle, Constant.ErrorIcon, true);
+            ShowMsgWithButton(title, buttonText, buttonAction, subTitle, Constant.ErrorIcon, useMainWindowAsOwner: true);
 
         public void ShowMsg(string title, string subTitle = "", string iconPath = "") =>
-            ShowMsg(title, subTitle, iconPath, true);
+            ShowMsg(title, subTitle, iconPath, useMainWindowAsOwner:true, forceShown:false);
 
-        public void ShowMsg(string title, string subTitle, string iconPath, bool useMainWindowAsOwner = true)
+        public void ShowMsg(string title, string subTitle, string iconPath, bool useMainWindowAsOwner = true) =>
+            ShowMsg(title, subTitle, iconPath, useMainWindowAsOwner: true, forceShown: false);
+
+        public void ShowMsg(string title, string subTitle, string iconPath, bool useMainWindowAsOwner = true, bool forceShown = false)
         {
+            if (!forceShown && !_settings.EnableSuccessNotification &&
+                !string.Equals(iconPath, Constant.ErrorIcon, StringComparison.OrdinalIgnoreCase))
+            {
+                return;
+            }
+
             Notification.Show(title, subTitle, iconPath);
         }
 
         public void ShowMsgWithButton(string title, string buttonText, Action buttonAction, string subTitle = "", string iconPath = "") =>
-            ShowMsgWithButton(title, buttonText, buttonAction, subTitle, iconPath, true);
+            ShowMsgWithButton(title, buttonText, buttonAction, subTitle, iconPath, useMainWindowAsOwner: true);
 
         public void ShowMsgWithButton(string title, string buttonText, Action buttonAction, string subTitle, string iconPath, bool useMainWindowAsOwner = true)
         {
