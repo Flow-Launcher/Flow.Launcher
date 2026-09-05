@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -128,7 +128,18 @@ namespace Flow.Launcher.Plugin.Calculator
 
                 if (!string.IsNullOrEmpty(result.ToString()))
                 {
-                    decimal roundedResult = Math.Round(Convert.ToDecimal(result), _settings.MaxDecimalPlaces, MidpointRounding.AwayFromZero);
+                    double rawValue = Convert.ToDouble(result);
+                    decimal decValue;
+                    if (double.IsNaN(rawValue) || double.IsInfinity(rawValue))
+                    {
+                        decValue = (decimal)rawValue;
+                    }
+                    else
+                    {
+                        string format = (rawValue % 1 == 0) ? "G17" : "G14";
+                        decValue = decimal.Parse(rawValue.ToString(format, CultureInfo.InvariantCulture), NumberStyles.Any, CultureInfo.InvariantCulture);
+                    }
+                    decimal roundedResult = Math.Round(decValue, _settings.MaxDecimalPlaces, MidpointRounding.AwayFromZero);
                     string newResult = FormatResult(roundedResult);
 
                     return
@@ -138,7 +149,6 @@ namespace Flow.Launcher.Plugin.Calculator
                             Title = newResult,
                             IcoPath = IcoPath,
                             Score = 300,
-                            // Check context nullability for unit testing
                             SubTitle = Context == null ? string.Empty : Localize.flowlauncher_plugin_calculator_copy_number_to_clipboard(),
                             CopyText = newResult,
                             Action = c =>
