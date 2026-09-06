@@ -10,6 +10,8 @@
     DataContext="{Binding RelativeSource={RelativeSource Self}}"
     Foreground="{DynamicResource PopupTextColor}"
     PreviewKeyDown="OnPreviewKeyDown"
+    PreviewKeyUp="OnPreviewKeyUp"
+    Unloaded="OnUnloaded"
     Style="{DynamicResource ContentDialog}">
     <ui:ContentDialog.Resources>
         <Thickness x:Key="ContentDialogPadding">0</Thickness>
