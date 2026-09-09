@@ -16,13 +16,19 @@ public enum PreviewContentLoadState
 
 public sealed class PreviewContentBlockViewModel : BaseModel
 {
-    private bool _loadStarted;
+    private readonly Func<string, CancellationToken, Task<string>> _readFileAsync;
+    private int _loadGeneration;
     private object _renderedContent;
     private PreviewContentLoadState _loadState;
 
-    public PreviewContentBlockViewModel(PreviewContentBlock inputBlock)
+    public PreviewContentBlockViewModel(PreviewContentBlock inputBlock) : this(inputBlock, File.ReadAllTextAsync)
+    {
+    }
+
+    internal PreviewContentBlockViewModel(PreviewContentBlock inputBlock, Func<string, CancellationToken, Task<string>> readFileAsync)
     {
         InputBlock = inputBlock;
+        _readFileAsync = readFileAsync;
         _loadState = RequiresFileLoad ? PreviewContentLoadState.NotLoaded : PreviewContentLoadState.Ready;
         _renderedContent = GetInlineContent(inputBlock);
     }
@@ -67,28 +73,46 @@ public sealed class PreviewContentBlockViewModel : BaseModel
 
     public async Task LoadAsync(string pluginDirectory, CancellationToken cancellationToken)
     {
-        if (!RequiresFileLoad || _loadStarted)
+        // Ready and Failed are terminal: loaded content is cached and a failed load is not retried.
+        if (!RequiresFileLoad || LoadState is PreviewContentLoadState.Ready or PreviewContentLoadState.Failed)
         {
             return;
         }
 
-        _loadStarted = true;
+        // A newer call supersedes any earlier attempt that has not finished unwinding yet.
+        // The generation marks the newest attempt, so a superseded one backs off when it resumes.
+        var generation = ++_loadGeneration;
         LoadState = PreviewContentLoadState.Loading;
 
         try
         {
             var filePath = ResolveFilePath(pluginDirectory);
-            var content = await File.ReadAllTextAsync(filePath, cancellationToken);
+            var content = await _readFileAsync(filePath, cancellationToken);
+
+            if (generation != _loadGeneration)
+            {
+                return;
+            }
+
             RenderedContent = content;
             LoadState = PreviewContentLoadState.Ready;
         }
         catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
         {
-            _loadStarted = false;
+            if (generation != _loadGeneration)
+            {
+                return;
+            }
+
             LoadState = PreviewContentLoadState.NotLoaded;
         }
         catch (Exception)
         {
+            if (generation != _loadGeneration)
+            {
+                return;
+            }
+
             LoadState = PreviewContentLoadState.Failed;
         }
     }
