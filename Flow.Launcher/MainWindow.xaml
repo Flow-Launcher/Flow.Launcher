@@ -91,7 +91,7 @@
                         FontWeight="SemiBold"
                         Foreground="{DynamicResource Color10B}"
                         Style="{DynamicResource SettingTitleLabel}"
-                        Text="{DynamicResource previewContentLoadError}"
+                        Text="{Binding LoadErrorMessage}"
                         TextWrapping="Wrap"
                         VerticalAlignment="Center" />
                 </Border>

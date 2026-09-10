@@ -28,6 +28,7 @@ namespace Flow.Launcher.Plugin
         /// The path to a markdown file to load when the preview is shown.
         /// It is used only when <see cref="InlineMarkdown"/> is null or empty.
         /// Absolute paths are supported. Relative paths are resolved from the plugin directory.
+        /// Files larger than 1 MiB are not loaded and an error is shown instead.
         /// </summary>
         public string FilePath { get; set; }
     }
@@ -53,6 +54,7 @@ namespace Flow.Launcher.Plugin
         /// The path to a text file to load when the preview is shown.
         /// It is used only when <see cref="Text"/> is null or empty.
         /// Absolute paths are supported. Relative paths are resolved from the plugin directory.
+        /// Files larger than 1 MiB are not loaded and an error is shown instead.
         /// </summary>
         public string FilePath { get; set; }
     }

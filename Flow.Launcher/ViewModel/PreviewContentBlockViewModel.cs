@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.ViewModel;
@@ -16,12 +17,17 @@ public enum PreviewContentLoadState
 
 public sealed class PreviewContentBlockViewModel : BaseModel
 {
+    private static readonly string ClassName = nameof(PreviewContentBlockViewModel);
+    private const long MaxPreviewFileSizeBytes = 1024 * 1024;
+    // 8 KiB chunks avoid many read calls while keeping the per-load allocation modest.
+    private const int FileReadBufferSize = 8192;
     private readonly Func<string, CancellationToken, Task<string>> _readFileAsync;
     private int _loadGeneration;
     private object _renderedContent;
+    private string _loadErrorMessage;
     private PreviewContentLoadState _loadState;
 
-    public PreviewContentBlockViewModel(PreviewContentBlock inputBlock) : this(inputBlock, File.ReadAllTextAsync)
+    public PreviewContentBlockViewModel(PreviewContentBlock inputBlock) : this(inputBlock, ReadPreviewFileAsync)
     {
     }
 
@@ -41,6 +47,16 @@ public sealed class PreviewContentBlockViewModel : BaseModel
         private set
         {
             _renderedContent = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public string LoadErrorMessage
+    {
+        get => _loadErrorMessage;
+        private set
+        {
+            _loadErrorMessage = value;
             OnPropertyChanged();
         }
     }
@@ -84,37 +100,51 @@ public sealed class PreviewContentBlockViewModel : BaseModel
         var generation = ++_loadGeneration;
         LoadState = PreviewContentLoadState.Loading;
 
+        string content = string.Empty;
+        string errorMessage = string.Empty;
+        string logMessage = string.Empty;
+        var nextState = PreviewContentLoadState.NotLoaded;
+
         try
         {
             var filePath = ResolveFilePath(pluginDirectory);
-            var content = await _readFileAsync(filePath, cancellationToken);
-
-            if (generation != _loadGeneration)
-            {
-                return;
-            }
-
-            RenderedContent = content;
-            LoadState = PreviewContentLoadState.Ready;
+            content = await _readFileAsync(filePath, cancellationToken);
+            nextState = PreviewContentLoadState.Ready;
         }
         catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
         {
-            if (generation != _loadGeneration)
-            {
-                return;
-            }
-
-            LoadState = PreviewContentLoadState.NotLoaded;
+            nextState = PreviewContentLoadState.NotLoaded; // already the default but being explicit here
         }
-        catch (Exception)
+        catch (PreviewFileTooLargeException e)
         {
-            if (generation != _loadGeneration)
-            {
-                return;
-            }
-
-            LoadState = PreviewContentLoadState.Failed;
+            errorMessage = Localize.previewContentLoadErrorTooLarge();
+            logMessage = e.Message;
+            nextState = PreviewContentLoadState.Failed;
         }
+        catch (Exception e)
+        {
+            errorMessage = Localize.previewContentLoadError();
+            logMessage = $"Failed to load preview file: {e.Message}";
+            nextState = PreviewContentLoadState.Failed;
+        }
+
+        // A superseded attempt must not update the state of the newer one.
+        if (generation != _loadGeneration)
+        {
+            return;
+        }
+
+        if (nextState == PreviewContentLoadState.Ready)
+        {
+            RenderedContent = content;
+        }
+        else if (nextState == PreviewContentLoadState.Failed)
+        {
+            LoadErrorMessage = errorMessage;
+            App.API.LogError(ClassName, logMessage);
+        }
+
+        LoadState = nextState;
     }
 
     private string ResolveFilePath(string pluginDirectory)
@@ -139,5 +169,37 @@ public sealed class PreviewContentBlockViewModel : BaseModel
             TextPreviewBlock text => text.Text,
             _ => null
         };
+    }
+
+    private static async Task<string> ReadPreviewFileAsync(string filePath, CancellationToken cancellationToken)
+    {
+        // The file can grow after being opened, so cap the bytes actually read.
+        using var content = new MemoryStream();
+        await using var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read, FileReadBufferSize, FileOptions.Asynchronous);
+        var buffer = new byte[FileReadBufferSize];
+
+        int read;
+        while ((read = await stream.ReadAsync(buffer, cancellationToken)) > 0)
+        {
+            if (content.Length + read > MaxPreviewFileSizeBytes)
+            {
+                throw new PreviewFileTooLargeException(filePath);
+            }
+
+            await content.WriteAsync(buffer.AsMemory(0, read), cancellationToken);
+        }
+
+        // Decode the same way File.ReadAllTextAsync does, including byte order mark detection.
+        content.Position = 0;
+        using var reader = new StreamReader(content, detectEncodingFromByteOrderMarks: true);
+        return await reader.ReadToEndAsync(cancellationToken);
+    }
+
+    private sealed class PreviewFileTooLargeException : Exception
+    {
+        public PreviewFileTooLargeException(string filePath)
+            : base($"Preview file '{filePath}' is over the {MaxPreviewFileSizeBytes} byte limit.")
+        {
+        }
     }
 }
