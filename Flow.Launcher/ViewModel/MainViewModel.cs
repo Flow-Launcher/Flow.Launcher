@@ -53,6 +53,7 @@ namespace Flow.Launcher.ViewModel
         private readonly UserSelectedRecord _userSelectedRecord;
 
         private CancellationTokenSource _updateSource; // Used to cancel old query flows
+        private CancellationTokenSource _clockUpdateCts; // Used to stop the clock/date update loop when idle
         private CancellationToken _updateToken; // Used to avoid ObjectDisposedException of _updateSource.Token
 
         private ChannelWriter<ResultsForUpdate> _resultsUpdateChannelWriter;
@@ -192,7 +193,7 @@ namespace Flow.Launcher.ViewModel
             History.PropertyChanged += OnHistoryPropertyChanged;
 
             RegisterViewUpdate();
-            _ = RegisterClockAndDateUpdateAsync();
+            RegisterClockAndDateUpdate();
 
             ThemeManager.Current.ActualApplicationThemeChanged += ThemeManager_ActualApplicationThemeChanged;
         }
@@ -315,17 +316,85 @@ namespace Flow.Launcher.ViewModel
             };
         }
 
-        private async Task RegisterClockAndDateUpdateAsync()
+        /// <summary>
+        /// Registers the clock/date update loop. The loop only runs while the main window is visible
+        /// and at least one of clock/date display is enabled; it is fully stopped otherwise,
+        /// so no thread wakes up periodically while Flow sits in the background.
+        /// </summary>
+        private void RegisterClockAndDateUpdate()
         {
-            var timer = new PeriodicTimer(TimeSpan.FromSeconds(1));
-            // ReSharper disable once MethodSupportsCancellation
-            while (await timer.WaitForNextTickAsync().ConfigureAwait(false))
+            Settings.PropertyChanged += OnClockSettingsChanged;
+            VisibilityChanged += OnClockVisibilityChanged;
+        }
+
+        private void OnClockSettingsChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName is nameof(Settings.UseClock) or nameof(Settings.UseDate)
+                or nameof(Settings.TimeFormat) or nameof(Settings.DateFormat))
             {
-                if (Settings.UseClock)
-                    ClockText = DateTime.Now.ToString(Settings.TimeFormat, CultureInfo.CurrentCulture);
-                if (Settings.UseDate)
-                    DateText = DateTime.Now.ToString(Settings.DateFormat, CultureInfo.CurrentCulture);
+                RestartClockUpdate();
             }
+        }
+
+        private void OnClockVisibilityChanged(object sender, VisibilityChangedEventArgs e)
+        {
+            if (e.IsVisible)
+                RestartClockUpdate();
+            else
+                StopClockUpdate();
+        }
+
+        private void RestartClockUpdate()
+        {
+            StopClockUpdate();
+
+            // Nothing to update when both displays are disabled
+            if (!Settings.UseClock && !Settings.UseDate)
+                return;
+
+            _clockUpdateCts = new CancellationTokenSource();
+            _ = Task.Run(() => ClockUpdateLoopAsync(_clockUpdateCts.Token));
+        }
+
+        private void StopClockUpdate()
+        {
+            _clockUpdateCts?.Cancel();
+            _clockUpdateCts?.Dispose();
+            _clockUpdateCts = null;
+        }
+
+        private async Task ClockUpdateLoopAsync(CancellationToken token)
+        {
+            try
+            {
+                while (!token.IsCancellationRequested)
+                {
+                    if (Settings.UseClock)
+                        ClockText = DateTime.Now.ToString(Settings.TimeFormat, CultureInfo.CurrentCulture);
+                    if (Settings.UseDate)
+                        DateText = DateTime.Now.ToString(Settings.DateFormat, CultureInfo.CurrentCulture);
+
+                    // Only tick every second when a format actually shows seconds/sub-second precision;
+                    // otherwise wait until just past the next minute boundary.
+                    var perSecond =
+                        (Settings.UseClock && ShowsSubMinutePrecision(Settings.TimeFormat)) ||
+                        (Settings.UseDate && ShowsSubMinutePrecision(Settings.DateFormat));
+                    var delay = perSecond
+                        ? TimeSpan.FromSeconds(1)
+                        : TimeSpan.FromMilliseconds(60_050 - DateTime.Now.Millisecond);
+
+                    await Task.Delay(delay, token).ConfigureAwait(false);
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                // stopped on hide/settings change/dispose
+            }
+        }
+
+        private static bool ShowsSubMinutePrecision(string format)
+        {
+            return !string.IsNullOrEmpty(format) && (format.Contains('s') || format.Contains('f'));
         }
 
         [RelayCommand]
@@ -2563,6 +2632,9 @@ namespace Flow.Launcher.ViewModel
             {
                 if (disposing)
                 {
+                    StopClockUpdate();
+                    Settings.PropertyChanged -= OnClockSettingsChanged;
+                    VisibilityChanged -= OnClockVisibilityChanged;
                     _updateSource?.Dispose();
                     _dialogJumpSource?.Dispose();
                     _resultsUpdateChannelWriter?.Complete();
