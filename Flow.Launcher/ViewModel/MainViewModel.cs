@@ -425,7 +425,7 @@ namespace Flow.Launcher.ViewModel
                 return false;
 
             // Single-letter standard format strings never contain 's'/'f' literally;
-            // these variants include seconds in their output (case-insensitive O/R, plus s/u/U/T/F).
+            // these variants include seconds in their output (case-insensitive O/R, plus s/u/U/T/F/G).
             if (format.Length == 1)
                 return format[0] is 'O' or 'o' or 'R' or 'r' or 's' or 'u' or 'U' or 'T' or 'F' or 'G';
 
