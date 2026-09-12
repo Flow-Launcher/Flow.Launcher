@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -323,11 +323,14 @@ namespace Flow.Launcher.ViewModel
         /// </summary>
         private void RegisterClockAndDateUpdate()
         {
-            Settings.PropertyChanged += OnClockSettingsChanged;
-            VisibilityChanged += OnClockVisibilityChanged;
+            Settings.PropertyChanged += HandleClockSettingsChanged;
+            VisibilityChanged += HandleClockVisibilityChanged;
         }
 
-        private void OnClockSettingsChanged(object sender, PropertyChangedEventArgs e)
+        /// <summary>
+        /// Restarts the clock/date update loop when a clock-related setting (toggles or formats) changes.
+        /// </summary>
+        private void HandleClockSettingsChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName is nameof(Settings.UseClock) or nameof(Settings.UseDate)
                 or nameof(Settings.TimeFormat) or nameof(Settings.DateFormat))
@@ -336,7 +339,10 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private void OnClockVisibilityChanged(object sender, VisibilityChangedEventArgs e)
+        /// <summary>
+        /// Starts or stops the clock/date update loop when the main window becomes visible or hidden.
+        /// </summary>
+        private void HandleClockVisibilityChanged(object sender, VisibilityChangedEventArgs e)
         {
             if (e.IsVisible)
                 RestartClockUpdate();
@@ -344,18 +350,29 @@ namespace Flow.Launcher.ViewModel
                 StopClockUpdate();
         }
 
+        /// <summary>
+        /// Stops any running loop and starts a new one, but only while the main window is visible
+        /// and at least one of clock/date display is enabled.
+        /// </summary>
         private void RestartClockUpdate()
         {
             StopClockUpdate();
 
-            // Nothing to update when both displays are disabled
-            if (!Settings.UseClock && !Settings.UseDate)
+            // Nothing to update when both displays are disabled or the main window is hidden
+            if (!MainWindowVisibilityStatus || (!Settings.UseClock && !Settings.UseDate))
                 return;
 
-            _clockUpdateCts = new CancellationTokenSource();
-            _ = Task.Run(() => ClockUpdateLoopAsync(_clockUpdateCts.Token));
+            var cts = new CancellationTokenSource();
+            _clockUpdateCts = cts;
+            // Capture the token locally: a concurrent stop/restart could null or replace the field
+            // before the queued task reads it.
+            var token = cts.Token;
+            _ = Task.Run(() => ClockUpdateLoopAsync(token));
         }
 
+        /// <summary>
+        /// Cancels and disposes the clock/date update loop, if running.
+        /// </summary>
         private void StopClockUpdate()
         {
             _clockUpdateCts?.Cancel();
@@ -363,6 +380,11 @@ namespace Flow.Launcher.ViewModel
             _clockUpdateCts = null;
         }
 
+        /// <summary>
+        /// Periodically refreshes <see cref="ClockText"/> and <see cref="DateText"/>. Ticks every second
+        /// when any enabled format shows sub-minute precision; otherwise wakes just past each minute boundary.
+        /// Exits when the cancellation token is cancelled (hide, settings change, or dispose).
+        /// </summary>
         private async Task ClockUpdateLoopAsync(CancellationToken token)
         {
             try
@@ -381,7 +403,8 @@ namespace Flow.Launcher.ViewModel
                         (Settings.UseDate && ShowsSubMinutePrecision(Settings.DateFormat));
                     var delay = perSecond
                         ? TimeSpan.FromSeconds(1)
-                        : TimeSpan.FromMilliseconds(60_050 - DateTime.Now.Millisecond);
+                        // Align just past the next minute boundary (account for seconds AND milliseconds)
+                        : TimeSpan.FromMilliseconds(60_050 - (DateTime.Now.Second * 1_000 + DateTime.Now.Millisecond));
 
                     await Task.Delay(delay, token).ConfigureAwait(false);
                 }
@@ -392,9 +415,21 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        /// <summary>
+        /// Determines whether a date/time format string displays seconds or sub-second precision,
+        /// considering both custom formats and single-letter standard format specifiers.
+        /// </summary>
         private static bool ShowsSubMinutePrecision(string format)
         {
-            return !string.IsNullOrEmpty(format) && (format.Contains('s') || format.Contains('f'));
+            if (string.IsNullOrEmpty(format))
+                return false;
+
+            // Single-letter standard format strings never contain 's'/'f' literally;
+            // these variants include seconds in their output.
+            if (format.Length == 1)
+                return format[0] is 'O' or 'R' or 's' or 'u' or 'U' or 'T' or 'G' or 'f' or 'F';
+
+            return format.Contains('s') || format.Contains('f');
         }
 
         [RelayCommand]
@@ -2633,8 +2668,8 @@ namespace Flow.Launcher.ViewModel
                 if (disposing)
                 {
                     StopClockUpdate();
-                    Settings.PropertyChanged -= OnClockSettingsChanged;
-                    VisibilityChanged -= OnClockVisibilityChanged;
+                    Settings.PropertyChanged -= HandleClockSettingsChanged;
+                    VisibilityChanged -= HandleClockVisibilityChanged;
                     _updateSource?.Dispose();
                     _dialogJumpSource?.Dispose();
                     _resultsUpdateChannelWriter?.Complete();
