@@ -11,17 +11,11 @@
         <Grid.ColumnDefinitions />
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
         <CheckBox
             Grid.Row="0"
             Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
             Content="{DynamicResource plugin_pluginsmanager_plugin_settings_unknown_source}"
             IsChecked="{Binding WarnFromUnknownSource}" />
-        <CheckBox
-            Grid.Row="1"
-            Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
-            Content="{DynamicResource plugin_pluginsmanager_plugin_settings_auto_restart}"
-            IsChecked="{Binding AutoRestartAfterChanging}" />
     </Grid>
 </UserControl>

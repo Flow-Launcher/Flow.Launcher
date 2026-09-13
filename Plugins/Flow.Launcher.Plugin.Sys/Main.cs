@@ -36,6 +36,7 @@ namespace Flow.Launcher.Plugin.Sys
             {"Restart Flow Launcher", "flowlauncher_plugin_sys_restart_cmd"},
             {"Settings", "flowlauncher_plugin_sys_setting_cmd"},
             {"Reload Plugin Data", "flowlauncher_plugin_sys_reload_plugin_data_cmd"},
+            {"Reload All Plugins", "flowlauncher_plugin_sys_reload_all_plugins_cmd"},
             {"Check For Update", "flowlauncher_plugin_sys_check_for_update_cmd"},
             {"Open Log Location", "flowlauncher_plugin_sys_open_log_location_cmd"},
             {"Flow Launcher Tips", "flowlauncher_plugin_sys_open_docs_tips_cmd"},
@@ -140,6 +141,15 @@ namespace Flow.Launcher.Plugin.Sys
             {
                 // Remove _cmd in the last of the strings
                 KeywordDescriptionMappings[key] = KeywordTitleMappings[key][..^4];
+            }
+
+            // Add commands introduced after the user's settings were first saved
+            foreach (var command in new Settings().Commands)
+            {
+                if (_settings.Commands.All(x => x.Key != command.Key))
+                {
+                    _settings.Commands.Add(command);
+                }
             }
         }
 
@@ -434,6 +444,38 @@ namespace Flow.Launcher.Plugin.Sys
                             Context.API.ShowMsg(
                                 Localize.flowlauncher_plugin_sys_dlgtitle_success(),
                                 Localize.flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded()),
+                            TaskScheduler.Current);
+                        return true;
+                    }
+                },
+                new Result
+                {
+                    Title = "Reload All Plugins",
+                    IcoPath = "Images\\app.png",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe72c"),
+                    Action = c =>
+                    {
+                        // Hide the window first then show msg after done because the reload could take a while, so not to make user think it's frozen.
+                        Context.API.HideMainWindow();
+                        _ = Context.API.ReloadAllPluginsAsync().ContinueWith(t =>
+                            {
+                                if (t.Status == TaskStatus.RanToCompletion && t.Result)
+                                {
+                                    Context.API.ShowMsg(
+                                        Localize.flowlauncher_plugin_sys_dlgtitle_success(),
+                                        Localize.flowlauncher_plugin_sys_dlgtext_all_plugins_reloaded());
+                                }
+                                else if (t.Exception != null)
+                                {
+                                    // An unexpected exception escaped the per-plugin reload loop, so no
+                                    // individual plugin notification fired for it; ReloadPluginAsync's own
+                                    // per-plugin failure message already covers every plain reload failure
+                                    Context.API.LogException(ClassName, "Failed to reload all plugins", t.Exception);
+                                    Context.API.ShowMsgError(
+                                        Localize.flowlauncher_plugin_sys_reload_all_plugins_cmd(),
+                                        Localize.flowlauncher_plugin_sys_dlgtext_all_plugins_reload_failed());
+                                }
+                            },
                             TaskScheduler.Current);
                         return true;
                     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
@@ -13,7 +14,6 @@ using NHotkey;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.UI.Accessibility;
-using System.Collections.Concurrent;
 
 namespace Flow.Launcher.Infrastructure.DialogJump
 {
@@ -61,13 +61,24 @@ namespace Flow.Launcher.Infrastructure.DialogJump
 
         private static HWND _mainWindowHandle = HWND.Null;
 
-        private static readonly ConcurrentDictionary<DialogJumpExplorerPair, IDialogJumpExplorerWindow> _dialogJumpExplorers = new();
+        // Registrations are keyed by pair instance, not by plugin ID: a hot reload registers a new pair
+        // for an ID while an in-flight window event may still hold the old one, and the pair equality is
+        // by plugin ID only, so an ID-keyed entry cannot tell a stale pair from the live one that
+        // replaced it. _lastExplorerLock guards every access to this dictionary and to _lastExplorer.
+        private static readonly Dictionary<DialogJumpExplorerPair, IDialogJumpExplorerWindow> _dialogJumpExplorers =
+            new(ReferenceEqualityComparer.Instance);
 
         private static DialogJumpExplorerPair _lastExplorer = null;
         private static readonly Lock _lastExplorerLock = new();
 
-        private static readonly ConcurrentDictionary<DialogJumpDialogPair, IDialogJumpDialogWindow> _dialogJumpDialogs = new();
+        // Same instance-keyed identity rule as _dialogJumpExplorers. Dialog windows are created by plugin
+        // code outside this lock and only published under it, so a publish can be rejected when a hot
+        // reload unregistered the pair while its window was being created.
+        private static readonly Dictionary<DialogJumpDialogPair, IDialogJumpDialogWindow> _dialogJumpDialogs =
+            new(ReferenceEqualityComparer.Instance);
+        private static readonly Lock _dialogJumpDialogsLock = new();
 
+        // Always taken inside _dialogJumpDialogsLock when both are needed, never the other way round
         private static IDialogJumpDialogWindow _dialogWindow = null;
         private static readonly Lock _dialogWindowLock = new();
 
@@ -107,8 +118,14 @@ namespace Flow.Launcher.Infrastructure.DialogJump
             if (_initialized) return;
 
             // Initialize preinstalled Dialog Jump explorers & dialogs
-            _dialogJumpExplorers.TryAdd(WindowsDialogJumpExplorer, null);
-            _dialogJumpDialogs.TryAdd(WindowsDialogJumpDialog, null);
+            lock (_lastExplorerLock)
+            {
+                _dialogJumpExplorers.TryAdd(WindowsDialogJumpExplorer, null);
+            }
+            lock (_dialogJumpDialogsLock)
+            {
+                _dialogJumpDialogs.TryAdd(WindowsDialogJumpDialog, null);
+            }
 
             // Initialize main window handle
             _mainWindowHandle = Win32Helper.GetMainWindowHandle();
@@ -133,7 +150,15 @@ namespace Flow.Launcher.Infrastructure.DialogJump
                     Plugin = explorer,
                     Metadata = pair.Metadata
                 };
-                _dialogJumpExplorers.TryAdd(dialogJumpExplorer, null);
+                lock (_lastExplorerLock)
+                {
+                    // Instance-keyed registrations cannot deduplicate by plugin ID on their own, and one
+                    // plugin must never end up with two live registrations
+                    if (!_dialogJumpExplorers.Keys.Any(e => e.Metadata.ID == pair.Metadata.ID))
+                    {
+                        _dialogJumpExplorers.Add(dialogJumpExplorer, null);
+                    }
+                }
             }
             if (pair.Plugin is IDialogJumpDialog dialog)
             {
@@ -142,8 +167,142 @@ namespace Flow.Launcher.Infrastructure.DialogJump
                     Plugin = dialog,
                     Metadata = pair.Metadata
                 };
-                _dialogJumpDialogs.TryAdd(dialogJumpDialog, null);
+                lock (_dialogJumpDialogsLock)
+                {
+                    if (!_dialogJumpDialogs.Keys.Any(d => d.Metadata.ID == pair.Metadata.ID))
+                    {
+                        _dialogJumpDialogs.Add(dialogJumpDialog, null);
+                    }
+                }
             }
+        }
+
+        public static void RemoveDialogJumpPlugin(PluginPair pair)
+        {
+            var id = pair.Metadata.ID;
+            var removedWindows = new List<IDisposable>();
+
+            lock (_lastExplorerLock)
+            {
+                foreach (var explorer in _dialogJumpExplorers.Keys.Where(e => e.Metadata.ID == id).ToList())
+                {
+                    if (_dialogJumpExplorers.Remove(explorer, out var explorerWindow) && explorerWindow != null)
+                    {
+                        removedWindows.Add(explorerWindow);
+                    }
+
+                    if (ReferenceEquals(_lastExplorer, explorer))
+                    {
+                        _lastExplorer = null;
+                    }
+                }
+            }
+
+            lock (_dialogJumpDialogsLock)
+            {
+                var removedDialog = false;
+                foreach (var dialog in _dialogJumpDialogs.Keys.Where(d => d.Metadata.ID == id).ToList())
+                {
+                    if (!_dialogJumpDialogs.Remove(dialog, out var dialogWindow)) continue;
+
+                    removedDialog = true;
+                    if (dialogWindow != null)
+                    {
+                        removedWindows.Add(dialogWindow);
+                    }
+                }
+
+                if (removedDialog)
+                {
+                    // Drop the cached active dialog window so later navigation cannot call into the
+                    // disposed instance. The cached window may have been created by foreground
+                    // detection without being stored in the dictionary, so it cannot be attributed
+                    // to a plugin by comparing values; clearing it is safe because the next
+                    // foreground event repopulates it from the remaining dialogs. Clearing it under
+                    // the registry lock keeps it from being re-cached by a window that is being
+                    // published for this plugin at the same moment.
+                    lock (_dialogWindowLock)
+                    {
+                        _dialogWindow = null;
+                    }
+                }
+            }
+
+            // Dispose runs plugin code, so it must not run while a registry lock a window event could
+            // be waiting on is held
+            foreach (var window in removedWindows)
+            {
+                window.Dispose();
+            }
+        }
+
+        private static List<DialogJumpDialogPair> GetDialogJumpDialogs()
+        {
+            lock (_dialogJumpDialogsLock)
+            {
+                return [.. _dialogJumpDialogs.Keys];
+            }
+        }
+
+        private static bool TryGetDialogWindow(DialogJumpDialogPair dialog, out IDialogJumpDialogWindow dialogWindow)
+        {
+            lock (_dialogJumpDialogsLock)
+            {
+                return _dialogJumpDialogs.TryGetValue(dialog, out dialogWindow);
+            }
+        }
+
+        /// <summary>
+        /// Stores a dialog window created outside the registry lock. Fails when this exact pair instance
+        /// is no longer registered, or when another thread published a different window for it, so a
+        /// window built by a hot reloaded away plugin instance can never land on the registration that
+        /// replaced it. The caller owns disposing what it created when this fails.
+        /// </summary>
+        private static bool TryPublishDialogWindow(DialogJumpDialogPair dialog,
+            IDialogJumpDialogWindow dialogWindow, IDialogJumpDialogWindow expectedDialogWindow)
+        {
+            lock (_dialogJumpDialogsLock)
+            {
+                return TryPublishDialogWindowUnderLock(dialog, dialogWindow, expectedDialogWindow);
+            }
+        }
+
+        /// <summary>
+        /// Publishes a dialog window and caches it as the active one in a single atomic step, so
+        /// <see cref="RemoveDialogJumpPlugin"/> can never dispose the window between the two and leave
+        /// the disposed instance cached.
+        /// </summary>
+        private static bool TryActivateDialogWindow(DialogJumpDialogPair dialog,
+            IDialogJumpDialogWindow dialogWindow, IDialogJumpDialogWindow expectedDialogWindow,
+            HWND hwnd, out bool dialogWindowChanged)
+        {
+            dialogWindowChanged = false;
+
+            lock (_dialogJumpDialogsLock)
+            {
+                if (!TryPublishDialogWindowUnderLock(dialog, dialogWindow, expectedDialogWindow)) return false;
+
+                lock (_dialogWindowLock)
+                {
+                    dialogWindowChanged = _dialogWindow == null || _dialogWindow.Handle != hwnd;
+                    _dialogWindow = dialogWindow;
+                }
+
+                return true;
+            }
+        }
+
+        private static bool TryPublishDialogWindowUnderLock(DialogJumpDialogPair dialog,
+            IDialogJumpDialogWindow dialogWindow, IDialogJumpDialogWindow expectedDialogWindow)
+        {
+            if (!_dialogJumpDialogs.TryGetValue(dialog, out var currentDialogWindow) ||
+                !ReferenceEquals(currentDialogWindow, expectedDialogWindow))
+            {
+                return false;
+            }
+
+            _dialogJumpDialogs[dialog] = dialogWindow;
+            return true;
         }
 
         public static void SetupDialogJump(bool enabled)
@@ -247,15 +406,21 @@ namespace Flow.Launcher.Infrastructure.DialogJump
             else
             {
                 // Remove explorer windows
-                foreach (var explorer in _dialogJumpExplorers.Keys)
+                lock (_lastExplorerLock)
                 {
-                    _dialogJumpExplorers[explorer] = null;
+                    foreach (var explorer in _dialogJumpExplorers.Keys.ToList())
+                    {
+                        _dialogJumpExplorers[explorer] = null;
+                    }
                 }
 
                 // Remove dialog windows
-                foreach (var dialog in _dialogJumpDialogs.Keys)
+                lock (_dialogJumpDialogsLock)
                 {
-                    _dialogJumpDialogs[dialog] = null;
+                    foreach (var dialog in _dialogJumpDialogs.Keys.ToList())
+                    {
+                        _dialogJumpDialogs[dialog] = null;
+                    }
                 }
 
                 // Remove dialog window handle
@@ -353,7 +518,15 @@ namespace Flow.Launcher.Infrastructure.DialogJump
 
         public static string GetActiveExplorerPath()
         {
-            return RefreshLastExplorer() ? _dialogJumpExplorers[_lastExplorer].GetExplorerPath() : string.Empty;
+            if (!RefreshLastExplorer()) return string.Empty;
+
+            lock (_lastExplorerLock)
+            {
+                // The explorer can be removed concurrently by a plugin hot reload
+                return _lastExplorer != null && _dialogJumpExplorers.TryGetValue(_lastExplorer, out var explorerWindow)
+                    ? explorerWindow?.GetExplorerPath() ?? string.Empty
+                    : string.Empty;
+            }
         }
 
         #endregion
@@ -504,35 +677,45 @@ namespace Flow.Launcher.Infrastructure.DialogJump
                 // Check if it is a file dialog window
                 var isDialogWindow = false;
                 var dialogWindowChanged = false;
-                foreach (var dialog in _dialogJumpDialogs.Keys)
+                foreach (var dialog in GetDialogJumpDialogs())
                 {
                     if (PublicApi.Instance.PluginModified(dialog.Metadata.ID) || // Plugin is modified
                         dialog.Metadata.Disabled) continue; // Plugin is disabled
 
                     IDialogJumpDialogWindow dialogWindow;
-                    var existingDialogWindow = _dialogJumpDialogs[dialog];
+                    bool dialogWindowCreated;
+                    // Skip dialogs removed concurrently by a plugin hot reload
+                    if (!TryGetDialogWindow(dialog, out var existingDialogWindow)) continue;
                     if (existingDialogWindow != null && existingDialogWindow.Handle == hwnd)
                     {
                         // If the dialog window is already in the list, no need to check again
                         dialogWindow = existingDialogWindow;
+                        dialogWindowCreated = false;
                     }
                     else
                     {
+                        // Runs plugin code, so it must happen outside the registry lock
                         dialogWindow = dialog.Plugin.CheckDialogWindow(hwnd);
+                        if (dialogWindow == null) continue;
+                        dialogWindowCreated = true;
                     }
 
-                    // If the dialog window is found, set it
-                    if (dialogWindow != null)
+                    // Keep the dialog registry as the source of truth for this instance so a plugin hot
+                    // reload can find and dispose it instead of it living only in _dialogWindow,
+                    // unreachable from the registry-based disposal in RemoveDialogJumpPlugin
+                    if (!TryActivateDialogWindow(dialog, dialogWindow, existingDialogWindow, hwnd, out dialogWindowChanged))
                     {
-                        lock (_dialogWindowLock)
+                        // A hot reload unregistered this plugin, or another thread published a different
+                        // window, while this one was being created: it is unreachable for later disposal
+                        if (dialogWindowCreated)
                         {
-                            dialogWindowChanged = _dialogWindow == null || _dialogWindow.Handle != hwnd;
-                            _dialogWindow = dialogWindow;
+                            dialogWindow.Dispose();
                         }
-
-                        isDialogWindow = true;
-                        break;
+                        continue;
                     }
+
+                    isDialogWindow = true;
+                    break;
                 }
 
                 // Handle window based on its type
@@ -827,7 +1010,10 @@ namespace Flow.Launcher.Infrastructure.DialogJump
             string path;
             lock (_lastExplorerLock)
             {
-                path = _dialogJumpExplorers[_lastExplorer]?.GetExplorerPath();
+                // The explorer can be removed concurrently by a plugin hot reload
+                path = _lastExplorer != null && _dialogJumpExplorers.TryGetValue(_lastExplorer, out var explorerWindow)
+                    ? explorerWindow?.GetExplorerPath()
+                    : null;
             }
 
             // Check path null or empty
@@ -908,12 +1094,13 @@ namespace Flow.Launcher.Infrastructure.DialogJump
             }
 
             // Then check all dialog windows
-            foreach (var dialog in _dialogJumpDialogs.Keys)
+            foreach (var dialog in GetDialogJumpDialogs())
             {
                 if (PublicApi.Instance.PluginModified(dialog.Metadata.ID) || // Plugin is modified
                     dialog.Metadata.Disabled) continue; // Plugin is disabled
 
-                var dialogWindow = _dialogJumpDialogs[dialog];
+                // The dialog can be removed concurrently by a plugin hot reload
+                TryGetDialogWindow(dialog, out var dialogWindow);
                 if (dialogWindow != null && dialogWindow.Handle == hwnd)
                 {
                     return dialogWindow;
@@ -921,29 +1108,30 @@ namespace Flow.Launcher.Infrastructure.DialogJump
             }
 
             // Finally search for the dialog window again
-            foreach (var dialog in _dialogJumpDialogs.Keys)
+            foreach (var dialog in GetDialogJumpDialogs())
             {
                 if (PublicApi.Instance.PluginModified(dialog.Metadata.ID) || // Plugin is modified
                     dialog.Metadata.Disabled) continue; // Plugin is disabled
 
-                IDialogJumpDialogWindow dialogWindow;
-                var existingDialogWindow = _dialogJumpDialogs[dialog];
+                // Skip dialogs removed concurrently by a plugin hot reload
+                if (!TryGetDialogWindow(dialog, out var existingDialogWindow)) continue;
                 if (existingDialogWindow != null && existingDialogWindow.Handle == hwnd)
                 {
                     // If the dialog window is already in the list, no need to check again
-                    dialogWindow = existingDialogWindow;
-                }
-                else
-                {
-                    dialogWindow = dialog.Plugin.CheckDialogWindow(hwnd);
+                    return existingDialogWindow;
                 }
 
-                // Update dialog window if found
-                if (dialogWindow != null)
+                // Runs plugin code, so it must happen outside the registry lock
+                var dialogWindow = dialog.Plugin.CheckDialogWindow(hwnd);
+                if (dialogWindow == null) continue;
+
+                if (TryPublishDialogWindow(dialog, dialogWindow, existingDialogWindow))
                 {
-                    _dialogJumpDialogs[dialog] = dialogWindow;
                     return dialogWindow;
                 }
+
+                // Unreachable for later disposal once the publish is rejected
+                dialogWindow.Dispose();
             }
 
             return null;
@@ -1080,25 +1268,32 @@ namespace Flow.Launcher.Infrastructure.DialogJump
             }
 
             // Dispose explorers
-            foreach (var explorer in _dialogJumpExplorers.Keys)
-            {
-                _dialogJumpExplorers[explorer]?.Dispose();
-            }
-            _dialogJumpExplorers.Clear();
+            List<IDialogJumpExplorerWindow> explorerWindows;
             lock (_lastExplorerLock)
             {
+                explorerWindows = [.. _dialogJumpExplorers.Values];
+                _dialogJumpExplorers.Clear();
                 _lastExplorer = null;
+            }
+            foreach (var explorerWindow in explorerWindows)
+            {
+                explorerWindow?.Dispose();
             }
 
             // Dispose dialogs
-            foreach (var dialog in _dialogJumpDialogs.Keys)
+            List<IDialogJumpDialogWindow> dialogWindows;
+            lock (_dialogJumpDialogsLock)
             {
-                _dialogJumpDialogs[dialog]?.Dispose();
+                dialogWindows = [.. _dialogJumpDialogs.Values];
+                _dialogJumpDialogs.Clear();
+                lock (_dialogWindowLock)
+                {
+                    _dialogWindow = null;
+                }
             }
-            _dialogJumpDialogs.Clear();
-            lock (_dialogWindowLock)
+            foreach (var dialogWindow in dialogWindows)
             {
-                _dialogWindow = null;
+                dialogWindow?.Dispose();
             }
 
             // Dispose locks
