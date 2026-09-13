@@ -35,6 +35,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         internal static extern IntPtr Everything3_ConnectW(string instanceName);
 
         [DllImport(Dll)]
+        internal static extern uint Everything3_GetMajorVersion(IntPtr client);
+
+        [DllImport(Dll)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool Everything3_DestroyClient(IntPtr client);
 
@@ -128,7 +131,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
         [DllImport(Dll)]
         internal static extern uint Everything3_GetLastError();
-
 
         [DllImport(Dll)]
         [return: MarshalAs(UnmanagedType.Bool)]
