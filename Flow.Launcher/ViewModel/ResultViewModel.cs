@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Drawing.Text;
 using System.IO;
+using System.Linq;
+using System.Collections.ObjectModel;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
@@ -17,6 +20,8 @@ namespace Flow.Launcher.ViewModel
 
         private static readonly PrivateFontCollection FontCollection = new();
         private static readonly Dictionary<string, string> Fonts = new();
+        private readonly ObservableCollection<PreviewContentBlockViewModel> _previewContentBlocks = new();
+        private CancellationTokenSource _previewContentBlocksLoadCancellation;
 
         public ResultViewModel(Result result, Settings settings)
         {
@@ -25,6 +30,10 @@ namespace Flow.Launcher.ViewModel
             if (result == null) return;
 
             Result = result;
+            foreach (var block in Result.RichPreview?.ContentBlocks ?? Enumerable.Empty<PreviewContentBlock>())
+            {
+                _previewContentBlocks.Add(new PreviewContentBlockViewModel(block));
+            }
 
             if (Result.Glyph is { FontFamily: not null } glyph)
             {
@@ -281,7 +290,10 @@ namespace Flow.Launcher.ViewModel
 
         public void LoadPreviewImage()
         {
-            if (ShowDefaultPreview == Visibility.Visible && !_previewImageLoaded && ShowPreviewImage == Visibility.Visible)
+            if (ShowDefaultPreview == Visibility.Visible &&
+                ShowLegacyPreview == Visibility.Visible &&
+                !_previewImageLoaded &&
+                ShowPreviewImage == Visibility.Visible)
             {
                 _previewImageLoaded = true;
                 _ = LoadPreviewImageAsync();
@@ -290,7 +302,41 @@ namespace Flow.Launcher.ViewModel
 
         public string PreviewDescription => Result.Preview?.Description ?? Result.SubTitle;
 
-        public bool IsMarkdownPreview => Result.Preview?.ContentType == PreviewContentType.Markdown;
+        public ObservableCollection<PreviewContentBlockViewModel> PreviewContentBlocks => _previewContentBlocks;
+
+        public bool HasContentBlocks => PreviewContentBlocks is { Count: > 0 };
+
+        public void LoadPreviewContentBlocks()
+        {
+            // Content blocks only render in the default preview area, which is hidden when a custom preview panel is shown.
+            if (ShowDefaultPreview != Visibility.Visible || !HasContentBlocks)
+            {
+                return;
+            }
+
+            _previewContentBlocksLoadCancellation ??= new CancellationTokenSource();
+            _ = LoadPreviewContentBlocksAsync(_previewContentBlocksLoadCancellation.Token);
+        }
+
+        public void CancelPreviewContentBlocksLoad()
+        {
+            _previewContentBlocksLoadCancellation?.Cancel();
+            _previewContentBlocksLoadCancellation?.Dispose();
+            _previewContentBlocksLoadCancellation = null;
+        }
+
+        private async Task LoadPreviewContentBlocksAsync(CancellationToken cancellationToken)
+        {
+            var loads = PreviewContentBlocks
+                .Where(block => block.RequiresFileLoad)
+                .Select(block => block.LoadAsync(Result.PluginDirectory, cancellationToken));
+
+            await Task.WhenAll(loads);
+        }
+
+        public Visibility ShowContentBlocksPreview => HasContentBlocks ? Visibility.Visible : Visibility.Collapsed;
+
+        public Visibility ShowLegacyPreview => HasContentBlocks ? Visibility.Collapsed : Visibility.Visible;
 
         public Result Result { get; }
         public int ResultProgress

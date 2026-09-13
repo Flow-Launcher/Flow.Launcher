@@ -35,6 +35,9 @@ namespace Flow.Launcher.Core.Plugin
         protected static readonly JsonSerializerOptions DeserializeOption = new()
         {
             PropertyNameCaseInsensitive = true,
+            // The type discriminator on preview content blocks is metadata, 
+            // which System.Text.Json otherwise requires to appear before the other properties.
+            AllowOutOfOrderMetadataProperties = true,
 #pragma warning disable SYSLIB0020
             // IgnoreNullValues is obsolete, but the replacement JsonIgnoreCondition.WhenWritingNull still 
             // deserializes null, instead of ignoring it and leaving the default (empty list). We can change the behaviour
