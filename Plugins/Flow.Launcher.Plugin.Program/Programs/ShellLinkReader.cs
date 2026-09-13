@@ -15,6 +15,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
 {
     public static class ShellLinkReader
     {
+        private const int E_FAIL = unchecked((int)0x80004005); // HResult returned by IShellLinkW.GetDescription
+
         // Retrieves the target path, arguments, and description from a shell link
         public static ShellLinkReadResult Read(string path)
         {
@@ -85,12 +87,28 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
             catch (COMException e)
             {
-                // C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\MiracastView.lnk always cause exception
-                ProgramLogger.LogException(
-                    $"|ShellLinkReader|retrieveDescription|{path}" +
-                    "|Error caused likely due to trying to get the description of the program",
-                    e
-                );
+                // GetDescription returns an undocumented E_FAIL 
+                // that does not distinguish a missing description from a real failure
+                // It regularly occurs for shortcuts without a description (see #4616, #3812) 
+                // so log at Debug to avoid error spam.
+                if (e.HResult == E_FAIL)
+                {
+                    ProgramLogger.LogDebug(
+                        nameof(ShellLinkReader), 
+                        nameof(retrieveDescription), 
+                        path, 
+                        "Shortcut description read gave E_FAIL, returning empty"
+                    );
+                }
+                else
+                {
+                    ProgramLogger.LogException(
+                        $"|ShellLinkReader|retrieveDescription|{path}" +
+                        "|Unexpected error occurred when trying to get the description of the shortcut",
+                        e
+                    );
+                }
+
                 return string.Empty;
             }
         }
