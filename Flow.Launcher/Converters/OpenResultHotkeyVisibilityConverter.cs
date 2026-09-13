@@ -17,7 +17,17 @@ public class OpenResultHotkeyVisibilityConverter : IValueConverter
 
         if (value is ListBoxItem listBoxItem
             && ItemsControl.ItemsControlFromItemContainer(listBoxItem) is ListBox listBox)
-            number = listBox.ItemContainerGenerator.IndexFromContainer(listBoxItem) + 1;
+        {
+            var dataItem = listBoxItem.DataContext;
+            if (dataItem != null)
+            {
+                var index = listBox.Items.IndexOf(dataItem);
+                if (index >= 0)
+                {
+                    number = index + 1;
+                }
+            }
+        }
 
         return number <= MaxVisibleHotkeys ? Visibility.Visible : Visibility.Collapsed;
     }
