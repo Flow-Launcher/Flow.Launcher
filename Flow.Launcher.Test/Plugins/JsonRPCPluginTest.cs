@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Threading;
 using System.Text;
+using System.Text.Json;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -97,6 +98,57 @@ namespace Flow.Launcher.Test.Plugins
             var block = result.RichPreview.ContentBlocks.Single();
             ClassicAssert.IsInstanceOf<MarkdownPreviewBlock>(block);
             ClassicAssert.AreEqual("**`*args`** collects extra positional arguments.", ((MarkdownPreviewBlock)block).InlineMarkdown);
+        }
+
+        [Test]
+        public async Task GivenContentBlockWithTypeAfterContent_WhenDeserializeJsonRpcResult_ThenBlocksAreDeserialized()
+        {
+            const string resultText =
+                """
+                {
+                  "result": [
+                    {
+                      "title": "Answer",
+                      "subTitle": "Out of order discriminator",
+                      "richPreview": {
+                        "contentBlocks": [
+                          {
+                            "inlineMarkdown": "# Title",
+                            "type": "markdown"
+                          },
+                          {
+                            "text": "A plain line of text.",
+                            "type": "text"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "debugMessage": null
+                }
+                """;
+
+            var results = await QueryAsync(new Query
+            {
+                Search = resultText
+            }, default);
+
+            var blocks = results.Single().RichPreview.ContentBlocks;
+
+            ClassicAssert.IsInstanceOf<MarkdownPreviewBlock>(blocks[0]);
+            ClassicAssert.AreEqual("# Title", ((MarkdownPreviewBlock)blocks[0]).InlineMarkdown);
+            ClassicAssert.IsInstanceOf<TextPreviewBlock>(blocks[1]);
+            ClassicAssert.AreEqual("A plain line of text.", ((TextPreviewBlock)blocks[1]).Text);
+        }
+
+        [Test]
+        public void GivenContentBlockWithTypeAfterContent_WhenDeserializeWithBaseOption_ThenBlockIsDeserialized()
+        {
+            const string blockText = """{"inlineMarkdown":"# Title","type":"markdown"}""";
+
+            var block = JsonSerializer.Deserialize<PreviewContentBlock>(blockText, DeserializeOption);
+
+            ClassicAssert.IsInstanceOf<MarkdownPreviewBlock>(block);
         }
 
         [Test]
