@@ -301,6 +301,20 @@
 
             <ui:SettingsCard
                 Margin="0 4 0 0"
+                Description="{DynamicResource enableDeepLinkProtocolToolTip}"
+                Header="{DynamicResource enableDeepLinkProtocol}">
+                <ui:SettingsCard.HeaderIcon>
+                    <ui:FontIcon Glyph="&#xE71B;" />
+                </ui:SettingsCard.HeaderIcon>
+
+                <ui:ToggleSwitch
+                    IsOn="{Binding EnableDeepLinkProtocol}"
+                    OffContent="{DynamicResource disable}"
+                    OnContent="{DynamicResource enable}" />
+            </ui:SettingsCard>
+
+            <ui:SettingsCard
+                Margin="0 4 0 0"
                 Description="{DynamicResource autoUpdatePluginsToolTip}"
                 Header="{DynamicResource autoUpdatePlugins}">
                 <ui:SettingsCard.HeaderIcon>
