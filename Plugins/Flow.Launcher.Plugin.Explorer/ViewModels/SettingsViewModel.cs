@@ -40,6 +40,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             InitialUsingEverything15 = settings.EnableEverything15Support;
             InitialEverything15InstanceName = settings.Everything15InstanceName;
             InitializeEngineSelection();
+            Settings.SearchEngineSelectionChanged += OnSearchEngineSelectionChanged;
             InitializeActionKeywordModels();
         }
 
@@ -102,6 +103,17 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             _selectedIndexSearchEngine = IndexSearchEngines.First(x => x.Value == Settings.IndexSearchEngine);
             _selectedContentSearchEngine = ContentIndexSearchEngines.First(x => x.Value == Settings.ContentSearchEngine);
             _selectedPathEnumerationEngine = PathEnumerationEngines.First(x => x.Value == Settings.PathEnumerationEngine);
+        }
+
+        private void OnSearchEngineSelectionChanged(object? sender, EventArgs e)
+        {
+            _selectedIndexSearchEngine = IndexSearchEngines.First(x => x.Value == Settings.IndexSearchEngine);
+            _selectedContentSearchEngine = ContentIndexSearchEngines.First(x => x.Value == Settings.ContentSearchEngine);
+            _selectedPathEnumerationEngine = PathEnumerationEngines.First(x => x.Value == Settings.PathEnumerationEngine);
+
+            OnPropertyChanged(nameof(SelectedIndexSearchEngine));
+            OnPropertyChanged(nameof(SelectedContentSearchEngine));
+            OnPropertyChanged(nameof(SelectedPathEnumerationEngine));
         }
 
         #endregion
@@ -659,10 +671,14 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                 }
                 catch (Exception ex) when (ex is DllNotFoundException or EntryPointNotFoundException or PlatformNotSupportedException)
                 {
-                    return ex is PlatformNotSupportedException
-                        ? Localize.flowlauncher_plugin_everything_unsupported_architecture(
-                            RuntimeInformation.ProcessArchitecture)
-                        : Localize.flowlauncher_plugin_everything_sdk_issue();
+                    return ex switch
+                    {
+                        PlatformNotSupportedException =>
+                            Localize.flowlauncher_plugin_everything_unsupported_architecture(
+                                RuntimeInformation.ProcessArchitecture),
+                        DllNotFoundException { InnerException: not null } => ex.Message,
+                        _ => Localize.flowlauncher_plugin_everything_sdk_issue(),
+                    };
                 }
             }
         }

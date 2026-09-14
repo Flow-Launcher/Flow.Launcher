@@ -59,6 +59,9 @@ $sourceDirty = $sourceStatus.Count -gt 0
 if ($sourceDirty -and -not $AllowDirty) {
     throw "The source working tree is dirty. Commit the exact source before packaging, or pass -AllowDirty for a development-only artifact."
 }
+if ($sourceDirty -and $AllowDirty -and $Version -notmatch "^(dev|ci|local)([._-].*)?$") {
+    throw "Dirty source requires a development version beginning with dev, ci, or local."
+}
 
 $stateBuilder = [Text.StringBuilder]::new()
 [void]$stateBuilder.Append((& git -C $repositoryRoot diff --binary HEAD | Out-String))
@@ -207,6 +210,7 @@ $manifest = [pscustomobject]@{
     Configuration = $Configuration
     SourceCommit = $sourceCommit
     SourceDirty = $sourceDirty
+    DevelopmentArtifact = $sourceDirty
     SourceStatus = $sourceStatus
     SourceUntracked = $sourceUntracked
     SourceStateSha256 = $sourceStateSha256

@@ -5,14 +5,21 @@ using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
 using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
 using Flow.Launcher.Plugin.SharedCommands;
+using Moq;
 using NUnit.Framework;
 using NUnit.Framework.Legacy;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.IO;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
+using System.Threading;
+using System.Threading.Tasks;
 using Flow.Launcher.Plugin.Explorer.Search.Everything;
+using Flow.Launcher.Plugin.Explorer.ViewModels;
 using static Flow.Launcher.Plugin.Explorer.Search.SearchManager;
 
 namespace Flow.Launcher.Test.Plugins
@@ -24,9 +31,38 @@ namespace Flow.Launcher.Test.Plugins
     [TestFixture]
     public class ExplorerTest
     {
+        private static readonly PropertyInfo MainContextProperty = typeof(Main).GetProperty(
+            "Context",
+            BindingFlags.Static | BindingFlags.NonPublic);
+
         private bool PreviousLocationExistsReturnsTrue(string dummyString) => true;
 
         private bool PreviousLocationNotExistReturnsFalse(string dummyString) => false;
+
+        private static PluginInitContext CreatePluginContext()
+        {
+            return CreatePluginContext(out _);
+        }
+
+        private static PluginInitContext CreatePluginContext(out Mock<IPublicAPI> api)
+        {
+            api = new Mock<IPublicAPI>();
+            api.Setup(x => x.GetTranslation(It.IsAny<string>()))
+                .Returns((string key) => key);
+            return new PluginInitContext { API = api.Object };
+        }
+
+        private static object SetMainContext(PluginInitContext context)
+        {
+            var previousContext = MainContextProperty.GetValue(null);
+            MainContextProperty.SetValue(null, context);
+            return previousContext;
+        }
+
+        private static void RestoreMainContext(object context)
+        {
+            MainContextProperty.SetValue(null, context);
+        }
 
         [SupportedOSPlatform("windows7.0")]
         [TestCase("C:\\SomeFolder\\", "directory='file:C:\\SomeFolder\\'")]
@@ -519,6 +555,113 @@ namespace Flow.Launcher.Test.Plugins
 
             Assert.Throws<PlatformNotSupportedException>(
                 () => manager.IsFastSortOption(EverythingSortOption.NAME_ASCENDING));
+        }
+
+        [Test]
+        public void GivenEverythingSdkLoadFailure_WhenCheckingSortOption_ThenSdkFailureIsPreserved()
+        {
+            var previousContext = SetMainContext(CreatePluginContext());
+
+            try
+            {
+                var manager = new EverythingSearchManager(new Settings());
+                manager.InitializeApi(Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N")));
+
+                var exception = Assert.Throws<DllNotFoundException>(
+                    () => manager.IsFastSortOption(EverythingSortOption.NAME_ASCENDING));
+
+                ClassicAssert.IsInstanceOf<Win32Exception>(exception.InnerException);
+                StringAssert.Contains(exception.InnerException.Message, exception.Message);
+            }
+            finally
+            {
+                RestoreMainContext(previousContext);
+            }
+        }
+
+        [Test]
+        public async Task GivenUnavailableEverythingSdk_WhenSelectingFallback_ThenSettingsViewModelUsesWindowsSearchAsync()
+        {
+            var context = CreatePluginContext(out var api);
+            var previousContext = SetMainContext(context);
+            try
+            {
+                var settings = new Settings
+                {
+                    IndexSearchEngine = Settings.IndexSearchEngineOption.Everything,
+                    ContentSearchEngine = Settings.ContentIndexSearchEngineOption.Everything,
+                    PathEnumerationEngine = Settings.PathEnumerationEngineOption.Everything,
+                };
+                var viewModel = new SettingsViewModel(context, settings);
+                var changedProperties = new List<string>();
+                viewModel.PropertyChanged += (_, args) => changedProperties.Add(args.PropertyName);
+                var manager = new EverythingSearchManager(settings);
+                manager.InitializeApi(null);
+
+                var exception = Assert.ThrowsAsync<EngineNotAvailableException>(async () =>
+                {
+                    await foreach (var _ in manager.SearchAsync("test", CancellationToken.None))
+                    {
+                    }
+                });
+
+                ClassicAssert.IsNotNull(exception.Action);
+                ClassicAssert.IsTrue(await exception.Action(new ActionContext()));
+                ClassicAssert.AreEqual(Settings.IndexSearchEngineOption.WindowsIndex, settings.IndexSearchEngine);
+                ClassicAssert.AreEqual(Settings.ContentIndexSearchEngineOption.WindowsIndex, settings.ContentSearchEngine);
+                ClassicAssert.AreEqual(Settings.PathEnumerationEngineOption.WindowsIndex, settings.PathEnumerationEngine);
+                ClassicAssert.AreEqual(Settings.IndexSearchEngineOption.WindowsIndex, viewModel.SelectedIndexSearchEngine.Value);
+                ClassicAssert.AreEqual(Settings.ContentIndexSearchEngineOption.WindowsIndex, viewModel.SelectedContentSearchEngine.Value);
+                ClassicAssert.AreEqual(Settings.PathEnumerationEngineOption.WindowsIndex, viewModel.SelectedPathEnumerationEngine.Value);
+                CollectionAssert.Contains(changedProperties, nameof(SettingsViewModel.SelectedIndexSearchEngine));
+                CollectionAssert.Contains(changedProperties, nameof(SettingsViewModel.SelectedContentSearchEngine));
+                CollectionAssert.Contains(changedProperties, nameof(SettingsViewModel.SelectedPathEnumerationEngine));
+                api.Verify(x => x.ReQuery(true), Times.Once);
+            }
+            finally
+            {
+                RestoreMainContext(previousContext);
+            }
+        }
+
+        [Test]
+        public void GivenUnavailablePathEngine_WhenSearchingRecursively_ThenOriginalStackTraceIsPreserved()
+        {
+            var directory = Directory.CreateTempSubdirectory("flow-launcher-stack-");
+            var context = CreatePluginContext();
+            var previousContext = SetMainContext(context);
+            try
+            {
+                var settings = new Settings
+                {
+                    PathEnumerationEngine = Settings.PathEnumerationEngineOption.Everything,
+                };
+                ResultManager.Init(context, settings);
+                var searchManager = new SearchManager(settings, context);
+                var searchAsync = typeof(SearchManager).GetMethod(
+                    "SearchAsync",
+                    BindingFlags.Instance | BindingFlags.NonPublic);
+                var query = new Query
+                {
+                    ActionKeyword = Query.GlobalPluginWildcardSign,
+                    Search = $"{directory.FullName}\\>missing",
+                };
+
+                var exception = Assert.ThrowsAsync<EngineNotAvailableException>(async () =>
+                {
+                    var task = (Task<List<Result>>)searchAsync.Invoke(
+                        searchManager,
+                        new object[] { query, CancellationToken.None });
+                    await task;
+                });
+
+                StringAssert.Contains("EnsureAvailableAsync", exception.StackTrace);
+            }
+            finally
+            {
+                RestoreMainContext(previousContext);
+                directory.Delete(true);
+            }
         }
 
         [Test]

@@ -85,6 +85,7 @@ foreach ($file in $files) {
             Classification = $classification
             AllowedByPattern = $allowedByPattern
             Valid = $valid
+            Error = $null
         }
     } catch {
         $results += [pscustomobject]@{

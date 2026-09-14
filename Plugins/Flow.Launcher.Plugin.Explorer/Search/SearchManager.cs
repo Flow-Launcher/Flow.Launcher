@@ -256,6 +256,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     results.Add(ResultManager.CreateResult(query, directory));
                 }
             }
+            catch (EngineNotAvailableException)
+            {
+                throw;
+            }
             catch (Exception e)
             {
                 throw CreatePathEnumerationException(Settings.PathEnumerationEngine, e);

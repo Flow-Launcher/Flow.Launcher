@@ -145,13 +145,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                     Constants.EverythingErrorImagePath,
                     _ =>
                     {
-                        if (Settings.IndexSearchEngine == Settings.IndexSearchEngineOption.Everything)
-                            Settings.IndexSearchEngine = Settings.IndexSearchEngineOption.WindowsIndex;
-                        if (Settings.PathEnumerationEngine == Settings.PathEnumerationEngineOption.Everything)
-                            Settings.PathEnumerationEngine = Settings.PathEnumerationEngineOption.WindowsIndex;
-                        if (Settings.ContentSearchEngine == Settings.ContentIndexSearchEngineOption.Everything)
-                            Settings.ContentSearchEngine = Settings.ContentIndexSearchEngineOption.WindowsIndex;
-
+                        Settings.SelectWindowsSearchForEverythingEngines();
                         Main.Context.API.ReQuery();
                         return ValueTask.FromResult(true);
                     });
@@ -234,7 +228,14 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
         private IEverythingApi GetApiForSettings()
         {
-            return api ?? throw new PlatformNotSupportedException(GetUnavailableMessage(), initializationException);
+            if (api is not null)
+            {
+                return api;
+            }
+
+            throw initializationException is null
+                ? new PlatformNotSupportedException(GetUnavailableMessage())
+                : new DllNotFoundException(GetUnavailableMessage(), initializationException);
         }
 
         public bool IsFastSortOption(EverythingSortOption sortOption) => GetApiForSettings().IsFastSortOption(sortOption);

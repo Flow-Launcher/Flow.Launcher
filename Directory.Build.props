@@ -7,7 +7,7 @@
     <RuntimeIdentifier
       Condition="'$(FlowLauncherRuntimeIdentifier)' != ''">$(FlowLauncherRuntimeIdentifier)</RuntimeIdentifier>
     <FlowLauncherArchitectureIsolatedOutput
-      Condition="'$(FlowLauncherArchitectureIsolatedOutput)' == '' and '$(RuntimeIdentifier)' != ''">true</FlowLauncherArchitectureIsolatedOutput>
+      Condition="'$(FlowLauncherArchitectureIsolatedOutput)' == '' and '$(FlowLauncherRuntimeIdentifier)' != ''">true</FlowLauncherArchitectureIsolatedOutput>
     <FlowLauncherProjectDirectoryName>$([System.IO.Path]::GetFileName('$(MSBuildProjectDirectory)'))</FlowLauncherProjectDirectoryName>
     <FlowLauncherBundledPluginProject
       Condition="$([System.String]::Copy('$(FlowLauncherProjectDirectoryName)').StartsWith('Flow.Launcher.Plugin.'))">true</FlowLauncherBundledPluginProject>

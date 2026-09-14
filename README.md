@@ -448,6 +448,8 @@ Use `Scripts\publish_portable.ps1` to build a self-contained portable ZIP with a
 
 Supported runtime identifiers are `win-x64` and `win-arm64`. The script builds every bundled plugin, validates each shipped EXE and DLL, and fails if an unexpected native architecture enters the package.
 
-Packaging requires a clean working tree so the manifest identifies the exact source commit. `-AllowDirty` is available only for development artifacts and records the dirty status plus a source-state fingerprint.
+Packaging requires a clean working tree so the manifest identifies the exact source commit. `-AllowDirty` requires a development version beginning with `dev`, `ci`, or `local`; the manifest records the dirty status, marks the package as a development artifact, and includes a source-state fingerprint.
 
 The ARM64 package uses Windows Search in the Explorer plugin by default. The bundled Everything SDK remains x64-only, so selecting Everything on ARM64 presents a Windows Search fallback instead of loading an incompatible DLL.
+
+The Windows architecture workflow publishes run-scoped validation artifacts for pull requests and manual runs. When a GitHub release is published, the release deployment workflow builds both portable architectures from the release tag and attaches their ZIPs and SHA-256 files to that release.
