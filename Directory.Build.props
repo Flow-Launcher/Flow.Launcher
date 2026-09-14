@@ -4,6 +4,8 @@
     <AccelerateBuildsInVisualStudio>true</AccelerateBuildsInVisualStudio>
     <!-- Workaround https://github.com/dotnet/runtime/issues/109682 -->
     <CETCompat>false</CETCompat>
+    <RuntimeIdentifier
+      Condition="'$(FlowLauncherRuntimeIdentifier)' != ''">$(FlowLauncherRuntimeIdentifier)</RuntimeIdentifier>
     <FlowLauncherArchitectureIsolatedOutput
       Condition="'$(FlowLauncherArchitectureIsolatedOutput)' == '' and '$(RuntimeIdentifier)' != ''">true</FlowLauncherArchitectureIsolatedOutput>
     <FlowLauncherProjectDirectoryName>$([System.IO.Path]::GetFileName('$(MSBuildProjectDirectory)'))</FlowLauncherProjectDirectoryName>
