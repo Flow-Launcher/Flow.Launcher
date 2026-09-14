@@ -435,3 +435,19 @@ Get in touch if you would like to join the Flow-Launcher Team and help build thi
   - via Visual Studio installer
   - via winget `winget install Microsoft.DotNet.SDK.9`
   - Manually from [here](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)
+
+### Architecture-specific portable packages
+
+Use `Scripts\publish_portable.ps1` to build a self-contained portable ZIP with architecture-isolated intermediate, build, publish, and lock-file paths:
+
+```powershell
+.\Scripts\publish_portable.ps1 `
+  -RuntimeIdentifier win-arm64 `
+  -ArtifactsDirectory C:\FlowLauncherArtifacts
+```
+
+Supported runtime identifiers are `win-x64` and `win-arm64`. The script builds every bundled plugin, validates each shipped EXE and DLL, and fails if an unexpected native architecture enters the package.
+
+Packaging requires a clean working tree so the manifest identifies the exact source commit. `-AllowDirty` is available only for development artifacts and records the dirty status plus a source-state fingerprint.
+
+The ARM64 package uses Windows Search in the Explorer plugin by default. The bundled Everything SDK remains x64-only, so selecting Everything on ARM64 presents a Windows Search fallback instead of loading an incompatible DLL.
