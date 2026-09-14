@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Flow.Launcher.Plugin.Explorer.Exceptions;
@@ -15,6 +17,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         private readonly Lock _syncRoot = new();
         private bool isApiInitialized;
         private IEverythingApi api;
+        private Exception initializationException;
 
         public EverythingSearchManager(Settings settings)
         {
@@ -23,7 +26,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
         public async IAsyncEnumerable<SearchResult> SearchAsync(string search, [EnumeratorCancellation] CancellationToken token)
         {
-            await EnsureAvailableAsync(token);
+            var currentApi = await EnsureAvailableAsync(token);
 
             if (token.IsCancellationRequested)
                 yield break;
@@ -34,14 +37,14 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 IsFullPathSearch: Settings.EverythingSearchFullPath,
                 IsRunCounterEnabled: Settings.EverythingEnableRunCount);
 
-            await foreach (var result in api.SearchAsync(option, token))
+            await foreach (var result in currentApi.SearchAsync(option, token))
                 yield return result;
         }
 
         public async IAsyncEnumerable<SearchResult> ContentSearchAsync(string plainSearch, string contentSearch,
             [EnumeratorCancellation] CancellationToken token)
         {
-            await EnsureAvailableAsync(token);
+            var currentApi = await EnsureAvailableAsync(token);
 
             if (!Settings.EnableEverythingContentSearch)
             {
@@ -67,7 +70,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 IsFullPathSearch: Settings.EverythingSearchFullPath,
                 IsRunCounterEnabled: Settings.EverythingEnableRunCount);
 
-            await foreach (var result in api.SearchAsync(option, token))
+            await foreach (var result in currentApi.SearchAsync(option, token))
             {
                 yield return result;
             }
@@ -75,7 +78,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
         public async IAsyncEnumerable<SearchResult> EnumerateAsync(string path, string search, bool recursive, [EnumeratorCancellation] CancellationToken token)
         {
-            await EnsureAvailableAsync(token);
+            var currentApi = await EnsureAvailableAsync(token);
 
             if (token.IsCancellationRequested)
                 yield break;
@@ -88,7 +91,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 IsFullPathSearch: Settings.EverythingSearchFullPath,
                 IsRunCounterEnabled: Settings.EverythingEnableRunCount);
 
-            await foreach (var result in api.SearchAsync(option, token))
+            await foreach (var result in currentApi.SearchAsync(option, token))
                 yield return result;
         }
 
@@ -99,36 +102,71 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 if (isApiInitialized)
                     return;
 
-                if (Settings.EnableEverything15Support)
+                if (string.IsNullOrEmpty(sdkDirectory))
                 {
-                    if (!Everything3ApiDllImport.IsLoaded)
-                        Everything3ApiDllImport.Load(sdkDirectory);
-                }
-                else
-                {
-                    if (!EverythingApiDllImport.IsLoaded)
-                        EverythingApiDllImport.Load(sdkDirectory);
+                    return;
                 }
 
-                api = Settings.EnableEverything15Support
-                    ? new EverythingApiV3(Settings.Everything15InstanceName)
-                    : new LegacyEverythingApi();
-                isApiInitialized = true;
+                try
+                {
+                    if (Settings.EnableEverything15Support)
+                    {
+                        if (!Everything3ApiDllImport.IsLoaded)
+                            Everything3ApiDllImport.Load(sdkDirectory);
+                    }
+                    else
+                    {
+                        if (!EverythingApiDllImport.IsLoaded)
+                            EverythingApiDllImport.Load(sdkDirectory);
+                    }
+
+                    api = Settings.EnableEverything15Support
+                        ? new EverythingApiV3(Settings.Everything15InstanceName)
+                        : new LegacyEverythingApi();
+                    isApiInitialized = true;
+                }
+                catch (Win32Exception ex)
+                {
+                    initializationException = ex;
+                    Main.Context.API.LogException(nameof(EverythingSearchManager), "Failed to load Everything SDK", ex);
+                }
             }
         }
 
-        private async Task EnsureAvailableAsync(CancellationToken token)
+        private async Task<IEverythingApi> EnsureAvailableAsync(CancellationToken token)
         {
             var engineName = Enum.GetName(Settings.IndexSearchEngineOption.Everything)!;
+            if (api is null)
+            {
+                throw new EngineNotAvailableException(
+                    engineName,
+                    Localize.flowlauncher_plugin_everything_use_windows_search(),
+                    GetLocalizedUnavailableMessage(),
+                    Constants.EverythingErrorImagePath,
+                    _ =>
+                    {
+                        if (Settings.IndexSearchEngine == Settings.IndexSearchEngineOption.Everything)
+                            Settings.IndexSearchEngine = Settings.IndexSearchEngineOption.WindowsIndex;
+                        if (Settings.PathEnumerationEngine == Settings.PathEnumerationEngineOption.Everything)
+                            Settings.PathEnumerationEngine = Settings.PathEnumerationEngineOption.WindowsIndex;
+                        if (Settings.ContentSearchEngine == Settings.ContentIndexSearchEngineOption.Everything)
+                            Settings.ContentSearchEngine = Settings.ContentIndexSearchEngineOption.WindowsIndex;
+
+                        Main.Context.API.ReQuery();
+                        return ValueTask.FromResult(true);
+                    });
+            }
+
+            var currentApi = api;
             try
             {
-                await api.CheckAvailableAsync(token);
+                await currentApi.CheckAvailableAsync(token);
             }
             catch (OperationCanceledException)
             {
                 // ignore, the search was cancelled
             }
-            catch (Exceptions.IPCErrorException) when (api is LegacyEverythingApi)
+            catch (Exceptions.IPCErrorException) when (currentApi is LegacyEverythingApi)
             {
                 throw new EngineNotAvailableException(engineName,
                     Localize.flowlauncher_plugin_everything_click_to_launch_or_install(),
@@ -150,6 +188,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                     Constants.GeneralSearchErrorImagePath,
                     Localize.flowlauncher_plugin_everything_sdk_issue());
             }
+
+            return currentApi;
         }
 
         private async ValueTask<bool> ClickToInstallEverythingAsync(ActionContext _)
@@ -177,8 +217,28 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             }
         }
 
-        public bool IsFastSortOption(EverythingSortOption sortOption) => api.IsFastSortOption(sortOption);
+        private string GetUnavailableMessage()
+        {
+            return initializationException is null
+                ? $"Everything SDK is not available for the {RuntimeInformation.ProcessArchitecture} process architecture"
+                : $"{Localize.flowlauncher_plugin_everything_sdk_issue()}: {initializationException.Message}";
+        }
 
-        public Task IncrementRunCounterAsync(string fileOrFolder) => api.IncrementRunCounterAsync(fileOrFolder);
+        private string GetLocalizedUnavailableMessage()
+        {
+            return initializationException is null
+                ? Localize.flowlauncher_plugin_everything_unsupported_architecture(
+                    RuntimeInformation.ProcessArchitecture)
+                : GetUnavailableMessage();
+        }
+
+        private IEverythingApi GetApiForSettings()
+        {
+            return api ?? throw new PlatformNotSupportedException(GetUnavailableMessage(), initializationException);
+        }
+
+        public bool IsFastSortOption(EverythingSortOption sortOption) => GetApiForSettings().IsFastSortOption(sortOption);
+
+        public Task IncrementRunCounterAsync(string fileOrFolder) => GetApiForSettings().IncrementRunCounterAsync(fileOrFolder);
     }
 }

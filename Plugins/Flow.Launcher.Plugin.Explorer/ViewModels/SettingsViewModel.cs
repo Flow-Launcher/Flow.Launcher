@@ -6,6 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Forms;
 using CommunityToolkit.Mvvm.Input;
@@ -632,7 +633,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                     // update the message to let user know in the settings panel.
                     return Visibility.Visible;
                 }
-                catch (Exception ex) when (ex is DllNotFoundException || ex is EntryPointNotFoundException)
+                catch (Exception ex) when (ex is DllNotFoundException or EntryPointNotFoundException or PlatformNotSupportedException)
                 {
                     return Visibility.Collapsed;
                 }
@@ -656,9 +657,12 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                         ? Localize.flowlauncher_plugin_everything_15_sort_warning()
                         : Localize.flowlauncher_plugin_everything_is_not_running();
                 }
-                catch (Exception ex) when (ex is DllNotFoundException || ex is EntryPointNotFoundException)
+                catch (Exception ex) when (ex is DllNotFoundException or EntryPointNotFoundException or PlatformNotSupportedException)
                 {
-                    return Localize.flowlauncher_plugin_everything_sdk_issue();
+                    return ex is PlatformNotSupportedException
+                        ? Localize.flowlauncher_plugin_everything_unsupported_architecture(
+                            RuntimeInformation.ProcessArchitecture)
+                        : Localize.flowlauncher_plugin_everything_sdk_issue();
                 }
             }
         }

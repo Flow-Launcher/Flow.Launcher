@@ -25,10 +25,10 @@
     <None Include="plugin.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="EverythingSDK\x64\Everything.dll">
+    <None Update="EverythingSDK\x64\Everything.dll" Condition="'$(RuntimeIdentifier)' != 'win-arm64'">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="EverythingSDK\x64\Everything3.dll">
+    <None Update="EverythingSDK\x64\Everything3.dll" Condition="'$(RuntimeIdentifier)' != 'win-arm64'">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

@@ -1,5 +1,6 @@
 ﻿using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.Explorer;
+using Flow.Launcher.Plugin.Explorer.Exceptions;
 using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
 using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
@@ -9,7 +10,9 @@ using NUnit.Framework.Legacy;
 using System;
 using System.Globalization;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
+using Flow.Launcher.Plugin.Explorer.Search.Everything;
 using static Flow.Launcher.Plugin.Explorer.Search.SearchManager;
 
 namespace Flow.Launcher.Test.Plugins
@@ -482,6 +485,56 @@ namespace Flow.Launcher.Test.Plugins
                 ClassicAssert.IsTrue(ResultManager.IsHomeFolderPath(path),
                     $"Expected '{path}' to be recognized as inside a home folder");
             }
+        }
+
+        [TestCase(Architecture.X64, "x64")]
+        [TestCase(Architecture.X86, null)]
+        [TestCase(Architecture.Arm, null)]
+        [TestCase(Architecture.Arm64, null)]
+        public void GivenProcessArchitecture_WhenLocatingEverythingSdk_ThenOnlyX64UsesBundledSdk(
+            Architecture architecture,
+            string expectedDirectory)
+        {
+            const string pluginDirectory = @"C:\Flow\Explorer";
+
+            var result = EverythingSdkLocator.GetSdkDirectory(pluginDirectory, architecture);
+
+            if (expectedDirectory is null)
+            {
+                ClassicAssert.IsNull(result);
+            }
+            else
+            {
+                ClassicAssert.AreEqual(
+                    Path.Combine(pluginDirectory, "EverythingSDK", expectedDirectory),
+                    result);
+            }
+        }
+
+        [Test]
+        public void GivenUnavailableEverythingSdk_WhenCheckingSortOption_ThenFailureIsExplicit()
+        {
+            var manager = new EverythingSearchManager(new Settings());
+            manager.InitializeApi(null);
+
+            Assert.Throws<PlatformNotSupportedException>(
+                () => manager.IsFastSortOption(EverythingSortOption.NAME_ASCENDING));
+        }
+
+        [Test]
+        public void GivenUnavailablePathEngine_WhenCreatingPathError_ThenFallbackExceptionIsPreserved()
+        {
+            var expected = new EngineNotAvailableException(
+                "Everything",
+                "Select Windows Search",
+                "Everything is unavailable");
+
+            var result = SearchManager.CreatePathEnumerationException(
+                Settings.PathEnumerationEngineOption.Everything,
+                expected);
+
+            ClassicAssert.AreSame(expected, result);
+            ClassicAssert.IsNotNull(((EngineNotAvailableException)result).Action);
         }
     }
 }

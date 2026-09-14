@@ -5,7 +5,7 @@ using Flow.Launcher.Plugin.Explorer.ViewModels;
 using Flow.Launcher.Plugin.Explorer.Views;
 using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -46,7 +46,9 @@ namespace Flow.Launcher.Plugin.Explorer
             searchManager = new SearchManager(Settings, Context);
             ResultManager.Init(Context, Settings);
 
-            var sdkDirectory = Path.Combine(Context.CurrentPluginMetadata.PluginDirectory, "EverythingSDK", "x64");
+            var sdkDirectory = EverythingSdkLocator.GetSdkDirectory(
+                Context.CurrentPluginMetadata.PluginDirectory,
+                RuntimeInformation.ProcessArchitecture);
             Settings.EverythingManagerInstance.InitializeApi(sdkDirectory);
             return Task.CompletedTask;
         }
