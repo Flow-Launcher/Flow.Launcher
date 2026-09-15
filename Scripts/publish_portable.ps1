@@ -175,10 +175,43 @@ $explorerSdkRoot = Join-Path $publishedPluginsRoot "Flow.Launcher.Plugin.Explore
 $expectedSdkArchitecture = if ($RuntimeIdentifier -eq "win-arm64") { "arm64" } else { "x64" }
 $unexpectedSdkArchitecture = if ($RuntimeIdentifier -eq "win-arm64") { "x64" } else { "arm64" }
 $expectedSdkRoot = Join-Path $explorerSdkRoot $expectedSdkArchitecture
-foreach ($sdkName in @("Everything.dll", "Everything3.dll")) {
+$sdkMetadata = @{
+    "win-x64" = @{
+        "Everything.dll" = @{
+            Sha256 = "ae856af0c30068d9ba4c65d64ec3b30fda85c62914141bcd79a6381074a84948"
+            SignerThumbprint = "B5B6468C781744765A590C0FE13AA418FC3335D1"
+        }
+        "Everything3.dll" = @{
+            Sha256 = "be25b01c73bbf359b50ddf30255133225f93b4bc40a8d208173319373bcdaa5c"
+            SignerThumbprint = "6C8A3919279E9756765978716EB07C8052F5D1DE"
+        }
+    }
+    "win-arm64" = @{
+        "Everything.dll" = @{
+            Sha256 = "8531ea393677dd8fd37bed7420ac93344cd458b9a1324ba65c4a75d024d61886"
+            SignerThumbprint = "6C8A3919279E9756765978716EB07C8052F5D1DE"
+        }
+        "Everything3.dll" = @{
+            Sha256 = "0ef26560d1c0224686e67134ada57171f40f326a872ee8a1f2200e973f49f871"
+            SignerThumbprint = "6C8A3919279E9756765978716EB07C8052F5D1DE"
+        }
+    }
+}
+foreach ($sdkName in $sdkMetadata[$RuntimeIdentifier].Keys) {
     $sdkPath = Join-Path $expectedSdkRoot $sdkName
     if (-not (Test-Path -LiteralPath $sdkPath -PathType Leaf)) {
         throw "Required $expectedSdkArchitecture Everything SDK is missing: $sdkPath"
+    }
+    $expectedMetadata = $sdkMetadata[$RuntimeIdentifier][$sdkName]
+    $actualHash = (Get-FileHash -LiteralPath $sdkPath -Algorithm SHA256).Hash.ToLowerInvariant()
+    if ($actualHash -ne $expectedMetadata.Sha256) {
+        throw "Everything SDK hash mismatch for $sdkPath. Expected $($expectedMetadata.Sha256), found $actualHash."
+    }
+    $signature = Get-AuthenticodeSignature -FilePath $sdkPath
+    if ($signature.Status -ne "Valid" -or
+        -not $signature.SignerCertificate -or
+        $signature.SignerCertificate.Thumbprint -ne $expectedMetadata.SignerThumbprint) {
+        throw "Everything SDK signature validation failed for $sdkPath."
     }
 }
 $unexpectedSdkRoot = Join-Path $explorerSdkRoot $unexpectedSdkArchitecture

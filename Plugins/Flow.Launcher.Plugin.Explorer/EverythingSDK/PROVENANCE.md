@@ -2,6 +2,17 @@
 
 The Explorer plugin redistributes voidtools SDK wrappers that communicate with a separately installed Everything client over inter-process communication (IPC). Flow Launcher does not bundle the Everything application.
 
+## Packaged Binary Inventory
+
+| Path | SHA-256 | Signer thumbprint |
+|---|---|---|
+| `x64\Everything.dll` | `ae856af0c30068d9ba4c65d64ec3b30fda85c62914141bcd79a6381074a84948` | `B5B6468C781744765A590C0FE13AA418FC3335D1` |
+| `x64\Everything3.dll` | `be25b01c73bbf359b50ddf30255133225f93b4bc40a8d208173319373bcdaa5c` | `6C8A3919279E9756765978716EB07C8052F5D1DE` |
+| `arm64\Everything.dll` | `8531ea393677dd8fd37bed7420ac93344cd458b9a1324ba65c4a75d024d61886` | `6C8A3919279E9756765978716EB07C8052F5D1DE` |
+| `arm64\Everything3.dll` | `0ef26560d1c0224686e67134ada57171f40f326a872ee8a1f2200e973f49f871` | `6C8A3919279E9756765978716EB07C8052F5D1DE` |
+
+Portable packaging enforces the active architecture's hashes, valid Authenticode status, and signer thumbprints before creating the ZIP.
+
 ## ARM64 SDK2 Wrapper
 
 - Packaged name: `arm64\Everything.dll`
