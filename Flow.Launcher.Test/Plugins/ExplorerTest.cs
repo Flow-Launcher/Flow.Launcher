@@ -550,11 +550,19 @@ namespace Flow.Launcher.Test.Plugins
         [Test]
         public void GivenUnavailableEverythingSdk_WhenCheckingSortOption_ThenFailureIsExplicit()
         {
-            var manager = new EverythingSearchManager(new Settings());
-            manager.InitializeApi(null);
+            var previousContext = SetMainContext(CreatePluginContext());
+            try
+            {
+                var manager = new EverythingSearchManager(new Settings());
+                manager.InitializeApi(null);
 
-            Assert.Throws<PlatformNotSupportedException>(
-                () => manager.IsFastSortOption(EverythingSortOption.NAME_ASCENDING));
+                Assert.Throws<PlatformNotSupportedException>(
+                    () => manager.IsFastSortOption(EverythingSortOption.NAME_ASCENDING));
+            }
+            finally
+            {
+                RestoreMainContext(previousContext);
+            }
         }
 
         [Test]
@@ -577,9 +585,9 @@ namespace Flow.Launcher.Test.Plugins
                 var viewModel = new SettingsViewModel(context, settings);
 
                 ClassicAssert.IsInstanceOf<Win32Exception>(exception.InnerException);
-                StringAssert.Contains(exception.InnerException.Message, exception.Message);
+                StringAssert.Contains(exception.InnerException.Message, exception.ToString());
                 ClassicAssert.AreEqual(System.Windows.Visibility.Visible, viewModel.FastSortWarningVisibility);
-                StringAssert.Contains(exception.InnerException.Message, viewModel.SortOptionWarningMessage);
+                ClassicAssert.AreEqual(exception.Message, viewModel.SortOptionWarningMessage);
             }
             finally
             {

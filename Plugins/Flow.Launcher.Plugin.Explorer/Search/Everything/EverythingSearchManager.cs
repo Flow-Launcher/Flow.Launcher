@@ -211,19 +211,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             }
         }
 
-        private string GetUnavailableMessage()
-        {
-            return initializationException is null
-                ? $"Everything SDK is not available for the {RuntimeInformation.ProcessArchitecture} process architecture"
-                : $"{Localize.flowlauncher_plugin_everything_sdk_issue()}: {initializationException.Message}";
-        }
-
         private string GetLocalizedUnavailableMessage()
         {
             return initializationException is null
                 ? Localize.flowlauncher_plugin_everything_unsupported_architecture(
                     RuntimeInformation.ProcessArchitecture)
-                : GetUnavailableMessage();
+                : Localize.flowlauncher_plugin_everything_sdk_issue();
         }
 
         private IEverythingApi GetApiForSettings()
@@ -234,8 +227,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             }
 
             throw initializationException is null
-                ? new PlatformNotSupportedException(GetUnavailableMessage())
-                : new DllNotFoundException(GetUnavailableMessage(), initializationException);
+                ? new PlatformNotSupportedException(
+                    Localize.flowlauncher_plugin_everything_unsupported_architecture(
+                        RuntimeInformation.ProcessArchitecture))
+                : new DllNotFoundException(
+                    Localize.flowlauncher_plugin_everything_sdk_issue(),
+                    initializationException);
         }
 
         public bool IsFastSortOption(EverythingSortOption sortOption) => GetApiForSettings().IsFastSortOption(sortOption);

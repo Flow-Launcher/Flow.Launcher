@@ -647,12 +647,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                 }
                 catch (Exception ex) when (ex is DllNotFoundException or EntryPointNotFoundException or PlatformNotSupportedException)
                 {
-                    return ex switch
-                    {
-                        PlatformNotSupportedException => Visibility.Visible,
-                        DllNotFoundException { InnerException: not null } => Visibility.Visible,
-                        _ => Visibility.Collapsed,
-                    };
+                    return Visibility.Visible;
                 }
             }
         }
@@ -681,7 +676,6 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                         PlatformNotSupportedException =>
                             Localize.flowlauncher_plugin_everything_unsupported_architecture(
                                 RuntimeInformation.ProcessArchitecture),
-                        DllNotFoundException { InnerException: not null } => ex.Message,
                         _ => Localize.flowlauncher_plugin_everything_sdk_issue(),
                     };
                 }
