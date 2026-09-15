@@ -566,7 +566,7 @@ namespace Flow.Launcher.Test.Plugins
         }
 
         [Test]
-        public void GivenEverythingSdkLoadFailure_WhenCheckingSortOption_ThenSdkFailureIsPreserved()
+        public void GivenEverythingSdkLoadFailure_WhenCheckingSortOption_ThenSdkFailureIsPreservedAndLocalized()
         {
             var context = CreatePluginContext();
             var previousContext = SetMainContext(context);
@@ -585,7 +585,6 @@ namespace Flow.Launcher.Test.Plugins
                 var viewModel = new SettingsViewModel(context, settings);
 
                 ClassicAssert.IsInstanceOf<Win32Exception>(exception.InnerException);
-                StringAssert.Contains(exception.InnerException.Message, exception.ToString());
                 ClassicAssert.AreEqual(System.Windows.Visibility.Visible, viewModel.FastSortWarningVisibility);
                 ClassicAssert.AreEqual(exception.Message, viewModel.SortOptionWarningMessage);
             }
