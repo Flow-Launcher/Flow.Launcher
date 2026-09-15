@@ -108,7 +108,8 @@ $commonBuildArguments = @(
     "--verbosity", "minimal",
     "/p:FlowLauncherRuntimeIdentifier=$RuntimeIdentifier",
     "/p:FlowLauncherArchitectureLockRoot=$lockRoot",
-    "/p:FlowLauncherOutputRoot=$buildRoot"
+    "/p:FlowLauncherOutputRoot=$buildRoot",
+    "/p:GeneratePackageOnBuild=false"
 )
 
 Invoke-DotNet `
@@ -134,6 +135,7 @@ Invoke-DotNet `
         "/p:FlowLauncherRuntimeIdentifier=$RuntimeIdentifier",
         "/p:FlowLauncherArchitectureLockRoot=$lockRoot",
         "/p:FlowLauncherOutputRoot=$buildRoot",
+        "/p:GeneratePackageOnBuild=false",
         "/p:PublishReadyToRun=false",
         "/p:PublishTrimmed=false"
     ) `
