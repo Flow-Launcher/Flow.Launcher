@@ -171,6 +171,21 @@ foreach ($pluginDirectory in $publishedPluginDirectories) {
     }
 }
 
+$explorerSdkRoot = Join-Path $publishedPluginsRoot "Flow.Launcher.Plugin.Explorer\EverythingSDK"
+$expectedSdkArchitecture = if ($RuntimeIdentifier -eq "win-arm64") { "arm64" } else { "x64" }
+$unexpectedSdkArchitecture = if ($RuntimeIdentifier -eq "win-arm64") { "x64" } else { "arm64" }
+$expectedSdkRoot = Join-Path $explorerSdkRoot $expectedSdkArchitecture
+foreach ($sdkName in @("Everything.dll", "Everything3.dll")) {
+    $sdkPath = Join-Path $expectedSdkRoot $sdkName
+    if (-not (Test-Path -LiteralPath $sdkPath -PathType Leaf)) {
+        throw "Required $expectedSdkArchitecture Everything SDK is missing: $sdkPath"
+    }
+}
+$unexpectedSdkRoot = Join-Path $explorerSdkRoot $unexpectedSdkArchitecture
+if (Test-Path -LiteralPath $unexpectedSdkRoot) {
+    throw "Unexpected $unexpectedSdkArchitecture Everything SDK entered the $RuntimeIdentifier package."
+}
+
 Get-ChildItem -LiteralPath $publishRoot -Filter "*.pdb" -File -Recurse |
     ForEach-Object { [IO.File]::Delete($_.FullName) }
 [void][IO.Directory]::CreateDirectory((Join-Path $publishRoot "UserData"))

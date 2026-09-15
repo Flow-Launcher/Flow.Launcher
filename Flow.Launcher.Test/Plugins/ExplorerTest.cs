@@ -526,8 +526,8 @@ namespace Flow.Launcher.Test.Plugins
         [TestCase(Architecture.X64, "x64")]
         [TestCase(Architecture.X86, null)]
         [TestCase(Architecture.Arm, null)]
-        [TestCase(Architecture.Arm64, null)]
-        public void GivenProcessArchitecture_WhenLocatingEverythingSdk_ThenOnlyX64UsesBundledSdk(
+        [TestCase(Architecture.Arm64, "arm64")]
+        public void GivenProcessArchitecture_WhenLocatingEverythingSdk_ThenSupportedArchitecturesUseBundledSdk(
             Architecture architecture,
             string expectedDirectory)
         {
