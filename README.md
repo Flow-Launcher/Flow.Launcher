@@ -435,3 +435,21 @@ Get in touch if you would like to join the Flow-Launcher Team and help build thi
   - via Visual Studio installer
   - via winget `winget install Microsoft.DotNet.SDK.9`
   - Manually from [here](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)
+
+### Architecture-specific portable packages
+
+Use `Scripts\publish_portable.ps1` to build a self-contained portable ZIP with architecture-isolated intermediate, build, publish, and lock-file paths:
+
+```powershell
+.\Scripts\publish_portable.ps1 `
+  -RuntimeIdentifier win-arm64 `
+  -ArtifactsDirectory C:\FlowLauncherArtifacts
+```
+
+Supported runtime identifiers are `win-x64` and `win-arm64`. The script builds every bundled plugin, validates each shipped EXE and DLL, and fails if an unexpected native architecture enters the package.
+
+Packaging requires a clean working tree so the manifest identifies the exact source commit. `-AllowDirty` requires `dev`, `ci`, or `local`, optionally followed by `.`, `_`, or `-` and a suffix. The manifest records the dirty status, marks the package as a development artifact, and includes a source-state fingerprint.
+
+The Explorer plugin includes voidtools-signed Everything SDK wrappers for x64 and ARM64. Windows Search remains the default engine and the actionable fallback when Everything is not installed, running, or available. See `Plugins\Flow.Launcher.Plugin.Explorer\EverythingSDK\PROVENANCE.md` for the pinned ARM64 sources, hashes, signatures, and live compatibility evidence.
+
+The Windows architecture workflow publishes run-scoped validation artifacts for pull requests and manual runs. When a GitHub release is published, the release deployment workflow builds both portable architectures from the release tag and attaches their ZIPs and SHA-256 files to that release.
