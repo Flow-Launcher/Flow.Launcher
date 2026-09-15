@@ -6,6 +6,9 @@ on:
     types: [published]
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   deploy-website:
     runs-on: ubuntu-latest
@@ -41,6 +44,7 @@ jobs:
     env:
       DOTNET_CLI_TELEMETRY_OPTOUT: 1
       NUGET_CERT_REVOCATION_MODE: offline
+      RELEASE_TAG: ${{ github.event.release.tag_name }}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -52,7 +56,7 @@ jobs:
       - name: Publish portable packages
         shell: pwsh
         run: |
-          $version = "${{ github.event.release.tag_name }}".TrimStart("v")
+          $version = $env:RELEASE_TAG.TrimStart("v")
           foreach ($runtime in @("win-x64", "win-arm64")) {
             .\Scripts\publish_portable.ps1 `
               -RuntimeIdentifier $runtime `

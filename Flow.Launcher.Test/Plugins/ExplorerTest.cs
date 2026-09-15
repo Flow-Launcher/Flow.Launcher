@@ -560,18 +560,26 @@ namespace Flow.Launcher.Test.Plugins
         [Test]
         public void GivenEverythingSdkLoadFailure_WhenCheckingSortOption_ThenSdkFailureIsPreserved()
         {
-            var previousContext = SetMainContext(CreatePluginContext());
+            var context = CreatePluginContext();
+            var previousContext = SetMainContext(context);
 
             try
             {
-                var manager = new EverythingSearchManager(new Settings());
+                var settings = new Settings
+                {
+                    IndexSearchEngine = Settings.IndexSearchEngineOption.Everything,
+                };
+                var manager = (EverythingSearchManager)settings.IndexProvider;
                 manager.InitializeApi(Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N")));
 
                 var exception = Assert.Throws<DllNotFoundException>(
                     () => manager.IsFastSortOption(EverythingSortOption.NAME_ASCENDING));
+                var viewModel = new SettingsViewModel(context, settings);
 
                 ClassicAssert.IsInstanceOf<Win32Exception>(exception.InnerException);
                 StringAssert.Contains(exception.InnerException.Message, exception.Message);
+                ClassicAssert.AreEqual(System.Windows.Visibility.Visible, viewModel.FastSortWarningVisibility);
+                StringAssert.Contains(exception.InnerException.Message, viewModel.SortOptionWarningMessage);
             }
             finally
             {
@@ -597,6 +605,9 @@ namespace Flow.Launcher.Test.Plugins
                 viewModel.PropertyChanged += (_, args) => changedProperties.Add(args.PropertyName);
                 var manager = new EverythingSearchManager(settings);
                 manager.InitializeApi(null);
+
+                ClassicAssert.AreEqual(System.Windows.Visibility.Visible, viewModel.FastSortWarningVisibility);
+                ClassicAssert.IsNotEmpty(viewModel.SortOptionWarningMessage);
 
                 var exception = Assert.ThrowsAsync<EngineNotAvailableException>(async () =>
                 {

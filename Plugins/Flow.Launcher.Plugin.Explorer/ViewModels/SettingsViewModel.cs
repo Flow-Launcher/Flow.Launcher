@@ -647,7 +647,12 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                 }
                 catch (Exception ex) when (ex is DllNotFoundException or EntryPointNotFoundException or PlatformNotSupportedException)
                 {
-                    return Visibility.Collapsed;
+                    return ex switch
+                    {
+                        PlatformNotSupportedException => Visibility.Visible,
+                        DllNotFoundException { InnerException: not null } => Visibility.Visible,
+                        _ => Visibility.Collapsed,
+                    };
                 }
             }
         }

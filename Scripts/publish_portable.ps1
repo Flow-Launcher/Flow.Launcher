@@ -60,7 +60,7 @@ if ($sourceDirty -and -not $AllowDirty) {
     throw "The source working tree is dirty. Commit the exact source before packaging, or pass -AllowDirty for a development-only artifact."
 }
 if ($sourceDirty -and $AllowDirty -and $Version -notmatch "^(dev|ci|local)([._-].*)?$") {
-    throw "Dirty source requires a development version beginning with dev, ci, or local."
+    throw "Dirty source requires dev, ci, or local, optionally followed by '.', '_', or '-' and a suffix."
 }
 
 $stateBuilder = [Text.StringBuilder]::new()
