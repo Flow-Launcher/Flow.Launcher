@@ -12,10 +12,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
     public class EverythingApiV3 : IEverythingApi
     {
         private const int BufferSize = 4096;
-        private static readonly SemaphoreSlim _semaphore = new(1, 1);
-        private static readonly StringBuilder _buffer = new(BufferSize);
+        private readonly SemaphoreSlim _semaphore = new(1, 1);
+        private readonly StringBuilder _buffer = new(BufferSize);
 
         private readonly string _instanceName;
+        private IntPtr _client;
 
         public EverythingApiV3(string instanceName)
         {
@@ -44,11 +45,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         const uint EVERYTHING3_ERROR_PROPERTY_NOT_FOUND = 0xE0000007;
         const uint EVERYTHING3_OK = 0;
 
-        private static void LogIfEverything3CallFailed(string callName, bool succeeded)
+        private void CheckEverything3Call(string callName, bool succeeded)
         {
             if (!succeeded)
             {
                 Main.Context?.API?.LogDebug(nameof(EverythingApiV3), $"{callName} failed");
+                CheckAndThrowExceptionOnErrorFromEverything3();
             }
         }
 
@@ -71,9 +73,13 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
             try
             {
-                if (!TryConnectEverything3(out var client))
+                token.ThrowIfCancellationRequested();
+
+                if (!EverythingClientConnected())
+                {
+                    _client = IntPtr.Zero;
                     throw new IPCErrorException();
-                _ = Everything3ApiDllImport.Everything3_DestroyClient(client);
+                }
             }
             finally
             {
@@ -100,10 +106,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 if (token.IsCancellationRequested)
                     yield break;
 
-                if (!TryConnectEverything3(out var client))
+                if (!EverythingClientConnected())
                     throw new IPCErrorException();
 
-                await foreach (var result in SearchWithEverything3Async(client, preparedOption, query, token))
+                await foreach (var result in SearchWithEverything3Async(preparedOption, query, token))
                     yield return result;
             }
             finally
@@ -122,15 +128,17 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             }
             try
             {
-                if (TryConnectEverything3(out var client))
+                if (EverythingClientConnected())
                 {
                     try
                     {
-                        Everything3ApiDllImport.Everything3_IncRunCountFromFilenameW(client, fileOrFolder);
+                        var incremented = Everything3ApiDllImport.Everything3_IncRunCountFromFilenameW(_client, fileOrFolder) != 0;
+                        CheckEverything3Call(nameof(Everything3ApiDllImport.Everything3_IncRunCountFromFilenameW), incremented);
                     }
-                    finally
+                    catch (IPCErrorException)
                     {
-                        _ = Everything3ApiDllImport.Everything3_DestroyClient(client);
+                        DestroyEverythingClient(_client);
+                        throw;
                     }
                 }
             }
@@ -146,37 +154,48 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
         public bool IsFastSortOption(EverythingSortOption sortOption)
         {
-            if (!TryConnectEverything3(out var client))
-                throw new IPCErrorException();
+            if (!_semaphore.Wait(TimeSpan.FromSeconds(1)))
+                return false;
 
             try
             {
+                if (!EverythingClientConnected())
+                    throw new IPCErrorException();
+
                 if (TryConvertSortOption(sortOption, out var propertyId, out _))
                 {
-                    var isFastSort = Everything3ApiDllImport.Everything3_IsPropertyFastSort(client, propertyId);
+                    var isFastSort = Everything3ApiDllImport.Everything3_IsPropertyFastSort(_client, propertyId);
                     CheckAndThrowExceptionOnErrorFromEverything3();
                     return isFastSort;
                 }
             }
+            catch (IPCErrorException)
+            {
+                DestroyEverythingClient(_client);
+                throw;
+            }
             finally
             {
-                _ = Everything3ApiDllImport.Everything3_DestroyClient(client);
+                _semaphore.Release();
             }
 
             return false;
         }
 
-        private static async IAsyncEnumerable<SearchResult> SearchWithEverything3Async(IntPtr client,
+        private async IAsyncEnumerable<SearchResult> SearchWithEverything3Async(
             EverythingSearchOption option,
             EverythingHelper.PreparedQuery query,
             [EnumeratorCancellation] CancellationToken token)
         {
             IntPtr searchState = IntPtr.Zero;
             IntPtr resultList = IntPtr.Zero;
+            var completed = false;
             var includeRunCount = option.IsRunCounterEnabled || option.SortOption == EverythingSortOption.RUN_COUNT_DESCENDING || option.SortOption == EverythingSortOption.RUN_COUNT_ASCENDING;
 
             try
             {
+                if (token.IsCancellationRequested)
+                    yield break;
                 searchState = Everything3ApiDllImport.Everything3_CreateSearchState();
                 if (searchState == IntPtr.Zero)
                 {
@@ -184,37 +203,41 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                     yield break;
                 }
 
-                LogIfEverything3CallFailed(nameof(Everything3ApiDllImport.Everything3_SetSearchRegex),
+                CheckEverything3Call(nameof(Everything3ApiDllImport.Everything3_SetSearchRegex),
                     Everything3ApiDllImport.Everything3_SetSearchRegex(searchState, option.UseRegex));
-                LogIfEverything3CallFailed(nameof(Everything3ApiDllImport.Everything3_SetSearchMatchPath),
+                CheckEverything3Call(nameof(Everything3ApiDllImport.Everything3_SetSearchMatchPath),
                     Everything3ApiDllImport.Everything3_SetSearchMatchPath(searchState, option.IsFullPathSearch));
-                LogIfEverything3CallFailed(nameof(Everything3ApiDllImport.Everything3_SetSearchTextW),
+                CheckEverything3Call(nameof(Everything3ApiDllImport.Everything3_SetSearchTextW),
                     Everything3ApiDllImport.Everything3_SetSearchTextW(searchState, query.SearchText));
-                LogIfEverything3CallFailed(nameof(Everything3ApiDllImport.Everything3_SetSearchHideResultOmissions),
+                CheckEverything3Call(nameof(Everything3ApiDllImport.Everything3_SetSearchHideResultOmissions),
                     Everything3ApiDllImport.Everything3_SetSearchHideResultOmissions(searchState, true));
-                LogIfEverything3CallFailed(nameof(Everything3ApiDllImport.Everything3_SetSearchViewportOffset),
+                CheckEverything3Call(nameof(Everything3ApiDllImport.Everything3_SetSearchViewportOffset),
                     Everything3ApiDllImport.Everything3_SetSearchViewportOffset(searchState, (nuint)option.Offset));
-                LogIfEverything3CallFailed(nameof(Everything3ApiDllImport.Everything3_SetSearchViewportCount),
+                CheckEverything3Call(nameof(Everything3ApiDllImport.Everything3_SetSearchViewportCount),
                     Everything3ApiDllImport.Everything3_SetSearchViewportCount(searchState, (nuint)option.MaxCount));
 
                 if (TryConvertSortOption(option.SortOption, out var sortPropertyId, out var ascending))
                 {
                     if (!Everything3ApiDllImport.Everything3_AddSearchSort(searchState, sortPropertyId, ascending))
                     {
-                        CheckAndThrowExceptionOnErrorFromEverything3();
-                        yield break;
+                        CheckEverything3Call(nameof(Everything3ApiDllImport.Everything3_AddSearchSort), false);
                     }
                 }
 
-                _ = Everything3ApiDllImport.Everything3_ClearSearchPropertyRequests(searchState);
-                _ = Everything3ApiDllImport.Everything3_AddSearchPropertyRequestHighlighted(searchState, EVERYTHING3_PROPERTY_ID_NAME);
-                _ = Everything3ApiDllImport.Everything3_AddSearchPropertyRequest(searchState, EVERYTHING3_PROPERTY_ID_PATH_AND_NAME);
+                CheckEverything3Call(nameof(Everything3ApiDllImport.Everything3_ClearSearchPropertyRequests),
+                    Everything3ApiDllImport.Everything3_ClearSearchPropertyRequests(searchState));
+                CheckEverything3Call(nameof(Everything3ApiDllImport.Everything3_AddSearchPropertyRequestHighlighted),
+                    Everything3ApiDllImport.Everything3_AddSearchPropertyRequestHighlighted(searchState, EVERYTHING3_PROPERTY_ID_NAME));
+                CheckEverything3Call(nameof(Everything3ApiDllImport.Everything3_AddSearchPropertyRequest),
+                    Everything3ApiDllImport.Everything3_AddSearchPropertyRequest(searchState, EVERYTHING3_PROPERTY_ID_PATH_AND_NAME));
                 if (includeRunCount)
-                    _ = Everything3ApiDllImport.Everything3_AddSearchPropertyRequest(searchState, EVERYTHING3_PROPERTY_ID_RUN_COUNT);
+                {
+                    CheckEverything3Call(nameof(Everything3ApiDllImport.Everything3_AddSearchPropertyRequest),
+                        Everything3ApiDllImport.Everything3_AddSearchPropertyRequest(searchState, EVERYTHING3_PROPERTY_ID_RUN_COUNT));
+                }
                 if (token.IsCancellationRequested)
                     yield break;
-
-                resultList = Everything3ApiDllImport.Everything3_Search(client, searchState);
+                resultList = Everything3ApiDllImport.Everything3_Search(_client, searchState);
                 if (resultList == IntPtr.Zero)
                 {
                     CheckAndThrowExceptionOnErrorFromEverything3();
@@ -234,6 +257,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
                     yield return result;
                 }
+
+                completed = true;
             }
             finally
             {
@@ -243,13 +268,14 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 if (searchState != IntPtr.Zero)
                     _ = Everything3ApiDllImport.Everything3_DestroySearchState(searchState);
 
-                _ = Everything3ApiDllImport.Everything3_DestroyClient(client);
+                if (!completed)
+                    DestroyEverythingClient(_client);
             }
 
             await Task.CompletedTask;
         }
 
-        private static bool TryCreateSearchResult(IntPtr resultList, nuint resultIndex, bool includeRunCount, out SearchResult result)
+        private bool TryCreateSearchResult(IntPtr resultList, nuint resultIndex, bool includeRunCount, out SearchResult result)
         {
             result = default;
 
@@ -267,7 +293,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             return true;
         }
 
-        private static int GetResultScore(IntPtr resultList, nuint resultIndex)
+        private int GetResultScore(IntPtr resultList, nuint resultIndex)
         {
             var runCount = Everything3ApiDllImport.Everything3_GetResultRunCount(resultList, resultIndex);
             var lastError = Everything3ApiDllImport.Everything3_GetLastError();
@@ -288,7 +314,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             return (int)runCount;
         }
 
-        private static bool TryGetResultFullPath(IntPtr resultList, nuint resultIndex, out string fullPath)
+        private bool TryGetResultFullPath(IntPtr resultList, nuint resultIndex, out string fullPath)
         {
             _buffer.Clear();
             var fullPathLength = Everything3ApiDllImport.Everything3_GetResultFullPathNameW(resultList, resultIndex, _buffer, BufferSize);
@@ -303,7 +329,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             return !string.IsNullOrEmpty(fullPath);
         }
 
-        private static ResultType GetResultType(IntPtr resultList, nuint resultIndex)
+        private ResultType GetResultType(IntPtr resultList, nuint resultIndex)
         {
             return Everything3ApiDllImport.Everything3_IsFolderResult(resultList, resultIndex)
                 ? ResultType.Folder
@@ -312,7 +338,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                     : ResultType.File;
         }
 
-        private static List<int> GetHighlightData(IntPtr resultList, nuint resultIndex)
+        private List<int> GetHighlightData(IntPtr resultList, nuint resultIndex)
         {
             _buffer.Clear();
             var highlightedFileNameLength = Everything3ApiDllImport.Everything3_GetResultPropertyTextHighlightedW(
@@ -327,10 +353,27 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 : [];
         }
 
-        private bool TryConnectEverything3(out IntPtr client)
+        private bool EverythingClientConnected()
         {
-            client = Everything3ApiDllImport.Everything3_ConnectW(_instanceName);
-            return client != IntPtr.Zero;
+            if (_client == IntPtr.Zero)
+                _client = Everything3ApiDllImport.Everything3_ConnectW(_instanceName);
+
+            if (_client == IntPtr.Zero || Everything3ApiDllImport.Everything3_GetMajorVersion(_client) == 0)
+            {
+                DestroyEverythingClient(_client);
+                _client = Everything3ApiDllImport.Everything3_ConnectW(_instanceName);
+            }
+
+            return _client != IntPtr.Zero;
+        }
+
+        private void DestroyEverythingClient(IntPtr client)
+        {
+            if (client == IntPtr.Zero || client != _client)
+                return;
+
+            _ = Everything3ApiDllImport.Everything3_DestroyClient(_client);
+            _client = IntPtr.Zero;
         }
 
         /// <summary>
@@ -451,7 +494,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             }
         }
 
-        private static void CheckAndThrowExceptionOnErrorFromEverything3()
+        private void CheckAndThrowExceptionOnErrorFromEverything3()
         {
             switch (Everything3ApiDllImport.Everything3_GetLastError())
             {
@@ -464,6 +507,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                     throw new InvalidCallException();
                 case EVERYTHING3_ERROR_PROPERTY_NOT_FOUND:
                     throw new ArgumentException("EVERYTHING3_ERROR_PROPERTY_NOT_FOUND");
+                case EVERYTHING3_OK:
+                    return;
+                default:
+                    throw new InvalidCallException();
             }
         }
     }
