@@ -57,58 +57,15 @@ namespace Flow.Launcher.Core.Plugin
 
             foreach (var metadata in metadatas)
             {
-                var milliseconds = PublicApi.Instance.StopwatchLogDebug(ClassName, $"Constructor init cost for {metadata.Name}", () =>
+                var pair = DotNetPlugin(metadata);
+                if (pair == null)
                 {
-                    Assembly assembly = null;
-                    IAsyncPlugin plugin = null;
-
-                    try
-                    {
-                        var assemblyLoader = new PluginAssemblyLoader(metadata.ExecuteFilePath);
-                        assembly = assemblyLoader.LoadAssemblyAndDependencies();
-
-                        var type = assemblyLoader.FromAssemblyGetTypeOfInterface(assembly,
-                            typeof(IAsyncPlugin));
-
-                        plugin = Activator.CreateInstance(type) as IAsyncPlugin;
-
-                        metadata.AssemblyName = assembly.GetName().Name;
-                    }
-#if DEBUG
-                    catch (Exception)
-                    {
-                        throw;
-                    }
-#else
-                    catch (Exception e) when (assembly == null)
-                    {
-                        PublicApi.Instance.LogException(ClassName, $"Couldn't load assembly for the plugin: {metadata.Name}", e);
-                    }
-                    catch (InvalidOperationException e)
-                    {
-                        PublicApi.Instance.LogException(ClassName, $"Can't find the required IPlugin interface for the plugin: <{metadata.Name}>", e);
-                    }
-                    catch (ReflectionTypeLoadException e)
-                    {
-                        PublicApi.Instance.LogException(ClassName, $"The GetTypes method was unable to load assembly types for the plugin: <{metadata.Name}>", e);
-                    }
-                    catch (Exception e)
-                    {
-                        PublicApi.Instance.LogException(ClassName, $"The following plugin has errored and can not be loaded: <{metadata.Name}>", e);
-                    }
-#endif
-
-                    if (plugin == null)
-                    {
-                        erroredPlugins.Add(metadata.Name);
-                        return;
-                    }
-
-                    plugins.Add(new PluginPair { Plugin = plugin, Metadata = metadata });
-                });
-
-                metadata.InitTime += milliseconds;
-                PublicApi.Instance.LogDebug(ClassName, $"Constructor cost for <{metadata.Name}> is <{metadata.InitTime}ms>");
+                    erroredPlugins.Add(metadata.Name);
+                }
+                else
+                {
+                    plugins.Add(pair);
+                }
             }
 
             if (erroredPlugins.Count > 0)
@@ -125,6 +82,104 @@ namespace Flow.Launcher.Core.Plugin
             }
 
             return plugins;
+        }
+
+        internal static PluginPair DotNetPlugin(PluginMetadata metadata)
+        {
+            PluginPair pair = null;
+
+            var milliseconds = PublicApi.Instance.StopwatchLogDebug(ClassName, $"Constructor init cost for {metadata.Name}", () =>
+            {
+                Assembly assembly = null;
+                IAsyncPlugin plugin = null;
+                PluginAssemblyLoader assemblyLoader = null;
+
+                try
+                {
+                    assemblyLoader = new PluginAssemblyLoader(metadata.ExecuteFilePath);
+                    assembly = assemblyLoader.LoadAssemblyAndDependencies();
+
+                    var type = assemblyLoader.FromAssemblyGetTypeOfInterface(assembly,
+                        typeof(IAsyncPlugin));
+
+                    plugin = Activator.CreateInstance(type) as IAsyncPlugin;
+
+                    metadata.AssemblyName = assembly.GetName().Name;
+                }
+#if DEBUG
+                catch (Exception)
+                {
+                    throw;
+                }
+#else
+                catch (Exception e) when (assembly == null)
+                {
+                    PublicApi.Instance.LogException(ClassName, $"Couldn't load assembly for the plugin: {metadata.Name}", e);
+                }
+                catch (InvalidOperationException e)
+                {
+                    PublicApi.Instance.LogException(ClassName, $"Can't find the required IPlugin interface for the plugin: <{metadata.Name}>", e);
+                }
+                catch (ReflectionTypeLoadException e)
+                {
+                    PublicApi.Instance.LogException(ClassName, $"The GetTypes method was unable to load assembly types for the plugin: <{metadata.Name}>", e);
+                }
+                catch (Exception e)
+                {
+                    PublicApi.Instance.LogException(ClassName, $"The following plugin has errored and can not be loaded: <{metadata.Name}>", e);
+                }
+#endif
+
+                if (plugin == null) return;
+
+                // Track the load context only for an accepted plugin, so a rejected one cannot
+                // displace the running instance's context; it is used to unload the assembly when
+                // the plugin is reloaded or uninstalled
+                PluginManager.TrackAssemblyLoader(metadata.ID, assemblyLoader);
+
+                pair = new PluginPair { Plugin = plugin, Metadata = metadata };
+            });
+
+            metadata.InitTime += milliseconds;
+            PublicApi.Instance.LogDebug(ClassName, $"Constructor cost for <{metadata.Name}> is <{metadata.InitTime}ms>");
+
+            return pair;
+        }
+
+        /// <summary>
+        /// Loads a single plugin from its already-parsed metadata, dispatching on the plugin language.
+        /// Used by hot reload; the batch equivalent for startup is <see cref="Plugins"/>.
+        /// </summary>
+        internal static PluginPair LoadPlugin(PluginMetadata metadata, PluginsSettings settings)
+        {
+            if (AllowedLanguage.IsDotNet(metadata.Language))
+            {
+                return DotNetPlugin(metadata);
+            }
+
+            var metadatas = new List<PluginMetadata> { metadata };
+
+            if (AllowedLanguage.IsPython(metadata.Language) || AllowedLanguage.IsNodeJs(metadata.Language))
+            {
+                AbstractPluginEnvironment environment = metadata.Language.ToUpperInvariant() switch
+                {
+                    "PYTHON" => new PythonEnvironment(metadatas, settings),
+                    "PYTHON_V2" => new PythonV2Environment(metadatas, settings),
+                    "TYPESCRIPT" => new TypeScriptEnvironment(metadatas, settings),
+                    "TYPESCRIPT_V2" => new TypeScriptV2Environment(metadatas, settings),
+                    "JAVASCRIPT" => new JavaScriptEnvironment(metadatas, settings),
+                    _ => new JavaScriptV2Environment(metadatas, settings),
+                };
+                return environment.Setup().FirstOrDefault();
+            }
+
+            if (AllowedLanguage.IsExecutable(metadata.Language))
+            {
+                return ExecutablePlugins(metadatas).Concat(ExecutableV2Plugins(metadatas)).FirstOrDefault();
+            }
+
+            PublicApi.Instance.LogError(ClassName, $"Unsupported language <{metadata.Language}> for plugin <{metadata.Name}>");
+            return null;
         }
 
         private static IEnumerable<PluginPair> ExecutablePlugins(IEnumerable<PluginMetadata> source)
