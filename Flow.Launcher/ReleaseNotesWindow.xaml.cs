@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.Http;
 using iNKORE.UI.WPF.Modern;
 
@@ -108,26 +109,19 @@ namespace Flow.Launcher
 
         private void MarkdownViewer_MouseWheel(object sender, MouseWheelEventArgs e)
         {
-            RaiseMouseWheelEvent(sender, e);
+            ForwardMouseWheelToParentScrollViewer(sender, e);
         }
 
         private void MarkdownViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
-            RaiseMouseWheelEvent(sender, e);
+            ForwardMouseWheelToParentScrollViewer(sender, e);
         }
 
-        private void RaiseMouseWheelEvent(object sender, MouseWheelEventArgs e)
+        private void ForwardMouseWheelToParentScrollViewer(object sender, MouseWheelEventArgs e)
         {
-            e.Handled = true; // Prevent the inner control from handling the event
-
-            var eventArg = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta)
-            {
-                RoutedEvent = UIElement.MouseWheelEvent,
-                Source = sender
-            };
-
-            // Raise the event on the parent ScrollViewer
-            MarkdownScrollViewer.RaiseEvent(eventArg);
+            // The Markdown viewer's does not support smooth scrolling, 
+            // so forward wheel input to the parent scroll viewer (ScrollViewerEx) which does.
+            MouseWheelHelper.ForwardMouseWheelToScrollViewer(e, MarkdownScrollViewer, sender);
         }
 
         #endregion

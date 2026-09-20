@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Threading;
 using System.Text;
+using System.Text.Json;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -64,7 +65,7 @@ namespace Flow.Launcher.Test.Plugins
         };
 
         [Test]
-        public async Task GivenMarkdownPreviewContentType_WhenDeserializeJsonRpcResult_ThenPreviewContentTypeIsMarkdown()
+        public async Task GivenMarkdownContentBlock_WhenDeserializeJsonRpcResult_ThenContentBlockIsMarkdown()
         {
             const string resultText =
                 """
@@ -73,9 +74,13 @@ namespace Flow.Launcher.Test.Plugins
                     {
                       "title": "Answer",
                       "subTitle": "*args in Python",
-                      "preview": {
-                        "description": "**`*args`** collects extra positional arguments.",
-                        "contentType": "markdown"
+                      "richPreview": {
+                        "contentBlocks": [
+                          {
+                            "type": "markdown",
+                            "inlineMarkdown": "**`*args`** collects extra positional arguments."
+                          }
+                        ]
                       }
                     }
                   ],
@@ -90,12 +95,13 @@ namespace Flow.Launcher.Test.Plugins
 
             var result = results.Single();
 
-            ClassicAssert.AreEqual(PreviewContentType.Markdown, result.Preview.ContentType);
-            ClassicAssert.AreEqual("**`*args`** collects extra positional arguments.", result.Preview.Description);
+            var block = result.RichPreview.ContentBlocks.Single();
+            ClassicAssert.IsInstanceOf<MarkdownPreviewBlock>(block);
+            ClassicAssert.AreEqual("**`*args`** collects extra positional arguments.", ((MarkdownPreviewBlock)block).InlineMarkdown);
         }
 
         [Test]
-        public async Task GivenNoPreviewContentType_WhenDeserializeJsonRpcResult_ThenPreviewContentTypeIsImageWithTextAsync()
+        public async Task GivenContentBlockWithTypeAfterContent_WhenDeserializeJsonRpcResult_ThenBlocksAreDeserialized()
         {
             const string resultText =
                 """
@@ -103,9 +109,64 @@ namespace Flow.Launcher.Test.Plugins
                   "result": [
                     {
                       "title": "Answer",
-                      "subTitle": "Plain result",
-                      "preview": {
-                        "description": "Plain description."
+                      "subTitle": "Out of order discriminator",
+                      "richPreview": {
+                        "contentBlocks": [
+                          {
+                            "inlineMarkdown": "# Title",
+                            "type": "markdown"
+                          },
+                          {
+                            "text": "A plain line of text.",
+                            "type": "text"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "debugMessage": null
+                }
+                """;
+
+            var results = await QueryAsync(new Query
+            {
+                Search = resultText
+            }, default);
+
+            var blocks = results.Single().RichPreview.ContentBlocks;
+
+            ClassicAssert.IsInstanceOf<MarkdownPreviewBlock>(blocks[0]);
+            ClassicAssert.AreEqual("# Title", ((MarkdownPreviewBlock)blocks[0]).InlineMarkdown);
+            ClassicAssert.IsInstanceOf<TextPreviewBlock>(blocks[1]);
+            ClassicAssert.AreEqual("A plain line of text.", ((TextPreviewBlock)blocks[1]).Text);
+        }
+
+        [Test]
+        public void GivenContentBlockWithTypeAfterContent_WhenDeserializeWithBaseOption_ThenBlockIsDeserialized()
+        {
+            const string blockText = """{"inlineMarkdown":"# Title","type":"markdown"}""";
+
+            var block = JsonSerializer.Deserialize<PreviewContentBlock>(blockText, DeserializeOption);
+
+            ClassicAssert.IsInstanceOf<MarkdownPreviewBlock>(block);
+        }
+
+        [Test]
+        public async Task GivenSeparatorContentBlock_WhenDeserializeJsonRpcResult_ThenContentBlockIsSeparator()
+        {
+            const string resultText =
+                """
+                {
+                  "result": [
+                    {
+                      "title": "Answer",
+                      "subTitle": "Answer with sections",
+                      "richPreview": {
+                        "contentBlocks": [
+                          {
+                            "type": "separator"
+                          }
+                        ]
                       }
                     }
                   ],
@@ -120,7 +181,44 @@ namespace Flow.Launcher.Test.Plugins
 
             var result = results.Single();
 
-            ClassicAssert.AreEqual(PreviewContentType.ImageWithText, result.Preview.ContentType);
+            var block = result.RichPreview.ContentBlocks.Single();
+            ClassicAssert.IsInstanceOf<SeparatorPreviewBlock>(block);
+        }
+
+        [Test]
+        public async Task GivenTextContentBlock_WhenDeserializeJsonRpcResult_ThenContentBlockIsText()
+        {
+            const string resultText =
+                """
+                {
+                  "result": [
+                    {
+                      "title": "Answer",
+                      "subTitle": "Answer with sections",
+                      "richPreview": {
+                        "contentBlocks": [
+                          {
+                            "type": "text",
+                            "text": "A plain line of text."
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "debugMessage": null
+                }
+                """;
+
+            var results = await QueryAsync(new Query
+            {
+                Search = resultText
+            }, default);
+
+            var result = results.Single();
+
+            var block = result.RichPreview.ContentBlocks.Single();
+            ClassicAssert.IsInstanceOf<TextPreviewBlock>(block);
+            ClassicAssert.AreEqual("A plain line of text.", ((TextPreviewBlock)block).Text);
         }
 
         [Test]
