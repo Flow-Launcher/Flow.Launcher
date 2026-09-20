@@ -1,5 +1,14 @@
 name: Publish Default Plugins
 
+# Required secrets
+#
+# PUBLISH_PLUGINS:
+# Used to create releases in each of the Flow-Launcher/Flow.Launcher.Plugin.*
+# repositories for the default plugins.
+# Necessary permissions:
+#   Flow-Launcher/Flow.Launcher.Plugin.*:
+#     Contents: write
+
 on:
   push:
     branches: ['master']

@@ -1,6 +1,15 @@
 ---
 
 name: New Release Deployments
+
+# Required secrets
+#
+# DEPLOY_FLOW_WEBSITE:
+# Used to trigger a repository_dispatch event on Flow-Launcher/flow-launcher.github.io.
+#
+# Publish_Chocolatey:
+# Used to trigger a repository_dispatch event on Flow-Launcher/chocolatey-package.
+
 on:
   release:
     types: [published]

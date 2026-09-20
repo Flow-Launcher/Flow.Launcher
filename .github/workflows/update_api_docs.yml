@@ -1,5 +1,15 @@
 name: Update API Docs
 
+# Required secrets
+#
+# DOCS_PR_TOKEN:
+# fine-grained PAT scoped to Flow-Launcher/docs,
+# Use to push docs rebuild branch and submit pull request.
+# Necessary permissions:
+#   Flow-Launcher/docs:
+#     Contents: write
+#     Pull requests: write
+
 on:
   release:
     types: [published]
@@ -8,6 +18,9 @@ on:
       tag:
         description: "Release tag to generate docs for (defaults to the latest release)"
         required: false
+
+permissions:
+  contents: read
 
 jobs:
   check-latest:
@@ -69,16 +82,12 @@ jobs:
         with:
           repository: Flow-Launcher/docs
           path: docs
-          token: ${{ secrets.PR_TOKEN }}
+          persist-credentials: false
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v5
         with:
           dotnet-version: 9.0.x
-
-      - name: Build Flow.Launcher.Plugin
-        working-directory: Flow.Launcher
-        run: dotnet build Flow.Launcher.Plugin/Flow.Launcher.Plugin.csproj -c Release
 
       - name: Regenerate API docs
         working-directory: Flow.Launcher
@@ -105,7 +114,7 @@ jobs:
         working-directory: docs
         shell: bash
         env:
-          GH_TOKEN: ${{ secrets.PR_TOKEN }}
+          GH_TOKEN: ${{ secrets.DOCS_PR_TOKEN }}
         run: |
           set -euo pipefail
 
@@ -115,6 +124,8 @@ jobs:
             echo "::error::Branch '$branch' already exists on Flow-Launcher/docs. Refusing to overwrite it - if the API docs for $TAG need to be regenerated, delete or merge that branch first."
             exit 1
           fi
+
+          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/Flow-Launcher/docs.git"
 
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
