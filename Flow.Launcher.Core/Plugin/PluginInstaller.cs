@@ -21,7 +21,12 @@ public static class PluginInstaller
 {
     private static readonly string ClassName = nameof(PluginInstaller);
 
-    private static readonly Settings Settings = Ioc.Default.GetRequiredService<Settings>();
+    // Resolved lazily rather than in the static initializer so that pure helpers (e.g.
+    // DerivePluginNameFromUrl) can be exercised without a configured IoC container. Every real
+    // consumer touches Settings at call time, long after the container is built, so this is
+    // behaviour-identical in production.
+    private static Settings _settings;
+    private static Settings Settings => _settings ??= Ioc.Default.GetRequiredService<Settings>();
 
     private static readonly SemaphoreSlim UpdatePluginsSemaphore = new(1, 1);
 
@@ -75,6 +80,14 @@ public static class PluginInstaller
             if (!File.Exists(filePath))
             {
                 throw new FileNotFoundException($"Plugin {newPlugin.ID} zip file not found at {filePath}", filePath);
+            }
+
+            // URL installs start with an empty ID; recover the real one from the downloaded zip so
+            // ModifiedPlugins does not track every URL install under the same empty key, which would
+            // reject any later URL install as already modified.
+            if (string.IsNullOrEmpty(newPlugin.ID))
+            {
+                TryPopulateIdFromZip(newPlugin, filePath);
             }
 
             if (!PublicApi.Instance.InstallPlugin(newPlugin, filePath))
@@ -149,6 +162,86 @@ public static class PluginInstaller
         }
 
         await InstallPluginAndCheckRestartAsync(plugin);
+    }
+
+    /// <summary>
+    /// Installs a plugin from a direct zip download URL and restarts the application if required by settings.
+    /// Applies the unknown source warning and prompts user for confirmation before installing.
+    /// </summary>
+    /// <param name="url">The https URL of the plugin zip file.</param>
+    /// <returns>A Task representing the asynchronous install operation.</returns>
+    public static async Task InstallPluginFromWebAndCheckRestartAsync(string url)
+    {
+        var plugin = new UserPlugin
+        {
+            ID = string.Empty,
+            Name = DerivePluginNameFromUrl(url),
+            Version = string.Empty,
+            Author = Localize.UnknownPluginAuthor(),
+            UrlDownload = url
+        };
+
+        if (Settings.ShowUnknownSourceWarning)
+        {
+            if (!InstallSourceKnown(url)
+                && PublicApi.Instance.ShowMsgBox(Localize.InstallFromUnknownSourceSubtitle(Environment.NewLine),
+                    Localize.InstallFromUnknownSourceTitle(),
+                    MessageBoxButton.YesNo) == MessageBoxResult.No)
+                return;
+        }
+
+        await InstallPluginAndCheckRestartAsync(plugin);
+    }
+
+    /// <summary>
+    /// Derives a plugin display name from a download URL by taking the URI path's filename and
+    /// dropping a trailing ".zip". Query strings (e.g. plugin.zip?token=x) are excluded so they
+    /// don't leak into the temp filename, which would be invalid on Windows.
+    /// </summary>
+    /// <param name="url">The download URL of the plugin zip file.</param>
+    /// <returns>The sanitized plugin name, safe to use as a Windows filename.</returns>
+    internal static string DerivePluginNameFromUrl(string url)
+    {
+        // Fall back to the naive split if the URL somehow fails to parse as a URI (callers already
+        // validate https, this is defense in depth). uri.LocalPath is percent-decoded, so it can
+        // still contain characters that are invalid in Windows filenames (e.g. a literal "?" from an
+        // encoded "%3F"); strip those out.
+        var filename = Uri.TryCreate(url, UriKind.Absolute, out var uri)
+            ? Path.GetFileName(uri.LocalPath)
+            : url.Split('/').Last();
+        foreach (var c in Path.GetInvalidFileNameChars())
+        {
+            filename = filename.Replace(c.ToString(), string.Empty);
+        }
+        var name = filename.EndsWith(".zip", StringComparison.OrdinalIgnoreCase)
+            ? filename[..^".zip".Length]
+            : filename;
+        // Stripping can consume the entire basename (e.g. "%3F.zip" decodes to "?.zip" and collapses
+        // to ""); an empty name would blank the install prompt and the temp download filename.
+        return string.IsNullOrWhiteSpace(name) ? "plugin" : name;
+    }
+
+    private static void TryPopulateIdFromZip(UserPlugin plugin, string zipFilePath)
+    {
+        try
+        {
+            using var archive = ZipFile.OpenRead(zipFilePath);
+            var pluginJsonEntry = archive.Entries.FirstOrDefault(x => x.Name == "plugin.json");
+            if (pluginJsonEntry == null) return;
+
+            using var stream = pluginJsonEntry.Open();
+            var zipPlugin = JsonSerializer.Deserialize<UserPlugin>(stream);
+            if (!string.IsNullOrEmpty(zipPlugin?.ID))
+            {
+                plugin.ID = zipPlugin.ID;
+            }
+        }
+        catch (Exception e)
+        {
+            // A bad archive fails later in InstallPlugin with a user-facing error; here it only
+            // means the ID stays empty.
+            PublicApi.Instance.LogException(ClassName, "Failed to read plugin.json from downloaded zip", e);
+        }
     }
 
     /// <summary>
