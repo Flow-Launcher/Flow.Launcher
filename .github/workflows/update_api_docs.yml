@@ -43,23 +43,25 @@ jobs:
           echo "Latest stable release is: $latest_tag"
 
           if [ -n "${INPUT_TAG:-}" ]; then
+            # If explicitly overridden tag, always run
             target_tag="$INPUT_TAG"
+            echo "should-run=true" >> "$GITHUB_OUTPUT"
           else
-            target_tag="$EVENT_TAG"
+            # If auto-triggered or manually triggered without explicit tag,
+            # only run against the latest stable release.
+            target_tag="${EVENT_TAG:-$latest_tag}"
+
             if [ "${EVENT_PRERELEASE:-false}" = "true" ]; then
               echo "::notice::Release $target_tag is a pre-release. Skipping API docs update."
               echo "should-run=false" >> "$GITHUB_OUTPUT"
-              echo "tag=$target_tag" >> "$GITHUB_OUTPUT"
-              exit 0
+            elif [ "$target_tag" != "$latest_tag" ]; then
+              echo "::notice::$target_tag is not the latest release ($latest_tag). Skipping API docs update."
+              echo "should-run=false" >> "$GITHUB_OUTPUT"
+            else
+              echo "should-run=true" >> "$GITHUB_OUTPUT"
             fi
           fi
 
-          if [ "$target_tag" != "$latest_tag" ]; then
-            echo "::notice::$target_tag is not the latest release ($latest_tag). Skipping API docs update."
-            echo "should-run=false" >> "$GITHUB_OUTPUT"
-          else
-            echo "should-run=true" >> "$GITHUB_OUTPUT"
-          fi
           echo "tag=$target_tag" >> "$GITHUB_OUTPUT"
 
   update-docs:
@@ -71,21 +73,22 @@ jobs:
       DOCS_BRANCH_PREFIX: rebuild-api-docs
     steps:
       - name: Checkout Flow.Launcher at release tag
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: Flow-Launcher/Flow.Launcher
           ref: ${{ env.TAG }}
           path: Flow.Launcher
+          persist-credentials: false
 
       - name: Checkout docs
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: Flow-Launcher/docs
           path: docs
           persist-credentials: false
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v5
+        uses: actions/setup-dotnet@v6
         with:
           dotnet-version: 9.0.x
 
