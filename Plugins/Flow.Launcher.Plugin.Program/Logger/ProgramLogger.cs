@@ -86,6 +86,16 @@ namespace Flow.Launcher.Plugin.Program.Logger
             LogException(classname, callingMethodName, loadingProgramPath, interpretationMessage, e);
         }
 
+        /// <summary>
+        /// Logs a debug message
+        /// </summary>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        internal static void LogDebug(string classname, string callingMethodName, string loadingProgramPath, string message)
+        {
+            var logger = LogManager.GetLogger("");
+            logger.Debug($"{classname}.{callingMethodName}: {message} ({loadingProgramPath})");
+        }
+
         private static bool IsKnownWinProgramError(Exception e, string callingMethodName)
         {
             if (e.TargetSite?.Name == "GetDescription" && callingMethodName == "LnkProgram")

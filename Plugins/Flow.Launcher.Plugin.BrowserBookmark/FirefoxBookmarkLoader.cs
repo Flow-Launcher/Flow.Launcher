@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
@@ -270,7 +270,7 @@ public class FirefoxBookmarkLoader : FirefoxBookmarkLoaderBase
         using var sReader = new StreamReader(profileIni);
         var ini = sReader.ReadToEnd();
 
-        var lines = ini.Split("\r\n").ToList();
+        var lines = ini.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None).ToList();
 
         var defaultProfileFolderNameRaw = lines.FirstOrDefault(x => x.Contains("Default=") && x != "Default=1") ?? string.Empty;
 
