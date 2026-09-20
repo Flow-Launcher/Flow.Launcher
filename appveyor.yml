@@ -62,7 +62,7 @@ deploy:
   - provider: NuGet
     artifact: Plugin nupkg
     api_key:
-      secure: en+/GPSgfUVARoX0+lOeAAlbzvcCZAyBeVQaNq1AeXuRjjHgMwhBnt0PHVJXOepS
+      secure: DkNodT9ZH0XAuM/wanIDqOHx67xJVy2fh3PMgjOxGc5VbXSKZhoc96uyTEGTuSpU
     on:
       branch: master
 
