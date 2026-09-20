@@ -1,0 +1,135 @@
+name: Update API Docs
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag to generate docs for (defaults to the latest release)"
+        required: false
+
+jobs:
+  check-latest:
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.resolve.outputs.tag }}
+      should-run: ${{ steps.resolve.outputs.should-run }}
+    steps:
+      - name: Resolve target tag and confirm it is the latest stable release
+        id: resolve
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENT_TAG: ${{ github.event.release.tag_name }}
+          EVENT_PRERELEASE: ${{ github.event.release.prerelease }}
+          INPUT_TAG: ${{ inputs.tag }}
+        run: |
+          set -euo pipefail
+
+          latest_tag=$(gh release view --repo "${GITHUB_REPOSITORY}" --json tagName --jq '.tagName')
+          echo "Latest stable release is: $latest_tag"
+
+          if [ -n "${INPUT_TAG:-}" ]; then
+            target_tag="$INPUT_TAG"
+          else
+            target_tag="$EVENT_TAG"
+            if [ "${EVENT_PRERELEASE:-false}" = "true" ]; then
+              echo "::notice::Release $target_tag is a pre-release. Skipping API docs update."
+              echo "should-run=false" >> "$GITHUB_OUTPUT"
+              echo "tag=$target_tag" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+          fi
+
+          if [ "$target_tag" != "$latest_tag" ]; then
+            echo "::notice::$target_tag is not the latest release ($latest_tag). Skipping API docs update."
+            echo "should-run=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "should-run=true" >> "$GITHUB_OUTPUT"
+          fi
+          echo "tag=$target_tag" >> "$GITHUB_OUTPUT"
+
+  update-docs:
+    needs: check-latest
+    if: needs.check-latest.outputs.should-run == 'true'
+    runs-on: windows-latest
+    env:
+      TAG: ${{ needs.check-latest.outputs.tag }}
+      DOCS_BRANCH_PREFIX: rebuild-api-docs
+    steps:
+      - name: Checkout Flow.Launcher at release tag
+        uses: actions/checkout@v6
+        with:
+          repository: Flow-Launcher/Flow.Launcher
+          ref: ${{ env.TAG }}
+          path: Flow.Launcher
+
+      - name: Checkout docs
+        uses: actions/checkout@v6
+        with:
+          repository: Flow-Launcher/docs
+          path: docs
+          token: ${{ secrets.PR_TOKEN }}
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 9.0.x
+
+      - name: Build Flow.Launcher.Plugin
+        working-directory: Flow.Launcher
+        run: dotnet build Flow.Launcher.Plugin/Flow.Launcher.Plugin.csproj -c Release
+
+      - name: Regenerate API docs
+        working-directory: Flow.Launcher
+        run: |
+          dotnet run --project Flow.Launcher.DocsGen -c Release -- `
+            Output/Release/Flow.Launcher.Plugin.dll `
+            "../docs/API-Reference" `
+            --clean
+
+      - name: Check for changes
+        id: diff
+        working-directory: docs
+        shell: bash
+        run: |
+          git add -A
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create branch and pull request
+        if: steps.diff.outputs.changed == 'true'
+        working-directory: docs
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.PR_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          branch="${DOCS_BRANCH_PREFIX}/${TAG}"
+
+          if git ls-remote --exit-code --heads origin "$branch" >/dev/null 2>&1; then
+            echo "::error::Branch '$branch' already exists on Flow-Launcher/docs. Refusing to overwrite it - if the API docs for $TAG need to be regenerated, delete or merge that branch first."
+            exit 1
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git checkout -b "$branch"
+          git commit -m "Update API docs for $TAG"
+          git push origin "$branch"
+
+          gh pr create \
+            --repo Flow-Launcher/docs \
+            --head "$branch" \
+            --base main \
+            --title "Update API docs for $TAG" \
+            --body "Automated update of \`API-Reference\` generated from [Flow-Launcher/Flow.Launcher@$TAG](https://github.com/Flow-Launcher/Flow.Launcher/releases/tag/$TAG) by the [update_api_docs](https://github.com/Flow-Launcher/Flow.Launcher/actions/workflows/update_api_docs.yml) workflow."
+
+      - name: No changes detected
+        if: steps.diff.outputs.changed == 'false'
+        run: echo "::notice::API docs are already up to date for $TAG. Nothing to do."
