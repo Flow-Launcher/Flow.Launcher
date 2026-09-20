@@ -1,10 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
+using Flow.Launcher.Plugin.Calculator.Storage;
 using Flow.Launcher.Plugin.Calculator.ViewModels;
 using Flow.Launcher.Plugin.Calculator.Views;
 using Mages.Core;
@@ -24,8 +25,10 @@ namespace Flow.Launcher.Plugin.Calculator
         private const string Comma = ",";
         private const string Dot = ".";
         private const string IcoPath = "Images/calculator.png";
+
         private static readonly List<Result> EmptyResults = [];
 
+        private History History { get; set; } = null!;
         internal static PluginInitContext Context { get; private set; } = null!;
 
         private Settings _settings;
@@ -35,6 +38,7 @@ namespace Flow.Launcher.Plugin.Calculator
         {
             Context = context;
             _settings = context.API.LoadSettingJsonStorage<Settings>();
+            History = context.API.LoadSettingJsonStorage<History>();
             _viewModel = new SettingsViewModel(_settings);
 
             MagesEngine = new Engine(new Configuration
@@ -57,7 +61,7 @@ namespace Flow.Launcher.Plugin.Calculator
             {
                 var search = query.Search;
                 bool isFunctionPresent = FunctionRegex.IsMatch(search);
-
+                bool isValidResultToAddHistory = true;
                 // Mages is case sensitive, so we need to convert all function names to lower case.
                 search = FunctionRegex.Replace(search, m => m.Value.ToLowerInvariant());
 
@@ -119,43 +123,68 @@ namespace Flow.Launcher.Plugin.Calculator
                 if (result.ToString() == "NaN")
                 {
                     result = Localize.flowlauncher_plugin_calculator_not_a_number();
+                    isValidResultToAddHistory = false;
                 }
 
                 if (result is Function)
                 {
                     result = Localize.flowlauncher_plugin_calculator_expression_not_complete();
+                    isValidResultToAddHistory = false;
                 }
 
                 if (!string.IsNullOrEmpty(result.ToString()))
                 {
                     decimal roundedResult = Math.Round(Convert.ToDecimal(result), _settings.MaxDecimalPlaces, MidpointRounding.AwayFromZero);
                     string newResult = FormatResult(roundedResult);
+                    
+                    var results = new List<Result>();
+                    var resultObject = new Result
+                    {
+                        Title = newResult,
+                        IcoPath = IcoPath,
+                        Score = 300,
+                        // Check context nullability for unit testing
+                        SubTitle = Context == null
+                            ? string.Empty
+                            : Localize.flowlauncher_plugin_calculator_copy_number_to_clipboard(),
+                        CopyText = newResult
+                    };
 
-                    return
-                    [
-                        new Result
+                    resultObject.Action = BuildResultAction(resultObject, newResult, expression);
+
+                    if (_settings.EnableHistory && _settings.HistoryCreationMode == HistoryCreationMode.OnQuery)
+                    {
+                        var item = HistoryHelper.CreatePendingHistoryItem(Context, resultObject, newResult, expression);
+                        History.AddOrUpdate(item);
+                    }
+                    results.Add(resultObject);
+                    var historyItems = _settings.EnableHistory
+                        ? History.GetItemsExcluding(expression)
+                        : [];
+                    var resultsToReturn = new List<Result>();
+                    if (_settings.EnableHistory)
+                    {
+                        foreach (var item in historyItems)
                         {
-                            Title = newResult,
-                            IcoPath = IcoPath,
-                            Score = 300,
-                            // Check context nullability for unit testing
-                            SubTitle = Context == null ? string.Empty : Localize.flowlauncher_plugin_calculator_copy_number_to_clipboard(),
-                            CopyText = newResult,
-                            Action = c =>
+                            var timeDeltaStr = HistoryHelper.GetTimeDeltaString(Context, item.CalculatedAt);
+                            var historySubtitle = Context == null
+                                ? string.Format(CultureInfo.CurrentCulture, "{0}", timeDeltaStr)
+                                : Localize.flowlauncher_plugin_calculator_history_subtitle(timeDeltaStr);
+                            resultsToReturn.Add(new Result
                             {
-                                try
-                                {
-                                    Context.API.CopyToClipboard(newResult);
-                                    return true;
-                                }
-                                catch (ExternalException)
-                                {
-                                    Context.API.ShowMsgBox(Localize.flowlauncher_plugin_calculator_failed_to_copy());
-                                    return false;
-                                }
-                            }
+                                Title = item.Query,
+                                SubTitle = $"{item.CopyText} - {historySubtitle}",
+                                IcoPath = item.IcoPath,
+                                BadgeIcoPath = item.BadgeIcoPath,
+                                ShowBadge = item.ShowBadge,
+                                Score = item.Score,
+                                CopyText = item.CopyText,
+                                Action = item.Action
+                            });
                         }
-                    ];
+                    }
+                    return results.Concat(resultsToReturn).ToList();
+
                 }
             }
             catch (Exception)
@@ -173,6 +202,60 @@ namespace Flow.Launcher.Plugin.Calculator
             }
 
             return EmptyResults;
+        }
+
+
+
+        private Func<ActionContext, bool> BuildResultAction
+        (
+            Result result,
+            string newResult,
+            string expression
+        )
+        {
+
+            var action = 
+                !_settings.EnableHistory || _settings.HistoryCreationMode == HistoryCreationMode.OnQuery
+                ? CreateClipboardAction(newResult) 
+                : CreateClipboardActionWithHistory(result, newResult, expression);
+
+            return action;
+                
+        }
+
+        private Func<ActionContext, bool> CreateClipboardAction(string newResult)
+        {
+            return (_) =>
+            {
+                try
+                {
+                    Context.API.CopyToClipboard(newResult);
+
+                    return true;
+                }
+                catch (ExternalException)
+                {
+                    Context.API.ShowMsgBox(
+                        Localize.flowlauncher_plugin_calculator_failed_to_copy()
+                    );
+                    return false;
+                }
+            };
+        }
+
+        private Func<ActionContext, bool> CreateClipboardActionWithHistory(Result resultObject, string newResult, string expression)
+        {
+            var baseAction = CreateClipboardAction(newResult);
+            return (actionContext) =>
+            {
+                if (baseAction(actionContext))
+                {
+                    var item = new HistoryItem(resultObject, newResult, expression, DateTime.Now);
+                    History.AddOrUpdate(item);
+                    return true;
+                }
+                return false;
+            };
         }
 
         private static string PowMatchEvaluator(Match m)
