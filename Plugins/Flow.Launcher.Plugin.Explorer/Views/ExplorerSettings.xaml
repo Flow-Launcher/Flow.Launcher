@@ -205,6 +205,8 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -420,6 +422,24 @@
                     Margin="{StaticResource SettingPanelItemTopBottomMargin}"
                     Click="btnOpenIndexingOptions_Click"
                     Content="{DynamicResource plugin_explorer_Open_Window_Index_Option}" />
+
+                <CheckBox
+                    Grid.Row="13"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Margin="{StaticResource SettingPanelItemTopBottomMargin}"
+                    HorizontalAlignment="Left"
+                    Content="{DynamicResource plugin_explorer_move_deleted_items_to_recycle_bin}"
+                    IsChecked="{Binding Settings.DeleteToRecycleBin}" />
+
+                <CheckBox
+                    Grid.Row="14"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Margin="{StaticResource SettingPanelItemTopBottomMargin}"
+                    HorizontalAlignment="Left"
+                    Content="{DynamicResource plugin_explorer_confirm_before_deleting}"
+                    IsChecked="{Binding Settings.ConfirmBeforeDeleting}" />
             </Grid>
         </Expander>
 

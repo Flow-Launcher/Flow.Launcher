@@ -14,3 +14,8 @@ GetMonitorInfo
 MONITORINFOEXW
 GetCursorPos
 MonitorFromPoint
+IFileOperation
+FileOperation
+IShellItem
+SHCreateItemFromParsingName
+FILEOPERATION_FLAGS
