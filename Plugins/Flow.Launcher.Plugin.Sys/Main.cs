@@ -313,6 +313,8 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\sleep.png",
                     Action = c =>
                     {
+                        // SetSuspendState requires the SE_SHUTDOWN_NAME privilege.
+                        EnableShutdownPrivilege();
                         PInvoke.SetSuspendState(false, false, false);
                         return true;
                     }
@@ -324,6 +326,8 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\hibernate.png",
                     Action= c =>
                     {
+                        // SetSuspendState requires the SE_SHUTDOWN_NAME privilege.
+                        EnableShutdownPrivilege();
                         PInvoke.SetSuspendState(true, false, false);
                         return true;
                     }
