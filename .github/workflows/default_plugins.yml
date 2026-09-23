@@ -42,7 +42,7 @@ jobs:
 
       - name: Build BrowserBookmark
         run: |
-          dotnet publish 'Plugins/Flow.Launcher.Plugin.BrowserBookmark/Flow.Launcher.Plugin.BrowserBookmark.csproj' --framework net9.0-windows  -c Release -o "Flow.Launcher.Plugin.BrowserBookmark"
+          dotnet publish 'Plugins/Flow.Launcher.Plugin.BrowserBookmark/Flow.Launcher.Plugin.BrowserBookmark.csproj' --framework net9.0-windows10.0.19041.0  -c Release -o "Flow.Launcher.Plugin.BrowserBookmark"
           7z a -tzip "Flow.Launcher.Plugin.BrowserBookmark.zip" "./Flow.Launcher.Plugin.BrowserBookmark/*"
           rm -r "Flow.Launcher.Plugin.BrowserBookmark"
 
