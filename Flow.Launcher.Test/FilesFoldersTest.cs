@@ -182,6 +182,16 @@ namespace Flow.Launcher.Test
         }
 
         [Test]
+        public void GetOpenFileErrorMessage_WhenWin32ErrorIsNotBlockedDownload_ShowsGenericMessage()
+        {
+            string tempFile = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName() + ".exe");
+            string message = FilesFolders.GetOpenFileErrorMessage(tempFile, new Win32Exception(2));
+
+            StringAssert.Contains("please check if it exists", message);
+            StringAssert.DoesNotContain("Unblock", message);
+        }
+
+        [Test]
         public void GetOpenFileErrorMessage_WhenBlockedExceptionIsNested_ShowsUnblockMessage()
         {
             if (!OperatingSystem.IsWindows())
