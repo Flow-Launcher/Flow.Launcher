@@ -180,5 +180,39 @@ namespace Flow.Launcher.Test
             StringAssert.Contains("please check if it exists", message);
             StringAssert.DoesNotContain("Unblock", message);
         }
+
+        [Test]
+        public void GetOpenFileErrorMessage_WhenBlockedExceptionIsNested_ShowsUnblockMessage()
+        {
+            if (!OperatingSystem.IsWindows())
+            {
+                Assert.Ignore("Zone.Identifier stream is Windows specific.");
+            }
+
+            string tempFile = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName() + ".exe");
+            File.WriteAllText(tempFile, "content");
+            File.WriteAllText(tempFile + ":Zone.Identifier", "[ZoneTransfer]\r\nZoneId=3");
+
+            try
+            {
+                var wrappedException = new Exception("Launch failed", new Win32Exception(5));
+                string message = FilesFolders.GetOpenFileErrorMessage(tempFile, wrappedException);
+
+                StringAssert.Contains("blocked as downloaded from the Internet", message);
+                StringAssert.Contains("Unblock", message);
+            }
+            finally
+            {
+                if (File.Exists(tempFile + ":Zone.Identifier"))
+                {
+                    File.Delete(tempFile + ":Zone.Identifier");
+                }
+
+                if (File.Exists(tempFile))
+                {
+                    File.Delete(tempFile);
+                }
+            }
+        }
     }
 }

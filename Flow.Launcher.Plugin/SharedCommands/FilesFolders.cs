@@ -348,10 +348,21 @@ namespace Flow.Launcher.Plugin.SharedCommands
 
         private static bool IsLikelyBlockedDownloadedExecutable(string filePath, Exception exception)
         {
-            if (exception is not Win32Exception && exception is not UnauthorizedAccessException)
+            if (!ContainsLaunchAccessException(exception))
                 return false;
 
             return HasZoneIdentifierStream(filePath);
+        }
+
+        private static bool ContainsLaunchAccessException(Exception exception)
+        {
+            for (var current = exception; current != null; current = current.InnerException)
+            {
+                if (current is Win32Exception or UnauthorizedAccessException)
+                    return true;
+            }
+
+            return false;
         }
 
         private static bool HasZoneIdentifierStream(string filePath)
