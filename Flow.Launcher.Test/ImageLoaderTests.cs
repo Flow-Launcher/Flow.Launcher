@@ -222,6 +222,13 @@ namespace Flow.Launcher.Test
                 Assert.That(pixel[3], Is.GreaterThan(0), "Left edge of the circle is missing.");
                 bitmap.CopyPixels(new System.Windows.Int32Rect(width - 1, bitmap.PixelHeight / 2, 1, 1), pixel, 4, 0);
                 Assert.That(pixel[3], Is.GreaterThan(0), "Right edge of the circle is clipped.");
+
+                // And the top and bottom in the middle column.
+                var height = bitmap.PixelHeight;
+                bitmap.CopyPixels(new System.Windows.Int32Rect(width / 2, 0, 1, 1), pixel, 4, 0);
+                Assert.That(pixel[3], Is.GreaterThan(0), "Top edge of the circle is missing.");
+                bitmap.CopyPixels(new System.Windows.Int32Rect(width / 2, height - 1, 1, 1), pixel, 4, 0);
+                Assert.That(pixel[3], Is.GreaterThan(0), "Bottom edge of the circle is clipped.");
             }
             finally
             {
