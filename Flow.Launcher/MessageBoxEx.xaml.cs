@@ -20,6 +20,11 @@ namespace Flow.Launcher
         {
             _button = button;
             InitializeComponent();
+
+            // For YesNo dialogs, hide the close button to match native windows message box behavior
+            // https://learn.microsoft.com/en-us/dotnet/api/system.windows.messageboxbutton?view=windowsdesktop-10.0#remarks
+            if (_button == MessageBoxButton.YesNo)
+                TitleBar.ShowCloseButton = false;
         }
 
         public static MessageBoxResult Show(
@@ -52,6 +57,11 @@ namespace Flow.Launcher
                     _ = SetImageOfMessageBoxAsync(icon);
                 }
                 SetButtonVisibilityFocusAndResult(button, defaultResult);
+
+                // This ensures that if the message box is closed without using the answer buttons
+                // It will still have a meaningful result based on its type
+                _result = msgBox.DefaultCloseResult;
+
                 msgBox.ShowDialog();
                 return _result;
             }
@@ -158,15 +168,30 @@ namespace Flow.Launcher
             Img.Source = imageSource;
         }
 
+        // What the result should be if the message box is closed outside of the direct response buttons - e.g title bar close button
+        // Mostly replicates System.Windows.MessageBox behavior
+        // https://learn.microsoft.com/en-us/dotnet/api/system.windows.messageboxresult#remarks
+        private MessageBoxResult DefaultCloseResult => _button switch
+        {
+            MessageBoxButton.OK => MessageBoxResult.OK,
+            MessageBoxButton.OKCancel => MessageBoxResult.Cancel,
+            MessageBoxButton.YesNoCancel => MessageBoxResult.Cancel,
+            
+            // For YesNo this should only be used in a forced close edge case (e.g. alt f4)
+            // Most callers make the mistake of checking for No instead of not Yes - so best not to return None etc
+            MessageBoxButton.YesNo => MessageBoxResult.No,
+            
+            // covers unsupported types, e.g. AbortRetryIgnore
+            _ => MessageBoxResult.None 
+        };
+
+
         private void KeyEsc_OnPress(object sender, ExecutedRoutedEventArgs e)
         {
             if (_button == MessageBoxButton.YesNo)
                 // Follow System.Windows.MessageBox behavior
                 return;
-            else if (_button == MessageBoxButton.OK)
-                _result = MessageBoxResult.OK;
-            else
-                _result = MessageBoxResult.Cancel;
+            
             DialogResult = false;
             Close();
         }
@@ -192,12 +217,12 @@ namespace Flow.Launcher
             e.Handled = true;
 
             if (_button == MessageBoxButton.YesNo)
-                // Follow System.Windows.MessageBox behavior
+            {
+                // For YesNo, the close button should be hidden and inaccessible.
+                App.API.LogWarn(ClassName, "Close button was invoked despite being hidden for YesNo dialog");
                 return;
-            else if (_button == MessageBoxButton.OK)
-                _result = MessageBoxResult.OK;
-            else
-                _result = MessageBoxResult.Cancel;
+            }
+
             msgBox.Close();
             msgBox = null;
         }
