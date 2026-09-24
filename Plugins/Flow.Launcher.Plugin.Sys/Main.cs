@@ -314,7 +314,8 @@ namespace Flow.Launcher.Plugin.Sys
                     Action = c =>
                     {
                         // SetSuspendState requires the SE_SHUTDOWN_NAME privilege.
-                        EnableShutdownPrivilege();
+                        if (!EnableShutdownPrivilege())
+                            Context.API.LogWarn(ClassName, "Failed to enable the shutdown privilege");
                         PInvoke.SetSuspendState(false, false, false);
                         return true;
                     }
@@ -327,7 +328,8 @@ namespace Flow.Launcher.Plugin.Sys
                     Action= c =>
                     {
                         // SetSuspendState requires the SE_SHUTDOWN_NAME privilege.
-                        EnableShutdownPrivilege();
+                        if (!EnableShutdownPrivilege())
+                            Context.API.LogWarn(ClassName, "Failed to enable the shutdown privilege");
                         PInvoke.SetSuspendState(true, false, false);
                         return true;
                     }
