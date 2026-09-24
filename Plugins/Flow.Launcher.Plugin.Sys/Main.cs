@@ -193,6 +193,24 @@ namespace Flow.Launcher.Plugin.Sys
             }
         }
 
+        private static void Suspend(bool hibernate)
+        {
+            // SetSuspendState requires the SE_SHUTDOWN_NAME privilege.
+            if (!EnableShutdownPrivilege())
+            {
+                Context.API.LogWarn(ClassName, "Failed to enable the shutdown privilege");
+            }
+            else if (PInvoke.SetSuspendState(hibernate, false, false))
+            {
+                return;
+            }
+
+            Context.API.ShowMsgBox(
+                Localize.flowlauncher_plugin_sys_dlgtext_suspend_failed(),
+                Localize.flowlauncher_plugin_sys_dlgtitle_error(),
+                MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
         private List<Result> Commands(Query query)
         {
             var results = new List<Result>();
@@ -313,16 +331,7 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\sleep.png",
                     Action = c =>
                     {
-                        // SetSuspendState requires the SE_SHUTDOWN_NAME privilege.
-                        if (!EnableShutdownPrivilege())
-                            Context.API.LogWarn(ClassName, "Failed to enable the shutdown privilege");
-                        if (!PInvoke.SetSuspendState(false, false, false))
-                        {
-                            Context.API.ShowMsgBox(
-                                Localize.flowlauncher_plugin_sys_dlgtext_suspend_failed(),
-                                Localize.flowlauncher_plugin_sys_dlgtitle_error(),
-                                MessageBoxButton.OK, MessageBoxImage.Error);
-                        }
+                        Suspend(hibernate: false);
                         return true;
                     }
                 },
@@ -333,16 +342,7 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\hibernate.png",
                     Action= c =>
                     {
-                        // SetSuspendState requires the SE_SHUTDOWN_NAME privilege.
-                        if (!EnableShutdownPrivilege())
-                            Context.API.LogWarn(ClassName, "Failed to enable the shutdown privilege");
-                        if (!PInvoke.SetSuspendState(true, false, false))
-                        {
-                            Context.API.ShowMsgBox(
-                                Localize.flowlauncher_plugin_sys_dlgtext_suspend_failed(),
-                                Localize.flowlauncher_plugin_sys_dlgtitle_error(),
-                                MessageBoxButton.OK, MessageBoxImage.Error);
-                        }
+                        Suspend(hibernate: true);
                         return true;
                     }
                 },
