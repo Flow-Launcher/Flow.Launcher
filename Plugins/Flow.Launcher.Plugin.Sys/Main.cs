@@ -316,7 +316,13 @@ namespace Flow.Launcher.Plugin.Sys
                         // SetSuspendState requires the SE_SHUTDOWN_NAME privilege.
                         if (!EnableShutdownPrivilege())
                             Context.API.LogWarn(ClassName, "Failed to enable the shutdown privilege");
-                        PInvoke.SetSuspendState(false, false, false);
+                        if (!PInvoke.SetSuspendState(false, false, false))
+                        {
+                            Context.API.ShowMsgBox(
+                                Localize.flowlauncher_plugin_sys_dlgtext_suspend_failed(),
+                                Localize.flowlauncher_plugin_sys_dlgtitle_error(),
+                                MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
                         return true;
                     }
                 },
@@ -330,7 +336,13 @@ namespace Flow.Launcher.Plugin.Sys
                         // SetSuspendState requires the SE_SHUTDOWN_NAME privilege.
                         if (!EnableShutdownPrivilege())
                             Context.API.LogWarn(ClassName, "Failed to enable the shutdown privilege");
-                        PInvoke.SetSuspendState(true, false, false);
+                        if (!PInvoke.SetSuspendState(true, false, false))
+                        {
+                            Context.API.ShowMsgBox(
+                                Localize.flowlauncher_plugin_sys_dlgtext_suspend_failed(),
+                                Localize.flowlauncher_plugin_sys_dlgtitle_error(),
+                                MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
                         return true;
                     }
                 },
