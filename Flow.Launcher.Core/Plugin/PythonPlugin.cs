@@ -29,6 +29,8 @@ namespace Flow.Launcher.Core.Plugin
             // Prevent Python from writing .py[co] files.
             // Because .pyc contains location infos which will prevent python portable.
             _startInfo.EnvironmentVariables["PYTHONDONTWRITEBYTECODE"] = "1";
+            // Flow reads plugin output as UTF-8; on Windows, Python uses the ANSI code page for pipes.
+            _startInfo.EnvironmentVariables["PYTHONIOENCODING"] = "utf-8";
 
             _startInfo.EnvironmentVariables["FLOW_VERSION"] = Constant.Version;
             _startInfo.EnvironmentVariables["FLOW_PROGRAM_DIRECTORY"] = Constant.ProgramDirectory;

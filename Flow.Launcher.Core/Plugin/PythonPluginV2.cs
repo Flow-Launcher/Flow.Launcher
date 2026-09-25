@@ -27,6 +27,8 @@ namespace Flow.Launcher.Core.Plugin
             var path = Path.Combine(Constant.ProgramDirectory, JsonRpc);
             StartInfo.EnvironmentVariables["PYTHONPATH"] = path;
             StartInfo.EnvironmentVariables["PYTHONDONTWRITEBYTECODE"] = "1";
+            // Flow reads plugin output as UTF-8; on Windows, Python uses the ANSI code page for pipes.
+            StartInfo.EnvironmentVariables["PYTHONIOENCODING"] = "utf-8";
         }
 
         public override async Task InitAsync(PluginInitContext context)
