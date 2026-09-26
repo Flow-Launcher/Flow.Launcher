@@ -155,8 +155,12 @@ namespace Flow.Launcher.Plugin.Sys
             }
         }
 
-        private static unsafe bool EnableShutdownPrivilege()
+        private static bool EnableShutdownPrivilege() => EnableShutdownPrivilege(out _);
+
+        /// <param name="previousState">What to pass to <see cref="RestorePrivileges"/> to undo the change.</param>
+        private static unsafe bool EnableShutdownPrivilege(out TOKEN_PRIVILEGES previousState)
         {
+            previousState = default;
             try
             {
                 if (!PInvoke.OpenProcessToken(Process.GetCurrentProcess().SafeHandle, TOKEN_ACCESS_MASK.TOKEN_ADJUST_PRIVILEGES | TOKEN_ACCESS_MASK.TOKEN_QUERY, out var tokenHandle))
@@ -175,7 +179,8 @@ namespace Flow.Launcher.Plugin.Sys
                     Privileges = new() { e0 = new LUID_AND_ATTRIBUTES { Luid = luid, Attributes = TOKEN_PRIVILEGES_ATTRIBUTES.SE_PRIVILEGE_ENABLED } }
                 };
 
-                if (!PInvoke.AdjustTokenPrivileges(tokenHandle, false, &privileges, null, out var _))
+                Span<byte> previous = stackalloc byte[sizeof(TOKEN_PRIVILEGES)];
+                if (!PInvoke.AdjustTokenPrivileges(tokenHandle, false, &privileges, previous, out var _))
                 {
                     return false;
                 }
@@ -185,12 +190,71 @@ namespace Flow.Launcher.Plugin.Sys
                     return false;
                 }
 
+                previousState = MemoryMarshal.Read<TOKEN_PRIVILEGES>(previous);
                 return true;
             }
             catch (Exception)
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Puts back the privileges <see cref="EnableShutdownPrivilege(out TOKEN_PRIVILEGES)"/> changed.
+        /// An empty state (the privilege was already enabled) changes nothing.
+        /// </summary>
+        private static unsafe void RestorePrivileges(TOKEN_PRIVILEGES previousState)
+        {
+            if (previousState.PrivilegeCount == 0)
+            {
+                return;
+            }
+
+            try
+            {
+                if (!PInvoke.OpenProcessToken(Process.GetCurrentProcess().SafeHandle, TOKEN_ACCESS_MASK.TOKEN_ADJUST_PRIVILEGES | TOKEN_ACCESS_MASK.TOKEN_QUERY, out var tokenHandle))
+                {
+                    return;
+                }
+
+                PInvoke.AdjustTokenPrivileges(tokenHandle, false, &previousState, null, out var _);
+            }
+            catch (Exception)
+            {
+                // Leaving the privilege enabled is harmless; it only lets Flow call shutdown APIs.
+            }
+        }
+
+        private static void Suspend(bool hibernate)
+        {
+            // SetSuspendState requires the SE_SHUTDOWN_NAME privilege. Flow keeps running
+            // afterwards, so the privilege is disabled again once the call returns.
+            if (!EnableShutdownPrivilege(out var previousState))
+            {
+                Context.API.LogWarn(ClassName, "Failed to enable the shutdown privilege");
+            }
+            else
+            {
+                bool suspended;
+                try
+                {
+                    suspended = PInvoke.SetSuspendState(hibernate, false, false);
+                }
+                finally
+                {
+                    RestorePrivileges(previousState);
+                }
+
+                if (suspended)
+                {
+                    return;
+                }
+            }
+
+            Context.API.ShowMsgBox(
+                Localize.flowlauncher_plugin_sys_dlgtext_suspend_failed(),
+                Localize.flowlauncher_plugin_sys_dlgtitle_error(),
+                MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         private List<Result> Commands(Query query)
@@ -313,7 +377,7 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\sleep.png",
                     Action = c =>
                     {
-                        PInvoke.SetSuspendState(false, false, false);
+                        Suspend(hibernate: false);
                         return true;
                     }
                 },
@@ -324,7 +388,7 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\hibernate.png",
                     Action= c =>
                     {
-                        PInvoke.SetSuspendState(true, false, false);
+                        Suspend(hibernate: true);
                         return true;
                     }
                 },
