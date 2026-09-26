@@ -34,11 +34,22 @@ public class ThemePreviewTest
 
     private static Task<Application> GetApplicationAsync()
     {
-        if (Application.Current != null)
-            return Task.FromResult(Application.Current);
+        var current = Application.Current;
+        if (current != null)
+        {
+            if (current.Dispatcher.HasShutdownStarted || current.Dispatcher.HasShutdownFinished ||
+                !current.Dispatcher.Thread.IsAlive)
+            {
+                throw new InvalidOperationException(
+                    "The existing WPF application dispatcher is unavailable. Run the tests in a fresh process.");
+            }
+
+            return Task.FromResult(current);
+        }
 
         var ready = new TaskCompletionSource<Application>(TaskCreationOptions.RunContinuationsAsynchronously);
-        // WPF permits only one Application per process. Keep its STA dispatcher alive for reuse.
+        // WPF permits only one Application creation per AppDomain, even after shutdown.
+        // Keep its STA dispatcher alive so repeated tests can reuse the same application.
         var thread = new Thread(() =>
         {
             try
