@@ -1,5 +1,13 @@
 name: Update release PR
 
+# Required secrets
+#
+# PR_TOKEN:
+# Used to maintain the release PR description.
+# Necessary permissions:
+#   Flow-Launcher/Flow.Launcher:
+#     Pull requests: write
+
 on:
   pull_request:
     types: [opened, reopened, synchronize]

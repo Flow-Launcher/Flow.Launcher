@@ -1,12 +1,37 @@
 ---
 
 name: New Release Deployments
+
+# Required secrets
+#
+# DEPLOY_FLOW_WEBSITE:
+# Used to trigger a repository_dispatch event on Flow-Launcher/flow-launcher.github.io.
+#
+# Publish_Chocolatey:
+# Used to trigger a repository_dispatch event on Flow-Launcher/chocolatey-package.
+#
+# DEPLOY_FLOW_DOCS:
+# Used to trigger a repository_dispatch event on Flow-Launcher/docs.
+
 on:
   release:
     types: [published]
   workflow_dispatch:
 
 jobs:
+  update-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger dispatch event for regenerating API docs
+        run: |
+          http_status=$(curl -L -f -s -o /dev/null -w "%{http_code}" \
+            -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.DEPLOY_FLOW_DOCS }}" \
+            https://api.github.com/repos/Flow-Launcher/docs/dispatches \
+            -d '{"event_type":"regenerate-api-docs"}')
+          if [ "$http_status" -ne 204 ]; then echo "Error: Regenerate API docs failed, HTTP status code is $http_status"; exit 1; fi
+
   deploy-website:
     runs-on: ubuntu-latest
     steps:
