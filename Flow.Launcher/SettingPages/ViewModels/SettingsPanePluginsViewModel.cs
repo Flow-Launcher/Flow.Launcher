@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -9,6 +10,7 @@ using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.ViewModel;
 using iNKORE.UI.WPF.Modern.Controls;
+using Version = SemanticVersioning.Version;
 
 #nullable enable
 
@@ -118,16 +120,35 @@ public partial class SettingsPanePluginsViewModel : BaseModel
     // Get all plugins: Initializing & Initialized & Init failed plugins
     // Include init failed ones so that we can uninstall them
     // Include initializing ones so that we can change related settings like action keywords, etc.
-    public List<PluginViewModel> PluginViewModels => _pluginViewModels ??= App.API.GetAllPlugins()
-        .OrderBy(plugin => plugin.Metadata.Disabled)
-        .ThenBy(plugin => plugin.Metadata.Name)
-        .Select(plugin => new PluginViewModel
+    public List<PluginViewModel> PluginViewModels
+    {
+        get
         {
-            PluginPair = plugin,
-            PluginSettingsObject = _settings.PluginSettings.GetPluginSettings(plugin.Metadata.ID)
-        })
-        .Where(plugin => plugin.PluginSettingsObject != null)
-        .ToList();
+            if (_pluginViewModels == null)
+            {
+                _pluginViewModels = App.API.GetAllPlugins()
+                    .OrderBy(plugin => plugin.Metadata.Disabled)
+                    .ThenBy(plugin => plugin.Metadata.Name)
+                    .Select(plugin => new PluginViewModel
+                    {
+                        PluginPair = plugin,
+                        PluginSettingsObject = _settings.PluginSettings.GetPluginSettings(plugin.Metadata.ID)
+                    })
+                    .Where(plugin => plugin.PluginSettingsObject != null)
+                    .ToList();
+
+                foreach (var vm in _pluginViewModels)
+                {
+                    vm.UpdateStateChanged += _ =>
+                    {
+                        OnPropertyChanged(nameof(AvailableUpdatesCount));
+                        OnPropertyChanged(nameof(HasAvailableUpdates));
+                    };
+                }
+            }
+            return _pluginViewModels;
+        }
+    }
 
     public bool SatisfiesFilter(PluginViewModel plugin)
     {
@@ -195,6 +216,94 @@ public partial class SettingsPanePluginsViewModel : BaseModel
     private void UpdateEnumDropdownLocalizations()
     {
         DropdownDataGeneric<DisplayMode>.UpdateLabels(DisplayModes);
+    }
+
+    [RelayCommand]
+    private Task CheckPluginUpdatesAsync() => CheckForUpdatesCoreAsync();
+
+    public int AvailableUpdatesCount => PluginViewModels?.Count(vm => vm.HasUpdate) ?? 0;
+    public bool HasAvailableUpdates => AvailableUpdatesCount > 0;
+
+    [RelayCommand]
+    private async Task UpdateAllPluginsAsync()
+    {
+        var updates = PluginViewModels
+            .Where(vm => vm.HasUpdate)
+            .Select(vm => vm.UpdateInfo)
+            .ToList();
+
+        var window = new PluginUpdateWindow(updates);
+        if (window.ShowDialog() is not true) return;
+
+        var successfulUpdates = (await window.UpdatePluginsAsync()).ToHashSet();
+        foreach (var vm in PluginViewModels.Where(vm =>
+                     vm.UpdateInfo is not null && successfulUpdates.Contains(vm.UpdateInfo)))
+        {
+            vm.UpdateInfo = null;
+        }
+    }
+
+    private bool _updatesChecked;
+
+    public async Task CheckForUpdatesSilentlyAsync()
+    {
+        if (_updatesChecked) return;
+        _updatesChecked = true;
+
+        try
+        {
+            await CheckForUpdatesCoreAsync();
+        }
+        catch (Exception e)
+        {
+            _updatesChecked = false;
+            App.API.LogException(nameof(SettingsPanePluginsViewModel), "Failed to check for plugin updates", e);
+        }
+    }
+
+    private async Task CheckForUpdatesCoreAsync()
+    {
+        await PublicApi.Instance.UpdatePluginManifestAsync();
+
+        var manifest = PublicApi.Instance.GetPluginManifest();
+
+        foreach (var vm in PluginViewModels)
+        {
+            var manifestPlugin = manifest.FirstOrDefault(p => p.ID == vm.PluginPair.Metadata.ID);
+            if (manifestPlugin == null)
+            {
+                vm.UpdateInfo = null;
+                continue;
+            }
+
+            var currentVersion = vm.PluginPair.Metadata.Version;
+            var newVersion = manifestPlugin.Version;
+
+            if (Version.TryParse(currentVersion, out var current) &&
+                Version.TryParse(newVersion, out var latest) &&
+                current < latest &&
+                !PublicApi.Instance.PluginModified(vm.PluginPair.Metadata.ID))
+            {
+                vm.UpdateInfo = new PluginUpdateInfo
+                {
+                    ID = vm.PluginPair.Metadata.ID,
+                    Name = vm.PluginPair.Metadata.Name,
+                    Author = vm.PluginPair.Metadata.Author,
+                    CurrentVersion = currentVersion,
+                    NewVersion = newVersion,
+                    IcoPath = vm.PluginPair.Metadata.IcoPath,
+                    PluginExistingMetadata = vm.PluginPair.Metadata,
+                    PluginNewUserPlugin = manifestPlugin
+                };
+            }
+            else
+            {
+                vm.UpdateInfo = null;
+            }
+        }
+
+        OnPropertyChanged(nameof(AvailableUpdatesCount));
+        OnPropertyChanged(nameof(HasAvailableUpdates));
     }
 
     private void UpdateDisplayModeFromSelection()

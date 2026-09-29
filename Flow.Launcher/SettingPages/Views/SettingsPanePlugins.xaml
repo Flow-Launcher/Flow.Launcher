@@ -17,6 +17,7 @@
     KeyDown="SettingsPanePlugins_OnKeyDown"
     mc:Ignorable="d">
     <ui:Page.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         <CollectionViewSource
             x:Key="PluginCollectionView"
             Filter="PluginCollectionView_OnFilter"
@@ -58,6 +59,22 @@
                     ItemsSource="{Binding DisplayModes}"
                     SelectedValue="{Binding SelectedDisplayMode, Mode=TwoWay}"
                     SelectedValuePath="Value" />
+                <Button
+                    Width="34"
+                    Height="34"
+                    Padding="0"
+                    Command="{Binding CheckPluginUpdatesCommand}"
+                    ToolTip="{DynamicResource checkPluginUpdatesTooltip}"
+                    FontSize="14">
+                    <ui:FontIcon FontSize="14" Glyph="&#xe149;" />
+                </Button>
+                <Button
+                    Height="34"
+                    Padding="12 0"
+                    Command="{Binding UpdateAllPluginsCommand}"
+                    Content="{DynamicResource updateAllPluginsButtonContent}"
+                    Style="{DynamicResource AccentButtonStyle}"
+                    Visibility="{Binding HasAvailableUpdates, Converter={StaticResource BoolToVisibilityConverter}}" />
                 <Button
                     Width="34"
                     Height="34"

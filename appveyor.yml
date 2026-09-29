@@ -1,4 +1,4 @@
-version: '2.1.3.{build}'
+version: '2.1.4.{build}'
 
 # Do not build on tags because we create a release on merge to master. Otherwise will upload artifacts twice changing the hash, as well as triggering duplicate GitHub release action & NuGet deployments.
 skip_tags: true
@@ -62,7 +62,7 @@ deploy:
   - provider: NuGet
     artifact: Plugin nupkg
     api_key:
-      secure: en+/GPSgfUVARoX0+lOeAAlbzvcCZAyBeVQaNq1AeXuRjjHgMwhBnt0PHVJXOepS
+      secure: DkNodT9ZH0XAuM/wanIDqOHx67xJVy2fh3PMgjOxGc5VbXSKZhoc96uyTEGTuSpU
     on:
       branch: master
 

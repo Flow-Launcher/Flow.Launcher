@@ -32,6 +32,7 @@ public partial class SettingsPanePlugins
             InitializeComponent();
         }
         _viewModel.PropertyChanged += ViewModel_PropertyChanged;
+        _ = _viewModel.CheckForUpdatesSilentlyAsync();
         base.OnNavigatedTo(e);
     }
 

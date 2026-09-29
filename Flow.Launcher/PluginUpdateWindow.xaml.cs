@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -68,11 +69,12 @@ namespace Flow.Launcher
                 return;
             }
 
-            _ = PluginInstaller.UpdateAllPluginsAsync(Plugins, Restart);
-
             DialogResult = true;
             Close();
         }
+
+        public Task<IReadOnlyList<PluginUpdateInfo>> UpdatePluginsAsync() =>
+            PluginInstaller.UpdateAllPluginsAsync(Plugins, Restart);
 
         private void cmdEsc_OnPress(object sender, ExecutedRoutedEventArgs e)
         {

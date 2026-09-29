@@ -7,6 +7,7 @@ using System.IO;
 using System.Threading;
 using System.Text;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Flow.Launcher.Test.Plugins
 {
@@ -61,5 +62,120 @@ namespace Flow.Launcher.Test.Plugins
                 }
             })
         };
+
+        [Test]
+        public async Task GivenMarkdownPreviewContentType_WhenDeserializeJsonRpcResult_ThenPreviewContentTypeIsMarkdown()
+        {
+            const string resultText =
+                """
+                {
+                  "result": [
+                    {
+                      "title": "Answer",
+                      "subTitle": "*args in Python",
+                      "preview": {
+                        "description": "**`*args`** collects extra positional arguments.",
+                        "contentType": "markdown"
+                      }
+                    }
+                  ],
+                  "debugMessage": null
+                }
+                """;
+
+            var results = await QueryAsync(new Query
+            {
+                Search = resultText
+            }, default);
+
+            var result = results.Single();
+
+            ClassicAssert.AreEqual(PreviewContentType.Markdown, result.Preview.ContentType);
+            ClassicAssert.AreEqual("**`*args`** collects extra positional arguments.", result.Preview.Description);
+        }
+
+        [Test]
+        public async Task GivenNoPreviewContentType_WhenDeserializeJsonRpcResult_ThenPreviewContentTypeIsImageWithTextAsync()
+        {
+            const string resultText =
+                """
+                {
+                  "result": [
+                    {
+                      "title": "Answer",
+                      "subTitle": "Plain result",
+                      "preview": {
+                        "description": "Plain description."
+                      }
+                    }
+                  ],
+                  "debugMessage": null
+                }
+                """;
+
+            var results = await QueryAsync(new Query
+            {
+                Search = resultText
+            }, default);
+
+            var result = results.Single();
+
+            ClassicAssert.AreEqual(PreviewContentType.ImageWithText, result.Preview.ContentType);
+        }
+
+        [Test]
+        public async Task GivenPreviewVisibilityNever_WhenDeserializeJsonRpcResult_ThenPreviewVisibilityIsNeverAsync()
+        {
+            const string resultText =
+                """
+                {
+                  "result": [
+                    {
+                      "title": "Ask",
+                      "subTitle": "Type a question",
+                      "previewVisibility": "never"
+                    }
+                  ],
+                  "debugMessage": null
+                }
+                """;
+
+            var results = await QueryAsync(new Query
+            {
+                Search = resultText
+            }, default);
+
+            var result = results.Single();
+
+            ClassicAssert.AreEqual(PreviewVisibility.Never, result.PreviewVisibility);
+        }
+
+        [Test]
+        public async Task GivenPreviewVisibilityAlways_WhenDeserializeJsonRpcResult_ThenPreviewVisibilityIsAlwaysAsync()
+        {
+            const string resultText =
+                """
+                {
+                  "result": [
+                    {
+                      "title": "Answer",
+                      "subTitle": "Markdown answer",
+                      "preview": { "contentType": "markdown" },
+                      "previewVisibility": "always"
+                    }
+                  ],
+                  "debugMessage": null
+                }
+                """;
+
+            var results = await QueryAsync(new Query
+            {
+                Search = resultText
+            }, default);
+
+            var result = results.Single();
+
+            ClassicAssert.AreEqual(PreviewVisibility.Always, result.PreviewVisibility);
+        }
     }
 }
