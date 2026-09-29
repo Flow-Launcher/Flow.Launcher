@@ -104,20 +104,22 @@ namespace Flow.Launcher.Infrastructure.Storage
             if (!File.Exists(BackupFilePath))
                 return default;
 
+            T? data;
+
             try
             {
                 await using var source = File.OpenRead(BackupFilePath);
-                var data = await JsonSerializer.DeserializeAsync<T>(source) ?? default;
-
-                if (data != null)
-                    RestoreBackup();
-
-                return data;
+                data = await JsonSerializer.DeserializeAsync<T>(source) ?? default;
             }
             catch (JsonException)
             {
                 return default;
             }
+
+            if (data != null)
+                RestoreBackup();
+
+            return data;
         }
 
         private void RestoreBackup()

@@ -39,6 +39,33 @@ namespace Flow.Launcher.Test
             }
         }
 
+        [Test]
+        public async Task LoadAsync_WhenOnlyBackupExists_RestoresBackupAsync()
+        {
+            var tempDir = Path.Combine(Path.GetTempPath(), $"json-storage-{Guid.NewGuid():N}");
+            Directory.CreateDirectory(tempDir);
+
+            try
+            {
+                var filePath = Path.Combine(tempDir, "settings.json");
+                var backupPath = $"{filePath}.bak";
+                await File.WriteAllTextAsync(backupPath, "{\"Value\":\"from-backup\"}");
+
+                var data = await new JsonStorage<JsonStoragePayload>(filePath).LoadAsync();
+
+                Assert.That(data.Value, Is.EqualTo("from-backup"));
+                Assert.That(File.Exists(filePath), Is.True);
+                Assert.That(File.Exists(backupPath), Is.False);
+            }
+            finally
+            {
+                if (Directory.Exists(tempDir))
+                {
+                    Directory.Delete(tempDir, true);
+                }
+            }
+        }
+
         private sealed class JsonStoragePayload
         {
             public string Value { get; set; } = string.Empty;
