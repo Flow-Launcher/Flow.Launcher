@@ -124,12 +124,19 @@ namespace Flow.Launcher.Infrastructure.Storage
 
         private void RestoreBackup()
         {
-            Log.Info(ClassName, $"Failed to load settings.json, {BackupFilePath} restored successfully");
+            try
+            {
+                if (File.Exists(FilePath))
+                    File.Replace(BackupFilePath, FilePath, null);
+                else
+                    File.Move(BackupFilePath, FilePath);
 
-            if (File.Exists(FilePath))
-                File.Replace(BackupFilePath, FilePath, null);
-            else
-                File.Move(BackupFilePath, FilePath);
+                Log.Info(ClassName, $"Failed to load settings.json, {BackupFilePath} restored successfully");
+            }
+            catch (Exception e) when (e is IOException or UnauthorizedAccessException)
+            {
+                Log.Exception(ClassName, $"Loaded {BackupFilePath} but failed to restore it to {FilePath}", e);
+            }
         }
 
         public T Load()
