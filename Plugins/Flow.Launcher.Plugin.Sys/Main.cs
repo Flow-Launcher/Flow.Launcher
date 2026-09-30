@@ -214,14 +214,20 @@ namespace Flow.Launcher.Plugin.Sys
             {
                 if (!PInvoke.OpenProcessToken(Process.GetCurrentProcess().SafeHandle, TOKEN_ACCESS_MASK.TOKEN_ADJUST_PRIVILEGES | TOKEN_ACCESS_MASK.TOKEN_QUERY, out var tokenHandle))
                 {
+                    Context.API.LogWarn(ClassName, "Failed to reopen the process token while restoring the shutdown privilege");
                     return;
                 }
 
-                PInvoke.AdjustTokenPrivileges(tokenHandle, false, &previousState, null, out var _);
+                Marshal.SetLastPInvokeError((int)WIN32_ERROR.NO_ERROR);
+                if (!PInvoke.AdjustTokenPrivileges(tokenHandle, false, &previousState, null, out var _) ||
+                    Marshal.GetLastPInvokeError() == (int)WIN32_ERROR.ERROR_NOT_ALL_ASSIGNED)
+                {
+                    Context.API.LogWarn(ClassName, "Failed to restore the shutdown privilege");
+                }
             }
             catch (Exception)
             {
-                // Leaving the privilege enabled is harmless; it only lets Flow call shutdown APIs.
+                Context.API.LogWarn(ClassName, "Failed to restore the shutdown privilege");
             }
         }
 
