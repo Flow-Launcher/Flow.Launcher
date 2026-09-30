@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Threading.Tasks;
 using Flow.Launcher.Infrastructure.Storage;
@@ -93,7 +93,7 @@ namespace Flow.Launcher.Test
         }
 
         [Test]
-        public async Task LoadAsync_WhenRestoreFails_StillReturnsBackupDataAsync()
+        public async Task LoadAsync_WhenFileNonExistent_StillReturnsBackupDataAsync()
         {
             var tempDir = Path.Combine(Path.GetTempPath(), $"json-storage-{Guid.NewGuid():N}");
             Directory.CreateDirectory(tempDir);
