@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Flow.Launcher.Plugin.Calculator;
@@ -121,9 +121,14 @@ namespace Flow.Launcher.Test.Plugins
         [TestCase(@"(100+10%)*2", "220")]
         [TestCase(@"100+(5+5)%", "110")]
         [TestCase(@"max(100+10%,5)", "110")]
+        [TestCase(@"100+sqrt (16)%", "104")]
+        [TestCase(@"100+-10%", "90")]
+        [TestCase(@"10%-3", "-2.9")]
+        [TestCase(@"10%+3", "3.1")]
         // Modulo
         [TestCase(@"10%3", "1")]
         [TestCase(@"10 % (4)", "2")]
+        [TestCase(@"10%(-3)", "1")]
         // Error handling (should return empty result)
         [TestCase(@"10/0", "")]
         [TestCase(@"sqrt(-1)", "")]
