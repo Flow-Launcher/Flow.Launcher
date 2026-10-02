@@ -76,7 +76,7 @@ internal static class PercentageHelper
             {
                 // a + b% -> a * (1 + b / 100)
                 var op = expression[operatorIndex];
-                return $"{expression[..baseStart]}({baseExpression})*(1{op}{operand}
+                return $"{expression[..baseStart]}({baseExpression})*(1{op}{operand}/100){rest}";
             }
         }
 
@@ -86,7 +86,7 @@ internal static class PercentageHelper
 
     /// <summary>
     /// Finds the start of the operand that ends at <paramref name="end"/>:
-    /// a number, a constant like "pi", a parenthesized group or a function call lik
+    /// a number, a constant like "pi", a parenthesized group or a function call like "sqrt(16)".
     /// </summary>
     private static int FindOperandStart(string expression, int end)
     {
@@ -125,7 +125,7 @@ internal static class PercentageHelper
     }
 
     /// <summary>
-    /// Finds where the left side of a '+' or '-' begins: the start of the expressio
+    /// Finds where the left side of a '+' or '-' begins: the start of the expression,
     /// the enclosing opening parenthesis, a function argument separator or a lower precedence operator.
     /// </summary>
     private static int FindAdditiveBaseStart(string expression, int end)
@@ -143,7 +143,7 @@ internal static class PercentageHelper
                         return i + 1;
                     depth--;
                     break;
-                case ',' or ';' or '=' or '<' or '>' or '&' or '|' or '?' or ':' whe
+                case ',' or ';' or '=' or '<' or '>' or '&' or '|' or '?' or ':' when depth == 0:
                     return i + 1;
             }
         }
@@ -160,10 +160,10 @@ internal static class PercentageHelper
     private static bool EndsAdditiveTerm(string expression, int percentIndex)
     {
         var next = SkipWhiteSpaceForward(expression, percentIndex + 1);
-        return next == expression.Length || expression[next] is ')' or ']' or ',' or
+        return next == expression.Length || expression[next] is ')' or ']' or ',' or '+' or '-';
     }
 
-    private static bool IsIdentifierChar(char c) => char.IsLetterOrDigit(c) || c is
+    private static bool IsIdentifierChar(char c) => char.IsLetterOrDigit(c) || c is '.' or '_';
 
     private static int SkipWhiteSpaceForward(string expression, int index)
     {
