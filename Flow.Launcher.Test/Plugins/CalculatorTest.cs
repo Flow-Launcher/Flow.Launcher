@@ -109,6 +109,21 @@ namespace Flow.Launcher.Test.Plugins
         // Complex expressions
         [TestCase(@"(2+3)*sqrt(16)-log(100)/ln(e)", "18")]
         [TestCase(@"sin(pi/2)+cos(0)+tan(0)", "2")]
+        // Percentages
+        [TestCase(@"15%", "0.15")]
+        [TestCase(@"200*15%", "30")]
+        [TestCase(@"15%*200", "30")]
+        [TestCase(@"200/50%", "400")]
+        [TestCase(@"200+15%", "230")]
+        [TestCase(@"200 - 15 %", "170")]
+        [TestCase(@"100+50+10%", "165")]
+        [TestCase(@"100-10%-10%", "81")]
+        [TestCase(@"(100+10%)*2", "220")]
+        [TestCase(@"100+(5+5)%", "110")]
+        [TestCase(@"max(100+10%,5)", "110")]
+        // Modulo
+        [TestCase(@"10%3", "1")]
+        [TestCase(@"10 % (4)", "2")]
         // Error handling (should return empty result)
         [TestCase(@"10/0", "")]
         [TestCase(@"sqrt(-1)", "")]
