@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Core.Plugin;
+using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher.Core.ExternalPlugins
 {
@@ -11,11 +12,8 @@ namespace Flow.Launcher.Core.ExternalPlugins
     {
         private static readonly string ClassName = nameof(PluginsManifest);
 
-        private static readonly CommunityPluginStore mainPluginStore =
-            new("https://raw.githubusercontent.com/Flow-Launcher/Flow.Launcher.PluginsManifest/main/plugins.json",
-                "https://fastly.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@main/plugins.json",
-                "https://gcore.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@main/plugins.json",
-                "https://cdn.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@main/plugins.json");
+        private static CommunityPluginStore mainPluginStore;
+        private static string lastCustomUrl = string.Empty;
 
         private static readonly SemaphoreSlim manifestUpdateLock = new(1);
 
@@ -24,13 +22,47 @@ namespace Flow.Launcher.Core.ExternalPlugins
 
         public static List<UserPlugin> UserPlugins { get; private set; }
 
-        public static async Task<bool> UpdateManifestAsync(bool usePrimaryUrlOnly = false, CancellationToken token = default)
+        public static async Task<bool> UpdateManifestAsync(Settings settings, bool usePrimaryUrlOnly = false, CancellationToken token = default)
         {
-            bool lockAcquired = false;
+            var lockAcquired = false;
             try
             {
+                var defaultUrls = new[]
+                {
+                    "https://raw.githubusercontent.com/Flow-Launcher/Flow.Launcher.PluginsManifest/main/plugins.json",
+                    "https://fastly.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@main/plugins.json",
+                    "https://gcore.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@main/plugins.json",
+                    "https://cdn.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@main/plugins.json"
+                };
+
                 await manifestUpdateLock.WaitAsync(token).ConfigureAwait(false);
                 lockAcquired = true;
+
+                var customUrl = settings.PluginSettings.PluginsManifestUrl?.Trim() ?? string.Empty;
+
+                if (mainPluginStore == null || lastCustomUrl != customUrl)
+                {
+                    if (!string.IsNullOrEmpty(customUrl))
+                    {
+                        if (Uri.TryCreate(customUrl, UriKind.Absolute, out var uri)
+                            && (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps)
+                            && !string.IsNullOrEmpty(uri.Host))
+                        {
+                            mainPluginStore = new(customUrl);
+                        }
+                        else
+                        {
+                            PublicApi.Instance.LogWarn(ClassName, $"Invalid custom plugins manifest URL: {customUrl}. Using default URLs.");
+                            mainPluginStore = new(defaultUrls[0], defaultUrls[1..]);
+                        }
+                    }
+                    else
+                    {
+                        mainPluginStore = new(defaultUrls[0], defaultUrls[1..]);
+                    }
+                    lastCustomUrl = customUrl;
+                    lastFetchedAt = DateTime.MinValue;
+                }
 
                 if (UserPlugins == null || usePrimaryUrlOnly || DateTime.Now.Subtract(lastFetchedAt) >= fetchTimeout)
                 {
