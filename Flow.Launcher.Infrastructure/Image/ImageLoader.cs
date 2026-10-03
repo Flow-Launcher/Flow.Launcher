@@ -127,54 +127,72 @@ namespace Flow.Launcher.Infrastructure.Image
 
         private static async ValueTask<ImageResult> LoadInternalAsync(string path, bool loadFullImage = false)
         {
-            ImageResult imageResult;
+            if (string.IsNullOrEmpty(path))
+            {
+                return new ImageResult(MissingImage, ImageType.Error);
+            }
 
+            if (ImageCache.TryGetValue(path, loadFullImage, out var imageSource))
+            {
+                return new ImageResult(imageSource, ImageType.Cache);
+            }
+
+            if (Uri.TryCreate(path, UriKind.RelativeOrAbsolute, out var uriResult)
+                && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps))
+            {
+                return await GetRemoteImageResultAsync(path, uriResult, loadFullImage);
+            }
+
+            if (path.StartsWith("data:image", StringComparison.OrdinalIgnoreCase))
+            {
+                return GetDataImageResult(path);
+            }
+
+            return await GetThumbnailResultWithRetryAsync(path, loadFullImage);
+        }
+
+        private static async ValueTask<ImageResult> GetRemoteImageResultAsync(string path, Uri uriResult, bool loadFullImage)
+        {
             try
             {
-                if (string.IsNullOrEmpty(path))
-                {
-                    return new ImageResult(MissingImage, ImageType.Error);
-                }
+                var image = await LoadRemoteImageAsync(loadFullImage, uriResult);
+                ImageCache[path, loadFullImage] = image;
+                return new ImageResult(image, ImageType.ImageFile);
+            }
+            catch (System.Exception ex)
+            {
+                Log.Warn(ClassName, $"Failed to load remote image from url {uriResult}: {ex.Message}");
+                return new ImageResult(MissingImage, ImageType.Error);
+            }
+        }
 
-                // extra scope for use of same variable name
-                {
-                    if (ImageCache.TryGetValue(path, loadFullImage, out var imageSource))
-                    {
-                        return new ImageResult(imageSource, ImageType.Cache);
-                    }
-                }
+        private static ImageResult GetDataImageResult(string path)
+        {
+            try
+            {
+                var imageSource = new BitmapImage(new Uri(path));
+                imageSource.Freeze();
+                return new ImageResult(imageSource, ImageType.Data);
+            }
+            catch (System.Exception ex)
+            {
+                Log.Warn(ClassName, $"Failed to load data image from path {path}: {ex.Message}");
+                return new ImageResult(MissingImage, ImageType.Error);
+            }
+        }
 
-                if (Uri.TryCreate(path, UriKind.RelativeOrAbsolute, out var uriResult)
-                    && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps))
-                {
-                    try
-                    {
-                        var image = await LoadRemoteImageAsync(loadFullImage, uriResult);
-                        ImageCache[path, loadFullImage] = image;
-                        return new ImageResult(image, ImageType.ImageFile);
-                    }
-                    catch (System.Exception ex)
-                    {
-                        Log.Warn(ClassName, $"Failed to load remote image from url {uriResult}: {ex.Message}");
-                        return new ImageResult(MissingImage, ImageType.Error);
-                    }
-                }
-
-                if (path.StartsWith("data:image", StringComparison.OrdinalIgnoreCase))
-                {
-                    var imageSource = new BitmapImage(new Uri(path));
-                    imageSource.Freeze();
-                    return new ImageResult(imageSource, ImageType.Data);
-                }
-
-                imageResult = await Task.Run(() => GetThumbnailResult(path, loadFullImage));
+        private static async ValueTask<ImageResult> GetThumbnailResultWithRetryAsync(string path, bool loadFullImage)
+        {
+            try
+            {
+                return await Task.Run(() => GetThumbnailResult(path, loadFullImage));
             }
             catch (System.Exception e)
             {
                 try
                 {
                     // Get thumbnail may fail for certain images on the first try, retry again has proven to work
-                    imageResult = GetThumbnailResult(path, loadFullImage);
+                    return GetThumbnailResult(path, loadFullImage);
                 }
                 catch (System.Exception e2)
                 {
@@ -183,11 +201,9 @@ namespace Flow.Launcher.Infrastructure.Image
 
                     ImageSource image = MissingImage;
                     ImageCache[path, false] = image;
-                    imageResult = new ImageResult(image, ImageType.Error);
+                    return new ImageResult(image, ImageType.Error);
                 }
             }
-
-            return imageResult;
         }
 
         private static async Task<BitmapImage> LoadRemoteImageAsync(bool loadFullImage, Uri uriResult)
