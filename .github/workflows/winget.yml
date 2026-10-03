@@ -1,5 +1,11 @@
 name: Publish to Winget
 
+# Required secrets
+#
+# WINGET_TOKEN:
+# Token used to submit a manifest PR to microsoft/winget-pkgs
+# on behalf of Flow-Launcher.Flow-Launcher.
+
 on:
   workflow_dispatch:
 
