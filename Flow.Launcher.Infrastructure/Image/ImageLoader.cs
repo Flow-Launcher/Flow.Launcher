@@ -27,9 +27,15 @@ namespace Flow.Launcher.Infrastructure.Image
         private static readonly ConcurrentDictionary<string, string> GuidToKey = new();
         private static ImageHashGenerator _hashGenerator;
         private static readonly bool EnableImageHash = true;
-        public static ImageSource MissingImage => ImageCache[Constant.MissingImgIcon, false];
-        public static ImageSource LoadingImage => ImageCache[Constant.LoadingImgIcon, false];
-        public static ImageSource FolderImage => ImageCache[Constant.FolderIcon, false];
+
+        // Fallbacks are held outside the image cache because the cache evicts its least used entries
+        private static ImageSource _missingImage;
+        private static ImageSource _loadingImage;
+        private static ImageSource _folderImage;
+
+        public static ImageSource MissingImage => _missingImage;
+        public static ImageSource LoadingImage => _loadingImage;
+        public static ImageSource FolderImage => _folderImage;
         public const int SmallIconSize = 64;
         public const int FullIconSize = 256;
         public const int FullImageSize = 320;
@@ -56,12 +62,15 @@ namespace Flow.Launcher.Infrastructure.Image
 
                 ImageCache.Initialize(usage);
 
-                foreach (var icon in new[] { Constant.DefaultIcon, Constant.MissingImgIcon, Constant.LoadingImgIcon, Constant.FolderIcon })
-                {
-                    ImageSource img = new BitmapImage(new Uri(icon));
-                    img.Freeze();
-                    ImageCache[icon, false] = img;
-                }
+                _missingImage = LoadFrozenImage(Constant.MissingImgIcon);
+                _loadingImage = LoadFrozenImage(Constant.LoadingImgIcon);
+                _folderImage = LoadFrozenImage(Constant.FolderIcon);
+
+                // Cache the fallbacks as well so path lookups resolve, the fields above survive eviction
+                ImageCache[Constant.DefaultIcon, false] = LoadFrozenImage(Constant.DefaultIcon);
+                ImageCache[Constant.MissingImgIcon, false] = _missingImage;
+                ImageCache[Constant.LoadingImgIcon, false] = _loadingImage;
+                ImageCache[Constant.FolderIcon, false] = _folderImage;
 
                 return usage;
             });
@@ -100,6 +109,13 @@ namespace Flow.Launcher.Infrastructure.Image
             {
                 return _storage.TryLoad([]);
             }
+        }
+
+        private static ImageSource LoadFrozenImage(string path)
+        {
+            var image = new BitmapImage(new Uri(path));
+            image.Freeze();
+            return image;
         }
 
         private class ImageResult
