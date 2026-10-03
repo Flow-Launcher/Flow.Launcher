@@ -27,7 +27,7 @@
     Style="{DynamicResource BaseListboxStyle}"
     VirtualizingPanel.ScrollUnit="Item"
     VirtualizingStackPanel.IsVirtualizing="True"
-    VirtualizingStackPanel.VirtualizationMode="Standard"
+    VirtualizingStackPanel.VirtualizationMode="Recycling"
     Visibility="{Binding Visibility}"
     mc:Ignorable="d">
     <!--  IsSynchronizedWithCurrentItem: http://stackoverflow.com/a/7833798/2833083  -->
@@ -82,7 +82,7 @@
                                     <TextBlock.Text>
                                         <MultiBinding StringFormat="{}{0}+{1}">
                                             <Binding Mode="OneWay" Path="Settings.OpenResultModifiers" />
-                                            <Binding Converter="{StaticResource ResourceKey=OrdinalConverter}" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}" />
+                                            <Binding Converter="{StaticResource ResourceKey=OrdinalConverter}" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}"/>
                                         </MultiBinding>
                                     </TextBlock.Text>
                                 </TextBlock>
