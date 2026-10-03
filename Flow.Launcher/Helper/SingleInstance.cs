@@ -1,8 +1,11 @@
 ﻿using System;
+using System.IO;
 using System.IO.Pipes;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using Flow.Launcher.Infrastructure.Logger;
 
 // http://blogs.microsoft.co.il/arik/2010/05/28/wpf-single-instance-application/
 // modified to allow single instace restart
@@ -10,7 +13,7 @@ namespace Flow.Launcher.Helper
 {
     public interface ISingleInstanceApp
     {
-        void OnSecondAppStarted();
+        void OnSecondAppStarted(string payload);
     }
 
     /// <summary>
@@ -53,7 +56,7 @@ namespace Flow.Launcher.Helper
         /// If not, activates the first instance.
         /// </summary>
         /// <returns>True if this is the first instance of the application.</returns>
-        public static bool InitializeAsFirstInstance()
+        public static bool InitializeAsFirstInstance(string payload = null)
         {
             // Build unique application Id and the IPC channel name.
             string applicationIdentifier = InstanceMutexName + Environment.UserName;
@@ -69,7 +72,18 @@ namespace Flow.Launcher.Helper
             }
             else
             {
-                _ = SignalFirstInstanceAsync(channelName);
+                try
+                {
+                    // Block until the signal and deep link payload are delivered,
+                    // because the second instance exits right after this returns.
+                    // Budget beyond the 3s connect timeout below so a slow connect still
+                    // leaves room for the write to complete.
+                    SignalFirstInstanceAsync(channelName, payload).Wait(TimeSpan.FromSeconds(5));
+                }
+                catch
+                {
+                    // If the first instance cannot be reached there is nothing more to do
+                }
                 return false;
             }
         }
@@ -99,8 +113,31 @@ namespace Flow.Launcher.Helper
                 // Wait for connection to the pipe
                 await pipeServer.WaitForConnectionAsync();
 
-                // Do an asynchronous call to ActivateFirstInstance function
-                Application.Current?.Dispatcher.Invoke(ActivateFirstInstance);
+                string payload = null;
+                try
+                {
+                    // Guard against a client that connects but never writes or closes; cancelling the
+                    // read (rather than abandoning it) avoids it faulting later against the disposed reader
+                    using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(2));
+                    using var reader = new StreamReader(pipeServer, Encoding.UTF8, false, 1024, leaveOpen: true);
+                    payload = await reader.ReadLineAsync(cts.Token); // null when the client wrote nothing (plain activation)
+                }
+                catch (OperationCanceledException)
+                {
+                    // Client connected but never wrote/closed before the timeout; treat as a plain activation
+                }
+                catch (Exception e)
+                {
+                    // Never let a genuine pipe read failure kill the server loop, but still surface it
+                    Log.Exception("SingleInstance", "Failed to read deep link payload from second instance", e);
+                }
+
+                // Do an asynchronous call to ActivateFirstInstance function so a deep-link handler
+                // showing modal prompts cannot block this pipe accept loop and drop later activations
+                var activation = Application.Current?.Dispatcher.InvokeAsync(() => ActivateFirstInstance(payload));
+                activation?.Task.ContinueWith(
+                    t => Log.Exception("SingleInstance", "Failed to activate first instance from second app", t.Exception),
+                    TaskContinuationOptions.OnlyOnFaulted);
 
                 // Disconect client
                 pipeServer.Disconnect();
@@ -111,31 +148,39 @@ namespace Flow.Launcher.Helper
         /// Creates a client pipe and sends a signal to server to launch first instance
         /// </summary>
         /// <param name="channelName">Application's IPC channel name.</param>
-        /// <param name="args">
-        /// Command line arguments for the second instance, passed to the first instance to take appropriate action.
+        /// <param name="payload">
+        /// The deep link payload from the second instance, passed to the first instance to take appropriate action.
         /// </param>
-        private static async Task SignalFirstInstanceAsync(string channelName)
+        private static async Task SignalFirstInstanceAsync(string channelName, string payload)
         {
             // Create a client pipe connected to server
             using NamedPipeClientStream pipeClient = new NamedPipeClientStream(".", channelName, PipeDirection.Out);
 
-            // Connect to the available pipe
-            await pipeClient.ConnectAsync(0);
+            // Connect to the available pipe. Longer than the server's 2s read timeout so a stalled
+            // prior client can't starve this connection attempt.
+            await pipeClient.ConnectAsync(3000);
+
+            // Send the deep link payload to the first instance if there is one
+            if (!string.IsNullOrEmpty(payload))
+            {
+                using var writer = new StreamWriter(pipeClient, Encoding.UTF8) { AutoFlush = true };
+                await writer.WriteLineAsync(payload);
+            }
         }
 
         /// <summary>
-        /// Activates the first instance of the application with arguments from a second instance.
+        /// Activates the first instance of the application with the deep link payload from a second instance.
         /// </summary>
-        /// <param name="args">List of arguments to supply the first instance of the application.</param>
-        private static void ActivateFirstInstance()
+        /// <param name="payload">The deep link payload to supply the first instance of the application.</param>
+        private static void ActivateFirstInstance(string payload)
         {
-            // Set main window state and process command line args
+            // Set main window state and process the deep link payload
             if (Application.Current == null)
             {
                 return;
             }
 
-            ((TApplication)Application.Current).OnSecondAppStarted();
+            ((TApplication)Application.Current).OnSecondAppStarted(payload);
         }
 
         #endregion
