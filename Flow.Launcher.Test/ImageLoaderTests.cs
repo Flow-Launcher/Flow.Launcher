@@ -196,5 +196,49 @@ namespace Flow.Launcher.Test
         }
 
         #endregion
+
+        #region SVG Rendering
+
+        [Test]
+        public async Task SvgWithInsetArtwork_IsNotClippedAsync()
+        {
+            // The artwork's bounds start at (1,1), not at the viewBox origin.
+            var tempPath = Path.Combine(Path.GetTempPath(), $"image-loader-{Guid.NewGuid():N}.svg");
+            await File.WriteAllTextAsync(tempPath,
+                "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\">" +
+                "<circle cx=\"12\" cy=\"12\" r=\"11\" fill=\"#1A7F37\"/></svg>");
+
+            try
+            {
+                var image = await ImageLoader.LoadAsync(tempPath, loadFullImage: false, cacheImage: false);
+                Assert.That(image, Is.Not.SameAs(ImageLoader.MissingImage));
+
+                var bitmap = new FormatConvertedBitmap((BitmapSource)image, PixelFormats.Pbgra32, null, 0);
+                var width = bitmap.PixelWidth;
+                var pixel = new byte[4];
+
+                // The circle touches both sides of the bitmap in the middle row.
+                bitmap.CopyPixels(new System.Windows.Int32Rect(0, bitmap.PixelHeight / 2, 1, 1), pixel, 4, 0);
+                Assert.That(pixel[3], Is.GreaterThan(0), "Left edge of the circle is missing.");
+                bitmap.CopyPixels(new System.Windows.Int32Rect(width - 1, bitmap.PixelHeight / 2, 1, 1), pixel, 4, 0);
+                Assert.That(pixel[3], Is.GreaterThan(0), "Right edge of the circle is clipped.");
+
+                // And the top and bottom in the middle column.
+                var height = bitmap.PixelHeight;
+                bitmap.CopyPixels(new System.Windows.Int32Rect(width / 2, 0, 1, 1), pixel, 4, 0);
+                Assert.That(pixel[3], Is.GreaterThan(0), "Top edge of the circle is missing.");
+                bitmap.CopyPixels(new System.Windows.Int32Rect(width / 2, height - 1, 1, 1), pixel, 4, 0);
+                Assert.That(pixel[3], Is.GreaterThan(0), "Bottom edge of the circle is clipped.");
+            }
+            finally
+            {
+                if (File.Exists(tempPath))
+                {
+                    File.Delete(tempPath);
+                }
+            }
+        }
+
+        #endregion
     }
 }

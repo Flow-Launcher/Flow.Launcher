@@ -526,6 +526,8 @@ namespace Flow.Launcher.Infrastructure.Image
             using (DrawingContext drawingContext = drawingVisual.RenderOpen())
             {
                 drawingContext.PushTransform(new ScaleTransform(scale, scale));
+                // Move the artwork to the bitmap origin, its bounds can start inside the viewBox.
+                drawingContext.PushTransform(new TranslateTransform(-drawingBounds.X, -drawingBounds.Y));
                 drawingContext.DrawDrawing(drawing);
             }
 
