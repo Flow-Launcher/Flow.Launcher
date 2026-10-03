@@ -187,21 +187,20 @@ namespace Flow.Launcher.Infrastructure.Image
             {
                 return await Task.Run(() => GetThumbnailResult(path, loadFullImage));
             }
-            catch (System.Exception e)
+            catch (System.Exception firstEx)
             {
                 try
                 {
                     // Get thumbnail may fail for certain images on the first try, retry again has proven to work
                     return GetThumbnailResult(path, loadFullImage);
                 }
-                catch (System.Exception e2)
+                catch (System.Exception secondEx)
                 {
-                    Log.Warn(ClassName, $"Failed to get thumbnail for {path} on first try: {e.Message}");
-                    Log.Warn(ClassName, $"Failed to get thumbnail for {path} on second try: {e2.Message}");
+                    Log.Warn(ClassName, $"Failed to get thumbnail for {path} on first try: {firstEx.Message}");
+                    Log.Warn(ClassName, $"Failed to get thumbnail for {path} on second try: {secondEx.Message}");
 
-                    ImageSource image = MissingImage;
-                    ImageCache[path, false] = image;
-                    return new ImageResult(image, ImageType.Error);
+                    ImageCache[path, false] = MissingImage;
+                    return new ImageResult(MissingImage, ImageType.Error);
                 }
             }
         }
