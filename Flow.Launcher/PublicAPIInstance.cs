@@ -132,6 +132,11 @@ namespace Flow.Launcher
             Notification.Show(title, subTitle, iconPath);
         }
 
+        public void ShowNotification(string title, string subTitle = "", NotificationSeverity severity = NotificationSeverity.Informational)
+        {
+            Notification.ShowInline(title, subTitle, severity);
+        }
+
         public void ShowMsgWithButton(string title, string buttonText, Action buttonAction, string subTitle = "", string iconPath = "") =>
             ShowMsgWithButton(title, buttonText, buttonAction, subTitle, iconPath, true);
 
