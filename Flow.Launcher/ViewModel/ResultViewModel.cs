@@ -175,7 +175,11 @@ namespace Flow.Launcher.ViewModel
 
                 return _image;
             }
-            private set => _image = value;
+            private set
+            {
+                _image = value;
+                OnPropertyChanged();
+            }
         }
 
         public ImageSource BadgeImage
@@ -190,7 +194,11 @@ namespace Flow.Launcher.ViewModel
 
                 return _badgeImage;
             }
-            private set => _badgeImage = value;
+            private set
+            {
+                _badgeImage = value;
+                OnPropertyChanged();
+            }
         }
 
         public ImageSource PreviewImage
@@ -205,7 +213,11 @@ namespace Flow.Launcher.ViewModel
 
                 return _previewImage;
             }
-            private set => _previewImage = value;
+            private set
+            {
+                _previewImage = value;
+                OnPropertyChanged();
+            }
         }
 
         /// <summary>
