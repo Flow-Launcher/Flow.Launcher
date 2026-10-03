@@ -154,6 +154,8 @@
     <!--  Everything  -->
     <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">Failed to load Everything SDK</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_architecture_check">Please check whether your system is x86 or x64</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_unsupported_architecture">Everything SDK is not available for the {0} process architecture</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_use_windows_search">select Windows Search in Explorer settings</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_is_not_running">Warning: Everything service is not running</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_15_unavailable">Warning: Everything 1.5 is unavailable</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_15_resolution">Ensure Everything is running and verify the configured instance name</system:String>
@@ -222,4 +224,3 @@
     <system:String x:Key="OneYearAgo">1 year ago</system:String>
     <system:String x:Key="YearsAgo">{0} years ago</system:String>
 </ResourceDictionary>
-

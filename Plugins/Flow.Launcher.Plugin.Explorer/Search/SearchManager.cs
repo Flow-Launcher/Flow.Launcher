@@ -256,13 +256,26 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     results.Add(ResultManager.CreateResult(query, directory));
                 }
             }
+            catch (EngineNotAvailableException)
+            {
+                throw;
+            }
             catch (Exception e)
             {
-                throw new SearchException(Enum.GetName(Settings.PathEnumerationEngine), e.Message, e);
+                throw CreatePathEnumerationException(Settings.PathEnumerationEngine, e);
             }
 
 
             return [.. results];
+        }
+
+        public static Exception CreatePathEnumerationException(
+            Settings.PathEnumerationEngineOption engine,
+            Exception exception)
+        {
+            return exception is EngineNotAvailableException
+                ? exception
+                : new SearchException(Enum.GetName(engine), exception.Message, exception);
         }
 
         public bool IsFileContentSearch(string actionKeyword) => actionKeyword == Settings.FileContentSearchActionKeyword;

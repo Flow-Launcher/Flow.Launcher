@@ -6,6 +6,9 @@ on:
     types: [published]
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   deploy-website:
     runs-on: ubuntu-latest
@@ -19,7 +22,7 @@ jobs:
             https://api.github.com/repos/Flow-Launcher/flow-launcher.github.io/dispatches \
             -d '{"event_type":"deploy"}')
           if [ "$http_status" -ne 204 ]; then echo "Error: Deploy website failed, HTTP status code is $http_status"; exit 1; fi
-  
+
   publish-chocolatey:
     runs-on: ubuntu-latest
     steps:
@@ -32,3 +35,39 @@ jobs:
             https://api.github.com/repos/Flow-Launcher/chocolatey-package/dispatches \
             -d '{"event_type":"publish"}')
           if [ "$http_status" -ne 204 ]; then echo "Error: Publish Chocolatey package failed, HTTP status code is $http_status"; exit 1; fi
+
+  publish-windows-architecture-packages:
+    if: github.event_name == 'release'
+    runs-on: windows-latest
+    permissions:
+      contents: write
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: 1
+      NUGET_CERT_REVOCATION_MODE: offline
+      RELEASE_TAG: ${{ github.event.release.tag_name }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.release.tag_name }}
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 9.0.x
+      - name: Publish portable packages
+        shell: pwsh
+        run: |
+          $version = $env:RELEASE_TAG.TrimStart("v")
+          foreach ($runtime in @("win-x64", "win-arm64")) {
+            .\Scripts\publish_portable.ps1 `
+              -RuntimeIdentifier $runtime `
+              -ArtifactsDirectory "$env:RUNNER_TEMP\flow-launcher" `
+              -Version $version
+          }
+      - name: Attach portable packages to release
+        uses: softprops/action-gh-release@v3
+        with:
+          files: |
+            ${{ runner.temp }}\flow-launcher\packages\Flow-Launcher-*-win-x64-Portable.zip
+            ${{ runner.temp }}\flow-launcher\packages\Flow-Launcher-*-win-x64-Portable.zip.sha256
+            ${{ runner.temp }}\flow-launcher\packages\Flow-Launcher-*-win-arm64-Portable.zip
+            ${{ runner.temp }}\flow-launcher\packages\Flow-Launcher-*-win-arm64-Portable.zip.sha256
