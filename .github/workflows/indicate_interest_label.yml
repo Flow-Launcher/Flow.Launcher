@@ -1,0 +1,20 @@
+name: Indicate interest label
+
+on:
+  issues:
+    types: [labeled]
+
+permissions:
+  issues: write
+
+jobs:
+  comment-on-indicate-interest-label:
+    runs-on: ubuntu-latest
+    if: github.event.label.name == 'Indicate interest required'
+    steps:
+      - name: Comment after applying indicate interest label
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            Thumbs up on the issue description if you would also like this feature request
