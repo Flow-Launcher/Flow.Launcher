@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -146,9 +147,17 @@ namespace Flow.Launcher.Infrastructure.Image
                 if (Uri.TryCreate(path, UriKind.RelativeOrAbsolute, out var uriResult)
                     && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps))
                 {
-                    var image = await LoadRemoteImageAsync(loadFullImage, uriResult);
-                    ImageCache[path, loadFullImage] = image;
-                    return new ImageResult(image, ImageType.ImageFile);
+                    try
+                    {
+                        var image = await LoadRemoteImageAsync(loadFullImage, uriResult);
+                        ImageCache[path, loadFullImage] = image;
+                        return new ImageResult(image, ImageType.ImageFile);
+                    }
+                    catch (System.Exception ex)
+                    {
+                        Log.Warn(ClassName, $"Failed to load remote image from url {uriResult}: {ex.Message}");
+                        return new ImageResult(MissingImage, ImageType.Error);
+                    }
                 }
 
                 if (path.StartsWith("data:image", StringComparison.OrdinalIgnoreCase))
@@ -183,10 +192,19 @@ namespace Flow.Launcher.Infrastructure.Image
 
         private static async Task<BitmapImage> LoadRemoteImageAsync(bool loadFullImage, Uri uriResult)
         {
-            // Download image from url
-            await using var resp = await Http.Http.GetStreamAsync(uriResult);
+            // Read headers first so a bad status is caught before the body is downloaded
+            using var httpResponse = await Http.Http.GetResponseAsync(uriResult, HttpCompletionOption.ResponseHeadersRead);
+
+            // A non-success status would otherwise return the error page body, which only fails later as a decode error
+            if (!httpResponse.IsSuccessStatusCode)
+            {
+                throw new HttpRequestException($"{(int)httpResponse.StatusCode} {httpResponse.ReasonPhrase} for <{uriResult}>");
+            }
+
+            // Read the response body into a buffer the bitmap decoder can read
+            await using var contentStream = await httpResponse.Content.ReadAsStreamAsync();
             await using var buffer = new MemoryStream();
-            await resp.CopyToAsync(buffer);
+            await contentStream.CopyToAsync(buffer);
             buffer.Seek(0, SeekOrigin.Begin);
             var image = new BitmapImage();
             image.BeginInit();
