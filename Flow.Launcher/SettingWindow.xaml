@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="clr-namespace:Flow.Launcher.Resources.Controls"
     xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
     xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
     Title="{DynamicResource flowlauncher_settings}"
@@ -21,8 +22,6 @@
     MouseDown="window_MouseDown"
     ResizeMode="CanResize"
     SnapsToDevicePixels="True"
-    StateChanged="Window_StateChanged"
-    Activated="Window_Activated"
     Top="{Binding SettingWindowTop, Mode=TwoWay}"
     UseLayoutRounding="True"
     WindowStartupLocation="Manual"
@@ -41,132 +40,18 @@
     <Grid>
         <Border Style="{StaticResource WindowMainPanelStyle}">
             <Grid Background="{DynamicResource Color01B}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="32" />
                     <RowDefinition />
                 </Grid.RowDefinitions>
-                <!--  TitleBar and Control  -->
-                <Image
+                
+                <controls:CustomWindowTitleBar
                     Grid.Row="0"
-                    Grid.Column="0"
-                    Width="16"
-                    Height="16"
-                    Margin="10 4 4 4"
-                    RenderOptions.BitmapScalingMode="HighQuality"
-                    Source="/Images/app.png" />
-                <TextBlock
-                    Grid.Row="0"
-                    Grid.Column="1"
-                    Margin="4 0 0 0"
-                    VerticalAlignment="Center"
-                    FontSize="12"
-                    Foreground="{DynamicResource Color05B}"
-                    Text="{DynamicResource flowlauncher_settings}" />
-
-                <Button
-                    Grid.Row="0"
-                    Grid.Column="2"
-                    Click="OnMinimizeButtonClick"
-                    RenderOptions.EdgeMode="Aliased"
-                    Style="{DynamicResource TitleBarButtonStyle}">
-                    <Path
-                        Width="46"
-                        Height="32"
-                        Data="M 18,15 H 28"
-                        Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
-                        StrokeThickness="1">
-                        <Path.Style>
-                            <Style TargetType="Path">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Path=IsActive, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Value="False">
-                                        <Setter Property="Opacity" Value="0.5" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Path.Style>
-                    </Path>
-                </Button>
-                <Button
-                    Name="MaximizeButton"
-                    Grid.Row="0"
-                    Grid.Column="3"
-                    Click="OnMaximizeRestoreButtonClick"
-                    Style="{StaticResource TitleBarButtonStyle}">
-                    <Path
-                        Width="46"
-                        Height="32"
-                        Data="M 18.5,10.5 H 27.5 V 19.5 H 18.5 Z"
-                        Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
-                        StrokeThickness="1">
-                        <Path.Style>
-                            <Style TargetType="Path">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Path=IsActive, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Value="False">
-                                        <Setter Property="Opacity" Value="0.5" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Path.Style>
-                    </Path>
-                </Button>
-                <Button
-                    Name="RestoreButton"
-                    Grid.Row="0"
-                    Grid.Column="3"
-                    Click="OnMaximizeRestoreButtonClick"
-                    Style="{StaticResource TitleBarButtonStyle}">
-                    <Path
-                        Width="46"
-                        Height="32"
-                        Data="M 18.5,12.5 H 25.5 V 19.5 H 18.5 Z M 20.5,12.5 V 10.5 H 27.5 V 17.5 H 25.5"
-                        Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
-                        StrokeThickness="1">
-                        <Path.Style>
-                            <Style TargetType="Path">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Path=IsActive, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Value="False">
-                                        <Setter Property="Opacity" Value="0.5" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Path.Style>
-                    </Path>
-                </Button>
-                <Button
-                    Grid.Row="0"
-                    Grid.Column="4"
-                    Click="OnCloseButtonClick"
-                    Style="{StaticResource TitleBarCloseButtonStyle}">
-                    <Path
-                        Width="46"
-                        Height="32"
-                        Data="M 18,11 27,20 M 18,20 27,11"
-                        Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
-                        StrokeThickness="1">
-                        <Path.Style>
-                            <Style TargetType="Path">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Path=IsActive, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Value="False">
-                                        <Setter Property="Opacity" Value="0.5" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Path.Style>
-                    </Path>
-                </Button>
+                    LastNonMinimizedWindowStateChanged="OnLastNonMinimizedWindowStateChanged" />
 
                 <ui:NavigationView
                     x:Name="NavView"
                     Grid.Row="1"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="5"
                     Margin="0 0 0 0"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"

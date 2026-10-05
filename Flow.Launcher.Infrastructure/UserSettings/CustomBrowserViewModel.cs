@@ -10,6 +10,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string DisplayName => Name == "Default" ? Localize.defaultBrowser_default() : Name;
         public string Path { get; set; }
         public string PrivateArg { get; set; }
+        public string ExtraArgs { get; set; }
         public bool EnablePrivate { get; set; }
         public bool OpenInTab { get; set; } = true;
         [JsonIgnore]
@@ -24,6 +25,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 Path = Path,
                 OpenInTab = OpenInTab,
                 PrivateArg = PrivateArg,
+                ExtraArgs = ExtraArgs,
                 EnablePrivate = EnablePrivate,
                 Editable = Editable
             };

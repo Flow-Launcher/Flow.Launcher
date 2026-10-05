@@ -125,6 +125,9 @@
     <system:String x:Key="hideOnStartupToolTip">Flow Launcher search window is hidden in the tray after starting up.</system:String>
     <system:String x:Key="hideNotifyIcon">Hide tray icon</system:String>
     <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>
+    <system:String x:Key="ignoreAccents">Ignore accents when searching</system:String>
+    <system:String x:Key="ignoreAccentsToolTip">Treat accented and unaccented characters as equivalent.</system:String>
+    <system:String x:Key="promptIgnoreAccents">Would you like to turn on the option to ignore accents when searching?</system:String>
     <system:String x:Key="querySearchPrecision">Query Search Precision</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Changes minimum match score required for results.</system:String>
     <system:String x:Key="SearchPrecisionNone">None</system:String>
@@ -135,6 +138,8 @@
     <system:String x:Key="ShouldUseDoublePinyin">Use Double Pinyin</system:String>
     <system:String x:Key="ShouldUseDoublePinyinToolTip">Use Double Pinyin instead of Full Pinyin to search.</system:String>
     <system:String x:Key="DoublePinyinSchema">Double Pinyin Schema</system:String>
+    <system:String x:Key="UsePolyphonicPhraseOverrides">Use polyphonic phrase pronunciations</system:String>
+    <system:String x:Key="UsePolyphonicPhraseOverridesToolTip">Use phrase-level pronunciation data to improve Pinyin conversion for polyphonic Chinese characters. This may use additional memory.</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoHe">Xiao He</system:String>
     <system:String x:Key="DoublePinyinSchemasZiRanMa">Zi Ran Ma</system:String>
     <system:String x:Key="DoublePinyinSchemasWeiRuan">Wei Ruan</system:String>
@@ -144,9 +149,10 @@
     <system:String x:Key="DoublePinyinSchemasXingKongJianDao">Xing Kong Jian Dao</system:String>
     <system:String x:Key="DoublePinyinSchemasDaNiu">Da Niu</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoLang">Xiao Lang</system:String>
+    <system:String x:Key="HelpUsTranslateFlow">Help us translate Flow</system:String>
 
     <system:String x:Key="AlwaysPreview">Always Preview</system:String>
-    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow activates. Press {0} to toggle preview.</system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Always open the preview panel. Press {0} to toggle. Per their own requirements, plugins may override this to always or never for their results.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Shadow effect is not allowed while current theme has blur effect enabled</system:String>
     <system:String x:Key="searchDelay">Search Delay</system:String>
     <system:String x:Key="searchDelayToolTip">Adds a short delay while typing to reduce UI flicker and result load. Recommended if your typing speed is average.</system:String>
@@ -172,6 +178,10 @@
     <system:String x:Key="homePageToolTip">Show home page results when query text is empty.</system:String>
     <system:String x:Key="historyResultsForHomePage">Show History Results in Home Page</system:String>
     <system:String x:Key="historyResultsCountForHomePage">Maximum History Results Shown in Home Page</system:String>
+    <system:String x:Key="historyStyle">History Style</system:String>
+    <system:String x:Key="historyStyleTooltip">Choose the type of history to show in the History and Home Page</system:String>
+    <system:String x:Key="queryHistory">Query History</system:String>
+    <system:String x:Key="executedHistory">Last Opened History</system:String>
     <system:String x:Key="homeToggleBoxToolTip">This can only be edited if plugin supports Home feature and Home Page is enabled.</system:String>
     <system:String x:Key="showAtTopmost">Show Search Window at Foremost</system:String>
     <system:String x:Key="showAtTopmostToolTip">Overrides other programs' 'Always on Top' setting and displays Flow in the foremost position.</system:String>
@@ -228,6 +238,9 @@
     <system:String x:Key="fileNotFoundMessage">Unable to find plugin.json from the extracted zip file, or this path {0} does not exist</system:String>
     <system:String x:Key="pluginExistAlreadyMessage">A plugin with the same ID and version already exists, or the version is greater than this downloaded plugin</system:String>
     <system:String x:Key="errorCreatingSettingPanel">Error creating setting panel for plugin {0}:{1}{2}</system:String>
+    <system:String x:Key="pluginMinimumAppVersionUnsatisfiedTitle">{0} requires Flow version {1} to run</system:String>
+    <system:String x:Key="pluginMinimumAppVersionUnsatisfiedMessage">Flow does not meet the minimum version requirements for {0} to run. Do you want to continue installing it?{1}{1}We recommend updating Flow to the latest version to ensure that {0} works without issues.</system:String>
+    <system:String x:Key="pluginJsonInvalidOrCorrupted">Failed to install plugin because plugin.json is invalid or corrupted</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Plugin Store</system:String>
@@ -235,6 +248,11 @@
     <system:String x:Key="pluginStore_RecentlyUpdated">Recently Updated</system:String>
     <system:String x:Key="pluginStore_None">Plugins</system:String>
     <system:String x:Key="pluginStore_Installed">Installed</system:String>
+    <system:String x:Key="PluginStoreSortModeDefault">Default</system:String>
+    <system:String x:Key="PluginStoreSortModeName">Name</system:String>
+    <system:String x:Key="PluginStoreSortModeReleaseDate">Release Date</system:String>
+    <system:String x:Key="PluginStoreSortModeUpdatedDate">Updated Date</system:String>
+    <system:String x:Key="PluginStoreSortingModeComboboxLabel">Sorting Mode:</system:String>
     <system:String x:Key="refresh">Refresh</system:String>
     <system:String x:Key="installbtn">Install</system:String>
     <system:String x:Key="uninstallbtn">Uninstall</system:String>
@@ -306,6 +324,13 @@
     <system:String x:Key="ColorSchemeSystem">System Default</system:String>
     <system:String x:Key="ColorSchemeLight">Light</system:String>
     <system:String x:Key="ColorSchemeDark">Dark</system:String>
+    <system:String x:Key="CodeHighlightTheme">Code Highlight Theme</system:String>
+    <system:String x:Key="CodeHighlightThemeTooltip">Syntax highlighting theme for code blocks in the markdown preview pane.</system:String>
+    <system:String x:Key="CodeHighlightThemeAuto">Auto (match color scheme)</system:String>
+    <system:String x:Key="CodeHighlightThemeVSCodeLight">VS Code Light</system:String>
+    <system:String x:Key="CodeHighlightThemeVSCodeDarkPlus">VS Code Dark+</system:String>
+    <system:String x:Key="CodeHighlightThemeCatppuccinMacchiato">Catppuccin Macchiato</system:String>
+    <system:String x:Key="CodeHighlightThemeOneDark">One Dark</system:String>
     <system:String x:Key="SoundEffect">Sound Effect</system:String>
     <system:String x:Key="SoundEffectTip">Play a small sound when the search window opens</system:String>
     <system:String x:Key="SoundEffectVolume">Sound Effect Volume</system:String>
@@ -443,6 +468,7 @@
     <system:String x:Key="website">Website</system:String>
     <system:String x:Key="github">GitHub</system:String>
     <system:String x:Key="docs">Docs</system:String>
+    <system:String x:Key="crowdin">Crowdin</system:String>
     <system:String x:Key="version">Version</system:String>
     <system:String x:Key="icons">Icons</system:String>
     <system:String x:Key="about_activate_times">You have activated Flow Launcher {0} times</system:String>
@@ -466,9 +492,21 @@
     <system:String x:Key="clearcachefolderMessage">Are you sure you want to delete all caches?</system:String>
     <system:String x:Key="clearfolderfailMessage">Failed to clear part of folders and files. Please see log file for more information</system:String>
     <system:String x:Key="welcomewindow">Wizard</system:String>
+    <system:String x:Key="openWelcomeWindow">Open Welcome Window</system:String>
     <system:String x:Key="userdatapath">User Data Location</system:String>
     <system:String x:Key="userdatapathToolTip">User settings and installed plugins are saved in the user data folder. This location may vary depending on whether it's in portable mode or not.</system:String>
     <system:String x:Key="userdatapathButton">Open Folder</system:String>
+    <system:String x:Key="openFolderButton">Open Folder</system:String>
+    <system:String x:Key="devtoolsReportWindow">Report Window</system:String>
+    <system:String x:Key="devtoolsProgressWindow">Progress Window</system:String>
+    <system:String x:Key="devtoolsPluginUpdateWindow">Plugin Update Window</system:String>
+    <system:String x:Key="devtoolsMessageBoxWindow">Message Box Window</system:String>
+    <system:String x:Key="devtoolsMessageBoxOkLabel">OK</system:String>
+    <system:String x:Key="devtoolsMessageBoxOkCancelLabel">OK / Cancel</system:String>
+    <system:String x:Key="devtoolsMessageBoxYesNoLabel">Yes / No</system:String>
+    <system:String x:Key="devtoolsMessageBoxYesNoCancelLabel">Yes / No / Cancel</system:String>
+    <system:String x:Key="devtoolsMessageBoxTestMessage">This is a test message box.</system:String>
+    <system:String x:Key="devtoolsOpenTestWindow">Open Test Window</system:String>
     <system:String x:Key="advanced">Advanced</system:String>
     <system:String x:Key="logLevel">Log Level</system:String>
     <system:String x:Key="LogLevelNONE">Silent</system:String>
@@ -476,6 +514,10 @@
     <system:String x:Key="LogLevelINFO">Info</system:String>
     <system:String x:Key="LogLevelDEBUG">Debug</system:String>
     <system:String x:Key="settingWindowFontTitle">Setting Window Font</system:String>
+
+    <!--  Plugin Settings Window  -->
+    <system:String x:Key="pluginSettingsWindowTitle">Settings: {0}</system:String>
+    <system:String x:Key="pluginSettingsWindowOpenFailed">Failed to open plugin settings window</system:String>
 
     <!--  Release Notes Window  -->
     <system:String x:Key="seeMoreReleaseNotes">See more release notes on GitHub</system:String>
@@ -507,6 +549,7 @@
     <system:String x:Key="defaultBrowser_newWindow">New Window</system:String>
     <system:String x:Key="defaultBrowser_newTab">New Tab</system:String>
     <system:String x:Key="defaultBrowser_parameter">Private Mode</system:String>
+    <system:String x:Key="defaultBrowser_extraArgs">Extra Args</system:String>
     <system:String x:Key="defaultBrowser_default">Default</system:String>
     <system:String x:Key="defaultBrowser_new_profile">New Profile</system:String>
 

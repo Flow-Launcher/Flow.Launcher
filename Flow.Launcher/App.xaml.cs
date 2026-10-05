@@ -259,6 +259,9 @@ namespace Flow.Launcher
 
                     await PluginManager.InitializePluginsAsync(_mainVM);
 
+                    // Refresh the history results after plugins are initialized so that we can parse the absolute icon paths
+                    _mainVM.RefreshLastOpenedHistoryResults();
+
                     // Refresh home page after plugins are initialized because users may open main window during plugin initialization
                     // And home page is created without full plugin list
                     if (_settings.ShowHomePage && _mainVM.QueryResultsSelected() && string.IsNullOrEmpty(_mainVM.QueryText))
@@ -329,24 +332,30 @@ namespace Flow.Launcher
                 {
                     // check plugin updates every 5 hour
                     var timer = new PeriodicTimer(TimeSpan.FromHours(5));
-                    await PluginInstaller.CheckForPluginUpdatesAsync((plugins) =>
+                    await PluginInstaller.CheckForPluginUpdatesAsync(async (plugins) =>
                     {
-                        Current.Dispatcher.Invoke(() =>
+                        await Current.Dispatcher.InvokeAsync(async () =>
                         {
                             var pluginUpdateWindow = new PluginUpdateWindow(plugins);
-                            pluginUpdateWindow.ShowDialog();
-                        });
+                            if (pluginUpdateWindow.ShowDialog() is true)
+                            {
+                                await pluginUpdateWindow.UpdatePluginsAsync();
+                            }
+                        }).Task.Unwrap();
                     });
 
                     while (await timer.WaitForNextTickAsync())
                         // check updates on startup
-                        await PluginInstaller.CheckForPluginUpdatesAsync((plugins) =>
+                        await PluginInstaller.CheckForPluginUpdatesAsync(async (plugins) =>
                         {
-                            Current.Dispatcher.Invoke(() =>
+                            await Current.Dispatcher.InvokeAsync(async () =>
                             {
                                 var pluginUpdateWindow = new PluginUpdateWindow(plugins);
-                                pluginUpdateWindow.ShowDialog();
-                            });
+                                if (pluginUpdateWindow.ShowDialog() is true)
+                                {
+                                    await pluginUpdateWindow.UpdatePluginsAsync();
+                                }
+                            }).Task.Unwrap();
                         });
                 }
             });

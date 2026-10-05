@@ -20,7 +20,6 @@
     Foreground="{DynamicResource PopupTextColor}"
     Loaded="Window_Loaded"
     ResizeMode="CanResize"
-    StateChanged="Window_StateChanged"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <WindowChrome.WindowChrome>
@@ -36,145 +35,24 @@
     <Grid>
         <Border Style="{StaticResource WindowMainPanelStyle}">
             <Grid Background="{DynamicResource Color01B}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="32" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <!--  TitleBar and Control  -->
-                <Image
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    Width="16"
-                    Height="16"
-                    Margin="10 4 4 4"
-                    RenderOptions.BitmapScalingMode="HighQuality"
-                    Source="/Images/app.png" />
-                <TextBlock
-                    Grid.Row="0"
-                    Grid.Column="1"
-                    Margin="4 0 0 0"
-                    VerticalAlignment="Center"
-                    FontSize="12"
-                    Foreground="{DynamicResource Color05B}"
-                    Text="{DynamicResource releaseNotes}" />
+                <cc:CustomWindowTitleBar Grid.Row="0" />
 
-                <Button
-                    Grid.Row="0"
-                    Grid.Column="2"
-                    Click="OnMinimizeButtonClick"
-                    RenderOptions.EdgeMode="Aliased"
-                    Style="{DynamicResource TitleBarButtonStyle}">
-                    <Path
-                        Width="46"
-                        Height="32"
-                        Data="M 18,15 H 28"
-                        Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
-                        StrokeThickness="1">
-                        <Path.Style>
-                            <Style TargetType="Path">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Path=IsActive, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Value="False">
-                                        <Setter Property="Opacity" Value="0.5" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Path.Style>
-                    </Path>
-                </Button>
-                <Button
-                    Name="MaximizeButton"
-                    Grid.Row="0"
-                    Grid.Column="3"
-                    Click="OnMaximizeRestoreButtonClick"
-                    Style="{StaticResource TitleBarButtonStyle}">
-                    <Path
-                        Width="46"
-                        Height="32"
-                        Data="M 18.5,10.5 H 27.5 V 19.5 H 18.5 Z"
-                        Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
-                        StrokeThickness="1">
-                        <Path.Style>
-                            <Style TargetType="Path">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Path=IsActive, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Value="False">
-                                        <Setter Property="Opacity" Value="0.5" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Path.Style>
-                    </Path>
-                </Button>
-                <Button
-                    Name="RestoreButton"
-                    Grid.Row="0"
-                    Grid.Column="3"
-                    Click="OnMaximizeRestoreButtonClick"
-                    Style="{StaticResource TitleBarButtonStyle}">
-                    <Path
-                        Width="46"
-                        Height="32"
-                        Data="M 18.5,12.5 H 25.5 V 19.5 H 18.5 Z M 20.5,12.5 V 10.5 H 27.5 V 17.5 H 25.5"
-                        Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
-                        StrokeThickness="1">
-                        <Path.Style>
-                            <Style TargetType="Path">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Path=IsActive, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Value="False">
-                                        <Setter Property="Opacity" Value="0.5" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Path.Style>
-                    </Path>
-                </Button>
-                <Button
-                    Grid.Row="0"
-                    Grid.Column="4"
-                    Click="OnCloseButtonClick"
-                    Style="{StaticResource TitleBarCloseButtonStyle}">
-                    <Path
-                        Width="46"
-                        Height="32"
-                        Data="M 18,11 27,20 M 18,20 27,11"
-                        Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
-                        StrokeThickness="1">
-                        <Path.Style>
-                            <Style TargetType="Path">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Path=IsActive, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Value="False">
-                                        <Setter Property="Opacity" Value="0.5" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Path.Style>
-                    </Path>
-                </Button>
-
-                <Grid
+                <ui:HyperlinkButton
                     Grid.Row="1"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="5"
-                    Margin="6 0 18 0">
-                    <ui:HyperlinkButton
-                        x:Name="SeeMore"
-                        Content="{DynamicResource seeMoreReleaseNotes}"
-                        NavigateUri="{Binding ReleaseNotes}" />
-                </Grid>
+                    Margin="6 0 18 0"
+                    x:Name="SeeMore"
+                    Content="{DynamicResource seeMoreReleaseNotes}"
+                    NavigateUri="{Binding ReleaseNotes}" />
 
                 <!--  Do not use scroll function of MarkdownViewer because it does not support smooth scroll  -->
                 <ui:ScrollViewerEx
                     x:Name="MarkdownScrollViewer"
                     Grid.Row="2"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="5"
                     Height="500"
                     Margin="15 0 0 0"
                     Padding="0 0 15 0"
@@ -206,8 +84,6 @@
                 <!--  Because VerticalAlignment="Stretch" can cause height issue with MarkdownScrollViewer.  -->
                 <Grid
                     Grid.Row="2"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="5"
                     Margin="15 0 20 0"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"

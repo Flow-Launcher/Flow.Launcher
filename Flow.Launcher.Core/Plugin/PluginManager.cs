@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure;
@@ -29,7 +30,7 @@ namespace Flow.Launcher.Core.Plugin
         private static readonly ConcurrentDictionary<string, PluginPair> _allInitializedPlugins = [];
         private static readonly ConcurrentDictionary<string, PluginPair> _initFailedPlugins = [];
         private static readonly ConcurrentDictionary<string, PluginPair> _globalPlugins = [];
-        private static readonly ConcurrentDictionary<string, PluginPair> _nonGlobalPlugins = [];
+        private static readonly ConcurrentDictionary<string, List<PluginPair>> _nonGlobalPlugins = [];
 
         private static PluginsSettings Settings;
         private static readonly ConcurrentBag<string> ModifiedPlugins = [];
@@ -332,7 +333,19 @@ namespace Flow.Launcher.Core.Plugin
                         _globalPlugins.TryAdd(pair.Metadata.ID, pair);
                         break;
                     default:
-                        _nonGlobalPlugins.TryAdd(actionKeyword, pair);
+                        _nonGlobalPlugins.AddOrUpdate(actionKeyword,
+                            _ => [pair],
+                            (_, existing) =>
+                            {
+                                lock (existing)
+                                {
+                                    if (!existing.Contains(pair))
+                                    {
+                                        existing.Add(pair);
+                                    }
+                                }
+                                return existing;
+                            });
                         break;
                 }
             }
@@ -368,7 +381,7 @@ namespace Flow.Launcher.Core.Plugin
             if (query is null)
                 return Array.Empty<PluginPair>();
 
-            if (!_nonGlobalPlugins.TryGetValue(query.ActionKeyword, out var plugin))
+            if (!TryGetNonGlobalPlugins(query.ActionKeyword, out var plugins))
             {
                 if (dialogJump)
                     return [.. GetGlobalPlugins().Where(p => p.Plugin is IAsyncDialogJump && !PluginModified(p.Metadata.ID))];
@@ -376,18 +389,30 @@ namespace Flow.Launcher.Core.Plugin
                     return [.. GetGlobalPlugins().Where(p => !PluginModified(p.Metadata.ID))];
             }
 
-            if (dialogJump && plugin.Plugin is not IAsyncDialogJump)
-                return Array.Empty<PluginPair>();
+            var validPlugins = plugins.Where(p => !p.Metadata.Disabled && !PluginModified(p.Metadata.ID));
+            if (dialogJump)
+                validPlugins = validPlugins.Where(p => p.Plugin is IAsyncDialogJump);
 
-            if (PluginModified(plugin.Metadata.ID))
-                return Array.Empty<PluginPair>();
+            return [.. validPlugins];
+        }
 
-            return [plugin];
+        private static bool TryGetNonGlobalPlugins(string actionKeyword, out List<PluginPair> plugins)
+        {
+            if (_nonGlobalPlugins.TryGetValue(actionKeyword, out var list))
+            {
+                lock (list)
+                {
+                    plugins = [.. list];
+                }
+                return true;
+            }
+            plugins = [];
+            return false;
         }
 
         public static ICollection<PluginPair> ValidPluginsForHomeQuery()
         {
-            return [.. _homePlugins.Where(p => !PluginModified(p.Metadata.ID))];
+            return [.. _homePlugins.Where(p => !p.Metadata.Disabled && !PluginModified(p.Metadata.ID))];
         }
 
         public static async Task<List<Result>> QueryForPluginAsync(PluginPair pair, Query query, CancellationToken token)
@@ -576,9 +601,17 @@ namespace Flow.Launcher.Core.Plugin
             return [.. _globalPlugins.Values];
         }
 
-        public static Dictionary<string, PluginPair> GetNonGlobalPlugins()
+        public static Dictionary<string, List<PluginPair>> GetNonGlobalPlugins()
         {
-            return _nonGlobalPlugins.ToDictionary();
+            var nonGlobalPlugins = new Dictionary<string, List<PluginPair>>();
+            foreach (var kvp in _nonGlobalPlugins)
+            {
+                lock (kvp.Value)
+                {
+                    nonGlobalPlugins.Add(kvp.Key, [.. kvp.Value]);
+                }
+            }
+            return nonGlobalPlugins;
         }
 
         public static List<PluginPair> GetTranslationPlugins()
@@ -721,12 +754,12 @@ namespace Flow.Launcher.Core.Plugin
 
         #region Plugin Action Keyword
 
+        [Obsolete("This method is only used for old Flow compatibility.")]
         public static bool ActionKeywordRegistered(string actionKeyword)
         {
-            // this method is only checking for action keywords (defined as not '*') registration
-            // hence the actionKeyword != Query.GlobalPluginWildcardSign logic
-            return actionKeyword != Query.GlobalPluginWildcardSign 
-                && _nonGlobalPlugins.ContainsKey(actionKeyword);
+            // Since now we support to assign one action keyword to multiple plugins,
+            // this check is unnecessary, so we will just return false here to ensure compatibility for old plugins.
+            return false;
         }
 
         /// <summary>
@@ -736,17 +769,34 @@ namespace Flow.Launcher.Core.Plugin
         public static void AddActionKeyword(string id, string newActionKeyword)
         {
             var plugin = GetPluginForId(id);
+            if (plugin == null) return;
+
             if (newActionKeyword == Query.GlobalPluginWildcardSign)
             {
                 _globalPlugins.TryAdd(id, plugin);
             }
             else
             {
-                _nonGlobalPlugins.AddOrUpdate(newActionKeyword, plugin, (key, oldValue) => plugin);
+                _nonGlobalPlugins.AddOrUpdate(newActionKeyword,
+                    _ => [plugin],
+                    (_, existing) =>
+                    {
+                        lock (existing)
+                        {
+                            if (!existing.Contains(plugin))
+                            {
+                                existing.Add(plugin);
+                            }
+                        }
+                        return existing;
+                    });
             }
 
             // Update action keywords and action keyword in plugin metadata
-            plugin.Metadata.ActionKeywords.Add(newActionKeyword);
+            if (!plugin.Metadata.ActionKeywords.Contains(newActionKeyword))
+            {
+                plugin.Metadata.ActionKeywords.Add(newActionKeyword);
+            }
             if (plugin.Metadata.ActionKeywords.Count > 0)
             {
                 plugin.Metadata.ActionKeyword = plugin.Metadata.ActionKeywords[0];
@@ -764,6 +814,8 @@ namespace Flow.Launcher.Core.Plugin
         public static void RemoveActionKeyword(string id, string oldActionkeyword)
         {
             var plugin = GetPluginForId(id);
+            if (plugin == null) return;
+
             if (oldActionkeyword == Query.GlobalPluginWildcardSign
                 && // Plugins may have multiple ActionKeywords that are global, eg. WebSearch
                 plugin.Metadata.ActionKeywords
@@ -774,11 +826,22 @@ namespace Flow.Launcher.Core.Plugin
 
             if (oldActionkeyword != Query.GlobalPluginWildcardSign)
             {
-                _nonGlobalPlugins.TryRemove(oldActionkeyword, out _);
+                if (_nonGlobalPlugins.TryGetValue(oldActionkeyword, out var plugins))
+                {
+                    lock (plugins)
+                    {
+                        plugins.RemoveAll(p => p.Metadata.ID == id);
+
+                        if (plugins.Count == 0)
+                        {
+                            _nonGlobalPlugins.TryRemove(new KeyValuePair<string, List<PluginPair>>(oldActionkeyword, plugins));
+                        }
+                    }
+                }
             }
 
             // Update action keywords and action keyword in plugin metadata
-            plugin.Metadata.ActionKeywords.Remove(oldActionkeyword);
+            plugin.Metadata.ActionKeywords.RemoveAll(k => k == oldActionkeyword);
             if (plugin.Metadata.ActionKeywords.Count > 0)
             {
                 plugin.Metadata.ActionKeyword = plugin.Metadata.ActionKeywords[0];
@@ -813,15 +876,13 @@ namespace Flow.Launcher.Core.Plugin
             return string.Empty;
         }
 
-        private static bool SameOrLesserPluginVersionExists(string metadataPath)
+        private static bool SameOrLesserPluginVersionExists(PluginMetadata metadata)
         {
-            var newMetadata = JsonSerializer.Deserialize<PluginMetadata>(File.ReadAllText(metadataPath));
-
-            if (!Version.TryParse(newMetadata.Version, out var newVersion))
+            if (!Version.TryParse(metadata.Version, out var newVersion))
                 return true; // If version is not valid, we assume it is lesser than any existing version
 
             // Get all plugins even if initialization failed so that we can check if the plugin with the same ID exists
-            return GetAllInitializedPlugins(includeFailed: true).Any(x => x.Metadata.ID == newMetadata.ID
+            return GetAllInitializedPlugins(includeFailed: true).Any(x => x.Metadata.ID == metadata.ID
                 && Version.TryParse(x.Metadata.Version, out var version)
                 && newVersion <= version);
         }
@@ -881,84 +942,116 @@ namespace Flow.Launcher.Core.Plugin
             var tempFolderPluginPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
             System.IO.Compression.ZipFile.ExtractToDirectory(zipFilePath, tempFolderPluginPath);
 
-            if(!plugin.IsFromLocalInstallPath)
-                File.Delete(zipFilePath);
-
-            var pluginFolderPath = GetContainingFolderPathAfterUnzip(tempFolderPluginPath);
-
-            var metadataJsonFilePath = string.Empty;
-            if (File.Exists(Path.Combine(pluginFolderPath, Constant.PluginMetadataFileName)))
-                metadataJsonFilePath = Path.Combine(pluginFolderPath, Constant.PluginMetadataFileName);
-
-            if (string.IsNullOrEmpty(metadataJsonFilePath) || string.IsNullOrEmpty(pluginFolderPath))
+            try
             {
-                PublicApi.Instance.ShowMsgError(Localize.failedToInstallPluginTitle(plugin.Name),
-                    Localize.fileNotFoundMessage(pluginFolderPath));
-                return false;
-            }
+                if (!plugin.IsFromLocalInstallPath)
+                    File.Delete(zipFilePath);
 
-            if (SameOrLesserPluginVersionExists(metadataJsonFilePath))
-            {
-                PublicApi.Instance.ShowMsgError(Localize.failedToInstallPluginTitle(plugin.Name),
-                    Localize.pluginExistAlreadyMessage());
-                return false;
-            }
+                var pluginFolderPath = GetContainingFolderPathAfterUnzip(tempFolderPluginPath);
 
-            var folderName = string.IsNullOrEmpty(plugin.Version) ? $"{plugin.Name}-{Guid.NewGuid()}" : $"{plugin.Name}-{plugin.Version}";
+                var metadataJsonFilePath = string.Empty;
+                if (File.Exists(Path.Combine(pluginFolderPath, Constant.PluginMetadataFileName)))
+                    metadataJsonFilePath = Path.Combine(pluginFolderPath, Constant.PluginMetadataFileName);
 
-            var defaultPluginIDs = new List<string>
+                if (string.IsNullOrEmpty(metadataJsonFilePath) || string.IsNullOrEmpty(pluginFolderPath))
                 {
-                    "0ECADE17459B49F587BF81DC3A125110", // BrowserBookmark
-                    "CEA0FDFC6D3B4085823D60DC76F28855", // Calculator
-                    "572be03c74c642baae319fc283e561a8", // Explorer
-                    "6A122269676E40EB86EB543B945932B9", // PluginIndicator
-                    "9f8f9b14-2518-4907-b211-35ab6290dee7", // PluginsManager
-                    "b64d0a79-329a-48b0-b53f-d658318a1bf6", // ProcessKiller
-                    "791FC278BA414111B8D1886DFE447410", // Program
-                    "D409510CD0D2481F853690A07E6DC426", // Shell
-                    "CEA08895D2544B019B2E9C5009600DF4", // Sys
-                    "0308FD86DE0A4DEE8D62B9B535370992", // URL
-                    "565B73353DBF4806919830B9202EE3BF", // WebSearch
-                    "5043CETYU6A748679OPA02D27D99677A" // WindowsSettings
-                };
+                    PublicApi.Instance.ShowMsgError(Localize.failedToInstallPluginTitle(plugin.Name),
+                        Localize.fileNotFoundMessage(pluginFolderPath));
+                    return false;
+                }
 
-            // Treat default plugin differently, it needs to be removable along with each flow release
-            var installDirectory = !defaultPluginIDs.Any(x => x == plugin.ID)
-                                    ? DataLocation.PluginsDirectory
-                                    : Constant.PreinstalledDirectory;
+                PluginMetadata newMetadata;
+                try
+                {
+                    newMetadata = JsonSerializer.Deserialize<PluginMetadata>(File.ReadAllText(metadataJsonFilePath)) ??
+                        throw new JsonException("Deserialized metadata is null");
+                }
+                catch (Exception ex)
+                {
+                    PublicApi.Instance.ShowMsgError(Localize.failedToInstallPluginTitle(plugin.Name),
+                        Localize.pluginJsonInvalidOrCorrupted());
+                    PublicApi.Instance.LogException(ClassName,
+                        $"Failed to deserialize plugin metadata for plugin {plugin.Name} from file {metadataJsonFilePath}", ex);
+                    return false;
+                }
 
-            var newPluginPath = Path.Combine(installDirectory, folderName);
+                if (SameOrLesserPluginVersionExists(newMetadata))
+                {
+                    PublicApi.Instance.ShowMsgError(Localize.failedToInstallPluginTitle(plugin.Name),
+                        Localize.pluginExistAlreadyMessage());
+                    return false;
+                }
 
-            FilesFolders.CopyAll(pluginFolderPath, newPluginPath, (s) => PublicApi.Instance.ShowMsgBox(s));
+                if (!IsMinimumAppVersionSatisfied(newMetadata.Name, newMetadata.MinimumAppVersion))
+                {
+                    // Ask users if they want to install the plugin that doesn't satisfy the minimum app version requirement
+                    if (PublicApi.Instance.ShowMsgBox(
+                        Localize.pluginMinimumAppVersionUnsatisfiedMessage(newMetadata.Name, Environment.NewLine),
+                        Localize.pluginMinimumAppVersionUnsatisfiedTitle(newMetadata.Name, newMetadata.MinimumAppVersion),
+                        MessageBoxButton.YesNo) == MessageBoxResult.No)
+                    {
+                        return false;
+                    }
+                }
 
-            // Check if marker file exists and delete it
-            try
-            {
-                var markerFilePath = Path.Combine(newPluginPath, DataLocation.PluginDeleteFile);
-                if (File.Exists(markerFilePath))
-                    File.Delete(markerFilePath);
+                var folderName = string.IsNullOrEmpty(plugin.Version) ? $"{plugin.Name}-{Guid.NewGuid()}" : $"{plugin.Name}-{plugin.Version}";
+
+                var defaultPluginIDs = new List<string>
+                    {
+                        "0ECADE17459B49F587BF81DC3A125110", // BrowserBookmark
+                        "CEA0FDFC6D3B4085823D60DC76F28855", // Calculator
+                        "572be03c74c642baae319fc283e561a8", // Explorer
+                        "6A122269676E40EB86EB543B945932B9", // PluginIndicator
+                        "9f8f9b14-2518-4907-b211-35ab6290dee7", // PluginsManager
+                        "b64d0a79-329a-48b0-b53f-d658318a1bf6", // ProcessKiller
+                        "791FC278BA414111B8D1886DFE447410", // Program
+                        "D409510CD0D2481F853690A07E6DC426", // Shell
+                        "CEA08895D2544B019B2E9C5009600DF4", // Sys
+                        "0308FD86DE0A4DEE8D62B9B535370992", // URL
+                        "565B73353DBF4806919830B9202EE3BF", // WebSearch
+                        "5043CETYU6A748679OPA02D27D99677A" // WindowsSettings
+                    };
+
+                // Treat default plugin differently, it needs to be removable along with each flow release
+                var installDirectory = !defaultPluginIDs.Any(x => x == plugin.ID)
+                                        ? DataLocation.PluginsDirectory
+                                        : Constant.PreinstalledDirectory;
+
+                var newPluginPath = Path.Combine(installDirectory, folderName);
+
+                FilesFolders.CopyAll(pluginFolderPath, newPluginPath, (s) => PublicApi.Instance.ShowMsgBox(s));
+
+                // Check if marker file exists and delete it
+                try
+                {
+                    var markerFilePath = Path.Combine(newPluginPath, DataLocation.PluginDeleteFile);
+                    if (File.Exists(markerFilePath))
+                        File.Delete(markerFilePath);
+                }
+                catch (Exception e)
+                {
+                    PublicApi.Instance.LogException(ClassName, $"Failed to delete plugin marker file in {newPluginPath}", e);
+                }
+
+                if (checkModified)
+                {
+                    ModifiedPlugins.Add(plugin.ID);
+                }
+
+                return true;
             }
-            catch (Exception e)
+            finally
             {
-                PublicApi.Instance.LogException(ClassName, $"Failed to delete plugin marker file in {newPluginPath}", e);
+                try
+                {
+                    if (Directory.Exists(tempFolderPluginPath))
+                        Directory.Delete(tempFolderPluginPath, true);
+                }
+                catch (Exception e)
+                {
+                    PublicApi.Instance.LogException(ClassName, $"Failed to delete temp folder {tempFolderPluginPath}", e);
+                }
             }
-
-            try
-            {
-                if (Directory.Exists(tempFolderPluginPath))
-                    Directory.Delete(tempFolderPluginPath, true);
-            }
-            catch (Exception e)
-            {
-                PublicApi.Instance.LogException(ClassName, $"Failed to delete temp folder {tempFolderPluginPath}", e);
-            }
-
-            if (checkModified)
-            {
-                ModifiedPlugins.Add(plugin.ID);
-            }
-
-            return true;
         }
 
         internal static async Task<bool> UninstallPluginAsync(PluginMetadata plugin, bool removePluginFromSettings, bool removePluginSettings, bool checkModified)
@@ -1032,10 +1125,18 @@ namespace Flow.Launcher.Core.Plugin
                 {
                     _globalPlugins.TryRemove(plugin.ID, out var _);
                 }
-                var keysToRemove = _nonGlobalPlugins.Where(p => p.Value.Metadata.ID == plugin.ID).Select(p => p.Key).ToList();
-                foreach (var key in keysToRemove)
+                var entriesToUpdate = _nonGlobalPlugins.ToList();
+                foreach (var entry in entriesToUpdate)
                 {
-                    _nonGlobalPlugins.TryRemove(key, out var _);
+                    lock (entry.Value)
+                    {
+                        entry.Value.RemoveAll(p => p.Metadata.ID == plugin.ID);
+
+                        if (entry.Value.Count == 0)
+                        {
+                            _nonGlobalPlugins.TryRemove(new KeyValuePair<string, List<PluginPair>>(entry.Key, entry.Value));
+                        }
+                    }
                 }
             }
 
@@ -1048,6 +1149,27 @@ namespace Flow.Launcher.Core.Plugin
             }
 
             return true;
+        }
+
+        internal static bool IsMinimumAppVersionSatisfied(string pluginName, string minimumAppVersion)
+        {
+            // If the minimum app version is not specified in plugin.json, this plugin is compatible with all app versions
+            if (string.IsNullOrEmpty(minimumAppVersion))
+                return true;
+
+            var appVersion = Version.Parse(Constant.Version);
+
+            if (!Version.TryParse(minimumAppVersion, out var minimumVersion))
+            {
+                PublicApi.Instance.LogError(ClassName,
+                    $"Failed to parse the minimum app version {minimumAppVersion} for plugin {pluginName}.");
+                return false;  // If the minimum app version specified in plugin.json is invalid, we assume it is not satisfied
+            }
+
+            if (appVersion >= minimumVersion)
+                return true;
+
+            return false;
         }
 
         #endregion

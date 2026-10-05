@@ -28,11 +28,16 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
         public IReadOnlyList<EnumBindingModel<Settings.ContentIndexSearchEngineOption>> ContentIndexSearchEngines { get; set; }
         public IReadOnlyList<EnumBindingModel<Settings.PathEnumerationEngineOption>> PathEnumerationEngines { get; set; }
 
+        // Cache when initializing
+        private readonly bool InitialUsingEverything15;
+        private readonly string InitialEverything15InstanceName;
+
         public SettingsViewModel(PluginInitContext context, Settings settings)
         {
             Context = context;
             Settings = settings;
-
+            InitialUsingEverything15 = settings.EnableEverything15Support;
+            InitialEverything15InstanceName = settings.Everything15InstanceName;
             InitializeEngineSelection();
             InitializeActionKeywordModels();
         }
@@ -619,7 +624,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             {
                 try
                 {
-                    return EverythingApi.IsFastSortOption(Settings.SortOption) ? Visibility.Collapsed : Visibility.Visible;
+                    return Settings.EverythingManagerInstance.IsFastSortOption(Settings.SortOption) ? Visibility.Collapsed : Visibility.Visible;
                 }
                 catch (IPCErrorException)
                 {
@@ -627,7 +632,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                     // update the message to let user know in the settings panel.
                     return Visibility.Visible;
                 }
-                catch (DllNotFoundException)
+                catch (Exception ex) when (ex is DllNotFoundException || ex is EntryPointNotFoundException)
                 {
                     return Visibility.Collapsed;
                 }
@@ -642,14 +647,16 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                 {
                     // this method is used to determine if Everything service is running because as at Everything v1.4.1
                     // the sdk does not provide a dedicated interface to determine if it is running.
-                    return EverythingApi.IsFastSortOption(Settings.SortOption) ? string.Empty
+                    return Settings.EverythingManagerInstance.IsFastSortOption(Settings.SortOption) ? string.Empty
                         : Localize.flowlauncher_plugin_everything_nonfastsort_warning();
                 }
                 catch (IPCErrorException)
                 {
-                    return Localize.flowlauncher_plugin_everything_is_not_running();
+                    return InitialUsingEverything15
+                        ? Localize.flowlauncher_plugin_everything_15_sort_warning()
+                        : Localize.flowlauncher_plugin_everything_is_not_running();
                 }
-                catch (DllNotFoundException)
+                catch (Exception ex) when (ex is DllNotFoundException || ex is EntryPointNotFoundException)
                 {
                     return Localize.flowlauncher_plugin_everything_sdk_issue();
                 }
@@ -662,6 +669,50 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             set
             {
                 Settings.EverythingInstalledPath = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool EnableEverything15Support
+        {
+            get => Settings.EnableEverything15Support;
+            set
+            {
+                if (Settings.EnableEverything15Support == value)
+                    return;
+
+                Settings.EnableEverything15Support = value;
+
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(FastSortWarningVisibility));
+                OnPropertyChanged(nameof(SortOptionWarningMessage));
+                OnPropertyChanged(nameof(Everything15RestartRequired));
+            }
+        }
+
+        public bool Everything15RestartRequired =>
+            Settings.EnableEverything15Support != InitialUsingEverything15 ||
+            (Settings.EnableEverything15Support && Settings.Everything15InstanceName != InitialEverything15InstanceName);
+
+        public string Everything15InstanceName
+        {
+            get => Settings.Everything15InstanceName;
+            set
+            {
+                var instanceName = value?.Trim() ?? string.Empty;
+
+                if (Settings.Everything15InstanceName == instanceName)
+                    return;
+
+                Settings.Everything15InstanceName = instanceName;
+
+                if (EnableEverything15Support)
+                {
+                    OnPropertyChanged(nameof(FastSortWarningVisibility));
+                    OnPropertyChanged(nameof(SortOptionWarningMessage));
+                    OnPropertyChanged(nameof(Everything15RestartRequired));
+                }
+
                 OnPropertyChanged();
             }
         }

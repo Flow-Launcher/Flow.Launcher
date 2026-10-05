@@ -24,6 +24,7 @@ using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Plugin.SharedModels;
+using Flow.Launcher.Resources.Controls;
 using Flow.Launcher.ViewModel;
 using iNKORE.UI.WPF.Modern;
 using iNKORE.UI.WPF.Modern.Controls;
@@ -110,6 +111,8 @@ namespace Flow.Launcher
 
         private void ViewModel_ActualApplicationThemeChanged(object sender, ActualApplicationThemeChangedEventArgs args)
         {
+            // Keep the markdown preview's "Auto" code-highlight theme in step with the app colour scheme.
+            PreviewMarkdownScrollViewer.ApplyCodeHighlightTheme(_settings.CodeHighlightTheme, args.IsDark);
             _ = _theme.RefreshFrameAsync();
         }
 
@@ -200,6 +203,12 @@ namespace Flow.Launcher
                 ThemeManager.Current.ApplicationTheme = ApplicationTheme.Dark;
             }
 
+            // Initialize the markdown preview code-highlight theme from settings, resolving "Auto"
+            // against the colour scheme just applied above.
+            PreviewMarkdownScrollViewer.ApplyCodeHighlightTheme(
+                _settings.CodeHighlightTheme,
+                ThemeManager.Current.ActualApplicationTheme == ApplicationTheme.Dark);
+
             // Force update position
             UpdatePosition();
 
@@ -207,7 +216,10 @@ namespace Flow.Launcher
             SetupResizeMode();
 
             // Reset preview
-            _viewModel.ResetPreview();
+            // Can't await in sync startup code; fire-and-forget but safely log any failure
+            _ = _viewModel.ResetPreviewAsync().ContinueWith(static t =>
+                    App.API.LogError(ClassName, $"ResetPreviewAsync failed: {t.Exception}"),
+                CancellationToken.None, TaskContinuationOptions.OnlyOnFaulted, TaskScheduler.Default);
 
             // Since the default main window visibility is visible, so we need set focus during startup
             QueryTextBox.Focus();
@@ -220,7 +232,7 @@ namespace Flow.Launcher
             // being shown yet, and skipped entirely when the window starts hidden for the same reason.
             if (!_settings.HideOnStartup)
             {
-                Dispatcher.BeginInvoke(new Action(() =>
+                _ = Dispatcher.BeginInvoke((() =>
                 {
                     if (!_viewModel.MainWindowVisibilityStatus) return;
                     Activate();
@@ -257,7 +269,10 @@ namespace Flow.Launcher
                                     Activate();
 
                                     // Reset preview
-                                    _viewModel.ResetPreview();
+                                    // Can't await in Dispatcher.Invoke; fire-and-forget but safely log any failure
+                                    _ = _viewModel.ResetPreviewAsync().ContinueWith(static t =>
+                                            App.API.LogError(ClassName, $"ResetPreviewAsync failed: {t.Exception}"),
+                                        CancellationToken.None, TaskContinuationOptions.OnlyOnFaulted, TaskScheduler.Default);
 
                                     // Select last query if need
                                     if (!_viewModel.LastQuerySelected)
@@ -336,6 +351,7 @@ namespace Flow.Launcher
                         break;
                     case nameof(Settings.ShowHomePage):
                     case nameof(Settings.ShowHistoryResultsForHomePage):
+                    case nameof(Settings.HistoryStyle):
                         if (_viewModel.QueryResultsSelected() && string.IsNullOrEmpty(_viewModel.QueryText))
                         {
                             _viewModel.QueryResults();
@@ -453,6 +469,15 @@ namespace Flow.Launcher
 
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
+            // When a code-block in the markdown preview is focused
+            // Let it capture input of text navigation keys (arrows, page, home/end) instead
+            // Non-navigation keys pass through normally.
+            if (PreviewMarkdownScrollViewer.IsCodeBlockFocused(e.OriginalSource)
+                && PreviewMarkdownScrollViewer.IsCodeBlockNavigationKey(e.Key))
+            {
+                return;
+            }
+
             var specialKeyState = GlobalHotkey.CheckModifiers();
             switch (e.Key)
             {
@@ -475,10 +500,10 @@ namespace Flow.Launcher
                     e.Handled = true;
                     break;
                 case Key.Right:
-                    if (_viewModel.QueryResultsSelected()
-                        && QueryTextBox.CaretIndex == QueryTextBox.Text.Length)            
+                    if ((_viewModel.QueryResultsSelected() || _viewModel.HistorySelected())
+                        && QueryTextBox.CaretIndex == QueryTextBox.Text.Length)
                     {
-                        _viewModel.LoadContextMenuCommand.Execute(null);
+                        _viewModel.ToggleContextMenuCommand.Execute(null);
                         e.Handled = true;
                     }
                     break;
@@ -930,7 +955,7 @@ namespace Flow.Launcher
 
         public void UpdatePosition()
         {
-            // Initialize call twice to work around multi-display alignment issue- https://github.com/Flow-Launcher/Flow.Launcher/issues/2910
+            // Initialize call twice to workaround multi-display alignment issue- https://github.com/Flow-Launcher/Flow.Launcher/issues/2910
             if (_viewModel.IsDialogJumpWindowUnderDialog())
             {
                 InitializeDialogJumpPosition();
@@ -954,7 +979,7 @@ namespace Flow.Launcher
 
         private void InitializePosition()
         {
-            // Initialize call twice to work around multi-display alignment issue- https://github.com/Flow-Launcher/Flow.Launcher/issues/2910
+            // Initialize call twice to workaround multi-display alignment issue- https://github.com/Flow-Launcher/Flow.Launcher/issues/2910
             InitializePositionInner();
             InitializePositionInner();
             return;

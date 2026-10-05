@@ -94,6 +94,11 @@ namespace Flow.Launcher.Core.Plugin.JsonRPCV2Models
             _api.OpenSettingDialog();
         }
 
+        public bool OpenPluginSettingsWindow(string pluginId)
+        {
+            return _api.OpenPluginSettingsWindow(pluginId);
+        }
+
         public string GetTranslation(string key)
         {
             return _api.GetTranslation(key);

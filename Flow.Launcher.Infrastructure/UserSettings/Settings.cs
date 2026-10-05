@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Text.Json.Serialization;
 using System.Windows;
 using System.Windows.Media;
@@ -7,6 +9,7 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
+using Flow.Launcher.Localization.Attributes;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
 
@@ -16,6 +19,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
     {
         private FlowLauncherJsonStorage<Settings> _storage;
         private StringMatcher _stringMatcher = null;
+
+        public event EventHandler StringMatcherBehaviorChanged;
 
         public void SetStorage(FlowLauncherJsonStorage<Settings> storage)
         {
@@ -31,6 +36,23 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             var settingWindowFont = new FontFamily(SettingWindowFont);
             Application.Current.Resources["SettingWindowFont"] = settingWindowFont;
             Application.Current.Resources["ContentControlThemeFontFamily"] = settingWindowFont;
+
+            PropertyChanged += Settings_PropertyChanged;
+        }
+
+        private void Settings_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case nameof(QuerySearchPrecision):
+                case nameof(ShouldUsePinyin):
+                case nameof(UseDoublePinyin):
+                case nameof(DoublePinyinSchema):
+                case nameof(UsePolyphonicPhraseOverrides):
+                case nameof(IgnoreAccents):
+                    StringMatcherBehaviorChanged?.Invoke(this, EventArgs.Empty);
+                    break;
+            }
         }
 
         public void Save()
@@ -152,7 +174,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
         public double SoundVolume { get; set; } = 50;
-        public bool ShowBadges { get; set; } = false;
+        public bool ShowBadges { get; set; } = true;
         public bool ShowBadgesGlobalOnly { get; set; } = false;
 
         private string _settingWindowFont { get; set; } = Win32Helper.GetSystemDefaultFont(false);
@@ -384,6 +406,20 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
 
+        private bool _usePolyphonicPhraseOverrides = true;
+        public bool UsePolyphonicPhraseOverrides
+        {
+            get => _usePolyphonicPhraseOverrides;
+            set
+            {
+                if (_usePolyphonicPhraseOverrides != value)
+                {
+                    _usePolyphonicPhraseOverrides = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         private DoublePinyinSchemas _doublePinyinSchema = DoublePinyinSchemas.XiaoHe;
 
         [JsonInclude, JsonConverter(typeof(JsonStringEnumConverter))]
@@ -402,6 +438,12 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         public bool AlwaysPreview { get; set; } = false;
 
+        /// <summary>
+        /// Name of the syntax-highlighting theme used for code blocks in the markdown preview.
+        /// "Auto" follows the app colour scheme (light/dark); otherwise a <see cref="CodeHighlightThemes"/> name.
+        /// </summary>
+        public string CodeHighlightTheme { get; set; } = "Auto";
+
         public bool AlwaysStartEn { get; set; } = false;
 
         private SearchPrecisionScore _querySearchPrecision = SearchPrecisionScore.Regular;
@@ -415,7 +457,24 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 {
                     _querySearchPrecision = value;
                     if (_stringMatcher != null)
+                    {
                         _stringMatcher.UserSettingSearchPrecision = value;
+                        OnPropertyChanged();
+                    }
+                }
+            }
+        }
+
+        private bool _ignoreAccents = false;
+        public bool IgnoreAccents
+        {
+            get => _ignoreAccents;
+            set
+            {
+                if (_ignoreAccents != value)
+                {
+                    _ignoreAccents = value;
+                    OnPropertyChanged();
                 }
             }
         }
@@ -525,6 +584,21 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public LastQueryMode LastQueryMode { get; set; } = LastQueryMode.Selected;
+
+        private HistoryStyle _historyStyle = HistoryStyle.Query;
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public HistoryStyle HistoryStyle
+        {
+            get => _historyStyle;
+            set
+            {
+                if (_historyStyle != value)
+                {
+                    _historyStyle = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public AnimationSpeeds AnimationSpeed { get; set; } = AnimationSpeeds.Medium;
@@ -643,6 +717,15 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         Dark
     }
 
+    public enum CodeHighlightThemes
+    {
+        Auto,
+        VSCodeLight,
+        VSCodeDarkPlus,
+        CatppuccinMacchiato,
+        OneDark
+    }
+
     public enum SearchWindowScreens
     {
         RememberLastLaunchLocation,
@@ -707,5 +790,15 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         FullPath,
         FullPathOpen,
         Directory
+    }
+
+    [EnumLocalize]
+    public enum HistoryStyle
+    {
+        [EnumLocalizeKey(nameof(Localize.queryHistory))]
+        Query,
+
+        [EnumLocalizeKey(nameof(Localize.executedHistory))]
+        LastOpened
     }
 }

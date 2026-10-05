@@ -147,6 +147,8 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     public List<LastQueryModeData> LastQueryModes { get; } =
         DropdownDataGeneric<LastQueryMode>.GetValues<LastQueryModeData>("LastQuery");
 
+    public List<HistoryStyleLocalized> HistoryStyles { get; } = HistoryStyleLocalized.GetValues();
+
     public bool EnableDialogJump
     {
         get => Settings.EnableDialogJump;
@@ -194,6 +196,20 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         }
     }
 
+
+    public bool IgnoreAccents
+    {
+        get => Settings.IgnoreAccents;
+        set
+        {
+            if(Settings.IgnoreAccents != value)
+            {
+                Settings.IgnoreAccents = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
     public int MaxHistoryResultsToShowValue
     {
         get => Settings.MaxHistoryResultsToShowForHomePage;
@@ -213,6 +229,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         DropdownDataGeneric<SearchWindowAligns>.UpdateLabels(SearchWindowAligns);
         DropdownDataGeneric<SearchPrecisionScore>.UpdateLabels(SearchPrecisionScores);
         DropdownDataGeneric<LastQueryMode>.UpdateLabels(LastQueryModes);
+        HistoryStyleLocalized.UpdateLabels(HistoryStyles);
         DropdownDataGeneric<DoublePinyinSchemas>.UpdateLabels(DoublePinyinSchemas);
         DropdownDataGeneric<DialogJumpWindowPositions>.UpdateLabels(DialogJumpWindowPositions);
         DropdownDataGeneric<DialogJumpResultBehaviours>.UpdateLabels(DialogJumpResultBehaviours);
@@ -223,6 +240,8 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         Settings.CustomBrowser.OnDisplayNameChanged();
     }
 
+    public string Crowdin => Constant.CrowdinProjectUrl;
+
     public string Language
     {
         get => Settings.Language;
@@ -232,6 +251,9 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
 
             if (_translater.PromptShouldUsePinyin(value))
                 ShouldUsePinyin = true;
+
+            if (_translater.PromptShouldIgnoreAccents(value))
+                IgnoreAccents = true;
 
             UpdateEnumDropdownLocalizations();
         }
@@ -318,6 +340,12 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     {
         set => Settings.UseDoublePinyin = value;
         get => Settings.UseDoublePinyin;
+    }
+
+    public bool UsePolyphonicPhraseOverrides
+    {
+        set => Settings.UsePolyphonicPhraseOverrides = value;
+        get => Settings.UsePolyphonicPhraseOverrides;
     }
 
     public List<DoublePinyinSchemaData> DoublePinyinSchemas { get; } =

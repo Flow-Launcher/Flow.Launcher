@@ -138,6 +138,11 @@ namespace Flow.Launcher.Plugin
         public int QueryCount { get; set; }
 
         /// <summary>
+        /// The minimum Flow Launcher version required for this plugin. Default is "".
+        /// </summary>
+        public string MinimumAppVersion { get; set; } = string.Empty;
+
+        /// <summary>
         /// The path to the plugin settings directory which is not validated.
         /// It is used to store plugin settings files and data files.
         /// When plugin is deleted, FL will ask users whether to keep its settings.
