@@ -46,7 +46,7 @@
     <ProjectReference Include="..\Plugins\Flow.Launcher.Plugin.Shell\Flow.Launcher.Plugin.Shell.csproj" />
     <ProjectReference Include="..\Plugins\Flow.Launcher.Plugin.Url\Flow.Launcher.Plugin.Url.csproj" />
     <ProjectReference Include="..\Flow.Launcher.Core\Flow.Launcher.Core.csproj" />
-    <ProjectReference Include="..\Flow.Launcher.Infrastructure\Flow.Launcher.Infrastructure.csproj" />
+    <ProjectReference Include="..\Flow.Launcher.Infrastructure\Flow.Launcher.Infrastructure.csproj" Aliases="global,Infrastructure" />
     <ProjectReference Include="..\Flow.Launcher.Plugin\Flow.Launcher.Plugin.csproj" />
   </ItemGroup>
 
