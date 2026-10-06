@@ -12,19 +12,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Trigger dispatch event for regenerating API docs
-        env:
-          RELEASE_TAG: ${{ github.event.release.tag_name }}
-          RELEASE_URL: ${{ github.event.release.html_url }}
         run: |
-          # release_tag/release_url are empty on workflow_dispatch runs
-          payload=$(jq -nc --arg tag "$RELEASE_TAG" --arg url "$RELEASE_URL" \
-            '{event_type: "regenerate-api-docs", client_payload: {release_tag: $tag, release_url: $url}}')
           http_status=$(curl -L -f -s -o /dev/null -w "%{http_code}" \
             -X POST \
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer ${{ secrets.DEPLOY_FLOW_DOCS }}" \
             https://api.github.com/repos/Flow-Launcher/docs/dispatches \
-            -d "$payload")
+            -d '{"event_type":"regenerate-api-docs"}')
           if [ "$http_status" -ne 204 ]; then echo "Error: Regenerate API docs failed, HTTP status code is $http_status"; exit 1; fi
 
   deploy-website:
