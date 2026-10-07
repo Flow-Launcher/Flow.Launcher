@@ -3,6 +3,7 @@
   <PropertyGroup>
     <ProjectGuid>{FF742965-9A80-41A5-B042-D6C7D3A21708}</ProjectGuid>
     <OutputType>Library</OutputType>
+    <UseWindowsForms>true</UseWindowsForms>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Flow.Launcher.Test</RootNamespace>
     <AssemblyName>Flow.Launcher.Test</AssemblyName>

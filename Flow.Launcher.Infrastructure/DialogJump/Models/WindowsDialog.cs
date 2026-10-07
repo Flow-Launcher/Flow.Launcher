@@ -155,6 +155,8 @@ namespace Flow.Launcher.Infrastructure.DialogJump.Models
             // Ctrl-L focuses the address bar without conflicting with localized dialog mnemonics.
             _pathControl = HWND.Null;
             _pathEditor = HWND.Null;
+            GetPathControlEditor();
+            if (_pathControl.IsNull) return JumpFolderWithFileEditor(path, true);
             _inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.LCONTROL, VirtualKeyCode.VK_L);
 
             var timeOut = !SpinWait.SpinUntil(() =>
@@ -221,12 +223,11 @@ namespace Flow.Launcher.Infrastructure.DialogJump.Models
         {
             // Get the handle of the path editor
             // Must use PInvoke.FindWindowEx because PInvoke.GetDlgItem(Handle, 0x0000) will get another control
-            _pathControl = PInvoke.FindWindowEx(new(Handle), HWND.Null, "WorkerW", null); // 0x0000
-            _pathControl = PInvoke.FindWindowEx(_pathControl, HWND.Null, "ReBarWindow32", null); // 0xA005
-            _pathControl = PInvoke.FindWindowEx(_pathControl, HWND.Null, "Address Band Root", null); // 0xA205
-            _pathControl = PInvoke.FindWindowEx(_pathControl, HWND.Null, "msctls_progress32", null); // 0x0000
-            _pathControl = PInvoke.FindWindowEx(_pathControl, HWND.Null, "ComboBoxEx32", null); // 0xA205
-            if (_pathControl == HWND.Null)
+            if ((_pathControl = PInvoke.FindWindowEx(new(Handle), HWND.Null, "WorkerW", null)).IsNull ||
+                (_pathControl = PInvoke.FindWindowEx(_pathControl, HWND.Null, "ReBarWindow32", null)).IsNull ||
+                (_pathControl = PInvoke.FindWindowEx(_pathControl, HWND.Null, "Address Band Root", null)).IsNull ||
+                (_pathControl = PInvoke.FindWindowEx(_pathControl, HWND.Null, "msctls_progress32", null)).IsNull ||
+                (_pathControl = PInvoke.FindWindowEx(_pathControl, HWND.Null, "ComboBoxEx32", null)).IsNull)
             {
                 _pathEditor = HWND.Null;
             }
