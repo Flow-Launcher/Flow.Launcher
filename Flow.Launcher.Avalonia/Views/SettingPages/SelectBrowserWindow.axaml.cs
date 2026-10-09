@@ -139,7 +139,8 @@ public partial class SelectBrowserWindow : Window, INotifyPropertyChanged
             [
                 new FilePickerFileType("Executable files")
                 {
-                    Patterns = ["*.exe", "*.cmd", "*.bat", "*.com"]
+                    // macOS browsers are .app bundles.
+                    Patterns = OperatingSystem.IsWindows() ? ["*.exe", "*.cmd", "*.bat", "*.com"] : ["*.app"]
                 },
                 FilePickerFileTypes.All
             ]

@@ -7,10 +7,10 @@ using System.Linq;
 using System.Xml;
 using Avalonia;
 using Avalonia.Media;
-using Avalonia.Styling;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
+using Flow.Launcher.Avalonia.Helper;
 using Flow.Launcher.Avalonia.Resource;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.UserSettings;
@@ -39,8 +39,6 @@ public partial class ThemeSettingsViewModel : ObservableObject, IDisposable
         AnimationSpeedOptions = DropdownDataGeneric<AnimationSpeeds>.GetEnumData("AnimationSpeed");
         AvailableFonts = FontManager.Current.SystemFonts.OrderBy(font => font.Name).Select(font => font.Name).Distinct().ToList();
         Themes = LoadThemes();
-
-        ApplyColorScheme(SelectedColorScheme);
 
         _settingsPropertyChangedHandler = (_, e) =>
         {
@@ -82,7 +80,7 @@ public partial class ThemeSettingsViewModel : ObservableObject, IDisposable
 
     public ColorSchemes SelectedColorScheme
     {
-        get => Enum.TryParse<ColorSchemes>(_settings.ColorScheme, true, out var result) ? result : ColorSchemes.System;
+        get => ThemeLoader.ParseColorScheme(_settings.ColorScheme);
         set
         {
             if (SelectedColorScheme == value)
@@ -91,7 +89,11 @@ public partial class ThemeSettingsViewModel : ObservableObject, IDisposable
             }
 
             _settings.ColorScheme = value.ToString();
-            ApplyColorScheme(value);
+            if (Application.Current is { } application)
+            {
+                ThemeLoader.ApplyColorScheme(application, value);
+            }
+
             OnPropertyChanged();
         }
     }
@@ -546,7 +548,7 @@ public partial class ThemeSettingsViewModel : ObservableObject, IDisposable
             return;
         }
 
-        var themePath = GetThemePath(SelectedTheme.FileNameWithoutExtension);
+        var themePath = ThemeLoader.GetThemePath(SelectedTheme.FileNameWithoutExtension);
         if (string.IsNullOrWhiteSpace(themePath) || !File.Exists(themePath))
         {
             return;
@@ -564,21 +566,6 @@ public partial class ThemeSettingsViewModel : ObservableObject, IDisposable
         BackdropTypesList.ForEach(x => x.UpdateLabels());
         AnimationSpeedOptions.ForEach(x => x.UpdateLabels());
         OnPropertyChanged(nameof(ClockAndDateText));
-    }
-
-    private void ApplyColorScheme(ColorSchemes scheme)
-    {
-        if (Application.Current == null)
-        {
-            return;
-        }
-
-        Application.Current.RequestedThemeVariant = scheme switch
-        {
-            ColorSchemes.Light => ThemeVariant.Light,
-            ColorSchemes.Dark => ThemeVariant.Dark,
-            _ => ThemeVariant.Default
-        };
     }
 
     private List<ThemeData> LoadThemes()
@@ -632,26 +619,6 @@ public partial class ThemeSettingsViewModel : ObservableObject, IDisposable
             string.Equals(option.Weight, weight, StringComparison.OrdinalIgnoreCase) &&
             string.Equals(option.Stretch, stretch, StringComparison.OrdinalIgnoreCase))
             ?? options.FirstOrDefault();
-    }
-
-    private static string GetThemePath(string themeName)
-    {
-        var themeDirectories = new[]
-        {
-            Path.Combine(Constant.ProgramDirectory, Constant.Themes),
-            Path.Combine(DataLocation.DataDirectory(), Constant.Themes)
-        };
-
-        foreach (var directory in themeDirectories)
-        {
-            var candidate = Path.Combine(directory, themeName + ".xaml");
-            if (File.Exists(candidate))
-            {
-                return candidate;
-            }
-        }
-
-        return string.Empty;
     }
 
     private static ThemeData GetThemeDataFromPath(string path)

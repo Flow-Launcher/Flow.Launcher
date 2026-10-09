@@ -51,6 +51,9 @@ public partial class GeneralSettingsViewModel : ObservableObject
 
     public string Crowdin => Constant.CrowdinProjectUrl;
 
+    // Hides options backed by Windows-only services (logon task, taskbar, Squirrel updates/portable mode, Dialog Jump, keyboard layout).
+    public bool IsWindowsPlatform { get; } = OperatingSystem.IsWindows();
+
     #region Languages
 
     [ObservableProperty]
@@ -637,11 +640,10 @@ public partial class GeneralSettingsViewModel : ObservableObject
         {
             Title = _i18n.GetTranslation("selectPythonExecutable"),
             AllowMultiple = false,
-            FileTypeFilter =
-            [
-                new FilePickerFileType("Python") { Patterns = ["pythonw.exe", "python.exe"] },
-                FilePickerFileTypes.All
-            ]
+            // Unix executables have no extension to filter on.
+            FileTypeFilter = OperatingSystem.IsWindows()
+                ? [new FilePickerFileType("Python") { Patterns = ["pythonw.exe", "python.exe"] }, FilePickerFileTypes.All]
+                : [FilePickerFileTypes.All]
         });
 
         var selectedFile = files.FirstOrDefault()?.Path.LocalPath;
@@ -665,11 +667,9 @@ public partial class GeneralSettingsViewModel : ObservableObject
         {
             Title = _i18n.GetTranslation("selectNodeExecutable"),
             AllowMultiple = false,
-            FileTypeFilter =
-            [
-                new FilePickerFileType("Node") { Patterns = ["*.exe"] },
-                FilePickerFileTypes.All
-            ]
+            FileTypeFilter = OperatingSystem.IsWindows()
+                ? [new FilePickerFileType("Node") { Patterns = ["*.exe"] }, FilePickerFileTypes.All]
+                : [FilePickerFileTypes.All]
         });
 
         var selectedFile = files.FirstOrDefault()?.Path.LocalPath;
@@ -721,8 +721,11 @@ public partial class GeneralSettingsViewModel : ObservableObject
     [RelayCommand]
     private void OpenImeSettings()
     {
-        Win32Helper.OpenImeSettings();
+        OpenPlatformImeSettings();
     }
+
+    // Windows input settings page; the Korean IME section that exposes this command is hidden elsewhere.
+    partial void OpenPlatformImeSettings();
 
     [RelayCommand]
     private async Task OpenCrowdin()

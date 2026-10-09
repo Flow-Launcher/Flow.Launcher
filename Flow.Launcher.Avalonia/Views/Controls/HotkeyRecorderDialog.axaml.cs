@@ -4,6 +4,7 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using FluentAvalonia.UI.Controls;
+using Flow.Launcher.Avalonia.Helper;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Hotkey;
 using System;
@@ -60,7 +61,7 @@ namespace Flow.Launcher.Avalonia.Views.Controls
             DetachKeyboardHook();
         }
 
-        // Key capture uses the Win32 low-level keyboard hook; recording is unavailable elsewhere.
+        // Key capture: Win32 low-level keyboard hook on Windows (.Windows.cs), window key events elsewhere (.CrossPlatform.cs).
         partial void AttachKeyboardHook();
 
         partial void DetachKeyboardHook();
@@ -76,6 +77,33 @@ namespace Flow.Launcher.Avalonia.Views.Controls
             foreach (var key in model.EnumerateDisplayKeys())
             {
                 KeysToDisplay.Add(key);
+            }
+        }
+
+        private void ApplyRecordedHotkey(HotkeyModel model)
+        {
+            UpdateKeysDisplay(model);
+            
+            // Update Save button enablement based on validity and availability
+            var isValid = model.Validate();
+            var isAvailable = isValid && HotKeyMapper.CheckAvailability(model);
+            
+            IsPrimaryButtonEnabled = isAvailable;
+
+            var alert = this.FindControl<Border>("Alert");
+            var tbMsg = this.FindControl<TextBlock>("tbMsg");
+            if (alert != null && tbMsg != null)
+            {
+                if (isValid && !isAvailable)
+                {
+                    // TODO: Get actual translation
+                    tbMsg.Text = "Hotkey already in use";
+                    alert.IsVisible = true;
+                }
+                else
+                {
+                    alert.IsVisible = false;
+                }
             }
         }
         

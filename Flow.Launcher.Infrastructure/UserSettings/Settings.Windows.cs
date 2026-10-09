@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Media;
@@ -29,5 +30,39 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         };
 
         public static partial string GetSystemDefaultFont(bool useNoto) => Win32Helper.GetSystemDefaultFont(useNoto);
+
+        private static partial List<CustomExplorerViewModel> CreateDefaultCustomExplorerList() => new()
+        {
+            new()
+            {
+                Name = "Explorer",
+                Path = "explorer",
+                DirectoryArgument = "\"%d\"",
+                FileArgument = "/select, \"%f\"",
+                Editable = false
+            },
+            new()
+            {
+                Name = "Total Commander",
+                Path = @"C:\Program Files\totalcmd\TOTALCMD64.exe",
+                DirectoryArgument = "/O /A /S /T \"%d\"",
+                FileArgument = "/O /A /S /T \"%f\""
+            },
+            new()
+            {
+                Name = "Directory Opus",
+                Path = @"C:\Program Files\GPSoftware\Directory Opus\dopusrt.exe",
+                DirectoryArgument = "/cmd Go \"%d\" NEW",
+                FileArgument = "/cmd Go \"%f\" NEW"
+
+            },
+            new()
+            {
+                Name = "Files",
+                Path = "Files-Stable",
+                DirectoryArgument = "\"%d\"",
+                FileArgument = "-select \"%f\""
+            }
+        };
     }
 }

@@ -21,9 +21,13 @@ internal sealed partial class Program
     static partial void InitializeWpfApplication();
 
     // Avalonia configuration, don't remove; also used by visual designer.
+    // macOS: ShowInDock = false, because Avalonia otherwise sets the Regular activation policy, overriding the
+    // bundle's LSUIElement and showing a Dock icon (the launcher is a menu-bar/tray app); DisableSetProcessName
+    // keeps the bundle's CFBundleName instead of Avalonia's default "Avalonia Application". Ignored elsewhere.
     public static AppBuilder BuildAvaloniaApp()
         => AppBuilder.Configure<App>()
             .UsePlatformDetect()
+            .With(new MacOSPlatformOptions { ShowInDock = false, DisableSetProcessName = true })
             .WithInterFont()
             .LogToTrace();
 }

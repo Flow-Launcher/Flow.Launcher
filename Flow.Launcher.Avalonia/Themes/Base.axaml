@@ -11,11 +11,11 @@
 
     <!-- Window Border Style -->
     <Style Selector="Border.windowBorder">
-        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderThickness" Value="{DynamicResource WindowBorderThickness}" />
         <Setter Property="BorderBrush" Value="{DynamicResource WindowBorderBrush}" />
         <Setter Property="Background" Value="{DynamicResource WindowBackgroundBrush}" />
         <Setter Property="Padding" Value="0" />
-        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="CornerRadius" Value="{DynamicResource WindowCornerRadius}" />
         <Setter Property="ClipToBounds" Value="True" />
         <Setter Property="BoxShadow" Value="0 18 48 0 #26000000" />
     </Style>
@@ -35,7 +35,7 @@
         <Setter Property="Padding" Value="0" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="{DynamicResource QueryBoxForegroundBrush}" />
-        <Setter Property="CaretBrush" Value="{DynamicResource QueryBoxForegroundBrush}" />
+        <Setter Property="CaretBrush" Value="{DynamicResource QueryBoxCaretBrush}" />
         <Setter Property="SelectionBrush" Value="{DynamicResource QueryBoxSelectionBrush}" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -54,6 +54,10 @@
     <Style Selector="TextBox.queryBox /template/ Border#PART_BorderElement">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
+    </Style>
+    <!-- Placeholder uses the theme's QuerySuggestionBoxStyle color, as in the WPF window -->
+    <Style Selector="TextBox.queryBox /template/ TextBlock#PART_Watermark">
+        <Setter Property="Foreground" Value="{DynamicResource QuerySuggestionForegroundBrush}" />
     </Style>
 
     <!-- Query Suggestion Box (autocomplete hint) -->
@@ -156,6 +160,9 @@
         <Setter Property="Foreground" Value="{DynamicResource ResultGlyphBrush}" />
         <Setter Property="TextAlignment" Value="Center" />
     </Style>
+    <Style Selector="ListBoxItem:selected TextBlock.resultGlyph">
+        <Setter Property="Foreground" Value="{DynamicResource ResultGlyphSelectedBrush}" />
+    </Style>
 
     <!-- Result Title -->
     <Style Selector="TextBlock.resultTitle">
@@ -173,6 +180,14 @@
         <Setter Property="Margin" Value="0,1,0,0" />
         <Setter Property="VerticalAlignment" Value="Top" />
         <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+    </Style>
+
+    <!-- Selected result text (theme ItemTitleSelectedStyle / ItemSubTitleSelectedStyle) -->
+    <Style Selector="ListBoxItem:selected TextBlock.resultTitle">
+        <Setter Property="Foreground" Value="{DynamicResource ResultTitleSelectedBrush}" />
+    </Style>
+    <Style Selector="ListBoxItem:selected TextBlock.resultSubTitle">
+        <Setter Property="Foreground" Value="{DynamicResource ResultSubTitleSelectedBrush}" />
     </Style>
 
     <!-- Result Bullet/Selection Indicator -->

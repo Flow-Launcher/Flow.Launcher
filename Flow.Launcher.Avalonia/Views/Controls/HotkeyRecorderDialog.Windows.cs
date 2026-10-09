@@ -1,5 +1,3 @@
-using Avalonia.Controls;
-using Flow.Launcher.Avalonia.Helper;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Plugin;
@@ -101,29 +99,7 @@ namespace Flow.Launcher.Avalonia.Views.Controls
                 ctrlDown,
                 wpfKey);
 
-            UpdateKeysDisplay(model);
-            
-            // Update Save button enablement based on validity and availability
-            var isValid = model.Validate();
-            var isAvailable = isValid && HotKeyMapper.CheckAvailability(model);
-            
-            IsPrimaryButtonEnabled = isAvailable;
-
-            var alert = this.FindControl<Border>("Alert");
-            var tbMsg = this.FindControl<TextBlock>("tbMsg");
-            if (alert != null && tbMsg != null)
-            {
-                if (isValid && !isAvailable)
-                {
-                    // TODO: Get actual translation
-                    tbMsg.Text = "Hotkey already in use";
-                    alert.IsVisible = true;
-                }
-                else
-                {
-                    alert.IsVisible = false;
-                }
-            }
+            ApplyRecordedHotkey(model);
         }
     }
 }

@@ -51,6 +51,9 @@ public partial class AboutSettingsViewModel : ObservableObject
     public string Docs => Constant.Docs;
     public string GitHub => Constant.GitHub;
     public string Crowdin => Constant.CrowdinProjectUrl;
+
+    // Self-update goes through Squirrel.Windows; there is no updater on other platforms.
+    public bool IsWindowsPlatform { get; } = OperatingSystem.IsWindows();
     public string ActivatedTimes => string.Format(Translate("about_activate_times", "You have activated Flow Launcher {0} times"), _settings.ActivateTimes);
 
     public string LogFolderSize => $"{Translate("clearlogfolder", "Clear Logs")} ({BytesToReadableString(GetLogFiles().Sum(file => file.Length))})";

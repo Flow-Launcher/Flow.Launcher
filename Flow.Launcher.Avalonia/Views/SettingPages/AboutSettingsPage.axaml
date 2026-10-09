@@ -16,7 +16,8 @@
                                 IconSource="Info">
                 <ui:FASettingsExpander.Footer>
                     <WrapPanel Orientation="Horizontal">
-                        <Button Content="{i18n:Localize checkUpdates}" Command="{Binding UpdateAppCommand}" Margin="0,0,8,8" />
+                        <Button Content="{i18n:Localize checkUpdates}" Command="{Binding UpdateAppCommand}" Margin="0,0,8,8"
+                                IsVisible="{Binding IsWindowsPlatform}" />
                         <Button Content="{i18n:Localize BecomeASponsor}" Command="{Binding OpenSponsorPageCommand}" Classes="accent" Margin="0,0,8,8" />
                     </WrapPanel>
                 </ui:FASettingsExpander.Footer>

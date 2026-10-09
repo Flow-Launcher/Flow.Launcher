@@ -14,6 +14,8 @@
     <!-- Cross-platform build goes to a net10.0 subfolder so it never overwrites the Windows build -->
     <AppendTargetFrameworkToOutputPath Condition="'$(TargetFramework)' == 'net10.0'">true</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <!-- RID-specific publishes (Scripts/macos/build-app.sh: -r osx-arm64/osx-x64) build into their own subfolder so they never mix with the framework-dependent net10.0 build -->
+    <AppendRuntimeIdentifierToOutputPath Condition="'$(TargetFramework)' == 'net10.0' and '$(RuntimeIdentifier)' != ''">true</AppendRuntimeIdentifierToOutputPath>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <RootNamespace>Flow.Launcher.Avalonia</RootNamespace>
     <AssemblyName>Flow.Launcher.Avalonia</AssemblyName>
@@ -45,7 +47,8 @@
     <PackageReference Include="DynamicData" Version="9.0.4" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.12" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.12" />
-    <PackageReference Include="TaskScheduler" Version="2.12.2" />
+    <!-- Only the Windows auto-startup implementation (Helper/AutoStartup.Windows.cs) uses the Task Scheduler -->
+    <PackageReference Include="TaskScheduler" Version="2.12.2" Condition="$(TargetFramework.Contains('-windows'))" />
   </ItemGroup>
 
   <ItemGroup>
@@ -61,6 +64,13 @@
 
   <!-- Copy themes and languages from WPF project -->
   <ItemGroup>
+    <Content Include="..\Flow.Launcher\Themes\*.xaml" Link="Themes\%(Filename)%(Extension)">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <!-- Flow light/dark palettes referenced by system-colored themes (Win11Light, Win10System, ...); read by Helper/ThemeLoader.cs -->
+    <Content Include="..\Flow.Launcher\Resources\Light.xaml;..\Flow.Launcher\Resources\Dark.xaml" Link="Resources\%(Filename)%(Extension)">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\Flow.Launcher\Languages\*.xaml" Link="Languages\%(Filename)%(Extension)">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

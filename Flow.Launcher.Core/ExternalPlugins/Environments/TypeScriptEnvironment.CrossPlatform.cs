@@ -2,11 +2,19 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
 {
     internal partial class TypeScriptEnvironment
     {
-        // Droplex only installs Windows runtimes; a user-selected Node.js executable is required on this platform.
+        // Droplex only installs Windows runtimes; here "install" means adopting the system's node.
         internal override void InstallEnvironment()
         {
+            var node = FindSystemRuntime("node");
+            if (node != null)
+            {
+                PluginsSettingsFilePath = node;
+                API.LogInfo(ClassName, $"Using system Node.js runtime <{node}>");
+                return;
+            }
+
             API.ShowMsgError(Localize.failToInstallTypeScriptEnv());
-            API.LogError(ClassName, "Automatic TypeScript environment installation is not supported on this platform");
+            API.LogError(ClassName, "No node found on this system; install Node.js (e.g. `brew install node`) or select an executable");
         }
     }
 }

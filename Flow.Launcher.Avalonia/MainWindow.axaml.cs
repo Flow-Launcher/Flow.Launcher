@@ -33,7 +33,11 @@ public partial class MainWindow : Window
         // Get the ViewModel and Settings from DI
         _viewModel = Ioc.Default.GetRequiredService<MainViewModel>();
         _settings = Ioc.Default.GetRequiredService<Settings>();
-        _viewModel.HideRequested += () => Hide();
+        _viewModel.HideRequested += () =>
+        {
+            Hide();
+            ReturnFocusAfterHide();
+        };
         _viewModel.QueryTextFocusRequested += HandleQueryTextFocusRequest;
         DataContext = _viewModel;
 
@@ -298,6 +302,11 @@ public partial class MainWindow : Window
             Opacity = 0;
         }
 
+        if (request.ShowWindow || request.ActivateWindow)
+        {
+            ActivateApplication();
+        }
+
         if (request.ShowWindow)
         {
             SynchronizeQueryTextBoxText();
@@ -322,6 +331,11 @@ public partial class MainWindow : Window
 
         ApplyQueryTextBoxFocus(request.Mode);
     }
+
+    // Platform hooks: bring the app forward before the window is shown/activated, and hand focus back after it hides.
+    partial void ActivateApplication();
+
+    partial void ReturnFocusAfterHide();
 
     private void SynchronizeQueryTextBoxText()
     {

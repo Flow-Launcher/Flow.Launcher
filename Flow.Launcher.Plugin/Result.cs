@@ -85,6 +85,7 @@ namespace Flow.Launcher.Plugin
             get => _icoPath;
             set
             {
+                value = NormalizeIconPathSeparators(value);
                 _icoPath = value;
 
                 // As a standard this property will handle prepping and converting to absolute local path for icon image processing
@@ -122,6 +123,8 @@ namespace Flow.Launcher.Plugin
             get => _badgeIcoPath;
             set
             {
+                value = NormalizeIconPathSeparators(value);
+
                 // As a standard this property will handle prepping and converting to absolute local path for icon image processing
                 if (!string.IsNullOrEmpty(value)
                     && !string.IsNullOrEmpty(PluginDirectory)
@@ -137,6 +140,25 @@ namespace Flow.Launcher.Plugin
                     _badgeIcoPath = value;
                 }
             }
+        }
+
+        /// <summary>
+        /// Plugins conventionally write icon paths with Windows separators (e.g. "Images\icon.png").
+        /// Off Windows, '\' is not a separator, so convert local paths to '/'; URLs and data URIs are left untouched.
+        /// </summary>
+        private static string NormalizeIconPathSeparators(string value)
+        {
+            if (OperatingSystem.IsWindows()
+                || string.IsNullOrEmpty(value)
+                || !value.Contains('\\')
+                || value.StartsWith("http://", StringComparison.OrdinalIgnoreCase)
+                || value.StartsWith("https://", StringComparison.OrdinalIgnoreCase)
+                || value.StartsWith("data:", StringComparison.OrdinalIgnoreCase))
+            {
+                return value;
+            }
+
+            return value.Replace('\\', '/');
         }
 
         /// <summary>

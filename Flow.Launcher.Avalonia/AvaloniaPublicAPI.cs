@@ -97,8 +97,11 @@ public partial class AvaloniaPublicAPI : IPublicAPI
     public void LogException(string className, string message, Exception e, [CallerMemberName] string methodName = "") => Log.Exception(className, message, e, methodName);
 
     // Shell/URL operations
-    public void ShellRun(string cmd, string filename = "cmd.exe") => 
-        System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo { FileName = filename, Arguments = $"/c {cmd}", UseShellExecute = true });
+    public void ShellRun(string cmd, string filename = "cmd.exe") => StartShellCommand(cmd, filename);
+
+    // Windows runs the command through cmd.exe /c; macOS through the user's shell -c.
+    private partial void StartShellCommand(string cmd, string filename);
+
     public void OpenUrl(string url, bool? inPrivate = null) => OpenUri(new Uri(url), inPrivate);
     public void OpenUrl(Uri url, bool? inPrivate = null) => OpenUri(url, inPrivate);
     public void OpenWebUrl(string url, bool? inPrivate = null) => OpenUri(new Uri(url), inPrivate, true);
@@ -118,36 +121,21 @@ public partial class AvaloniaPublicAPI : IPublicAPI
                     ? FileNameOrFilePath
                     : Path.Combine(DirectoryPath, FileNameOrFilePath);
 
-            if (Path.GetFileNameWithoutExtension(explorerPath) == "explorer")
+            if (IsSystemFileManager(explorerPath))
             {
-                if (FileNameOrFilePath is null)
-                {
-                    using var explorer = new Process();
-                    explorer.StartInfo = new ProcessStartInfo
-                    {
-                        FileName = DirectoryPath,
-                        UseShellExecute = true
-                    };
-                    explorer.Start();
-                }
-                else
-                {
-                    Win32Helper.OpenFolderAndSelectFile(targetPath);
-                }
+                OpenInSystemFileManager(DirectoryPath, FileNameOrFilePath is null ? null : targetPath);
             }
             else
             {
                 using var explorer = new Process();
-                explorer.StartInfo = new ProcessStartInfo
-                {
-                    FileName = explorerInfo.Path.Replace("%d", DirectoryPath),
-                    UseShellExecute = true,
-                    Arguments = FileNameOrFilePath is null
+                explorer.StartInfo = CreateFileManagerStartInfo(
+                    explorerInfo.Path.Replace("%d", DirectoryPath),
+                    FileNameOrFilePath is null
                         ? explorerInfo.DirectoryArgument.Replace("%d", DirectoryPath)
                         : explorerInfo.FileArgument
                             .Replace("%d", DirectoryPath)
-                            .Replace("%f", targetPath)
-                };
+                            .Replace("%f", targetPath),
+                    targetPath);
                 explorer.Start();
             }
         }
@@ -166,6 +154,14 @@ public partial class AvaloniaPublicAPI : IPublicAPI
         }
     }
 
+    // Explorer on Windows, Finder on macOS.
+    private partial bool IsSystemFileManager(string explorerPath);
+
+    // Opens the folder, or reveals (selects) filePathToSelect in it.
+    private partial void OpenInSystemFileManager(string directoryPath, string? filePathToSelect);
+
+    private partial ProcessStartInfo CreateFileManagerStartInfo(string fileName, string arguments, string targetPath);
+
     private void OpenUri(Uri uri, bool? inPrivate = null, bool forceBrowser = false)
     {
         if (uri.IsFile && !uri.LocalPath.FileOrLocationExists())
@@ -181,14 +177,7 @@ public partial class AvaloniaPublicAPI : IPublicAPI
 
             try
             {
-                if (browserInfo.OpenInTab)
-                {
-                    uri.AbsoluteUri.OpenInBrowserTab(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg, browserInfo.ExtraArgs);
-                }
-                else
-                {
-                    uri.AbsoluteUri.OpenInBrowserWindow(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg, browserInfo.ExtraArgs);
-                }
+                OpenInBrowser(uri.AbsoluteUri, browserInfo, path, inPrivate ?? browserInfo.EnablePrivate);
             }
             catch (Exception e)
             {
@@ -217,6 +206,9 @@ public partial class AvaloniaPublicAPI : IPublicAPI
             }
         }
     }
+
+    // Opens url in the configured browser ("" = system default) in a tab or a new window per browserInfo.
+    private partial void OpenInBrowser(string url, CustomBrowserViewModel browserInfo, string browserPath, bool inPrivate);
 
     // Clipboard
     public async void CopyToClipboard(string text, bool directCopy = false, bool showDefaultNotification = true)

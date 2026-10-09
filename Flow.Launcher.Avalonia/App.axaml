@@ -3,6 +3,7 @@
              xmlns:local="using:Flow.Launcher.Avalonia"
              xmlns:sty="using:FluentAvalonia.Styling"
              xmlns:i18n="using:Flow.Launcher.Avalonia.Resource"
+             xmlns:helper="using:Flow.Launcher.Avalonia.Helper"
              x:Class="Flow.Launcher.Avalonia.App"
              RequestedThemeVariant="Default">
     <!-- "Default" ThemeVariant follows system theme variant. 
@@ -17,6 +18,8 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <!-- Embedded fonts -->
+                <!-- Selected Flow theme (Settings.Theme); overrides the Light/Dark defaults from Themes/Resources.axaml -->
+                <helper:ThemeResources />
             </ResourceDictionary.MergedDictionaries>
             <!-- Register Segoe Fluent Icons font for glyph icons -->
             <FontFamily x:Key="SegoeFluentIcons">avares://Flow.Launcher.Avalonia/Resources#Segoe Fluent Icons</FontFamily>

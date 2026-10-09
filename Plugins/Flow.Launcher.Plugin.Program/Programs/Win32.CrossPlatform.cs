@@ -223,7 +223,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
         /// <summary>
         /// Reads the top-level string values of an Info.plist. XML plists are parsed directly;
-        /// other formats (binary) are converted with plutil.
+        /// other formats (binary) and XML that fails to parse (e.g. stray NUL bytes) are converted with plutil.
         /// </summary>
         private static Dictionary<string, string> ReadInfoPlist(string bundlePath, string plistPath)
         {
@@ -231,22 +231,33 @@ namespace Flow.Launcher.Plugin.Program.Programs
             if (!File.Exists(plistPath))
                 return values;
 
+            Exception xmlError = null;
             try
             {
                 if (IsXmlPlist(plistPath))
                 {
                     using var reader = XmlReader.Create(plistPath, PlistReaderSettings);
                     ReadXmlPlist(reader, values);
-                }
-                else
-                {
-                    ReadPlistWithPlutil(plistPath, values);
+                    return values;
                 }
             }
-            catch (Exception e) when (e is IOException or UnauthorizedAccessException or XmlException or JsonException or Win32Exception or InvalidOperationException)
+            catch (Exception e) when (e is IOException or UnauthorizedAccessException or XmlException)
             {
-                ProgramLogger.LogException($"|Win32|ReadInfoPlist|{bundlePath}" +
-                                           "|Failed to read Info.plist, falling back to the bundle name", e);
+                // CoreFoundation's parser is more lenient than XmlReader, so let plutil have a go
+                xmlError = e;
+                values.Clear();
+            }
+
+            try
+            {
+                ReadPlistWithPlutil(plistPath, values);
+            }
+            catch (Exception e) when (e is IOException or JsonException or Win32Exception or InvalidOperationException)
+            {
+                values.Clear();
+                var xmlMessage = xmlError == null ? string.Empty : $"XML: {xmlError.Message}; ";
+                ProgramLogger.LogDebug(nameof(Win32), nameof(ReadInfoPlist), bundlePath,
+                    $"Failed to read Info.plist, falling back to the bundle name. {xmlMessage}plutil: {e.Message}");
             }
 
             return values;

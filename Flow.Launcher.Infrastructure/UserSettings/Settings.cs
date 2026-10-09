@@ -279,39 +279,10 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             set => CustomExplorerList[CustomExplorerIndex] = value;
         }
 
-        public List<CustomExplorerViewModel> CustomExplorerList { get; set; } = new()
-        {
-            new()
-            {
-                Name = "Explorer",
-                Path = "explorer",
-                DirectoryArgument = "\"%d\"",
-                FileArgument = "/select, \"%f\"",
-                Editable = false
-            },
-            new()
-            {
-                Name = "Total Commander",
-                Path = @"C:\Program Files\totalcmd\TOTALCMD64.exe",
-                DirectoryArgument = "/O /A /S /T \"%d\"",
-                FileArgument = "/O /A /S /T \"%f\""
-            },
-            new()
-            {
-                Name = "Directory Opus",
-                Path = @"C:\Program Files\GPSoftware\Directory Opus\dopusrt.exe",
-                DirectoryArgument = "/cmd Go \"%d\" NEW",
-                FileArgument = "/cmd Go \"%f\" NEW"
+        public List<CustomExplorerViewModel> CustomExplorerList { get; set; } = CreateDefaultCustomExplorerList();
 
-            },
-            new()
-            {
-                Name = "Files",
-                Path = "Files-Stable",
-                DirectoryArgument = "\"%d\"",
-                FileArgument = "-select \"%f\""
-            }
-        };
+        // The first entry is the system file manager (Explorer / Finder).
+        private static partial List<CustomExplorerViewModel> CreateDefaultCustomExplorerList();
 
         public int CustomBrowserIndex { get; set; } = 0;
 

@@ -10,6 +10,8 @@ public partial class GeneralSettingsViewModel
 {
     partial void SetupDialogJump(bool enabled) => DialogJump.SetupDialogJump(enabled);
 
+    partial void OpenPlatformImeSettings() => Win32Helper.OpenImeSettings();
+
     public bool KoreanIMERegistryKeyExists
     {
         get
