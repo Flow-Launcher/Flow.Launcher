@@ -167,7 +167,7 @@ public partial class SelectFileManagerWindow : Window, INotifyPropertyChanged
             return true;
         }
 
-        var dialog = new ContentDialog
+        var dialog = new FAContentDialog
         {
             Title = Translate("fileManagerPathError", "File manager path error"),
             Content = string.Format(
@@ -179,7 +179,7 @@ public partial class SelectFileManagerWindow : Window, INotifyPropertyChanged
         };
 
         var result = await dialog.ShowAsync(this);
-        return result == ContentDialogResult.Primary;
+        return result == FAContentDialogResult.Primary;
     }
 
     private static async System.Threading.Tasks.Task<bool> IsFileManagerValidAsync(string path)

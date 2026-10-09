@@ -17,15 +17,15 @@
             
             <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10">
                 <Button Command="{Binding RefreshExternalPluginsCommand}" ToolTip.Tip="{i18n:Localize refresh}" AutomationProperties.Name="{i18n:Localize refresh}">
-                    <ui:SymbolIcon Symbol="Refresh" FontSize="16"/>
+                    <ui:FASymbolIcon Symbol="Refresh" FontSize="16"/>
                 </Button>
                 
                 <Button Command="{Binding CheckPluginUpdatesCommand}" ToolTip.Tip="{i18n:Localize checkUpdates}" AutomationProperties.Name="{i18n:Localize checkUpdates}">
-                    <ui:SymbolIcon Symbol="Sync" FontSize="16"/>
+                    <ui:FASymbolIcon Symbol="Sync" FontSize="16"/>
                 </Button>
                 
                 <Button Command="{Binding InstallPluginCommand}" ToolTip.Tip="{i18n:Localize installLocalPluginTooltip}" AutomationProperties.Name="{i18n:Localize installLocalPluginTooltip}">
-                    <ui:SymbolIcon Symbol="Add" FontSize="16"/>
+                    <ui:FASymbolIcon Symbol="Add" FontSize="16"/>
                 </Button>
             </StackPanel>
         </Grid>
@@ -43,12 +43,12 @@
             <TextBox Grid.Column="2" 
                      Width="250"
                      Text="{Binding FilterText, Mode=TwoWay}"
-                     Watermark="{i18n:Localize searchplugin}">
+                     PlaceholderText="{i18n:Localize searchplugin}">
                 <TextBox.InnerRightContent>
                     <Button Theme="{StaticResource TransparentButton}" AutomationProperties.Name="{i18n:Localize search}"
                             IsVisible="{Binding FilterText, Converter={x:Static conv:StringConverters.IsNotNullOrEmpty}}"
                             Command="{Binding ClearFilterTextCommand}">
-                        <ui:SymbolIcon Symbol="Dismiss" FontSize="12"/>
+                        <ui:FASymbolIcon Symbol="Dismiss" FontSize="12"/>
                     </Button>
                 </TextBox.InnerRightContent>
             </TextBox>
@@ -59,20 +59,20 @@
             <!-- Loading indicator -->
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" 
                         IsVisible="{Binding IsLoading}" Spacing="10">
-                <ui:ProgressRing IsIndeterminate="True" Width="40" Height="40"/>
+                <ui:FAProgressRing IsIndeterminate="True" Width="40" Height="40"/>
                 <TextBlock Text="{i18n:Localize loading}" HorizontalAlignment="Center"
                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"/>
             </StackPanel>
             
             <!-- Plugin list -->
             <ScrollViewer IsVisible="{Binding !IsLoading}" HorizontalScrollBarVisibility="Disabled">
-                <ui:ItemsRepeater ItemsSource="{Binding FilteredPlugins}">
-                    <ui:ItemsRepeater.Layout>
-                        <ui:UniformGridLayout MinItemWidth="216" MinItemHeight="184"
+                <ui:FAItemsRepeater ItemsSource="{Binding FilteredPlugins}">
+                    <ui:FAItemsRepeater.Layout>
+                        <ui:FAUniformGridLayout MinItemWidth="216" MinItemHeight="184"
                                               MinColumnSpacing="10" MinRowSpacing="10"
                                               ItemsStretch="None" />
-                    </ui:ItemsRepeater.Layout>
-                    <ui:ItemsRepeater.ItemTemplate>
+                    </ui:FAItemsRepeater.Layout>
+                    <ui:FAItemsRepeater.ItemTemplate>
                     <DataTemplate x:DataType="vm:PluginStoreItemViewModel">
                         <Button Padding="0" 
                                 Width="216" Height="184"
@@ -91,7 +91,7 @@
                                                        IsVisible="{Binding Icon, Converter={x:Static conv:ObjectConverters.IsNotNull}}"
                                                        RenderOptions.BitmapInterpolationMode="HighQuality"/>
                                                 <Viewbox IsVisible="{Binding Icon, Converter={x:Static conv:ObjectConverters.IsNull}}">
-                                                    <ui:SymbolIcon Symbol="Library" />
+                                                    <ui:FASymbolIcon Symbol="Library" />
                                                 </Viewbox>
                                             </Panel>
                                             <StackPanel Grid.Column="1" VerticalAlignment="Center">
@@ -116,12 +116,12 @@
                                             <Button Command="{Binding OpenUrlCommand}" CommandParameter="{Binding Website}" 
                                                     IsVisible="{Binding Website, Converter={x:Static conv:StringConverters.IsNotNullOrEmpty}}"
                                                     ToolTip.Tip="{i18n:Localize website}">
-                                                <ui:SymbolIcon Symbol="Globe"/>
+                                                <ui:FASymbolIcon Symbol="Globe"/>
                                             </Button>
                                             <Button Command="{Binding OpenUrlCommand}" CommandParameter="{Binding UrlSourceCode}"
                                                     IsVisible="{Binding UrlSourceCode, Converter={x:Static conv:StringConverters.IsNotNullOrEmpty}}"
                                                     ToolTip.Tip="{i18n:Localize sourceCode}">
-                                                <ui:SymbolIcon Symbol="Code"/>
+                                                <ui:FASymbolIcon Symbol="Code"/>
                                             </Button>
                                         </StackPanel>
                                         
@@ -155,7 +155,7 @@
                                                IsVisible="{Binding Icon, Converter={x:Static conv:ObjectConverters.IsNotNull}}"
                                                RenderOptions.BitmapInterpolationMode="HighQuality"/>
                                         <Viewbox IsVisible="{Binding Icon, Converter={x:Static conv:ObjectConverters.IsNull}}">
-                                            <ui:SymbolIcon Symbol="Library" />
+                                            <ui:FASymbolIcon Symbol="Library" />
                                         </Viewbox>
                                     </Panel>
                                     
@@ -193,8 +193,8 @@
                             </Grid>
                         </Button>
                     </DataTemplate>
-                </ui:ItemsRepeater.ItemTemplate>
-            </ui:ItemsRepeater>
+                </ui:FAItemsRepeater.ItemTemplate>
+            </ui:FAItemsRepeater>
         </ScrollViewer>
         </Grid>
     </Grid>

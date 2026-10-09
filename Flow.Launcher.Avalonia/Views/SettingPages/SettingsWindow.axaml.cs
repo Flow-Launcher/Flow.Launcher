@@ -17,9 +17,9 @@ public partial class SettingsWindow : Window
         LoadPage("General");
     }
 
-    private void NavView_SelectionChanged(object? sender, NavigationViewSelectionChangedEventArgs e)
+    private void NavView_SelectionChanged(object? sender, FANavigationViewSelectionChangedEventArgs e)
     {
-        if (e.SelectedItem is NavigationViewItem item && item.Tag is string tag)
+        if (e.SelectedItem is FANavigationViewItem item && item.Tag is string tag)
         {
             LoadPage(tag);
         }

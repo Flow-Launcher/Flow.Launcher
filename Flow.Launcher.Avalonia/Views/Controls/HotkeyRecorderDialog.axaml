@@ -1,4 +1,4 @@
-<ui:ContentDialog xmlns="https://github.com/avaloniaui"
+<ui:FAContentDialog xmlns="https://github.com/avaloniaui"
                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                   xmlns:ui="using:FluentAvalonia.UI.Controls"
                   xmlns:i18n="using:Flow.Launcher.Avalonia.Resource"
@@ -46,11 +46,11 @@
                 CornerRadius="4"
                 IsVisible="False">
             <Grid ColumnDefinitions="Auto,*">
-                <ui:FontIcon Glyph="&#xf167;" 
+                <ui:FAFontIcon Glyph="&#xf167;" 
                              FontFamily="{StaticResource SymbolThemeFontFamily}"
                              Margin="0,0,12,0" />
                 <TextBlock x:Name="tbMsg" Grid.Column="1" TextWrapping="Wrap" />
             </Grid>
         </Border>
     </StackPanel>
-</ui:ContentDialog>
+</ui:FAContentDialog>

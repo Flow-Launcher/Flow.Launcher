@@ -13,9 +13,6 @@ using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.SharedModels;
 using System;
 using System.ComponentModel;
-#if DEBUG
-using Avalonia.Diagnostics;
-#endif
 
 namespace Flow.Launcher.Avalonia;
 
@@ -51,10 +48,6 @@ public partial class MainWindow : Window
 
         // Subscribe to window events
         this.Deactivated += OnWindowDeactivated;
-
-#if DEBUG
-        this.AttachDevTools();
-#endif
     }
 
     private void OnSettingsPropertyChanged(object? sender, PropertyChangedEventArgs e)

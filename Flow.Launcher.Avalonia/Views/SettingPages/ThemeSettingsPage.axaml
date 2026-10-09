@@ -46,10 +46,10 @@
                 </StackPanel>
             </Border>
 
-            <ui:SettingsExpander Header="{i18n:Localize theme}"
+            <ui:FASettingsExpander Header="{i18n:Localize theme}"
                                 IconSource="DarkTheme"
                                 IsExpanded="False">
-                <ui:SettingsExpander.Footer>
+                <ui:FASettingsExpander.Footer>
                     <ComboBox ItemsSource="{Binding Themes}"
                               SelectedItem="{Binding SelectedTheme, Mode=TwoWay}"
                               MinWidth="220">
@@ -59,81 +59,81 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                </ui:SettingsExpander.Footer>
-                <ui:SettingsExpanderItem Content="{i18n:Localize ColorScheme}">
-                    <ui:SettingsExpanderItem.Footer>
+                </ui:FASettingsExpander.Footer>
+                <ui:FASettingsExpanderItem Content="{i18n:Localize ColorScheme}">
+                    <ui:FASettingsExpanderItem.Footer>
                         <ComboBox ItemsSource="{Binding ColorSchemeOptions}"
                                   SelectedValue="{Binding SelectedColorScheme, Mode=TwoWay}"
                                   SelectedValueBinding="{Binding Value}"
                                   DisplayMemberBinding="{Binding Display}"
                                   MinWidth="160" />
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
-                <ui:SettingsExpanderItem Content="{i18n:Localize BackdropType}"
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
+                <ui:FASettingsExpanderItem Content="{i18n:Localize BackdropType}"
                                          Description="{Binding BackdropSubText}">
-                    <ui:SettingsExpanderItem.Footer>
+                    <ui:FASettingsExpanderItem.Footer>
                         <ComboBox ItemsSource="{Binding BackdropTypesList}"
                                   SelectedValue="{Binding SelectedBackdropType, Mode=TwoWay}"
                                   SelectedValueBinding="{Binding Value}"
                                   DisplayMemberBinding="{Binding Display}"
                                   MinWidth="160"
                                   IsEnabled="{Binding IsBackdropEnabled}" />
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
-                <ui:SettingsExpanderItem Content="{i18n:Localize queryWindowShadowEffect}">
-                    <ui:SettingsExpanderItem.Footer>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
+                <ui:FASettingsExpanderItem Content="{i18n:Localize queryWindowShadowEffect}">
+                    <ui:FASettingsExpanderItem.Footer>
                         <ToggleSwitch IsChecked="{Binding DropShadowEffect}" />
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
-                <ui:SettingsExpanderItem Content="Theme resources">
-                    <ui:SettingsExpanderItem.Footer>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
+                <ui:FASettingsExpanderItem Content="Theme resources">
+                    <ui:FASettingsExpanderItem.Footer>
                         <WrapPanel Orientation="Horizontal">
                             <Button Margin="0,0,8,8" Content="{i18n:Localize browserMoreThemes}" Command="{Binding OpenThemeGalleryCommand}" />
                             <Button Margin="0,0,8,8" Content="Theme Builder" Command="{Binding OpenThemeBuilderCommand}" />
                             <Button Margin="0,0,8,8" Content="{i18n:Localize settingfolder}" Command="{Binding OpenThemesFolderCommand}" />
                         </WrapPanel>
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
-            </ui:SettingsExpander>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
+            </ui:FASettingsExpander>
 
-            <ui:SettingsExpander Header="{i18n:Localize KeepMaxResults}"
+            <ui:FASettingsExpander Header="{i18n:Localize KeepMaxResults}"
                                 Description="{i18n:Localize KeepMaxResultsToolTip}"
                                 IconSource="List"
                                 IsExpanded="False">
-                <ui:SettingsExpander.Footer>
+                <ui:FASettingsExpander.Footer>
                     <ToggleSwitch IsChecked="{Binding KeepMaxResults}" />
-                </ui:SettingsExpander.Footer>
-                <ui:SettingsExpanderItem Content="{i18n:Localize maxShowResults}"
+                </ui:FASettingsExpander.Footer>
+                <ui:FASettingsExpanderItem Content="{i18n:Localize maxShowResults}"
                                          Description="{i18n:Localize maxShowResultsToolTip}">
-                    <ui:SettingsExpanderItem.Footer>
+                    <ui:FASettingsExpanderItem.Footer>
                         <ComboBox ItemsSource="{Binding MaxResultsRange}"
                                   SelectedItem="{Binding MaxResults, Mode=TwoWay}"
                                   Width="100" />
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
-            </ui:SettingsExpander>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
+            </ui:FASettingsExpander>
 
-            <ui:SettingsExpander Header="Sizing and fonts"
+            <ui:FASettingsExpander Header="Sizing and fonts"
                                 IconSource="Font"
                                 IsExpanded="False">
-                <ui:SettingsExpanderItem Content="{i18n:Localize SearchBarHeight}">
-                    <ui:SettingsExpanderItem.Footer>
+                <ui:FASettingsExpanderItem Content="{i18n:Localize SearchBarHeight}">
+                    <ui:FASettingsExpanderItem.Footer>
                         <StackPanel Orientation="Horizontal" Spacing="10">
                             <TextBlock Text="{Binding WindowHeightSize}" Width="40" VerticalAlignment="Center" />
                             <Slider Minimum="20" Maximum="60" Value="{Binding WindowHeightSize}" Width="220" />
                         </StackPanel>
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
-                <ui:SettingsExpanderItem Content="{i18n:Localize ItemHeight}">
-                    <ui:SettingsExpanderItem.Footer>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
+                <ui:FASettingsExpanderItem Content="{i18n:Localize ItemHeight}">
+                    <ui:FASettingsExpanderItem.Footer>
                         <StackPanel Orientation="Horizontal" Spacing="10">
                             <TextBlock Text="{Binding ItemHeightSize}" Width="40" VerticalAlignment="Center" />
                             <Slider Minimum="30" Maximum="100" Value="{Binding ItemHeightSize}" Width="220" />
                         </StackPanel>
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
-                <ui:SettingsExpanderItem Content="{i18n:Localize queryBoxFont}">
-                    <ui:SettingsExpanderItem.Footer>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
+                <ui:FASettingsExpanderItem Content="{i18n:Localize queryBoxFont}">
+                    <ui:FASettingsExpanderItem.Footer>
                         <StackPanel Spacing="8">
                             <StackPanel Orientation="Horizontal" Spacing="10">
                                 <TextBlock Text="{Binding QueryBoxFontSize}" Width="40" VerticalAlignment="Center" />
@@ -152,10 +152,10 @@
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
                         </StackPanel>
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
-                <ui:SettingsExpanderItem Content="{i18n:Localize resultItemFont}">
-                    <ui:SettingsExpanderItem.Footer>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
+                <ui:FASettingsExpanderItem Content="{i18n:Localize resultItemFont}">
+                    <ui:FASettingsExpanderItem.Footer>
                         <StackPanel Spacing="8">
                             <StackPanel Orientation="Horizontal" Spacing="10">
                                 <TextBlock Text="{Binding ResultItemFontSize}" Width="40" VerticalAlignment="Center" />
@@ -174,10 +174,10 @@
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
                         </StackPanel>
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
-                <ui:SettingsExpanderItem Content="{i18n:Localize resultSubItemFont}">
-                    <ui:SettingsExpanderItem.Footer>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
+                <ui:FASettingsExpanderItem Content="{i18n:Localize resultSubItemFont}">
+                    <ui:FASettingsExpanderItem.Footer>
                         <StackPanel Spacing="8">
                             <StackPanel Orientation="Horizontal" Spacing="10">
                                 <TextBlock Text="{Binding ResultSubItemFontSize}" Width="40" VerticalAlignment="Center" />
@@ -196,23 +196,23 @@
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
                         </StackPanel>
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
-                <ui:SettingsExpanderItem Content="Theme sizing">
-                    <ui:SettingsExpanderItem.Footer>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
+                <ui:FASettingsExpanderItem Content="Theme sizing">
+                    <ui:FASettingsExpanderItem.Footer>
                         <StackPanel Orientation="Horizontal" Spacing="10">
                             <Button Content="{i18n:Localize ImportThemeSize}" Command="{Binding ImportSizingCommand}" />
                             <Button Content="{i18n:Localize resetCustomize}" Command="{Binding ResetSizingCommand}" />
                         </StackPanel>
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
-            </ui:SettingsExpander>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
+            </ui:FASettingsExpander>
 
-            <ui:SettingsExpander Header="{Binding ClockAndDateText}"
+            <ui:FASettingsExpander Header="{Binding ClockAndDateText}"
                                 IconSource="Clock"
                                 IsExpanded="False">
-                <ui:SettingsExpanderItem Content="{i18n:Localize Clock}">
-                    <ui:SettingsExpanderItem.Footer>
+                <ui:FASettingsExpanderItem Content="{i18n:Localize Clock}">
+                    <ui:FASettingsExpanderItem.Footer>
                         <StackPanel Orientation="Horizontal" Spacing="12">
                             <TextBlock Text="{Binding ClockText}" VerticalAlignment="Center" />
                             <ComboBox ItemsSource="{Binding TimeFormatList}"
@@ -220,10 +220,10 @@
                                       MinWidth="170" />
                             <ToggleSwitch IsChecked="{Binding UseClock}" />
                         </StackPanel>
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
-                <ui:SettingsExpanderItem Content="{i18n:Localize Date}">
-                    <ui:SettingsExpanderItem.Footer>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
+                <ui:FASettingsExpanderItem Content="{i18n:Localize Date}">
+                    <ui:FASettingsExpanderItem.Footer>
                         <StackPanel Orientation="Horizontal" Spacing="12">
                             <TextBlock Text="{Binding DateText}" VerticalAlignment="Center" />
                             <ComboBox ItemsSource="{Binding DateFormatList}"
@@ -231,99 +231,99 @@
                                       MinWidth="170" />
                             <ToggleSwitch IsChecked="{Binding UseDate}" />
                         </StackPanel>
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
-            </ui:SettingsExpander>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
+            </ui:FASettingsExpander>
 
-            <ui:SettingsExpander Header="{i18n:Localize ShowPlaceholder}"
+            <ui:FASettingsExpander Header="{i18n:Localize ShowPlaceholder}"
                                 Description="{i18n:Localize ShowPlaceholderTip}"
                                 IconSource="Edit"
                                 IsExpanded="False">
-                <ui:SettingsExpander.Footer>
+                <ui:FASettingsExpander.Footer>
                     <ToggleSwitch IsChecked="{Binding ShowPlaceholder}" />
-                </ui:SettingsExpander.Footer>
-                <ui:SettingsExpanderItem Content="{i18n:Localize PlaceholderText}"
+                </ui:FASettingsExpander.Footer>
+                <ui:FASettingsExpanderItem Content="{i18n:Localize PlaceholderText}"
                                          Description="{Binding PlaceholderTextTip}">
-                    <ui:SettingsExpanderItem.Footer>
+                    <ui:FASettingsExpanderItem.Footer>
                         <TextBox Text="{Binding PlaceholderText, Mode=TwoWay}" MinWidth="220" />
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
-            </ui:SettingsExpander>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
+            </ui:FASettingsExpander>
 
-            <ui:SettingsExpander Header="{i18n:Localize Animation}"
+            <ui:FASettingsExpander Header="{i18n:Localize Animation}"
                                 Description="{i18n:Localize AnimationTip}"
                                 IconSource="Play"
                                 IsExpanded="False">
-                <ui:SettingsExpander.Footer>
+                <ui:FASettingsExpander.Footer>
                     <ToggleSwitch IsChecked="{Binding UseAnimation}" />
-                </ui:SettingsExpander.Footer>
-                <ui:SettingsExpanderItem Content="{i18n:Localize AnimationSpeed}"
+                </ui:FASettingsExpander.Footer>
+                <ui:FASettingsExpanderItem Content="{i18n:Localize AnimationSpeed}"
                                          Description="{i18n:Localize AnimationSpeedTip}">
-                    <ui:SettingsExpanderItem.Footer>
+                    <ui:FASettingsExpanderItem.Footer>
                         <StackPanel Orientation="Horizontal" Spacing="10">
                             <ComboBox ItemsSource="{Binding AnimationSpeedOptions}"
                                       SelectedValue="{Binding SelectedAnimationSpeed, Mode=TwoWay}"
                                       SelectedValueBinding="{Binding Value}"
                                       DisplayMemberBinding="{Binding Display}"
                                       MinWidth="160" />
-                            <ui:NumberBox Value="{Binding CustomAnimationLength}"
+                            <ui:FANumberBox Value="{Binding CustomAnimationLength}"
                                           Minimum="0"
                                           Maximum="2000"
                                           Width="100"
                                           IsVisible="{Binding IsCustomAnimationSpeed}" />
                         </StackPanel>
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
-            </ui:SettingsExpander>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
+            </ui:FASettingsExpander>
 
-            <ui:SettingsExpander Header="{i18n:Localize SoundEffect}"
+            <ui:FASettingsExpander Header="{i18n:Localize SoundEffect}"
                                 Description="{i18n:Localize SoundEffectTip}"
                                 IconSource="Audio"
                                 IsExpanded="False">
-                <ui:SettingsExpander.Footer>
+                <ui:FASettingsExpander.Footer>
                     <ToggleSwitch IsChecked="{Binding UseSound}" />
-                </ui:SettingsExpander.Footer>
-                <ui:SettingsExpanderItem Content="{i18n:Localize SoundEffectVolume}"
+                </ui:FASettingsExpander.Footer>
+                <ui:FASettingsExpanderItem Content="{i18n:Localize SoundEffectVolume}"
                                          Description="{i18n:Localize SoundEffectVolumeTip}">
-                    <ui:SettingsExpanderItem.Footer>
+                    <ui:FASettingsExpanderItem.Footer>
                         <StackPanel Orientation="Horizontal" Spacing="10">
                             <TextBlock Text="{Binding SoundEffectVolume}" Width="40" VerticalAlignment="Center" />
                             <Slider Minimum="0" Maximum="100" Value="{Binding SoundEffectVolume}" Width="220"
                                     IsEnabled="{Binding EnableVolumeAdjustment}" />
                         </StackPanel>
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
-                <ui:SettingsExpanderItem Content="Warning"
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
+                <ui:FASettingsExpanderItem Content="Warning"
                                          Description="{i18n:Localize SoundEffectWarning}">
-                    <ui:SettingsExpanderItem.Footer>
+                    <ui:FASettingsExpanderItem.Footer>
                         <TextBlock Text="{i18n:Localize SoundEffectWarning}"
                                    TextWrapping="Wrap"
                                    MaxWidth="340"
                                    IsVisible="{Binding ShowWmpWarning}" />
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
-            </ui:SettingsExpander>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
+            </ui:FASettingsExpander>
 
-            <ui:SettingsExpander Header="{i18n:Localize useGlyphUI}"
+            <ui:FASettingsExpander Header="{i18n:Localize useGlyphUI}"
                                 Description="{i18n:Localize useGlyphUIEffect}"
                                 IconSource="Font"
                                 IsExpanded="False">
-                <ui:SettingsExpander.Footer>
+                <ui:FASettingsExpander.Footer>
                     <ToggleSwitch IsChecked="{Binding UseGlyphIcons}" />
-                </ui:SettingsExpander.Footer>
-                <ui:SettingsExpanderItem Content="{i18n:Localize showBadges}"
+                </ui:FASettingsExpander.Footer>
+                <ui:FASettingsExpanderItem Content="{i18n:Localize showBadges}"
                                          Description="{i18n:Localize showBadgesToolTip}">
-                    <ui:SettingsExpanderItem.Footer>
+                    <ui:FASettingsExpanderItem.Footer>
                         <ToggleSwitch IsChecked="{Binding ShowBadges}" />
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
-                <ui:SettingsExpanderItem Content="{i18n:Localize showBadgesGlobalOnly}"
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
+                <ui:FASettingsExpanderItem Content="{i18n:Localize showBadgesGlobalOnly}"
                                          Description="{i18n:Localize showBadgesGlobalOnlyToolTip}">
-                    <ui:SettingsExpanderItem.Footer>
+                    <ui:FASettingsExpanderItem.Footer>
                         <ToggleSwitch IsChecked="{Binding ShowBadgesGlobalOnly}" />
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
-            </ui:SettingsExpander>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
+            </ui:FASettingsExpander>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

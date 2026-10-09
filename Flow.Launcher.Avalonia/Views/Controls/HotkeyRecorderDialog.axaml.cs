@@ -16,7 +16,7 @@ using InfrastructureGlobalHotkey = Flow.Launcher.Infrastructure.Hotkey.GlobalHot
 
 namespace Flow.Launcher.Avalonia.Views.Controls
 {
-    public partial class HotkeyRecorderDialog : ContentDialog
+    public partial class HotkeyRecorderDialog : FAContentDialog
     {
         public enum EResultType
         {
@@ -56,7 +56,7 @@ namespace Flow.Launcher.Avalonia.Views.Controls
             SecondaryButtonClick += (s, e) => { ResultType = EResultType.Delete; };
         }
 
-        protected override Type StyleKeyOverride => typeof(ContentDialog);
+        protected override Type StyleKeyOverride => typeof(FAContentDialog);
 
         private void HotkeyRecorderDialog_Opened(object? sender, EventArgs args)
         {
@@ -187,9 +187,9 @@ namespace Flow.Launcher.Avalonia.Views.Controls
         public new async Task<EResultType> ShowAsync()
         {
             var result = await base.ShowAsync();
-            if (result == ContentDialogResult.Primary)
+            if (result == FAContentDialogResult.Primary)
                 return EResultType.Save;
-            if (result == ContentDialogResult.Secondary)
+            if (result == FAContentDialogResult.Secondary)
                 return EResultType.Delete;
             return EResultType.Cancel;
         }
