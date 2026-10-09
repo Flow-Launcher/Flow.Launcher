@@ -22,6 +22,14 @@ public partial class AvaloniaPublicAPI
     // No WPF host here, so legacy WPF settings panels cannot be shown.
     private partial bool OpenWpfPluginSettingsWindow(ISettingProvider settingProvider, PluginPair plugin) => false;
 
+    public void ExitApp()
+    {
+        HideMainWindow();
+        SaveAppAllSettings();
+        Dispatcher.UIThread.Post(() =>
+            (global::Avalonia.Application.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.Shutdown());
+    }
+
     // Copying files as a file-drop list is not implemented for this platform yet.
     private partial Task<Exception?> SetClipboardFileDropListAsync(string path) =>
         Task.FromResult<Exception?>(new PlatformNotSupportedException("Copying files to the clipboard is not supported on this platform."));

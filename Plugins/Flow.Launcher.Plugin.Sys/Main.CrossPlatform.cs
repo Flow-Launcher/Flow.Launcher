@@ -28,10 +28,10 @@ namespace Flow.Launcher.Plugin.Sys
 
         private partial List<Result> SystemCommands()
         {
-            // System commands are only implemented for macOS on the cross-platform build
+            // Power and session commands are only implemented for macOS on the cross-platform build
             if (!OperatingSystem.IsMacOS())
             {
-                return [];
+                return [ExitCommand()];
             }
 
             var trashFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".Trash");
@@ -122,9 +122,22 @@ namespace Flow.Launcher.Plugin.Sys
                         _ = RunCommandAsync(null, Open, trashFolder);
                         return true;
                     }
-                }
+                },
+                ExitCommand()
             ];
         }
+
+        private static Result ExitCommand() => new()
+        {
+            Title = "Exit",
+            IcoPath = "Images\\app.png",
+            Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe89f"),
+            Action = c =>
+            {
+                Context.API.ExitApp();
+                return true;
+            }
+        };
 
         /// <summary>
         /// Runs a macOS command and reports a failure to the user, e.g. osascript fails when
