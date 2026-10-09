@@ -1,15 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <TargetFramework></TargetFramework>
+    <TargetFrameworks>net10.0;net10.0-windows10.0.19041.0</TargetFrameworks>
     <OutputType>Library</OutputType>
     <ProjectGuid>{C21BFF9C-2C99-4B5F-B7C9-A5E6DDDB37B0}</ProjectGuid>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Flow.Launcher.Plugin.Shell</RootNamespace>
     <AssemblyName>Flow.Launcher.Plugin.Shell</AssemblyName>
-    <UseWindowsForms>true</UseWindowsForms>
-    <UseWpf>true</UseWpf>
+    <UseWindowsForms Condition="$(TargetFramework.Contains('-windows'))">true</UseWindowsForms>
+    <UseWpf Condition="$(TargetFramework.Contains('-windows'))">true</UseWpf>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendTargetFrameworkToOutputPath Condition="'$(TargetFramework)' == 'net10.0'">true</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
   </PropertyGroup>
@@ -59,7 +62,7 @@
 
   <ItemGroup>
     <PackageReference Include="Flow.Launcher.Localization" Version="0.0.6" />
-    <PackageReference Include="InputSimulator" Version="1.0.4" NoWarn="NU1701" />
+    <PackageReference Include="InputSimulator" Version="1.0.4" NoWarn="NU1701" Condition="$(TargetFramework.Contains('-windows'))" />
     <PackageReference Include="Avalonia" Version="11.2.3" ExcludeAssets="runtime" />
     <PackageReference Include="FluentAvaloniaUI" Version="2.2.0" ExcludeAssets="runtime" />
   </ItemGroup>
@@ -75,15 +78,18 @@
   <Target Name="CopyToAvaloniaOutput" AfterTargets="Build">
     <PropertyGroup>
       <AvaloniaPluginDir>..\..\Output\Avalonia\$(Configuration)\Plugins\$(AssemblyName)\</AvaloniaPluginDir>
+      <AvaloniaPluginDir Condition="'$(TargetFramework)' == 'net10.0'">..\..\Output\Avalonia\$(Configuration)\net10.0\Plugins\$(AssemblyName)\</AvaloniaPluginDir>
       <PluginOutputDir>$([MSBuild]::EnsureTrailingSlash('$(OutputPath)'))</PluginOutputDir>
     </PropertyGroup>
     <ItemGroup>
-      <PluginFiles Include="$(PluginOutputDir)**\*.*" Exclude="$(PluginOutputDir)runtimes\**\*.*" />
-      <PluginWindowsRuntimeFiles Include="$(PluginOutputDir)runtimes\**\*.*"
-                                 Exclude="$(PluginOutputDir)runtimes\linux*\**\*.*;$(PluginOutputDir)runtimes\osx*\**\*.*;$(PluginOutputDir)runtimes\unix*\**\*.*;$(PluginOutputDir)runtimes\browser*\**\*.*" />
+      <!-- The Windows build output folder also contains the net10.0 build in its net10.0 subfolder -->
+      <PluginFiles Include="$(PluginOutputDir)**\*.*" Exclude="$(PluginOutputDir)runtimes\**\*.*;$(PluginOutputDir)net10.0\**\*.*" />
+      <PluginRuntimeFiles Condition="'$(TargetFramework)' != 'net10.0'" Include="$(PluginOutputDir)runtimes\**\*.*"
+                          Exclude="$(PluginOutputDir)runtimes\linux*\**\*.*;$(PluginOutputDir)runtimes\osx*\**\*.*;$(PluginOutputDir)runtimes\unix*\**\*.*;$(PluginOutputDir)runtimes\browser*\**\*.*" />
+      <PluginRuntimeFiles Condition="'$(TargetFramework)' == 'net10.0'" Include="$(PluginOutputDir)runtimes\**\*.*" />
     </ItemGroup>
     <Copy SourceFiles="@(PluginFiles)" DestinationFolder="$(AvaloniaPluginDir)%(RecursiveDir)" SkipUnchangedFiles="true" />
-    <Copy SourceFiles="@(PluginWindowsRuntimeFiles)" DestinationFolder="$(AvaloniaPluginDir)runtimes\%(RecursiveDir)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(PluginRuntimeFiles)" DestinationFolder="$(AvaloniaPluginDir)runtimes\%(RecursiveDir)" SkipUnchangedFiles="true" />
   </Target>
 
 </Project>

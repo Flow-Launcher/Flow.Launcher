@@ -4,12 +4,11 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher.Plugin.WebSearch
 {
-    public class Main : IAsyncPlugin, ISettingProvider, IPluginI18n, IResultUpdated, IContextMenu
+    public partial class Main : IAsyncPlugin, ISettingProvider, IPluginI18n, IResultUpdated, IContextMenu
     {
         internal static PluginInitContext _context;
 
@@ -186,15 +185,6 @@ namespace Flow.Launcher.Plugin.WebSearch
                 CustomImagesDirectory = Path.Combine(_context.CurrentPluginMetadata.PluginSettingsDirectoryPath, "CustomIcons");
             };
         }
-
-        #region ISettingProvider Members
-
-        public Control CreateSettingPanel()
-        {
-            return new SettingsControl(_context, _viewModel);
-        }
-
-        #endregion
 
         public string GetTranslatedPluginTitle()
         {

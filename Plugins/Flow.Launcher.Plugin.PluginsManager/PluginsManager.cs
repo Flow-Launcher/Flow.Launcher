@@ -11,7 +11,7 @@ using Version = SemanticVersioning.Version;
 
 namespace Flow.Launcher.Plugin.PluginsManager
 {
-    public class PluginsManager
+    public partial class PluginsManager
     {
         private const string ZipSuffix = "zip";
 
@@ -38,6 +38,8 @@ namespace Flow.Launcher.Plugin.PluginsManager
         }
 
         internal readonly string icoPath = "Images\\pluginsmanager.png";
+
+        partial void ShowMainWindow();
 
         internal PluginsManager(PluginInitContext context, Settings settings)
         {
@@ -102,9 +104,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                         .ChangeQuery(
                             $"{Context.CurrentPluginMetadata.ActionKeywords.FirstOrDefault()} {Settings.UpdateCommand} {updateDetail}");
 
-                    var mainWindow = Application.Current.MainWindow;
-                    mainWindow.Show();
-                    mainWindow.Focus();
+                    ShowMainWindow();
 
                     shouldHideWindow = false;
 

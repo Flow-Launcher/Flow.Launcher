@@ -1,16 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <TargetFramework></TargetFramework>
+    <TargetFrameworks>net10.0;net10.0-windows10.0.19041.0</TargetFrameworks>
     <OutputType>Library</OutputType>
-    <UseWPF>true</UseWPF>
+    <UseWPF Condition="$(TargetFramework.Contains('-windows'))">true</UseWPF>
     <ProjectGuid>{9B130CC5-14FB-41FF-B310-0A95B6894C37}</ProjectGuid>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Flow.Launcher.Plugin.BrowserBookmark</RootNamespace>
     <AssemblyName>Flow.Launcher.Plugin.BrowserBookmark</AssemblyName>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendTargetFrameworkToOutputPath Condition="'$(TargetFramework)' == 'net10.0'">true</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-    <UseWindowsForms>true</UseWindowsForms>
+    <UseWindowsForms Condition="$(TargetFramework.Contains('-windows'))">true</UseWindowsForms>
     <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
   </PropertyGroup>
 
@@ -36,7 +39,8 @@
     <NoWarn>$(NoWarn);FLSG0007</NoWarn>
   </PropertyGroup>
 
-  <Target Name="RemoveUnnecessaryRuntimesAfterBuild" AfterTargets="Build">
+  <!-- The cross-platform build keeps every runtime: macOS needs the osx natives (e_sqlite3, libSkiaSharp). -->
+  <Target Name="RemoveUnnecessaryRuntimesAfterBuild" AfterTargets="Build" Condition="$(TargetFramework.Contains('-windows'))">
     <RemoveDir Directories="$(OutputPath)runtimes\browser-wasm;
                             $(OutputPath)runtimes\linux-arm;
                             $(OutputPath)runtimes\linux-arm64;
@@ -61,7 +65,7 @@
                             $(OutputPath)runtimes\win-arm64;"/>
   </Target>
 
-  <Target Name="RemoveUnnecessaryRuntimesAfterPublish" AfterTargets="Publish">
+  <Target Name="RemoveUnnecessaryRuntimesAfterPublish" AfterTargets="Publish" Condition="$(TargetFramework.Contains('-windows'))">
     <RemoveDir Directories="$(PublishDir)runtimes\browser-wasm;
                             $(PublishDir)runtimes\linux-arm;
                             $(PublishDir)runtimes\linux-arm64;
@@ -119,15 +123,17 @@
   <Target Name="CopyToAvaloniaOutput" AfterTargets="Build" DependsOnTargets="RemoveUnnecessaryRuntimesAfterBuild">
     <PropertyGroup>
       <AvaloniaPluginDir>..\..\Output\Avalonia\$(Configuration)\Plugins\$(AssemblyName)\</AvaloniaPluginDir>
+      <AvaloniaPluginDir Condition="'$(TargetFramework)' == 'net10.0'">..\..\Output\Avalonia\$(Configuration)\net10.0\Plugins\$(AssemblyName)\</AvaloniaPluginDir>
       <PluginOutputDir>$([MSBuild]::EnsureTrailingSlash('$(OutputPath)'))</PluginOutputDir>
     </PropertyGroup>
     <ItemGroup>
-      <PluginFiles Include="$(PluginOutputDir)**\*.*" Exclude="$(PluginOutputDir)runtimes\**\*.*" />
-      <PluginWindowsRuntimeFiles Include="$(PluginOutputDir)runtimes\**\*.*"
-                                 Exclude="$(PluginOutputDir)runtimes\linux*\**\*.*;$(PluginOutputDir)runtimes\osx*\**\*.*;$(PluginOutputDir)runtimes\unix*\**\*.*;$(PluginOutputDir)runtimes\browser*\**\*.*" />
+      <PluginFiles Include="$(PluginOutputDir)**\*.*" Exclude="$(PluginOutputDir)runtimes\**\*.*;$(PluginOutputDir)net10.0\**\*.*" />
+      <PluginRuntimeFiles Condition="'$(TargetFramework)' != 'net10.0'" Include="$(PluginOutputDir)runtimes\**\*.*"
+                          Exclude="$(PluginOutputDir)runtimes\linux*\**\*.*;$(PluginOutputDir)runtimes\osx*\**\*.*;$(PluginOutputDir)runtimes\unix*\**\*.*;$(PluginOutputDir)runtimes\browser*\**\*.*" />
+      <PluginRuntimeFiles Condition="'$(TargetFramework)' == 'net10.0'" Include="$(PluginOutputDir)runtimes\**\*.*" />
     </ItemGroup>
     <Copy SourceFiles="@(PluginFiles)" DestinationFolder="$(AvaloniaPluginDir)%(RecursiveDir)" SkipUnchangedFiles="true" />
-    <Copy SourceFiles="@(PluginWindowsRuntimeFiles)" DestinationFolder="$(AvaloniaPluginDir)runtimes\%(RecursiveDir)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(PluginRuntimeFiles)" DestinationFolder="$(AvaloniaPluginDir)runtimes\%(RecursiveDir)" SkipUnchangedFiles="true" />
   </Target>
 
 </Project>

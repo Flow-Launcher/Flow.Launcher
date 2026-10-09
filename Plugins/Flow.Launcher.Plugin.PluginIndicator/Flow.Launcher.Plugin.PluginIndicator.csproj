@@ -1,6 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <TargetFramework></TargetFramework>
+    <TargetFrameworks>net10.0;net10.0-windows10.0.19041.0</TargetFrameworks>
     <OutputType>Library</OutputType>
     <ProjectGuid>{FDED22C8-B637-42E8-824A-63B5B6E05A3A}</ProjectGuid>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -8,6 +10,7 @@
     <AssemblyName>Flow.Launcher.Plugin.PluginIndicator</AssemblyName>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendTargetFrameworkToOutputPath Condition="'$(TargetFramework)' == 'net10.0'">true</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
   </PropertyGroup>
@@ -63,12 +66,14 @@
   <Target Name="CopyToAvaloniaOutput" AfterTargets="Build">
     <PropertyGroup>
       <AvaloniaPluginDir>..\..\Output\Avalonia\$(Configuration)\Plugins\$(AssemblyName)\</AvaloniaPluginDir>
+      <AvaloniaPluginDir Condition="'$(TargetFramework)' == 'net10.0'">..\..\Output\Avalonia\$(Configuration)\net10.0\Plugins\$(AssemblyName)\</AvaloniaPluginDir>
       <PluginOutputDir>$([MSBuild]::EnsureTrailingSlash('$(OutputPath)'))</PluginOutputDir>
     </PropertyGroup>
     <ItemGroup>
       <PluginFiles Include="$(PluginOutputDir)**\*.*" Exclude="$(PluginOutputDir)runtimes\**\*.*" />
-      <PluginWindowsRuntimeFiles Include="$(PluginOutputDir)runtimes\**\*.*"
+      <PluginWindowsRuntimeFiles Condition="'$(TargetFramework)' != 'net10.0'" Include="$(PluginOutputDir)runtimes\**\*.*"
                                  Exclude="$(PluginOutputDir)runtimes\linux*\**\*.*;$(PluginOutputDir)runtimes\osx*\**\*.*;$(PluginOutputDir)runtimes\unix*\**\*.*;$(PluginOutputDir)runtimes\browser*\**\*.*" />
+      <PluginWindowsRuntimeFiles Condition="'$(TargetFramework)' == 'net10.0'" Include="$(PluginOutputDir)runtimes\**\*.*" />
     </ItemGroup>
     <Copy SourceFiles="@(PluginFiles)" DestinationFolder="$(AvaloniaPluginDir)%(RecursiveDir)" SkipUnchangedFiles="true" />
     <Copy SourceFiles="@(PluginWindowsRuntimeFiles)" DestinationFolder="$(AvaloniaPluginDir)runtimes\%(RecursiveDir)" SkipUnchangedFiles="true" />

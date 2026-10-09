@@ -19,19 +19,22 @@
                              Description="{DynamicResource flowlauncher_plugin_cmd_plugin_description}"
                              IsExpanded="True">
             <ui:SettingsExpander.Items>
-                <ui:SettingsExpanderItem Content="{DynamicResource flowlauncher_plugin_cmd_relace_winr}">
+                <ui:SettingsExpanderItem Content="{DynamicResource flowlauncher_plugin_cmd_relace_winr}"
+                                         IsVisible="{Binding ShowWindowsOnlySettings}">
                     <ui:SettingsExpanderItem.Footer>
                         <ToggleSwitch IsChecked="{Binding Settings.ReplaceWinR}" OnContent="" OffContent="" />
                     </ui:SettingsExpanderItem.Footer>
                 </ui:SettingsExpanderItem>
 
-                <ui:SettingsExpanderItem Content="{DynamicResource flowlauncher_plugin_cmd_always_run_as_administrator}">
+                <ui:SettingsExpanderItem Content="{DynamicResource flowlauncher_plugin_cmd_always_run_as_administrator}"
+                                         IsVisible="{Binding ShowWindowsOnlySettings}">
                     <ui:SettingsExpanderItem.Footer>
                         <ToggleSwitch IsChecked="{Binding Settings.RunAsAdministrator}" OnContent="" OffContent="" />
                     </ui:SettingsExpanderItem.Footer>
                 </ui:SettingsExpanderItem>
 
-                <ui:SettingsExpanderItem Content="{DynamicResource flowlauncher_plugin_cmd_use_windows_terminal}">
+                <ui:SettingsExpanderItem Content="{DynamicResource flowlauncher_plugin_cmd_use_windows_terminal}"
+                                         IsVisible="{Binding ShowWindowsOnlySettings}">
                     <ui:SettingsExpanderItem.Footer>
                         <ToggleSwitch IsChecked="{Binding Settings.UseWindowsTerminal}" OnContent="" OffContent="" />
                     </ui:SettingsExpanderItem.Footer>
