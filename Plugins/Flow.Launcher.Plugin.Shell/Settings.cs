@@ -117,6 +117,20 @@ namespace Flow.Launcher.Plugin.Shell
             }
         }
 
+        private CustomTemplateShellConfig _customTemplateShellConfig = new();
+        public CustomTemplateShellConfig CustomTemplateShellConfig
+        {
+            get => _customTemplateShellConfig;
+            set
+            {
+                if (_customTemplateShellConfig != value)
+                {
+                    _customTemplateShellConfig = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public Dictionary<string, int> CommandHistory { get; set; } = [];
 
         public void AddCmdHistory(string cmdName)
@@ -124,6 +138,37 @@ namespace Flow.Launcher.Plugin.Shell
             if (!CommandHistory.TryAdd(cmdName, 1))
             {
                 CommandHistory[cmdName] += 1;
+            }
+        }
+    }
+
+    public class CustomTemplateShellConfig : BaseModel
+    {
+        private string _executablePath = "cmd.exe";
+        public string ExecutablePath
+        {
+            get => _executablePath;
+            set
+            {
+                if (_executablePath != value)
+                {
+                    _executablePath = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _argumentsTemplate = "/k \"{command}\"";
+        public string ArgumentsTemplate
+        {
+            get => _argumentsTemplate;
+            set
+            {
+                if (_argumentsTemplate != value)
+                {
+                    _argumentsTemplate = value;
+                    OnPropertyChanged();
+                }
             }
         }
     }
@@ -142,5 +187,8 @@ namespace Flow.Launcher.Plugin.Shell
 
         [EnumLocalizeValue("Pwsh")]
         Pwsh = 3,
+
+        [EnumLocalizeValue("Custom Template")]
+        CustomTemplate = 4,
     }
 }

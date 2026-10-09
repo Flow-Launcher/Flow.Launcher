@@ -36,6 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="SemanticVersioning" Version="3.0.0" />
     <PackageReference Include="SharpZipLib" Version="1.4.2" />
     <PackageReference Include="Avalonia" Version="11.2.3" ExcludeAssets="runtime" />
     <PackageReference Include="FluentAvaloniaUI" Version="2.2.0" ExcludeAssets="runtime" />

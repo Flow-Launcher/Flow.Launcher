@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
-    <system:String x:Key="flowlauncher_plugin_calculator_plugin_name">מחשבו</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_plugin_description">Perform mathematical calculations, including hex values and advanced functions such as 'min(1,2,3)', 'sqrt(123)' and 'cos(123)'.</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_plugin_name">מחשבון</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_plugin_description">ביצוע חישובים מתמטיים, כולל ערכים הקסדצימליים ופונקציות מתקדמות כגון 'min(1,2,3)', 'sqrt(123)' ו-'cos(123)'.</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_not_a_number">לא מספר (NaN)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_expression_not_complete">הביטוי שגוי או לא שלם (האם שכחת סוגריים?)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_copy_number_to_clipboard">העתק מספר זה ללוח</system:String>
@@ -12,7 +12,7 @@
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_comma">פסיק (,)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_dot">נקודה (.)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_max_decimal_places">מספר מקסימלי של מקומות עשרוניים</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_use_thousands_separator">Show thousands separator in results</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_failed_to_copy">Copy failed, please try later</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_show_error_message">Show error message when calculation fails</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_use_thousands_separator">הצג מפריד אלפים בתוצאות</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_failed_to_copy">ההעתקה נכשלה, אנא נסה שוב מאוחר יותר</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_show_error_message">הצג הודעת שגיאה כאשר החישוב נכשל</system:String>
 </ResourceDictionary>

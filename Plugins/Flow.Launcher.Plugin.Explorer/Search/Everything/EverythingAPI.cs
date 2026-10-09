@@ -1,33 +1,21 @@
-﻿using Flow.Launcher.Plugin.Explorer.Search.Everything.Exceptions;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Flow.Launcher.Plugin.Explorer.Exceptions;
+using Flow.Launcher.Plugin.Explorer.Search.Everything.Exceptions;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 {
-    public static class EverythingApi
+    public class LegacyEverythingApi : IEverythingApi
     {
         private const int BufferSize = 4096;
-
         private static readonly SemaphoreSlim _semaphore = new(1, 1);
-
         // cached buffer to remove redundant allocations.
         private static readonly StringBuilder buffer = new(BufferSize);
-
-        public enum StateCode
-        {
-            OK,
-            MemoryError,
-            IPCError,
-            RegisterClassExError,
-            CreateWindowError,
-            CreateThreadError,
-            InvalidIndexError,
-            InvalidCallError
-        }
 
         const uint EVERYTHING_REQUEST_FULL_PATH_AND_FILE_NAME = 0x00000004u;
         const uint EVERYTHING_REQUEST_RUN_COUNT = 0x00000400u;
@@ -35,18 +23,28 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         /// <summary>
         /// Checks whether the sort option is Fast Sort.
         /// </summary>
-        public static bool IsFastSortOption(EverythingSortOption sortOption)
+        public bool IsFastSortOption(EverythingSortOption sortOption)
         {
             var fastSortOptionEnabled = EverythingApiDllImport.Everything_IsFastSort(sortOption);
-
-            // If the Everything service is not running, then this call will incorrectly report 
+            // If the Everything service is not running, then this call will incorrectly report
             // the state as false. This checks for errors thrown by the api and up to the caller to handle.
             CheckAndThrowExceptionOnError();
-
             return fastSortOptionEnabled;
         }
 
-        public static async ValueTask<bool> IsEverythingRunningAsync(CancellationToken token = default)
+        /// <summary>
+        /// Searches using the specified criteria and resets the Everything API afterwards.
+        /// </summary>
+        /// <param name="option">The search criteria.</param>
+        /// <param name="token">A cancellation token that stops the current search when cancellation is requested.</param>
+        /// <returns>An asynchronous sequence of search results that match the specified criteria.</returns>
+        public async IAsyncEnumerable<SearchResult> SearchAsync(EverythingSearchOption option, [EnumeratorCancellation] CancellationToken token = default)
+        {
+            await foreach (var result in SearchCoreAsync(option, token))
+                yield return result;
+        }
+
+        public async Task CheckAvailableAsync(CancellationToken token = default)
         {
             try
             {
@@ -54,14 +52,14 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             }
             catch (OperationCanceledException)
             {
-                return false;
+                return;
             }
 
             try
             {
                 _ = EverythingApiDllImport.Everything_GetMajorVersion();
-                var result = EverythingApiDllImport.Everything_GetLastError() != StateCode.IPCError;
-                return result;
+                if (EverythingApiDllImport.Everything_GetLastError() == EverythingStateCode.IPCError)
+                    throw new IPCErrorException();
             }
             finally
             {
@@ -69,20 +67,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             }
         }
 
-        /// <summary>
-        /// Searches the specified key word and reset the everything API afterwards
-        /// </summary>
-        /// <param name="option">Search Criteria</param>
-        /// <param name="token">when cancelled the current search will stop and exit (and would not reset)</param>
-        /// <returns>An IAsyncEnumerable that will enumerate all results searched by the specific query and option</returns>
-        public static async IAsyncEnumerable<SearchResult> SearchAsync(EverythingSearchOption option,
-            [EnumeratorCancellation] CancellationToken token)
+        private async IAsyncEnumerable<SearchResult> SearchCoreAsync(EverythingSearchOption option, [EnumeratorCancellation] CancellationToken token)
         {
-            if (option.Offset < 0)
-                throw new ArgumentOutOfRangeException(nameof(option.Offset), option.Offset, "Offset must be greater than or equal to 0");
-
-            if (option.MaxCount < 0)
-                throw new ArgumentOutOfRangeException(nameof(option.MaxCount), option.MaxCount, "MaxCount must be greater than or equal to 0");
+            var query = EverythingHelper.PrepareQuery(option);
+            var preparedOption = query.Option;
 
             try
             {
@@ -98,33 +86,16 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 if (token.IsCancellationRequested)
                     yield break;
 
-                if (option.Keyword.StartsWith("@"))
-                {
-                    EverythingApiDllImport.Everything_SetRegex(true);
-                    option.Keyword = option.Keyword[1..];
-                }
+                EverythingApiDllImport.Everything_SetRegex(preparedOption.UseRegex);
+                EverythingApiDllImport.Everything_SetSearchW(query.SearchText);
+                EverythingApiDllImport.Everything_SetOffset(preparedOption.Offset);
+                EverythingApiDllImport.Everything_SetMax(preparedOption.MaxCount);
 
-                var builder = new StringBuilder();
-                builder.Append(option.Keyword);
+                EverythingApiDllImport.Everything_SetSort(preparedOption.SortOption);
+                EverythingApiDllImport.Everything_SetMatchPath(preparedOption.IsFullPathSearch);
 
-                if (!string.IsNullOrWhiteSpace(option.ParentPath))
-                {
-                    builder.Append($" {(option.IsRecursive ? "" : "parent:")}\"{option.ParentPath}\"");
-                }
-
-                if (option.IsContentSearch)
-                {
-                    builder.Append($" content:\"{option.ContentSearchKeyword}\"");
-                }
-
-                EverythingApiDllImport.Everything_SetSearchW(builder.ToString());
-                EverythingApiDllImport.Everything_SetOffset(option.Offset);
-                EverythingApiDllImport.Everything_SetMax(option.MaxCount);
-
-                EverythingApiDllImport.Everything_SetSort(option.SortOption);
-                EverythingApiDllImport.Everything_SetMatchPath(option.IsFullPathSearch);
-                
-                if (option.SortOption == EverythingSortOption.RUN_COUNT_DESCENDING)
+                if (preparedOption.SortOption == EverythingSortOption.RUN_COUNT_DESCENDING ||
+                    preparedOption.SortOption == EverythingSortOption.RUN_COUNT_ASCENDING)
                 {
                     EverythingApiDllImport.Everything_SetRequestFlags(EVERYTHING_REQUEST_FULL_PATH_AND_FILE_NAME | EVERYTHING_REQUEST_RUN_COUNT);
                 }
@@ -144,24 +115,19 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 for (var idx = 0; idx < EverythingApiDllImport.Everything_GetNumResults(); ++idx)
                 {
                     if (token.IsCancellationRequested)
-                    {
                         yield break;
-                    }
 
                     EverythingApiDllImport.Everything_GetResultFullPathNameW(idx, buffer, BufferSize);
 
-                    var result = new SearchResult
+                    yield return new SearchResult
                     {
-                        // todo the types are wrong. Everything expects uint everywhere, but we send int just above/below. how to fix? Is EverythingApiDllImport autogenerated or handmade?
                         FullPath = buffer.ToString(),
                         Type = EverythingApiDllImport.Everything_IsFolderResult(idx) ? ResultType.Folder :
                             EverythingApiDllImport.Everything_IsFileResult(idx) ? ResultType.File :
                             ResultType.Volume,
                         Score = Convert.ToInt32(EverythingApiDllImport.Everything_GetResultRunCount((uint)idx)),
-                        HighlightData = EverythingHighlightStringToHighlightList(EverythingApiDllImport.Everything_GetResultHighlightedFileName((uint)idx))
+                        HighlightData = EverythingHelper.EverythingHighlightStringToHighlightList(EverythingApiDllImport.Everything_GetResultHighlightedFileName((uint)idx))
                     };
-
-                    yield return result;
                 }
             }
             finally
@@ -175,30 +141,35 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         {
             switch (EverythingApiDllImport.Everything_GetLastError())
             {
-                case StateCode.CreateThreadError:
+                case EverythingStateCode.CreateThreadError:
                     throw new CreateThreadException();
-                case StateCode.CreateWindowError:
+                case EverythingStateCode.CreateWindowError:
                     throw new CreateWindowException();
-                case StateCode.InvalidCallError:
+                case EverythingStateCode.InvalidCallError:
                     throw new InvalidCallException();
-                case StateCode.InvalidIndexError:
+                case EverythingStateCode.InvalidIndexError:
                     throw new InvalidIndexException();
-                case StateCode.IPCError:
+                case EverythingStateCode.IPCError:
                     throw new IPCErrorException();
-                case StateCode.MemoryError:
+                case EverythingStateCode.MemoryError:
                     throw new MemoryErrorException();
-                case StateCode.RegisterClassExError:
+                case EverythingStateCode.RegisterClassExError:
                     throw new RegisterClassExException();
-                case StateCode.OK:
+                case EverythingStateCode.OK:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
 
-        public static async Task IncrementRunCounterAsync(string fileOrFolder)
+        public async Task IncrementRunCounterAsync(string fileOrFolder)
         {
-            await _semaphore.WaitAsync(TimeSpan.FromSeconds(1));
+            var _entered = await _semaphore.WaitAsync(TimeSpan.FromSeconds(1));
+            if (!_entered)
+            {
+                // If we can't acquire the semaphore within the timeout, we skip incrementing the run count to avoid blocking.
+                return;
+            }
             try
             {
                 _ = EverythingApiDllImport.Everything_IncRunCountFromFileName(fileOrFolder);
@@ -207,57 +178,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             {
                 /*ignored*/
             }
-            finally { _semaphore.Release(); }
-        }
-
-        /// <summary>
-        /// Convert the highlighted string from Everything API to a list of highlight indexes for our Result.
-        /// </summary>
-        /// <param name="highlightString">Text inside a * quote is highlighted, two consecutive *'s is a single literal *. For example, in the highlighted text: abc*123* the 123 part is highlighted.</param>
-        /// <returns>A list of zero-based character indices that should be highlighted.</returns>
-        public static List<int> EverythingHighlightStringToHighlightList(string highlightString)
-        {
-            var highlightData = new List<int>();
-
-            if (string.IsNullOrEmpty(highlightString))
-                return highlightData;
-
-            var isHighlighted = false;
-            var actualIndex = 0; // Index in the actual string (without * markers)
-            var length = highlightString.Length;
-
-            for (var i = 0; i < length; i++)
-            {
-                if (highlightString[i] == '*')
-                {
-                    // Check if it's a literal * (two consecutive *)
-                    if (i + 1 < length && highlightString[i + 1] == '*')
-                    {
-                        // Two consecutive *'s represent a single literal *
-                        if (isHighlighted)
-                        {
-                            highlightData.Add(actualIndex);
-                        }
-                        actualIndex++;
-                        i++; // Skip the next *
-                    }
-                    else
-                    {
-                        isHighlighted = !isHighlighted;
-                    }
-                }
-                else
-                {
-                    // Regular character
-                    if (isHighlighted)
-                    {
-                        highlightData.Add(actualIndex);
-                    }
-                    actualIndex++;
-                }
+            finally
+            { 
+                _semaphore.Release();
             }
-
-            return highlightData;
         }
     }
 }
