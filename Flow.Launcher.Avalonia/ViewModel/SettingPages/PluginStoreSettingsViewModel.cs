@@ -180,10 +180,9 @@ namespace Flow.Launcher.Avalonia.ViewModel.SettingPages
         [RelayCommand]
         private async Task CheckPluginUpdatesAsync()
         {
-            await PluginInstaller.CheckForPluginUpdatesAsync((plugins) =>
-            {
-                Dispatcher.UIThread.Post(() => _ = ShowPluginUpdateWindowAsync(plugins));
-            }, silentUpdate: false);
+            await PluginInstaller.CheckForPluginUpdatesAsync(
+                plugins => Dispatcher.UIThread.InvokeAsync(() => ShowPluginUpdateWindowAsync(plugins)),
+                silentUpdate: false);
         }
 
         private static async Task ShowPluginUpdateWindowAsync(List<PluginUpdateInfo> plugins)
