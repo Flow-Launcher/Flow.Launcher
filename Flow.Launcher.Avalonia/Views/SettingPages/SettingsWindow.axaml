@@ -10,22 +10,22 @@
         Width="900" Height="650"
         WindowStartupLocation="CenterScreen">
 
-    <ui:NavigationView Name="NavView"
+    <ui:FANavigationView Name="NavView"
                       PaneDisplayMode="Left"
                       OpenPaneLength="200"
                       IsSettingsVisible="False">
-        <ui:NavigationView.MenuItems>
-            <ui:NavigationViewItem Content="{i18n:Localize general}" Tag="General" IconSource="Setting" IsSelected="True" />
-            <ui:NavigationViewItem Content="{i18n:Localize plugin}" Tag="Plugins" IconSource="Library" />
-            <ui:NavigationViewItem Content="{i18n:Localize pluginStore}" Tag="PluginStore" IconSource="Shop" />
-            <ui:NavigationViewItem Content="{i18n:Localize theme}" Tag="Theme" IconSource="DarkTheme" />
-            <ui:NavigationViewItem Content="{i18n:Localize hotkey}" Tag="Hotkey" IconSource="Keyboard" />
-            <ui:NavigationViewItem Content="{i18n:Localize proxy}" Tag="Proxy" IconSource="Globe" />
-            <ui:NavigationViewItem Content="{i18n:Localize about}" Tag="About" IconSource="Help" />
-        </ui:NavigationView.MenuItems>
+        <ui:FANavigationView.MenuItems>
+            <ui:FANavigationViewItem Content="{i18n:Localize general}" Tag="General" IconSource="Setting" IsSelected="True" />
+            <ui:FANavigationViewItem Content="{i18n:Localize plugin}" Tag="Plugins" IconSource="Library" />
+            <ui:FANavigationViewItem Content="{i18n:Localize pluginStore}" Tag="PluginStore" IconSource="Shop" />
+            <ui:FANavigationViewItem Content="{i18n:Localize theme}" Tag="Theme" IconSource="DarkTheme" />
+            <ui:FANavigationViewItem Content="{i18n:Localize hotkey}" Tag="Hotkey" IconSource="Keyboard" />
+            <ui:FANavigationViewItem Content="{i18n:Localize proxy}" Tag="Proxy" IconSource="Globe" />
+            <ui:FANavigationViewItem Content="{i18n:Localize about}" Tag="About" IconSource="Help" />
+        </ui:FANavigationView.MenuItems>
 
         <ScrollViewer Name="ContentFrame" Padding="20">
             <!-- Content will be loaded here -->
         </ScrollViewer>
-    </ui:NavigationView>
+    </ui:FANavigationView>
 </Window>

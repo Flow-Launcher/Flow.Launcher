@@ -28,7 +28,7 @@
                 </ComboBox>
                 <Button Command="{Binding OpenHelperCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
                         ToolTip.Tip="{i18n:Localize flowlauncher_settings}">
-                    <ui:SymbolIcon Symbol="Help" FontSize="16"/>
+                    <ui:FASymbolIcon Symbol="Help" FontSize="16"/>
                 </Button>
             </StackPanel>
         </Grid>
@@ -37,13 +37,13 @@
         <TextBox Grid.Row="1" 
                  x:Name="SearchTextBox"
                  Text="{Binding SearchText, Mode=TwoWay}"
-                 Watermark="{i18n:Localize searchplugin}"
+                 PlaceholderText="{i18n:Localize searchplugin}"
                  Margin="0,0,0,10">
             <TextBox.InnerRightContent>
                 <Button Theme="{StaticResource TransparentButton}"
                         IsVisible="{Binding SearchText, Converter={x:Static conv:StringConverters.IsNotNullOrEmpty}}"
                         Click="ClearSearchText_Click">
-                    <ui:SymbolIcon Symbol="Dismiss" FontSize="12"/>
+                    <ui:FASymbolIcon Symbol="Dismiss" FontSize="12"/>
                 </Button>
             </TextBox.InnerRightContent>
         </TextBox>
@@ -85,14 +85,14 @@
                                         <StackPanel Orientation="Horizontal" Spacing="10" 
                                                     IsVisible="{Binding $parent[UserControl].((vm:PluginsSettingsViewModel)DataContext).IsPrioritySelected, FallbackValue=False}">
                                             <TextBlock Text="{i18n:Localize priority}" VerticalAlignment="Center"/>
-                                            <ui:NumberBox Value="{Binding Priority}" SpinButtonPlacementMode="Inline" Width="100" SmallChange="1" LargeChange="10"/>
+                                            <ui:FANumberBox Value="{Binding Priority}" SpinButtonPlacementMode="Inline" Width="100" SmallChange="1" LargeChange="10"/>
                                         </StackPanel>
 
                                         <!-- Search Delay -->
                                         <StackPanel Orientation="Horizontal" Spacing="10"
                                                     IsVisible="{Binding $parent[UserControl].((vm:PluginsSettingsViewModel)DataContext).IsSearchDelaySelected, FallbackValue=False}">
                                             <TextBlock Text="{i18n:Localize searchDelay}" VerticalAlignment="Center"/>
-                                            <ui:NumberBox Value="{Binding PluginSearchDelayTime}" SpinButtonPlacementMode="Inline" Width="100" Minimum="0" SmallChange="10" LargeChange="100"/>
+                                            <ui:FANumberBox Value="{Binding PluginSearchDelayTime}" SpinButtonPlacementMode="Inline" Width="100" Minimum="0" SmallChange="10" LargeChange="100"/>
                                         </StackPanel>
 
                                         <!-- Home On/Off -->
@@ -123,7 +123,7 @@
                                     
                                     <StackPanel Orientation="Horizontal" Spacing="10"
                                                 IsVisible="{Binding HasWpfOnlySettings}">
-                                        <ui:SymbolIcon Symbol="Open" FontSize="14" Foreground="{DynamicResource TextFillColorSecondaryBrush}"/>
+                                        <ui:FASymbolIcon Symbol="Open" FontSize="14" Foreground="{DynamicResource TextFillColorSecondaryBrush}"/>
                                         <TextBlock Text="{i18n:Localize plugin_settings_open_in_wpf_window}" 
                                                    Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                                                    FontStyle="Italic"
@@ -138,11 +138,11 @@
                                     <Grid ColumnDefinitions="*,Auto">
                                         <StackPanel Orientation="Horizontal" Spacing="15" VerticalAlignment="Center">
                                             <StackPanel Orientation="Horizontal" Spacing="5">
-                                                <ui:SymbolIcon Symbol="Contact" FontSize="14"/>
+                                                <ui:FASymbolIcon Symbol="Contact" FontSize="14"/>
                                                 <TextBlock Text="{Binding Author}" />
                                             </StackPanel>
                                             <StackPanel Orientation="Horizontal" Spacing="5">
-                                                <ui:SymbolIcon Symbol="Tag" FontSize="14"/>
+                                                <ui:FASymbolIcon Symbol="Tag" FontSize="14"/>
                                                 <TextBlock Text="{Binding Version}" />
                                             </StackPanel>
                                             <TextBlock Text="{Binding InitTime}" Foreground="{DynamicResource TextFillColorSecondaryBrush}" FontSize="12" VerticalAlignment="Center"/>
@@ -151,13 +151,13 @@
 
                                         <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10">
                                             <Button Command="{Binding OpenSourceCodeLinkCommand}" ToolTip.Tip="{i18n:Localize website}">
-                                                <ui:SymbolIcon Symbol="Globe"/>
+                                                <ui:FASymbolIcon Symbol="Globe"/>
                                             </Button>
                                             <Button Command="{Binding OpenPluginDirectoryCommand}" ToolTip.Tip="{i18n:Localize pluginDirectory}">
-                                                <ui:SymbolIcon Symbol="Folder"/>
+                                                <ui:FASymbolIcon Symbol="Folder"/>
                                             </Button>
                                             <Button Command="{Binding OpenDeletePluginWindowCommand}" ToolTip.Tip="{i18n:Localize plugin_uninstall}">
-                                                <ui:SymbolIcon Symbol="Delete"/>
+                                                <ui:FASymbolIcon Symbol="Delete"/>
                                             </Button>
                                         </StackPanel>
                                     </Grid>

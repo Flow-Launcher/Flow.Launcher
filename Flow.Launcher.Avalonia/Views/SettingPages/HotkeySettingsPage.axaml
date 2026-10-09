@@ -20,229 +20,229 @@
                        Margin="0,0,0,12" />
 
             <!-- Toggle Flow Launcher Hotkey -->
-            <ui:SettingsExpander Header="{i18n:Localize flowlauncherHotkey}"
+            <ui:FASettingsExpander Header="{i18n:Localize flowlauncherHotkey}"
                                 Description="{i18n:Localize flowlauncherHotkeyToolTip}"
                                 IconSource="Keyboard">
-                <ui:SettingsExpander.Footer>
+                <ui:FASettingsExpander.Footer>
                     <controls:HotkeyControl Hotkey="{Binding ToggleHotkey, Mode=TwoWay}"
                                             MinWidth="150"
                                             UnregisterToggleHotkeyWhileRecording="True" />
-                </ui:SettingsExpander.Footer>
-            </ui:SettingsExpander>
+                </ui:FASettingsExpander.Footer>
+            </ui:FASettingsExpander>
 
             <!-- Preview Hotkey -->
-            <ui:SettingsExpander Header="{i18n:Localize previewHotkey}"
+            <ui:FASettingsExpander Header="{i18n:Localize previewHotkey}"
                                 Description="{i18n:Localize previewHotkeyToolTip}"
                                 IconSource="View">
-                <ui:SettingsExpander.Footer>
+                <ui:FASettingsExpander.Footer>
                     <controls:HotkeyControl Hotkey="{Binding PreviewHotkey, Mode=TwoWay}" MinWidth="150" />
-                </ui:SettingsExpander.Footer>
-            </ui:SettingsExpander>
+                </ui:FASettingsExpander.Footer>
+            </ui:FASettingsExpander>
 
             <!-- Open Result Modifiers -->
-            <ui:SettingsExpander Header="{i18n:Localize openResultModifiers}"
+            <ui:FASettingsExpander Header="{i18n:Localize openResultModifiers}"
                                 Description="{i18n:Localize openResultModifiersToolTip}"
                                 IconSource="Keyboard">
-                <ui:SettingsExpander.Footer>
+                <ui:FASettingsExpander.Footer>
                     <ComboBox Width="140"
                               ItemsSource="{Binding OpenResultModifiersList}"
                               SelectedItem="{Binding OpenResultModifiers}" />
-                </ui:SettingsExpander.Footer>
-                <ui:SettingsExpanderItem Content="{i18n:Localize showOpenResultHotkey}"
+                </ui:FASettingsExpander.Footer>
+                <ui:FASettingsExpanderItem Content="{i18n:Localize showOpenResultHotkey}"
                                          Description="{i18n:Localize showOpenResultHotkeyToolTip}">
-                    <ui:SettingsExpanderItem.Footer>
+                    <ui:FASettingsExpanderItem.Footer>
                         <ToggleSwitch IsChecked="{Binding ShowOpenResultHotkey}" />
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
-            </ui:SettingsExpander>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
+            </ui:FASettingsExpander>
 
             <!-- Dialog Jump Hotkey -->
-            <ui:SettingsExpander Header="{i18n:Localize dialogJumpHotkey}"
+            <ui:FASettingsExpander Header="{i18n:Localize dialogJumpHotkey}"
                                 Description="{i18n:Localize dialogJumpHotkeyToolTip}"
                                 IconSource="Target">
-                <ui:SettingsExpander.Footer>
+                <ui:FASettingsExpander.Footer>
                     <controls:HotkeyControl Hotkey="{Binding DialogJumpHotkey, Mode=TwoWay}" MinWidth="150" />
-                </ui:SettingsExpander.Footer>
-            </ui:SettingsExpander>
+                </ui:FASettingsExpander.Footer>
+            </ui:FASettingsExpander>
 
             <!-- Hotkey Presets (expandable group with fixed hotkeys) -->
-            <ui:SettingsExpander Header="{i18n:Localize hotkeyPresets}"
+            <ui:FASettingsExpander Header="{i18n:Localize hotkeyPresets}"
                                 Description="{i18n:Localize hotkeyPresetsToolTip}"
                                 IconSource="Keyboard"
                                 IsExpanded="False">
                 
                 <!-- Open Containing Folder -->
-                <ui:SettingsExpanderItem Content="{i18n:Localize OpenContainFolderHotkey}">
-                    <ui:SettingsExpanderItem.Footer>
+                <ui:FASettingsExpanderItem Content="{i18n:Localize OpenContainFolderHotkey}">
+                    <ui:FASettingsExpanderItem.Footer>
                         <controls:HotkeyDisplay Keys="Ctrl+Enter" />
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
 
                 <!-- Run as Admin -->
-                <ui:SettingsExpanderItem Content="{i18n:Localize RunAsAdminHotkey}">
-                    <ui:SettingsExpanderItem.Footer>
+                <ui:FASettingsExpanderItem Content="{i18n:Localize RunAsAdminHotkey}">
+                    <ui:FASettingsExpanderItem.Footer>
                         <controls:HotkeyDisplay Keys="Ctrl+Shift+Enter" />
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
 
                 <!-- Toggle History -->
-                <ui:SettingsExpanderItem Content="{i18n:Localize ToggleHistoryHotkey}">
-                    <ui:SettingsExpanderItem.Footer>
+                <ui:FASettingsExpanderItem Content="{i18n:Localize ToggleHistoryHotkey}">
+                    <ui:FASettingsExpanderItem.Footer>
                         <controls:HotkeyControl Hotkey="{Binding OpenHistoryHotkey, Mode=TwoWay}" MinWidth="120" />
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
 
                 <!-- Copy File Path -->
-                <ui:SettingsExpanderItem Content="{i18n:Localize CopyFilePathHotkey}">
-                    <ui:SettingsExpanderItem.Footer>
+                <ui:FASettingsExpanderItem Content="{i18n:Localize CopyFilePathHotkey}">
+                    <ui:FASettingsExpanderItem.Footer>
                         <controls:HotkeyDisplay Keys="Ctrl+Shift+C" />
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
 
                 <!-- Open Context Menu (customizable) -->
-                <ui:SettingsExpanderItem Content="{i18n:Localize OpenContextMenuHotkey}">
-                    <ui:SettingsExpanderItem.Footer>
+                <ui:FASettingsExpanderItem Content="{i18n:Localize OpenContextMenuHotkey}">
+                    <ui:FASettingsExpanderItem.Footer>
                         <controls:HotkeyControl Hotkey="{Binding OpenContextMenuHotkey, Mode=TwoWay}" MinWidth="120" />
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
 
                 <!-- Open Context Menu (fixed Shift+Enter) -->
-                <ui:SettingsExpanderItem Content="{i18n:Localize OpenContextMenuHotkey}">
-                    <ui:SettingsExpanderItem.Footer>
+                <ui:FASettingsExpanderItem Content="{i18n:Localize OpenContextMenuHotkey}">
+                    <ui:FASettingsExpanderItem.Footer>
                         <controls:HotkeyDisplay Keys="Shift+Enter" />
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
 
                 <!-- Open Native Context Menu -->
-                <ui:SettingsExpanderItem Content="{i18n:Localize OpenNativeContextMenuHotkey}">
-                    <ui:SettingsExpanderItem.Footer>
+                <ui:FASettingsExpanderItem Content="{i18n:Localize OpenNativeContextMenuHotkey}">
+                    <ui:FASettingsExpanderItem.Footer>
                         <controls:HotkeyDisplay Keys="Alt+Enter" />
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
 
                 <!-- Settings Window -->
-                <ui:SettingsExpanderItem Content="{i18n:Localize SettingWindowHotkey}">
-                    <ui:SettingsExpanderItem.Footer>
+                <ui:FASettingsExpanderItem Content="{i18n:Localize SettingWindowHotkey}">
+                    <ui:FASettingsExpanderItem.Footer>
                         <controls:HotkeyControl Hotkey="{Binding SettingWindowHotkey, Mode=TwoWay}" MinWidth="120" />
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
 
                 <!-- Toggle Game Mode -->
-                <ui:SettingsExpanderItem Content="{i18n:Localize ToggleGameModeHotkey}">
-                    <ui:SettingsExpanderItem.Footer>
+                <ui:FASettingsExpanderItem Content="{i18n:Localize ToggleGameModeHotkey}">
+                    <ui:FASettingsExpanderItem.Footer>
                         <controls:HotkeyDisplay Keys="Ctrl+F12" />
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
 
                 <!-- Requery -->
-                <ui:SettingsExpanderItem Content="{i18n:Localize RequeryHotkey}">
-                    <ui:SettingsExpanderItem.Footer>
+                <ui:FASettingsExpanderItem Content="{i18n:Localize RequeryHotkey}">
+                    <ui:FASettingsExpanderItem.Footer>
                         <controls:HotkeyDisplay Keys="Ctrl+R" />
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
 
                 <!-- Cycle History Up -->
-                <ui:SettingsExpanderItem Content="{i18n:Localize CycleHistoryUpHotkey}">
-                    <ui:SettingsExpanderItem.Footer>
+                <ui:FASettingsExpanderItem Content="{i18n:Localize CycleHistoryUpHotkey}">
+                    <ui:FASettingsExpanderItem.Footer>
                         <controls:HotkeyControl Hotkey="{Binding CycleHistoryUpHotkey, Mode=TwoWay}" MinWidth="120" />
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
 
                 <!-- Cycle History Down -->
-                <ui:SettingsExpanderItem Content="{i18n:Localize CycleHistoryDownHotkey}">
-                    <ui:SettingsExpanderItem.Footer>
+                <ui:FASettingsExpanderItem Content="{i18n:Localize CycleHistoryDownHotkey}">
+                    <ui:FASettingsExpanderItem.Footer>
                         <controls:HotkeyControl Hotkey="{Binding CycleHistoryDownHotkey, Mode=TwoWay}" MinWidth="120" />
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
 
                 <!-- Reload Plugin -->
-                <ui:SettingsExpanderItem Content="{i18n:Localize ReloadPluginHotkey}"
+                <ui:FASettingsExpanderItem Content="{i18n:Localize ReloadPluginHotkey}"
                                          Description="{i18n:Localize ReloadPluginHotkeyToolTip}">
-                    <ui:SettingsExpanderItem.Footer>
+                    <ui:FASettingsExpanderItem.Footer>
                         <controls:HotkeyDisplay Keys="F5" />
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
 
                 <!-- Select Prev Page -->
-                <ui:SettingsExpanderItem Content="{i18n:Localize SelectPrevPageHotkey}">
-                    <ui:SettingsExpanderItem.Footer>
+                <ui:FASettingsExpanderItem Content="{i18n:Localize SelectPrevPageHotkey}">
+                    <ui:FASettingsExpanderItem.Footer>
                         <controls:HotkeyControl Hotkey="{Binding SelectPrevPageHotkey, Mode=TwoWay}" MinWidth="120" />
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
 
                 <!-- Select Next Page -->
-                <ui:SettingsExpanderItem Content="{i18n:Localize SelectNextPageHotkey}">
-                    <ui:SettingsExpanderItem.Footer>
+                <ui:FASettingsExpanderItem Content="{i18n:Localize SelectNextPageHotkey}">
+                    <ui:FASettingsExpanderItem.Footer>
                         <controls:HotkeyControl Hotkey="{Binding SelectNextPageHotkey, Mode=TwoWay}" MinWidth="120" />
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
 
                 <!-- Quick Width -->
-                <ui:SettingsExpanderItem Content="{i18n:Localize QuickWidthHotkey}">
-                    <ui:SettingsExpanderItem.Footer>
+                <ui:FASettingsExpanderItem Content="{i18n:Localize QuickWidthHotkey}">
+                    <ui:FASettingsExpanderItem.Footer>
                         <StackPanel Orientation="Horizontal" Spacing="8">
                             <controls:HotkeyDisplay Keys="Ctrl+[" />
                             <controls:HotkeyDisplay Keys="Ctrl+]" />
                         </StackPanel>
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
 
                 <!-- Quick Height -->
-                <ui:SettingsExpanderItem Content="{i18n:Localize QuickHeightHotkey}">
-                    <ui:SettingsExpanderItem.Footer>
+                <ui:FASettingsExpanderItem Content="{i18n:Localize QuickHeightHotkey}">
+                    <ui:FASettingsExpanderItem.Footer>
                         <StackPanel Orientation="Horizontal" Spacing="8">
                             <controls:HotkeyDisplay Keys="Ctrl+Plus" />
                             <controls:HotkeyDisplay Keys="Ctrl+Minus" />
                         </StackPanel>
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
-            </ui:SettingsExpander>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
+            </ui:FASettingsExpander>
 
             <!-- Auto-complete Hotkey -->
-            <ui:SettingsExpander Header="{i18n:Localize autoCompleteHotkey}"
+            <ui:FASettingsExpander Header="{i18n:Localize autoCompleteHotkey}"
                                 Description="{i18n:Localize autoCompleteHotkeyToolTip}"
                                 IconSource="Accept">
-                <ui:SettingsExpander.Footer>
+                <ui:FASettingsExpander.Footer>
                     <controls:HotkeyControl Hotkey="{Binding AutoCompleteHotkey, Mode=TwoWay}" MinWidth="150" />
-                </ui:SettingsExpander.Footer>
-                <ui:SettingsExpanderItem Content="{i18n:Localize autoCompleteHotkey}"
+                </ui:FASettingsExpander.Footer>
+                <ui:FASettingsExpanderItem Content="{i18n:Localize autoCompleteHotkey}"
                                          Description="{i18n:Localize AdditionalHotkeyToolTip}">
-                    <ui:SettingsExpanderItem.Footer>
+                    <ui:FASettingsExpanderItem.Footer>
                         <controls:HotkeyControl Hotkey="{Binding AutoCompleteHotkey2, Mode=TwoWay}" MinWidth="120" />
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
-            </ui:SettingsExpander>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
+            </ui:FASettingsExpander>
 
             <!-- Select Previous Item -->
-            <ui:SettingsExpander Header="{i18n:Localize SelectPrevItemHotkey}"
+            <ui:FASettingsExpander Header="{i18n:Localize SelectPrevItemHotkey}"
                                 IconSource="Up">
-                <ui:SettingsExpander.Footer>
+                <ui:FASettingsExpander.Footer>
                     <controls:HotkeyControl Hotkey="{Binding SelectPrevItemHotkey, Mode=TwoWay}" MinWidth="150" />
-                </ui:SettingsExpander.Footer>
-                <ui:SettingsExpanderItem Content="{i18n:Localize SelectPrevItemHotkey}"
+                </ui:FASettingsExpander.Footer>
+                <ui:FASettingsExpanderItem Content="{i18n:Localize SelectPrevItemHotkey}"
                                          Description="{i18n:Localize AdditionalHotkeyToolTip}">
-                    <ui:SettingsExpanderItem.Footer>
+                    <ui:FASettingsExpanderItem.Footer>
                         <controls:HotkeyControl Hotkey="{Binding SelectPrevItemHotkey2, Mode=TwoWay}" MinWidth="120" />
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
-            </ui:SettingsExpander>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
+            </ui:FASettingsExpander>
 
             <!-- Select Next Item -->
-            <ui:SettingsExpander Header="{i18n:Localize SelectNextItemHotkey}"
+            <ui:FASettingsExpander Header="{i18n:Localize SelectNextItemHotkey}"
                                 IconSource="Down">
-                <ui:SettingsExpander.Footer>
+                <ui:FASettingsExpander.Footer>
                     <controls:HotkeyControl Hotkey="{Binding SelectNextItemHotkey, Mode=TwoWay}" MinWidth="150" />
-                </ui:SettingsExpander.Footer>
-                <ui:SettingsExpanderItem Content="{i18n:Localize SelectNextItemHotkey}"
+                </ui:FASettingsExpander.Footer>
+                <ui:FASettingsExpanderItem Content="{i18n:Localize SelectNextItemHotkey}"
                                          Description="{i18n:Localize AdditionalHotkeyToolTip}">
-                    <ui:SettingsExpanderItem.Footer>
+                    <ui:FASettingsExpanderItem.Footer>
                         <controls:HotkeyControl Hotkey="{Binding SelectNextItemHotkey2, Mode=TwoWay}" MinWidth="120" />
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
-            </ui:SettingsExpander>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
+            </ui:FASettingsExpander>
 
             <!-- Custom Query Hotkeys -->
-            <ui:SettingsExpander Header="{i18n:Localize customQueryHotkey}"
+            <ui:FASettingsExpander Header="{i18n:Localize customQueryHotkey}"
                                 IconSource="Keyboard"
                                 IsExpanded="False">
                 <StackPanel Spacing="8" Margin="0,8">
@@ -275,10 +275,10 @@
                                 MinWidth="80" />
                     </StackPanel>
                 </StackPanel>
-            </ui:SettingsExpander>
+            </ui:FASettingsExpander>
 
             <!-- Custom Shortcuts -->
-            <ui:SettingsExpander Header="{i18n:Localize customQueryShortcut}"
+            <ui:FASettingsExpander Header="{i18n:Localize customQueryShortcut}"
                                 IconSource="Edit"
                                 IsExpanded="False">
                 <StackPanel Spacing="8" Margin="0,8">
@@ -311,10 +311,10 @@
                                 MinWidth="80" />
                     </StackPanel>
                 </StackPanel>
-            </ui:SettingsExpander>
+            </ui:FASettingsExpander>
 
             <!-- Builtin Shortcuts -->
-            <ui:SettingsExpander Header="{i18n:Localize builtinShortcuts}"
+            <ui:FASettingsExpander Header="{i18n:Localize builtinShortcuts}"
                                 IconSource="Library"
                                 IsExpanded="False">
                 <DataGrid ItemsSource="{Binding BuiltinShortcuts}"
@@ -334,7 +334,7 @@
                                            Width="*" />
                     </DataGrid.Columns>
                 </DataGrid>
-            </ui:SettingsExpander>
+            </ui:FASettingsExpander>
 
             <!-- Hotkey format tip -->
             <TextBlock Text="{i18n:Localize hotkeyFormatTip}" 

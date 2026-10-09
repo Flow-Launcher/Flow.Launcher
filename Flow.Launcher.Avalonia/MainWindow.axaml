@@ -19,11 +19,10 @@
         CanResize="True"
         ShowInTaskbar="False"
         Topmost="True"
-        SystemDecorations="None"
+        WindowDecorations="None"
         TransparencyLevelHint="AcrylicBlur"
         Background="Transparent"
         ExtendClientAreaToDecorationsHint="True"
-        ExtendClientAreaChromeHints="NoChrome"
         SizeToContent="Height"
         IsVisible="{Binding MainWindowVisibility, Mode=TwoWay}">
 
@@ -59,7 +58,7 @@
                                   FontSize="{Binding Settings.QueryBoxFontSize}"
                                   FontFamily="{Binding Settings.QueryBoxFont}"
                                   MinHeight="{Binding Settings.WindowHeightSize}"
-                                  Watermark="{i18n:Localize queryTextBoxPlaceholder, Fallback='Type here to search'}"
+                                  PlaceholderText="{i18n:Localize queryTextBoxPlaceholder, Fallback='Type here to search'}"
                                   AcceptsReturn="False"
                                   TextWrapping="NoWrap" />
                 </Border>

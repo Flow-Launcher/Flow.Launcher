@@ -484,7 +484,7 @@ public partial class HotkeySettingsViewModel : ObservableObject
             return;
         }
 
-        var dialog = new ContentDialog
+        var dialog = new FAContentDialog
         {
             Title = title,
             Content = message,
@@ -501,7 +501,7 @@ public partial class HotkeySettingsViewModel : ObservableObject
             return false;
         }
 
-        var dialog = new ContentDialog
+        var dialog = new FAContentDialog
         {
             Title = title,
             Content = message,
@@ -510,7 +510,7 @@ public partial class HotkeySettingsViewModel : ObservableObject
         };
 
         var result = await dialog.ShowAsync(desktop.MainWindow);
-        return result == ContentDialogResult.Primary;
+        return result == FAContentDialogResult.Primary;
     }
 
     private string Translate(string key, string fallback)

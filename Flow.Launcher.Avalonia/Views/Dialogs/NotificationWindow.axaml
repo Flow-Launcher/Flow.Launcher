@@ -12,7 +12,7 @@
         Height="120"
         CanResize="False"
         ShowInTaskbar="False"
-        SystemDecorations="None"
+        WindowDecorations="None"
         Topmost="True"
         Background="Transparent"
         TransparencyLevelHint="AcrylicBlur">

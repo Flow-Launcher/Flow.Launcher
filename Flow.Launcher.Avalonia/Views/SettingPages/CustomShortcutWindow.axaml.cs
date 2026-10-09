@@ -107,7 +107,7 @@ public partial class CustomShortcutWindow : Window, INotifyPropertyChanged
 
     private async System.Threading.Tasks.Task ShowMessageAsync(string title, string message)
     {
-        var dialog = new ContentDialog
+        var dialog = new FAContentDialog
         {
             Title = title,
             Content = message,

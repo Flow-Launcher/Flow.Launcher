@@ -174,7 +174,7 @@ public partial class PluginsSettingsViewModel : ObservableObject, IDisposable
     [RelayCommand]
     private async Task OpenHelper(Control source)
     {
-        var helpDialog = new ContentDialog
+        var helpDialog = new FAContentDialog
         {
             Title = _i18n.GetTranslation("flowlauncher_settings"),
             Content = new StackPanel
@@ -457,7 +457,7 @@ public partial class PluginItemViewModel : ObservableObject, IDisposable
     private async Task OpenDeletePluginWindow()
     {
         // We need to implement a dialog for confirmation
-        var dialog = new ContentDialog
+        var dialog = new FAContentDialog
         {
             Title = _i18n.GetTranslation("plugin_uninstall_title"),
             Content = string.Format(_i18n.GetTranslation("plugin_uninstall_content"), Name),
@@ -466,7 +466,7 @@ public partial class PluginItemViewModel : ObservableObject, IDisposable
         };
 
         var result = await dialog.ShowAsync();
-        if (result == ContentDialogResult.Primary)
+        if (result == FAContentDialogResult.Primary)
         {
              await PluginInstaller.UninstallPluginAndCheckRestartAsync(_plugin.Metadata);
         }
@@ -482,7 +482,7 @@ public partial class PluginItemViewModel : ObservableObject, IDisposable
             AcceptsReturn = false
         };
 
-        var dialog = new ContentDialog
+        var dialog = new FAContentDialog
         {
             Title = _i18n.GetTranslation("actionKeywords"),
             Content = new StackPanel
@@ -499,7 +499,7 @@ public partial class PluginItemViewModel : ObservableObject, IDisposable
         };
 
         var result = await dialog.ShowAsync();
-        if (result == ContentDialogResult.Primary)
+        if (result == FAContentDialogResult.Primary)
         {
             var oldKeywords = _plugin.Metadata.ActionKeywords;
             var newKeywords = textBox.Text?
