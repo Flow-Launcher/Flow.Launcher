@@ -9,41 +9,41 @@
              x:DataType="vm:SettingsViewModel">
 
     <StackPanel Spacing="10" Margin="0,0,10,0">
-        <ui:SettingsExpander Header="{DynamicResource flowlauncher_plugin_calculator_plugin_name}"
+        <ui:FASettingsExpander Header="{DynamicResource flowlauncher_plugin_calculator_plugin_name}"
                              IconSource="Calculator"
                              Description="{DynamicResource flowlauncher_plugin_calculator_plugin_description}"
                              IsExpanded="True">
-            <ui:SettingsExpander.Items>
-                <ui:SettingsExpanderItem Content="{DynamicResource flowlauncher_plugin_calculator_output_decimal_separator}">
-                    <ui:SettingsExpanderItem.Footer>
+            <ui:FASettingsExpander.Items>
+                <ui:FASettingsExpanderItem Content="{DynamicResource flowlauncher_plugin_calculator_output_decimal_separator}">
+                    <ui:FASettingsExpanderItem.Footer>
                         <ComboBox ItemsSource="{Binding AllDecimalSeparator}"
                                   SelectedValue="{Binding SelectedDecimalSeparator, Mode=TwoWay}"
                                   DisplayMemberBinding="{Binding Display}"
                                   SelectedValueBinding="{Binding Value}"
                                   MinWidth="150" />
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
 
-                <ui:SettingsExpanderItem Content="{DynamicResource flowlauncher_plugin_calculator_max_decimal_places}">
-                    <ui:SettingsExpanderItem.Footer>
+                <ui:FASettingsExpanderItem Content="{DynamicResource flowlauncher_plugin_calculator_max_decimal_places}">
+                    <ui:FASettingsExpanderItem.Footer>
                         <ComboBox ItemsSource="{Binding MaxDecimalPlacesRange}"
                                   SelectedItem="{Binding Settings.MaxDecimalPlaces}"
                                   MinWidth="150" />
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
 
-                <ui:SettingsExpanderItem Content="{DynamicResource flowlauncher_plugin_calculator_use_thousands_separator}">
-                    <ui:SettingsExpanderItem.Footer>
+                <ui:FASettingsExpanderItem Content="{DynamicResource flowlauncher_plugin_calculator_use_thousands_separator}">
+                    <ui:FASettingsExpanderItem.Footer>
                         <ToggleSwitch IsChecked="{Binding Settings.UseThousandsSeparator}" />
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
 
-                <ui:SettingsExpanderItem Content="{DynamicResource flowlauncher_plugin_calculator_show_error_message}">
-                    <ui:SettingsExpanderItem.Footer>
+                <ui:FASettingsExpanderItem Content="{DynamicResource flowlauncher_plugin_calculator_show_error_message}">
+                    <ui:FASettingsExpanderItem.Footer>
                         <ToggleSwitch IsChecked="{Binding Settings.ShowErrorMessage}" />
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
-            </ui:SettingsExpander.Items>
-        </ui:SettingsExpander>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
+            </ui:FASettingsExpander.Items>
+        </ui:FASettingsExpander>
     </StackPanel>
 </UserControl>

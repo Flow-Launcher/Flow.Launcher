@@ -11,6 +11,6 @@
     <description>Flow Launcher Avalonia host</description>
   </metadata>
   <files>
-    <file src="**\*.*" target="lib\net9.0\" exclude="Flow.Launcher.Avalonia.vshost.exe;Flow.Launcher.Avalonia.vshost.exe.config;Flow.Launcher.Avalonia.vshost.exe.manifest;*.nupkg;Setup.exe;RELEASES"/>
+    <file src="**\*.*" target="lib\net10.0\" exclude="Flow.Launcher.Avalonia.vshost.exe;Flow.Launcher.Avalonia.vshost.exe.config;Flow.Launcher.Avalonia.vshost.exe.manifest;*.nupkg;Setup.exe;RELEASES"/>
   </files>
 </package>

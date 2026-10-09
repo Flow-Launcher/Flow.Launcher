@@ -87,7 +87,7 @@ internal partial class SysSettings : UserControl
         keywordRow.Children.Add(keywordBox);
         keywordRow.Children.Add(resetButton);
 
-        var dialog = new ContentDialog
+        var dialog = new FAContentDialog
         {
             Title = Localize.flowlauncher_plugin_sys_custom_command_keyword(),
             Content = new StackPanel
@@ -107,7 +107,7 @@ internal partial class SysSettings : UserControl
             },
             PrimaryButtonText = Localize.flowlauncher_plugin_sys_confirm(),
             CloseButtonText = Localize.flowlauncher_plugin_sys_cancel(),
-            DefaultButton = ContentDialogButton.Primary
+            DefaultButton = FAContentDialogButton.Primary
         };
 
         dialog.PrimaryButtonClick += (_, args) =>

@@ -12,41 +12,41 @@
     <ScrollViewer>
         <StackPanel Spacing="4" Margin="0,0,16,24">
             <TextBlock Text="{i18n:Localize about}" Classes="pageTitle" Margin="0,0,0,12" />
-            <ui:SettingsExpander Header="{i18n:Localize version}"
+            <ui:FASettingsExpander Header="{i18n:Localize version}"
                                 Description="{Binding Version}"
                                 IconSource="Tag">
-                <ui:SettingsExpander.Footer>
+                <ui:FASettingsExpander.Footer>
                     <StackPanel Orientation="Horizontal" Spacing="8">
                         <Button Content="{i18n:Localize checkUpdates}" Command="{Binding UpdateAppCommand}" />
                         <Button Content="{i18n:Localize BecomeASponsor}" Command="{Binding OpenSponsorPageCommand}" Classes="accent" />
                     </StackPanel>
-                </ui:SettingsExpander.Footer>
-            </ui:SettingsExpander>
+                </ui:FASettingsExpander.Footer>
+            </ui:FASettingsExpander>
 
-            <ui:SettingsExpander Header="{i18n:Localize releaseNotes}"
+            <ui:FASettingsExpander Header="{i18n:Localize releaseNotes}"
                                 Description="{Binding ReleaseNotesUrl}"
                                 IconSource="Bookmarks">
-                <ui:SettingsExpander.Footer>
+                <ui:FASettingsExpander.Footer>
                     <StackPanel Orientation="Horizontal" Spacing="8">
                         <Button Content="{i18n:Localize releaseNotes}" Command="{Binding OpenReleaseNotesCommand}" />
                         <Button Content="{i18n:Localize welcomewindow}" Command="{Binding OpenWelcomeCommand}" />
                     </StackPanel>
-                </ui:SettingsExpander.Footer>
-            </ui:SettingsExpander>
+                </ui:FASettingsExpander.Footer>
+            </ui:FASettingsExpander>
 
-            <ui:SettingsExpander Header="{i18n:Localize userdatapath}"
+            <ui:FASettingsExpander Header="{i18n:Localize userdatapath}"
                                 Description="{i18n:Localize userdatapathToolTip}"
                                 IconSource="OpenFolder">
-                <ui:SettingsExpander.Footer>
+                <ui:FASettingsExpander.Footer>
                     <Button Content="{i18n:Localize userdatapathButton}" Command="{Binding OpenParentOfSettingsFolderCommand}" />
-                </ui:SettingsExpander.Footer>
-            </ui:SettingsExpander>
+                </ui:FASettingsExpander.Footer>
+            </ui:FASettingsExpander>
 
             <!-- The footer is measured with unbounded width, so MaxWidth is what makes these rows wrap. -->
-            <ui:SettingsExpander Header="{i18n:Localize website}"
+            <ui:FASettingsExpander Header="{i18n:Localize website}"
                                 Description="Flow Launcher web resources"
                                 IconSource="World">
-                <ui:SettingsExpander.Footer>
+                <ui:FASettingsExpander.Footer>
                     <WrapPanel Orientation="Horizontal" ItemSpacing="8" LineSpacing="8" MaxWidth="440" HorizontalAlignment="Right">
                         <Button Content="{i18n:Localize website}" Command="{Binding OpenWebsiteCommand}" />
                         <Button Content="{i18n:Localize documentation}" Command="{Binding OpenDocumentationCommand}" />
@@ -54,13 +54,13 @@
                         <Button Content="{i18n:Localize crowdin}" Command="{Binding OpenCrowdinCommand}" />
                         <Button Content="{i18n:Localize icons}" Command="{Binding OpenIconsWebsiteCommand}" />
                     </WrapPanel>
-                </ui:SettingsExpander.Footer>
-            </ui:SettingsExpander>
+                </ui:FASettingsExpander.Footer>
+            </ui:FASettingsExpander>
 
-            <ui:SettingsExpander Header="{i18n:Localize devtool}"
+            <ui:FASettingsExpander Header="{i18n:Localize devtool}"
                                 Description="Folders and cleanup tools"
                                 IconSource="Code">
-                <ui:SettingsExpander.Footer>
+                <ui:FASettingsExpander.Footer>
                     <WrapPanel Orientation="Horizontal" ItemSpacing="8" LineSpacing="8" MaxWidth="440" HorizontalAlignment="Right">
                         <Button Content="{Binding CacheFolderSize}" Command="{Binding AskClearCacheFolderConfirmationCommand}" />
                         <Button Content="{Binding LogFolderSize}" Command="{Binding AskClearLogFolderConfirmationCommand}" />
@@ -68,25 +68,25 @@
                         <Button Content="{i18n:Localize logfolder}" Command="{Binding OpenLogsFolderCommand}" />
                         <Button Content="{i18n:Localize cachefolder}" Command="{Binding OpenCacheFolderCommand}" />
                     </WrapPanel>
-                </ui:SettingsExpander.Footer>
-                <ui:SettingsExpander.Items>
-                    <ui:SettingsExpanderItem Content="{i18n:Localize devtoolsReportWindow}">
-                        <ui:SettingsExpanderItem.Footer>
+                </ui:FASettingsExpander.Footer>
+                <ui:FASettingsExpander.Items>
+                    <ui:FASettingsExpanderItem Content="{i18n:Localize devtoolsReportWindow}">
+                        <ui:FASettingsExpanderItem.Footer>
                             <Button Content="{i18n:Localize devtoolsOpenTestWindow}" Command="{Binding OpenTestReportWindowCommand}" />
-                        </ui:SettingsExpanderItem.Footer>
-                    </ui:SettingsExpanderItem>
-                    <ui:SettingsExpanderItem Content="{i18n:Localize devtoolsProgressWindow}">
-                        <ui:SettingsExpanderItem.Footer>
+                        </ui:FASettingsExpanderItem.Footer>
+                    </ui:FASettingsExpanderItem>
+                    <ui:FASettingsExpanderItem Content="{i18n:Localize devtoolsProgressWindow}">
+                        <ui:FASettingsExpanderItem.Footer>
                             <Button Content="{i18n:Localize devtoolsOpenTestWindow}" Command="{Binding OpenTestProgressWindowCommand}" />
-                        </ui:SettingsExpanderItem.Footer>
-                    </ui:SettingsExpanderItem>
-                    <ui:SettingsExpanderItem Content="{i18n:Localize devtoolsPluginUpdateWindow}">
-                        <ui:SettingsExpanderItem.Footer>
+                        </ui:FASettingsExpanderItem.Footer>
+                    </ui:FASettingsExpanderItem>
+                    <ui:FASettingsExpanderItem Content="{i18n:Localize devtoolsPluginUpdateWindow}">
+                        <ui:FASettingsExpanderItem.Footer>
                             <Button Content="{i18n:Localize devtoolsOpenTestWindow}" Command="{Binding OpenTestPluginUpdateWindowCommand}" />
-                        </ui:SettingsExpanderItem.Footer>
-                    </ui:SettingsExpanderItem>
-                    <ui:SettingsExpanderItem Content="{i18n:Localize devtoolsMessageBoxWindow}">
-                        <ui:SettingsExpanderItem.Footer>
+                        </ui:FASettingsExpanderItem.Footer>
+                    </ui:FASettingsExpanderItem>
+                    <ui:FASettingsExpanderItem Content="{i18n:Localize devtoolsMessageBoxWindow}">
+                        <ui:FASettingsExpanderItem.Footer>
                             <SplitButton Content="{i18n:Localize devtoolsOpenTestWindow}"
                                          Command="{Binding OpenTestMessageBoxCommand}"
                                          CommandParameter="OK">
@@ -99,16 +99,16 @@
                                     </MenuFlyout>
                                 </SplitButton.Flyout>
                             </SplitButton>
-                        </ui:SettingsExpanderItem.Footer>
-                    </ui:SettingsExpanderItem>
-                </ui:SettingsExpander.Items>
-            </ui:SettingsExpander>
+                        </ui:FASettingsExpanderItem.Footer>
+                    </ui:FASettingsExpanderItem>
+                </ui:FASettingsExpander.Items>
+            </ui:FASettingsExpander>
 
-            <ui:SettingsExpander Header="{i18n:Localize advanced}"
+            <ui:FASettingsExpander Header="{i18n:Localize advanced}"
                                 Description="Advanced application options"
                                 IconSource="Settings">
-                <ui:SettingsExpander.Items>
-                    <ui:SettingsExpanderItem Content="{i18n:Localize logLevel}">
+                <ui:FASettingsExpander.Items>
+                    <ui:FASettingsExpanderItem Content="{i18n:Localize logLevel}">
                         <ComboBox ItemsSource="{Binding LogLevels}"
                                   SelectedItem="{Binding SelectedLogLevelItem, Mode=TwoWay}"
                                   Width="180">
@@ -118,18 +118,18 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                    </ui:SettingsExpanderItem>
+                    </ui:FASettingsExpanderItem>
 
-                    <ui:SettingsExpanderItem Content="{i18n:Localize settingWindowFontTitle}">
+                    <ui:FASettingsExpanderItem Content="{i18n:Localize settingWindowFontTitle}">
                         <StackPanel Orientation="Horizontal" Spacing="12">
                             <Button Content="{i18n:Localize commonReset}" Command="{Binding ResetSettingWindowFontCommand}" />
                             <ComboBox ItemsSource="{Binding AvailableFonts}"
                                       SelectedItem="{Binding SettingWindowFont, Mode=TwoWay}"
                                       Width="260" />
                         </StackPanel>
-                    </ui:SettingsExpanderItem>
-                </ui:SettingsExpander.Items>
-            </ui:SettingsExpander>
+                    </ui:FASettingsExpanderItem>
+                </ui:FASettingsExpander.Items>
+            </ui:FASettingsExpander>
 
             <TextBlock Margin="0,12,0,0"
                        HorizontalAlignment="Center"
