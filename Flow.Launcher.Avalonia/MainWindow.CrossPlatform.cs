@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Platform;
 using Flow.Launcher.Avalonia.Helper;
 
 namespace Flow.Launcher.Avalonia;
@@ -35,4 +36,18 @@ public partial class MainWindow
 
         MacWindowActivation.ReturnFocusToPreviousApp();
     }
+
+    private partial Screen? GetCursorScreen() =>
+        OperatingSystem.IsMacOS() && MacScreens.TryGetCursorLocation(out var x, out var y) ? ScreenAtMacPoint(x, y) : null;
+
+    private partial Screen? GetForegroundWindowScreen() =>
+        OperatingSystem.IsMacOS() && MacScreens.TryGetFrontmostWindowCenter(out var x, out var y) ? ScreenAtMacPoint(x, y) : null;
+
+    // CoreGraphics reports global points; Avalonia reports each screen's bounds in that screen's pixels (points × scaling).
+    private Screen? ScreenAtMacPoint(double x, double y) =>
+        Screens.All.FirstOrDefault(screen =>
+        {
+            var bounds = screen.Bounds.ToRect(screen.Scaling);
+            return bounds.Contains(new Point(x, y));
+        });
 }

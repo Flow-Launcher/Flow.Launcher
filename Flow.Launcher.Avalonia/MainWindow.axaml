@@ -15,7 +15,7 @@
         Width="{Binding Settings.WindowSize}"
         MinWidth="400"
         MinHeight="30"
-        WindowStartupLocation="CenterScreen"
+        WindowStartupLocation="Manual"
         CanResize="True"
         ShowInTaskbar="False"
         Topmost="True"

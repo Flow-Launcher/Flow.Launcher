@@ -35,6 +35,7 @@ public partial class MainWindow : Window
         _settings = Ioc.Default.GetRequiredService<Settings>();
         _viewModel.HideRequested += () =>
         {
+            SaveLastPosition();
             Hide();
             ReturnFocusAfterHide();
         };
@@ -139,23 +140,10 @@ public partial class MainWindow : Window
     {
         base.OnOpened(e);
 
-        // Center the window on screen
-        CenterOnScreen();
+        PlaceOnSelectedScreen();
 
         // QueryTextFocusRequested applies the final select/caret behavior. Avoid a transient SelectAll here.
         _queryTextBox?.Focus();
-    }
-
-    private void CenterOnScreen()
-    {
-        var screen = Screens.Primary;
-        if (screen != null)
-        {
-            var workingArea = screen.WorkingArea;
-            var x = (workingArea.Width - Width) / 2 + workingArea.X;
-            var y = workingArea.Height * 0.25 + workingArea.Y; // Position at 25% from top (like Flow Launcher)
-            Position = new PixelPoint((int)x, (int)y);
-        }
     }
 
     protected override void OnKeyDown(KeyEventArgs e)
@@ -218,6 +206,7 @@ public partial class MainWindow : Window
         // Hide window when it loses focus if the setting is enabled
         if (_settings?.HideWhenDeactivated == true)
         {
+            SaveLastPosition();
             Hide();
         }
     }
@@ -300,6 +289,8 @@ public partial class MainWindow : Window
         if (revealAfterFocus)
         {
             Opacity = 0;
+            // Before activating Flow, so the "Focus" screen option still sees the previously active window.
+            PlaceOnSelectedScreen();
         }
 
         if (request.ShowWindow || request.ActivateWindow)
