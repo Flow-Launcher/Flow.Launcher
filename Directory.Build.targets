@@ -1,4 +1,17 @@
 <Project>
+	<!--
+	  Platform file convention for multi-targeted projects (net10.0 + net10.0-windows):
+	    *.Windows.cs        code that needs WPF/WinForms types; compiled only for the Windows TFM.
+	    *.CrossPlatform.cs  net10.0 counterparts; compiled only for the cross-platform TFM.
+	  Win32/registry code that compiles everywhere stays in shared files, marked [SupportedOSPlatform("windows")].
+	-->
+	<ItemGroup Condition="'$(TargetFramework)' != '' and !$(TargetFramework.Contains('-windows'))">
+		<Compile Remove="**\*.Windows.cs" />
+	</ItemGroup>
+	<ItemGroup Condition="$(TargetFramework.Contains('-windows'))">
+		<Compile Remove="**\*.CrossPlatform.cs" />
+	</ItemGroup>
+
 	<Target Name="ExcludePluginProjectReferenceOutput"
 			AfterTargets="AssignProjectConfiguration" 
 			BeforeTargets="ResolveProjectReferences" 

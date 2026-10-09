@@ -9,7 +9,6 @@ using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Plugin;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
-using Control = System.Windows.Controls.Control;
 
 namespace Flow.Launcher.Core.Plugin
 {
@@ -17,7 +16,7 @@ namespace Flow.Launcher.Core.Plugin
     /// Represent the plugin that using JsonPRC
     /// every JsonRPC plugin should has its own plugin instance
     /// </summary>
-    public abstract class JsonRPCPluginBase : IAsyncPlugin, IContextMenu, ISettingProvider, ISavable
+    public abstract partial class JsonRPCPluginBase : IAsyncPlugin, IContextMenu, ISettingProvider, ISavable
     {
         public const string JsonRPC = "JsonRPC";
 
@@ -139,11 +138,6 @@ namespace Flow.Launcher.Core.Plugin
         public bool NeedCreateSettingPanel()
         {
             return Settings.NeedCreateSettingPanel();
-        }
-
-        public Control CreateSettingPanel()
-        {
-            return Settings.CreateSettingPanel();
         }
     }
 }

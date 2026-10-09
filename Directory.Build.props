@@ -4,5 +4,7 @@
     <AccelerateBuildsInVisualStudio>true</AccelerateBuildsInVisualStudio>
     <!-- Workaround https://github.com/dotnet/runtime/issues/109682 -->
     <CETCompat>false</CETCompat>
+    <!-- Lets non-Windows hosts restore/compile the Windows TFM of multi-targeted projects -->
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
   </PropertyGroup>
 </Project>

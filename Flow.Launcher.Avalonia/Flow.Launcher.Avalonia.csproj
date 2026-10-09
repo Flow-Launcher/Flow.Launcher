@@ -2,14 +2,17 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
+    <TargetFramework></TargetFramework>
+    <TargetFrameworks>net10.0;net10.0-windows10.0.19041.0</TargetFrameworks>
     <Nullable>enable</Nullable>
-    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <BuiltInComInteropSupport Condition="$(TargetFramework.Contains('-windows'))">true</BuiltInComInteropSupport>
+    <ApplicationManifest Condition="$(TargetFramework.Contains('-windows'))">app.manifest</ApplicationManifest>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
     <ApplicationIcon>..\Flow.Launcher\Resources\app.ico</ApplicationIcon>
     <StartupObject>Flow.Launcher.Avalonia.Program</StartupObject>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <!-- Cross-platform build goes to a net10.0 subfolder so it never overwrites the Windows build -->
+    <AppendTargetFrameworkToOutputPath Condition="'$(TargetFramework)' == 'net10.0'">true</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <RootNamespace>Flow.Launcher.Avalonia</RootNamespace>
@@ -51,8 +54,8 @@
     <ProjectReference Include="..\Flow.Launcher.Plugin\Flow.Launcher.Plugin.csproj" />
   </ItemGroup>
 
-  <!-- WPF assemblies needed for IPublicAPI compatibility (ImageSource, MessageBox types) -->
-  <ItemGroup>
+  <!-- WPF assemblies needed for IPublicAPI compatibility (ImageSource, MessageBox types) and legacy WPF plugin settings -->
+  <ItemGroup Condition="$(TargetFramework.Contains('-windows'))">
     <FrameworkReference Include="Microsoft.WindowsDesktop.App.WPF" />
   </ItemGroup>
 
@@ -75,7 +78,7 @@
   </ItemGroup>
 
   <!-- WPF Resources for legacy plugin settings -->
-  <ItemGroup>
+  <ItemGroup Condition="$(TargetFramework.Contains('-windows'))">
     <Resource Include="WpfResources\Dark.xaml" />
     <Resource Include="WpfResources\CustomControlTemplate.xaml" />
     <Resource Include="WpfResources\SettingWindowStyle.xaml" />

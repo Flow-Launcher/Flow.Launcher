@@ -245,7 +245,7 @@ public partial class AboutSettingsViewModel : ObservableObject
     [RelayCommand]
     private void ResetSettingWindowFont()
     {
-        SettingWindowFont = Win32Helper.GetSystemDefaultFont(false);
+        SettingWindowFont = Flow.Launcher.Infrastructure.UserSettings.Settings.GetSystemDefaultFont(false);
     }
 
     private bool ClearLogFolder()

@@ -10,7 +10,6 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media;
 using Flow.Launcher.Avalonia.Views.Dialogs;
 using Flow.Launcher.Core;
 using Flow.Launcher.Infrastructure;
@@ -32,7 +31,7 @@ namespace Flow.Launcher.Avalonia;
 /// <summary>
 /// IPublicAPI implementation for the Avalonia host.
 /// </summary>
-public class AvaloniaPublicAPI : IPublicAPI
+public partial class AvaloniaPublicAPI : IPublicAPI
 {
     private readonly Settings _settings;
     private readonly Func<MainViewModel> _getMainViewModel;
@@ -50,8 +49,14 @@ public class AvaloniaPublicAPI : IPublicAPI
         _settings = settings;
         _getMainViewModel = getMainViewModel;
         _i18n = i18n;
-        Flow.Launcher.Infrastructure.Hotkey.GlobalHotkey.hookedKeyboardCallback = KListenerHookedKeyboardCallback;
+        HookGlobalKeyboard();
     }
+
+    // Low-level keyboard hook (WH_KEYBOARD_LL); Windows only — see AvaloniaPublicAPI.Windows.cs.
+    partial void HookGlobalKeyboard();
+
+    // Legacy WPF plugin settings panels can only be hosted on Windows.
+    private partial bool OpenWpfPluginSettingsWindow(ISettingProvider settingProvider, PluginPair plugin);
 
 #pragma warning disable CS0067
     public event VisibilityChangedEventHandler? VisibilityChanged;
@@ -224,11 +229,7 @@ public class AvaloniaPublicAPI : IPublicAPI
         var isFile = File.Exists(text);
         if (directCopy && (isFile || Directory.Exists(text)))
         {
-            var exception = await RetryActionOnStaThreadAsync(() =>
-            {
-                var paths = new StringCollection { text };
-                Clipboard.SetFileDropList(paths);
-            });
+            var exception = await SetClipboardFileDropListAsync(text);
 
             if (exception == null)
             {
@@ -246,7 +247,7 @@ public class AvaloniaPublicAPI : IPublicAPI
             return;
         }
 
-        var textException = await RetryActionOnStaThreadAsync(() => Clipboard.SetText(text));
+        var textException = await SetClipboardTextAsync(text);
         if (textException == null)
         {
             if (showDefaultNotification)
@@ -261,28 +262,9 @@ public class AvaloniaPublicAPI : IPublicAPI
         }
     }
 
-    private static async Task<Exception?> RetryActionOnStaThreadAsync(Action action, int retryCount = 6, int retryDelay = 150)
-    {
-        for (var i = 0; i < retryCount; i++)
-        {
-            try
-            {
-                await Win32Helper.StartSTATaskAsync(action).ConfigureAwait(false);
-                return null;
-            }
-            catch (Exception e)
-            {
-                if (i == retryCount - 1)
-                {
-                    return e;
-                }
-
-                await Task.Delay(retryDelay).ConfigureAwait(false);
-            }
-        }
-
-        return null;
-    }
+    // Return the failure (if any) instead of throwing, so the caller decides how to report it.
+    private partial Task<Exception?> SetClipboardFileDropListAsync(string path);
+    private partial Task<Exception?> SetClipboardTextAsync(string text);
 
     // HTTP (delegate to Infrastructure)
     public Task<string> HttpGetStringAsync(string url, CancellationToken token = default) => Infrastructure.Http.Http.GetAsync(url, token);
@@ -385,14 +367,7 @@ public class AvaloniaPublicAPI : IPublicAPI
                 return true;
             }
 
-            var settingsControl = settingProvider.CreateSettingPanel();
-            if (settingsControl == null)
-            {
-                return false;
-            }
-
-            WpfSettingsWindow.Show(settingsControl, plugin.Metadata.Name);
-            return true;
+            return OpenWpfPluginSettingsWindow(settingProvider, plugin);
         }
         catch (Exception e)
         {
@@ -435,16 +410,7 @@ public class AvaloniaPublicAPI : IPublicAPI
     public bool IsGameModeOn() => _gameModeStatus;
     public void ReQuery(bool reselect = true) => _getMainViewModel().ReQuery(reselect);
     public void BackToQueryResults() => _getMainViewModel().BackToQueryResults();
-    public MessageBoxResult ShowMsgBox(string messageBoxText, string caption = "", MessageBoxButton button = MessageBoxButton.OK, MessageBoxImage icon = MessageBoxImage.None, MessageBoxResult defaultResult = MessageBoxResult.OK)
-    {
-        if (System.Windows.Application.Current?.Dispatcher != null)
-        {
-            return System.Windows.Application.Current.Dispatcher.Invoke(() =>
-                System.Windows.MessageBox.Show(messageBoxText, caption, button, icon, defaultResult));
-        }
-
-        return System.Windows.MessageBox.Show(messageBoxText, caption, button, icon, defaultResult);
-    }
+    public partial MessageBoxResult ShowMsgBox(string messageBoxText, string caption = "", MessageBoxButton button = MessageBoxButton.OK, MessageBoxImage icon = MessageBoxImage.None, MessageBoxResult defaultResult = MessageBoxResult.OK);
     public Task ShowProgressBoxAsync(string caption, Func<Action<double>, Task> reportProgressAsync, Action? cancelProgress = null) =>
         ProgressBoxWindow.ShowAsync(caption, reportProgressAsync, cancelProgress);
     public void StartLoadingBar() => _getMainViewModel().IsQueryRunning = true;
@@ -487,9 +453,6 @@ public class AvaloniaPublicAPI : IPublicAPI
 
         await storage.SaveAsync();
     }
-
-    public ValueTask<ImageSource> LoadImageAsync(string path, bool loadFullImage = false, bool cacheImage = true) =>
-        Flow.Launcher.Infrastructure.Image.ImageLoader.LoadAsync(path, loadFullImage, cacheImage);
 
     public Task<bool> UpdatePluginManifestAsync(bool usePrimaryUrlOnly = false, CancellationToken token = default) =>
         PluginsManifest.UpdateManifestAsync(usePrimaryUrlOnly, token);

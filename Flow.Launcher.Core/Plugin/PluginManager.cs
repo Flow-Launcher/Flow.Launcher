@@ -22,7 +22,7 @@ namespace Flow.Launcher.Core.Plugin
     /// <summary>
     /// Class for co-ordinating and managing all plugin lifecycle.
     /// </summary>
-    public static class PluginManager
+    public static partial class PluginManager
     {
         private static readonly string ClassName = nameof(PluginManager);
 
@@ -301,7 +301,7 @@ namespace Flow.Launcher.Core.Plugin
                 Internationalization.UpdatePluginMetadataTranslation(pair);
 
                 // Add plugin to Dialog Jump plugin list after the plugin is initialized
-                DialogJump.InitializeDialogJumpPlugin(pair);
+                InitializeDialogJumpPlugin(pair);
 
                 // Add plugin to lists after the plugin is initialized
                 AddPluginToLists(pair);
@@ -1175,5 +1175,8 @@ namespace Flow.Launcher.Core.Plugin
         #endregion
 
         #endregion
+
+        // Dialog Jump hooks Windows file dialogs; implemented in PluginManager.Windows.cs only.
+        static partial void InitializeDialogJumpPlugin(PluginPair pair);
     }
 }

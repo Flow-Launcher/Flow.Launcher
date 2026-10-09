@@ -23,7 +23,8 @@ namespace Flow.Launcher.Core.Plugin
         public static List<PluginMetadata> Parse(string[] pluginDirectories)
         {
             var allPluginMetadata = new List<PluginMetadata>();
-            var directories = pluginDirectories.SelectMany(Directory.EnumerateDirectories);
+            // A root may be absent, e.g. no preinstalled plugins ship with the cross-platform build.
+            var directories = pluginDirectories.Where(Directory.Exists).SelectMany(Directory.EnumerateDirectories);
 
             // todo use linq when diable plugin is implmented since parallel.foreach + list is not thread saft
             foreach (var directory in directories)

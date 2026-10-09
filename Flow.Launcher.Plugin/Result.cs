@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Windows.Media;
 using System.Text.Json.Serialization;
 
 namespace Flow.Launcher.Plugin
@@ -12,7 +10,7 @@ namespace Flow.Launcher.Plugin
     /// Describes a result of a <see cref="Query"/> executed by a plugin.
     /// This or its child classes is serializable.
     /// </summary>
-    public class Result
+    public partial class Result
     {
         /// <summary>
         /// Maximum score. This can be useful when set one result to the top by default. This is the score for the results set to the topmost by users.
@@ -147,12 +145,6 @@ namespace Flow.Launcher.Plugin
         public bool RoundedIcon { get; set; } = false;
 
         /// <summary>
-        /// Delegate function that produces an <see cref="ImageSource"/>
-        /// </summary>
-        /// <returns></returns>
-        public delegate ImageSource IconDelegate();
-
-        /// <summary>
         /// Delegate to load an icon for this result.
         /// </summary>
         [JsonIgnore]
@@ -264,12 +256,6 @@ namespace Flow.Launcher.Plugin
         /// Show message as ToolTip on result SubTitle hover over
         /// </summary>
         public string SubTitleToolTip { get; set; }
-
-        /// <summary>
-        /// Customized Preview Panel
-        /// </summary>
-        [JsonIgnore]
-        public Lazy<UserControl> PreviewPanel { get; set; }
 
         /// <summary>
         /// Progress bar display. Providing an int value between 0-100 will trigger the progress bar to be displayed on the result

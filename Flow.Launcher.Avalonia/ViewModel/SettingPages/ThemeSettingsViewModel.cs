@@ -5,12 +5,6 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Xml;
-using WpfFrameworkElement = System.Windows.FrameworkElement;
-using WpfResourceDictionary = System.Windows.ResourceDictionary;
-using WpfSetter = System.Windows.Setter;
-using WpfStyle = System.Windows.Style;
-using WpfTextBlock = System.Windows.Controls.TextBlock;
-using WpfTextBox = System.Windows.Controls.TextBox;
 using Avalonia;
 using Avalonia.Media;
 using Avalonia.Styling;
@@ -539,9 +533,9 @@ public partial class ThemeSettingsViewModel : ObservableObject, IDisposable
         ResultSubItemFontSize = 13;
         WindowHeightSize = 42;
         ItemHeightSize = 58;
-        QueryFont = Win32Helper.GetSystemDefaultFont();
-        ResultFont = Win32Helper.GetSystemDefaultFont();
-        ResultSubFont = Win32Helper.GetSystemDefaultFont();
+        QueryFont = Settings.GetSystemDefaultFont(true);
+        ResultFont = Settings.GetSystemDefaultFont(true);
+        ResultSubFont = Settings.GetSystemDefaultFont(true);
     }
 
     [RelayCommand]
@@ -558,47 +552,11 @@ public partial class ThemeSettingsViewModel : ObservableObject, IDisposable
             return;
         }
 
-        try
-        {
-            var resourceDictionary = new WpfResourceDictionary
-            {
-                Source = new Uri(themePath, UriKind.Absolute)
-            };
-
-            if (resourceDictionary["QueryBoxStyle"] is WpfStyle queryBoxStyle)
-            {
-                if (TryGetSetterValue<double>(queryBoxStyle, WpfTextBox.FontSizeProperty, out var fontSize))
-                {
-                    QueryBoxFontSize = fontSize;
-                }
-
-                if (TryGetSetterValue<double>(queryBoxStyle, WpfFrameworkElement.HeightProperty, out var height))
-                {
-                    WindowHeightSize = height;
-                }
-            }
-
-            if (resourceDictionary["ResultItemHeight"] is double itemHeight)
-            {
-                ItemHeightSize = itemHeight;
-            }
-
-            if (resourceDictionary["ItemTitleStyle"] is WpfStyle itemTitleStyle &&
-                TryGetSetterValue<double>(itemTitleStyle, WpfTextBlock.FontSizeProperty, out var resultFontSize))
-            {
-                ResultItemFontSize = resultFontSize;
-            }
-
-            if (resourceDictionary["ItemSubTitleStyle"] is WpfStyle itemSubTitleStyle &&
-                TryGetSetterValue<double>(itemSubTitleStyle, WpfTextBlock.FontSizeProperty, out var subResultFontSize))
-            {
-                ResultSubItemFontSize = subResultFontSize;
-            }
-        }
-        catch (Exception)
-        {
-        }
+        ImportSizingFromTheme(themePath);
     }
+
+    // Theme sizing is read from WPF theme XAML; without WPF (non-Windows) import is unavailable and sizes stay unchanged.
+    partial void ImportSizingFromTheme(string themePath);
 
     private void UpdateLabels()
     {
@@ -674,22 +632,6 @@ public partial class ThemeSettingsViewModel : ObservableObject, IDisposable
             string.Equals(option.Weight, weight, StringComparison.OrdinalIgnoreCase) &&
             string.Equals(option.Stretch, stretch, StringComparison.OrdinalIgnoreCase))
             ?? options.FirstOrDefault();
-    }
-
-    private static bool TryGetSetterValue<T>(WpfStyle style, System.Windows.DependencyProperty property, out T value)
-    {
-        var setter = style.Setters
-            .OfType<WpfSetter>()
-            .FirstOrDefault(currentSetter => currentSetter.Property == property);
-
-        if (setter?.Value is T typedValue)
-        {
-            value = typedValue;
-            return true;
-        }
-
-        value = default!;
-        return false;
     }
 
     private static string GetThemePath(string themeName)

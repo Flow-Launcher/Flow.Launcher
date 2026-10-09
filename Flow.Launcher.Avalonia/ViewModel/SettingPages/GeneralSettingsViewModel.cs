@@ -19,7 +19,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using AvaloniaI18n = Flow.Launcher.Avalonia.Resource.Internationalization;
 
 namespace Flow.Launcher.Avalonia.ViewModel.SettingPages;
@@ -535,11 +534,14 @@ public partial class GeneralSettingsViewModel : ObservableObject
             }
 
             _settings.EnableDialogJump = value;
-            DialogJump.SetupDialogJump(value);
+            SetupDialogJump(value);
 
             OnPropertyChanged();
         }
     }
+
+    // Dialog Jump hooks Windows file dialogs; implemented in GeneralSettingsViewModel.Windows.cs only.
+    partial void SetupDialogJump(bool enabled);
 
     public bool ShowDialogJumpWindow
     {
@@ -612,33 +614,6 @@ public partial class GeneralSettingsViewModel : ObservableObject
         {
             _settings.DialogJumpFileResultBehaviour = value;
             OnPropertyChanged();
-        }
-    }
-
-    public bool KoreanIMERegistryKeyExists
-    {
-        get
-        {
-            var registryKeyExists = Win32Helper.IsKoreanIMEExist();
-            var koreanLanguageInstalled = InputLanguage.InstalledInputLanguages.Cast<InputLanguage>().Any(lang => lang.Culture.Name.StartsWith("ko", StringComparison.OrdinalIgnoreCase));
-            var isWindows11 = Win32Helper.IsWindows11();
-            return (isWindows11 && koreanLanguageInstalled) || registryKeyExists;
-        }
-    }
-
-    public bool LegacyKoreanIMEEnabled
-    {
-        get => Win32Helper.IsLegacyKoreanIMEEnabled();
-        set
-        {
-            if (Win32Helper.SetLegacyKoreanIMEEnabled(value))
-            {
-                OnPropertyChanged();
-            }
-            else
-            {
-                App.API?.ShowMsgError(_i18n.GetTranslation("KoreanImeSettingChangeFailTitle"), _i18n.GetTranslation("KoreanImeSettingChangeFailSubTitle"));
-            }
         }
     }
 
