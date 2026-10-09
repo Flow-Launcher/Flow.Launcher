@@ -40,10 +40,6 @@
                       ColumnDefinitions="Auto,*,Auto"
                       MinHeight="{Binding Settings.ItemHeightSize}">
                     
-                    <!-- Selection Bullet -->
-                    <Border Grid.Column="0" 
-                            Classes="resultBullet"
-                            VerticalAlignment="Stretch" />
                     
                     <!-- Icon Area -->
                     <Grid Grid.Column="1" ColumnDefinitions="Auto,*" Margin="6,0,0,0">
@@ -172,6 +168,7 @@
                 </Style>
 
                 <!-- FluentAvalonia's selection pill, colored by the theme's ItemBulletSelectedStyle (Helper/ThemeLoader.cs). -->
+                <!-- Disable transitions so the indicator does not animate/scaleY/flash on typing or item replacement. -->
                 <Style Selector="^ /template/ Rectangle#SelectionIndicator">
                     <Setter Property="Fill" Value="{DynamicResource ResultSelectionIndicatorBrush}" />
                 </Style>

@@ -17,9 +17,8 @@ namespace Flow.Launcher.Avalonia.ViewModel;
 public partial class ResultsViewModel : ObservableObject, IDisposable
 {
     private readonly Settings _settings;
-    private readonly SourceList<ResultViewModel> _sourceList = new();
-    private readonly ReadOnlyObservableCollection<ResultViewModel> _results;
-    private readonly IDisposable _subscription;
+    private readonly ObservableCollection<ResultViewModel> _results = new();
+    private readonly ReadOnlyObservableCollection<ResultViewModel> _readOnlyResults;
 
     [ObservableProperty]
     private ResultViewModel? _selectedItem;
@@ -34,7 +33,7 @@ public partial class ResultsViewModel : ObservableObject, IDisposable
     /// Sorted results collection bound to the UI.
     /// Automatically sorted by Score descending.
     /// </summary>
-    public ReadOnlyObservableCollection<ResultViewModel> Results => _results;
+    public ReadOnlyObservableCollection<ResultViewModel> Results => _readOnlyResults;
 
     public Settings Settings => _settings;
 
@@ -43,14 +42,7 @@ public partial class ResultsViewModel : ObservableObject, IDisposable
     public ResultsViewModel(Settings settings)
     {
         _settings = settings;
-
-        // Connect SourceList to sorted ReadOnlyObservableCollection
-        _subscription = _sourceList.Connect()
-            .AutoRefresh(r => r.Score)
-            .Sort(SortExpressionComparer<ResultViewModel>.Descending(r => r.Score))
-            .Bind(out _results)
-            .Subscribe();
-
+        _readOnlyResults = new ReadOnlyObservableCollection<ResultViewModel>(_results);
         _settings.PropertyChanged += OnSettingsPropertyChanged;
     }
 
@@ -70,49 +62,82 @@ public partial class ResultsViewModel : ObservableObject, IDisposable
     public void ReplaceResults(IEnumerable<ResultViewModel> newResults, bool reselect = true)
     {
         var previousSelection = SelectedItem;
-        var resultsList = newResults.ToList();
+        var resultsList = newResults
+            .OrderByDescending(r => r.Score)
+            .ToList();
         foreach (var r in resultsList)
         {
             r.Settings = _settings;
         }
 
-        // Update highlight data and score for items that will be kept by EditDiff.
-        // This is necessary because EditDiff reuses existing ResultViewModel instances
-        // based on Title+SubTitle equality, but highlight indices are query-specific.
-        // For example, "Chrome" highlighted for "chr" [0,1,2] vs "chrome" [0,1,2,3,4,5].
-        var existingItems = new Dictionary<(string PluginId, string RecordKey, string Query, string Title, string SubTitle), ResultViewModel>(_sourceList.Count);
-        foreach (var existingItem in _sourceList.Items)
+        // Update highlight data and score for items that will be kept.
+        var existingItems = new Dictionary<(string PluginId, string RecordKey, string Query, string Title, string SubTitle), ResultViewModel>(_results.Count);
+        foreach (var existingItem in _results)
         {
             existingItems.TryAdd(ResultViewModelComparer.GetIdentityKey(existingItem), existingItem);
         }
-        foreach (var newItem in resultsList)
+
+        for (var i = 0; i < resultsList.Count; i++)
         {
+            var newItem = resultsList[i];
             if (existingItems.TryGetValue(ResultViewModelComparer.GetIdentityKey(newItem), out var existing))
             {
-                existing.PluginResult = newItem.PluginResult;
-                existing.HistoryItem = newItem.HistoryItem;
-                existing.IconPath = newItem.IconPath;
-                existing.Glyph = newItem.Glyph;
-                existing.TitleHighlightData = newItem.TitleHighlightData;
-                existing.Score = newItem.Score;
+                if (!ReferenceEquals(existing, newItem))
+                {
+                    existing.PluginResult = newItem.PluginResult;
+                    existing.HistoryItem = newItem.HistoryItem;
+                    existing.IconPath = newItem.IconPath;
+                    existing.Glyph = newItem.Glyph;
+                    existing.TitleHighlightData = newItem.TitleHighlightData;
+                    existing.Score = newItem.Score;
+
+                    resultsList[i] = existing;
+                }
             }
         }
 
-        // EditDiff calculates minimal changes needed - items with same Title+SubTitle are kept
-        _sourceList.EditDiff(resultsList, ResultViewModelComparer.Instance);
+        // In-place collection synchronization to avoid recreating containers or resetting selection.
+        // If the top item is identical, index 0 is never touched, so its ListBoxItem stays selected without animating.
+        var count = Math.Min(_results.Count, resultsList.Count);
+        for (var i = 0; i < count; i++)
+        {
+            if (!ReferenceEquals(_results[i], resultsList[i]))
+            {
+                _results[i] = resultsList[i];
+            }
+        }
+
+        if (resultsList.Count > _results.Count)
+        {
+            for (var i = _results.Count; i < resultsList.Count; i++)
+            {
+                _results.Add(resultsList[i]);
+            }
+        }
+        else if (resultsList.Count < _results.Count)
+        {
+            for (var i = _results.Count - 1; i >= resultsList.Count; i--)
+            {
+                _results.RemoveAt(i);
+            }
+        }
 
         // Select first item after replacement, unless the caller asked to keep the
         // previous selection (re-query) and that item survived the diff.
         var keptIndex = !reselect && previousSelection != null ? _results.IndexOf(previousSelection) : -1;
         if (keptIndex >= 0)
         {
-            SelectedIndex = keptIndex;
-            SelectedItem = previousSelection;
+            if (SelectedIndex != keptIndex)
+                SelectedIndex = keptIndex;
+            if (!ReferenceEquals(SelectedItem, previousSelection))
+                SelectedItem = previousSelection;
         }
         else if (_results.Count > 0)
         {
-            SelectedIndex = 0;
-            SelectedItem = _results[0];
+            if (SelectedIndex != 0)
+                SelectedIndex = 0;
+            if (!ReferenceEquals(SelectedItem, _results[0]))
+                SelectedItem = _results[0];
         }
         else
         {
@@ -121,20 +146,36 @@ public partial class ResultsViewModel : ObservableObject, IDisposable
         }
     }
 
-    public void ReplaceResultsForPlugin(string pluginId, IEnumerable<ResultViewModel> pluginResults)
-    {
-        var mergedResults = _sourceList.Items
-            .Where(result => !string.Equals(ResultViewModelComparer.GetPluginId(result), pluginId, StringComparison.Ordinal))
-            .Concat(pluginResults)
-            .ToList();
 
-        ReplaceResults(mergedResults);
+    public void ReplaceResultsForPlugin(string pluginId, IEnumerable<ResultViewModel> pluginResults, bool reselect = true)
+    {
+        ReplaceResultsForPlugins([new KeyValuePair<string, IReadOnlyList<ResultViewModel>>(pluginId, pluginResults.ToList())], clearExisting: false, reselect: reselect);
+    }
+
+    public void ReplaceResultsForPlugins(IReadOnlyList<KeyValuePair<string, IReadOnlyList<ResultViewModel>>> pluginUpdates, bool clearExisting = false, bool reselect = true)
+    {
+        if (pluginUpdates.Count == 0 && !clearExisting)
+            return;
+
+        var updatedPluginIds = new HashSet<string>(pluginUpdates.Select(u => u.Key), StringComparer.Ordinal);
+        var mergedResults = clearExisting
+            ? new List<ResultViewModel>()
+            : _results
+                .Where(result => !updatedPluginIds.Contains(ResultViewModelComparer.GetPluginId(result)))
+                .ToList();
+
+        foreach (var update in pluginUpdates)
+        {
+            mergedResults.AddRange(update.Value);
+        }
+
+        ReplaceResults(mergedResults, reselect);
     }
 
     public void AddResult(ResultViewModel result)
     {
         result.Settings = _settings;
-        _sourceList.Add(result);
+        _results.Add(result);
 
         // Select first item if nothing selected
         if (SelectedItem == null && _results.Count > 0)
@@ -146,7 +187,7 @@ public partial class ResultsViewModel : ObservableObject, IDisposable
 
     public void Clear()
     {
-        _sourceList.Clear();
+        _results.Clear();
         SelectedItem = null;
         SelectedIndex = -1;
     }
@@ -219,8 +260,6 @@ public partial class ResultsViewModel : ObservableObject, IDisposable
     public void Dispose()
     {
         _settings.PropertyChanged -= OnSettingsPropertyChanged;
-        _subscription.Dispose();
-        _sourceList.Dispose();
     }
 
     /// <summary>
