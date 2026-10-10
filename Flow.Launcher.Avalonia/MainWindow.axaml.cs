@@ -29,6 +29,7 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        InitializeWindowShape();
 
         // Get the ViewModel and Settings from DI
         _viewModel = Ioc.Default.GetRequiredService<MainViewModel>();
@@ -307,7 +308,11 @@ public partial class MainWindow : Window
             Activate();
         }
 
-        ApplyQueryTextBoxFocus(request.Mode, selectionAlreadyApplied: request.ShowWindow);
+        _queryTextBox.Focus();
+        if (!request.ShowWindow)
+        {
+            ApplyQueryTextBoxSelection(request.Mode);
+        }
 
         if (revealing)
         {
@@ -322,6 +327,9 @@ public partial class MainWindow : Window
 
     partial void ReturnFocusAfterHide();
 
+    // Platform hook: shape the native window to match the rounded WindowBorder.
+    partial void InitializeWindowShape();
+
     private void SynchronizeQueryTextBoxText()
     {
         if (_queryTextBox == null || _viewModel == null)
@@ -332,21 +340,6 @@ public partial class MainWindow : Window
         if (_queryTextBox.Text != _viewModel.QueryText)
         {
             _queryTextBox.Text = _viewModel.QueryText;
-        }
-    }
-
-    private void ApplyQueryTextBoxFocus(QueryTextFocusMode mode, bool selectionAlreadyApplied = false)
-    {
-        if (_queryTextBox == null)
-        {
-            return;
-        }
-
-        _queryTextBox.Focus();
-
-        if (!selectionAlreadyApplied)
-        {
-            ApplyQueryTextBoxSelection(mode);
         }
     }
 

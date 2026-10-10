@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Platform;
 using Flow.Launcher.Avalonia.Helper;
@@ -37,6 +38,34 @@ public partial class MainWindow
         MacWindowActivation.ReturnFocusToPreviousApp();
     }
 
+    // The native blur fills the square NSWindow; clip it to WindowBorder's corners (the style and theme switches
+    // change CornerRadius) and keep the window background clear whenever Avalonia (re)applies the blur.
+    partial void InitializeWindowShape()
+    {
+        if (!OperatingSystem.IsMacOS() || this.FindControl<Border>("WindowBorder") is not { } border)
+        {
+            return;
+        }
+
+        MacWindowShape.SetCornerRadius(this, border.CornerRadius);
+        MacWindowShape.ClearBackgroundIfTransparent(this);
+
+        border.PropertyChanged += (_, e) =>
+        {
+            if (e.Property == Border.CornerRadiusProperty)
+            {
+                MacWindowShape.SetCornerRadius(this, border.CornerRadius);
+            }
+        };
+        PropertyChanged += (_, e) =>
+        {
+            if (e.Property == ActualTransparencyLevelProperty)
+            {
+                MacWindowShape.ClearBackgroundIfTransparent(this);
+            }
+        };
+    }
+
     private partial Screen? GetCursorScreen() =>
         OperatingSystem.IsMacOS() && MacScreens.TryGetCursorLocation(out var x, out var y) ? ScreenAtMacPoint(x, y) : null;
 
@@ -44,17 +73,10 @@ public partial class MainWindow
         OperatingSystem.IsMacOS() && MacScreens.TryGetFrontmostWindowCenter(out var x, out var y) ? ScreenAtMacPoint(x, y) : null;
 
     // CoreGraphics reports global points; Avalonia reports each screen's bounds in that screen's pixels (points × scaling).
-    private Screen? ScreenAtMacPoint(double x, double y)
-    {
-        var point = new Point(x, y);
-        foreach (var screen in Screens.All)
+    private Screen? ScreenAtMacPoint(double x, double y) =>
+        Screens.All.FirstOrDefault(screen =>
         {
-            if (screen.Bounds.ToRect(screen.Scaling).Contains(point))
-            {
-                return screen;
-            }
-        }
-
-        return null;
-    }
+            var bounds = screen.Bounds.ToRect(screen.Scaling);
+            return bounds.Contains(new Point(x, y));
+        });
 }
