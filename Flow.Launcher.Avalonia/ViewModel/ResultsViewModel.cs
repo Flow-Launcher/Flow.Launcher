@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -49,6 +50,17 @@ public partial class ResultsViewModel : ObservableObject, IDisposable
             .Sort(SortExpressionComparer<ResultViewModel>.Descending(r => r.Score))
             .Bind(out _results)
             .Subscribe();
+
+        _settings.PropertyChanged += OnSettingsPropertyChanged;
+    }
+
+    // The result list height follows the max-results setting live (Ctrl+= / Ctrl+-, window resize, settings page).
+    private void OnSettingsPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName is nameof(Settings.MaxResultsToShow) or nameof(Settings.ItemHeightSize))
+        {
+            OnPropertyChanged(nameof(MaxHeight));
+        }
     }
 
     /// <summary>
@@ -167,6 +179,25 @@ public partial class ResultsViewModel : ObservableObject, IDisposable
         SelectedItem = _results[newIndex];
     }
 
+    public void SelectNextPage() => SelectIndex(SelectedIndex + _settings.MaxResultsToShow);
+
+    public void SelectPrevPage() => SelectIndex(SelectedIndex - _settings.MaxResultsToShow);
+
+    public void SelectFirstResult() => SelectIndex(0);
+
+    public void SelectLastResult() => SelectIndex(_results.Count - 1);
+
+    // Wraps around like the WPF ResultsViewModel.NewIndex.
+    private void SelectIndex(int index)
+    {
+        var count = _results.Count;
+        if (count == 0) return;
+
+        index = ((index % count) + count) % count;
+        SelectedIndex = index;
+        SelectedItem = _results[index];
+    }
+
     partial void OnSelectedIndexChanged(int value)
     {
         if (value >= 0 && value < _results.Count)
@@ -177,6 +208,7 @@ public partial class ResultsViewModel : ObservableObject, IDisposable
 
     public void Dispose()
     {
+        _settings.PropertyChanged -= OnSettingsPropertyChanged;
         _subscription.Dispose();
         _sourceList.Dispose();
     }
@@ -200,9 +232,10 @@ public partial class ResultsViewModel : ObservableObject, IDisposable
             return GetIdentityKey(obj).GetHashCode();
         }
 
+        // History rows are never replaced by a plugin's ResultsUpdated batch, even when recorded from that plugin.
         public static string GetPluginId(ResultViewModel item)
         {
-            return item.PluginResult?.PluginID ?? item.HistoryItem?.PluginID ?? string.Empty;
+            return item.HistoryItem != null ? string.Empty : item.PluginResult?.PluginID ?? string.Empty;
         }
 
         public static (string PluginId, string RecordKey, string Query, string Title, string SubTitle) GetIdentityKey(ResultViewModel item)

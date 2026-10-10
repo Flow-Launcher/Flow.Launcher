@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Avalonia;
 using Avalonia.Platform;
+using Avalonia.Threading;
 using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher.Avalonia;
@@ -25,6 +26,28 @@ public partial class MainWindow
         }
 
         if (_settings.SearchWindowScreen == SearchWindowScreens.RememberLastLaunchLocation && TryRestoreLastPosition())
+        {
+            return;
+        }
+
+        if (SelectScreen() is { } screen)
+        {
+            Position = AlignOn(screen);
+        }
+    }
+
+    /// <summary>
+    /// Moves the window back to the screen and alignment chosen in settings, ignoring a remembered last position.
+    /// </summary>
+    public void ResetPosition()
+    {
+        if (!Dispatcher.UIThread.CheckAccess())
+        {
+            Dispatcher.UIThread.Post(ResetPosition);
+            return;
+        }
+
+        if (_settings == null)
         {
             return;
         }
