@@ -107,6 +107,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string CycleHistoryUpHotkey { get; set; } = $"{KeyConstant.Alt} + Up";
         public string CycleHistoryDownHotkey { get; set; } = $"{KeyConstant.Alt} + Down";
         public string DialogJumpHotkey { get; set; } = $"{KeyConstant.Alt} + G";
+        public string ToggleResultLayoutHotkey { get; set; } = $"";
 
         private string _language = Constant.SystemLanguageCode;
         public string Language
@@ -644,6 +645,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                     list.Add(new(CycleHistoryDownHotkey, "CycleHistoryDownHotkey", () => CycleHistoryDownHotkey = ""));
                 if (!string.IsNullOrEmpty(DialogJumpHotkey))
                     list.Add(new(DialogJumpHotkey, "dialogJumpHotkey", () => DialogJumpHotkey = ""));
+                if (!string.IsNullOrEmpty(ToggleResultLayoutHotkey))
+                    list.Add(new(ToggleResultLayoutHotkey, "ToggleResultLayoutHotkey", () => ToggleResultLayoutHotkey = ""));
 
                 // Custom Query Hotkeys
                 foreach (var customPluginHotkey in CustomPluginHotkeys)

@@ -119,6 +119,9 @@ namespace Flow.Launcher.ViewModel
                     case nameof(Settings.CycleHistoryDownHotkey):
                         OnPropertyChanged(nameof(CycleHistoryDownHotkey));
                         break;
+                    case nameof(Settings.ToggleResultLayoutHotkey):
+                        OnPropertyChanged(nameof(ToggleResultLayoutHotkey));
+                        break;
                     case nameof(Settings.AutoCompleteHotkey2):
                         OnPropertyChanged(nameof(AutoCompleteHotkey2));
                         break;
@@ -736,6 +739,12 @@ namespace Flow.Launcher.ViewModel
         }
 
         [RelayCommand]
+        private void ToggleResultLayout()
+        {
+            Settings.ResultLayout = Settings.ResultLayout == ResultLayout.Grid ? ResultLayout.List : ResultLayout.Grid;
+        }
+
+        [RelayCommand]
         public void CopyAlternative()
         {
             var result = Results.SelectedItem?.Result?.CopyText;
@@ -1078,6 +1087,7 @@ namespace Flow.Launcher.ViewModel
         public string OpenHistoryHotkey => VerifyOrSetDefaultHotkey(Settings.OpenHistoryHotkey, "Ctrl+H");
         public string CycleHistoryUpHotkey => VerifyOrSetDefaultHotkey(Settings.CycleHistoryUpHotkey, "Alt+Up");
         public string CycleHistoryDownHotkey => VerifyOrSetDefaultHotkey(Settings.CycleHistoryDownHotkey, "Alt+Down");
+        public string ToggleResultLayoutHotkey => VerifyOrSetDefaultHotkey(Settings.ToggleResultLayoutHotkey, "");
 
         public bool StartWithEnglishMode => Settings.AlwaysStartEn;
 
