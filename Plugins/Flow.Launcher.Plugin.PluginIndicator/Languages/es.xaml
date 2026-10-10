@@ -3,6 +3,9 @@
 
     <system:String x:Key="flowlauncher_plugin_pluginindicator_result_subtitle">Activa {0} palabra clave de acción del complemento</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_settings_title">Configuración: {0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_settings_subtitle">Open the settings page for the {0} plugin</system:String>
+
     <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_name">Indicador de complementos</system:String>
     <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_description">Proporciona sugerencias de palabras de acción para los complementos</system:String>
 
