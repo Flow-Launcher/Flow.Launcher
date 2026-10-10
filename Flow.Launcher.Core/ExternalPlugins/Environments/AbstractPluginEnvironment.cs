@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
-using System.Windows.Forms;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher.Core.ExternalPlugins.Environments
 {
-    public abstract class AbstractPluginEnvironment
+    public abstract partial class AbstractPluginEnvironment
     {
         private static readonly string ClassName = nameof(AbstractPluginEnvironment);
 
@@ -131,14 +130,8 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
 
         internal abstract void InstallEnvironment();
 
-        private void EnsureLatestInstalled(string expectedPath, string currentPath, string installedDirPath)
-        {
-            if (expectedPath == currentPath) return;
-
-            FilesFolders.RemoveFolderIfExists(installedDirPath, (s) => API.ShowMsgBox(s));
-
-            InstallEnvironment();
-        }
+        // Reinstalling Flow's bundled runtime needs Droplex (Windows only); elsewhere the configured runtime is left untouched.
+        partial void EnsureLatestInstalled(string expectedPath, string currentPath, string installedDirPath);
 
         internal abstract PluginPair CreatePluginPair(string filePath, PluginMetadata metadata);
 
@@ -158,21 +151,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
             return pluginPairs;
         }
 
-        private static string GetFileFromDialog(string title, string filter = "")
-        {
-            var dlg = new OpenFileDialog
-            {
-                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles),
-                Multiselect = false,
-                CheckFileExists = true,
-                CheckPathExists = true,
-                Title = title,
-                Filter = filter
-            };
-
-            var result = dlg.ShowDialog();
-            return result == DialogResult.OK ? dlg.FileName : string.Empty;
-        }
+        private static partial string GetFileFromDialog(string title, string filter = "");
 
         /// <summary>
         /// After app updated while in portable mode or switched between portable/roaming mode,

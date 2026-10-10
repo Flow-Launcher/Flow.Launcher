@@ -3,29 +3,97 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ui="using:FluentAvalonia.UI.Controls"
+        xmlns:chrome="using:Avalonia.Controls.Chrome"
         xmlns:i18n="using:Flow.Launcher.Avalonia.Resource"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Flow.Launcher.Avalonia.Views.SettingPages.SettingsWindow"
         Title="{i18n:Localize settingsWindowTitle, Fallback='Flow Launcher Settings'}"
-        Width="900" Height="650"
-        WindowStartupLocation="CenterScreen">
+        Width="960" Height="680"
+        MinWidth="720" MinHeight="480"
+        WindowStartupLocation="CenterScreen"
+        ExtendClientAreaToDecorationsHint="True"
+        ExtendClientAreaTitleBarHeightHint="40"
+        Background="{DynamicResource SettingsChromeBackgroundBrush}">
 
-    <ui:FANavigationView Name="NavView"
-                      PaneDisplayMode="Left"
-                      OpenPaneLength="200"
-                      IsSettingsVisible="False">
-        <ui:FANavigationView.MenuItems>
-            <ui:FANavigationViewItem Content="{i18n:Localize general}" Tag="General" IconSource="Setting" IsSelected="True" />
-            <ui:FANavigationViewItem Content="{i18n:Localize plugin}" Tag="Plugins" IconSource="Library" />
-            <ui:FANavigationViewItem Content="{i18n:Localize pluginStore}" Tag="PluginStore" IconSource="Shop" />
-            <ui:FANavigationViewItem Content="{i18n:Localize theme}" Tag="Theme" IconSource="DarkTheme" />
-            <ui:FANavigationViewItem Content="{i18n:Localize hotkey}" Tag="Hotkey" IconSource="Keyboard" />
-            <ui:FANavigationViewItem Content="{i18n:Localize proxy}" Tag="Proxy" IconSource="Globe" />
-            <ui:FANavigationViewItem Content="{i18n:Localize about}" Tag="About" IconSource="Help" />
-        </ui:FANavigationView.MenuItems>
+    <Window.Resources>
+        <ResourceDictionary>
+            <!-- The window draws its own title bar: the sidebar and the strip above the content share one surface,
+                 and the page content sits in an inset rounded panel. -->
+            <x:Double x:Key="SettingsTitleBarHeight">40</x:Double>
+            <Thickness x:Key="NavigationViewContentMargin">0,40,10,10</Thickness>
+            <!-- FluentAvalonia's default (-1,3) leaves the selected item's highlight and indicator flush with the window edge. -->
+            <Thickness x:Key="NavigationViewPaneContentGridMargin">8,3,6,3</Thickness>
+            <CornerRadius x:Key="NavigationViewContentGridCornerRadius">10</CornerRadius>
+            <Thickness x:Key="NavigationViewContentGridBorderThickness">1</Thickness>
+            <SolidColorBrush x:Key="NavigationViewExpandedPaneBackground" Color="Transparent" />
+            <SolidColorBrush x:Key="NavigationViewDefaultPaneBackground" Color="Transparent" />
 
-        <ScrollViewer Name="ContentFrame" Padding="20">
-            <!-- Content will be loaded here -->
-        </ScrollViewer>
-    </ui:FANavigationView>
+            <x:Double x:Key="SettingsExpanderMinHeight">60</x:Double>
+            <Thickness x:Key="SettingsExpanderPadding">16,10,16,10</Thickness>
+
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="SettingsChromeBackgroundBrush" Color="#FFEDEDED" />
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Dark">
+                    <SolidColorBrush x:Key="SettingsChromeBackgroundBrush" Color="#FF1F1F1F" />
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Window.Styles>
+        <!-- Toggle state is visible from the knob; the On/Off labels only add noise next to every row. -->
+        <Style Selector="ToggleSwitch">
+            <Setter Property="OnContent" Value="{x:Null}" />
+            <Setter Property="OffContent" Value="{x:Null}" />
+        </Style>
+
+        <Style Selector="TextBlock.pageTitle">
+            <Setter Property="FontSize" Value="24" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+    </Window.Styles>
+
+    <Panel>
+        <ui:FANavigationView Name="NavView"
+                             PaneDisplayMode="Left"
+                             OpenPaneLength="220"
+                             IsPaneToggleButtonVisible="False"
+                             IsSettingsVisible="False">
+            <ui:FANavigationView.PaneHeader>
+                <!-- Clears the traffic lights and puts the first item's top (header + 3 grid margin + 2 item margin)
+                     on the content panel's top edge (NavigationViewContentMargin.Top). -->
+                <Border Height="35" />
+            </ui:FANavigationView.PaneHeader>
+            <ui:FANavigationView.MenuItems>
+                <ui:FANavigationViewItem Content="{i18n:Localize general}" Tag="General" IconSource="Setting" IsSelected="True" />
+                <ui:FANavigationViewItem Content="{i18n:Localize plugin}" Tag="Plugins" IconSource="Library" />
+                <ui:FANavigationViewItem Content="{i18n:Localize pluginStore}" Tag="PluginStore" IconSource="Shop" />
+                <ui:FANavigationViewItem Content="{i18n:Localize theme}" Tag="Theme" IconSource="DarkTheme" />
+                <ui:FANavigationViewItem Content="{i18n:Localize hotkey}" Tag="Hotkey" IconSource="Keyboard" />
+                <ui:FANavigationViewItem Content="{i18n:Localize proxy}" Tag="Proxy" IconSource="Globe" />
+                <ui:FANavigationViewItem Content="{i18n:Localize about}" Tag="About" IconSource="Help" />
+            </ui:FANavigationView.MenuItems>
+
+            <!-- Pages scroll themselves; an outer ScrollViewer would give them infinite height and defeat virtualization. -->
+            <ContentControl Name="ContentFrame" Margin="28,22,6,0" />
+        </ui:FANavigationView>
+
+        <!-- Draggable title bar strip spanning the whole window width. -->
+        <Border Height="{StaticResource SettingsTitleBarHeight}"
+                VerticalAlignment="Top"
+                Background="Transparent"
+                chrome:WindowDecorationProperties.ElementRole="TitleBar">
+            <!-- Same 28px band as the traffic lights so the title lines up with them. -->
+            <TextBlock Text="{Binding $parent[Window].Title}"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Top"
+                       Margin="0,6,0,0"
+                       FontSize="13"
+                       FontWeight="SemiBold"
+                       Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+        </Border>
+    </Panel>
 </Window>

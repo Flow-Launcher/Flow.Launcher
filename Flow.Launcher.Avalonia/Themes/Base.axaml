@@ -11,13 +11,14 @@
 
     <!-- Window Border Style -->
     <Style Selector="Border.windowBorder">
-        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderThickness" Value="{DynamicResource WindowBorderThickness}" />
         <Setter Property="BorderBrush" Value="{DynamicResource WindowBorderBrush}" />
         <Setter Property="Background" Value="{DynamicResource WindowBackgroundBrush}" />
         <Setter Property="Padding" Value="0" />
-        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="CornerRadius" Value="{DynamicResource WindowCornerRadius}" />
         <Setter Property="ClipToBounds" Value="True" />
-        <Setter Property="BoxShadow" Value="0 18 48 0 #26000000" />
+        <!-- WindowShadow is set by ThemeResources (Helper/ThemeLoader.cs) from Settings.UseDropShadowEffect; none for blur themes. -->
+        <Setter Property="BoxShadow" Value="{DynamicResource WindowShadow}" />
     </Style>
 
     <!-- Query Box Background -->
@@ -35,7 +36,7 @@
         <Setter Property="Padding" Value="0" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="{DynamicResource QueryBoxForegroundBrush}" />
-        <Setter Property="CaretBrush" Value="{DynamicResource QueryBoxForegroundBrush}" />
+        <Setter Property="CaretBrush" Value="{DynamicResource QueryBoxCaretBrush}" />
         <Setter Property="SelectionBrush" Value="{DynamicResource QueryBoxSelectionBrush}" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -54,6 +55,10 @@
     <Style Selector="TextBox.queryBox /template/ Border#PART_BorderElement">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
+    </Style>
+    <!-- Placeholder uses the theme's QuerySuggestionBoxStyle color, as in the WPF window -->
+    <Style Selector="TextBox.queryBox /template/ TextBlock#PART_Watermark">
+        <Setter Property="Foreground" Value="{DynamicResource QuerySuggestionForegroundBrush}" />
     </Style>
 
     <!-- Query Suggestion Box (autocomplete hint) -->
@@ -117,27 +122,6 @@
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
     </Style>
 
-    <!-- Result List Item -->
-    <Style Selector="ListBoxItem.resultItem">
-        <Setter Property="Padding" Value="0" />
-        <Setter Property="Margin" Value="4,2,4,2" />
-        <Setter Property="CornerRadius" Value="6" />
-        <Setter Property="MinHeight" Value="50" />
-        <Setter Property="Background" Value="Transparent" />
-    </Style>
-    
-    <Style Selector="ListBoxItem.resultItem:selected">
-        <Setter Property="Background" Value="#30FFFFFF" />
-    </Style>
-
-    <Style Selector="ListBoxItem.resultItem:selected /template/ ContentPresenter#PART_ContentPresenter">
-        <Setter Property="Background" Value="#30FFFFFF" />
-    </Style>
-
-    <Style Selector="ListBoxItem.resultItem:pointerover">
-        <Setter Property="Background" Value="#20FFFFFF" />
-    </Style>
-
     <!-- Result Item Grid -->
     <Style Selector="Grid.resultItemGrid">
         <Setter Property="Margin" Value="0" />
@@ -155,6 +139,9 @@
         <Setter Property="FontSize" Value="20" />
         <Setter Property="Foreground" Value="{DynamicResource ResultGlyphBrush}" />
         <Setter Property="TextAlignment" Value="Center" />
+    </Style>
+    <Style Selector="ListBoxItem:selected TextBlock.resultGlyph">
+        <Setter Property="Foreground" Value="{DynamicResource ResultGlyphSelectedBrush}" />
     </Style>
 
     <!-- Result Title -->
@@ -175,16 +162,20 @@
         <Setter Property="TextTrimming" Value="CharacterEllipsis" />
     </Style>
 
+    <!-- Selected result text (theme ItemTitleSelectedStyle / ItemSubTitleSelectedStyle) -->
+    <Style Selector="ListBoxItem:selected TextBlock.resultTitle">
+        <Setter Property="Foreground" Value="{DynamicResource ResultTitleSelectedBrush}" />
+    </Style>
+    <Style Selector="ListBoxItem:selected TextBlock.resultSubTitle">
+        <Setter Property="Foreground" Value="{DynamicResource ResultSubTitleSelectedBrush}" />
+    </Style>
+
     <!-- Result Bullet/Selection Indicator -->
     <Style Selector="Border.resultBullet">
         <Setter Property="Width" Value="3" />
         <Setter Property="CornerRadius" Value="1.5" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Margin" Value="0,8,0,8" />
-    </Style>
-
-    <Style Selector="ListBoxItem.resultItem:selected Border.resultBullet">
-        <Setter Property="Background" Value="{DynamicResource SystemAccentColor}" />
     </Style>
 
     <!-- Scrollbar Styles -->
@@ -215,6 +206,13 @@
         <Setter Property="Foreground" Value="{DynamicResource HotkeyTextBrush}" />
         <Setter Property="FontSize" Value="11" />
         <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
+    <!-- FluentAvalonia top-aligns ComboBox content with 5/7 padding tuned for Segoe UI; with other fonts
+         (e.g. the macOS or Linux system font) the selected text sits visibly above the box's center. Center it instead. -->
+    <Style Selector="ComboBox">
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Padding" Value="12,0,0,0" />
     </Style>
 
 </Styles>

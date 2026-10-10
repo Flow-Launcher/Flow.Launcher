@@ -1,14 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <TargetFramework></TargetFramework>
+    <TargetFrameworks>net10.0;net10.0-windows10.0.19041.0</TargetFrameworks>
     <OutputType>Library</OutputType>
     <ProjectGuid>{403B57F2-1856-4FC7-8A24-36AB346B763E}</ProjectGuid>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <UseWPF>true</UseWPF>
+    <UseWPF Condition="$(TargetFramework.Contains('-windows'))">true</UseWPF>
     <RootNamespace>Flow.Launcher.Plugin.WebSearch</RootNamespace>
     <AssemblyName>Flow.Launcher.Plugin.WebSearch</AssemblyName>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendTargetFrameworkToOutputPath Condition="'$(TargetFramework)' == 'net10.0'">true</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
   </PropertyGroup>
@@ -49,7 +52,7 @@
     </None>
   </ItemGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="$(TargetFramework.Contains('-windows'))">
     <PackageReference Include="iNKORE.UI.WPF.Modern" Version="0.10.1" />
   </ItemGroup>
 
@@ -61,12 +64,14 @@
   <Target Name="CopyToAvaloniaOutput" AfterTargets="Build">
     <PropertyGroup>
       <AvaloniaPluginDir>..\..\Output\Avalonia\$(Configuration)\Plugins\$(AssemblyName)\</AvaloniaPluginDir>
+      <AvaloniaPluginDir Condition="'$(TargetFramework)' == 'net10.0'">..\..\Output\Avalonia\$(Configuration)\net10.0\Plugins\$(AssemblyName)\</AvaloniaPluginDir>
       <PluginOutputDir>$([MSBuild]::EnsureTrailingSlash('$(OutputPath)'))</PluginOutputDir>
     </PropertyGroup>
     <ItemGroup>
       <PluginFiles Include="$(PluginOutputDir)**\*.*" Exclude="$(PluginOutputDir)runtimes\**\*.*" />
-      <PluginWindowsRuntimeFiles Include="$(PluginOutputDir)runtimes\**\*.*"
+      <PluginWindowsRuntimeFiles Condition="'$(TargetFramework)' != 'net10.0'" Include="$(PluginOutputDir)runtimes\**\*.*"
                                  Exclude="$(PluginOutputDir)runtimes\linux*\**\*.*;$(PluginOutputDir)runtimes\osx*\**\*.*;$(PluginOutputDir)runtimes\unix*\**\*.*;$(PluginOutputDir)runtimes\browser*\**\*.*" />
+      <PluginWindowsRuntimeFiles Condition="'$(TargetFramework)' == 'net10.0'" Include="$(PluginOutputDir)runtimes\**\*.*" />
     </ItemGroup>
     <Copy SourceFiles="@(PluginFiles)" DestinationFolder="$(AvaloniaPluginDir)%(RecursiveDir)" SkipUnchangedFiles="true" />
     <Copy SourceFiles="@(PluginWindowsRuntimeFiles)" DestinationFolder="$(AvaloniaPluginDir)runtimes\%(RecursiveDir)" SkipUnchangedFiles="true" />

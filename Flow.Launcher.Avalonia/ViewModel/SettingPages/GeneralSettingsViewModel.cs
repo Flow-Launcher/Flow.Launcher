@@ -19,7 +19,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using AvaloniaI18n = Flow.Launcher.Avalonia.Resource.Internationalization;
 
 namespace Flow.Launcher.Avalonia.ViewModel.SettingPages;
@@ -52,6 +51,9 @@ public partial class GeneralSettingsViewModel : ObservableObject
 
     public string Crowdin => Constant.CrowdinProjectUrl;
 
+    // Hides options backed by Windows-only services (logon task, taskbar, Squirrel updates/portable mode, Dialog Jump, keyboard layout).
+    public bool IsWindowsPlatform { get; } = OperatingSystem.IsWindows();
+
     #region Languages
 
     [ObservableProperty]
@@ -66,6 +68,13 @@ public partial class GeneralSettingsViewModel : ObservableObject
             {
                 _settings.Language = value.LanguageCode;
                 _i18n.ChangeLanguage(value.LanguageCode);
+
+                if (_i18n.PromptShouldUsePinyin(value.LanguageCode))
+                    ShouldUsePinyin = true;
+
+                if (_i18n.PromptShouldIgnoreAccents(value.LanguageCode))
+                    IgnoreAccents = true;
+
                 OnPropertyChanged();
                 UpdateLabels();
             }
@@ -83,6 +92,7 @@ public partial class GeneralSettingsViewModel : ObservableObject
         DialogJumpResultBehaviours.ForEach(x => x.UpdateLabels());
         DialogJumpFileResultBehaviours.ForEach(x => x.UpdateLabels());
         HistoryStyles.ForEach(x => x.UpdateLabel(_i18n));
+        OnPropertyChanged(nameof(AlwaysPreviewToolTip));
     }
 
 
@@ -227,6 +237,8 @@ public partial class GeneralSettingsViewModel : ObservableObject
             OnPropertyChanged();
         }
     }
+
+    public string AlwaysPreviewToolTip => string.Format(_i18n.GetTranslation("AlwaysPreviewToolTip"), _settings.PreviewHotkey);
 
     #endregion
 
@@ -486,6 +498,28 @@ public partial class GeneralSettingsViewModel : ObservableObject
         }
     }
 
+    public bool UsePolyphonicPhraseOverrides
+    {
+        get => _settings.UsePolyphonicPhraseOverrides;
+        set
+        {
+            _settings.UsePolyphonicPhraseOverrides = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public bool IgnoreAccents
+    {
+        get => _settings.IgnoreAccents;
+        set
+        {
+            if (_settings.IgnoreAccents == value)
+                return;
+            _settings.IgnoreAccents = value;
+            OnPropertyChanged();
+        }
+    }
+
     public bool ShowTaskbarWhenOpened
     {
         get => _settings.ShowTaskbarWhenInvoked;
@@ -535,11 +569,14 @@ public partial class GeneralSettingsViewModel : ObservableObject
             }
 
             _settings.EnableDialogJump = value;
-            DialogJump.SetupDialogJump(value);
+            SetupDialogJump(value);
 
             OnPropertyChanged();
         }
     }
+
+    // Dialog Jump hooks Windows file dialogs; implemented in GeneralSettingsViewModel.Windows.cs only.
+    partial void SetupDialogJump(bool enabled);
 
     public bool ShowDialogJumpWindow
     {
@@ -615,39 +652,35 @@ public partial class GeneralSettingsViewModel : ObservableObject
         }
     }
 
-    public bool KoreanIMERegistryKeyExists
-    {
-        get
-        {
-            var registryKeyExists = Win32Helper.IsKoreanIMEExist();
-            var koreanLanguageInstalled = InputLanguage.InstalledInputLanguages.Cast<InputLanguage>().Any(lang => lang.Culture.Name.StartsWith("ko", StringComparison.OrdinalIgnoreCase));
-            var isWindows11 = Win32Helper.IsWindows11();
-            return (isWindows11 && koreanLanguageInstalled) || registryKeyExists;
-        }
-    }
-
-    public bool LegacyKoreanIMEEnabled
-    {
-        get => Win32Helper.IsLegacyKoreanIMEEnabled();
-        set
-        {
-            if (Win32Helper.SetLegacyKoreanIMEEnabled(value))
-            {
-                OnPropertyChanged();
-            }
-            else
-            {
-                App.API?.ShowMsgError(_i18n.GetTranslation("KoreanImeSettingChangeFailTitle"), _i18n.GetTranslation("KoreanImeSettingChangeFailSubTitle"));
-            }
-        }
-    }
-
     #endregion
 
     #region Paths
 
-    public string PythonPath => _settings.PluginSettings.PythonExecutablePath ?? "Not set";
-    public string NodePath => _settings.PluginSettings.NodeExecutablePath ?? "Not set";
+    public string? PythonPath
+    {
+        get => _settings.PluginSettings.PythonExecutablePath;
+        set
+        {
+            _settings.PluginSettings.PythonExecutablePath = string.IsNullOrWhiteSpace(value) ? null : value.Trim();
+            OnPropertyChanged();
+        }
+    }
+
+    public string? NodePath
+    {
+        get => _settings.PluginSettings.NodeExecutablePath;
+        set
+        {
+            _settings.PluginSettings.NodeExecutablePath = string.IsNullOrWhiteSpace(value) ? null : value.Trim();
+            OnPropertyChanged();
+        }
+    }
+
+    [RelayCommand]
+    private void ClearPython() => PythonPath = null;
+
+    [RelayCommand]
+    private void ClearNode() => NodePath = null;
 
     [RelayCommand]
     private async Task SelectPython()
@@ -662,18 +695,16 @@ public partial class GeneralSettingsViewModel : ObservableObject
         {
             Title = _i18n.GetTranslation("selectPythonExecutable"),
             AllowMultiple = false,
-            FileTypeFilter =
-            [
-                new FilePickerFileType("Python") { Patterns = ["pythonw.exe", "python.exe"] },
-                FilePickerFileTypes.All
-            ]
+            // Unix executables have no extension to filter on.
+            FileTypeFilter = OperatingSystem.IsWindows()
+                ? [new FilePickerFileType("Python") { Patterns = ["pythonw.exe", "python.exe"] }, FilePickerFileTypes.All]
+                : [FilePickerFileTypes.All]
         });
 
         var selectedFile = files.FirstOrDefault()?.Path.LocalPath;
         if (!string.IsNullOrWhiteSpace(selectedFile))
         {
-            _settings.PluginSettings.PythonExecutablePath = selectedFile;
-            OnPropertyChanged(nameof(PythonPath));
+            PythonPath = selectedFile;
         }
     }
 
@@ -690,18 +721,15 @@ public partial class GeneralSettingsViewModel : ObservableObject
         {
             Title = _i18n.GetTranslation("selectNodeExecutable"),
             AllowMultiple = false,
-            FileTypeFilter =
-            [
-                new FilePickerFileType("Node") { Patterns = ["*.exe"] },
-                FilePickerFileTypes.All
-            ]
+            FileTypeFilter = OperatingSystem.IsWindows()
+                ? [new FilePickerFileType("Node") { Patterns = ["*.exe"] }, FilePickerFileTypes.All]
+                : [FilePickerFileTypes.All]
         });
 
         var selectedFile = files.FirstOrDefault()?.Path.LocalPath;
         if (!string.IsNullOrWhiteSpace(selectedFile))
         {
-            _settings.PluginSettings.NodeExecutablePath = selectedFile;
-            OnPropertyChanged(nameof(NodePath));
+            NodePath = selectedFile;
         }
     }
 
@@ -746,8 +774,11 @@ public partial class GeneralSettingsViewModel : ObservableObject
     [RelayCommand]
     private void OpenImeSettings()
     {
-        Win32Helper.OpenImeSettings();
+        OpenPlatformImeSettings();
     }
+
+    // Windows input settings page; the Korean IME section that exposes this command is hidden elsewhere.
+    partial void OpenPlatformImeSettings();
 
     [RelayCommand]
     private async Task OpenCrowdin()
@@ -762,15 +793,7 @@ public partial class GeneralSettingsViewModel : ObservableObject
 
     private void LoadLanguages()
     {
-        Languages = new List<Language>
-        {
-            new(Constant.SystemLanguageCode, "System"),
-            new("en", "English"),
-            new("zh-cn", "中文 (简体)"),
-            new("zh-tw", "中文 (繁體)"),
-            new("ko", "한국어"),
-            new("ja", "日本語")
-        };
+        Languages = AvaloniaI18n.LoadAvailableLanguages();
     }
 
     private void LoadSearchWindowOptions()

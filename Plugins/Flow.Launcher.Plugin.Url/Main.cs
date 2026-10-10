@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Windows.Controls;
-using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher.Plugin.Url
 {
-    public class Main : IPlugin, IPluginI18n, ISettingProvider
+    public partial class Main : IPlugin, IPluginI18n, ISettingProvider
     {
         internal static PluginInitContext Context { get; private set; }
         internal static Settings Settings { get; private set; }
@@ -71,14 +69,7 @@ namespace Flow.Launcher.Plugin.Url
                             {
                                 if (Settings.UseCustomBrowser)
                                 {
-                                    if (Settings.OpenInNewBrowserWindow)
-                                    {
-                                        SearchWeb.OpenInBrowserWindow(raw, Settings.BrowserPath, Settings.OpenInPrivateMode, Settings.PrivateModeArgument);
-                                    }
-                                    else
-                                    {
-                                        SearchWeb.OpenInBrowserTab(raw, Settings.BrowserPath, Settings.OpenInPrivateMode, Settings.PrivateModeArgument);
-                                    }
+                                    OpenInCustomBrowser(raw);
                                 }
                                 else
                                 {
@@ -280,9 +271,6 @@ namespace Flow.Launcher.Plugin.Url
             return Localize.flowlauncher_plugin_url_plugin_description();
         }
 
-        public Control CreateSettingPanel()
-        {
-            return new SettingsControl();
-        }
+        private partial void OpenInCustomBrowser(string url);
     }
 }

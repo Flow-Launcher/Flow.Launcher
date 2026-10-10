@@ -2,11 +2,13 @@
 
 namespace Flow.Launcher.Plugin.Shell.ViewModels;
 
-public class ShellSettingViewModel : BaseModel
+public partial class ShellSettingViewModel : BaseModel
 {
     public Settings Settings { get; }
 
-    public List<ShellLocalized> AllShells { get; } = ShellLocalized.GetValues();
+    public List<ShellLocalized> AllShells { get; } = GetAvailableShells();
+
+    private static partial List<ShellLocalized> GetAvailableShells();
 
     public Shell SelectedShell
     {

@@ -15,10 +15,10 @@
         Width="{Binding Settings.WindowSize}"
         MinWidth="400"
         MinHeight="30"
-        WindowStartupLocation="CenterScreen"
-        CanResize="True"
+        WindowStartupLocation="Manual"
+        CanResize="{Binding !Settings.KeepMaxResults}"
         ShowInTaskbar="False"
-        Topmost="True"
+        Topmost="{Binding Settings.ShowAtTopmost}"
         WindowDecorations="None"
         TransparencyLevelHint="AcrylicBlur"
         Background="Transparent"
@@ -30,14 +30,51 @@
         <converters:BoolToIsVisibleConverter x:Key="BoolToVisibilityConverter" />
     </Window.Resources>
 
+    <Window.Styles>
+        <!-- Clock/date panel left of the search icon (WPF BaseClockPanel/BaseClockBox/BaseDateBox) -->
+        <Style Selector="StackPanel.clockPanel">
+            <Setter Property="Orientation" Value="Vertical" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="0,0,66,0" />
+        </Style>
+        <Style Selector="TextBlock.clockBox">
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="Foreground" Value="{DynamicResource QuerySuggestionForegroundBrush}" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="0,0,0,3" />
+        </Style>
+        <Style Selector="TextBlock.clockBox.compact">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Margin" Value="0" />
+        </Style>
+        <Style Selector="TextBlock.dateBox">
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="Foreground" Value="{DynamicResource QuerySuggestionForegroundBrush}" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        <Style Selector="TextBlock.dateBox.compact">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Margin" Value="0,0,0,3" />
+        </Style>
+        <Style Selector="Image.pluginActivationIcon">
+            <Setter Property="Width" Value="32" />
+            <Setter Property="Height" Value="32" />
+            <Setter Property="Margin" Value="0,0,18,0" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
+        </Style>
+    </Window.Styles>
+
     <Window.KeyBindings>
         <KeyBinding Gesture="Escape" Command="{Binding EscCommand}" />
-        <KeyBinding Gesture="Enter" Command="{Binding OpenResultCommand}" />
         <KeyBinding Gesture="Down" Command="{Binding SelectNextItemCommand}" />
         <KeyBinding Gesture="Up" Command="{Binding SelectPrevItemCommand}" />
-        <KeyBinding Gesture="Shift+Enter" Command="{Binding LoadContextMenuCommand}" />
         <KeyBinding Gesture="Ctrl+OemComma" Command="{Binding OpenSettingsCommand}" />
-        <!-- Preview hotkey is handled dynamically in code-behind to support customization -->
+        <!-- Enter variants and the customizable/fixed launcher hotkeys are handled in code-behind
+             (they need the pressed modifiers and must re-apply when settings change) -->
     </Window.KeyBindings>
 
     <!-- Main container with rounded corners and background -->
@@ -45,29 +82,89 @@
             Classes="windowBorder"
             PointerPressed="OnWindowBorderPointerPressed">
         <StackPanel Orientation="Vertical">
-            
+
             <!-- Query Box Area -->
             <Grid Name="QueryBoxArea">
                 <Border Name="QueryBoxBg"
                         Classes="queryBoxBg"
                         MinHeight="{Binding Settings.WindowHeightSize}">
+                    <Grid>
+                        <!-- Ghost autocomplete suggestion drawn behind the transparent query box -->
+                        <TextBox Name="QuerySuggestionBox"
+                                 Classes="querySuggestionBox"
+                                 Text="{Binding QuerySuggestionText}"
+                                 FontSize="{Binding Settings.QueryBoxFontSize}"
+                                 FontFamily="{Binding Settings.QueryBoxFont}"
+                                 FontWeight="{Binding QueryBoxFontWeight}"
+                                 FontStyle="{Binding QueryBoxFontStyle}"
+                                 MinHeight="{Binding Settings.WindowHeightSize}"
+                                 IsReadOnly="True"
+                                 IsHitTestVisible="False"
+                                 Focusable="False"
+                                 IsTabStop="False"
+                                 CaretBrush="Transparent"
+                                 ContextFlyout="{x:Null}"
+                                 TextWrapping="NoWrap" />
+
                         <!-- Main Query Text Box -->
                         <TextBox Name="QueryTextBox"
-                                  Classes="queryBox"
-                                  Text="{Binding QueryText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                  FontSize="{Binding Settings.QueryBoxFontSize}"
-                                  FontFamily="{Binding Settings.QueryBoxFont}"
-                                  MinHeight="{Binding Settings.WindowHeightSize}"
-                                  PlaceholderText="{i18n:Localize queryTextBoxPlaceholder, Fallback='Type here to search'}"
-                                  AcceptsReturn="False"
-                                  TextWrapping="NoWrap" />
+                                 Classes="queryBox"
+                                 Text="{Binding QueryText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 FontSize="{Binding Settings.QueryBoxFontSize}"
+                                 FontFamily="{Binding Settings.QueryBoxFont}"
+                                 FontWeight="{Binding QueryBoxFontWeight}"
+                                 FontStyle="{Binding QueryBoxFontStyle}"
+                                 MinHeight="{Binding Settings.WindowHeightSize}"
+                                 PlaceholderText="{Binding PlaceholderText}"
+                                 AcceptsReturn="False"
+                                 ClearSelectionOnLostFocus="False"
+                                 ContextFlyout="{x:Null}"
+                                 TextWrapping="NoWrap">
+                            <TextBox.ContextMenu>
+                                <ContextMenu MinWidth="160">
+                                    <MenuItem Header="{i18n:Localize cut, Fallback='Cut'}" Click="OnQueryCutClick" />
+                                    <MenuItem Header="{i18n:Localize copy, Fallback='Copy'}" Click="OnQueryCopyClick" />
+                                    <MenuItem Header="{i18n:Localize paste, Fallback='Paste'}" Click="OnQueryPasteClick" />
+                                    <Separator />
+                                    <MenuItem Header="{i18n:Localize flowlauncher_settings, Fallback='Settings'}" Command="{Binding OpenSettingsCommand}" />
+                                    <MenuItem Header="{i18n:Localize closeWindow, Fallback='Close'}" Command="{Binding EscCommand}" />
+                                </ContextMenu>
+                            </TextBox.ContextMenu>
+                        </TextBox>
+                    </Grid>
                 </Border>
+
+                <!-- Clock / date (shown while the query box is empty) -->
+                <StackPanel Name="ClockPanel"
+                            Classes="clockPanel"
+                            IsHitTestVisible="False"
+                            IsVisible="{Binding IsClockPanelVisible}">
+                    <TextBlock Name="ClockBox"
+                               Classes="clockBox"
+                               Classes.compact="{Binding Settings.UseDate}"
+                               Text="{Binding ClockText}"
+                               IsVisible="{Binding Settings.UseClock}" />
+                    <TextBlock Name="DateBox"
+                               Classes="dateBox"
+                               Classes.compact="{Binding Settings.UseClock}"
+                               Text="{Binding DateText}"
+                               IsVisible="{Binding Settings.UseDate}" />
+                </StackPanel>
+
+                <!-- Icon of the plugin selected by the action keyword; replaces the search icon -->
+                <Image Name="PluginActivationIcon"
+                       Classes="pluginActivationIcon"
+                       IsHitTestVisible="False"
+                       Stretch="Uniform"
+                       Source="{Binding PluginIconImage^, FallbackValue={x:Null}}"
+                       IsVisible="{Binding IsPluginIconVisible}" />
 
                 <!-- Search Icon -->
                 <Canvas Name="SearchIconCanvas"
                         Classes="searchIconPosition"
                         HorizontalAlignment="Right"
-                        IsHitTestVisible="False">
+                        IsHitTestVisible="False"
+                        IsVisible="{Binding IsSearchIconVisible}">
                     <Path Name="SearchIcon"
                           Classes="searchIcon"
                           Data="{DynamicResource SearchIconGeometry}"
@@ -128,10 +225,13 @@
                                   Background="Transparent"
                                   IsVisible="{Binding IsPreviewOn}" />
 
-                    <!-- Preview Panel -->
+                    <!-- Preview Panel: at least 380 tall, capped by the result list height (as in WPF) so long
+                         previews scroll instead of growing the window -->
                     <Border Name="PreviewPanelContainer"
                             Grid.Column="2"
                             Width="300"
+                            MinHeight="380"
+                            MaxHeight="{Binding Results.MaxHeight}"
                             IsVisible="{Binding IsPreviewOn}">
                         <views:PreviewPanel DataContext="{Binding PreviewSelectedItem}" />
                     </Border>

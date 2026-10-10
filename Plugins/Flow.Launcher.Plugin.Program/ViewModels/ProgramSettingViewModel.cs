@@ -51,7 +51,7 @@ public partial class ProgramSettingViewModel : ObservableObject
     [ObservableProperty]
     private bool _hideDuplicatedWindowsApp;
 
-    public bool ShowUWPCheckbox => UWPPackage.SupportUWP();
+    public bool ShowUWPCheckbox => SupportUWP();
 
     [ObservableProperty]
     private ObservableCollection<ProgramSource> _programSources = new();
@@ -272,10 +272,9 @@ public partial class ProgramSettingViewModel : ObservableObject
     [RelayCommand]
     private async Task AddSource()
     {
-        var dialog = new System.Windows.Forms.FolderBrowserDialog();
-        if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+        var path = await BrowseFolderAsync();
+        if (path != null)
         {
-            var path = dialog.SelectedPath;
             if (ProgramSources.Any(x => x.UniqueIdentifier.Equals(path, StringComparison.OrdinalIgnoreCase)))
             {
                 _context.API.ShowMsgBox(_context.API.GetTranslation("flowlauncher_plugin_program_duplicate_program_source"));
@@ -291,7 +290,9 @@ public partial class ProgramSettingViewModel : ObservableObject
         }
     }
 
+    private static partial bool SupportUWP();
 
+    private static partial Task<string> BrowseFolderAsync();
 
     partial void OnEnableUWPChanged(bool value)
     {

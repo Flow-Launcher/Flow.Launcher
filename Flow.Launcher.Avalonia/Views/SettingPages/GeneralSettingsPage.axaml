@@ -11,33 +11,42 @@
              x:DataType="vm:GeneralSettingsViewModel">
 
     <ScrollViewer>
-        <StackPanel Spacing="4" Margin="0,18,25,30">
-            <TextBlock Text="{i18n:Localize general}" FontSize="28" FontWeight="SemiBold" Margin="0,0,0,8" />
+        <StackPanel Spacing="4" Margin="0,0,16,24">
+            <TextBlock Text="{i18n:Localize general}" Classes="pageTitle" Margin="0,0,0,12" />
 
             <ui:FASettingsExpander Header="{i18n:Localize startFlowLauncherOnSystemStartup}"
-                                IconSource="Power"
+                                IconSource="Play"
                                 IsExpanded="False">
                 <ui:FASettingsExpander.Footer>
                     <ToggleSwitch IsChecked="{Binding StartOnStartup}" />
                 </ui:FASettingsExpander.Footer>
-                <ui:FASettingsExpanderItem Content="{i18n:Localize useLogonTaskForStartup}"
-                                         Description="{i18n:Localize useLogonTaskForStartupTooltip}">
-                    <ui:FASettingsExpanderItem.Footer>
-                        <ToggleSwitch IsChecked="{Binding UseLogonTaskForStartup}" />
-                    </ui:FASettingsExpanderItem.Footer>
-                </ui:FASettingsExpanderItem>
+                <!-- Windows-only option; elsewhere ItemsSource stays unset, so the card has no chevron. -->
+                <ui:FASettingsExpander.ItemsSource>
+                    <OnPlatform>
+                        <On Options="Windows">
+                            <Controls>
+                                <ui:FASettingsExpanderItem Content="{i18n:Localize useLogonTaskForStartup}"
+                                                         Description="{i18n:Localize useLogonTaskForStartupTooltip}">
+                                    <ui:FASettingsExpanderItem.Footer>
+                                        <ToggleSwitch IsChecked="{Binding UseLogonTaskForStartup}" />
+                                    </ui:FASettingsExpanderItem.Footer>
+                                </ui:FASettingsExpanderItem>
+                            </Controls>
+                        </On>
+                    </OnPlatform>
+                </ui:FASettingsExpander.ItemsSource>
             </ui:FASettingsExpander>
 
             <ui:FASettingsExpander Header="{i18n:Localize hideOnStartup}"
                                 Description="{i18n:Localize hideOnStartupToolTip}"
-                                IconSource="Hide">
+                                IconSource="FullScreenMinimize">
                 <ui:FASettingsExpander.Footer>
                     <ToggleSwitch IsChecked="{Binding HideOnStartup}" />
                 </ui:FASettingsExpander.Footer>
             </ui:FASettingsExpander>
 
             <ui:FASettingsExpander Header="{i18n:Localize hideFlowLauncherWhenLoseFocus}"
-                                IconSource="Hide">
+                                IconSource="BackToWindow">
                 <ui:FASettingsExpander.Footer>
                     <ToggleSwitch IsChecked="{Binding HideWhenDeactivated}" />
                 </ui:FASettingsExpander.Footer>
@@ -45,7 +54,8 @@
 
             <ui:FASettingsExpander Header="{i18n:Localize showTaskbarWhenOpened}"
                                 Description="{i18n:Localize showTaskbarWhenOpenedToolTip}"
-                                IconSource="View">
+                                IconSource="View"
+                                IsVisible="{Binding IsWindowsPlatform}">
                 <ui:FASettingsExpander.Footer>
                     <ToggleSwitch IsChecked="{Binding ShowTaskbarWhenOpened}" />
                 </ui:FASettingsExpander.Footer>
@@ -53,7 +63,7 @@
 
             <ui:FASettingsExpander Header="{i18n:Localize hideNotifyIcon}"
                                 Description="{i18n:Localize hideNotifyIconToolTip}"
-                                IconSource="Hide">
+                                IconSource="Pin">
                 <ui:FASettingsExpander.Footer>
                     <ToggleSwitch IsChecked="{Binding HideNotifyIcon}" />
                 </ui:FASettingsExpander.Footer>
@@ -68,7 +78,7 @@
             </ui:FASettingsExpander>
 
             <ui:FASettingsExpander Header="{i18n:Localize SearchWindowPosition}"
-                                IconSource="MoveUp"
+                                IconSource="MapPin"
                                 IsExpanded="False">
                 <ui:FASettingsExpander.Footer>
                     <ComboBox ItemsSource="{Binding SearchWindowScreens}"
@@ -115,6 +125,7 @@
             </ui:FASettingsExpander>
 
             <ui:FASettingsExpander Header="{i18n:Localize AlwaysPreview}"
+                                Description="{Binding AlwaysPreviewToolTip}"
                                 IconSource="PreviewLink">
                 <ui:FASettingsExpander.Footer>
                     <ToggleSwitch IsChecked="{Binding AlwaysPreview}" />
@@ -123,7 +134,8 @@
 
             <ui:FASettingsExpander Header="{i18n:Localize autoUpdates}"
                                 Description="{i18n:Localize autoUpdatesTooltip}"
-                                IconSource="Sync">
+                                IconSource="Sync"
+                                IsVisible="{Binding IsWindowsPlatform}">
                 <ui:FASettingsExpander.Footer>
                     <ToggleSwitch IsChecked="{Binding AutoUpdates}" />
                 </ui:FASettingsExpander.Footer>
@@ -131,7 +143,8 @@
 
             <ui:FASettingsExpander Header="{i18n:Localize portableMode}"
                                 Description="{i18n:Localize portableModeToolTIp}"
-                                IconSource="Library">
+                                IconSource="Library"
+                                IsVisible="{Binding IsWindowsPlatform}">
                 <ui:FASettingsExpander.Footer>
                     <ToggleSwitch IsChecked="{Binding PortableMode}" />
                 </ui:FASettingsExpander.Footer>
@@ -185,7 +198,8 @@
             <ui:FASettingsExpander Header="{i18n:Localize dialogJump}"
                                 Description="{i18n:Localize dialogJumpToolTip}"
                                 IconSource="Target"
-                                IsExpanded="False">
+                                IsExpanded="False"
+                                IsVisible="{Binding IsWindowsPlatform}">
                 <ui:FASettingsExpander.Footer>
                     <ToggleSwitch IsChecked="{Binding EnableDialogJump}" />
                 </ui:FASettingsExpander.Footer>
@@ -289,7 +303,8 @@
 
             <ui:FASettingsExpander Header="{i18n:Localize typingStartEn}"
                                 Description="{i18n:Localize typingStartEnTooltip}"
-                                IconSource="Keyboard">
+                                IconSource="Keyboard"
+                                IsVisible="{Binding IsWindowsPlatform}">
                 <ui:FASettingsExpander.Footer>
                     <ToggleSwitch IsChecked="{Binding AlwaysStartEn}" />
                 </ui:FASettingsExpander.Footer>
@@ -319,6 +334,21 @@
                                   IsVisible="{Binding UseDoublePinyin}" />
                     </ui:FASettingsExpanderItem.Footer>
                 </ui:FASettingsExpanderItem>
+                <ui:FASettingsExpanderItem Content="{i18n:Localize UsePolyphonicPhraseOverrides}"
+                                         Description="{i18n:Localize UsePolyphonicPhraseOverridesToolTip}"
+                                         IsVisible="{Binding ShouldUsePinyin}">
+                    <ui:FASettingsExpanderItem.Footer>
+                        <ToggleSwitch IsChecked="{Binding UsePolyphonicPhraseOverrides}" />
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
+            </ui:FASettingsExpander>
+
+            <ui:FASettingsExpander Header="{i18n:Localize ignoreAccents}"
+                                Description="{i18n:Localize ignoreAccentsToolTip}"
+                                IconSource="Character">
+                <ui:FASettingsExpander.Footer>
+                    <ToggleSwitch IsChecked="{Binding IgnoreAccents}" />
+                </ui:FASettingsExpander.Footer>
             </ui:FASettingsExpander>
 
             <ui:FASettingsExpander Header="{i18n:Localize defaultFileManager}"
@@ -342,18 +372,28 @@
             </ui:FASettingsExpander>
 
             <ui:FASettingsExpander Header="{i18n:Localize pythonFilePath}"
-                                Description="{Binding PythonPath}"
                                 IconSource="Code">
                 <ui:FASettingsExpander.Footer>
-                    <Button Content="{i18n:Localize select}" Command="{Binding SelectPythonCommand}" />
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <TextBox Width="300"
+                                 Text="{Binding PythonPath, Mode=TwoWay}"
+                                 Watermark="{i18n:Localize none}" />
+                        <Button Content="{i18n:Localize select}" Command="{Binding SelectPythonCommand}" />
+                        <Button Content="{i18n:Localize delete}" Command="{Binding ClearPythonCommand}" />
+                    </StackPanel>
                 </ui:FASettingsExpander.Footer>
             </ui:FASettingsExpander>
 
             <ui:FASettingsExpander Header="{i18n:Localize nodeFilePath}"
-                                Description="{Binding NodePath}"
                                 IconSource="Code">
                 <ui:FASettingsExpander.Footer>
-                    <Button Content="{i18n:Localize select}" Command="{Binding SelectNodeCommand}" />
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <TextBox Width="300"
+                                 Text="{Binding NodePath, Mode=TwoWay}"
+                                 Watermark="{i18n:Localize none}" />
+                        <Button Content="{i18n:Localize select}" Command="{Binding SelectNodeCommand}" />
+                        <Button Content="{i18n:Localize delete}" Command="{Binding ClearNodeCommand}" />
+                    </StackPanel>
                 </ui:FASettingsExpander.Footer>
             </ui:FASettingsExpander>
 

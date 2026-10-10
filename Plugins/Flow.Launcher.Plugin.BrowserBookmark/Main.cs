@@ -5,16 +5,14 @@ using System.Linq;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 using System.Threading;
-using System.Windows.Controls;
 using Flow.Launcher.Plugin.BrowserBookmark.Commands;
 using Flow.Launcher.Plugin.BrowserBookmark.Models;
-using Flow.Launcher.Plugin.BrowserBookmark.Views;
 using Flow.Launcher.Plugin.SharedCommands;
 using System.Security.Policy;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark;
 
-public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContextMenu, IDisposable
+public partial class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContextMenu, IDisposable
 {
     private static readonly string ClassName = nameof(Main);
 
@@ -214,11 +212,6 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
     public string GetTranslatedPluginDescription()
     {
         return Localize.flowlauncher_plugin_browserbookmark_plugin_description();
-    }
-
-    public Control CreateSettingPanel()
-    {
-        return new SettingsControl(_settings);
     }
 
     public object CreateSettingPanelAvalonia()

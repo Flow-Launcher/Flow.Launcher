@@ -683,6 +683,7 @@
           "Microsoft.IO.RecyclableMemoryStream": "[3.0.1, )",
           "SemanticVersioning": "[3.0.0, )",
           "StreamJsonRpc": "[2.22.11, )",
+          "YamlDotNet": "[9.1.0, )",
           "squirrel.windows": "[1.9.0, )"
         }
       },

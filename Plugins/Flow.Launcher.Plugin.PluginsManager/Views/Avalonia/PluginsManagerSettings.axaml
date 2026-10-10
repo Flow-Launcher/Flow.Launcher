@@ -8,22 +8,22 @@
              x:Class="Flow.Launcher.Plugin.PluginsManager.Views.Avalonia.PluginsManagerSettings"
              x:DataType="vm:SettingsViewModel">
     <StackPanel Spacing="10" Margin="0,0,10,0">
-        <ui:SettingsExpander Header="{DynamicResource plugin_pluginsmanager_plugin_name}"
+        <ui:FASettingsExpander Header="{DynamicResource plugin_pluginsmanager_plugin_name}"
                              IconSource="Settings"
                              Description="{DynamicResource plugin_pluginsmanager_plugin_description}"
                              IsExpanded="True">
-            <ui:SettingsExpander.Items>
-                <ui:SettingsExpanderItem Content="{DynamicResource plugin_pluginsmanager_plugin_settings_unknown_source}">
-                    <ui:SettingsExpanderItem.Footer>
+            <ui:FASettingsExpander.Items>
+                <ui:FASettingsExpanderItem Content="{DynamicResource plugin_pluginsmanager_plugin_settings_unknown_source}">
+                    <ui:FASettingsExpanderItem.Footer>
                         <ToggleSwitch IsChecked="{Binding WarnFromUnknownSource}" OnContent="" OffContent="" />
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
-                <ui:SettingsExpanderItem Content="{DynamicResource plugin_pluginsmanager_plugin_settings_auto_restart}">
-                    <ui:SettingsExpanderItem.Footer>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
+                <ui:FASettingsExpanderItem Content="{DynamicResource plugin_pluginsmanager_plugin_settings_auto_restart}">
+                    <ui:FASettingsExpanderItem.Footer>
                         <ToggleSwitch IsChecked="{Binding AutoRestartAfterChanging}" OnContent="" OffContent="" />
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
-            </ui:SettingsExpander.Items>
-        </ui:SettingsExpander>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
+            </ui:FASettingsExpander.Items>
+        </ui:FASettingsExpander>
     </StackPanel>
 </UserControl>

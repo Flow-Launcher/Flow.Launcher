@@ -6,7 +6,7 @@ using System.Windows.Input;
 
 namespace Flow.Launcher.Infrastructure.Hotkey
 {
-    public record struct HotkeyModel
+    public partial record struct HotkeyModel
     {
         public bool Alt { get; set; }
         public bool Shift { get; set; }
@@ -172,17 +172,9 @@ namespace Flow.Launcher.Infrastructure.Hotkey
                 case Key.None:
                     return false;
                 default:
-                    if (validateKeyGestrue)
+                    if (validateKeyGestrue && !IsValidKeyGesture())
                     {
-                        try
-                        {
-                            KeyGesture keyGesture = new KeyGesture(CharKey, ModifierKeys);
-                        }
-                        catch (System.Exception e) when
-                            (e is NotSupportedException || e is InvalidEnumArgumentException)
-                        {
-                            return false;
-                        }
+                        return false;
                     }
 
                     if (ModifierKeys == ModifierKeys.None)
@@ -195,6 +187,9 @@ namespace Flow.Launcher.Infrastructure.Hotkey
                     }
             }
         }
+
+        // WPF KeyGesture validation on Windows; see HotkeyModel.Windows.cs / HotkeyModel.CrossPlatform.cs.
+        private partial bool IsValidKeyGesture();
 
         private static bool IsPrintableCharacter(Key key)
         {

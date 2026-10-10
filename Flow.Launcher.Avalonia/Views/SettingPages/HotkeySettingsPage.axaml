@@ -11,13 +11,9 @@
              x:Class="Flow.Launcher.Avalonia.Views.SettingPages.HotkeySettingsPage"
              x:DataType="vm:HotkeySettingsViewModel">
 
-    <ScrollViewer Padding="0,0,16,0">
-        <StackPanel Spacing="8" Margin="0,0,0,20">
-            <!-- Page Title -->
-            <TextBlock Text="{i18n:Localize hotkey}" 
-                       FontSize="28" 
-                       FontWeight="SemiBold" 
-                       Margin="0,0,0,12" />
+    <ScrollViewer>
+        <StackPanel Spacing="4" Margin="0,0,16,24">
+            <TextBlock Text="{i18n:Localize hotkey}" Classes="pageTitle" Margin="0,0,0,12" />
 
             <!-- Toggle Flow Launcher Hotkey -->
             <ui:FASettingsExpander Header="{i18n:Localize flowlauncherHotkey}"
@@ -215,7 +211,7 @@
 
             <!-- Select Previous Item -->
             <ui:FASettingsExpander Header="{i18n:Localize SelectPrevItemHotkey}"
-                                IconSource="Up">
+                                IconSource="ChevronUp">
                 <ui:FASettingsExpander.Footer>
                     <controls:HotkeyControl Hotkey="{Binding SelectPrevItemHotkey, Mode=TwoWay}" MinWidth="150" />
                 </ui:FASettingsExpander.Footer>
@@ -229,7 +225,7 @@
 
             <!-- Select Next Item -->
             <ui:FASettingsExpander Header="{i18n:Localize SelectNextItemHotkey}"
-                                IconSource="Down">
+                                IconSource="ChevronDown">
                 <ui:FASettingsExpander.Footer>
                     <controls:HotkeyControl Hotkey="{Binding SelectNextItemHotkey, Mode=TwoWay}" MinWidth="150" />
                 </ui:FASettingsExpander.Footer>

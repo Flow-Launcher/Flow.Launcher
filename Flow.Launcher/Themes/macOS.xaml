@@ -1,0 +1,266 @@
+<!--
+    Name: macOS
+    IsDark: True
+    HasBlur: True
+-->
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:m="clr-namespace:iNKORE.UI.WPF.Modern.Markup;assembly=iNKORE.UI.WPF.Modern"
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <!--
+        Spotlight-like: one translucent material for the query and the results, a hairline rim instead of a solid
+        border, large rounded corners, and a neutral selection highlight. Colors follow the system light/dark
+        appearance through the Mac* keys in Resources/Light.xaml and Resources/Dark.xaml.
+    -->
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/Themes/Base.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    <system:Boolean x:Key="ThemeBlurEnabled">True</system:Boolean>
+    <system:String x:Key="SystemBG">Auto</system:String>
+    <Color x:Key="LightBG">#99F6F6F8</Color>
+    <Color x:Key="DarkBG">#B31E1E20</Color>
+
+    <Style
+        x:Key="WindowBorderStyle"
+        BasedOn="{StaticResource BaseWindowBorderStyle}"
+        TargetType="{x:Type Border}">
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MacWindowBorder}" />
+        <!--  Fallback when blur is unavailable; blur replaces it with LightBG/DarkBG.  -->
+        <Setter Property="Background" Value="{DynamicResource Color01B}" />
+        <Setter Property="CornerRadius" Value="16" />
+        <Setter Property="UseLayoutRounding" Value="True" />
+    </Style>
+    <Style x:Key="WindowRadius" TargetType="{x:Type Border}">
+        <Setter Property="CornerRadius" Value="16" />
+    </Style>
+    <Style
+        x:Key="WindowStyle"
+        BasedOn="{StaticResource BaseWindowStyle}"
+        TargetType="{x:Type Window}" />
+
+    <!--  Query  -->
+    <Style
+        x:Key="QueryBoxStyle"
+        BasedOn="{StaticResource BaseQueryBoxStyle}"
+        TargetType="{x:Type TextBox}">
+        <Setter Property="Padding" Value="0 0 50 0" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{DynamicResource MacPrimaryText}" />
+        <Setter Property="CaretBrush" Value="{DynamicResource BasicSystemAccentColor}" />
+        <Setter Property="SelectionBrush" Value="{DynamicResource BasicSystemAccentColor}" />
+        <Setter Property="FontSize" Value="22" />
+        <Setter Property="Height" Value="48" />
+    </Style>
+    <Style
+        x:Key="QuerySuggestionBoxStyle"
+        BasedOn="{StaticResource BaseQuerySuggestionBoxStyle}"
+        TargetType="{x:Type TextBox}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Padding" Value="0 0 50 0" />
+        <Setter Property="FontSize" Value="22" />
+        <Setter Property="Height" Value="48" />
+        <Setter Property="Foreground" Value="{DynamicResource MacPlaceholderText}" />
+    </Style>
+    <Style
+        x:Key="SearchIconStyle"
+        BasedOn="{StaticResource BaseSearchIconStyle}"
+        TargetType="{x:Type Path}">
+        <Setter Property="Fill" Value="{DynamicResource MacSearchIcon}" />
+        <Setter Property="Width" Value="22" />
+        <Setter Property="Height" Value="22" />
+    </Style>
+    <Style x:Key="SearchIconPosition" TargetType="{x:Type Canvas}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Width" Value="32" />
+        <Setter Property="Height" Value="32" />
+        <Setter Property="Margin" Value="0 8 10 0" />
+        <Setter Property="HorizontalAlignment" Value="Right" />
+    </Style>
+    <Style
+        x:Key="PendingLineStyle"
+        BasedOn="{StaticResource BasePendingLineStyle}"
+        TargetType="{x:Type Line}">
+        <Setter Property="Stroke" Value="{DynamicResource BasicSystemAccentColor}" />
+    </Style>
+    <Style
+        x:Key="SeparatorStyle"
+        BasedOn="{StaticResource BaseSeparatorStyle}"
+        TargetType="{x:Type Rectangle}">
+        <Setter Property="Fill" Value="{DynamicResource MacSeparator}" />
+        <Setter Property="Height" Value="1" />
+        <Setter Property="Margin" Value="12 0 12 0" />
+    </Style>
+
+    <!--  Results  -->
+    <Style
+        x:Key="BulletStyle"
+        BasedOn="{StaticResource BaseBulletStyle}"
+        TargetType="{x:Type Border}">
+        <Setter Property="Background" Value="Transparent" />
+    </Style>
+    <Style
+        x:Key="ItemBulletSelectedStyle"
+        BasedOn="{StaticResource BaseBulletStyle}"
+        TargetType="{x:Type Border}">
+        <Setter Property="Background" Value="Transparent" />
+    </Style>
+    <Style
+        x:Key="ItemTitleStyle"
+        BasedOn="{StaticResource BaseItemTitleStyle}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="{DynamicResource MacPrimaryText}" />
+    </Style>
+    <Style
+        x:Key="ItemSubTitleStyle"
+        BasedOn="{StaticResource BaseItemSubTitleStyle}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="{DynamicResource MacSecondaryText}" />
+    </Style>
+    <Style
+        x:Key="ItemTitleSelectedStyle"
+        BasedOn="{StaticResource BaseItemTitleSelectedStyle}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="{DynamicResource MacPrimaryText}" />
+    </Style>
+    <Style
+        x:Key="ItemSubTitleSelectedStyle"
+        BasedOn="{StaticResource BaseItemSubTitleSelectedStyle}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="{DynamicResource MacSecondaryText}" />
+    </Style>
+    <!--  Matches are emphasized by weight only, without a color.  -->
+    <Style x:Key="HighlightStyle">
+        <Setter Property="Inline.FontWeight" Value="Bold" />
+        <Setter Property="Inline.Foreground" Value="{DynamicResource MacPrimaryText}" />
+    </Style>
+    <SolidColorBrush x:Key="ItemSelectedBackgroundColor" Color="{m:DynamicColor MacSelectedBackgroundColor}" />
+    <Style
+        x:Key="ItemGlyph"
+        BasedOn="{StaticResource BaseGlyphStyle}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="{DynamicResource MacPrimaryText}" />
+    </Style>
+    <Style x:Key="ItemGlyphSelectedStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="{DynamicResource MacPrimaryText}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="Width" Value="25" />
+        <Setter Property="Height" Value="25" />
+        <Setter Property="FontSize" Value="25" />
+    </Style>
+    <Style x:Key="ItemHotkeyStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="11" />
+        <Setter Property="Foreground" Value="{DynamicResource MacHotkeyText}" />
+    </Style>
+    <Style x:Key="ItemHotkeySelectedStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="11" />
+        <Setter Property="Foreground" Value="{DynamicResource MacHotkeyText}" />
+    </Style>
+    <Style
+        x:Key="ItemHotkeyBGStyle"
+        BasedOn="{StaticResource BaseItemHotkeyBGStyle}"
+        TargetType="{x:Type Border}">
+        <Setter Property="Background" Value="{DynamicResource MacHotkeyBackground}" />
+    </Style>
+    <Style
+        x:Key="ItemHotkeyBGSelectedStyle"
+        BasedOn="{StaticResource BaseItemHotkeyBGSelectedStyle}"
+        TargetType="{x:Type Border}">
+        <Setter Property="Background" Value="{DynamicResource MacHotkeyBackground}" />
+    </Style>
+    <CornerRadius x:Key="ItemRadius">8</CornerRadius>
+    <Thickness x:Key="ItemMargin">8 0 8 0</Thickness>
+    <Thickness x:Key="ResultMargin">0 6 0 6</Thickness>
+    <system:Double x:Key="ResultItemHeight">52</system:Double>
+
+    <!--  Scrollbar thumbs  -->
+    <Style
+        x:Key="ThumbStyle"
+        BasedOn="{StaticResource BaseThumbStyle}"
+        TargetType="{x:Type Thumb}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Border
+                        Background="{DynamicResource MacThumb}"
+                        BorderBrush="Transparent"
+                        BorderThickness="0"
+                        CornerRadius="3"
+                        DockPanel.Dock="Right" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style
+        x:Key="ScrollBarStyle"
+        BasedOn="{StaticResource BaseScrollBarStyle}"
+        TargetType="{x:Type ScrollBar}" />
+    <Style
+        x:Key="HorizontalScrollBarStyle"
+        BasedOn="{StaticResource BaseHorizontalScrollBarStyle}"
+        TargetType="{x:Type ScrollBar}" />
+    <Style
+        x:Key="HorizontalThumbStyle"
+        BasedOn="{StaticResource BaseHorizontalThumbStyle}"
+        TargetType="{x:Type Thumb}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Border
+                        Background="{DynamicResource MacThumb}"
+                        BorderBrush="Transparent"
+                        BorderThickness="0"
+                        CornerRadius="3" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  Clock and preview  -->
+    <Style
+        x:Key="ClockPanel"
+        BasedOn="{StaticResource ClockPanel}"
+        TargetType="{x:Type StackPanel}">
+        <Setter Property="Margin" Value="0 0 54 0" />
+    </Style>
+    <Style
+        x:Key="ClockBox"
+        BasedOn="{StaticResource BaseClockBox}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="{DynamicResource MacSecondaryText}" />
+    </Style>
+    <Style
+        x:Key="DateBox"
+        BasedOn="{StaticResource BaseDateBox}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="{DynamicResource MacSecondaryText}" />
+    </Style>
+    <Style
+        x:Key="PreviewBorderStyle"
+        BasedOn="{StaticResource BasePreviewBorderStyle}"
+        TargetType="{x:Type Border}">
+        <Setter Property="BorderBrush" Value="{DynamicResource MacSeparator}" />
+        <Setter Property="Margin" Value="5 0 10 0" />
+    </Style>
+    <Style
+        x:Key="PreviewItemTitleStyle"
+        BasedOn="{StaticResource BasePreviewItemTitleStyle}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="{DynamicResource MacPrimaryText}" />
+    </Style>
+    <Style
+        x:Key="PreviewItemSubTitleStyle"
+        BasedOn="{StaticResource BasePreviewItemSubTitleStyle}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="{DynamicResource MacSecondaryText}" />
+    </Style>
+    <Style
+        x:Key="PreviewGlyph"
+        BasedOn="{StaticResource BasePreviewGlyph}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="{DynamicResource MacPrimaryText}" />
+    </Style>
+</ResourceDictionary>

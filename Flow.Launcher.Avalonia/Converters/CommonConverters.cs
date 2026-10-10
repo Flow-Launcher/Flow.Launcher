@@ -10,70 +10,6 @@ using Avalonia.Media;
 namespace Flow.Launcher.Avalonia.Converters;
 
 /// <summary>
-/// Converts text with highlight indices to InlineCollection with bold highlights.
-/// Usage: MultiBinding with [0]=text string, [1]=List&lt;int&gt; of character indices to highlight.
-/// </summary>
-public class HighlightTextConverter : IMultiValueConverter
-{
-    public object? Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture)
-    {
-        if (values.Count < 1 || values[0] is not string text || string.IsNullOrEmpty(text))
-            return new InlineCollection { new Run(string.Empty) };
-
-        // If no highlight data, return plain text as single Run
-        if (values.Count < 2 || values[1] is not IList<int> { Count: > 0 } highlightData)
-            return new InlineCollection { new Run(text) };
-
-        var inlines = new InlineCollection();
-        var highlightSet = new HashSet<int>(highlightData);
-
-        // Build runs by grouping consecutive characters with same highlight state
-        var currentRun = new System.Text.StringBuilder();
-        var currentIsHighlight = highlightSet.Contains(0);
-
-        for (var i = 0; i < text.Length; i++)
-        {
-            var shouldHighlight = highlightSet.Contains(i);
-
-            if (shouldHighlight != currentIsHighlight && currentRun.Length > 0)
-            {
-                // Flush current run
-                inlines.Add(CreateRun(currentRun.ToString(), currentIsHighlight));
-                currentRun.Clear();
-                currentIsHighlight = shouldHighlight;
-            }
-
-            currentRun.Append(text[i]);
-        }
-
-        // Flush final run
-        if (currentRun.Length > 0)
-            inlines.Add(CreateRun(currentRun.ToString(), currentIsHighlight));
-
-        return inlines;
-    }
-
-    private static Run CreateRun(string text, bool isHighlight)
-    {
-        var run = new Run(text);
-        if (isHighlight)
-        {
-            run.FontWeight = FontWeight.Bold;
-            // Try to get from resources, fallback to gold
-            if (Application.Current != null && Application.Current.TryGetResource("HighlightForegroundBrush", null, out var brush) && brush is IBrush b)
-            {
-                run.Foreground = b;
-            }
-            else
-            {
-                run.Foreground = new SolidColorBrush(Colors.Gold);
-            }
-        }
-        return run;
-    }
-}
-
-/// <summary>
 /// Converts query text and selected item to suggestion text.
 /// </summary>
 public class QuerySuggestionBoxConverter : IMultiValueConverter
@@ -114,6 +50,25 @@ public class OrdinalConverter : IValueConverter
     public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         throw new NotImplementedException();
+    }
+}
+
+/// <summary>
+/// Shows the open-result hotkey badge only for the first ten results (HOTKEY+1 ... HOTKEY+0).
+/// Input is the 0-based item index.
+/// </summary>
+public class OpenResultHotkeyVisibilityConverter : IValueConverter
+{
+    private const int MaxVisibleHotkeys = 10;
+
+    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        return value is int index && index >= 0 && index < MaxVisibleHotkeys;
+    }
+
+    public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        throw new NotSupportedException();
     }
 }
 

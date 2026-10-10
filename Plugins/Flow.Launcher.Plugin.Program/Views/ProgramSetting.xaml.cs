@@ -23,10 +23,6 @@ namespace Flow.Launcher.Plugin.Program.Views
         private GridViewColumnHeader _lastHeaderClicked;
         private ListSortDirection _lastDirection;
 
-        // We do not save all program sources to settings, so using
-        // this as temporary holder for displaying all loaded programs sources.
-        internal static List<ProgramSource> ProgramSettingDisplayList { get; set; }
-
         public bool EnableDescription
         {
             get => _settings.EnableDescription;

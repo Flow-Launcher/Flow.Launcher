@@ -4,14 +4,12 @@ using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
-using System.Windows.Controls;
 using Flow.Launcher.Plugin.Calculator.ViewModels;
-using Flow.Launcher.Plugin.Calculator.Views;
 using Mages.Core;
 
 namespace Flow.Launcher.Plugin.Calculator
 {
-    public class Main : IPlugin, IPluginI18n, ISettingProvider
+    public partial class Main : IPlugin, IPluginI18n, ISettingProvider
     {
         private static readonly Regex ThousandGroupRegex = MainRegexHelper.GetThousandGroupRegex();
         private static readonly Regex NumberRegex = MainRegexHelper.GetNumberRegex();
@@ -417,11 +415,6 @@ namespace Flow.Launcher.Plugin.Calculator
         public string GetTranslatedPluginDescription()
         {
             return Localize.flowlauncher_plugin_calculator_plugin_description();
-        }
-
-        public Control CreateSettingPanel()
-        {
-            return new CalculatorSettings(_settings);
         }
 
         public object CreateSettingPanelAvalonia()

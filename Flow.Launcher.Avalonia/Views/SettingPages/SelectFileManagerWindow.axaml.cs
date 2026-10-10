@@ -110,7 +110,8 @@ public partial class SelectFileManagerWindow : Window, INotifyPropertyChanged
             [
                 new FilePickerFileType("Executable files")
                 {
-                    Patterns = ["*.exe", "*.cmd", "*.bat", "*.com"]
+                    // macOS file managers are .app bundles.
+                    Patterns = OperatingSystem.IsWindows() ? ["*.exe", "*.cmd", "*.bat", "*.com"] : ["*.app"]
                 },
                 FilePickerFileTypes.All
             ]
@@ -184,14 +185,16 @@ public partial class SelectFileManagerWindow : Window, INotifyPropertyChanged
 
     private static async System.Threading.Tasks.Task<bool> IsFileManagerValidAsync(string path)
     {
-        if (string.Equals(path, "explorer", StringComparison.OrdinalIgnoreCase))
+        if (string.Equals(path, "explorer", StringComparison.OrdinalIgnoreCase)
+            || (!OperatingSystem.IsWindows() && string.Equals(path, "finder", StringComparison.OrdinalIgnoreCase)))
         {
             return true;
         }
 
         if (Path.IsPathRooted(path))
         {
-            return File.Exists(path);
+            // .app bundles are directories.
+            return File.Exists(path) || (!OperatingSystem.IsWindows() && Directory.Exists(path));
         }
 
         return await System.Threading.Tasks.Task.Run(() =>
@@ -202,7 +205,7 @@ public partial class SelectFileManagerWindow : Window, INotifyPropertyChanged
                 {
                     StartInfo = new ProcessStartInfo
                     {
-                        FileName = "where",
+                        FileName = OperatingSystem.IsWindows() ? "where" : "/usr/bin/which",
                         Arguments = path,
                         RedirectStandardOutput = true,
                         UseShellExecute = false,

@@ -1,15 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <TargetFramework></TargetFramework>
+    <TargetFrameworks>net10.0;net10.0-windows10.0.19041.0</TargetFrameworks>
     <OutputType>Library</OutputType>
     <ProjectGuid>{FDB3555B-58EF-4AE6-B5F1-904719637AB4}</ProjectGuid>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Flow.Launcher.Plugin.Program</RootNamespace>
     <AssemblyName>Flow.Launcher.Plugin.Program</AssemblyName>
-    <UseWpf>true</UseWpf>
-    <UseWindowsForms>true</UseWindowsForms>
+    <UseWpf Condition="$(TargetFramework.Contains('-windows'))">true</UseWpf>
+    <UseWindowsForms Condition="$(TargetFramework.Contains('-windows'))">true</UseWindowsForms>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendTargetFrameworkToOutputPath Condition="'$(TargetFramework)' == 'net10.0'">true</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
   </PropertyGroup>
@@ -61,10 +64,10 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="11.2.3" ExcludeAssets="runtime" />
+    <PackageReference Include="Avalonia" Version="12.1.4" ExcludeAssets="runtime" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-    <PackageReference Include="FluentAvaloniaUI" Version="2.2.0" ExcludeAssets="runtime" />
-    <PackageReference Include="ini-parser" Version="2.5.2" />
+    <PackageReference Include="FluentAvaloniaUI" Version="3.1.0" ExcludeAssets="runtime" />
+    <PackageReference Include="ini-parser" Version="2.5.2" Condition="$(TargetFramework.Contains('-windows'))" />
     <PackageReference Include="MemoryPack" Version="1.21.4" />
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="10.0.12" />
     <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.298">
@@ -85,15 +88,17 @@
   <Target Name="CopyToAvaloniaOutput" AfterTargets="Build">
     <PropertyGroup>
       <AvaloniaPluginDir>..\..\Output\Avalonia\$(Configuration)\Plugins\$(AssemblyName)\</AvaloniaPluginDir>
+      <AvaloniaPluginDir Condition="'$(TargetFramework)' == 'net10.0'">..\..\Output\Avalonia\$(Configuration)\net10.0\Plugins\$(AssemblyName)\</AvaloniaPluginDir>
       <PluginOutputDir>$([MSBuild]::EnsureTrailingSlash('$(OutputPath)'))</PluginOutputDir>
     </PropertyGroup>
     <ItemGroup>
-      <PluginFiles Include="$(PluginOutputDir)**\*.*" Exclude="$(PluginOutputDir)runtimes\**\*.*" />
-      <PluginWindowsRuntimeFiles Include="$(PluginOutputDir)runtimes\**\*.*"
-                                 Exclude="$(PluginOutputDir)runtimes\linux*\**\*.*;$(PluginOutputDir)runtimes\osx*\**\*.*;$(PluginOutputDir)runtimes\unix*\**\*.*;$(PluginOutputDir)runtimes\browser*\**\*.*" />
+      <PluginFiles Include="$(PluginOutputDir)**\*.*" Exclude="$(PluginOutputDir)runtimes\**\*.*;$(PluginOutputDir)net10.0\**\*.*" />
+      <PluginRuntimeFiles Condition="'$(TargetFramework)' != 'net10.0'" Include="$(PluginOutputDir)runtimes\**\*.*"
+                          Exclude="$(PluginOutputDir)runtimes\linux*\**\*.*;$(PluginOutputDir)runtimes\osx*\**\*.*;$(PluginOutputDir)runtimes\unix*\**\*.*;$(PluginOutputDir)runtimes\browser*\**\*.*" />
+      <PluginRuntimeFiles Condition="'$(TargetFramework)' == 'net10.0'" Include="$(PluginOutputDir)runtimes\**\*.*" />
     </ItemGroup>
     <Copy SourceFiles="@(PluginFiles)" DestinationFolder="$(AvaloniaPluginDir)%(RecursiveDir)" SkipUnchangedFiles="true" />
-    <Copy SourceFiles="@(PluginWindowsRuntimeFiles)" DestinationFolder="$(AvaloniaPluginDir)runtimes\%(RecursiveDir)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(PluginRuntimeFiles)" DestinationFolder="$(AvaloniaPluginDir)runtimes\%(RecursiveDir)" SkipUnchangedFiles="true" />
   </Target>
 
 </Project>

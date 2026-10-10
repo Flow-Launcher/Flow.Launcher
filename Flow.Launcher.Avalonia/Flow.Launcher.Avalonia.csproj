@@ -2,15 +2,20 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
+    <TargetFramework></TargetFramework>
+    <TargetFrameworks>net10.0;net10.0-windows10.0.19041.0</TargetFrameworks>
     <Nullable>enable</Nullable>
-    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <BuiltInComInteropSupport Condition="$(TargetFramework.Contains('-windows'))">true</BuiltInComInteropSupport>
+    <ApplicationManifest Condition="$(TargetFramework.Contains('-windows'))">app.manifest</ApplicationManifest>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
     <ApplicationIcon>..\Flow.Launcher\Resources\app.ico</ApplicationIcon>
     <StartupObject>Flow.Launcher.Avalonia.Program</StartupObject>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <!-- Cross-platform build goes to a net10.0 subfolder so it never overwrites the Windows build -->
+    <AppendTargetFrameworkToOutputPath Condition="'$(TargetFramework)' == 'net10.0'">true</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <!-- RID-specific publishes (Scripts/macos/build-app.sh: -r osx-arm64/osx-x64) build into their own subfolder so they never mix with the framework-dependent net10.0 build -->
+    <AppendRuntimeIdentifierToOutputPath Condition="'$(TargetFramework)' == 'net10.0' and '$(RuntimeIdentifier)' != ''">true</AppendRuntimeIdentifierToOutputPath>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <RootNamespace>Flow.Launcher.Avalonia</RootNamespace>
     <AssemblyName>Flow.Launcher.Avalonia</AssemblyName>
@@ -29,6 +34,8 @@
 
   <ItemGroup>
     <Compile Include="..\SolutionAssemblyInfo.cs" Link="Properties\SolutionAssemblyInfo.cs" />
+    <Compile Include="..\Flow.Launcher\Storage\UserSelectedRecord.cs" Link="Storage\UserSelectedRecord.cs" />
+    <Compile Include="..\Flow.Launcher\Storage\TopMostRecord.cs" Link="Storage\TopMostRecord.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,11 +45,14 @@
     <PackageReference Include="Avalonia.Fonts.Inter" Version="12.1.4" />
     <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3" />
     <PackageReference Include="FluentAvaloniaUI" Version="3.1.0" />
+    <!-- Markdown preview (Result.Preview.ContentType = Markdown) with syntax-highlighted code blocks; MIT, first release line targeting Avalonia 12 -->
+    <PackageReference Include="Markdown.Avalonia" Version="12.0.0-a3" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="DynamicData" Version="9.0.4" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.12" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.12" />
-    <PackageReference Include="TaskScheduler" Version="2.12.2" />
+    <!-- Only the Windows auto-startup implementation (Helper/AutoStartup.Windows.cs) uses the Task Scheduler -->
+    <PackageReference Include="TaskScheduler" Version="2.12.2" Condition="$(TargetFramework.Contains('-windows'))" />
   </ItemGroup>
 
   <ItemGroup>
@@ -51,13 +61,20 @@
     <ProjectReference Include="..\Flow.Launcher.Plugin\Flow.Launcher.Plugin.csproj" />
   </ItemGroup>
 
-  <!-- WPF assemblies needed for IPublicAPI compatibility (ImageSource, MessageBox types) -->
-  <ItemGroup>
+  <!-- WPF assemblies needed for IPublicAPI compatibility (ImageSource, MessageBox types) and legacy WPF plugin settings -->
+  <ItemGroup Condition="$(TargetFramework.Contains('-windows'))">
     <FrameworkReference Include="Microsoft.WindowsDesktop.App.WPF" />
   </ItemGroup>
 
   <!-- Copy themes and languages from WPF project -->
   <ItemGroup>
+    <Content Include="..\Flow.Launcher\Themes\*.xaml" Link="Themes\%(Filename)%(Extension)">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <!-- Flow light/dark palettes referenced by system-colored themes (Win11Light, Win10System, ...); read by Helper/ThemeLoader.cs -->
+    <Content Include="..\Flow.Launcher\Resources\Light.xaml;..\Flow.Launcher\Resources\Dark.xaml" Link="Resources\%(Filename)%(Extension)">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\Flow.Launcher\Languages\*.xaml" Link="Languages\%(Filename)%(Extension)">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -75,7 +92,7 @@
   </ItemGroup>
 
   <!-- WPF Resources for legacy plugin settings -->
-  <ItemGroup>
+  <ItemGroup Condition="$(TargetFramework.Contains('-windows'))">
     <Resource Include="WpfResources\Dark.xaml" />
     <Resource Include="WpfResources\CustomControlTemplate.xaml" />
     <Resource Include="WpfResources\SettingWindowStyle.xaml" />

@@ -9,8 +9,9 @@
              x:Class="Flow.Launcher.Avalonia.Views.SettingPages.ProxySettingsPage"
              x:DataType="vm:ProxySettingsViewModel">
 
-    <StackPanel Spacing="20">
-        <TextBlock Text="{i18n:Localize proxy}" FontSize="28" FontWeight="SemiBold" />
+    <ScrollViewer>
+    <StackPanel Spacing="4" Margin="0,0,16,24">
+        <TextBlock Text="{i18n:Localize proxy}" Classes="pageTitle" Margin="0,0,0,12" />
 
         <ui:FASettingsExpander Header="{i18n:Localize enableProxy}"
                             IconSource="Globe">
@@ -43,5 +44,12 @@
             </ui:FASettingsExpander.Footer>
         </ui:FASettingsExpander>
 
+        <Button Content="{i18n:Localize testProxy}"
+                Command="{Binding TestProxyCommand}"
+                IsEnabled="{Binding ProxyEnabled}"
+                HorizontalAlignment="Right"
+                Margin="0,8,0,0" />
+
     </StackPanel>
+    </ScrollViewer>
 </UserControl>

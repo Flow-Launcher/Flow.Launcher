@@ -23,7 +23,8 @@ namespace Flow.Launcher.Core.Plugin
         public static List<PluginMetadata> Parse(string[] pluginDirectories)
         {
             var allPluginMetadata = new List<PluginMetadata>();
-            var directories = pluginDirectories.SelectMany(Directory.EnumerateDirectories);
+            // A root may be absent, e.g. no preinstalled plugins ship with the cross-platform build.
+            var directories = pluginDirectories.Where(Directory.Exists).SelectMany(Directory.EnumerateDirectories);
 
             // todo use linq when diable plugin is implmented since parallel.foreach + list is not thread saft
             foreach (var directory in directories)
@@ -188,6 +189,12 @@ namespace Flow.Launcher.Core.Plugin
             try
             {
                 metadata = JsonSerializer.Deserialize<PluginMetadata>(File.ReadAllText(configPath));
+                if (!OperatingSystem.IsWindows())
+                {
+                    // plugin.json files are authored on Windows ("Images\\app.png"); '\' is not a separator elsewhere.
+                    metadata.IcoPath = metadata.IcoPath?.Replace('\\', '/');
+                    metadata.ExecuteFileName = metadata.ExecuteFileName?.Replace('\\', '/');
+                }
                 metadata.PluginDirectory = pluginDirectory;
                 // for plugins which doesn't has ActionKeywords key
                 metadata.ActionKeywords ??= new List<string> { metadata.ActionKeyword };
