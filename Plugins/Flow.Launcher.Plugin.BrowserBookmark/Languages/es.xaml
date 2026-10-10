@@ -6,7 +6,8 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">Busca en los marcadores del navegador</system:String>
 
     <!--  Main  -->
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_copy_failed">No se ha podido establecer la url en el portapeles</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copy_failed">No se ha podido guardar la url en el portapeles</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_open_failed">No se ha podido abrir la url en el navegador</system:String>
 
     <!--  Settings  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Datos del marcador</system:String>

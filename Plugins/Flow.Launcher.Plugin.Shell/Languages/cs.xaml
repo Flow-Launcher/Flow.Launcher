@@ -2,11 +2,11 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <system:String x:Key="flowlauncher_plugin_cmd_relace_winr">Nahradit Win+R</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_close_cmd_after_press">Close Command Prompt after pressing any key</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_press_any_key_to_close">Press any key to close this window...</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_close_cmd_after_press">Zavřít příkazový řádek po stisknutí libovolné klávesy</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_press_any_key_to_close">Stiskněte libovolné tlačítko pro zavření tohoto okna...</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_leave_cmd_open">Po dokončení příkazu příkazový řádek nezavírejte</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_always_run_as_administrator">Vždy spustit jako správce</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_use_windows_terminal">Use Windows Terminal</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_use_windows_terminal">Použít Windows Terminal</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_different_user">Spustit jako jiný uživatel</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_plugin_name">Shell</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_plugin_description">Umožní spouštět systémové příkazy z Flow Launcheru</system:String>
@@ -15,6 +15,16 @@
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_administrator">Spustit jako správce</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_copy">Kopírovat příkaz</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_history">Zobrazit pouze počet nejpoužívanějších příkazů:</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_command_not_found">Command not found: {0}</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_error_running_command">Error running the command: {0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_command_not_found">Příkaz nebyl nalezen: {0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_error_running_command">Chyba při spuštění příkazu: {0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_error_no_exe_path_set">No executable path set. Check your shell plugin settings.</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_custom_template_exe_path">Executable path</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_custom_template_browse">Browse...</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_custom_template_browse_filter_exe">Executable files</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_custom_template_browse_filter_all">All files</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_custom_template_arguments">Arguments template</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_custom_template_exe_path_tooltip">Can be an absolute path or a name resolved via PATH. Example: cmd.exe</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_custom_template_arguments_tooltip">Use {command} as a placeholder. Example: /k &quot;{command}&quot;</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_shell_settings">Shell Settings</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_other_settings">Other Settings</system:String>
 </ResourceDictionary>

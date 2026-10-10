@@ -17,4 +17,14 @@
     <system:String x:Key="flowlauncher_plugin_cmd_history">显示最常用的命令个数：</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_command_not_found">找不到命令：{0}</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_error_running_command">运行命令时出错：{0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_error_no_exe_path_set">未设置可执行路径。请检查您的 shell 插件设置。</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_custom_template_exe_path">可执行文件位置</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_custom_template_browse">浏览……</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_custom_template_browse_filter_exe">可执行文件</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_custom_template_browse_filter_all">所有文件</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_custom_template_arguments">参数模板</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_custom_template_exe_path_tooltip">可以是 PATH 解析的绝对路径或名称。例如：cmd.exe</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_custom_template_arguments_tooltip">使用 {command} 作为占位符。例如：/k &quot;{command}&quot;</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_shell_settings">Shell 设置</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_other_settings">其它设置</system:String>
 </ResourceDictionary>

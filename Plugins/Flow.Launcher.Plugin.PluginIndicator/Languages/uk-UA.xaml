@@ -3,6 +3,9 @@
 
     <system:String x:Key="flowlauncher_plugin_pluginindicator_result_subtitle">Активувати {0} ключове слово дії плагіна</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_settings_title">Налаштування: {0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_settings_subtitle">Open the settings page for the {0} plugin</system:String>
+
     <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_name">Індикатор плагіну</system:String>
     <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_description">Надає плагінам пропозиції щодо слів дії</system:String>
 

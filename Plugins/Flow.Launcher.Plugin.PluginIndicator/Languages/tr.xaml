@@ -3,6 +3,9 @@
 
     <system:String x:Key="flowlauncher_plugin_pluginindicator_result_subtitle">{0} eklenti anahtar sözcüğünü etkinleştir</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_settings_title">Ayarlar: {0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_settings_subtitle">Open the settings page for the {0} plugin</system:String>
+
     <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_name">Eklenti Göstergesi</system:String>
     <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_description">Eklenti eylemleri hakkında kelime önerileri sunar</system:String>
 

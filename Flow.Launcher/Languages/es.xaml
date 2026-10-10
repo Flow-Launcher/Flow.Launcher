@@ -136,6 +136,8 @@
     <system:String x:Key="ShouldUseDoublePinyin">Utilizar Doble Pinyin</system:String>
     <system:String x:Key="ShouldUseDoublePinyinToolTip">Utiliza Doble Pinyin en lugar de Pinyin Completo para buscar.</system:String>
     <system:String x:Key="DoublePinyinSchema">Esquema Doble Pinyin</system:String>
+    <system:String x:Key="UsePolyphonicPhraseOverrides">Utilizar pronunciaciones de frases polifónicas</system:String>
+    <system:String x:Key="UsePolyphonicPhraseOverridesToolTip">Utiliza datos de pronunciación a nivel de frase para mejorar la conversión a Pinyin de los caracteres chinos polifónicos. Puede que se necesite memoria adicional.</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoHe">Xiao He</system:String>
     <system:String x:Key="DoublePinyinSchemasZiRanMa">Zi Ran Ma</system:String>
     <system:String x:Key="DoublePinyinSchemasWeiRuan">Wei Ruan</system:String>
@@ -185,7 +187,7 @@
     <system:String x:Key="historyStyleTooltip">Elija el tipo de historial que desea mostrar en el historial y la página de inicio</system:String>
     <system:String x:Key="queryHistory">Historial de consultas</system:String>
     <system:String x:Key="executedHistory">Historial de últimas aperturas</system:String>
-    <system:String x:Key="homeToggleBoxToolTip">Esto solo se puede editar si el complemento soporta la función de Inicio y la Página de Inicio está activada.</system:String>
+    <system:String x:Key="homeToggleBoxToolTip">Esto solo se puede editar si el complemento admite la función de Inicio y la Página de Inicio está activada.</system:String>
     <system:String x:Key="showAtTopmost">Mostrar ventana de búsqueda en primer plano</system:String>
     <system:String x:Key="showAtTopmostToolTip">Anula el ajuste «Siempre arriba» de otros programas y muestra Flow en primer plano.</system:String>
     <system:String x:Key="autoRestartAfterChanging">Reiniciar después de modificar el complemento a través de la Tienda de complementos</system:String>
@@ -327,6 +329,13 @@
     <system:String x:Key="ColorSchemeSystem">Predeterminado del sistema</system:String>
     <system:String x:Key="ColorSchemeLight">Claro</system:String>
     <system:String x:Key="ColorSchemeDark">Oscuro</system:String>
+    <system:String x:Key="CodeHighlightTheme">Tema con resaltado de código</system:String>
+    <system:String x:Key="CodeHighlightThemeTooltip">Tema con resaltado de sintaxis para bloques de código en el panel de vista previa de Markdown.</system:String>
+    <system:String x:Key="CodeHighlightThemeAuto">Automático (coincidir con esquema de colores)</system:String>
+    <system:String x:Key="CodeHighlightThemeVSCodeLight">VS Code Light (claro)</system:String>
+    <system:String x:Key="CodeHighlightThemeVSCodeDarkPlus">VS Code Dark+ (oscuro)</system:String>
+    <system:String x:Key="CodeHighlightThemeCatppuccinMacchiato">Catppuccin Macchiato</system:String>
+    <system:String x:Key="CodeHighlightThemeOneDark">One Dark</system:String>
     <system:String x:Key="SoundEffect">Efecto de sonido</system:String>
     <system:String x:Key="SoundEffectTip">Reproduce un pequeño sonido cuando se abre el cuadro de búsqueda</system:String>
     <system:String x:Key="SoundEffectVolume">Volumen del efecto de sonido</system:String>
@@ -349,8 +358,8 @@
     <system:String x:Key="BackdropTypesAcrylic">Acrílico</system:String>
     <system:String x:Key="BackdropTypesMica">Mica</system:String>
     <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
-    <system:String x:Key="TypeIsDarkToolTip">Este tema soporta dos modos (claro/oscuro).</system:String>
-    <system:String x:Key="TypeHasBlurToolTip">Este tema soporta fondo transparente desenfocado.</system:String>
+    <system:String x:Key="TypeIsDarkToolTip">Este tema admite dos modos (claro/oscuro).</system:String>
+    <system:String x:Key="TypeHasBlurToolTip">Este tema admite fondo transparente desenfocado.</system:String>
     <system:String x:Key="ShowPlaceholder">Mostrar marcador de posición</system:String>
     <system:String x:Key="ShowPlaceholderTip">Muestra marcador de posición cuando la consulta esté vacía</system:String>
     <system:String x:Key="PlaceholderText">Texto del marcador de posición</system:String>
@@ -488,9 +497,21 @@
     <system:String x:Key="clearcachefolderMessage">¿Está seguro de que desea eliminar todos los cachés?</system:String>
     <system:String x:Key="clearfolderfailMessage">No se ha podido eliminar parte de las carpetas y archivos. Por favor, consulte el archivo de registro para más información</system:String>
     <system:String x:Key="welcomewindow">Asistente</system:String>
+    <system:String x:Key="openWelcomeWindow">Abrir ventana de bienvenida</system:String>
     <system:String x:Key="userdatapath">Ubicación de datos del usuario</system:String>
     <system:String x:Key="userdatapathToolTip">La configuración del usuario y los complementos instalados se guardan en la carpeta de datos del usuario. Esta ubicación puede variar dependiendo de si está en modo portable o no.</system:String>
     <system:String x:Key="userdatapathButton">Abrir carpeta</system:String>
+    <system:String x:Key="openFolderButton">Abrir carpeta</system:String>
+    <system:String x:Key="devtoolsReportWindow">Ventana de informe</system:String>
+    <system:String x:Key="devtoolsProgressWindow">Ventana de progreso</system:String>
+    <system:String x:Key="devtoolsPluginUpdateWindow">Ventana de actualización de complemento</system:String>
+    <system:String x:Key="devtoolsMessageBoxWindow">Ventana de cuadro de mensaje</system:String>
+    <system:String x:Key="devtoolsMessageBoxOkLabel">Aceptar</system:String>
+    <system:String x:Key="devtoolsMessageBoxOkCancelLabel">Aceptar / Cancelar</system:String>
+    <system:String x:Key="devtoolsMessageBoxYesNoLabel">Sí / No</system:String>
+    <system:String x:Key="devtoolsMessageBoxYesNoCancelLabel">Sí / No / Cancelar</system:String>
+    <system:String x:Key="devtoolsMessageBoxTestMessage">Esto es un cuadro de mensaje de prueba.</system:String>
+    <system:String x:Key="devtoolsOpenTestWindow">Abrir ventana de prueba</system:String>
     <system:String x:Key="advanced">Avanzado</system:String>
     <system:String x:Key="logLevel">Nivel de registro</system:String>
     <system:String x:Key="LogLevelNONE">Silencioso</system:String>
@@ -583,7 +604,7 @@
     <system:String x:Key="customeQueryShortcutTips">Introduzca un acceso directo para expandir automáticamente la consulta especificada.</system:String>
     <system:String x:Key="customeQueryShortcutGuide" xml:space="preserve">Un acceso directo se expande cuando coincide exactamente con la consulta. 
 
-Si añade un prefijo &quot;@&quot; al introducir un acceso directo, éste coincidirá con cualquier posición de la consulta. Los accesos directos integrados coinciden con cualquier posición de la consulta.
+Si añade un prefijo '@' al introducir un acceso directo, éste coincidirá con cualquier posición de la consulta. Los accesos directos integrados coinciden con cualquier posición de la consulta.
     </system:String>
     <system:String x:Key="duplicateShortcut">El acceso directo ya existe, por favor introduzca uno nuevo o edite el existente.</system:String>
     <system:String x:Key="emptyShortcut">El acceso directo y/o su expansión están vacíos.</system:String>
@@ -598,7 +619,7 @@ Si añade un prefijo &quot;@&quot; al introducir un acceso directo, éste coinci
     <system:String x:Key="commonOK">Aceptar</system:String>
     <system:String x:Key="commonYes">Si</system:String>
     <system:String x:Key="commonNo">No</system:String>
-    <system:String x:Key="commonBackground">Fondo</system:String>
+    <system:String x:Key="commonBackground">En segundo plano</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">Versión</system:String>
@@ -610,7 +631,7 @@ Si añade un prefijo &quot;@&quot; al introducir un acceso directo, éste coinci
     <system:String x:Key="reportWindow_exceptions">Excepciones</system:String>
     <system:String x:Key="reportWindow_exception_type">Tipo de excepción</system:String>
     <system:String x:Key="reportWindow_source">Origen</system:String>
-    <system:String x:Key="reportWindow_stack_trace">Rastreo de Pila</system:String>
+    <system:String x:Key="reportWindow_stack_trace">Traza de pila</system:String>
     <system:String x:Key="reportWindow_sending">Enviando</system:String>
     <system:String x:Key="reportWindow_report_succeed">Informe enviado correctamente</system:String>
     <system:String x:Key="reportWindow_report_failed">No se ha podido enviar el informe</system:String>

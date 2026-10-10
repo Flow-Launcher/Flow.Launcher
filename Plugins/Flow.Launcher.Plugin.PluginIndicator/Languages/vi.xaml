@@ -3,6 +3,9 @@
 
     <system:String x:Key="flowlauncher_plugin_pluginindicator_result_subtitle">Kích hoạt từ khóa cho plugin {0}</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_settings_title">Settings: {0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_settings_subtitle">Open the settings page for the {0} plugin</system:String>
+
     <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_name">Chỉ báo plugin</system:String>
     <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_description">Cung cấp các gợi ý từ khóa cho plugin</system:String>
 
