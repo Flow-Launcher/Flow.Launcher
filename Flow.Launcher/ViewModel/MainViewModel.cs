@@ -687,6 +687,11 @@ namespace Flow.Launcher.ViewModel
         private bool IsQueryResultsGridShown() =>
             QueryResultsSelected() && Results.IsGridLayout && Results.Visibility == Visibility.Visible;
 
+        public void ReturnControlToSearchBox()
+        {
+            IsGridNavigationActive = false;
+        }
+
         public bool HandleGridNavigationKey(Key key, ModifierKeys modifiers)
         {
             if (!IsQueryResultsGridShown())

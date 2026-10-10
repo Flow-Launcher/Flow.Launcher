@@ -1452,6 +1452,11 @@ namespace Flow.Launcher
             e.Handled = true;
         }
 
+        private void QueryTextBox_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            _viewModel.ReturnControlToSearchBox();
+        }
+
         #endregion
 
         #region Placeholder
