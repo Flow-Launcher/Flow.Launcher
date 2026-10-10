@@ -11,6 +11,11 @@ internal sealed partial class Program
     [STAThread]
     public static void Main(string[] args)
     {
+        if (!Helper.SingleInstance.TryAcquire())
+        {
+            return;
+        }
+
         // Publishes Avalonia's per-pass timing histograms so RenderTrace (⌘⌥⇧R) can record them. Must be set
         // before any Avalonia code runs; recording into a histogram with no listener is a no-op-cheap call.
         AppContext.SetSwitch("Avalonia.Diagnostics.Diagnostic.IsEnabled", true);
