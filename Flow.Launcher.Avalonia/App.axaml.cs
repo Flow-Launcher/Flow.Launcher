@@ -48,6 +48,8 @@ public partial class App : Application
         #if DEBUG
             this.AttachDeveloperTools();
         #endif
+
+        RenderDiagnosticsHotkey.Register();
     }
 
     public override void OnFrameworkInitializationCompleted()
@@ -71,6 +73,9 @@ public partial class App : Application
             AutoStartup();
 
             Dispatcher.UIThread.Post(async () => await InitializePluginsAsync(), DispatcherPriority.Background);
+
+            // Decode the fallback result icon off the UI thread so the first realised row doesn't block on it.
+            _ = Task.Run(() => _ = ImageLoader.DefaultImage);
 
             // Cleanup on exit
             desktop.Exit += (_, _) =>
@@ -174,7 +179,9 @@ public partial class App : Application
         try
         {
             Log.Info(ClassName, "Loading plugins...");
-            PluginManager.LoadPlugins(_settings!.PluginSettings);
+            // Plugin discovery, environment probing and assembly loading touch no UI objects; keep them off the UI thread.
+            var pluginSettings = _settings!.PluginSettings;
+            await Task.Run(() => PluginManager.LoadPlugins(pluginSettings));
             Log.Info(ClassName, $"Loaded {PluginManager.GetAllLoadedPlugins().Count} plugins");
 
             await PluginManager.InitializePluginsAsync(_mainVM!);

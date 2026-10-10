@@ -139,7 +139,7 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
         
         _results.PropertyChanged += (s, e) =>
         {
-            if (e.PropertyName == nameof(ResultsViewModel.SelectedItem) && IsResultsViewActive)
+            if (e.PropertyName == nameof(ResultsViewModel.SelectedItem) && IsPreviewOn && IsResultsViewActive)
             {
                 PreviewSelectedItem = _results.SelectedItem;
             }
@@ -147,7 +147,7 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
         
         _contextMenu.PropertyChanged += (s, e) =>
         {
-            if (e.PropertyName == nameof(ResultsViewModel.SelectedItem) && IsContextMenuViewActive)
+            if (e.PropertyName == nameof(ResultsViewModel.SelectedItem) && IsPreviewOn && IsContextMenuViewActive)
             {
                 PreviewSelectedItem = _contextMenu.SelectedItem;
             }
@@ -155,19 +155,47 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
 
         _historyView.PropertyChanged += (s, e) =>
         {
-            if (e.PropertyName == nameof(ResultsViewModel.SelectedItem) && IsHistoryViewActive)
+            if (e.PropertyName == nameof(ResultsViewModel.SelectedItem) && IsPreviewOn && IsHistoryViewActive)
             {
                 PreviewSelectedItem = _historyView.SelectedItem;
             }
         };
         
         // Subscribe to context menu collection changes for ShowResultsArea (context menu still uses count)
-        ((System.Collections.Specialized.INotifyCollectionChanged)_contextMenu.Results).CollectionChanged += (s, e) => OnPropertyChanged(nameof(ShowResultsArea));
+        ((System.Collections.Specialized.INotifyCollectionChanged)_contextMenu.Results).CollectionChanged += (s, e) => NotifyShowResultsAreaIfChanged();
+        _lastShowResultsArea = ShowResultsArea;
+    }
+
+    private bool _lastShowResultsArea;
+
+    /// <summary>
+    /// Raise ShowResultsArea only when its computed value flips; each notification can re-measure the SizeToContent window.
+    /// </summary>
+    private void NotifyShowResultsAreaIfChanged()
+    {
+        var value = ShowResultsArea;
+        if (value == _lastShowResultsArea) return;
+        _lastShowResultsArea = value;
+        OnPropertyChanged(nameof(ShowResultsArea));
+    }
+
+    private ResultViewModel? GetActiveSelectedItem() => ActiveView switch
+    {
+        ActiveView.Results => Results.SelectedItem,
+        ActiveView.ContextMenu => ContextMenu.SelectedItem,
+        ActiveView.History => HistoryView.SelectedItem,
+        _ => null,
+    };
+
+    partial void OnIsPreviewOnChanged(bool value)
+    {
+        // The preview is only tracked while visible; catch it up (or release it) when toggled.
+        PreviewSelectedItem = value ? GetActiveSelectedItem() : null;
     }
 
     /// <summary>
-    /// Background task that processes result updates with debouncing.
-    /// Waits 20ms to batch multiple plugin completions into a single UI update.
+    /// Background task that processes result updates with leading-edge batching:
+    /// the first update is applied immediately, updates arriving within the next frame (~16ms) are coalesced.
     /// </summary>
     private async Task ProcessResultUpdatesAsync()
     {
@@ -177,9 +205,6 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
         {
             try
             {
-                // Wait 20ms to allow multiple plugin results to arrive
-                await Task.Delay(20);
-
                 var pendingUpdates = new List<ResultsForUpdate>();
 
                 while (channelReader.TryRead(out var update))
@@ -211,6 +236,9 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
                         await ApplyResultsUpdateAsync(update);
                     }
                 }
+
+                // Coalesce updates that arrive within the next frame into the following batch
+                await Task.Delay(16);
             }
             catch (Exception e)
             {
@@ -251,15 +279,12 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
         OnPropertyChanged(nameof(IsResultsViewActive));
         OnPropertyChanged(nameof(IsContextMenuViewActive));
         OnPropertyChanged(nameof(IsHistoryViewActive));
-        OnPropertyChanged(nameof(ShowResultsArea));
+        NotifyShowResultsAreaIfChanged();
 
-        PreviewSelectedItem = value switch
+        if (IsPreviewOn)
         {
-            ActiveView.Results => Results.SelectedItem,
-            ActiveView.ContextMenu => ContextMenu.SelectedItem,
-            ActiveView.History => HistoryView.SelectedItem,
-            _ => null,
-        };
+            PreviewSelectedItem = GetActiveSelectedItem();
+        }
     }
 
     partial void OnIsQueryRunningChanged(bool value)
@@ -432,7 +457,7 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
     /// </summary>
     public void ToggleFlowLauncher()
     {
-        Log.Info(ClassName, $"ToggleFlowLauncher called, currently visible: {MainWindowVisibility}");
+        Log.Debug(ClassName, "ToggleFlowLauncher called");
         if (MainWindowVisibility)
         {
             Hide();
@@ -453,7 +478,7 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
         MainWindowVisibility = false;
         ResetTransientViewState();
         ApplyLastQueryModeForHide();
-        Log.Info(ClassName, "Hide requested");
+        Log.Debug(ClassName, "Hide requested");
     }
 
     /// <summary>
@@ -465,7 +490,7 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
         var focusMode = ApplyLastQueryModeForShow();
         RequestQueryTextFocus(new QueryTextFocusRequest(true, true, focusMode));
         MainWindowVisibility = true;
-        Log.Info(ClassName, "Show requested");
+        Log.Debug(ClassName, "Show requested");
     }
 
     private void ResetTransientViewState()
@@ -473,8 +498,15 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
         _lastHistoryIndex = 1;
         _queryTextBeforeHistory = string.Empty;
         ActiveView = ActiveView.Results;
-        ContextMenu.Clear();
-        HistoryView.Clear();
+        if (ContextMenu.Results.Count > 0 || ContextMenu.SelectedItem != null)
+        {
+            ContextMenu.Clear();
+        }
+
+        if (HistoryView.Results.Count > 0 || HistoryView.SelectedItem != null)
+        {
+            HistoryView.Clear();
+        }
     }
 
     private void PrepareLastQueryModeBeforeHide()
@@ -594,7 +626,7 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
         }
 
         // Notify ShowResultsArea when query text changes (it depends on QueryText)
-        OnPropertyChanged(nameof(ShowResultsArea));
+        NotifyShowResultsAreaIfChanged();
         _ = QueryAsync(_settings.SearchQueryResultsWithDelay);
     }
 
@@ -668,8 +700,10 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
                 return;
             }
 
-            // Use a thread-safe collection to accumulate results from all plugins
-            var allResults = new ConcurrentBag<ResultViewModel>();
+            // Accumulated results; additions and snapshots happen under one lock so channel order matches
+            // growth and the last progressive snapshot always contains every plugin's results.
+            var allResults = new List<ResultViewModel>();
+            var progressiveUpdateWritten = false;
 
             // Query all plugins in parallel - results shown progressively as each completes
             var tasks = plugins.Select(async plugin =>
@@ -677,25 +711,31 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
                 var pluginResults = await QueryPluginAsync(plugin, query, token, searchDelay);
                 if (token.IsCancellationRequested) return;
 
-                // Add results to the bag
-                foreach (var r in pluginResults)
+                lock (allResults)
                 {
-                    allResults.Add(r);
-                }
+                    allResults.AddRange(pluginResults);
 
-                // Update UI with current accumulated results (progressive update via channel)
-                if (!token.IsCancellationRequested)
-                {
-                    _resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(allResults.ToList(), token));
+                    // Update UI with current accumulated results (progressive update via channel)
+                    if (!token.IsCancellationRequested &&
+                        _resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(allResults.ToList(), token)))
+                    {
+                        progressiveUpdateWritten = true;
+                    }
                 }
             });
 
             await Task.WhenAll(tasks);
 
-            // Final update after all plugins complete
-            if (!token.IsCancellationRequested)
+            // Final update after all plugins complete, only if no progressive snapshot already carried it
+            if (!token.IsCancellationRequested && !progressiveUpdateWritten)
             {
-                _resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(allResults.ToList(), token));
+                List<ResultViewModel> snapshot;
+                lock (allResults)
+                {
+                    snapshot = allResults.ToList();
+                }
+
+                _resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(snapshot, token));
             }
         }
         catch (OperationCanceledException) { }
@@ -901,11 +941,30 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
         ApplyHistoryQueryText(queryToRestore);
     }
 
-    private async Task RecordHistoryAsync(string executedQueryText, Result result)
+    private Task _historySaveTask = Task.CompletedTask;
+
+    /// <summary>
+    /// Records the history entry immediately and persists it in the background so hiding never waits on disk I/O.
+    /// Saves are chained so concurrent writes never race on the same file.
+    /// </summary>
+    private void RecordHistory(string executedQueryText, Result result)
     {
         _history.Add(executedQueryText, result);
-        await _historyItemsStorage.SaveAsync();
         _lastHistoryIndex = 1;
+        _historySaveTask = SaveHistoryAfterAsync(_historySaveTask);
+    }
+
+    private async Task SaveHistoryAfterAsync(Task previousSave)
+    {
+        await previousSave;
+        try
+        {
+            await _historyItemsStorage.SaveAsync();
+        }
+        catch (Exception e)
+        {
+            Log.Exception(ClassName, "Failed to save history", e);
+        }
     }
 
     [RelayCommand]
@@ -963,12 +1022,12 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
         {
             if (await result.ExecuteAsync(new ActionContext { SpecialKeyState = SpecialKeyState.Default }))
             {
+                Hide();
+
                 if (queryResultsSelected)
                 {
-                    await RecordHistoryAsync(executedQueryText, result);
+                    RecordHistory(executedQueryText, result);
                 }
-
-                Hide();
             }
             else if (ActiveView == ActiveView.ContextMenu)
             {
@@ -977,7 +1036,7 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
             }
             else if (queryResultsSelected)
             {
-                await RecordHistoryAsync(executedQueryText, result);
+                RecordHistory(executedQueryText, result);
             }
         }
         catch (Exception e) { Log.Exception(ClassName, "Execute error", e); }

@@ -26,13 +26,17 @@ internal static class MacWindowActivation
 
     private static IntPtr SharedApplication => objc_msgSend(NSApplicationClass, SharedApplicationSel);
 
+    // NSWindow whose collection behavior was already configured; avoids two ObjC round-trips on every show.
+    private static IntPtr _configuredWindow;
+
     /// <summary>
     /// Makes the window open on the active Space (also over full-screen apps) and activates the app, so the window
     /// becomes key even though another app is frontmost. Call before showing the window.
     /// </summary>
     internal static void ActivateForWindow(Window window)
     {
-        if (window.TryGetPlatformHandle() is { HandleDescriptor: "NSWindow", Handle: var nsWindow } && nsWindow != IntPtr.Zero)
+        if (window.TryGetPlatformHandle() is { HandleDescriptor: "NSWindow", Handle: var nsWindow }
+            && nsWindow != IntPtr.Zero && nsWindow != _configuredWindow)
         {
             var behavior = objc_msgSend_nuint(nsWindow, CollectionBehaviorSel);
             var wanted = behavior | MoveToActiveSpace | FullScreenAuxiliary;
@@ -40,6 +44,8 @@ internal static class MacWindowActivation
             {
                 objc_msgSend_void_nuint(nsWindow, SetCollectionBehaviorSel, wanted);
             }
+
+            _configuredWindow = nsWindow;
         }
 
         objc_msgSend_void_bool(SharedApplication, ActivateIgnoringOtherAppsSel, true);

@@ -60,6 +60,7 @@
                                   MinHeight="{Binding Settings.WindowHeightSize}"
                                   PlaceholderText="{i18n:Localize queryTextBoxPlaceholder, Fallback='Type here to search'}"
                                   AcceptsReturn="False"
+                                  ClearSelectionOnLostFocus="False"
                                   TextWrapping="NoWrap" />
                 </Border>
 

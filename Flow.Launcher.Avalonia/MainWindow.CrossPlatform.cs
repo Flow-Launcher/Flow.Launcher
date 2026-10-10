@@ -44,10 +44,17 @@ public partial class MainWindow
         OperatingSystem.IsMacOS() && MacScreens.TryGetFrontmostWindowCenter(out var x, out var y) ? ScreenAtMacPoint(x, y) : null;
 
     // CoreGraphics reports global points; Avalonia reports each screen's bounds in that screen's pixels (points × scaling).
-    private Screen? ScreenAtMacPoint(double x, double y) =>
-        Screens.All.FirstOrDefault(screen =>
+    private Screen? ScreenAtMacPoint(double x, double y)
+    {
+        var point = new Point(x, y);
+        foreach (var screen in Screens.All)
         {
-            var bounds = screen.Bounds.ToRect(screen.Scaling);
-            return bounds.Contains(new Point(x, y));
-        });
+            if (screen.Bounds.ToRect(screen.Scaling).Contains(point))
+            {
+                return screen;
+            }
+        }
+
+        return null;
+    }
 }

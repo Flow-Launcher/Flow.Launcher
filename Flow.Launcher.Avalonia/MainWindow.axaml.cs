@@ -285,22 +285,20 @@ public partial class MainWindow : Window
             return;
         }
 
-        var revealAfterFocus = request.ShowWindow && !IsVisible;
-        if (revealAfterFocus)
+        var revealing = request.ShowWindow && !IsVisible;
+        if (revealing)
         {
-            Opacity = 0;
             // Before activating Flow, so the "Focus" screen option still sees the previously active window.
             PlaceOnSelectedScreen();
         }
 
-        if (request.ShowWindow || request.ActivateWindow)
-        {
-            ActivateApplication();
-        }
+        ActivateApplication();
 
         if (request.ShowWindow)
         {
+            // Text and selection are applied before Show() so the first rendered frame never shows stale state.
             SynchronizeQueryTextBoxText();
+            ApplyQueryTextBoxSelection(request.Mode);
             Show();
         }
 
@@ -309,18 +307,14 @@ public partial class MainWindow : Window
             Activate();
         }
 
-        if (revealAfterFocus)
-        {
-            Dispatcher.UIThread.Post(() =>
-            {
-                SynchronizeQueryTextBoxText();
-                ApplyQueryTextBoxFocus(request.Mode);
-                Dispatcher.UIThread.Post(() => Opacity = 1, DispatcherPriority.Render);
-            }, DispatcherPriority.ContextIdle);
-            return;
-        }
+        ApplyQueryTextBoxFocus(request.Mode, selectionAlreadyApplied: request.ShowWindow);
 
-        ApplyQueryTextBoxFocus(request.Mode);
+        if (revealing)
+        {
+            // The native window may grant key focus a tick after Show(); re-assert focus only. Re-applying the
+            // selection here would select (and let the next keystroke overwrite) text the user already typed.
+            Dispatcher.UIThread.Post(() => _queryTextBox?.Focus(), DispatcherPriority.Input);
+        }
     }
 
     // Platform hooks: bring the app forward before the window is shown/activated, and hand focus back after it hides.
