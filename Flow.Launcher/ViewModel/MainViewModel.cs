@@ -149,6 +149,9 @@ namespace Flow.Launcher.ViewModel
                     case nameof(Settings.OpenHistoryHotkey):
                         OnPropertyChanged(nameof(OpenHistoryHotkey));
                         break;
+                    case nameof(Settings.ResultLayout):
+                        IsGridNavigationActive = false;
+                        break;
                 }
             };
 
@@ -187,6 +190,12 @@ namespace Flow.Launcher.ViewModel
                         _selectedItemFromQueryResults = true;
                         PreviewSelectedItem = Results.SelectedItem;
                         _ = UpdatePreviewAsync();
+                        break;
+                    case nameof(Results.Visibility):
+                        if (Results.Visibility != Visibility.Visible)
+                        {
+                            IsGridNavigationActive = false;
+                        }
                         break;
                 }
             };
@@ -670,6 +679,48 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        public bool IsGridNavigationActive { get; private set; }
+
+        private bool IsQueryResultsGridShown() =>
+            QueryResultsSelected() && Results.IsGridLayout && Results.Visibility == Visibility.Visible;
+
+        public bool HandleGridNavigationKey(Key key, ModifierKeys modifiers)
+        {
+            if (!IsQueryResultsGridShown())
+            {
+                return false;
+            }
+
+            switch (GridKeyRouting.Route(key, modifiers, IsGridNavigationActive))
+            {
+                case GridKeyAction.NotHandled:
+                    return false;
+                case GridKeyAction.EnterGrid:
+                    IsGridNavigationActive = true;
+                    break;
+                case GridKeyAction.LeaveGrid:
+                    IsGridNavigationActive = false;
+                    break;
+                case GridKeyAction.NextRow:
+                    Results.SelectNextGridRow();
+                    break;
+                case GridKeyAction.PrevRow:
+                    if (!Results.TrySelectPrevGridRow())
+                    {
+                        IsGridNavigationActive = false;
+                    }
+                    break;
+                case GridKeyAction.NextCell:
+                    Results.SelectNextGridCell();
+                    break;
+                case GridKeyAction.PrevCell:
+                    Results.SelectPrevGridCell();
+                    break;
+            }
+
+            return true;
+        }
+
         public void BackToQueryResults()
         {
             if (!QueryResultsSelected())
@@ -717,6 +768,10 @@ namespace Flow.Launcher.ViewModel
             get => _queryText;
             set
             {
+                if (_queryText != value)
+                {
+                    IsGridNavigationActive = false;
+                }
                 _queryText = value;
                 OnPropertyChanged();
             }
@@ -843,6 +898,7 @@ namespace Flow.Launcher.ViewModel
             get => _selectedResults;
             set
             {
+                IsGridNavigationActive = false;
                 var isReturningFromQueryResults = QueryResultsSelected();
                 var isReturningFromContextMenu = ContextMenuSelected();
                 var isReturningFromHistory = HistorySelected();
@@ -2190,6 +2246,7 @@ namespace Flow.Launcher.ViewModel
 
         public async void Hide(bool reset = true)
         {
+            IsGridNavigationActive = false;
             if (reset)
             {
                 lastHistoryIndex = 1;

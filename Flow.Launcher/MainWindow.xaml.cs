@@ -279,6 +279,9 @@ namespace Flow.Launcher
                             ? Properties.Resources.gamemode
                             : Properties.Resources.app;
                         break;
+                    case nameof(MainViewModel.IsGridNavigationActive):
+                        Dispatcher.Invoke(UpdateQueryCaretVisibility);
+                        break;
                 }
             };
 
@@ -438,6 +441,13 @@ namespace Flow.Launcher
 
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
+            if (_viewModel.HandleGridNavigationKey(e.Key, Keyboard.Modifiers))
+            {
+                _isArrowKeyPressed = e.Key is Key.Up or Key.Down or Key.Left or Key.Right;
+                e.Handled = true;
+                return;
+            }
+
             var specialKeyState = GlobalHotkey.CheckModifiers();
             switch (e.Key)
             {
@@ -500,9 +510,21 @@ namespace Flow.Launcher
 
         private void OnKeyUp(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Up || e.Key == Key.Down)
+            if (e.Key is Key.Up or Key.Down or Key.Left or Key.Right)
             {
                 _isArrowKeyPressed = false;
+            }
+        }
+
+        private void UpdateQueryCaretVisibility()
+        {
+            if (_viewModel.IsGridNavigationActive)
+            {
+                QueryTextBox.CaretBrush = System.Windows.Media.Brushes.Transparent;
+            }
+            else
+            {
+                QueryTextBox.ClearValue(TextBox.CaretBrushProperty);
             }
         }
 
