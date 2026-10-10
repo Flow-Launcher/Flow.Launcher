@@ -3,6 +3,9 @@
 
     <system:String x:Key="flowlauncher_plugin_pluginindicator_result_subtitle">Palavra-chave para ativar o plugin {0}</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_settings_title">Definições: {0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_settings_subtitle">Open the settings page for the {0} plugin</system:String>
+
     <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_name">Plugin Indicador</system:String>
     <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_description">Disponibiliza sugestões de palavras-chave para os plugins</system:String>
 
