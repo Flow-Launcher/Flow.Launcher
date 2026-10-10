@@ -18,7 +18,7 @@
         Background="Transparent"
         TransparencyLevelHint="AcrylicBlur">
 
-    <Border Margin="12"
+    <Border x:Name="NotificationBorder"
             Padding="16"
             CornerRadius="12"
             Background="#DD1F1F1F"

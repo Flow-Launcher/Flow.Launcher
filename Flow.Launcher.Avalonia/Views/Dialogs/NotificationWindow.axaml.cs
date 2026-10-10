@@ -7,6 +7,7 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
+using Avalonia.Platform;
 using Avalonia.Threading;
 using Flow.Launcher.Avalonia.Helper;
 using Flow.Launcher.Infrastructure;
@@ -95,13 +96,15 @@ public partial class NotificationWindow : Window, INotifyPropertyChanged
 
     private void OnOpened(object? sender, EventArgs e)
     {
+        InitializeWindowShape();
+
         var screen = Screens.Primary;
         if (screen != null)
         {
             lock (ActiveWindowsLock)
             {
                 ActiveWindows.Add(this);
-                RepositionActiveWindows(screen.WorkingArea);
+                RepositionActiveWindows(screen);
             }
         }
 
@@ -115,9 +118,9 @@ public partial class NotificationWindow : Window, INotifyPropertyChanged
         lock (ActiveWindowsLock)
         {
             ActiveWindows.Remove(this);
-            if (Screens.Primary != null)
+            if (Screens.Primary is { } primary)
             {
-                RepositionActiveWindows(Screens.Primary.WorkingArea);
+                RepositionActiveWindows(primary);
             }
         }
     }
@@ -148,13 +151,38 @@ public partial class NotificationWindow : Window, INotifyPropertyChanged
             Close();
         }
     }
-    private static void RepositionActiveWindows(PixelRect workingArea)
+
+    // The native blur fills the square window; clip it to the card's rounded corners and keep the window background
+    // clear whenever Avalonia (re)applies the blur, otherwise a grey rectangle shows around the card.
+    private void InitializeWindowShape()
     {
+        if (!OperatingSystem.IsMacOS() || this.FindControl<Border>("NotificationBorder") is not { } border)
+        {
+            return;
+        }
+
+        MacWindowShape.SetCornerRadius(this, border.CornerRadius);
+        MacWindowShape.ClearBackgroundIfTransparent(this);
+        base.PropertyChanged += (_, e) =>
+        {
+            if (e.Property == ActualTransparencyLevelProperty)
+            {
+                MacWindowShape.ClearBackgroundIfTransparent(this);
+            }
+        };
+    }
+
+    private static void RepositionActiveWindows(Screen screen)
+    {
+        // Position is in physical pixels; Width/Height are in DIPs.
+        var workingArea = screen.WorkingArea;
+        var scaling = screen.Scaling;
+        const double gap = 12;
         for (var index = 0; index < ActiveWindows.Count; index++)
         {
             var window = ActiveWindows[index];
-            var x = workingArea.X + workingArea.Width - (int)window.Width - 20;
-            var y = workingArea.Y + 20 + (index * ((int)window.Height - 8));
+            var x = workingArea.Right - (int)((window.Width + gap) * scaling);
+            var y = workingArea.Y + (int)((gap + index * (window.Height + gap)) * scaling);
             window.Position = new PixelPoint(x, y);
         }
     }
