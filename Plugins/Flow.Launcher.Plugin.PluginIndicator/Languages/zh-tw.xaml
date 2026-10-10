@@ -3,6 +3,9 @@
 
     <system:String x:Key="flowlauncher_plugin_pluginindicator_result_subtitle">啟動 {0} 外掛程式操作關鍵字</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_settings_title">Settings: {0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_settings_subtitle">Open the settings page for the {0} plugin</system:String>
+
     <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_name">套件關鍵字提示</system:String>
     <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_description">提供套件關鍵字搜尋提示</system:String>
 
