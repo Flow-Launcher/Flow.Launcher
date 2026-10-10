@@ -12,10 +12,12 @@ using Flow.Launcher.Avalonia.Storage;
 using Flow.Launcher.Avalonia.Resource;
 using Flow.Launcher.Avalonia.Views.SettingPages;
 using Flow.Launcher.Core.Plugin;
+using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
+using Flow.Launcher.Storage;
 
 namespace Flow.Launcher.Avalonia.ViewModel;
 
@@ -48,6 +50,9 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
     private readonly Settings _settings;
     private readonly FlowLauncherJsonStorage<History> _historyItemsStorage;
     private readonly History _history;
+    private readonly FlowLauncherJsonStorage<UserSelectedRecord> _userSelectedRecordStorage;
+    private readonly UserSelectedRecord _userSelectedRecord;
+    private readonly FlowLauncherJsonStorageTopMostRecord _topMostRecord;
     private CancellationTokenSource? _queryTokenSource;
     private string? _ignoredQueryText;
     private string _queryTextBeforeHistory = string.Empty;
@@ -128,6 +133,9 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
         _settings = settings;
         _historyItemsStorage = new FlowLauncherJsonStorage<History>();
         _history = _historyItemsStorage.Load();
+        _userSelectedRecordStorage = new FlowLauncherJsonStorage<UserSelectedRecord>();
+        _userSelectedRecord = _userSelectedRecordStorage.Load();
+        _topMostRecord = new FlowLauncherJsonStorageTopMostRecord();
         _results = new ResultsViewModel(settings);
         _contextMenu = new ResultsViewModel(settings);
         _historyView = new ResultsViewModel(settings);
@@ -239,7 +247,7 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
             }
             else
             {
-                Results.ReplaceResults(sortedResults);
+                Results.ReplaceResults(sortedResults, update.ReselectFirst);
             }
 
             HasResults = Results.Results.Count > 0;
@@ -361,11 +369,16 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
         QueryTextFocusRequested?.Invoke(request);
     }
 
-    public void ReQuery(bool reselect = true) => _ = QueryAsync();
+    public void ReQuery(bool reselect = true) => _ = QueryAsync(reselect: reselect);
 
     public void BackToQueryResults() => BackToResults();
 
-    public void Save() => _historyItemsStorage.Save();
+    public void Save()
+    {
+        _historyItemsStorage.Save();
+        _userSelectedRecordStorage.Save();
+        _topMostRecord.Save();
+    }
 
     [RelayCommand]
     private void ReverseHistory()
@@ -604,7 +617,7 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
         _lastQueryActionKeyword = query?.ActionKeyword ?? string.Empty;
     }
 
-    private async Task QueryAsync(bool searchDelay = false)
+    private async Task QueryAsync(bool searchDelay = false, bool reselect = true)
     {
         var previousQueryTokenSource = _queryTokenSource;
         previousQueryTokenSource?.Cancel();
@@ -684,7 +697,7 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
                     // Update UI with current accumulated results (progressive update via channel)
                     if (!token.IsCancellationRequested)
                     {
-                        _resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(allResults.ToList(), token));
+                        _resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(allResults.ToList(), token, pluginId: null, reselectFirst: reselect));
                     }
                 }
             });
@@ -694,7 +707,7 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
             // Final update after all plugins complete
             if (!token.IsCancellationRequested)
             {
-                _resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(allResults.ToList(), token));
+                _resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(allResults.ToList(), token, pluginId: null, reselectFirst: reselect));
             }
         }
         catch (OperationCanceledException) { }
@@ -758,7 +771,7 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
                 Title = result.Title ?? string.Empty,
                 SubTitle = result.SubTitle ?? string.Empty,
                 IconPath = result.IcoPath ?? plugin.Metadata.IcoPath ?? string.Empty,
-                Score = result.Score,
+                Score = AdjustedScore(result, plugin.Metadata),
                 PluginResult = result,
                 Glyph = result.Glyph,
                 TitleHighlightData = result.TitleHighlightData,
@@ -766,6 +779,25 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
         }
 
         return resultViewModels;
+    }
+
+    // The original Result is not mutated because Avalonia does not clone plugin results (a cached Result would be boosted repeatedly).
+    private int AdjustedScore(Result result, PluginMetadata metadata)
+    {
+        var deviationIndex = _topMostRecord.GetTopMostIndex(result);
+        if (deviationIndex != -1)
+        {
+            // A lower deviationIndex (closer to the top) results in a higher score.
+            return Result.MaxScore - deviationIndex;
+        }
+
+        long score = result.Score + metadata.Priority * 150L;
+        if (result.AddSelectedCount)
+        {
+            score += _userSelectedRecord.GetSelectedCount(result);
+        }
+
+        return (int)Math.Min(score, Result.MaxScore);
     }
 
     private Task<List<ResultViewModel>> QueryPluginAsync(PluginPair plugin, Query query, CancellationToken token, bool searchDelay)
@@ -926,6 +958,23 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
         }
     }
 
+    private void RecordUserSelected(Result result)
+    {
+        _userSelectedRecord.Add(result);
+        // FlowLauncherJsonStorage.SaveAsync logs its own failures; the wrapper guards against anything thrown before the await.
+        _ = Task.Run(async () =>
+        {
+            try
+            {
+                await _userSelectedRecordStorage.SaveAsync();
+            }
+            catch (Exception e)
+            {
+                Log.Exception(ClassName, "Failed to save user selected record", e);
+            }
+        });
+    }
+
     [RelayCommand]
     private void Esc()
     {
@@ -986,6 +1035,7 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
                 if (queryResultsSelected)
                 {
                     RecordHistory(executedQueryText, result);
+                    RecordUserSelected(result);
                 }
             }
             else if (ActiveView == ActiveView.ContextMenu)
@@ -996,6 +1046,7 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
             else if (queryResultsSelected)
             {
                 RecordHistory(executedQueryText, result);
+                RecordUserSelected(result);
             }
         }
         catch (Exception e) { Log.Exception(ClassName, "Execute error", e); }
@@ -1049,9 +1100,15 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
         try
         {
             var contextMenuResults = PluginManager.GetContextMenusForPlugin(selectedResult);
-            if (contextMenuResults == null || contextMenuResults.Count == 0) return;
+            var menuResults = contextMenuResults?.ToList() ?? new List<Result>();
+            if (!string.IsNullOrEmpty(selectedResult.PluginID))
+            {
+                menuResults.Add(ContextMenuTopMost(selectedResult));
+            }
 
-            var contextMenuItems = contextMenuResults.Select(r => new ResultViewModel
+            if (menuResults.Count == 0) return;
+
+            var contextMenuItems = menuResults.Select(r => new ResultViewModel
             {
                 Title = r.Title ?? "",
                 SubTitle = r.SubTitle ?? "",
@@ -1068,6 +1125,46 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
         {
             Log.Exception(ClassName, "Failed to load context menu", e);
         }
+    }
+
+    private Result ContextMenuTopMost(Result result)
+    {
+        if (_topMostRecord.IsTopMost(result))
+        {
+            return new Result
+            {
+                Title = App.API?.GetTranslation("cancelTopMostInThisQuery") ?? "cancelTopMostInThisQuery",
+                IcoPath = System.IO.Path.Combine(Constant.ProgramDirectory, "Images", "down.png"),
+                PluginDirectory = Constant.ProgramDirectory,
+                Action = _ =>
+                {
+                    _topMostRecord.Remove(result);
+                    _topMostRecord.Save();
+                    App.API?.ShowMsg(App.API.GetTranslation("success"));
+                    ReQuery();
+                    return false;
+                },
+                Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE74B"),
+                OriginQuery = result.OriginQuery
+            };
+        }
+
+        return new Result
+        {
+            Title = App.API?.GetTranslation("setAsTopMostInThisQuery") ?? "setAsTopMostInThisQuery",
+            IcoPath = System.IO.Path.Combine(Constant.ProgramDirectory, "Images", "up.png"),
+            PluginDirectory = Constant.ProgramDirectory,
+            Action = _ =>
+            {
+                _topMostRecord.AddOrUpdate(result);
+                _topMostRecord.Save();
+                App.API?.ShowMsg(App.API.GetTranslation("success"));
+                ReQuery();
+                return false;
+            },
+            Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE74A"),
+            OriginQuery = result.OriginQuery
+        };
     }
 
     [RelayCommand]
@@ -1102,12 +1199,14 @@ internal readonly struct ResultsForUpdate
     public IReadOnlyList<ResultViewModel> Results { get; }
     public CancellationToken Token { get; }
     public string? PluginId { get; }
+    public bool ReselectFirst { get; }
     public bool IsPluginUpdate => !string.IsNullOrEmpty(PluginId);
 
-    public ResultsForUpdate(IReadOnlyList<ResultViewModel> results, CancellationToken token, string? pluginId = null)
+    public ResultsForUpdate(IReadOnlyList<ResultViewModel> results, CancellationToken token, string? pluginId = null, bool reselectFirst = true)
     {
         Results = results;
         Token = token;
         PluginId = pluginId;
+        ReselectFirst = reselectFirst;
     }
 }

@@ -34,6 +34,8 @@
 
   <ItemGroup>
     <Compile Include="..\SolutionAssemblyInfo.cs" Link="Properties\SolutionAssemblyInfo.cs" />
+    <Compile Include="..\Flow.Launcher\Storage\UserSelectedRecord.cs" Link="Storage\UserSelectedRecord.cs" />
+    <Compile Include="..\Flow.Launcher\Storage\TopMostRecord.cs" Link="Storage\TopMostRecord.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -45,6 +45,7 @@ public partial class ResultsViewModel : ObservableObject, IDisposable
 
         // Connect SourceList to sorted ReadOnlyObservableCollection
         _subscription = _sourceList.Connect()
+            .AutoRefresh(r => r.Score)
             .Sort(SortExpressionComparer<ResultViewModel>.Descending(r => r.Score))
             .Bind(out _results)
             .Subscribe();
@@ -54,8 +55,9 @@ public partial class ResultsViewModel : ObservableObject, IDisposable
     /// Replace all results with new ones using atomic Edit to prevent flickering.
     /// Edit batches changes and fires only one notification at the end.
     /// </summary>
-    public void ReplaceResults(IEnumerable<ResultViewModel> newResults)
+    public void ReplaceResults(IEnumerable<ResultViewModel> newResults, bool reselect = true)
     {
+        var previousSelection = SelectedItem;
         var resultsList = newResults.ToList();
         foreach (var r in resultsList)
         {
@@ -87,8 +89,15 @@ public partial class ResultsViewModel : ObservableObject, IDisposable
         // EditDiff calculates minimal changes needed - items with same Title+SubTitle are kept
         _sourceList.EditDiff(resultsList, ResultViewModelComparer.Instance);
 
-        // Select first item after replacement
-        if (_results.Count > 0)
+        // Select first item after replacement, unless the caller asked to keep the
+        // previous selection (re-query) and that item survived the diff.
+        var keptIndex = !reselect && previousSelection != null ? _results.IndexOf(previousSelection) : -1;
+        if (keptIndex >= 0)
+        {
+            SelectedIndex = keptIndex;
+            SelectedItem = previousSelection;
+        }
+        else if (_results.Count > 0)
         {
             SelectedIndex = 0;
             SelectedItem = _results[0];
