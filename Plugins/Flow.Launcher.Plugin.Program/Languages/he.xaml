@@ -16,9 +16,9 @@
     <system:String x:Key="flowlauncher_plugin_program_location">מיקום</system:String>
     <system:String x:Key="flowlauncher_plugin_program_all_programs">כל התוכניות</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes">סוג קובץ</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_reindex">בצע אינדוקס מחדש</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_indexing">מבצע אינדוקס</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_index_source">מקורות אינדוקס</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_reindex">בצע אינדקס מחדש</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_indexing">מבצע אינדקס</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_source">מקורות אינדקס</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_option">אפשרויות</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_uwp">אפליקציות UWP</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_uwp_tooltip">כאשר האפשרות מופעלת, Flow יטען אפליקציות UWP</system:String>
@@ -46,8 +46,8 @@
 
     <system:String x:Key="flowlauncher_plugin_program_pls_select_program_source">אנא בחר מקור תוכנה</system:String>
     <system:String x:Key="flowlauncher_plugin_program_delete_program_source">האם אתה בטוח שברצונך למחוק את מקורות התוכניות שנבחרו?</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_not_user_added">Please select program sources that are not added by you</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_user_added">Please select program sources that are added by you</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_not_user_added">אנא בחר מקורות תוכנית שלא נוספו על ידך</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_user_added">אנא בחר מקורות תוכנית שנוספו על ידך</system:String>
     <system:String x:Key="flowlauncher_plugin_program_duplicate_program_source">מקור תוכנה נוסף עם אותו מיקום כבר קיים.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_edit_program_source_title">מקור תוכנה</system:String>

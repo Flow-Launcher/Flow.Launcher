@@ -8,13 +8,13 @@
     <system:String x:Key="flowlauncher_plugin_cmd_always_run_as_administrator">הפעל תמיד כמנהל</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_use_windows_terminal">השתמש ב-Windows Terminal</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_different_user">הפעל כמשתמש אחר</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_plugin_name">שורת פקודה</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_plugin_name">שורת הפקודה</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_plugin_description">מאפשר להריץ פקודות מערכת מתוך Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_cmd_has_been_executed_times">פקודה זו בוצעה {0} פעמים</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_execute_through_shell">בצע פקודה דרך מעטפת הפקודות</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_administrator">הפעל כמנהל</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_copy">העתק את הפקודה</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_history">הצג רק את מספר הפקודות הנפוצות ביותר:</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_command_not_found">Command not found: {0}</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_error_running_command">Error running the command: {0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_command_not_found">פקודה לא נמצאה: {0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_error_running_command">שגיאה בהפעלת הפקודה: {0}</system:String>
 </ResourceDictionary>
