@@ -2,7 +2,7 @@
 
 namespace Flow.Launcher.Core.Resource
 {
-    internal static class AvailableLanguages
+    public static class AvailableLanguages
     {
         public static Language English = new Language("en", "English");
         public static Language Chinese = new Language("zh-cn", "中文");

@@ -4,10 +4,12 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Windows;
 using System.Xml.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Flow.Launcher.Core.Plugin;
+using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
@@ -94,17 +96,97 @@ public class Internationalization
         }
     }
 
-    private string GetActualLanguageCode()
-    {
-        var languageCode = _settings.Language;
-        
-        // Handle "system" language setting
-        if (languageCode == Constant.SystemLanguageCode)
-        {
-            languageCode = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
-        }
+    // Captured once when the type is first used, before ChangeCultureInfo overrides CurrentCulture.
+    private static readonly string _systemLanguageCode = ResolveSystemLanguageCode();
 
-        return languageCode ?? DefaultLanguageCode;
+    /// <summary>
+    /// Map the OS culture to an available language code (zh-CN → zh-cn, pt-BR → pt-br, uk → uk-UA).
+    /// </summary>
+    private static string ResolveSystemLanguageCode()
+    {
+        var culture = CultureInfo.CurrentCulture;
+        var twoLetter = culture.TwoLetterISOLanguageName;
+        var threeLetter = culture.ThreeLetterISOLanguageName;
+        var fullName = culture.Name;
+
+        // Prefer a full-name match (zh-CN → zh-cn, pt-BR → pt-br) over the two-letter one.
+        var languages = AvailableLanguages.GetAvailableLanguages();
+        var match = languages.FirstOrDefault(l => string.Equals(l.LanguageCode, fullName, StringComparison.OrdinalIgnoreCase))
+            ?? languages.FirstOrDefault(l =>
+                string.Equals(l.LanguageCode, twoLetter, StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(l.LanguageCode, threeLetter, StringComparison.OrdinalIgnoreCase))
+            // Codes like uk-UA / nb-NO only exist region-qualified.
+            ?? languages.FirstOrDefault(l => l.LanguageCode.StartsWith(twoLetter + "-", StringComparison.OrdinalIgnoreCase));
+
+        return match?.LanguageCode ?? DefaultLanguageCode;
+    }
+
+    /// <summary>
+    /// All selectable languages, with a localized "System" entry first.
+    /// </summary>
+    public static List<Language> LoadAvailableLanguages()
+    {
+        var list = AvailableLanguages.GetAvailableLanguages();
+        list.Insert(0, new Language(Constant.SystemLanguageCode, AvailableLanguages.GetSystemTranslation(_systemLanguageCode)));
+        return list;
+    }
+
+    private static string ResolveLanguageCode(string? languageCode)
+    {
+        if (string.IsNullOrEmpty(languageCode))
+            return DefaultLanguageCode;
+        if (string.Equals(languageCode, Constant.SystemLanguageCode, StringComparison.OrdinalIgnoreCase))
+            return _systemLanguageCode;
+        return AvailableLanguages.GetAvailableLanguages()
+            .FirstOrDefault(l => string.Equals(l.LanguageCode, languageCode, StringComparison.OrdinalIgnoreCase))
+            ?.LanguageCode ?? DefaultLanguageCode;
+    }
+
+    private string GetActualLanguageCode() => ResolveLanguageCode(_settings.Language);
+
+    public bool PromptShouldUsePinyin(string languageCodeToSet)
+    {
+        if (_settings.ShouldUsePinyin)
+            return false;
+
+        var code = ResolveLanguageCode(languageCodeToSet);
+        var isChinese = code == AvailableLanguages.Chinese.LanguageCode;
+        if (!isChinese && code != AvailableLanguages.Chinese_TW.LanguageCode)
+            return false;
+
+        // Only Chinese users see this, so it is hard-coded: "Do you want to search with pinyin?"
+        var text = isChinese ? "是否启用拼音搜索？" : "是否啓用拼音搜索？";
+        return App.API?.ShowMsgBox(text, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.Yes;
+    }
+
+    public bool PromptShouldIgnoreAccents(string languageCodeToSet)
+    {
+        if (_settings.IgnoreAccents)
+            return false;
+
+        var languagesWithDiacritics = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
+            AvailableLanguages.French.LanguageCode,
+            AvailableLanguages.Polish.LanguageCode,
+            AvailableLanguages.Slovak.LanguageCode,
+            AvailableLanguages.Czech.LanguageCode,
+            AvailableLanguages.Portuguese_Portugal.LanguageCode,
+            AvailableLanguages.Portuguese_Brazil.LanguageCode,
+            AvailableLanguages.Spanish.LanguageCode,
+            AvailableLanguages.Spanish_LatinAmerica.LanguageCode,
+            AvailableLanguages.Turkish.LanguageCode,
+            AvailableLanguages.Dutch.LanguageCode,
+            AvailableLanguages.German.LanguageCode,
+            AvailableLanguages.Serbian.LanguageCode,
+            AvailableLanguages.Italian.LanguageCode,
+            AvailableLanguages.Danish.LanguageCode,
+            AvailableLanguages.Norwegian_Bokmal.LanguageCode
+        };
+
+        if (!languagesWithDiacritics.Contains(ResolveLanguageCode(languageCodeToSet)))
+            return false;
+
+        return App.API?.ShowMsgBox(GetTranslation("promptIgnoreAccents"), string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.Yes;
     }
 
     private void AddFlowLauncherLanguageDirectory()
@@ -264,6 +346,9 @@ public class Internationalization
             CultureInfo.CurrentUICulture = culture;
             Thread.CurrentThread.CurrentCulture = culture;
             Thread.CurrentThread.CurrentUICulture = culture;
+            // Threads created later (plugin queries, Task.Run) inherit the same culture.
+            CultureInfo.DefaultThreadCurrentCulture = culture;
+            CultureInfo.DefaultThreadCurrentUICulture = culture;
         }
         catch (CultureNotFoundException)
         {
@@ -276,9 +361,7 @@ public class Internationalization
     /// </summary>
     public void ChangeLanguage(string languageCode)
     {
-        var resolvedLanguageCode = string.Equals(languageCode, Constant.SystemLanguageCode, StringComparison.OrdinalIgnoreCase)
-            ? CultureInfo.CurrentCulture.TwoLetterISOLanguageName
-            : languageCode;
+        var resolvedLanguageCode = ResolveLanguageCode(languageCode);
 
         _translations.Clear();
 
@@ -295,6 +378,9 @@ public class Internationalization
 
         // Re-inject into Application.Resources for DynamicResource bindings
         InjectIntoApplicationResources();
+
+        // Plugins translate their metadata against the new culture
+        UpdatePluginMetadataTranslations();
 
         Log.Info(ClassName, $"Language changed to: {resolvedLanguageCode}");
     }
