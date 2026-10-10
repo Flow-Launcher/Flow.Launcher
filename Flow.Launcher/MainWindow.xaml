@@ -433,6 +433,27 @@
                                 LeftClickResultCommand="{Binding LeftClickResultCommand}"
                                 RightClickResultCommand="{Binding RightClickResultCommand}" />
                         </ContentControl>
+                        <Border Padding="18 0 18 8">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Results.IsGridLayout}" Value="True" />
+                                                <Condition Binding="{Binding Results.Visibility}" Value="Visible" />
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <TextBlock
+                                FontSize="{Binding ResultSubItemFontSize}"
+                                Style="{DynamicResource ItemSubTitleStyle}"
+                                Text="{Binding Results.SelectedItem.Result.SubTitle}"
+                                TextTrimming="CharacterEllipsis" />
+                        </Border>
                     </StackPanel>
 
                     <GridSplitter
