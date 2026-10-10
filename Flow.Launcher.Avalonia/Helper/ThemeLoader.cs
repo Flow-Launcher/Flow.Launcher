@@ -42,7 +42,8 @@ public sealed partial class ThemeLoader
         "QueryBoxSelectionBrush", "QuerySuggestionForegroundBrush", "SearchIconBrush", "SeparatorBrush",
         "ResultTitleBrush", "ResultSubTitleBrush", "ResultTitleSelectedBrush", "ResultSubTitleSelectedBrush",
         "ResultGlyphBrush", "ResultGlyphSelectedBrush", "SelectedItemBackgroundBrush", "HoveredItemBackgroundBrush",
-        "ScrollThumbBrush", "ScrollThumbPointerOverBrush", "HotkeyBadgeBackgroundBrush", "HotkeyTextBrush"
+        "ScrollThumbBrush", "ScrollThumbPointerOverBrush", "HotkeyBadgeBackgroundBrush", "HotkeyTextBrush",
+        "ResultSelectionIndicatorBrush", "HighlightForegroundBrush", "HighlightFontWeight"
     ];
 
     private static readonly HashSet<string> OutputKeySet = new(OutputKeys, StringComparer.Ordinal);
@@ -183,6 +184,17 @@ public sealed partial class ThemeLoader
 
         SetBrush("HotkeyTextBrush", StyleColor("ItemHotkeyStyle", "Foreground", variant, applyStyleOpacity: true));
         SetBrush("HotkeyBadgeBackgroundBrush", StyleColor("ItemHotkeyBGStyle", "Background", variant));
+
+        // Selected-row pill (WPF ItemBulletSelectedStyle); themes without one keep the accent color.
+        SetBrush("ResultSelectionIndicatorBrush",
+            StyleColor("ItemBulletSelectedStyle", "Background", variant) ?? ApplicationColor("SystemAccentColor", variant));
+
+        // Matched characters (WPF HighlightStyle); unset values keep the built-in gold bold highlight.
+        SetBrush("HighlightForegroundBrush", StyleColor("HighlightStyle", "Foreground", variant));
+        if (Enum.TryParse<FontWeight>(StyleText("HighlightStyle", "FontWeight")?.Trim(), true, out var highlightWeight))
+        {
+            result["HighlightFontWeight"] = highlightWeight;
+        }
 
         return result;
     }

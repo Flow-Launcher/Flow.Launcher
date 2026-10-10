@@ -113,6 +113,20 @@
                 <Style Selector="^:pointerover">
                     <Setter Property="Background" Value="{DynamicResource HoveredItemBackgroundBrush}" />
                 </Style>
+
+                <!-- FluentAvalonia's selection pill, colored by the theme's ItemBulletSelectedStyle (Helper/ThemeLoader.cs). -->
+                <Style Selector="^ /template/ Rectangle#SelectionIndicator">
+                    <Setter Property="Fill" Value="{DynamicResource ResultSelectionIndicatorBrush}" />
+                </Style>
+                <Style Selector="^:selected /template/ Rectangle#SelectionIndicator">
+                    <Setter Property="Fill" Value="{DynamicResource ResultSelectionIndicatorBrush}" />
+                </Style>
+                <Style Selector="^:selected:pointerover /template/ Rectangle#SelectionIndicator">
+                    <Setter Property="Fill" Value="{DynamicResource ResultSelectionIndicatorBrush}" />
+                </Style>
+                <Style Selector="^:selected:pressed /template/ Rectangle#SelectionIndicator">
+                    <Setter Property="Fill" Value="{DynamicResource ResultSelectionIndicatorBrush}" />
+                </Style>
             </ControlTheme>
         </ListBox.ItemContainerTheme>
         

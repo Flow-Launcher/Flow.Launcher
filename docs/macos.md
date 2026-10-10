@@ -33,7 +33,9 @@ dotnet Output/Avalonia/Debug/net10.0/Flow.Launcher.Avalonia.dll
 
 Copy `Output/macOS/Flow Launcher.app` to `/Applications`, then start it from Finder or with `open "/Applications/Flow Launcher.app"`.
 
-Flow Launcher runs as a menu bar app. It has no Dock icon or app menu. Use the menu bar icon to open settings or quit. The default hotkey is Option+Space (the Windows `Alt` modifier maps to Option). You can change it in Settings → Hotkey.
+Flow Launcher runs as a menu bar app. It has no Dock icon or app menu. Use the menu bar icon to open settings or quit; Cmd+W closes the settings window. The default hotkey is Option+Space (the Windows `Alt` modifier maps to Option). You can change it in Settings → Hotkey.
+
+For a Spotlight-style search window, choose **macOS** in Settings → Theme. It follows the system light/dark appearance (or the color scheme set there).
 
 User data (settings, logs, cache, plugins installed from the store) is stored in `~/Library/Application Support/FlowLauncher`.
 
@@ -49,7 +51,7 @@ User data (settings, logs, cache, plugins installed from the store) is stored in
 - The Explorer and WindowsSettings plugins are Windows-only and not bundled.
 - Copying files to the clipboard (file drop) is not supported.
 - Plugin settings panels that exist only in WPF are unavailable. Only plugins that provide Avalonia settings views show settings. Url and WebSearch have no settings panel on macOS.
-- Dialog Jump, portable mode, Squirrel auto-update, and the theme blur/backdrop effects are unavailable. So is the Korean IME option.
+- Dialog Jump, portable mode, Squirrel auto-update, and the Backdrop type setting (Mica/Acrylic) are unavailable. So is the Korean IME option. Themes marked as blur themes (such as macOS) still show the system background blur.
 - Python and Node.js runtimes for plugins are not installed automatically. Set the interpreter paths manually in Settings → General.
 - The `{clipboard}` and `{active_explorer_path}` custom shortcuts are unavailable.
 - ProcessKiller does not show window titles.

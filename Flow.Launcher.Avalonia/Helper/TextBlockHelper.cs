@@ -14,6 +14,7 @@ namespace Flow.Launcher.Avalonia.Helper;
 public static class TextBlockHelper
 {
     private const string HighlightBrushKey = "HighlightForegroundBrush";
+    private const string HighlightFontWeightKey = "HighlightFontWeight";
 
     public static readonly AttachedProperty<string?> HighlightTextProperty =
         AvaloniaProperty.RegisterAttached<TextBlock, string?>("HighlightText", typeof(TextBlockHelper));
@@ -60,7 +61,7 @@ public static class TextBlockHelper
                 marks[index] = true;
         }
 
-        var brush = ResolveHighlightBrush();
+        var (brush, weight) = ResolveHighlightStyle();
         var runStart = 0;
         var currentIsHighlight = marks[0];
 
@@ -69,33 +70,36 @@ public static class TextBlockHelper
             if (marks[i] == currentIsHighlight)
                 continue;
 
-            inlines.Add(CreateRun(text.Substring(runStart, i - runStart), currentIsHighlight, brush));
+            inlines.Add(CreateRun(text.Substring(runStart, i - runStart), currentIsHighlight, brush, weight));
             runStart = i;
             currentIsHighlight = marks[i];
         }
 
-        inlines.Add(CreateRun(text.Substring(runStart), currentIsHighlight, brush));
+        inlines.Add(CreateRun(text.Substring(runStart), currentIsHighlight, brush, weight));
     }
 
-    // Resolved once per rebuild (not per run) so theme/resource changes still apply to new rows.
-    private static IBrush ResolveHighlightBrush()
+    // Resolved once per rebuild (not per run) so theme/resource changes still apply to new rows. Rows are often not yet
+    // attached when this runs, so the lookup goes to the application. Themes supply both values through
+    // Helper/ThemeLoader.cs; Themes/Resources.axaml has the gold default and bold is the fallback weight.
+    private static (IBrush Brush, FontWeight Weight) ResolveHighlightStyle()
     {
-        if (Application.Current != null &&
-            Application.Current.TryGetResource(HighlightBrushKey, null, out var resource) &&
-            resource is IBrush brush)
-        {
-            return brush;
-        }
-
-        return new SolidColorBrush(Colors.Gold);
+        var application = Application.Current;
+        var variant = application?.ActualThemeVariant;
+        var brush = application != null && application.TryGetResource(HighlightBrushKey, variant, out var brushResource) && brushResource is IBrush themeBrush
+            ? themeBrush
+            : Brushes.Gold;
+        var weight = application != null && application.TryGetResource(HighlightFontWeightKey, variant, out var weightResource) && weightResource is FontWeight themeWeight
+            ? themeWeight
+            : FontWeight.Bold;
+        return (brush, weight);
     }
 
-    private static Run CreateRun(string text, bool isHighlight, IBrush brush)
+    private static Run CreateRun(string text, bool isHighlight, IBrush brush, FontWeight weight)
     {
         var run = new Run(text);
         if (isHighlight)
         {
-            run.FontWeight = FontWeight.Bold;
+            run.FontWeight = weight;
             run.Foreground = brush;
         }
 
