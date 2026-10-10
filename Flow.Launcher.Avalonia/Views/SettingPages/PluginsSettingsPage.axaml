@@ -10,6 +10,15 @@
              x:Class="Flow.Launcher.Avalonia.Views.SettingPages.PluginsSettingsPage"
              x:DataType="vm:PluginsSettingsViewModel">
 
+    <UserControl.Styles>
+        <Style Selector="Expander.pluginItem">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        </Style>
+        <Style Selector="Expander.pluginItem /template/ ToggleButton#ExpanderHeader">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        </Style>
+    </UserControl.Styles>
+
     <Grid RowDefinitions="Auto,Auto,*">
         <!-- Header -->
         <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="0,0,0,10">
@@ -48,20 +57,24 @@
             </TextBox.InnerRightContent>
         </TextBox>
 
-        <!-- Plugin List -->
-        <ScrollViewer Grid.Row="2">
-            <ItemsControl ItemsSource="{Binding FilteredPlugins}">
+        <!-- Plugin List (virtualized) -->
+        <ItemsControl Grid.Row="2" ItemsSource="{Binding FilteredPlugins}">
+            <ItemsControl.Template>
+                <ControlTemplate TargetType="ItemsControl">
+                    <ScrollViewer>
+                        <ItemsPresenter Name="PART_ItemsPresenter" ItemsPanel="{TemplateBinding ItemsPanel}" />
+                    </ScrollViewer>
+                </ControlTemplate>
+            </ItemsControl.Template>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate x:DataType="vm:PluginItemViewModel">
-                        <Expander HorizontalAlignment="Stretch" Margin="0,0,10,10" IsExpanded="{Binding IsExpanded}">
-                            <Expander.Styles>
-                                <Style Selector="Expander">
-                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                </Style>
-                                <Style Selector="Expander /template/ ToggleButton#ExpanderHeader">
-                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                </Style>
-                            </Expander.Styles>
+                        <Expander Classes="pluginItem" HorizontalAlignment="Stretch" Margin="0,0,10,10" IsExpanded="{Binding IsExpanded}"
+                                  Content="{Binding ExpandedBody}">
                             <Expander.Header>
                                 <Grid ColumnDefinitions="Auto,*,Auto" HorizontalAlignment="Stretch">
                                     <!-- Icon -->
@@ -79,18 +92,18 @@
                                         <!-- On/Off -->
                                         <ToggleSwitch IsChecked="{Binding PluginState}" 
                                                       OnContent="" OffContent=""
-                                                      IsVisible="{Binding $parent[UserControl].((vm:PluginsSettingsViewModel)DataContext).IsOnOffSelected, FallbackValue=True}"/>
+                                                      IsVisible="{Binding IsOnOffSelected}"/>
                                         
                                         <!-- Priority -->
                                         <StackPanel Orientation="Horizontal" Spacing="10" 
-                                                    IsVisible="{Binding $parent[UserControl].((vm:PluginsSettingsViewModel)DataContext).IsPrioritySelected, FallbackValue=False}">
+                                                    IsVisible="{Binding IsPrioritySelected}">
                                             <TextBlock Text="{i18n:Localize priority}" VerticalAlignment="Center"/>
                                             <ui:FANumberBox Value="{Binding Priority}" SpinButtonPlacementMode="Inline" Width="100" SmallChange="1" LargeChange="10"/>
                                         </StackPanel>
 
                                         <!-- Search Delay -->
                                         <StackPanel Orientation="Horizontal" Spacing="10"
-                                                    IsVisible="{Binding $parent[UserControl].((vm:PluginsSettingsViewModel)DataContext).IsSearchDelaySelected, FallbackValue=False}">
+                                                    IsVisible="{Binding IsSearchDelaySelected}">
                                             <TextBlock Text="{i18n:Localize searchDelay}" VerticalAlignment="Center"/>
                                             <ui:FANumberBox Value="{Binding PluginSearchDelayTime}" SpinButtonPlacementMode="Inline" Width="100" Minimum="0" SmallChange="10" LargeChange="100"/>
                                         </StackPanel>
@@ -98,12 +111,13 @@
                                         <!-- Home On/Off -->
                                         <ToggleSwitch IsChecked="{Binding PluginHomeState}"
                                                       OnContent="" OffContent=""
-                                                      IsVisible="{Binding $parent[UserControl].((vm:PluginsSettingsViewModel)DataContext).IsHomeOnOffSelected, FallbackValue=False}"/>
+                                                      IsVisible="{Binding IsHomeOnOffSelected}"/>
                                     </StackPanel>
                                 </Grid>
                             </Expander.Header>
                             
-                            <Expander.Content>
+                            <Expander.ContentTemplate>
+                                <DataTemplate x:DataType="vm:PluginItemViewModel">
                                 <StackPanel Spacing="15">
                                     <!-- Action Keywords -->
                                     <Grid ColumnDefinitions="*,Auto">
@@ -162,11 +176,11 @@
                                         </StackPanel>
                                     </Grid>
                                 </StackPanel>
-                            </Expander.Content>
+                                </DataTemplate>
+                            </Expander.ContentTemplate>
                         </Expander>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-        </ScrollViewer>
     </Grid>
 </UserControl>

@@ -4,6 +4,7 @@ using Avalonia;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Media;
@@ -32,6 +33,7 @@ public partial class PluginsSettingsViewModel : ObservableObject, IDisposable
         
         LoadDisplayModes();
         LoadPlugins();
+        _filteredPlugins = Plugins;
 
         _settingsPropertyChangedHandler = (_, e) =>
         {
@@ -53,28 +55,68 @@ public partial class PluginsSettingsViewModel : ObservableObject, IDisposable
     [ObservableProperty]
     private string _searchText = string.Empty;
 
-    public IEnumerable<PluginItemViewModel> FilteredPlugins => 
-        string.IsNullOrWhiteSpace(SearchText) 
-            ? Plugins 
-            : Plugins.Where(p => 
-                p.Name.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
-                p.Description.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
-                p.ActionKeywordsText.Contains(SearchText, StringComparison.OrdinalIgnoreCase)
-            );
+    [ObservableProperty]
+    private IReadOnlyList<PluginItemViewModel> _filteredPlugins;
 
-    partial void OnSearchTextChanged(string value) => OnPropertyChanged(nameof(FilteredPlugins));
+    private CancellationTokenSource? _filterCts;
+    private const int SearchDebounceMs = 150;
+
+    partial void OnSearchTextChanged(string value) => _ = ApplyFilterDebouncedAsync(value);
+
+    private async Task ApplyFilterDebouncedAsync(string text)
+    {
+        _filterCts?.Cancel();
+        _filterCts?.Dispose();
+        _filterCts = null;
+
+        if (string.IsNullOrWhiteSpace(text))
+        {
+            FilteredPlugins = Plugins;
+            return;
+        }
+
+        var cts = new CancellationTokenSource();
+        _filterCts = cts;
+        try
+        {
+            await Task.Delay(SearchDebounceMs, cts.Token);
+        }
+        catch (OperationCanceledException)
+        {
+            return;
+        }
+
+        if (cts.IsCancellationRequested)
+            return;
+
+        var filtered = new List<PluginItemViewModel>();
+        foreach (var p in Plugins)
+        {
+            if (p.Name.Contains(text, StringComparison.OrdinalIgnoreCase) ||
+                p.Description.Contains(text, StringComparison.OrdinalIgnoreCase) ||
+                p.ActionKeywordsText.Contains(text, StringComparison.OrdinalIgnoreCase))
+            {
+                filtered.Add(p);
+            }
+        }
+        FilteredPlugins = filtered;
+    }
 
     private void LoadPlugins()
     {
         var allPlugins = PluginManager.GetAllLoadedPlugins();
+        var mode = SelectedDisplayModeItem?.Value ?? DisplayMode.OnOff;
         foreach (var plugin in allPlugins.OrderBy(p => p.Metadata.Disabled).ThenBy(p => p.Metadata.Name))
         {
-            Plugins.Add(new PluginItemViewModel(plugin, _settings));
+            Plugins.Add(new PluginItemViewModel(plugin, _settings) { Mode = mode });
         }
     }
     public void Dispose()
     {
         _settings.PropertyChanged -= _settingsPropertyChangedHandler;
+        _filterCts?.Cancel();
+        _filterCts?.Dispose();
+        _filterCts = null;
 
         foreach (var plugin in Plugins)
         {
@@ -166,6 +208,11 @@ public partial class PluginsSettingsViewModel : ObservableObject, IDisposable
         IsPrioritySelected = mode == DisplayMode.Priority;
         IsSearchDelaySelected = mode == DisplayMode.SearchDelay;
         IsHomeOnOffSelected = mode == DisplayMode.HomeOnOff;
+
+        foreach (var plugin in Plugins)
+        {
+            plugin.Mode = mode;
+        }
     }
 
     #endregion
@@ -263,18 +310,11 @@ public partial class PluginItemViewModel : ObservableObject, IDisposable
             }
         }
 
-        // Initialize Avalonia settings if available
+        // Avalonia settings panel is created lazily on first expand; detect support cheaply
+        // by checking whether the plugin overrides the default (null-returning) interface method.
         if (HasSettings && _settingProvider != null)
         {
-            try
-            {
-                AvaloniaSettingControl = _settingProvider.CreateSettingPanelAvalonia() as Control;
-                HasNativeAvaloniaSettings = AvaloniaSettingControl != null;
-            }
-            catch (Exception ex)
-            {
-                Flow.Launcher.Infrastructure.Logger.Log.Exception(nameof(PluginItemViewModel), $"Failed to create Avalonia settings for {Name}", ex);
-            }
+            HasNativeAvaloniaSettings = OverridesAvaloniaSettingPanel(_settingProvider);
         }
 
         // Listen to metadata changes
@@ -301,6 +341,85 @@ public partial class PluginItemViewModel : ObservableObject, IDisposable
         _plugin.Metadata.PropertyChanged -= _metadataChangedHandler;
     }
 
+    private static readonly Dictionary<Type, bool> s_overridesAvaloniaPanel = new();
+
+    private static bool OverridesAvaloniaSettingPanel(ISettingProvider provider)
+    {
+        var type = provider.GetType();
+        lock (s_overridesAvaloniaPanel)
+        {
+            if (s_overridesAvaloniaPanel.TryGetValue(type, out var cached))
+                return cached;
+
+            var result = false;
+            try
+            {
+                var map = type.GetInterfaceMap(typeof(ISettingProvider));
+                for (var i = 0; i < map.InterfaceMethods.Length; i++)
+                {
+                    if (map.InterfaceMethods[i].Name == nameof(ISettingProvider.CreateSettingPanelAvalonia))
+                    {
+                        result = map.TargetMethods[i].DeclaringType != typeof(ISettingProvider);
+                        break;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                result = true; // fall back to probing on expand
+            }
+
+            s_overridesAvaloniaPanel[type] = result;
+            return result;
+        }
+    }
+
+    private bool _settingControlCreated;
+
+    private void EnsureAvaloniaSettingControl()
+    {
+        if (_settingControlCreated || !HasNativeAvaloniaSettings || _settingProvider == null)
+            return;
+
+        _settingControlCreated = true;
+        try
+        {
+            AvaloniaSettingControl = _settingProvider.CreateSettingPanelAvalonia() as Control;
+        }
+        catch (Exception ex)
+        {
+            Flow.Launcher.Infrastructure.Logger.Log.Exception(nameof(PluginItemViewModel), $"Failed to create Avalonia settings for {Name}", ex);
+        }
+
+        if (AvaloniaSettingControl == null)
+            HasNativeAvaloniaSettings = false;
+    }
+
+    // Null until first expand so the Expander body template is not instantiated for collapsed rows.
+    [ObservableProperty]
+    private PluginItemViewModel? _expandedBody;
+
+    partial void OnIsExpandedChanged(bool value)
+    {
+        if (!value)
+            return;
+
+        EnsureAvaloniaSettingControl();
+        ExpandedBody ??= this;
+    }
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(IsOnOffSelected))]
+    [NotifyPropertyChangedFor(nameof(IsPrioritySelected))]
+    [NotifyPropertyChangedFor(nameof(IsSearchDelaySelected))]
+    [NotifyPropertyChangedFor(nameof(IsHomeOnOffSelected))]
+    private PluginsSettingsViewModel.DisplayMode _mode;
+
+    public bool IsOnOffSelected => Mode == PluginsSettingsViewModel.DisplayMode.OnOff;
+    public bool IsPrioritySelected => Mode == PluginsSettingsViewModel.DisplayMode.Priority;
+    public bool IsSearchDelaySelected => Mode == PluginsSettingsViewModel.DisplayMode.SearchDelay;
+    public bool IsHomeOnOffSelected => Mode == PluginsSettingsViewModel.DisplayMode.HomeOnOff;
+
     [ObservableProperty]
     private IImage? _icon;
 
@@ -308,6 +427,7 @@ public partial class PluginItemViewModel : ObservableObject, IDisposable
     private bool _hasSettings;
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(HasWpfOnlySettings))]
     private bool _hasNativeAvaloniaSettings;
 
     /// <summary>

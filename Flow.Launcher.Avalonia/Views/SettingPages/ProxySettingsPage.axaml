@@ -9,6 +9,7 @@
              x:Class="Flow.Launcher.Avalonia.Views.SettingPages.ProxySettingsPage"
              x:DataType="vm:ProxySettingsViewModel">
 
+    <ScrollViewer>
     <StackPanel Spacing="20">
         <TextBlock Text="{i18n:Localize proxy}" FontSize="28" FontWeight="SemiBold" />
 
@@ -44,4 +45,5 @@
         </ui:FASettingsExpander>
 
     </StackPanel>
+    </ScrollViewer>
 </UserControl>

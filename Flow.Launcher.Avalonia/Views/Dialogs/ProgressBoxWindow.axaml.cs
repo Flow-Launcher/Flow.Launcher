@@ -1,3 +1,4 @@
+using System.Threading;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -75,9 +76,13 @@ public partial class ProgressBoxWindow : Window, INotifyPropertyChanged
 
     public static async System.Threading.Tasks.Task ShowAsync(string caption, Func<Action<double>, System.Threading.Tasks.Task> reportProgressAsync, Action? cancelProgress = null)
     {
-        var progressWindow = new ProgressBoxWindow(caption, cancelProgress);
-
-        await Dispatcher.UIThread.InvokeAsync(progressWindow.Show);
+        // Callers may be on a worker thread; the Window must be created on the UI thread.
+        var progressWindow = await Dispatcher.UIThread.InvokeAsync(() =>
+        {
+            var window = new ProgressBoxWindow(caption, cancelProgress);
+            window.Show();
+            return window;
+        });
 
         try
         {
@@ -94,11 +99,23 @@ public partial class ProgressBoxWindow : Window, INotifyPropertyChanged
         AvaloniaXamlLoader.Load(this);
     }
 
+    private double _pendingProgress;
+    private int _progressPosted;
+
+    // Downloads report every 8 KiB; keep at most one dispatcher callback queued and apply the latest value.
     private void ReportProgress(double progress)
     {
+        Volatile.Write(ref _pendingProgress, progress);
+        if (Interlocked.Exchange(ref _progressPosted, 1) == 1)
+        {
+            return;
+        }
+
         Dispatcher.UIThread.Post(() =>
         {
-            if (progress < 0)
+            Volatile.Write(ref _progressPosted, 0);
+            var latest = Volatile.Read(ref _pendingProgress);
+            if (latest < 0)
             {
                 IsIndeterminate = true;
                 ProgressText = "Working...";
@@ -106,7 +123,7 @@ public partial class ProgressBoxWindow : Window, INotifyPropertyChanged
             }
 
             IsIndeterminate = false;
-            ProgressValue = Math.Clamp(progress, 0, 100);
+            ProgressValue = Math.Clamp(latest, 0, 100);
             ProgressText = $"{Math.Round(ProgressValue)}%";
 
             if (ProgressValue >= 100 && IsVisible)

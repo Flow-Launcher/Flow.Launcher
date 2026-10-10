@@ -24,8 +24,7 @@
             <ui:FANavigationViewItem Content="{i18n:Localize about}" Tag="About" IconSource="Help" />
         </ui:FANavigationView.MenuItems>
 
-        <ScrollViewer Name="ContentFrame" Padding="20">
-            <!-- Content will be loaded here -->
-        </ScrollViewer>
+        <!-- Pages scroll themselves; an outer ScrollViewer would give them infinite height and defeat virtualization. -->
+        <Panel Name="ContentFrame" Margin="20" />
     </ui:FANavigationView>
 </Window>

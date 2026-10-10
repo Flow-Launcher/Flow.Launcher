@@ -65,8 +65,35 @@ namespace Flow.Launcher.Avalonia.ViewModel.SettingPages
         }
 
         [ObservableProperty]
-        [NotifyPropertyChangedFor(nameof(FilteredPlugins))]
         private string _filterText = string.Empty;
+
+        private System.Threading.CancellationTokenSource? _filterCts;
+
+        // Debounce text filtering (fuzzy search over every plugin) so it doesn't run per keystroke.
+        partial void OnFilterTextChanged(string value) => _ = RefreshFilterDebouncedAsync(value);
+
+        private async Task RefreshFilterDebouncedAsync(string value)
+        {
+            _filterCts?.Cancel();
+            _filterCts?.Dispose();
+            _filterCts = null;
+
+            if (!string.IsNullOrEmpty(value))
+            {
+                var cts = new System.Threading.CancellationTokenSource();
+                _filterCts = cts;
+                try
+                {
+                    await Task.Delay(150, cts.Token);
+                }
+                catch (OperationCanceledException)
+                {
+                    return;
+                }
+            }
+
+            OnPropertyChanged(nameof(FilteredPlugins));
+        }
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(FilteredPlugins))]

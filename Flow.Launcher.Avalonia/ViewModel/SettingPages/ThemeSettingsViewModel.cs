@@ -37,7 +37,7 @@ public partial class ThemeSettingsViewModel : ObservableObject, IDisposable
         ColorSchemeOptions = DropdownDataGeneric<ColorSchemes>.GetEnumData("ColorScheme");
         BackdropTypesList = DropdownDataGeneric<BackdropTypes>.GetEnumData("BackdropTypes");
         AnimationSpeedOptions = DropdownDataGeneric<AnimationSpeeds>.GetEnumData("AnimationSpeed");
-        AvailableFonts = FontManager.Current.SystemFonts.OrderBy(font => font.Name).Select(font => font.Name).Distinct().ToList();
+        AvailableFonts = SystemFontCache.FontNames;
         Themes = LoadThemes();
 
         _settingsPropertyChangedHandler = (_, e) =>
@@ -216,7 +216,6 @@ public partial class ThemeSettingsViewModel : ObservableObject, IDisposable
 
             _settings.QueryBoxFont = value;
             OnPropertyChanged();
-            OnPropertyChanged(nameof(QueryTypefaceOptions));
             OnPropertyChanged(nameof(SelectedQueryTypeface));
         }
     }
@@ -233,7 +232,6 @@ public partial class ThemeSettingsViewModel : ObservableObject, IDisposable
 
             _settings.ResultFont = value;
             OnPropertyChanged();
-            OnPropertyChanged(nameof(ResultTypefaceOptions));
             OnPropertyChanged(nameof(SelectedResultTypeface));
         }
     }
@@ -250,12 +248,11 @@ public partial class ThemeSettingsViewModel : ObservableObject, IDisposable
 
             _settings.ResultSubFont = value;
             OnPropertyChanged();
-            OnPropertyChanged(nameof(ResultSubTypefaceOptions));
             OnPropertyChanged(nameof(SelectedResultSubTypeface));
         }
     }
 
-    public List<FontTypefaceOption> QueryTypefaceOptions => GetTypefaceOptions(QueryFont);
+    public List<FontTypefaceOption> QueryTypefaceOptions => TypefaceOptions;
 
     public FontTypefaceOption? SelectedQueryTypeface
     {
@@ -274,7 +271,7 @@ public partial class ThemeSettingsViewModel : ObservableObject, IDisposable
         }
     }
 
-    public List<FontTypefaceOption> ResultTypefaceOptions => GetTypefaceOptions(ResultFont);
+    public List<FontTypefaceOption> ResultTypefaceOptions => TypefaceOptions;
 
     public FontTypefaceOption? SelectedResultTypeface
     {
@@ -293,7 +290,7 @@ public partial class ThemeSettingsViewModel : ObservableObject, IDisposable
         }
     }
 
-    public List<FontTypefaceOption> ResultSubTypefaceOptions => GetTypefaceOptions(ResultSubFont);
+    public List<FontTypefaceOption> ResultSubTypefaceOptions => TypefaceOptions;
 
     public FontTypefaceOption? SelectedResultSubTypeface
     {
@@ -601,16 +598,14 @@ public partial class ThemeSettingsViewModel : ObservableObject, IDisposable
         _settings.PropertyChanged -= _settingsPropertyChangedHandler;
     }
 
-    private static List<FontTypefaceOption> GetTypefaceOptions(string familyName)
-    {
-        return
-        [
-            new FontTypefaceOption("Normal", "Normal", "Normal", "Normal"),
-            new FontTypefaceOption("Bold", "Normal", "Bold", "Normal"),
-            new FontTypefaceOption("Italic", "Italic", "Normal", "Normal"),
-            new FontTypefaceOption("Bold Italic", "Italic", "Bold", "Normal")
-        ];
-    }
+    // Typeface options do not depend on the font family; share one immutable list.
+    private static readonly List<FontTypefaceOption> TypefaceOptions =
+    [
+        new FontTypefaceOption("Normal", "Normal", "Normal", "Normal"),
+        new FontTypefaceOption("Bold", "Normal", "Bold", "Normal"),
+        new FontTypefaceOption("Italic", "Italic", "Normal", "Normal"),
+        new FontTypefaceOption("Bold Italic", "Italic", "Bold", "Normal")
+    ];
 
     private static FontTypefaceOption? FindTypefaceOption(IEnumerable<FontTypefaceOption> options, string? style, string? weight, string? stretch)
     {

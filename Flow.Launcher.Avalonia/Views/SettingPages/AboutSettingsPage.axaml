@@ -91,7 +91,9 @@
                             <Button Content="{i18n:Localize commonReset}" Command="{Binding ResetSettingWindowFontCommand}" />
                             <ComboBox ItemsSource="{Binding AvailableFonts}"
                                       SelectedItem="{Binding SettingWindowFont, Mode=TwoWay}"
-                                      Width="260" />
+                                      Width="260">
+                                <ComboBox.ItemsPanel><ItemsPanelTemplate><VirtualizingStackPanel /></ItemsPanelTemplate></ComboBox.ItemsPanel>
+                            </ComboBox>
                         </StackPanel>
                     </ui:FASettingsExpanderItem>
                 </ui:FASettingsExpander.Items>
