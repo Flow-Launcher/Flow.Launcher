@@ -51,7 +51,7 @@
                     </ControlTemplate>
                 </Button.Template>
                 <Button.Content>
-                    <Grid Margin="4 10 4 4" UseLayoutRounding="False">
+                    <Grid Margin="4 4 4 2" UseLayoutRounding="False">
                         <Grid.Resources>
                             <converter:HighlightTextConverter x:Key="HighlightTextConverter" />
                         </Grid.Resources>
@@ -112,7 +112,7 @@
                         <TextBlock
                             x:Name="Title"
                             Grid.Row="1"
-                            Margin="0 6 0 0"
+                            Margin="0 2 0 0"
                             HorizontalAlignment="Center"
                             FontSize="{Binding Settings.ResultSubItemFontSize, Mode=OneWay}"
                             IsEnabled="False"
