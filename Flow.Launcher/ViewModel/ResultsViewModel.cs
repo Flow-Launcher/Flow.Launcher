@@ -49,6 +49,7 @@ namespace Flow.Launcher.ViewModel
                         break;
                     case nameof(_settings.ResultLayout):
                         OnPropertyChanged(nameof(IsGridLayout));
+                        OnPropertyChanged(nameof(MaxHeight));
                         break;
                 }
             };
@@ -73,7 +74,8 @@ namespace Flow.Launcher.ViewModel
                         newResultsCount = MaxResults;
                     }
                 }
-                return newResultsCount * _settings.ItemHeightSize;
+                var height = newResultsCount * _settings.ItemHeightSize;
+                return IsGridLayout ? Math.Max(GridCellHeight, height) : height;
             }
         }
 
