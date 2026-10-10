@@ -21,8 +21,6 @@ public static class TextBlockHelper
     public static readonly AttachedProperty<IList<int>?> HighlightDataProperty =
         AvaloniaProperty.RegisterAttached<TextBlock, IList<int>?>("HighlightData", typeof(TextBlockHelper));
 
-    private static IBrush? _fallbackBrush;
-
     static TextBlockHelper()
     {
         HighlightTextProperty.Changed.AddClassHandler<TextBlock>(OnHighlightChanged);
@@ -55,7 +53,7 @@ public static class TextBlockHelper
         var inlines = textBlock.Inlines ??= new InlineCollection();
         inlines.Clear();
 
-        System.Span<bool> marks = text.Length <= 256 ? stackalloc bool[text.Length] : new bool[text.Length];
+        var marks = new bool[text.Length];
         foreach (var index in highlightData)
         {
             if ((uint)index < (uint)text.Length)
@@ -89,7 +87,7 @@ public static class TextBlockHelper
             return brush;
         }
 
-        return _fallbackBrush ??= new SolidColorBrush(Colors.Gold);
+        return new SolidColorBrush(Colors.Gold);
     }
 
     private static Run CreateRun(string text, bool isHighlight, IBrush brush)

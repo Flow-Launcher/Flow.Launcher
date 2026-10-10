@@ -22,9 +22,6 @@ public static partial class ImageLoader
     // Completed images keyed by (path, decode width); 0 width = full size.
     private static readonly ConcurrentDictionary<(string Path, int Width), IImage?> _cache = new();
 
-    // Loads in progress, shared by concurrent callers for the same key.
-    private static readonly ConcurrentDictionary<(string Path, int Width), Task<IImage?>> _inflight = new();
-
     // Default image (lazy loaded)
     private static IImage? _defaultImage;
 
@@ -52,22 +49,8 @@ public static partial class ImageLoader
         if (_cache.TryGetValue(key, out var cached))
             return Task.FromResult(cached);
 
-        // Share one background load between concurrent callers
-        return _inflight.GetOrAdd(key, static k => Task.Run(() => LoadAndCacheAsync(k)));
-    }
-
-    private static async Task<IImage?> LoadAndCacheAsync((string Path, int Width) key)
-    {
-        try
-        {
-            var image = await LoadCore(key.Path, key.Width);
-            _cache.TryAdd(key, image);
-            return image;
-        }
-        finally
-        {
-            _inflight.TryRemove(key, out _);
-        }
+        // Load on background thread to avoid blocking UI
+        return Task.Run(() => LoadCore(path, decodeWidth));
     }
 
     /// <summary>
@@ -102,12 +85,16 @@ public static partial class ImageLoader
                 image = await LoadPlatformIconAsync(path);
             }
 
-            // Cached by the caller even if null-replaced by default, to avoid repeated attempts
-            return image ?? DefaultImage;
+            // Cache the result (even if null, to avoid repeated attempts)
+            image ??= DefaultImage;
+            _cache.TryAdd((path, decodeWidth), image);
+
+            return image;
         }
         catch (Exception ex)
         {
             Log.Debug(ClassName, $"Failed to load image: {path}, Error: {ex.Message}");
+            _cache.TryAdd((path, decodeWidth), DefaultImage);
             return DefaultImage;
         }
     }
@@ -233,14 +220,9 @@ public static partial class ImageLoader
     /// <summary>
     /// Try to get a cached image without loading.
     /// </summary>
-    public static bool TryGetCached(string? path, out IImage? image) => TryGetCached(path, 0, out image);
-
-    /// <summary>
-    /// Try to get a cached image (decoded for <paramref name="decodeWidth"/>, 0 = full size) without loading.
-    /// </summary>
-    public static bool TryGetCached(string? path, int decodeWidth, out IImage? image)
+    public static bool TryGetCached(string? path, out IImage? image)
     {
-        if (!string.IsNullOrWhiteSpace(path) && _cache.TryGetValue((path, decodeWidth), out image))
+        if (!string.IsNullOrWhiteSpace(path) && _cache.TryGetValue((path, 0), out image))
             return true;
         image = null;
         return false;

@@ -69,19 +69,17 @@ public partial class ResultsViewModel : ObservableObject, IDisposable
         var existingItems = new Dictionary<(string PluginId, string RecordKey, string Query, string Title, string SubTitle), ResultViewModel>(_sourceList.Count);
         foreach (var existingItem in _sourceList.Items)
         {
-            existingItems.TryAdd(existingItem.IdentityKey, existingItem);
+            existingItems.TryAdd(ResultViewModelComparer.GetIdentityKey(existingItem), existingItem);
         }
         foreach (var newItem in resultsList)
         {
-            if (existingItems.TryGetValue(newItem.IdentityKey, out var existing) && !ReferenceEquals(existing, newItem))
+            if (existingItems.TryGetValue(ResultViewModelComparer.GetIdentityKey(newItem), out var existing))
             {
-                // Only write values that actually differ so kept rows don't re-run their bindings.
                 existing.PluginResult = newItem.PluginResult;
                 existing.HistoryItem = newItem.HistoryItem;
-                existing.IconPath = newItem.IconPath; // string compare in generated setter
-                existing.Glyph = newItem.Glyph; // GlyphInfo is a record: value compare in setter
-                if (!SequenceEqual(existing.TitleHighlightData, newItem.TitleHighlightData))
-                    existing.TitleHighlightData = newItem.TitleHighlightData;
+                existing.IconPath = newItem.IconPath;
+                existing.Glyph = newItem.Glyph;
+                existing.TitleHighlightData = newItem.TitleHighlightData;
                 existing.Score = newItem.Score;
             }
         }
@@ -127,9 +125,6 @@ public partial class ResultsViewModel : ObservableObject, IDisposable
 
     public void Clear()
     {
-        if (_sourceList.Count == 0 && SelectedItem == null && SelectedIndex == -1)
-            return;
-
         _sourceList.Clear();
         SelectedItem = null;
         SelectedIndex = -1;
@@ -196,21 +191,19 @@ public partial class ResultsViewModel : ObservableObject, IDisposable
             return GetIdentityKey(obj).GetHashCode();
         }
 
-        public static string GetPluginId(ResultViewModel item) => item.IdentityKey.PluginId;
-
-        public static (string PluginId, string RecordKey, string Query, string Title, string SubTitle) GetIdentityKey(ResultViewModel item)
-            => item.IdentityKey;
-    }
-
-    private static bool SequenceEqual(IList<int>? a, IList<int>? b)
-    {
-        if (ReferenceEquals(a, b)) return true;
-        if (a is null || b is null || a.Count != b.Count) return false;
-        for (var i = 0; i < a.Count; i++)
+        public static string GetPluginId(ResultViewModel item)
         {
-            if (a[i] != b[i]) return false;
+            return item.PluginResult?.PluginID ?? item.HistoryItem?.PluginID ?? string.Empty;
         }
 
-        return true;
+        public static (string PluginId, string RecordKey, string Query, string Title, string SubTitle) GetIdentityKey(ResultViewModel item)
+        {
+            return (
+                item.PluginResult?.PluginID ?? item.HistoryItem?.PluginID ?? string.Empty,
+                item.PluginResult?.RecordKey ?? item.HistoryItem?.RecordKey ?? string.Empty,
+                item.HistoryItem?.Query ?? string.Empty,
+                item.Title,
+                item.SubTitle);
+        }
     }
 }

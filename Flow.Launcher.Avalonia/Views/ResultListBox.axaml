@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:Flow.Launcher.Avalonia.ViewModel"
              xmlns:helper="using:Flow.Launcher.Avalonia.Helper"
-             xmlns:converters="using:Flow.Launcher.Avalonia.Converters"
              mc:Ignorable="d" d:DesignWidth="580" d:DesignHeight="300"
              x:Class="Flow.Launcher.Avalonia.Views.ResultListBox"
              x:DataType="vm:ResultsViewModel">
@@ -52,7 +51,7 @@
                             
                             <!-- Image Icon -->
                             <Image Classes="resultIcon"
-                                   Source="{Binding Icon}"
+                                   Source="{Binding ListIcon^, FallbackValue={x:Static helper:ImageLoader.DefaultImage}}"
                                    IsVisible="{Binding !ShowGlyph}"
                                    RenderOptions.BitmapInterpolationMode="HighQuality"
                                    HorizontalAlignment="Center"
