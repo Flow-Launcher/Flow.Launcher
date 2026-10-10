@@ -150,7 +150,7 @@
     <system:String x:Key="HelpUsTranslateFlow">Ajude-nos a traduzir Flow Launcher</system:String>
 
     <system:String x:Key="AlwaysPreview">Pré-visualizar sempre</system:String>
-    <system:String x:Key="AlwaysPreviewToolTip">Abrir painel de pré-visualização ao ativar Flow Launcher. Prima {0} para comutar a pré-visualização.</system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Abrir sempre o painel de pré-visualização. Prima {0} para alternar. Alguns plugins, conforme os seus requisitos, podem sobrepor-se a esta definição.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">O efeito sombra não é permitido com este tema porque o efeito desfocar está ativo</system:String>
     <system:String x:Key="searchDelay">Atraso da pesquisa</system:String>
     <system:String x:Key="searchDelayToolTip">Adiciona um pequeno atraso durante a escrita para reduzir a oscilação ao carregar os resultados. Recomendado se a sua velocidade de escrita for média.</system:String>
@@ -328,11 +328,11 @@
     <system:String x:Key="ColorSchemeSystem">Padrão do sistema</system:String>
     <system:String x:Key="ColorSchemeLight">Claro</system:String>
     <system:String x:Key="ColorSchemeDark">Escuro</system:String>
-    <system:String x:Key="CodeHighlightTheme">Code Highlight Theme</system:String>
-    <system:String x:Key="CodeHighlightThemeTooltip">Syntax highlighting theme for code blocks in the markdown preview pane.</system:String>
-    <system:String x:Key="CodeHighlightThemeAuto">Auto (match color scheme)</system:String>
-    <system:String x:Key="CodeHighlightThemeVSCodeLight">VS Code Light</system:String>
-    <system:String x:Key="CodeHighlightThemeVSCodeDarkPlus">VS Code Dark+</system:String>
+    <system:String x:Key="CodeHighlightTheme">Tema para destaque de código</system:String>
+    <system:String x:Key="CodeHighlightThemeTooltip">Tema para destaque de código em blocos de código no painel de pré-visualização.</system:String>
+    <system:String x:Key="CodeHighlightThemeAuto">Automático (corresponde ao esquema de cores)</system:String>
+    <system:String x:Key="CodeHighlightThemeVSCodeLight">VS Code Claro</system:String>
+    <system:String x:Key="CodeHighlightThemeVSCodeDarkPlus">VS Código Escuro+</system:String>
     <system:String x:Key="CodeHighlightThemeCatppuccinMacchiato">Catppuccin Macchiato</system:String>
     <system:String x:Key="CodeHighlightThemeOneDark">One Dark</system:String>
     <system:String x:Key="SoundEffect">Efeitos sonoros</system:String>
@@ -495,7 +495,7 @@
     <system:String x:Key="clearcachefolderMessage">Tem a certeza de que pretende limpar todas as caches?</system:String>
     <system:String x:Key="clearfolderfailMessage">Não foi possível limpar todas as pastas e ficheiros. Consulte o ficheiro de registo para mais informações.</system:String>
     <system:String x:Key="welcomewindow">Assistente</system:String>
-    <system:String x:Key="openWelcomeWindow">Open Welcome Window</system:String>
+    <system:String x:Key="openWelcomeWindow">Abrir janela de boas-vindas</system:String>
     <system:String x:Key="userdatapath">Localização dos dados do utilizador</system:String>
     <system:String x:Key="userdatapathToolTip">As definições e os plugins instalados são guardados na pasta de dados do utilizador. A localização pode variar, tendo em conta se a aplicação está instalada ou no modo portátil</system:String>
     <system:String x:Key="userdatapathButton">Abrir pasta</system:String>
@@ -503,7 +503,7 @@
     <system:String x:Key="devtoolsReportWindow">Janela de avisos</system:String>
     <system:String x:Key="devtoolsProgressWindow">Janela de progresso</system:String>
     <system:String x:Key="devtoolsPluginUpdateWindow">Janela de atualização de plugins</system:String>
-    <system:String x:Key="devtoolsMessageBoxWindow">Janela da Caixa de Mensagens</system:String>
+    <system:String x:Key="devtoolsMessageBoxWindow">Janela da caixa de mensagens</system:String>
     <system:String x:Key="devtoolsMessageBoxOkLabel">OK</system:String>
     <system:String x:Key="devtoolsMessageBoxOkCancelLabel">Aceitar/Cancelar</system:String>
     <system:String x:Key="devtoolsMessageBoxYesNoLabel">Sim/Não</system:String>
