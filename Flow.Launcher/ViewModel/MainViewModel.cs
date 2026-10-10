@@ -168,7 +168,8 @@ namespace Flow.Launcher.ViewModel
             {
                 LeftClickResultCommand = OpenResultCommand,
                 RightClickResultCommand = LoadContextMenuCommand,
-                IsPreviewOn = Settings.AlwaysPreview
+                IsPreviewOn = Settings.AlwaysPreview,
+                SupportsGridLayout = true
             };
             History = new ResultsViewModel(Settings, this)
             {

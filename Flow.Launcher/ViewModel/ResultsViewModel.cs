@@ -47,6 +47,9 @@ namespace Flow.Launcher.ViewModel
                         OnPropertyChanged(nameof(ItemHeightSize));
                         OnPropertyChanged(nameof(MaxHeight));
                         break;
+                    case nameof(_settings.ResultLayout):
+                        OnPropertyChanged(nameof(IsGridLayout));
+                        break;
                 }
             };
         }
@@ -79,6 +82,29 @@ namespace Flow.Launcher.ViewModel
             get => _settings.ItemHeightSize;
             set => _settings.ItemHeightSize = value;
         }
+
+        public const double GridCellWidth = 96;
+        public const double GridCellHeight = 96;
+
+        public bool SupportsGridLayout { get; init; }
+
+        public bool IsGridLayout => SupportsGridLayout && _settings?.ResultLayout == ResultLayout.Grid;
+
+        private double _availableWidth;
+        public double AvailableWidth
+        {
+            get => _availableWidth;
+            set
+            {
+                _availableWidth = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(GridColumns));
+            }
+        }
+
+        public int GridColumns => Math.Max(1, (int)(AvailableWidth / GridCellWidth));
+
+        private int GridPageSize => Math.Max(1, (int)(MaxHeight / GridCellHeight)) * GridColumns;
 
         public int SelectedIndex { get; set; }
 
@@ -138,12 +164,38 @@ namespace Flow.Launcher.ViewModel
 
         public void SelectNextPage()
         {
-            SelectedIndex = NewIndex(SelectedIndex + MaxResults);
+            SelectedIndex = IsGridLayout
+                ? GridNavigation.NextPage(SelectedIndex, Results.Count, GridPageSize)
+                : NewIndex(SelectedIndex + MaxResults);
         }
 
         public void SelectPrevPage()
         {
-            SelectedIndex = NewIndex(SelectedIndex - MaxResults);
+            SelectedIndex = IsGridLayout
+                ? GridNavigation.PrevPage(SelectedIndex, Results.Count, GridPageSize)
+                : NewIndex(SelectedIndex - MaxResults);
+        }
+
+        public void SelectNextGridRow()
+        {
+            SelectedIndex = GridNavigation.NextRow(SelectedIndex, Results.Count, GridColumns);
+        }
+
+        public bool TrySelectPrevGridRow()
+        {
+            var move = GridNavigation.PrevRow(SelectedIndex, Results.Count, GridColumns);
+            SelectedIndex = move.Index;
+            return !move.LeavesGrid;
+        }
+
+        public void SelectNextGridCell()
+        {
+            SelectedIndex = GridNavigation.NextCell(SelectedIndex, Results.Count);
+        }
+
+        public void SelectPrevGridCell()
+        {
+            SelectedIndex = GridNavigation.PrevCell(SelectedIndex, Results.Count);
         }
 
         public void SelectFirstResult()
