@@ -530,6 +530,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
 
         WindowHeightSize = 42;
         ItemHeightSize = 58;
+        Settings.ResetSearchWindowSize();
     }
     
     [RelayCommand]
