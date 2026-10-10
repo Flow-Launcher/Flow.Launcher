@@ -280,7 +280,7 @@ namespace Flow.Launcher
                             : Properties.Resources.app;
                         break;
                     case nameof(MainViewModel.IsGridNavigationActive):
-                        Dispatcher.Invoke(UpdateQueryCaretVisibility);
+                        Dispatcher.BeginInvoke(new Action(UpdateQueryCaretVisibility));
                         break;
                 }
             };
