@@ -11,11 +11,11 @@
              x:DataType="vm:GeneralSettingsViewModel">
 
     <ScrollViewer>
-        <StackPanel Spacing="4" Margin="0,18,25,30">
-            <TextBlock Text="{i18n:Localize general}" FontSize="28" FontWeight="SemiBold" Margin="0,0,0,8" />
+        <StackPanel Spacing="4" Margin="0,0,16,24">
+            <TextBlock Text="{i18n:Localize general}" Classes="pageTitle" Margin="0,0,0,12" />
 
             <ui:FASettingsExpander Header="{i18n:Localize startFlowLauncherOnSystemStartup}"
-                                IconSource="Power"
+                                IconSource="Play"
                                 IsExpanded="False">
                 <ui:FASettingsExpander.Footer>
                     <ToggleSwitch IsChecked="{Binding StartOnStartup}" />
@@ -31,14 +31,14 @@
 
             <ui:FASettingsExpander Header="{i18n:Localize hideOnStartup}"
                                 Description="{i18n:Localize hideOnStartupToolTip}"
-                                IconSource="Hide">
+                                IconSource="FullScreenMinimize">
                 <ui:FASettingsExpander.Footer>
                     <ToggleSwitch IsChecked="{Binding HideOnStartup}" />
                 </ui:FASettingsExpander.Footer>
             </ui:FASettingsExpander>
 
             <ui:FASettingsExpander Header="{i18n:Localize hideFlowLauncherWhenLoseFocus}"
-                                IconSource="Hide">
+                                IconSource="BackToWindow">
                 <ui:FASettingsExpander.Footer>
                     <ToggleSwitch IsChecked="{Binding HideWhenDeactivated}" />
                 </ui:FASettingsExpander.Footer>
@@ -55,7 +55,7 @@
 
             <ui:FASettingsExpander Header="{i18n:Localize hideNotifyIcon}"
                                 Description="{i18n:Localize hideNotifyIconToolTip}"
-                                IconSource="Hide">
+                                IconSource="Pin">
                 <ui:FASettingsExpander.Footer>
                     <ToggleSwitch IsChecked="{Binding HideNotifyIcon}" />
                 </ui:FASettingsExpander.Footer>
@@ -70,7 +70,7 @@
             </ui:FASettingsExpander>
 
             <ui:FASettingsExpander Header="{i18n:Localize SearchWindowPosition}"
-                                IconSource="MoveUp"
+                                IconSource="MapPin"
                                 IsExpanded="False">
                 <ui:FASettingsExpander.Footer>
                     <ComboBox ItemsSource="{Binding SearchWindowScreens}"

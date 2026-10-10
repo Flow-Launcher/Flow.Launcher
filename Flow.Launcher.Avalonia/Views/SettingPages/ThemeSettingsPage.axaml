@@ -11,8 +11,8 @@
              x:DataType="vm:ThemeSettingsViewModel">
 
     <ScrollViewer>
-        <StackPanel Spacing="8" Margin="0,18,25,30">
-            <TextBlock Text="{i18n:Localize appearance}" FontSize="28" FontWeight="SemiBold" Margin="0,0,0,8" />
+        <StackPanel Spacing="4" Margin="0,0,16,24">
+            <TextBlock Text="{i18n:Localize appearance}" Classes="pageTitle" Margin="0,0,0,12" />
 
             <!-- Theme preview: a mock of the launcher window drawn with the same resources as MainWindow -->
             <Border Margin="0,0,0,12"

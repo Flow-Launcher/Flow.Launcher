@@ -19,10 +19,10 @@
         </Style>
     </UserControl.Styles>
 
-    <Grid RowDefinitions="Auto,Auto,*">
+    <Grid RowDefinitions="Auto,Auto,*" Margin="0,0,16,0">
         <!-- Header -->
-        <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="0,0,0,10">
-            <TextBlock Text="{i18n:Localize plugins}" FontSize="28" FontWeight="SemiBold" VerticalAlignment="Center"/>
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="0,0,0,12">
+            <TextBlock Text="{i18n:Localize plugins}" Classes="pageTitle"/>
             
             <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10">
                 <TextBlock Text="{i18n:Localize FilterComboboxLabel}" VerticalAlignment="Center" Foreground="{DynamicResource TextFillColorSecondaryBrush}"/>

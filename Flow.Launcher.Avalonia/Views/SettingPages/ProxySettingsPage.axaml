@@ -10,8 +10,8 @@
              x:DataType="vm:ProxySettingsViewModel">
 
     <ScrollViewer>
-    <StackPanel Spacing="20">
-        <TextBlock Text="{i18n:Localize proxy}" FontSize="28" FontWeight="SemiBold" />
+    <StackPanel Spacing="4" Margin="0,0,16,24">
+        <TextBlock Text="{i18n:Localize proxy}" Classes="pageTitle" Margin="0,0,0,12" />
 
         <ui:FASettingsExpander Header="{i18n:Localize enableProxy}"
                             IconSource="Globe">

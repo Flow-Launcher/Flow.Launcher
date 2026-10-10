@@ -10,10 +10,10 @@
              x:Class="Flow.Launcher.Avalonia.Views.SettingPages.PluginStoreSettingsPage"
              x:DataType="vm:PluginStoreSettingsViewModel">
 
-    <Grid RowDefinitions="Auto,Auto,*">
+    <Grid RowDefinitions="Auto,Auto,*" Margin="0,0,16,0">
         <!-- Header -->
-        <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="0,0,0,10">
-            <TextBlock Text="{i18n:Localize pluginStore}" FontSize="28" FontWeight="SemiBold" VerticalAlignment="Center"/>
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="0,0,0,12">
+            <TextBlock Text="{i18n:Localize pluginStore}" Classes="pageTitle"/>
             
             <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10">
                 <Button Command="{Binding RefreshExternalPluginsCommand}" ToolTip.Tip="{i18n:Localize refresh}" AutomationProperties.Name="{i18n:Localize refresh}">
