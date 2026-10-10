@@ -54,6 +54,25 @@ public class OrdinalConverter : IValueConverter
 }
 
 /// <summary>
+/// Shows the open-result hotkey badge only for the first ten results (HOTKEY+1 ... HOTKEY+0).
+/// Input is the 0-based item index.
+/// </summary>
+public class OpenResultHotkeyVisibilityConverter : IValueConverter
+{
+    private const int MaxVisibleHotkeys = 10;
+
+    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        return value is int index && index >= 0 && index < MaxVisibleHotkeys;
+    }
+
+    public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        throw new NotSupportedException();
+    }
+}
+
+/// <summary>
 /// Converts a size to a ratio of itself.
 /// </summary>
 public class SizeRatioConverter : IValueConverter

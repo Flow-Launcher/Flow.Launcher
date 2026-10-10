@@ -45,6 +45,8 @@
     <PackageReference Include="Avalonia.Fonts.Inter" Version="12.1.4" />
     <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3" />
     <PackageReference Include="FluentAvaloniaUI" Version="3.1.0" />
+    <!-- Markdown preview (Result.Preview.ContentType = Markdown) with syntax-highlighted code blocks; MIT, first release line targeting Avalonia 12 -->
+    <PackageReference Include="Markdown.Avalonia" Version="12.0.0-a3" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="DynamicData" Version="9.0.4" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.12" />
