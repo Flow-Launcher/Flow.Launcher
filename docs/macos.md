@@ -50,7 +50,7 @@ User data (settings, logs, cache, plugins installed from the store) is stored in
 
 - The Explorer and WindowsSettings plugins are Windows-only and not bundled.
 - Copying files to the clipboard (file drop) is not supported.
-- Plugin settings panels that exist only in WPF are unavailable. Only plugins that provide Avalonia settings views show settings. Url and WebSearch have no settings panel on macOS.
+- Plugin settings panels that exist only in WPF are unavailable. Only plugins that provide Avalonia settings views (such as Calculator and Sys) show settings. Url and WebSearch have no settings panel on macOS.
 - Dialog Jump, portable mode, Squirrel auto-update, and the Backdrop type setting (Mica/Acrylic) are unavailable. So is the Korean IME option. Themes marked as blur themes (such as macOS) still show the system background blur.
 - Python and Node.js runtimes for plugins are not installed automatically. Set the interpreter paths manually in Settings → General.
 - The `{clipboard}` and `{active_explorer_path}` custom shortcuts are unavailable.
