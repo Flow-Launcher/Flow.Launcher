@@ -13,7 +13,7 @@ namespace Flow.Launcher.Avalonia.Helper;
 /// </summary>
 public static class FontLoader
 {
-    private static readonly ConcurrentDictionary<string, FontFamily> FontFamilyCache = new();
+    private static readonly ConcurrentDictionary<string, FontFamily?> FontFamilyCache = new();
     
     /// <summary>
     /// Get a FontFamily from a GlyphInfo, handling file paths and resource paths.
@@ -41,8 +41,8 @@ public static class FontLoader
         if (result == null && IsFilePath(fontFamilyPath))
             result = LoadFontFromFile(fontFamilyPath);
 
-        if (result != null)
-            FontFamilyCache[fontFamilyPath] = result;
+        // Cache failures too (null) so unresolvable fonts aren't re-probed on every binding read
+        FontFamilyCache[fontFamilyPath] = result;
 
         return result;
     }

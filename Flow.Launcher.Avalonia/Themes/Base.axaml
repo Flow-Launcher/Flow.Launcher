@@ -121,27 +121,6 @@
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
     </Style>
 
-    <!-- Result List Item -->
-    <Style Selector="ListBoxItem.resultItem">
-        <Setter Property="Padding" Value="0" />
-        <Setter Property="Margin" Value="4,2,4,2" />
-        <Setter Property="CornerRadius" Value="6" />
-        <Setter Property="MinHeight" Value="50" />
-        <Setter Property="Background" Value="Transparent" />
-    </Style>
-    
-    <Style Selector="ListBoxItem.resultItem:selected">
-        <Setter Property="Background" Value="#30FFFFFF" />
-    </Style>
-
-    <Style Selector="ListBoxItem.resultItem:selected /template/ ContentPresenter#PART_ContentPresenter">
-        <Setter Property="Background" Value="#30FFFFFF" />
-    </Style>
-
-    <Style Selector="ListBoxItem.resultItem:pointerover">
-        <Setter Property="Background" Value="#20FFFFFF" />
-    </Style>
-
     <!-- Result Item Grid -->
     <Style Selector="Grid.resultItemGrid">
         <Setter Property="Margin" Value="0" />
@@ -196,10 +175,6 @@
         <Setter Property="CornerRadius" Value="1.5" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Margin" Value="0,8,0,8" />
-    </Style>
-
-    <Style Selector="ListBoxItem.resultItem:selected Border.resultBullet">
-        <Setter Property="Background" Value="{DynamicResource SystemAccentColor}" />
     </Style>
 
     <!-- Scrollbar Styles -->

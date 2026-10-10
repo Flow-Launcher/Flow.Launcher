@@ -124,6 +124,9 @@ public static partial class ImageLoader
         return File.Exists(iconPath) ? iconPath : null;
     }
 
+    // Limits concurrent sips/plutil processes when many uncached rows appear at once.
+    private static readonly SemaphoreSlim ToolGate = new(Math.Clamp(Environment.ProcessorCount / 2, 2, 4));
+
     private static async Task<(int ExitCode, string Output, string Error)> RunToolAsync(string command, params string[] arguments)
     {
         var info = new ProcessStartInfo(command)
@@ -136,19 +139,27 @@ public static partial class ImageLoader
         foreach (var argument in arguments)
             info.ArgumentList.Add(argument);
 
-        using var process = Process.Start(info)!;
-        using var timeout = new CancellationTokenSource(ToolTimeout);
-        var outputTask = process.StandardOutput.ReadToEndAsync(timeout.Token);
-        var errorTask = process.StandardError.ReadToEndAsync(timeout.Token);
+        await ToolGate.WaitAsync().ConfigureAwait(false);
         try
         {
-            await process.WaitForExitAsync(timeout.Token);
-            return (process.ExitCode, await outputTask, await errorTask);
+            using var process = Process.Start(info)!;
+            using var timeout = new CancellationTokenSource(ToolTimeout);
+            var outputTask = process.StandardOutput.ReadToEndAsync(timeout.Token);
+            var errorTask = process.StandardError.ReadToEndAsync(timeout.Token);
+            try
+            {
+                await process.WaitForExitAsync(timeout.Token);
+                return (process.ExitCode, await outputTask, await errorTask);
+            }
+            catch (OperationCanceledException)
+            {
+                process.Kill();
+                return (-1, string.Empty, $"{command} timed out");
+            }
         }
-        catch (OperationCanceledException)
+        finally
         {
-            process.Kill();
-            return (-1, string.Empty, $"{command} timed out");
+            ToolGate.Release();
         }
     }
 

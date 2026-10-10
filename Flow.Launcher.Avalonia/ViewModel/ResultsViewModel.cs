@@ -66,21 +66,22 @@ public partial class ResultsViewModel : ObservableObject, IDisposable
         // This is necessary because EditDiff reuses existing ResultViewModel instances
         // based on Title+SubTitle equality, but highlight indices are query-specific.
         // For example, "Chrome" highlighted for "chr" [0,1,2] vs "chrome" [0,1,2,3,4,5].
-        var existingItems = new Dictionary<(string PluginId, string RecordKey, string Query, string Title, string SubTitle), ResultViewModel>();
+        var existingItems = new Dictionary<(string PluginId, string RecordKey, string Query, string Title, string SubTitle), ResultViewModel>(_sourceList.Count);
         foreach (var existingItem in _sourceList.Items)
         {
-            existingItems.TryAdd(ResultViewModelComparer.GetIdentityKey(existingItem), existingItem);
+            existingItems.TryAdd(existingItem.IdentityKey, existingItem);
         }
         foreach (var newItem in resultsList)
         {
-            if (existingItems.TryGetValue(ResultViewModelComparer.GetIdentityKey(newItem), out var existing))
+            if (existingItems.TryGetValue(newItem.IdentityKey, out var existing) && !ReferenceEquals(existing, newItem))
             {
+                // Only write values that actually differ so kept rows don't re-run their bindings.
                 existing.PluginResult = newItem.PluginResult;
                 existing.HistoryItem = newItem.HistoryItem;
-                existing.IconPath = newItem.IconPath;
-                existing.Glyph = newItem.Glyph;
-                existing.TitleHighlightData = newItem.TitleHighlightData;
-                existing.SubTitleHighlightData = newItem.SubTitleHighlightData;
+                existing.IconPath = newItem.IconPath; // string compare in generated setter
+                existing.Glyph = newItem.Glyph; // GlyphInfo is a record: value compare in setter
+                if (!SequenceEqual(existing.TitleHighlightData, newItem.TitleHighlightData))
+                    existing.TitleHighlightData = newItem.TitleHighlightData;
                 existing.Score = newItem.Score;
             }
         }
@@ -126,6 +127,9 @@ public partial class ResultsViewModel : ObservableObject, IDisposable
 
     public void Clear()
     {
+        if (_sourceList.Count == 0 && SelectedItem == null && SelectedIndex == -1)
+            return;
+
         _sourceList.Clear();
         SelectedItem = null;
         SelectedIndex = -1;
@@ -192,19 +196,21 @@ public partial class ResultsViewModel : ObservableObject, IDisposable
             return GetIdentityKey(obj).GetHashCode();
         }
 
-        public static string GetPluginId(ResultViewModel item)
-        {
-            return item.PluginResult?.PluginID ?? item.HistoryItem?.PluginID ?? string.Empty;
-        }
+        public static string GetPluginId(ResultViewModel item) => item.IdentityKey.PluginId;
 
         public static (string PluginId, string RecordKey, string Query, string Title, string SubTitle) GetIdentityKey(ResultViewModel item)
+            => item.IdentityKey;
+    }
+
+    private static bool SequenceEqual(IList<int>? a, IList<int>? b)
+    {
+        if (ReferenceEquals(a, b)) return true;
+        if (a is null || b is null || a.Count != b.Count) return false;
+        for (var i = 0; i < a.Count; i++)
         {
-            return (
-                item.PluginResult?.PluginID ?? item.HistoryItem?.PluginID ?? string.Empty,
-                item.PluginResult?.RecordKey ?? item.HistoryItem?.RecordKey ?? string.Empty,
-                item.HistoryItem?.Query ?? string.Empty,
-                item.Title,
-                item.SubTitle);
+            if (a[i] != b[i]) return false;
         }
+
+        return true;
     }
 }

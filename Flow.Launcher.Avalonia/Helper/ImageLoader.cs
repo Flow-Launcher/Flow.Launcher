@@ -2,6 +2,7 @@ using System;
 using System.Collections.Concurrent;
 using System.IO;
 using System.Threading.Tasks;
+using Avalonia;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
@@ -18,8 +19,11 @@ public static partial class ImageLoader
 {
     private static readonly string ClassName = nameof(ImageLoader);
 
-    // Thread-safe cache
-    private static readonly ConcurrentDictionary<string, IImage?> _cache = new();
+    // Completed images keyed by (path, decode width); 0 width = full size.
+    private static readonly ConcurrentDictionary<(string Path, int Width), IImage?> _cache = new();
+
+    // Loads in progress, shared by concurrent callers for the same key.
+    private static readonly ConcurrentDictionary<(string Path, int Width), Task<IImage?>> _inflight = new();
 
     // Default image (lazy loaded)
     private static IImage? _defaultImage;
@@ -35,28 +39,44 @@ public static partial class ImageLoader
     /// <summary>
     /// Load an image from the given path asynchronously.
     /// Supports local files, HTTP/HTTPS URLs, and data URIs.
-    /// Use with Avalonia's ^ binding operator: {Binding Image^}
+    /// <paramref name="decodeWidth"/> &gt; 0 caps the pixel width of directly decoded raster images.
     /// </summary>
-    public static Task<IImage?> LoadAsync(string? path)
+    public static Task<IImage?> LoadAsync(string? path, int decodeWidth = 0)
     {
         if (string.IsNullOrWhiteSpace(path))
             return Task.FromResult(DefaultImage);
 
+        var key = (path, decodeWidth);
+
         // Check cache first - return immediately without Task.Run overhead
-        if (_cache.TryGetValue(path, out var cached))
+        if (_cache.TryGetValue(key, out var cached))
             return Task.FromResult(cached);
 
-        // Load on background thread to avoid blocking UI
-        return Task.Run(() => LoadCore(path));
+        // Share one background load between concurrent callers
+        return _inflight.GetOrAdd(key, static k => Task.Run(() => LoadAndCacheAsync(k)));
+    }
+
+    private static async Task<IImage?> LoadAndCacheAsync((string Path, int Width) key)
+    {
+        try
+        {
+            var image = await LoadCore(key.Path, key.Width);
+            _cache.TryAdd(key, image);
+            return image;
+        }
+        finally
+        {
+            _inflight.TryRemove(key, out _);
+        }
     }
 
     /// <summary>
     /// Core loading logic - runs on thread pool when not cached.
     /// </summary>
-    private static async Task<IImage?> LoadCore(string path)
+    private static async Task<IImage?> LoadCore(string path, int decodeWidth)
     {
         // Double-check cache (another thread may have loaded it)
-        if (_cache.TryGetValue(path, out var cached))
+        if (_cache.TryGetValue((path, decodeWidth), out var cached))
             return cached;
 
         try
@@ -74,7 +94,7 @@ public static partial class ImageLoader
             }
             else if (File.Exists(path))
             {
-                image = await LoadFromFileAsync(path);
+                image = await LoadFromFileAsync(path, decodeWidth);
             }
             else if (Directory.Exists(path))
             {
@@ -82,21 +102,17 @@ public static partial class ImageLoader
                 image = await LoadPlatformIconAsync(path);
             }
 
-            // Cache the result (even if null, to avoid repeated attempts)
-            image ??= DefaultImage;
-            _cache.TryAdd(path, image);
-
-            return image;
+            // Cached by the caller even if null-replaced by default, to avoid repeated attempts
+            return image ?? DefaultImage;
         }
         catch (Exception ex)
         {
             Log.Debug(ClassName, $"Failed to load image: {path}, Error: {ex.Message}");
-            _cache.TryAdd(path, DefaultImage);
             return DefaultImage;
         }
     }
 
-    private static async Task<IImage?> LoadFromFileAsync(string path)
+    private static async Task<IImage?> LoadFromFileAsync(string path, int decodeWidth)
     {
         try
         {
@@ -106,7 +122,7 @@ public static partial class ImageLoader
             if (Array.Exists(DirectLoadExtensions, e => e == ext))
             {
                 using var stream = File.OpenRead(path);
-                return new Bitmap(stream);
+                return Downscale(new Bitmap(stream), decodeWidth);
             }
 
             // For exe, dll, ico, lnk, icns and other files - use the platform icon loader
@@ -117,6 +133,22 @@ public static partial class ImageLoader
             Log.Debug(ClassName, $"Failed to load file: {path}, Error: {ex.Message}");
             return null;
         }
+    }
+
+    /// <summary>
+    /// Shrinks bitmaps wider than <paramref name="decodeWidth"/> so small icon slots don't keep and filter
+    /// full-resolution images. Never upscales; 0 keeps the original.
+    /// </summary>
+    private static Bitmap Downscale(Bitmap bitmap, int decodeWidth)
+    {
+        var size = bitmap.PixelSize;
+        if (decodeWidth <= 0 || size.Width <= decodeWidth)
+            return bitmap;
+
+        var height = Math.Max(1, (int)Math.Round(size.Height * (double)decodeWidth / size.Width));
+        var scaled = bitmap.CreateScaledBitmap(new PixelSize(decodeWidth, height), BitmapInterpolationMode.HighQuality);
+        bitmap.Dispose();
+        return scaled;
     }
 
     /// <summary>
@@ -201,9 +233,14 @@ public static partial class ImageLoader
     /// <summary>
     /// Try to get a cached image without loading.
     /// </summary>
-    public static bool TryGetCached(string? path, out IImage? image)
+    public static bool TryGetCached(string? path, out IImage? image) => TryGetCached(path, 0, out image);
+
+    /// <summary>
+    /// Try to get a cached image (decoded for <paramref name="decodeWidth"/>, 0 = full size) without loading.
+    /// </summary>
+    public static bool TryGetCached(string? path, int decodeWidth, out IImage? image)
     {
-        if (!string.IsNullOrWhiteSpace(path) && _cache.TryGetValue(path, out image))
+        if (!string.IsNullOrWhiteSpace(path) && _cache.TryGetValue((path, decodeWidth), out image))
             return true;
         image = null;
         return false;
