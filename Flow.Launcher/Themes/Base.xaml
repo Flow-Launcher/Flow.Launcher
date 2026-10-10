@@ -248,6 +248,13 @@
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
         <Setter Property="Margin" Value="{DynamicResource ResultMargin}" />
         <Setter Property="Padding" Value="0 0 0 0" />
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
 
         <Setter Property="Template">
             <Setter.Value>
@@ -270,7 +277,7 @@
                                 </Style.Triggers>
                             </Style>
                         </cc:CustomScrollViewerEx.Style>
-                        <VirtualizingStackPanel IsItemsHost="True" />
+                        <ItemsPresenter />
                     </cc:CustomScrollViewerEx>
                 </ControlTemplate>
             </Setter.Value>
