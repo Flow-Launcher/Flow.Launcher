@@ -8,6 +8,7 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using FluentAvalonia.UI.Controls;
 using Flow.Launcher.Avalonia.Resource;
 using Flow.Launcher.Avalonia.ViewModel;
+using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher.Avalonia.Views.SettingPages;
@@ -80,15 +81,22 @@ public partial class CustomQueryHotkeyWindow : Window, INotifyPropertyChanged
 
     private async void OnDoneClick(object? sender, RoutedEventArgs e)
     {
-        if (string.IsNullOrWhiteSpace(Hotkey) || string.IsNullOrWhiteSpace(ActionKeyword))
+        // WPF parity: an empty action keyword is allowed (opens Flow with an empty query); both empty is not.
+        if (string.IsNullOrWhiteSpace(Hotkey) && string.IsNullOrWhiteSpace(ActionKeyword))
         {
-            await ShowMessageAsync("Custom Query Hotkey", "Both the hotkey and query text are required.");
+            await ShowMessageAsync(Translate("emptyPluginHotkey", "Hotkey and action keyword are empty"));
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(Hotkey) || !new HotkeyModel(Hotkey).Validate())
+        {
+            await ShowMessageAsync(Translate("invalidPluginHotkey", "Hotkey is invalid"));
             return;
         }
 
         if (((_update && _originalHotkey != Hotkey) || !_update) && _doesHotkeyExist(Hotkey))
         {
-            await ShowMessageAsync("Custom Query Hotkey", "That hotkey is already assigned to another custom query.");
+            await ShowMessageAsync(Translate("hotkeyUnavailable", "Current hotkey is unavailable."));
             return;
         }
 
@@ -106,11 +114,11 @@ public partial class CustomQueryHotkeyWindow : Window, INotifyPropertyChanged
         _mainViewModel.ShowWithInjectedQuery(ActionKeyword);
     }
 
-    private async System.Threading.Tasks.Task ShowMessageAsync(string title, string message)
+    private async System.Threading.Tasks.Task ShowMessageAsync(string message)
     {
         var dialog = new FAContentDialog
         {
-            Title = title,
+            Title = Title,
             Content = message,
             CloseButtonText = Translate("commonOK", "OK")
         };

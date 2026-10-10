@@ -302,13 +302,13 @@ public partial class HotkeySettingsViewModel : ObservableObject
     {
         if (SelectedCustomPluginHotkey is null)
         {
-            await ShowMessageAsync("Custom Query Hotkey", "Please select a custom query hotkey first.");
+            await ShowMessageAsync(Translate("pleaseSelectAnItem", "Please select an item"));
             return;
         }
 
         var confirmed = await ShowConfirmationAsync(
             Translate("delete", "Delete"),
-            $"Delete the custom query hotkey '{SelectedCustomPluginHotkey.Hotkey}'?");
+            string.Format(Translate("deleteCustomHotkeyWarning", "Are you sure you want to delete {0} plugin hotkey?"), SelectedCustomPluginHotkey.Hotkey));
 
         if (!confirmed)
         {
@@ -324,7 +324,7 @@ public partial class HotkeySettingsViewModel : ObservableObject
     {
         if (SelectedCustomPluginHotkey is null)
         {
-            await ShowMessageAsync("Custom Query Hotkey", "Please select a custom query hotkey first.");
+            await ShowMessageAsync(Translate("pleaseSelectAnItem", "Please select an item"));
             return;
         }
 
@@ -333,7 +333,7 @@ public partial class HotkeySettingsViewModel : ObservableObject
 
         if (settingItem is null)
         {
-            await ShowMessageAsync("Custom Query Hotkey", "The selected custom query hotkey is no longer valid.");
+            await ShowMessageAsync(Translate("invalidPluginHotkey", "Hotkey is invalid"));
             return;
         }
 
@@ -361,8 +361,8 @@ public partial class HotkeySettingsViewModel : ObservableObject
             }
             else
             {
+                // SetCustomQueryHotkey already reported the failure (registerHotkeyFailed).
                 _ = HotKeyMapper.SetCustomQueryHotkey(settingItem);
-                await ShowMessageAsync("Custom Query Hotkey", $"Failed to register hotkey '{updatedHotkey.Hotkey}'. It may already be in use by another application.");
             }
         }
     }
@@ -382,10 +382,6 @@ public partial class HotkeySettingsViewModel : ObservableObject
         {
             CustomPluginHotkeys.Add(customHotkey);
         }
-        else
-        {
-            await ShowMessageAsync("Custom Query Hotkey", $"Failed to register hotkey '{customHotkey.Hotkey}'. It may already be in use by another application.");
-        }
     }
 
     // Custom Shortcut Commands
@@ -394,13 +390,13 @@ public partial class HotkeySettingsViewModel : ObservableObject
     {
         if (SelectedCustomShortcut is null)
         {
-            await ShowMessageAsync("Custom Shortcut", "Please select a custom shortcut first.");
+            await ShowMessageAsync(Translate("pleaseSelectAnItem", "Please select an item"));
             return;
         }
 
         var confirmed = await ShowConfirmationAsync(
             Translate("delete", "Delete"),
-            $"Delete the custom shortcut '{SelectedCustomShortcut.Key}'?");
+            string.Format(Translate("deleteCustomShortcutWarning", "Are you sure you want to delete shortcut: {0} with expansion {1}?"), SelectedCustomShortcut.Key, SelectedCustomShortcut.Value));
 
         if (!confirmed)
         {
@@ -415,7 +411,7 @@ public partial class HotkeySettingsViewModel : ObservableObject
     {
         if (SelectedCustomShortcut is null)
         {
-            await ShowMessageAsync("Custom Shortcut", "Please select a custom shortcut first.");
+            await ShowMessageAsync(Translate("pleaseSelectAnItem", "Please select an item"));
             return;
         }
 
@@ -424,7 +420,7 @@ public partial class HotkeySettingsViewModel : ObservableObject
 
         if (settingItem is null)
         {
-            await ShowMessageAsync("Custom Shortcut", "The selected custom shortcut is no longer valid.");
+            await ShowMessageAsync(Translate("invalidShortcut", "Shortcut is invalid"));
             return;
         }
 
@@ -466,37 +462,44 @@ public partial class HotkeySettingsViewModel : ObservableObject
         return CustomPluginHotkeys.Any(v => v.Hotkey == hotkey);
     }
 
+    // Dialogs belong to the settings window; the launcher main window is usually hidden while settings are open.
+    private static Window? GetOwnerWindow()
+    {
+        if (Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop)
+            return null;
+        return desktop.Windows.OfType<SettingsWindow>().FirstOrDefault() ?? desktop.MainWindow;
+    }
+
     private async Task<bool> ShowWindowDialogAsync(Window window)
     {
-        if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop && desktop.MainWindow is not null)
+        if (GetOwnerWindow() is { } owner)
         {
-            return await window.ShowDialog<bool>(desktop.MainWindow);
+            return await window.ShowDialog<bool>(owner);
         }
 
         window.Show();
         return false;
     }
 
-    private async Task ShowMessageAsync(string title, string message)
+    private async Task ShowMessageAsync(string message)
     {
-        if (Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop || desktop.MainWindow is null)
+        if (GetOwnerWindow() is not { } owner)
         {
             return;
         }
 
         var dialog = new FAContentDialog
         {
-            Title = title,
             Content = message,
             CloseButtonText = Translate("commonOK", "OK")
         };
 
-        await dialog.ShowAsync(desktop.MainWindow);
+        await dialog.ShowAsync(owner);
     }
 
     private async Task<bool> ShowConfirmationAsync(string title, string message)
     {
-        if (Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop || desktop.MainWindow is null)
+        if (GetOwnerWindow() is not { } owner)
         {
             return false;
         }
@@ -509,7 +512,7 @@ public partial class HotkeySettingsViewModel : ObservableObject
             CloseButtonText = Translate("cancel", "Cancel")
         };
 
-        var result = await dialog.ShowAsync(desktop.MainWindow);
+        var result = await dialog.ShowAsync(owner);
         return result == FAContentDialogResult.Primary;
     }
 

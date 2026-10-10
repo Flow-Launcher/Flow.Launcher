@@ -70,6 +70,39 @@
                         <Button Content="{i18n:Localize cachefolder}" Command="{Binding OpenCacheFolderCommand}" />
                     </WrapPanel>
                 </ui:FASettingsExpander.Footer>
+                <ui:FASettingsExpander.Items>
+                    <ui:FASettingsExpanderItem Content="{i18n:Localize devtoolsReportWindow}">
+                        <ui:FASettingsExpanderItem.Footer>
+                            <Button Content="{i18n:Localize devtoolsOpenTestWindow}" Command="{Binding OpenTestReportWindowCommand}" />
+                        </ui:FASettingsExpanderItem.Footer>
+                    </ui:FASettingsExpanderItem>
+                    <ui:FASettingsExpanderItem Content="{i18n:Localize devtoolsProgressWindow}">
+                        <ui:FASettingsExpanderItem.Footer>
+                            <Button Content="{i18n:Localize devtoolsOpenTestWindow}" Command="{Binding OpenTestProgressWindowCommand}" />
+                        </ui:FASettingsExpanderItem.Footer>
+                    </ui:FASettingsExpanderItem>
+                    <ui:FASettingsExpanderItem Content="{i18n:Localize devtoolsPluginUpdateWindow}">
+                        <ui:FASettingsExpanderItem.Footer>
+                            <Button Content="{i18n:Localize devtoolsOpenTestWindow}" Command="{Binding OpenTestPluginUpdateWindowCommand}" />
+                        </ui:FASettingsExpanderItem.Footer>
+                    </ui:FASettingsExpanderItem>
+                    <ui:FASettingsExpanderItem Content="{i18n:Localize devtoolsMessageBoxWindow}">
+                        <ui:FASettingsExpanderItem.Footer>
+                            <SplitButton Content="{i18n:Localize devtoolsOpenTestWindow}"
+                                         Command="{Binding OpenTestMessageBoxCommand}"
+                                         CommandParameter="OK">
+                                <SplitButton.Flyout>
+                                    <MenuFlyout>
+                                        <MenuItem Header="{i18n:Localize devtoolsMessageBoxOkLabel}" Command="{Binding OpenTestMessageBoxCommand}" CommandParameter="OK" />
+                                        <MenuItem Header="{i18n:Localize devtoolsMessageBoxOkCancelLabel}" Command="{Binding OpenTestMessageBoxCommand}" CommandParameter="OKCancel" />
+                                        <MenuItem Header="{i18n:Localize devtoolsMessageBoxYesNoLabel}" Command="{Binding OpenTestMessageBoxCommand}" CommandParameter="YesNo" />
+                                        <MenuItem Header="{i18n:Localize devtoolsMessageBoxYesNoCancelLabel}" Command="{Binding OpenTestMessageBoxCommand}" CommandParameter="YesNoCancel" />
+                                    </MenuFlyout>
+                                </SplitButton.Flyout>
+                            </SplitButton>
+                        </ui:FASettingsExpanderItem.Footer>
+                    </ui:FASettingsExpanderItem>
+                </ui:FASettingsExpander.Items>
             </ui:FASettingsExpander>
 
             <ui:FASettingsExpander Header="{i18n:Localize advanced}"

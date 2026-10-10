@@ -44,6 +44,12 @@
             </ui:FASettingsExpander.Footer>
         </ui:FASettingsExpander>
 
+        <Button Content="{i18n:Localize testProxy}"
+                Command="{Binding TestProxyCommand}"
+                IsEnabled="{Binding ProxyEnabled}"
+                HorizontalAlignment="Right"
+                Margin="0,8,0,0" />
+
     </StackPanel>
     </ScrollViewer>
 </UserControl>
