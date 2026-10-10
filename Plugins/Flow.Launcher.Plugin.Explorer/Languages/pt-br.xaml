@@ -8,10 +8,10 @@
     <system:String x:Key="plugin_explorer_delete_quick_access_link">Are you sure you want to delete this quick access link?</system:String>
     <system:String x:Key="plugin_explorer_delete_index_search_excluded_path">Are you sure you want to delete this index search excluded path?</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">Please select a folder link</system:String>
-    <system:String x:Key="plugin_explorer_delete_folder_link">Are you sure you want to delete {0}?</system:String>
+    <system:String x:Key="plugin_explorer_delete_folder_link">Tem certeza de que deseja deletar {0}?</system:String>
     <system:String x:Key="plugin_explorer_deletefileconfirm">Are you sure you want to permanently delete this file?</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolderconfirm">Are you sure you want to permanently delete this file/folder?</system:String>
-    <system:String x:Key="plugin_explorer_deletefilefoldersuccess">Deletion successful</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefoldersuccess">Exclusão bem-sucedida</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail">Successfully deleted {0}</system:String>
     <system:String x:Key="plugin_explorer_globalActionKeywordInvalid">Assigning the global action keyword could bring up too many results during search. Please choose a specific action keyword</system:String>
     <system:String x:Key="plugin_explorer_quickaccess_globalActionKeywordInvalid">Quick Access can not be set to the global action keyword when enabled. Please choose a specific action keyword</system:String>
@@ -42,6 +42,8 @@
     <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Date and time format</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">Sort Option:</system:String>
     <system:String x:Key="plugin_explorer_everything_installed_path">Everything Path:</system:String>
+    <system:String x:Key="plugin_explorer_everything_15_instance_name">Everything 1.5 instance name: </system:String>
+    <system:String x:Key="plugin_explorer_everything_15_instance_name_tooltip">Leave this blank to use the default Everything 1.5b instance. Only set this if you run a named instance of Everything, or set it to &quot;1.5a&quot; to use Everything 1.5a.</system:String>
     <system:String x:Key="plugin_explorer_launch_hidden">Launch Hidden</system:String>
     <system:String x:Key="plugin_explorer_editor_path">Editor Path</system:String>
     <system:String x:Key="plugin_explorer_shell_path">Shell Path</system:String>
@@ -56,19 +58,19 @@
     <system:String x:Key="plugin_explorer_actionkeywordview_pathsearch">Path Search:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_filecontentsearch">File Content Search:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_indexsearch">Index Search:</system:String>
-    <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">Quick Access:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">Acesso Rápido:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_foldersearch">Folder Search:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_filesearch">File Search:</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_current">Current Action Keyword</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_done">Finalizado</system:String>
-    <system:String x:Key="plugin_explorer_actionkeyword_enabled">Enabled</system:String>
+    <system:String x:Key="plugin_explorer_actionkeyword_enabled">Ativado</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled_tooltip">When disabled Flow will not execute this search option, and will additionally revert back to '*' to free up the action keyword</system:String>
     <system:String x:Key="plugin_explorer_engine_everything">Everything</system:String>
     <system:String x:Key="plugin_explorer_engine_windows_index">Windows Index</system:String>
     <system:String x:Key="plugin_explorer_path_enumeration_engine_none">Direct Enumeration</system:String>
     <system:String x:Key="plugin_explorer_file_editor_path">File Editor Path</system:String>
     <system:String x:Key="plugin_explorer_folder_editor_path">Folder Editor Path</system:String>
-    <system:String x:Key="plugin_explorer_enabled">Enabled</system:String>
+    <system:String x:Key="plugin_explorer_enabled">Ativado</system:String>
     <system:String x:Key="plugin_explorer_disabled">Disabled</system:String>
 
     <system:String x:Key="plugin_explorer_Content_Search_Engine">Content Search Engine</system:String>
@@ -107,12 +109,12 @@
     <system:String x:Key="plugin_explorer_path">Path</system:String>
     <system:String x:Key="plugin_explorer_file">Arquivo</system:String>
     <system:String x:Key="plugin_explorer_folder">Pasta</system:String>
-    <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Delete the selected</system:String>
-    <system:String x:Key="plugin_explorer_runasdifferentuser">Run as different user</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Excluir a seleção</system:String>
+    <system:String x:Key="plugin_explorer_runasdifferentuser">Executar como usuário diferente</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Run the selected using a different user account</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder">Open containing folder</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Open the location that contains current item</system:String>
-    <system:String x:Key="plugin_explorer_openwitheditor">Open With Editor:</system:String>
+    <system:String x:Key="plugin_explorer_openwitheditor">Abrir com Editor:</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor_error">Failed to open file at {0} with Editor {1} at {2}</system:String>
     <system:String x:Key="plugin_explorer_openwithshell">Open With Shell:</system:String>
     <system:String x:Key="plugin_explorer_openwithshell_error">Failed to open folder {0} with Shell {1} at {2}</system:String>
@@ -149,7 +151,11 @@
 
     <!--  Everything  -->
     <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">Failed to load Everything SDK</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_architecture_check">Please check whether your system is x86 or x64</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_is_not_running">Warning: Everything service is not running</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_15_unavailable">Warning: Everything 1.5 is unavailable</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_15_resolution">Ensure Everything is running and verify the configured instance name</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_15_sort_warning">Warning: Everything 1.5 is unavailable. The service may not be running, or the instance name may be invalid</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_query_error">Error while querying Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by">Sort By</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_name_ascending">Name ↑</system:String>
@@ -184,6 +190,8 @@
 
     <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">Search Full Path</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_run_count">Enable File/Folder Run Count</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_enable_15_support">Use Everything 1.5</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_15_restart_required">Restart Flow Launcher for this change to take effect</system:String>
 
     <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Click to launch or install Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_title">Everything Installation</system:String>
