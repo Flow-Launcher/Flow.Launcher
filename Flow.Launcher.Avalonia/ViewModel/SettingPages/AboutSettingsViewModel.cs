@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using Avalonia.Media;
@@ -14,6 +15,7 @@ using Flow.Launcher.Avalonia.Resource;
 using Flow.Launcher.Avalonia.Views.Dialogs;
 using Flow.Launcher.Avalonia.Views.SettingPages;
 using Flow.Launcher.Core;
+using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
@@ -204,6 +206,100 @@ public partial class AboutSettingsViewModel : ObservableObject
     private async Task UpdateApp()
     {
         await _updater.UpdateAppAsync(false);
+    }
+
+    // Dev tools test windows are owned by the settings window; the launcher window is usually hidden here.
+    private static global::Avalonia.Controls.Window? GetOwnerWindow()
+    {
+        if (global::Avalonia.Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop)
+            return null;
+        return desktop.Windows.OfType<SettingsWindow>().FirstOrDefault() ?? desktop.MainWindow;
+    }
+
+    [RelayCommand]
+    private void OpenTestReportWindow()
+    {
+        var reportWindow = new ReportWindow(new Exception("Dev Tools test exception"));
+        reportWindow.Show();
+    }
+
+    [RelayCommand]
+    private async Task OpenTestProgressWindowAsync()
+    {
+        using var cancellationTokenSource = new CancellationTokenSource();
+
+        await ProgressBoxWindow.ShowAsync(
+            Translate("devtoolsProgressWindow", "Progress Window"),
+            async reportProgress =>
+            {
+                var duration = TimeSpan.FromMinutes(1);
+                var updateInterval = TimeSpan.FromSeconds(0.5);
+                var totalSteps = (int)(duration.Ticks / updateInterval.Ticks);
+
+                try
+                {
+                    for (var currentStep = 1; currentStep <= totalSteps; currentStep++)
+                    {
+                        await Task.Delay(updateInterval, cancellationTokenSource.Token).ConfigureAwait(false);
+                        reportProgress((double)currentStep / totalSteps * 100);
+                    }
+                }
+                catch (OperationCanceledException)
+                {
+                    // Progress window cancel action triggers this path.
+                }
+            },
+            cancellationTokenSource.Cancel);
+    }
+
+    [RelayCommand]
+    private async Task OpenTestPluginUpdateWindowAsync()
+    {
+        var window = new PluginUpdateWindow(new List<PluginUpdateInfo>());
+        if (GetOwnerWindow() is { } owner)
+            await window.ShowDialog<bool>(owner);
+        else
+            window.Show();
+    }
+
+    [RelayCommand]
+    private void OpenTestMessageBox(string buttonType)
+    {
+        MessageBoxButton button;
+        string caption;
+        MessageBoxImage icon;
+
+        switch (buttonType)
+        {
+            case "OK":
+                button = MessageBoxButton.OK;
+                caption = Translate("devtoolsMessageBoxOkLabel", "OK");
+                icon = MessageBoxImage.Information;
+                break;
+            case "OKCancel":
+                button = MessageBoxButton.OKCancel;
+                caption = Translate("devtoolsMessageBoxOkCancelLabel", "OK / Cancel");
+                icon = MessageBoxImage.Question;
+                break;
+            case "YesNo":
+                button = MessageBoxButton.YesNo;
+                caption = Translate("devtoolsMessageBoxYesNoLabel", "Yes / No");
+                icon = MessageBoxImage.Question;
+                break;
+            case "YesNoCancel":
+                button = MessageBoxButton.YesNoCancel;
+                caption = Translate("devtoolsMessageBoxYesNoCancelLabel", "Yes / No / Cancel");
+                icon = MessageBoxImage.Question;
+                break;
+            default:
+                var ex = new ArgumentException($"Invalid button type: {buttonType}", nameof(buttonType));
+                App.API.LogException(ClassName, "Invalid button type passed for Test MessageBox", ex);
+                App.API.ShowMsg($"Invalid button type: {buttonType}");
+                return;
+        }
+
+        var result = App.API.ShowMsgBox(Translate("devtoolsMessageBoxTestMessage", "This is a test message box."), caption, button, icon);
+        App.API.ShowMsg($"{buttonType} result: {result}");
     }
 
     [RelayCommand]

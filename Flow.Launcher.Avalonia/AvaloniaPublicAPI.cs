@@ -31,7 +31,7 @@ namespace Flow.Launcher.Avalonia;
 /// <summary>
 /// IPublicAPI implementation for the Avalonia host.
 /// </summary>
-public partial class AvaloniaPublicAPI : IPublicAPI
+public partial class AvaloniaPublicAPI : IPublicAPI, global::Flow.Launcher.Core.Storage.IRemovable
 {
     private readonly Settings _settings;
     private readonly Func<MainViewModel> _getMainViewModel;
@@ -42,7 +42,6 @@ public partial class AvaloniaPublicAPI : IPublicAPI
     private readonly object _globalKeyboardHandlersLock = new();
     private readonly List<Func<int, int, SpecialKeyState, bool>> _globalKeyboardHandlers = new();
     private Flow.Launcher.Core.Resource.Theme? _theme;
-    private bool _gameModeStatus;
 
     public AvaloniaPublicAPI(Settings settings, Func<MainViewModel> getMainViewModel, Internationalization i18n)
     {
@@ -50,6 +49,19 @@ public partial class AvaloniaPublicAPI : IPublicAPI
         _getMainViewModel = getMainViewModel;
         _i18n = i18n;
         HookGlobalKeyboard();
+        global::Avalonia.Threading.Dispatcher.UIThread.Post(() =>
+        {
+            if (global::Avalonia.Application.Current is { } app)
+            {
+                app.ActualThemeVariantChanged += (_, _) =>
+                    ActualApplicationThemeChanged?.Invoke(
+                        app,
+                        new ActualApplicationThemeChangedEventArgs
+                        {
+                            IsDark = app.ActualThemeVariant == global::Avalonia.Styling.ThemeVariant.Dark
+                        });
+            }
+        });
     }
 
     // Low-level keyboard hook (WH_KEYBOARD_LL); Windows only — see AvaloniaPublicAPI.Windows.cs.
@@ -58,10 +70,13 @@ public partial class AvaloniaPublicAPI : IPublicAPI
     // Legacy WPF plugin settings panels can only be hosted on Windows.
     private partial bool OpenWpfPluginSettingsWindow(ISettingProvider settingProvider, PluginPair plugin);
 
-#pragma warning disable CS0067
-    public event VisibilityChangedEventHandler? VisibilityChanged;
+    public event VisibilityChangedEventHandler VisibilityChanged
+    {
+        add => _getMainViewModel().VisibilityChanged += value;
+        remove => _getMainViewModel().VisibilityChanged -= value;
+    }
+
     public event ActualApplicationThemeChangedEventHandler? ActualApplicationThemeChanged;
-#pragma warning restore CS0067
     public event EventHandler StringMatcherBehaviorChanged
     {
         add => _settings.StringMatcherBehaviorChanged += value;
@@ -70,17 +85,7 @@ public partial class AvaloniaPublicAPI : IPublicAPI
 
 
     // Essential for plugins
-    public void ChangeQuery(string query, bool requery = false)
-    {
-        var mainViewModel = _getMainViewModel();
-        if (requery && string.Equals(mainViewModel.QueryText, query, StringComparison.Ordinal))
-        {
-            ReQuery();
-            return;
-        }
-
-        mainViewModel.QueryText = query;
-    }
+    public void ChangeQuery(string query, bool requery = false) => _getMainViewModel().ChangeQueryText(query, requery);
     
     public string GetTranslation(string key) => _i18n.GetTranslation(key);
     
@@ -307,6 +312,29 @@ public partial class AvaloniaPublicAPI : IPublicAPI
         }
     }
 
+    public void RemovePluginSettings(string assemblyName)
+    {
+        foreach (var keyValuePair in _pluginJsonStorages)
+        {
+            var name = keyValuePair.Value.GetType().GetField("AssemblyName")?.GetValue(keyValuePair.Value)?.ToString();
+            if (name == assemblyName)
+            {
+                _pluginJsonStorages.TryRemove(keyValuePair.Key, out _);
+            }
+        }
+    }
+
+    public void RemovePluginCaches(string cacheDirectory)
+    {
+        foreach (var keyValuePair in _pluginBinaryStorages)
+        {
+            if (keyValuePair.Key.Item2 == cacheDirectory)
+            {
+                _pluginBinaryStorages.TryRemove(keyValuePair.Key, out _);
+            }
+        }
+    }
+
     public void SavePluginSettings()
     {
         foreach (var savable in _pluginJsonStorages.Values)
@@ -337,7 +365,7 @@ public partial class AvaloniaPublicAPI : IPublicAPI
     {
         NotificationWindow.ShowNotification(title, subTitle, iconPath, buttonText, buttonAction);
     }
-    public void OpenSettingDialog() => _getMainViewModel()?.OpenSettings();
+    public void OpenSettingDialog() => global::Flow.Launcher.Avalonia.Views.SettingPages.SettingsWindow.Open();
     public bool OpenPluginSettingsWindow(string pluginId)
     {
         try
@@ -355,7 +383,7 @@ public partial class AvaloniaPublicAPI : IPublicAPI
 
             if (settingProvider.CreateSettingPanelAvalonia() != null)
             {
-                OpenSettingDialog();
+                global::Flow.Launcher.Avalonia.Views.SettingPages.SettingsWindow.Open(pluginId);
                 return true;
             }
 
@@ -364,6 +392,7 @@ public partial class AvaloniaPublicAPI : IPublicAPI
         catch (Exception e)
         {
             Log.Exception(nameof(AvaloniaPublicAPI), $"Failed to open plugin settings window for plugin id '{pluginId}'", e);
+            ShowMsgError(GetTranslation("pluginSettingsWindowOpenFailed"));
             return false;
         }
     }
@@ -397,9 +426,9 @@ public partial class AvaloniaPublicAPI : IPublicAPI
         storage.Save();
     }
 
-    public void ToggleGameMode() => _gameModeStatus = !_gameModeStatus;
-    public void SetGameMode(bool value) => _gameModeStatus = value;
-    public bool IsGameModeOn() => _gameModeStatus;
+    public void ToggleGameMode() => _getMainViewModel().ToggleGameMode();
+    public void SetGameMode(bool value) => _getMainViewModel().GameModeStatus = value;
+    public bool IsGameModeOn() => _getMainViewModel().GameModeStatus;
     public void ReQuery(bool reselect = true) => _getMainViewModel().ReQuery(reselect);
     public void BackToQueryResults() => _getMainViewModel().BackToQueryResults();
     public partial MessageBoxResult ShowMsgBox(string messageBoxText, string caption = "", MessageBoxButton button = MessageBoxButton.OK, MessageBoxImage icon = MessageBoxImage.None, MessageBoxResult defaultResult = MessageBoxResult.OK);

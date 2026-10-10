@@ -1,10 +1,14 @@
 using System;
+using System.Diagnostics;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Platform;
 using Flow.Launcher.Avalonia.Helper;
+using Flow.Launcher.Infrastructure.Logger;
 
 namespace Flow.Launcher.Avalonia;
 
@@ -64,6 +68,42 @@ public partial class MainWindow
                 MacWindowShape.ClearBackgroundIfTransparent(this);
             }
         };
+    }
+
+    // The WPF app plays Resources/open.wav through SoundPlayer/MediaPlayer; macOS plays it with afplay, started in
+    // the background so showing the window never waits for the sound.
+    partial void PlayOpenSound()
+    {
+        if (!OperatingSystem.IsMacOS() || _settings == null)
+        {
+            return;
+        }
+
+        var soundPath = Path.Combine(AppContext.BaseDirectory, "Resources", "open.wav");
+        if (!File.Exists(soundPath))
+        {
+            return;
+        }
+
+        var volume = Math.Clamp(_settings.SoundVolume / 100.0, 0.0, 1.0);
+        try
+        {
+            var startInfo = new ProcessStartInfo("/usr/bin/afplay")
+            {
+                UseShellExecute = false,
+                CreateNoWindow = true,
+            };
+            startInfo.ArgumentList.Add("-v");
+            startInfo.ArgumentList.Add(volume.ToString(CultureInfo.InvariantCulture));
+            startInfo.ArgumentList.Add(soundPath);
+
+            // Disposing the handle does not stop afplay.
+            using var process = Process.Start(startInfo);
+        }
+        catch (Exception e)
+        {
+            Log.Exception(ClassName, "Failed to play the open sound", e);
+        }
     }
 
     private partial Screen? GetCursorScreen() =>

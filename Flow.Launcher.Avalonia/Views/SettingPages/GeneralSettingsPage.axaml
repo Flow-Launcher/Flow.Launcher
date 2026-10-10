@@ -20,13 +20,21 @@
                 <ui:FASettingsExpander.Footer>
                     <ToggleSwitch IsChecked="{Binding StartOnStartup}" />
                 </ui:FASettingsExpander.Footer>
-                <ui:FASettingsExpanderItem Content="{i18n:Localize useLogonTaskForStartup}"
-                                         Description="{i18n:Localize useLogonTaskForStartupTooltip}"
-                                         IsVisible="{Binding IsWindowsPlatform}">
-                    <ui:FASettingsExpanderItem.Footer>
-                        <ToggleSwitch IsChecked="{Binding UseLogonTaskForStartup}" />
-                    </ui:FASettingsExpanderItem.Footer>
-                </ui:FASettingsExpanderItem>
+                <!-- Windows-only option; elsewhere ItemsSource stays unset, so the card has no chevron. -->
+                <ui:FASettingsExpander.ItemsSource>
+                    <OnPlatform>
+                        <On Options="Windows">
+                            <Controls>
+                                <ui:FASettingsExpanderItem Content="{i18n:Localize useLogonTaskForStartup}"
+                                                         Description="{i18n:Localize useLogonTaskForStartupTooltip}">
+                                    <ui:FASettingsExpanderItem.Footer>
+                                        <ToggleSwitch IsChecked="{Binding UseLogonTaskForStartup}" />
+                                    </ui:FASettingsExpanderItem.Footer>
+                                </ui:FASettingsExpanderItem>
+                            </Controls>
+                        </On>
+                    </OnPlatform>
+                </ui:FASettingsExpander.ItemsSource>
             </ui:FASettingsExpander>
 
             <ui:FASettingsExpander Header="{i18n:Localize hideOnStartup}"
@@ -117,6 +125,7 @@
             </ui:FASettingsExpander>
 
             <ui:FASettingsExpander Header="{i18n:Localize AlwaysPreview}"
+                                Description="{Binding AlwaysPreviewToolTip}"
                                 IconSource="PreviewLink">
                 <ui:FASettingsExpander.Footer>
                     <ToggleSwitch IsChecked="{Binding AlwaysPreview}" />
@@ -325,6 +334,21 @@
                                   IsVisible="{Binding UseDoublePinyin}" />
                     </ui:FASettingsExpanderItem.Footer>
                 </ui:FASettingsExpanderItem>
+                <ui:FASettingsExpanderItem Content="{i18n:Localize UsePolyphonicPhraseOverrides}"
+                                         Description="{i18n:Localize UsePolyphonicPhraseOverridesToolTip}"
+                                         IsVisible="{Binding ShouldUsePinyin}">
+                    <ui:FASettingsExpanderItem.Footer>
+                        <ToggleSwitch IsChecked="{Binding UsePolyphonicPhraseOverrides}" />
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
+            </ui:FASettingsExpander>
+
+            <ui:FASettingsExpander Header="{i18n:Localize ignoreAccents}"
+                                Description="{i18n:Localize ignoreAccentsToolTip}"
+                                IconSource="Character">
+                <ui:FASettingsExpander.Footer>
+                    <ToggleSwitch IsChecked="{Binding IgnoreAccents}" />
+                </ui:FASettingsExpander.Footer>
             </ui:FASettingsExpander>
 
             <ui:FASettingsExpander Header="{i18n:Localize defaultFileManager}"
@@ -348,18 +372,28 @@
             </ui:FASettingsExpander>
 
             <ui:FASettingsExpander Header="{i18n:Localize pythonFilePath}"
-                                Description="{Binding PythonPath}"
                                 IconSource="Code">
                 <ui:FASettingsExpander.Footer>
-                    <Button Content="{i18n:Localize select}" Command="{Binding SelectPythonCommand}" />
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <TextBox Width="300"
+                                 Text="{Binding PythonPath, Mode=TwoWay}"
+                                 Watermark="{i18n:Localize none}" />
+                        <Button Content="{i18n:Localize select}" Command="{Binding SelectPythonCommand}" />
+                        <Button Content="{i18n:Localize delete}" Command="{Binding ClearPythonCommand}" />
+                    </StackPanel>
                 </ui:FASettingsExpander.Footer>
             </ui:FASettingsExpander>
 
             <ui:FASettingsExpander Header="{i18n:Localize nodeFilePath}"
-                                Description="{Binding NodePath}"
                                 IconSource="Code">
                 <ui:FASettingsExpander.Footer>
-                    <Button Content="{i18n:Localize select}" Command="{Binding SelectNodeCommand}" />
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <TextBox Width="300"
+                                 Text="{Binding NodePath, Mode=TwoWay}"
+                                 Watermark="{i18n:Localize none}" />
+                        <Button Content="{i18n:Localize select}" Command="{Binding SelectNodeCommand}" />
+                        <Button Content="{i18n:Localize delete}" Command="{Binding ClearNodeCommand}" />
+                    </StackPanel>
                 </ui:FASettingsExpander.Footer>
             </ui:FASettingsExpander>
 

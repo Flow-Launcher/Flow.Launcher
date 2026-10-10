@@ -42,6 +42,8 @@ PLUGIN_BUILD_DIR="$REPO_ROOT/Output/Avalonia/$CONFIGURATION/$TFM/Plugins"
 
 VERSION="$(sed -n 's/.*AssemblyInformationalVersion("\([^"]*\)").*/\1/p' "$REPO_ROOT/SolutionAssemblyInfo.cs")"
 VERSION="${VERSION:-1.0.0}"
+# CFBundleShortVersionString allows at most three integers; CI versions are four-part (x.y.z.build).
+SHORT_VERSION="$(cut -d. -f1-3 <<<"$VERSION")"
 
 is_macho() {
     file -b "$1" | grep -q 'Mach-O'
@@ -92,7 +94,7 @@ for name in "${PLUGINS[@]}"; do
     fi
 done
 
-sed -e "s/@EXECUTABLE@/$EXECUTABLE/g" -e "s/@VERSION@/$VERSION/g" \
+sed -e "s/@EXECUTABLE@/$EXECUTABLE/g" -e "s/@SHORT_VERSION@/$SHORT_VERSION/g" -e "s/@VERSION@/$VERSION/g" \
     "$SCRIPT_DIR/Info.plist" > "$CONTENTS/Info.plist"
 plutil -lint "$CONTENTS/Info.plist" >/dev/null
 

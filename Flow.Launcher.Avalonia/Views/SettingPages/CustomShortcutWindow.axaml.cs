@@ -81,13 +81,13 @@ public partial class CustomShortcutWindow : Window, INotifyPropertyChanged
     {
         if (string.IsNullOrWhiteSpace(ShortcutKey) || string.IsNullOrWhiteSpace(ShortcutValue))
         {
-            await ShowMessageAsync("Custom Shortcut", "Both the shortcut and expansion text are required.");
+            await ShowMessageAsync(Translate("emptyShortcut", "Shortcut and/or its expansion is empty."));
             return;
         }
 
         if (((_update && _originalShortcutKey != ShortcutKey) || !_update) && _doesShortcutExist(ShortcutKey))
         {
-            await ShowMessageAsync("Custom Shortcut", "That shortcut key already exists.");
+            await ShowMessageAsync(Translate("duplicateShortcut", "Shortcut already exists, please enter a new Shortcut or edit the existing one."));
             return;
         }
 
@@ -105,11 +105,11 @@ public partial class CustomShortcutWindow : Window, INotifyPropertyChanged
         _mainViewModel.ShowWithInjectedQuery(ShortcutValue);
     }
 
-    private async System.Threading.Tasks.Task ShowMessageAsync(string title, string message)
+    private async System.Threading.Tasks.Task ShowMessageAsync(string message)
     {
         var dialog = new FAContentDialog
         {
-            Title = title,
+            Title = Title,
             Content = message,
             CloseButtonText = Translate("commonOK", "OK")
         };

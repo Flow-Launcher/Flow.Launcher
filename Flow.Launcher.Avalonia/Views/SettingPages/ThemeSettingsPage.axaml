@@ -28,13 +28,37 @@
                         <Border MinHeight="{Binding WindowHeightSize}"
                                 Background="{DynamicResource QuerySurfaceBrush}"
                                 Padding="16,8">
-                            <Grid ColumnDefinitions="*,Auto">
+                            <Grid ColumnDefinitions="*,Auto,Auto">
                                 <TextBlock Text="Hello there"
+                                           IsVisible="{Binding !ShowPlaceholder}"
                                            VerticalAlignment="Center"
                                            FontSize="{Binding QueryBoxFontSize}"
                                            FontFamily="{Binding QueryFont}"
+                                           FontWeight="{Binding QueryFontWeight}"
+                                           FontStyle="{Binding QueryFontStyle}"
                                            Foreground="{DynamicResource QueryBoxForegroundBrush}" />
-                                <Path Grid.Column="1"
+                                <TextBlock Text="{Binding PreviewPlaceholderText}"
+                                           IsVisible="{Binding ShowPlaceholder}"
+                                           VerticalAlignment="Center"
+                                           FontSize="{Binding QueryBoxFontSize}"
+                                           FontFamily="{Binding QueryFont}"
+                                           FontWeight="{Binding QueryFontWeight}"
+                                           FontStyle="{Binding QueryFontStyle}"
+                                           Foreground="{DynamicResource QuerySuggestionForegroundBrush}" />
+                                <StackPanel Grid.Column="1"
+                                            Orientation="Horizontal"
+                                            Spacing="8"
+                                            VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding ClockText}"
+                                               IsVisible="{Binding UseClock}"
+                                               VerticalAlignment="Center"
+                                               Foreground="{DynamicResource QuerySuggestionForegroundBrush}" />
+                                    <TextBlock Text="{Binding DateText}"
+                                               IsVisible="{Binding UseDate}"
+                                               VerticalAlignment="Center"
+                                               Foreground="{DynamicResource QuerySuggestionForegroundBrush}" />
+                                </StackPanel>
+                                <Path Grid.Column="2"
                                       Width="24"
                                       Height="24"
                                       Margin="8,0,2,0"
@@ -49,30 +73,60 @@
                                     Background="{DynamicResource SelectedItemBackgroundBrush}"
                                     CornerRadius="6"
                                     Padding="12,8">
-                                <StackPanel VerticalAlignment="Center">
-                                    <TextBlock Text="Sample result title"
-                                               FontSize="{Binding ResultItemFontSize}"
-                                               FontFamily="{Binding ResultFont}"
-                                               Foreground="{DynamicResource ResultTitleSelectedBrush}" />
-                                    <TextBlock Text="Sample result subtitle"
-                                               FontSize="{Binding ResultSubItemFontSize}"
-                                               FontFamily="{Binding ResultSubFont}"
-                                               Foreground="{DynamicResource ResultSubTitleSelectedBrush}" />
-                                </StackPanel>
+                                <Grid ColumnDefinitions="Auto,*">
+                                    <Panel Width="32" Height="32" Margin="0,0,12,0" VerticalAlignment="Center">
+                                        <ui:FASymbolIcon Symbol="Globe" FontSize="28" Foreground="{DynamicResource ResultGlyphSelectedBrush}" />
+                                        <ui:FASymbolIcon Symbol="Library"
+                                                         FontSize="12"
+                                                         HorizontalAlignment="Right"
+                                                         VerticalAlignment="Bottom"
+                                                         IsVisible="{Binding ShowBadges}"
+                                                         Foreground="{DynamicResource ResultGlyphSelectedBrush}" />
+                                    </Panel>
+                                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                        <TextBlock Text="Sample result title"
+                                                   FontSize="{Binding ResultItemFontSize}"
+                                                   FontFamily="{Binding ResultFont}"
+                                                   FontWeight="{Binding ResultFontWeight}"
+                                                   FontStyle="{Binding ResultFontStyle}"
+                                                   Foreground="{DynamicResource ResultTitleSelectedBrush}" />
+                                        <TextBlock Text="Sample result subtitle"
+                                                   FontSize="{Binding ResultSubItemFontSize}"
+                                                   FontFamily="{Binding ResultSubFont}"
+                                                   FontWeight="{Binding ResultSubFontWeight}"
+                                                   FontStyle="{Binding ResultSubFontStyle}"
+                                                   Foreground="{DynamicResource ResultSubTitleSelectedBrush}" />
+                                    </StackPanel>
+                                </Grid>
                             </Border>
                             <Border MinHeight="{Binding ItemHeightSize}"
                                     CornerRadius="6"
                                     Padding="12,8">
-                                <StackPanel VerticalAlignment="Center">
-                                    <TextBlock Text="Sample result title"
-                                               FontSize="{Binding ResultItemFontSize}"
-                                               FontFamily="{Binding ResultFont}"
-                                               Foreground="{DynamicResource ResultTitleBrush}" />
-                                    <TextBlock Text="Sample result subtitle"
-                                               FontSize="{Binding ResultSubItemFontSize}"
-                                               FontFamily="{Binding ResultSubFont}"
-                                               Foreground="{DynamicResource ResultSubTitleBrush}" />
-                                </StackPanel>
+                                <Grid ColumnDefinitions="Auto,*">
+                                    <Panel Width="32" Height="32" Margin="0,0,12,0" VerticalAlignment="Center">
+                                        <ui:FASymbolIcon Symbol="Folder" FontSize="28" Foreground="{DynamicResource ResultGlyphBrush}" />
+                                        <ui:FASymbolIcon Symbol="Library"
+                                                         FontSize="12"
+                                                         HorizontalAlignment="Right"
+                                                         VerticalAlignment="Bottom"
+                                                         IsVisible="{Binding ShowBadges}"
+                                                         Foreground="{DynamicResource ResultGlyphBrush}" />
+                                    </Panel>
+                                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                        <TextBlock Text="Sample result title"
+                                                   FontSize="{Binding ResultItemFontSize}"
+                                                   FontFamily="{Binding ResultFont}"
+                                                   FontWeight="{Binding ResultFontWeight}"
+                                                   FontStyle="{Binding ResultFontStyle}"
+                                                   Foreground="{DynamicResource ResultTitleBrush}" />
+                                        <TextBlock Text="Sample result subtitle"
+                                                   FontSize="{Binding ResultSubItemFontSize}"
+                                                   FontFamily="{Binding ResultSubFont}"
+                                                   FontWeight="{Binding ResultSubFontWeight}"
+                                                   FontStyle="{Binding ResultSubFontStyle}"
+                                                   Foreground="{DynamicResource ResultSubTitleBrush}" />
+                                    </StackPanel>
+                                </Grid>
                             </Border>
                         </StackPanel>
                     </StackPanel>
@@ -88,7 +142,17 @@
                               MinWidth="220">
                         <ComboBox.ItemTemplate>
                             <DataTemplate x:DataType="shared:ThemeData">
-                                <TextBlock Text="{Binding Name}" />
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
+                                    <ui:FASymbolIcon Symbol="DarkTheme"
+                                                     FontSize="14"
+                                                     ToolTip.Tip="{i18n:Localize TypeIsDarkToolTip}"
+                                                     IsVisible="{Binding IsDark, TargetNullValue=False, FallbackValue=False}" />
+                                    <ui:FASymbolIcon Symbol="WeatherFog"
+                                                     FontSize="14"
+                                                     ToolTip.Tip="{i18n:Localize TypeHasBlurToolTip}"
+                                                     IsVisible="{Binding HasBlur, TargetNullValue=False, FallbackValue=False}" />
+                                </StackPanel>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
@@ -113,9 +177,14 @@
                                   IsEnabled="{Binding IsBackdropEnabled}" />
                     </ui:FASettingsExpanderItem.Footer>
                 </ui:FASettingsExpanderItem>
-                <ui:FASettingsExpanderItem Content="{i18n:Localize queryWindowShadowEffect}">
+                <ui:FASettingsExpanderItem Content="{i18n:Localize queryWindowShadowEffect}"
+                                         Description="{i18n:Localize shadowEffectCPUUsage}">
                     <ui:FASettingsExpanderItem.Footer>
-                        <ToggleSwitch IsChecked="{Binding DropShadowEffect}" />
+                        <ToggleSwitch IsChecked="{Binding DropShadowEffect}"
+                                      IsEnabled="{Binding IsDropShadowEnabled}"
+                                      ToolTip.Tip="{i18n:Localize shadowEffectNotAllowed}"
+                                      ToolTip.IsEnabled="{Binding !IsDropShadowEnabled}"
+                                      ToolTip.ShowOnDisabled="True" />
                     </ui:FASettingsExpanderItem.Footer>
                 </ui:FASettingsExpanderItem>
                 <ui:FASettingsExpanderItem Content="Theme resources">
@@ -321,20 +390,22 @@
                     <ui:FASettingsExpanderItem.Footer>
                         <StackPanel Orientation="Horizontal" Spacing="10">
                             <TextBlock Text="{Binding SoundEffectVolume}" Width="40" VerticalAlignment="Center" />
-                            <Slider Minimum="0" Maximum="100" Value="{Binding SoundEffectVolume}" Width="220"
-                                    IsEnabled="{Binding EnableVolumeAdjustment}" />
+                            <Slider Minimum="0" Maximum="100" Value="{Binding SoundEffectVolume}" Width="220" />
                         </StackPanel>
                     </ui:FASettingsExpanderItem.Footer>
                 </ui:FASettingsExpanderItem>
-                <ui:FASettingsExpanderItem Content="Warning"
-                                         Description="{i18n:Localize SoundEffectWarning}">
-                    <ui:FASettingsExpanderItem.Footer>
-                        <TextBlock Text="{i18n:Localize SoundEffectWarning}"
-                                   TextWrapping="Wrap"
-                                   MaxWidth="340"
-                                   IsVisible="{Binding ShowWmpWarning}" />
-                    </ui:FASettingsExpanderItem.Footer>
-                </ui:FASettingsExpanderItem>
+            </ui:FASettingsExpander>
+
+            <ui:FASettingsExpander Header="{i18n:Localize CodeHighlightTheme}"
+                                Description="{i18n:Localize CodeHighlightThemeTooltip}"
+                                IconSource="Code">
+                <ui:FASettingsExpander.Footer>
+                    <ComboBox ItemsSource="{Binding CodeHighlightThemeOptions}"
+                              SelectedValue="{Binding SelectedCodeHighlightTheme, Mode=TwoWay}"
+                              SelectedValueBinding="{Binding Value}"
+                              DisplayMemberBinding="{Binding Display}"
+                              MinWidth="220" />
+                </ui:FASettingsExpander.Footer>
             </ui:FASettingsExpander>
 
             <ui:FASettingsExpander Header="{i18n:Localize useGlyphUI}"

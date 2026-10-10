@@ -54,6 +54,43 @@ public static partial class ImageLoader
     }
 
     /// <summary>
+    /// Loads an image produced by a plugin icon delegate (<c>Result.Icon</c>, <c>BadgeIcon</c>, <c>PreviewDelegate</c>)
+    /// on the thread pool. The delegate may return an Avalonia <see cref="IImage"/>, a path/URL/data URI,
+    /// encoded image bytes or a stream; anything else (e.g. a WPF ImageSource) yields the default image.
+    /// Results are not cached because the delegate is specific to one result.
+    /// </summary>
+    public static Task<IImage?> LoadFromDelegateAsync(Func<object?> iconDelegate, int decodeWidth = 0)
+    {
+        return Task.Run(async () =>
+        {
+            try
+            {
+                return iconDelegate() switch
+                {
+                    IImage image => image,
+                    string path => await LoadAsync(path, decodeWidth),
+                    byte[] bytes => DecodeStream(new MemoryStream(bytes), decodeWidth),
+                    Stream stream => DecodeStream(stream, decodeWidth),
+                    _ => DefaultImage
+                };
+            }
+            catch (Exception ex)
+            {
+                Log.Exception(ClassName, "Exception when calling the icon delegate of a result", ex);
+                return DefaultImage;
+            }
+        });
+    }
+
+    private static IImage DecodeStream(Stream stream, int decodeWidth)
+    {
+        using (stream)
+        {
+            return Downscale(new Bitmap(stream), decodeWidth);
+        }
+    }
+
+    /// <summary>
     /// Core loading logic - runs on thread pool when not cached.
     /// </summary>
     private static async Task<IImage?> LoadCore(string path, int decodeWidth)

@@ -52,5 +52,16 @@
                 <TextBlock x:Name="tbMsg" Grid.Column="1" TextWrapping="Wrap" />
             </Grid>
         </Border>
+
+        <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Right">
+            <Button x:Name="OverwriteBtn"
+                    Classes="accent"
+                    IsVisible="False"
+                    Content="{i18n:Localize commonOverwrite}"
+                    Click="Overwrite_Click" />
+            <Button Content="{i18n:Localize commonReset}"
+                    IsVisible="{Binding #root.HasDefaultHotkey}"
+                    Click="Reset_Click" />
+        </StackPanel>
     </StackPanel>
 </ui:FAContentDialog>

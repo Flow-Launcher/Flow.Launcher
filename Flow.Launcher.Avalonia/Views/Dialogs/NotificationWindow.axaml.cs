@@ -152,25 +152,8 @@ public partial class NotificationWindow : Window, INotifyPropertyChanged
         }
     }
 
-    // The native blur fills the square window; clip it to the card's rounded corners and keep the window background
-    // clear whenever Avalonia (re)applies the blur, otherwise a grey rectangle shows around the card.
-    private void InitializeWindowShape()
-    {
-        if (!OperatingSystem.IsMacOS() || this.FindControl<Border>("NotificationBorder") is not { } border)
-        {
-            return;
-        }
-
-        MacWindowShape.SetCornerRadius(this, border.CornerRadius);
-        MacWindowShape.ClearBackgroundIfTransparent(this);
-        base.PropertyChanged += (_, e) =>
-        {
-            if (e.Property == ActualTransparencyLevelProperty)
-            {
-                MacWindowShape.ClearBackgroundIfTransparent(this);
-            }
-        };
-    }
+    // Platform hook: shape the native window to match the rounded NotificationBorder.
+    partial void InitializeWindowShape();
 
     private static void RepositionActiveWindows(Screen screen)
     {

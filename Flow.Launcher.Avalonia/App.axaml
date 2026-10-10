@@ -28,16 +28,11 @@
 
     <TrayIcon.Icons>
         <TrayIcons>
-            <TrayIcon Icon="avares://Flow.Launcher.Avalonia/Images/app.ico" 
+            <TrayIcon Icon="avares://Flow.Launcher.Avalonia/Images/app.ico"
                       ToolTipText="Flow Launcher"
                       Clicked="TrayIcon_OnClicked">
                 <TrayIcon.Menu>
-                    <NativeMenu>
-                        <NativeMenuItem Header="{i18n:Localize show}" Click="MenuShow_OnClick" />
-                        <NativeMenuItem Header="{i18n:Localize settings}" Click="MenuSettings_OnClick" />
-                        <NativeMenuItemSeparator />
-                        <NativeMenuItem Header="{i18n:Localize exit}" Click="MenuExit_OnClick" />
-                    </NativeMenu>
+                    <NativeMenu />
                 </TrayIcon.Menu>
             </TrayIcon>
         </TrayIcons>

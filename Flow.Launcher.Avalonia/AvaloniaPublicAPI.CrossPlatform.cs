@@ -12,6 +12,8 @@ using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
+using Flow.Launcher.Avalonia.Helper;
+using Flow.Launcher.Avalonia.Views.Dialogs;
 
 namespace Flow.Launcher.Avalonia;
 
@@ -21,6 +23,14 @@ public partial class AvaloniaPublicAPI
 
     // No WPF host here, so legacy WPF settings panels cannot be shown.
     private partial bool OpenWpfPluginSettingsWindow(ISettingProvider settingProvider, PluginPair plugin) => false;
+
+    partial void HookGlobalKeyboard()
+    {
+        if (OperatingSystem.IsMacOS())
+        {
+            MacKeyboardHook.Start(KListenerHookedKeyboardCallback);
+        }
+    }
 
     public void ExitApp()
     {
@@ -228,13 +238,13 @@ public partial class AvaloniaPublicAPI
     {
         if (!OperatingSystem.IsMacOS())
         {
-            Log.Warn(nameof(AvaloniaPublicAPI), $"Message box is not supported on this platform: {caption}: {messageBoxText}");
-            return MessageBoxResult.None;
+            return ShowFallbackMessageBox(messageBoxText, caption, button, icon, defaultResult);
         }
 
         if (!Dispatcher.UIThread.CheckAccess())
         {
-            return ShowMacDialog(messageBoxText, caption, button, icon, defaultResult);
+            return ShowMacDialog(messageBoxText, caption, button, icon, defaultResult)
+                ?? ShowFallbackMessageBox(messageBoxText, caption, button, icon, defaultResult);
         }
 
         // osascript blocks until answered. Like WPF's MessageBox, keep pumping the UI thread (nested frame)
@@ -252,10 +262,27 @@ public partial class AvaloniaPublicAPI
             Log.Warn(nameof(AvaloniaPublicAPI), $"Cannot push a dispatcher frame for the message box: {e.Message}");
         }
 
-        return dialogTask.GetAwaiter().GetResult();
+        return dialogTask.GetAwaiter().GetResult()
+            ?? ShowFallbackMessageBox(messageBoxText, caption, button, icon, defaultResult);
     }
 
-    private MessageBoxResult ShowMacDialog(string messageBoxText, string caption, MessageBoxButton button, MessageBoxImage icon, MessageBoxResult defaultResult)
+    private MessageBoxResult ShowFallbackMessageBox(string messageBoxText, string caption, MessageBoxButton button, MessageBoxImage icon, MessageBoxResult defaultResult)
+    {
+        try
+        {
+            return Dispatcher.UIThread.CheckAccess()
+                ? MessageBoxWindow.Show(messageBoxText, caption, button, icon, defaultResult)
+                : Dispatcher.UIThread.Invoke(() => MessageBoxWindow.Show(messageBoxText, caption, button, icon, defaultResult));
+        }
+        catch (Exception e)
+        {
+            Log.Exception(nameof(AvaloniaPublicAPI), "Failed to show fallback message box", e);
+            return MessageBoxResult.None;
+        }
+    }
+
+    // Returns null when osascript could not show the dialog, so the caller can fall back to an in-app window.
+    private MessageBoxResult? ShowMacDialog(string messageBoxText, string caption, MessageBoxButton button, MessageBoxImage icon, MessageBoxResult defaultResult)
     {
         // Buttons are listed left to right; macOS places the affirmative button last (rightmost).
         // The first entry doubles as the cancel button (Esc / "User canceled") when the dialog can be declined.
@@ -309,7 +336,7 @@ public partial class AvaloniaPublicAPI
             if (result.ExitCode != 0)
             {
                 Log.Error(nameof(AvaloniaPublicAPI), $"osascript dialog failed ({result.ExitCode}): {result.Error}");
-                return MessageBoxResult.None;
+                return null;
             }
 
             var clicked = ParseButtonReturned(result.Output);
@@ -318,8 +345,8 @@ public partial class AvaloniaPublicAPI
         }
         catch (Exception e)
         {
-            Log.Exception(nameof(AvaloniaPublicAPI), "Failed to show message box", e);
-            return MessageBoxResult.None;
+            Log.Exception(nameof(AvaloniaPublicAPI), "Failed to show message box with osascript", e);
+            return null;
         }
     }
 

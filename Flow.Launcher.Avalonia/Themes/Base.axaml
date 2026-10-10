@@ -208,4 +208,11 @@
         <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
 
+    <!-- FluentAvalonia top-aligns ComboBox content with 5/7 padding tuned for Segoe UI; with other fonts
+         (e.g. the macOS or Linux system font) the selected text sits visibly above the box's center. Center it instead. -->
+    <Style Selector="ComboBox">
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Padding" Value="12,0,0,0" />
+    </Style>
+
 </Styles>

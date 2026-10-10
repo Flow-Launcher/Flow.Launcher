@@ -1,7 +1,12 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Mvvm.Input;
+using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.UserSettings;
 using System;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Flow.Launcher.Avalonia.ViewModel.SettingPages;
 
@@ -12,6 +17,42 @@ public partial class ProxySettingsViewModel : ObservableObject
     public ProxySettingsViewModel()
     {
         _settings = Ioc.Default.GetRequiredService<Settings>();
+    }
+
+    [RelayCommand]
+    private async Task TestProxyAsync()
+    {
+        var messageKey = await CheckProxyAsync();
+        App.API.ShowMsgBox(App.API.GetTranslation(messageKey));
+    }
+
+    // Returns the translation key describing the result, like WPF SettingsPaneProxyViewModel.TestProxyAsync.
+    private async Task<string> CheckProxyAsync()
+    {
+        var proxy = _settings.Proxy;
+        if (string.IsNullOrEmpty(proxy.Server)) return "serverCantBeEmpty";
+        if (proxy.Port <= 0) return "portCantBeEmpty";
+
+        var handler = new HttpClientHandler
+        {
+            Proxy = new WebProxy(proxy.Server, proxy.Port)
+        };
+
+        if (!string.IsNullOrEmpty(proxy.UserName) && !string.IsNullOrEmpty(proxy.Password))
+        {
+            handler.Proxy.Credentials = new NetworkCredential(proxy.UserName, proxy.Password);
+        }
+
+        using var client = new HttpClient(handler);
+        try
+        {
+            var response = await client.GetAsync(Constant.GitHub);
+            return response.IsSuccessStatusCode ? "proxyIsCorrect" : "proxyConnectFailed";
+        }
+        catch
+        {
+            return "proxyConnectFailed";
+        }
     }
 
     public bool ProxyEnabled

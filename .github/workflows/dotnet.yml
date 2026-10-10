@@ -103,3 +103,38 @@ jobs:
           path: |
             Output\Packages\RELEASES
           compression-level: 0
+
+  build-macos:
+
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        rid: [osx-arm64, osx-x64]
+    env:
+      FlowVersion: 1.20.2
+      BUILD_NUMBER: ${{ github.run_number }}
+    steps:
+      - uses: actions/checkout@v7
+      - name: Set Flow.Launcher.csproj version
+        uses: vers-one/dotnet-project-version-updater@v1.8
+        with:
+          file: |
+            "**/SolutionAssemblyInfo.cs"
+          version: ${{ env.FlowVersion }}.${{ env.BUILD_NUMBER }}
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 10.0.x
+      - name: Build Flow Launcher.app
+        run: Scripts/macos/build-app.sh ${{ matrix.rid }}
+      - name: Package app bundle
+        # ditto keeps the Contents/MacOS symlink and the code signature intact; plain zip does not.
+        run: ditto -c -k --sequesterRsrc --keepParent "Output/macOS/Flow Launcher.app" "Output/macOS/Flow-Launcher-macOS-${{ matrix.rid }}.zip"
+      - name: Upload macOS App
+        uses: actions/upload-artifact@v7
+        with:
+          name: macOS App (${{ matrix.rid }})
+          path: |
+            Output/macOS/Flow-Launcher-macOS-${{ matrix.rid }}.zip
+          compression-level: 0

@@ -4,12 +4,21 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:Flow.Launcher.Avalonia.ViewModel"
              xmlns:helper="using:Flow.Launcher.Avalonia.Helper"
+             xmlns:views="using:Flow.Launcher.Avalonia.Views"
+             xmlns:converters="using:Flow.Launcher.Avalonia.Converters"
              mc:Ignorable="d" d:DesignWidth="580" d:DesignHeight="300"
              x:Class="Flow.Launcher.Avalonia.Views.ResultListBox"
              x:DataType="vm:ResultsViewModel">
-    
+
+    <UserControl.Resources>
+        <converters:OrdinalConverter x:Key="OrdinalConverter" />
+        <converters:OpenResultHotkeyVisibilityConverter x:Key="OpenResultHotkeyVisibilityConverter" />
+    </UserControl.Resources>
+
+    <!-- Not focusable (like WPF): keyboard focus stays in the query box while the mouse selects/opens results. -->
     <ListBox Name="ResultsList"
              Classes="resultListBox"
+             Focusable="False"
              ItemsSource="{Binding Results}"
              SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
              SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
@@ -48,48 +57,95 @@
                                        FontFamily="{Binding GlyphFontFamily}"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center" />
-                            
-                            <!-- Image Icon -->
-                            <Image Classes="resultIcon"
-                                   Source="{Binding ListIcon^, FallbackValue={x:Static helper:ImageLoader.DefaultImage}}"
-                                   IsVisible="{Binding !ShowGlyph}"
-                                   RenderOptions.BitmapInterpolationMode="HighQuality"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center" />
+
+                            <!-- Image Icon (clipped to a circle for Result.RoundedIcon) -->
+                            <Border CornerRadius="{Binding IconCornerRadius}"
+                                    ClipToBounds="True"
+                                    IsVisible="{Binding !ShowGlyph}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center">
+                                <Image Classes="resultIcon"
+                                       Source="{Binding ListIcon^, FallbackValue={x:Static helper:ImageLoader.DefaultImage}}"
+                                       RenderOptions.BitmapInterpolationMode="HighQuality" />
+                            </Border>
+
+                            <!-- Plugin badge overlaying the bottom-right corner of the icon -->
+                            <Image Width="19"
+                                   Height="19"
+                                   HorizontalAlignment="Right"
+                                   VerticalAlignment="Bottom"
+                                   Margin="0,0,-4,-4"
+                                   IsHitTestVisible="False"
+                                   IsVisible="{Binding ShowBadge}"
+                                   Source="{Binding BadgeImage^}"
+                                   RenderOptions.BitmapInterpolationMode="HighQuality" />
                         </Panel>
 
                         <!-- Title and SubTitle -->
-                        <Grid Grid.Column="1" 
+                        <Grid Grid.Column="1"
                               RowDefinitions="Auto,Auto"
                               Margin="10,0,10,0"
                               VerticalAlignment="Center">
-                            
+
+                            <!-- Result.ProgressBar (0-100) drawn behind the title -->
+                            <ProgressBar Grid.Row="0"
+                                         Height="18"
+                                         MinHeight="18"
+                                         MinWidth="0"
+                                         Margin="0,0,0,4"
+                                         VerticalAlignment="Center"
+                                         Minimum="0"
+                                         Maximum="100"
+                                         Value="{Binding ResultProgress, Mode=OneWay}"
+                                         Foreground="{Binding ProgressBarBrush}"
+                                         IsVisible="{Binding ShowProgressBar}"
+                                         IsHitTestVisible="False" />
+
                             <TextBlock Grid.Row="0"
                                        Classes="resultTitle"
                                        FontSize="{Binding Settings.ResultItemFontSize}"
                                        FontFamily="{Binding Settings.ResultFont}"
-                                       ToolTip.Tip="{Binding Title}"
+                                       FontWeight="{Binding TitleFontWeight}"
+                                       FontStyle="{Binding TitleFontStyle}"
+                                       FontStretch="{Binding TitleFontStretch}"
+                                       ToolTip.Tip="{Binding TitleToolTip}"
                                        helper:TextBlockHelper.HighlightText="{Binding Title}"
                                        helper:TextBlockHelper.HighlightData="{Binding TitleHighlightData}" />
-                            
+
                             <TextBlock Grid.Row="1"
                                        Classes="resultSubTitle"
                                        FontSize="{Binding Settings.ResultSubItemFontSize}"
                                        FontFamily="{Binding Settings.ResultSubFont}"
+                                       FontWeight="{Binding SubTitleFontWeight}"
+                                       FontStyle="{Binding SubTitleFontStyle}"
+                                       FontStretch="{Binding SubTitleFontStretch}"
                                        IsVisible="{Binding ShowSubTitle}"
                                        Text="{Binding SubTitle}"
-                                       ToolTip.Tip="{Binding SubTitle}" />
+                                       ToolTip.Tip="{Binding SubTitleToolTip}" />
                         </Grid>
                     </Grid>
-                    
-                    <!-- Hotkey Badge (optional, can be enabled later) -->
-                    <!--
-                    <Border Grid.Column="2" 
+
+                    <!-- Open-result hotkey (OpenResultModifiers+1 ... +0) for the first ten results -->
+                    <Border Grid.Column="2"
                             Classes="hotkeyBadge"
                             VerticalAlignment="Center">
-                        <TextBlock Classes="hotkeyText" Text="Alt+1" />
+                        <Border.IsVisible>
+                            <MultiBinding Converter="{x:Static BoolConverters.And}">
+                                <Binding Path="Settings.ShowOpenResultHotkey" FallbackValue="False" />
+                                <Binding Path="$parent[ListBoxItem].(views:ResultListBox.ItemIndex)"
+                                         Converter="{StaticResource OpenResultHotkeyVisibilityConverter}" />
+                            </MultiBinding>
+                        </Border.IsVisible>
+                        <TextBlock Classes="hotkeyText">
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0}+{1}">
+                                    <Binding Path="Settings.OpenResultModifiers" />
+                                    <Binding Path="$parent[ListBoxItem].(views:ResultListBox.ItemIndex)"
+                                             Converter="{StaticResource OrdinalConverter}" />
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
                     </Border>
-                    -->
                 </Grid>
             </DataTemplate>
         </ListBox.ItemTemplate>
@@ -97,6 +153,7 @@
         <ListBox.ItemContainerTheme>
             <ControlTheme TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
                 <Setter Property="Padding" Value="0" />
+                <Setter Property="Focusable" Value="False" />
                 <Setter Property="Margin" Value="4,2,4,2" />
                 <Setter Property="CornerRadius" Value="6" />
                 <Setter Property="MinHeight" Value="50" />

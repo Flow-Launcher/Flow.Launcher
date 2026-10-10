@@ -155,6 +155,39 @@ internal static class MacKeyMap
     }
 
     /// <summary>
+    /// Builds a lookup from macOS virtual key code (index) to stored key: every key maps to the first table row with its
+    /// code and, when <paramref name="followLayout"/> is set, keys producing a letter in the active layout map to that
+    /// letter. Text Input Sources must be queried on the main thread, so only follow the layout there.
+    /// </summary>
+    internal static Key[] CreateKeyCodeTable(bool followLayout)
+    {
+        var table = new Key[128];
+        foreach (var (_, key, keyCode) in KeyTable)
+        {
+            if (keyCode < table.Length && table[keyCode] == Key.None)
+            {
+                table[keyCode] = key;
+            }
+        }
+
+        if (!followLayout)
+        {
+            return table;
+        }
+
+        using var layout = KeyboardLayout.Current();
+        for (ushort keyCode = 0; keyCode < table.Length; keyCode++)
+        {
+            if (table[keyCode] != Key.None && layout.TryGetLetter(keyCode, out var letter))
+            {
+                table[keyCode] = Key.A + (letter - 'a');
+            }
+        }
+
+        return table;
+    }
+
+    /// <summary>
     /// The active keyboard layout (for input methods, the ASCII-capable layout they type with).
     /// </summary>
     private readonly struct KeyboardLayout : IDisposable
