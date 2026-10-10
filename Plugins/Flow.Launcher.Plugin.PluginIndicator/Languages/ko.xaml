@@ -3,6 +3,9 @@
 
     <system:String x:Key="flowlauncher_plugin_pluginindicator_result_subtitle">{0} 플러그인의 액션 키워드</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_settings_title">Settings: {0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_settings_subtitle">Open the settings page for the {0} plugin</system:String>
+
     <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_name">플러그인 키워드 힌트</system:String>
     <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_description">사용중인 플러그인들의 전체 액션 키워드 목록을 보여줍니다</system:String>
 
