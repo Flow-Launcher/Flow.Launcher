@@ -42,8 +42,8 @@
     <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Formato de fecha y hora</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">Ordenar por:</system:String>
     <system:String x:Key="plugin_explorer_everything_installed_path">Ruta de Everything:</system:String>
-    <system:String x:Key="plugin_explorer_everything_15_instance_name">Everything 1.5 instance name: </system:String>
-    <system:String x:Key="plugin_explorer_everything_15_instance_name_tooltip">Leave this blank to use the default Everything 1.5b instance. Only set this if you run a named instance of Everything, or set it to &quot;1.5a&quot; to use Everything 1.5a.</system:String>
+    <system:String x:Key="plugin_explorer_everything_15_instance_name">Nombre de instancia de Everything 1.5: </system:String>
+    <system:String x:Key="plugin_explorer_everything_15_instance_name_tooltip">Dejar este campo en blanco para utilizar la instancia predeterminada de Everything 1.5b. Configurar solo si se ejecuta una instancia de Everything con nombre, o bien establecer el valor en &quot;1.5a&quot; para utilizar Everything 1.5a.</system:String>
     <system:String x:Key="plugin_explorer_launch_hidden">Iniciar oculto</system:String>
     <system:String x:Key="plugin_explorer_editor_path">Ruta del editor</system:String>
     <system:String x:Key="plugin_explorer_shell_path">Ruta del Shell</system:String>
@@ -151,11 +151,11 @@
 
     <!--  Everything  -->
     <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">No se ha podido cargar Everything SDK</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_architecture_check">Please check whether your system is x86 or x64</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_architecture_check">Comprobar si el sistema es x86 o x64</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_is_not_running">Advertencia: El servicio de Everything no se está ejecutando</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_15_unavailable">Warning: Everything 1.5 is unavailable</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_15_resolution">Ensure Everything is running and verify the configured instance name</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_15_sort_warning">Warning: Everything 1.5 is unavailable. The service may not be running, or the instance name may be invalid</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_15_unavailable">Advertencia: Everything 1.5 no está disponible</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_15_resolution">Comprobar que Everything se esté ejecutando y verificar el nombre de la instancia configurada</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_15_sort_warning">Advertencia: Everything 1.5 no está disponible. Es posible que el servicio no se esté ejecutando o que el nombre de la instancia no sea válido</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_query_error">Error al consultar Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by">Ordenar por</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_name_ascending">Nombre ↑</system:String>
@@ -190,8 +190,8 @@
 
     <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">Buscar ruta completa</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_run_count">Activar número de ejecuciones de archivos/carpetas</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_enable_15_support">Use Everything 1.5</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_15_restart_required">Restart Flow Launcher for this change to take effect</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_enable_15_support">Utilizar Everything 1.5</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_15_restart_required">Reiniciar Flow Launcher para que el cambio surta efecto</system:String>
 
     <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Hacer clic para lanzar o instalar Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_title">Instalación de Everything</system:String>
