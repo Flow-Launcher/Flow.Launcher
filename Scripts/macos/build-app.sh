@@ -49,8 +49,9 @@ is_macho() {
 
 echo "==> Publishing $EXECUTABLE ($TFM, $RID, self-contained, $CONFIGURATION)"
 rm -rf "$WORK_DIR"
+# ReadyToRun precompiles IL so first window/settings open skips most JIT (~30-50% faster cold paths, ~+45 MB).
 dotnet publish "$REPO_ROOT/Flow.Launcher.Avalonia/Flow.Launcher.Avalonia.csproj" \
-    -f "$TFM" -r "$RID" --self-contained -c "$CONFIGURATION" -o "$PUBLISH_DIR" -nologo -v quiet -clp:NoSummary
+    -f "$TFM" -r "$RID" --self-contained -c "$CONFIGURATION" -p:PublishReadyToRun=true -o "$PUBLISH_DIR" -nologo -v quiet -clp:NoSummary
 
 echo "==> Building bundled plugins ($TFM, $CONFIGURATION)"
 PLUGINS=()
