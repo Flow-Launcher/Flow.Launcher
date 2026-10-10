@@ -94,7 +94,7 @@
     <system:String x:Key="SearchWindowAlignLeftTop">Liên kết oben</system:String>
     <system:String x:Key="SearchWindowAlignRightTop">Trên cùng bên phải</system:String>
     <system:String x:Key="SearchWindowAlignCustom">Vị trí tùy chỉnh</system:String>
-    <system:String x:Key="language">Ngôn Ngữ </system:String>
+    <system:String x:Key="language">Ngôn Ngữ</system:String>
     <system:String x:Key="lastQueryMode">Chọn kiểu truy vấn</system:String>
     <system:String x:Key="lastQueryModeToolTip">Hiển thị/ẩn các kết quả trước đó khi Flow Launcher được kích hoạt lại.</system:String>
     <system:String x:Key="LastQueryPreserved">Giữ lại truy vấn cuối cùng</system:String>
@@ -136,6 +136,8 @@
     <system:String x:Key="ShouldUseDoublePinyin">Use Double Pinyin</system:String>
     <system:String x:Key="ShouldUseDoublePinyinToolTip">Use Double Pinyin instead of Full Pinyin to search.</system:String>
     <system:String x:Key="DoublePinyinSchema">Double Pinyin Schema</system:String>
+    <system:String x:Key="UsePolyphonicPhraseOverrides">Use polyphonic phrase pronunciations</system:String>
+    <system:String x:Key="UsePolyphonicPhraseOverridesToolTip">Use phrase-level pronunciation data to improve Pinyin conversion for polyphonic Chinese characters. This may use additional memory.</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoHe">Xiao He</system:String>
     <system:String x:Key="DoublePinyinSchemasZiRanMa">Zi Ran Ma</system:String>
     <system:String x:Key="DoublePinyinSchemasWeiRuan">Wei Ruan</system:String>
@@ -299,13 +301,13 @@
     <system:String x:Key="browserMoreThemes">Tìm kiếm thêm chủ đề</system:String>
     <system:String x:Key="howToCreateTheme">Cách tạo chủ đề</system:String>
     <system:String x:Key="hiThere">Xin chào</system:String>
-    <system:String x:Key="SampleTitleExplorer">Thư mục </system:String>
+    <system:String x:Key="SampleTitleExplorer">Thư mục</system:String>
     <system:String x:Key="SampleSubTitleExplorer">Tìm kiếm tệp, thư mục và nội dung tệp</system:String>
     <system:String x:Key="SampleTitleWebSearch">Tìm kiếm trên web</system:String>
     <system:String x:Key="SampleSubTitleWebSearch">Tìm kiếm trên web với sự hỗ trợ của công cụ tìm kiếm khác</system:String>
     <system:String x:Key="SampleTitleProgram">Chương trình</system:String>
     <system:String x:Key="SampleSubTitleProgram">Khởi chạy chương trình với tư cách quản trị viên hoặc người dùng khác</system:String>
-    <system:String x:Key="SampleTitleProcessKiller">Buộc Tắt Tiến Trình </system:String>
+    <system:String x:Key="SampleTitleProcessKiller">Buộc Tắt Tiến Trình</system:String>
     <system:String x:Key="SampleSubTitleProcessKiller">Chấm dứt các tiến trình không mong muốn</system:String>
     <system:String x:Key="SearchBarHeight">Chiều cao thanh tìm kiếm</system:String>
     <system:String x:Key="ItemHeight">Item Height</system:String>
@@ -327,6 +329,13 @@
     <system:String x:Key="ColorSchemeSystem">Mặc định hệ thống</system:String>
     <system:String x:Key="ColorSchemeLight">Sáng</system:String>
     <system:String x:Key="ColorSchemeDark">Tối</system:String>
+    <system:String x:Key="CodeHighlightTheme">Code Highlight Theme</system:String>
+    <system:String x:Key="CodeHighlightThemeTooltip">Syntax highlighting theme for code blocks in the markdown preview pane.</system:String>
+    <system:String x:Key="CodeHighlightThemeAuto">Auto (match color scheme)</system:String>
+    <system:String x:Key="CodeHighlightThemeVSCodeLight">VS Code Light</system:String>
+    <system:String x:Key="CodeHighlightThemeVSCodeDarkPlus">VS Code Dark+</system:String>
+    <system:String x:Key="CodeHighlightThemeCatppuccinMacchiato">Catppuccin Macchiato</system:String>
+    <system:String x:Key="CodeHighlightThemeOneDark">One Dark</system:String>
     <system:String x:Key="SoundEffect">Hiệu ứng âm thanh</system:String>
     <system:String x:Key="SoundEffectTip">Phát âm thanh khi cửa sổ tìm kiếm mở</system:String>
     <system:String x:Key="SoundEffectVolume">Âm lượng hiệu ứng âm thanh</system:String>
@@ -473,10 +482,8 @@
     <system:String x:Key="newVersionTips">Đã có phiên bản mới {0}, bạn có muốn khởi động lại Flow Launcher để sử dụng bản cập nhật không?</system:String>
     <system:String x:Key="checkUpdatesFailed">Kiểm tra cập nhật không thành công. Vui lòng kiểm tra kết nối và cài đặt proxy của bạn tới api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
-        
-					Tải xuống bản cập nhật không thành công. Vui lòng kiểm tra cài đặt kết nối và proxy của bạn tới github-cloud.s3.amazonaws.com,
+        Tải xuống bản cập nhật không thành công. Vui lòng kiểm tra cài đặt kết nối và proxy của bạn tới github-cloud.s3.amazonaws.com,
 					hoặc truy cập https://github.com/Flow-Launcher/Flow.Launcher/releases để tải xuống các bản cập nhật theo cách thủ công.
-				
     </system:String>
     <system:String x:Key="releaseNotes">Ghi chú phát hành</system:String>
     <system:String x:Key="documentation">Mẹo sử dụng</system:String>
@@ -490,9 +497,21 @@
     <system:String x:Key="clearcachefolderMessage">Are you sure you want to delete all caches?</system:String>
     <system:String x:Key="clearfolderfailMessage">Failed to clear part of folders and files. Please see log file for more information</system:String>
     <system:String x:Key="welcomewindow">Wizard</system:String>
+    <system:String x:Key="openWelcomeWindow">Open Welcome Window</system:String>
     <system:String x:Key="userdatapath">Vị trí dữ liệu người dùng</system:String>
     <system:String x:Key="userdatapathToolTip">Thiết đặt người dùng và plugin đã cài đặt sẽ được lưu trong thư mục dữ liệu người dùng. Vị trí này có thể thay đổi tùy thuộc vào việc nó có ở chế độ di động hay không.</system:String>
     <system:String x:Key="userdatapathButton">Mở thư mục</system:String>
+    <system:String x:Key="openFolderButton">Mở thư mục</system:String>
+    <system:String x:Key="devtoolsReportWindow">Report Window</system:String>
+    <system:String x:Key="devtoolsProgressWindow">Progress Window</system:String>
+    <system:String x:Key="devtoolsPluginUpdateWindow">Plugin Update Window</system:String>
+    <system:String x:Key="devtoolsMessageBoxWindow">Message Box Window</system:String>
+    <system:String x:Key="devtoolsMessageBoxOkLabel">OK</system:String>
+    <system:String x:Key="devtoolsMessageBoxOkCancelLabel">OK / Cancel</system:String>
+    <system:String x:Key="devtoolsMessageBoxYesNoLabel">Yes / No</system:String>
+    <system:String x:Key="devtoolsMessageBoxYesNoCancelLabel">Yes / No / Cancel</system:String>
+    <system:String x:Key="devtoolsMessageBoxTestMessage">This is a test message box.</system:String>
+    <system:String x:Key="devtoolsOpenTestWindow">Open Test Window</system:String>
     <system:String x:Key="advanced">Advanced</system:String>
     <system:String x:Key="logLevel">Log Level</system:String>
     <system:String x:Key="LogLevelNONE">Silent</system:String>
@@ -583,11 +602,9 @@
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Phím tắt truy vấn tùy chỉnh</system:String>
     <system:String x:Key="customeQueryShortcutTips">Nhập một phím tắt tự động mở rộng theo truy vấn đã chỉ định.</system:String>
-    <system:String x:Key="customeQueryShortcutGuide" xml:space="preserve">
-					Một phím tắt được mở rộng khi nó khớp chính xác với truy vấn.
+    <system:String x:Key="customeQueryShortcutGuide" xml:space="preserve">Một phím tắt được mở rộng khi nó khớp chính xác với truy vấn.
 
 					Nếu bạn thêm tiền tố '@' trong khi nhập phím tắt, phím tắt đó sẽ khớp với bất kỳ vị trí nào trong truy vấn. Các phím tắt dựng sẵn khớp với bất kỳ vị trí nào trong truy vấn.
-				
     </system:String>
     <system:String x:Key="duplicateShortcut">Phím tắt đã tồn tại, vui lòng nhập Phím tắt mới hoặc chỉnh sửa phím tắt hiện có.</system:String>
     <system:String x:Key="emptyShortcut">Phím tắt và/hoặc phần mở rộng của nó trống.</system:String>
@@ -642,10 +659,8 @@
     <system:String x:Key="update_flowlauncher_update_found">Tìm thấy cập nhật</system:String>
     <system:String x:Key="update_flowlauncher_updating">Đang cập nhật...</system:String>
     <system:String x:Key="update_flowlauncher_fail_moving_portable_user_profile_data">
-        
-					Flow Launcher không thể di chuyển dữ liệu hồ sơ của bạn sang phiên bản cập nhật mới.
+        Flow Launcher không thể di chuyển dữ liệu hồ sơ của bạn sang phiên bản cập nhật mới.
 					Vui lòng di chuyển thủ công thư mục dữ liệu hồ sơ của bạn từ {0} sang {1}
-				
     </system:String>
     <system:String x:Key="update_flowlauncher_new_update">Cập nhật mới</system:String>
     <system:String x:Key="update_flowlauncher_update_new_version_available">Đã có sẵn V{0} của Flow Launcher</system:String>
@@ -702,10 +717,10 @@
     <system:String x:Key="RecommendWeatherDesc">Thời tiết từ kết quả của Google</system:String>
     <system:String x:Key="RecommendShell">&gt; ping 8.8.8.8</system:String>
     <system:String x:Key="RecommendShellDesc">Lệnh Shell</system:String>
-    <system:String x:Key="RecommendBluetooth"> Bluetooth</system:String>
-    <system:String x:Key="RecommendBluetoothDesc">Cài đặt Bluetooth </system:String>
+    <system:String x:Key="RecommendBluetooth">Bluetooth</system:String>
+    <system:String x:Key="RecommendBluetoothDesc">Cài đặt Bluetooth</system:String>
     <system:String x:Key="RecommendAcronyms">sn</system:String>
-    <system:String x:Key="RecommendAcronymsDesc">Ghi chú </system:String>
+    <system:String x:Key="RecommendAcronymsDesc">Ghi chú</system:String>
 
     <!--  Preview Area  -->
     <system:String x:Key="FileSize">Kích thước tệp</system:String>
