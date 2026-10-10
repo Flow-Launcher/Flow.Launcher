@@ -3,6 +3,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
+using Windows.Win32;
+using Windows.Win32.UI.Shell;
 
 #pragma warning disable IDE0005
 using System.Windows;
@@ -273,6 +276,35 @@ namespace Flow.Launcher.Plugin.SharedCommands
         public static bool FileOrLocationExists(this string path)
         {
             return LocationExists(path) || FileExists(path);
+        }
+
+        /// <summary>
+        /// Moves the specified file or directory to the Recycle Bin.
+        /// </summary>
+        /// <param name="path">The path of the file or directory to move.</param>
+        /// <exception cref="OperationCanceledException">Thrown when the operation is canceled.</exception>
+        public static void MoveToRecycleBin(this string path)
+        {
+            var shellItemGuid = typeof(IShellItem).GUID;
+            PInvoke.SHCreateItemFromParsingName(path, null, in shellItemGuid, out var shellItemObject).ThrowOnFailure();
+            var shellItem = (IShellItem)shellItemObject;
+
+            var fileOperation = new FileOperation();
+            try
+            {
+                ((IFileOperation)fileOperation).SetOperationFlags(FILEOPERATION_FLAGS.FOF_ALLOWUNDO | FILEOPERATION_FLAGS.FOF_NOCONFIRMATION | FILEOPERATION_FLAGS.FOF_NOERRORUI);
+                ((IFileOperation)fileOperation).DeleteItem(shellItem, null);
+                ((IFileOperation)fileOperation).PerformOperations();
+                ((IFileOperation)fileOperation).GetAnyOperationsAborted(out var aborted);
+
+                if (aborted)
+                    throw new OperationCanceledException();
+            }
+            finally
+            {
+                Marshal.FinalReleaseComObject(fileOperation);
+                Marshal.FinalReleaseComObject(shellItem);
+            }
         }
 
         /// <summary>
