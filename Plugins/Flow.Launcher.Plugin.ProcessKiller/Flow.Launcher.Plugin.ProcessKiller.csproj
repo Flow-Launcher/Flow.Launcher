@@ -55,8 +55,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="11.2.3" ExcludeAssets="runtime" />
-    <PackageReference Include="FluentAvaloniaUI" Version="2.2.0" ExcludeAssets="runtime" />
+    <PackageReference Include="Avalonia" Version="12.1.4" ExcludeAssets="runtime" />
+    <PackageReference Include="FluentAvaloniaUI" Version="3.1.0" ExcludeAssets="runtime" />
     <PackageReference Include="Flow.Launcher.Localization" Version="0.0.6" />
     <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.298">
       <PrivateAssets>all</PrivateAssets>

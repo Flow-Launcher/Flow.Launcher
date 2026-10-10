@@ -5,6 +5,7 @@
         xmlns:models="using:Flow.Launcher.Plugin.BrowserBookmark.Models"
         mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="400"
         x:Class="Flow.Launcher.Plugin.BrowserBookmark.Views.Avalonia.CustomBrowserSettingWindow"
+        x:DataType="models:CustomBrowser"
         Title="{DynamicResource flowlauncher_plugin_browserbookmark_bookmarkDataSetting}"
         Width="550" SizeToContent="Height" CanResize="False"
         WindowStartupLocation="CenterOwner">

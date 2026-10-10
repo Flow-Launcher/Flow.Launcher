@@ -14,44 +14,44 @@
     </UserControl.Resources>
 
     <StackPanel Spacing="10" Margin="0,0,10,0">
-        <ui:SettingsExpander Header="{DynamicResource flowlauncher_plugin_cmd_plugin_name}"
+        <ui:FASettingsExpander Header="{DynamicResource flowlauncher_plugin_cmd_plugin_name}"
                              IconSource="Code"
                              Description="{DynamicResource flowlauncher_plugin_cmd_plugin_description}"
                              IsExpanded="True">
-            <ui:SettingsExpander.Items>
-                <ui:SettingsExpanderItem Content="{DynamicResource flowlauncher_plugin_cmd_relace_winr}"
+            <ui:FASettingsExpander.Items>
+                <ui:FASettingsExpanderItem Content="{DynamicResource flowlauncher_plugin_cmd_relace_winr}"
                                          IsVisible="{Binding ShowWindowsOnlySettings}">
-                    <ui:SettingsExpanderItem.Footer>
+                    <ui:FASettingsExpanderItem.Footer>
                         <ToggleSwitch IsChecked="{Binding Settings.ReplaceWinR}" OnContent="" OffContent="" />
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
 
-                <ui:SettingsExpanderItem Content="{DynamicResource flowlauncher_plugin_cmd_always_run_as_administrator}"
+                <ui:FASettingsExpanderItem Content="{DynamicResource flowlauncher_plugin_cmd_always_run_as_administrator}"
                                          IsVisible="{Binding ShowWindowsOnlySettings}">
-                    <ui:SettingsExpanderItem.Footer>
+                    <ui:FASettingsExpanderItem.Footer>
                         <ToggleSwitch IsChecked="{Binding Settings.RunAsAdministrator}" OnContent="" OffContent="" />
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
 
-                <ui:SettingsExpanderItem Content="{DynamicResource flowlauncher_plugin_cmd_use_windows_terminal}"
+                <ui:FASettingsExpanderItem Content="{DynamicResource flowlauncher_plugin_cmd_use_windows_terminal}"
                                          IsVisible="{Binding ShowWindowsOnlySettings}">
-                    <ui:SettingsExpanderItem.Footer>
+                    <ui:FASettingsExpanderItem.Footer>
                         <ToggleSwitch IsChecked="{Binding Settings.UseWindowsTerminal}" OnContent="" OffContent="" />
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
 
-                <ui:SettingsExpanderItem Content="{DynamicResource flowlauncher_plugin_cmd_plugin_name}">
-                    <ui:SettingsExpanderItem.Footer>
+                <ui:FASettingsExpanderItem Content="{DynamicResource flowlauncher_plugin_cmd_plugin_name}">
+                    <ui:FASettingsExpanderItem.Footer>
                         <ComboBox ItemsSource="{Binding AllShells}"
                                   SelectedValue="{Binding SelectedShell}"
                                   DisplayMemberBinding="{Binding Display}"
                                   SelectedValueBinding="{Binding Value}"
                                   MinWidth="150" />
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
 
-                <ui:SettingsExpanderItem Content="{DynamicResource flowlauncher_plugin_cmd_close_cmd_after_press}">
-                    <ui:SettingsExpanderItem.Footer>
+                <ui:FASettingsExpanderItem Content="{DynamicResource flowlauncher_plugin_cmd_close_cmd_after_press}">
+                    <ui:FASettingsExpanderItem.Footer>
                         <ToggleSwitch IsChecked="{Binding CloseShellAfterPress}" OnContent="" OffContent="">
                             <ToggleSwitch.IsEnabled>
                                 <MultiBinding Converter="{StaticResource LeaveShellOpenOrCloseShellAfterPressEnabledConverter}">
@@ -60,11 +60,11 @@
                                 </MultiBinding>
                             </ToggleSwitch.IsEnabled>
                         </ToggleSwitch>
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
 
-                <ui:SettingsExpanderItem Content="{DynamicResource flowlauncher_plugin_cmd_leave_cmd_open}">
-                    <ui:SettingsExpanderItem.Footer>
+                <ui:FASettingsExpanderItem Content="{DynamicResource flowlauncher_plugin_cmd_leave_cmd_open}">
+                    <ui:FASettingsExpanderItem.Footer>
                         <ToggleSwitch IsChecked="{Binding LeaveShellOpen}" OnContent="" OffContent="">
                             <ToggleSwitch.IsEnabled>
                                 <MultiBinding Converter="{StaticResource LeaveShellOpenOrCloseShellAfterPressEnabledConverter}">
@@ -73,11 +73,11 @@
                                 </MultiBinding>
                             </ToggleSwitch.IsEnabled>
                         </ToggleSwitch>
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
 
-                <ui:SettingsExpanderItem Content="{DynamicResource flowlauncher_plugin_cmd_history}">
-                    <ui:SettingsExpanderItem.Footer>
+                <ui:FASettingsExpanderItem Content="{DynamicResource flowlauncher_plugin_cmd_history}">
+                    <ui:FASettingsExpanderItem.Footer>
                         <StackPanel Orientation="Horizontal" Spacing="10">
                             <ComboBox ItemsSource="{Binding OnlyMostUsedCMDsNumbers}"
                                       SelectedItem="{Binding SelectedOnlyMostUsedCMDsNumber}"
@@ -85,10 +85,10 @@
                                       MinWidth="60" />
                             <ToggleSwitch IsChecked="{Binding Settings.ShowOnlyMostUsedCMDs}" OnContent="" OffContent="" />
                         </StackPanel>
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
 
-            </ui:SettingsExpander.Items>
-        </ui:SettingsExpander>
+            </ui:FASettingsExpander.Items>
+        </ui:FASettingsExpander>
     </StackPanel>
 </UserControl>

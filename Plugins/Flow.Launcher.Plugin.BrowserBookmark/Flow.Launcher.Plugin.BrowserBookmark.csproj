@@ -111,12 +111,12 @@
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-    <PackageReference Include="Avalonia" Version="11.2.3" ExcludeAssets="runtime" />
-    <PackageReference Include="FluentAvaloniaUI" Version="2.2.0" ExcludeAssets="runtime" />
+    <PackageReference Include="Avalonia" Version="12.1.4" ExcludeAssets="runtime" />
+    <PackageReference Include="FluentAvaloniaUI" Version="3.1.0" ExcludeAssets="runtime" />
     <PackageReference Include="Flow.Launcher.Localization" Version="0.0.6" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.9" />
     <PackageReference Include="Svg.Skia" Version="4.6.0" />
-    <PackageReference Include="SkiaSharp" Version="3.119.1" />
+    <PackageReference Include="SkiaSharp" Version="3.119.4" />
   </ItemGroup>
 
   <!-- Copy plugin output to Avalonia build directory -->

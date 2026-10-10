@@ -41,8 +41,8 @@
   <ItemGroup>
     <PackageReference Include="SemanticVersioning" Version="3.0.0" />
     <PackageReference Include="SharpZipLib" Version="1.4.2" />
-    <PackageReference Include="Avalonia" Version="11.2.3" ExcludeAssets="runtime" />
-    <PackageReference Include="FluentAvaloniaUI" Version="2.2.0" ExcludeAssets="runtime" />
+    <PackageReference Include="Avalonia" Version="12.1.4" ExcludeAssets="runtime" />
+    <PackageReference Include="FluentAvaloniaUI" Version="3.1.0" ExcludeAssets="runtime" />
   </ItemGroup>
 
   <!-- Copy plugin output to Avalonia build directory -->
