@@ -68,9 +68,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 IsRunCounterEnabled: Settings.EverythingEnableRunCount);
 
             await foreach (var result in api.SearchAsync(option, token))
-            {
                 yield return result;
-            }
         }
 
         public async IAsyncEnumerable<SearchResult> EnumerateAsync(string path, string search, bool recursive, [EnumeratorCancellation] CancellationToken token)
@@ -119,7 +117,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
         private async Task EnsureAvailableAsync(CancellationToken token)
         {
-            var engineName = Enum.GetName(Settings.IndexSearchEngineOption.Everything)!;
             try
             {
                 await api.CheckAvailableAsync(token);
@@ -128,28 +125,42 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             {
                 // ignore, the search was cancelled
             }
-            catch (Exceptions.IPCErrorException) when (api is LegacyEverythingApi)
+            catch (Exception ex) when (IsAvailabilityException(ex))
             {
-                throw new EngineNotAvailableException(engineName,
+                throw WrapEngineNotAvailableException(ex);
+            }
+        }
+
+        internal static bool IsAvailabilityException(Exception exception) =>
+            exception is Exceptions.IPCErrorException ||
+            exception is DllNotFoundException ||
+            exception is EntryPointNotFoundException;
+
+        internal EngineNotAvailableException WrapEngineNotAvailableException(Exception exception)
+        {
+            var engineName = Enum.GetName(Settings.IndexSearchEngineOption.Everything)!;
+
+            if (exception is Exceptions.IPCErrorException && api is LegacyEverythingApi)
+            {
+                return new EngineNotAvailableException(engineName,
                     Localize.flowlauncher_plugin_everything_click_to_launch_or_install(),
                     Localize.flowlauncher_plugin_everything_is_not_running(),
                     Constants.EverythingErrorImagePath,
                     ClickToInstallEverythingAsync);
             }
-            catch (Exceptions.IPCErrorException)
+
+            if (exception is Exceptions.IPCErrorException)
             {
-                throw new EngineNotAvailableException(engineName,
+                return new EngineNotAvailableException(engineName,
                     Localize.flowlauncher_plugin_everything_15_resolution(),
                     Localize.flowlauncher_plugin_everything_15_unavailable(),
                     Constants.EverythingErrorImagePath);
             }
-            catch (Exception ex) when (ex is DllNotFoundException || ex is EntryPointNotFoundException)
-            {
-                throw new EngineNotAvailableException(engineName,
-                    Localize.flowlauncher_plugin_everything_architecture_check(),
-                    Constants.GeneralSearchErrorImagePath,
-                    Localize.flowlauncher_plugin_everything_sdk_issue());
-            }
+
+            return new EngineNotAvailableException(engineName,
+                Localize.flowlauncher_plugin_everything_architecture_check(),
+                Constants.GeneralSearchErrorImagePath,
+                Localize.flowlauncher_plugin_everything_sdk_issue());
         }
 
         private async ValueTask<bool> ClickToInstallEverythingAsync(ActionContext _)
