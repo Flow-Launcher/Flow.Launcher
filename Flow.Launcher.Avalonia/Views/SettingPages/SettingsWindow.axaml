@@ -25,6 +25,6 @@
         </ui:FANavigationView.MenuItems>
 
         <!-- Pages scroll themselves; an outer ScrollViewer would give them infinite height and defeat virtualization. -->
-        <Panel Name="ContentFrame" Margin="20" />
+        <ContentControl Name="ContentFrame" Margin="20" />
     </ui:FANavigationView>
 </Window>

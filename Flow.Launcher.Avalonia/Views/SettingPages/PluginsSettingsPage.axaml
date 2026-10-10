@@ -73,8 +73,7 @@
             </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate x:DataType="vm:PluginItemViewModel">
-                        <Expander Classes="pluginItem" HorizontalAlignment="Stretch" Margin="0,0,10,10" IsExpanded="{Binding IsExpanded}"
-                                  Content="{Binding ExpandedBody}">
+                        <Expander Classes="pluginItem" HorizontalAlignment="Stretch" Margin="0,0,10,10" IsExpanded="{Binding IsExpanded}">
                             <Expander.Header>
                                 <Grid ColumnDefinitions="Auto,*,Auto" HorizontalAlignment="Stretch">
                                     <!-- Icon -->
@@ -116,8 +115,7 @@
                                 </Grid>
                             </Expander.Header>
                             
-                            <Expander.ContentTemplate>
-                                <DataTemplate x:DataType="vm:PluginItemViewModel">
+                            <Expander.Content>
                                 <StackPanel Spacing="15">
                                     <!-- Action Keywords -->
                                     <Grid ColumnDefinitions="*,Auto">
@@ -176,8 +174,7 @@
                                         </StackPanel>
                                     </Grid>
                                 </StackPanel>
-                                </DataTemplate>
-                            </Expander.ContentTemplate>
+                            </Expander.Content>
                         </Expander>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>

@@ -34,19 +34,16 @@ namespace Flow.Launcher.Avalonia.ViewModel.SettingPages
         public string IcoPath => _newPlugin.IcoPath;
 
         public bool LabelInstalled => _oldPluginPair != null;
-        private bool? _labelUpdate;
-        public bool LabelUpdate => _labelUpdate ??= LabelInstalled && new Version(_newPlugin.Version) > new Version(_oldPluginPair.Metadata.Version);
+        public bool LabelUpdate => LabelInstalled && new Version(_newPlugin.Version) > new Version(_oldPluginPair.Metadata.Version);
 
         internal const string None = "None";
         internal const string RecentlyUpdated = "RecentlyUpdated";
         internal const string NewRelease = "NewRelease";
         internal const string Installed = "Installed";
 
-        private string? _category;
-        public string Category => _category ??= ComputeCategory();
-
-        private string ComputeCategory()
+        public string Category
         {
+            get
             {
                 string category = None;
                 if (DateTime.Now - _newPlugin.LatestReleaseDate < TimeSpan.FromDays(7))

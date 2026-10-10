@@ -4,9 +4,7 @@ using Avalonia.Markup.Xaml;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Avalonia.Helper;
 using Flow.Launcher.Avalonia.Resource;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 
@@ -33,18 +31,7 @@ namespace Flow.Launcher.Avalonia.Views.Controls
             }
         }
 
-        public static readonly DirectProperty<HotkeyControl, IReadOnlyList<string>> KeysToDisplayProperty =
-            AvaloniaProperty.RegisterDirect<HotkeyControl, IReadOnlyList<string>>(
-                nameof(KeysToDisplay),
-                o => o.KeysToDisplay);
-
-        private IReadOnlyList<string> _keysToDisplay = Array.Empty<string>();
-        // Replaced wholesale on each change so the ItemsControl regenerates once instead of per Add.
-        public IReadOnlyList<string> KeysToDisplay
-        {
-            get => _keysToDisplay;
-            private set => SetAndRaise(KeysToDisplayProperty, ref _keysToDisplay, value);
-        }
+        public ObservableCollection<string> KeysToDisplay { get; } = new();
 
         public static readonly DirectProperty<HotkeyControl, bool> UnregisterToggleHotkeyWhileRecordingProperty =
             AvaloniaProperty.RegisterDirect<HotkeyControl, bool>(
@@ -74,14 +61,18 @@ namespace Flow.Launcher.Avalonia.Views.Controls
 
         private void UpdateKeysDisplay()
         {
+            KeysToDisplay.Clear();
             if (string.IsNullOrEmpty(Hotkey))
             {
-                KeysToDisplay = [Translator.GetString("none")];
+                KeysToDisplay.Add(Translator.GetString("none"));
                 return;
             }
 
             var model = new HotkeyModel(Hotkey);
-            KeysToDisplay = model.EnumerateDisplayKeys().ToList();
+            foreach (var key in model.EnumerateDisplayKeys())
+            {
+                KeysToDisplay.Add(key);
+            }
         }
 
         private async Task OpenHotkeyRecorderDialog()

@@ -56,7 +56,7 @@ public partial class ThemeSettingsViewModel : ObservableObject, IDisposable
 
     public List<DropdownDataGeneric<AnimationSpeeds>> AnimationSpeedOptions { get; }
 
-    public List<string> AvailableFonts { get; }
+    public IReadOnlyList<string> AvailableFonts { get; }
 
     public List<ThemeData> Themes { get; }
 

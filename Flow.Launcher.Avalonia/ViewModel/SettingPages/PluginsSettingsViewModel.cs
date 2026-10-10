@@ -4,7 +4,6 @@ using Avalonia;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Media;
@@ -33,7 +32,6 @@ public partial class PluginsSettingsViewModel : ObservableObject, IDisposable
         
         LoadDisplayModes();
         LoadPlugins();
-        _filteredPlugins = Plugins;
 
         _settingsPropertyChangedHandler = (_, e) =>
         {
@@ -55,52 +53,16 @@ public partial class PluginsSettingsViewModel : ObservableObject, IDisposable
     [ObservableProperty]
     private string _searchText = string.Empty;
 
-    [ObservableProperty]
-    private IReadOnlyList<PluginItemViewModel> _filteredPlugins;
+    public IEnumerable<PluginItemViewModel> FilteredPlugins => 
+        string.IsNullOrWhiteSpace(SearchText) 
+            ? Plugins 
+            : Plugins.Where(p => 
+                p.Name.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
+                p.Description.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
+                p.ActionKeywordsText.Contains(SearchText, StringComparison.OrdinalIgnoreCase)
+            );
 
-    private CancellationTokenSource? _filterCts;
-    private const int SearchDebounceMs = 150;
-
-    partial void OnSearchTextChanged(string value) => _ = ApplyFilterDebouncedAsync(value);
-
-    private async Task ApplyFilterDebouncedAsync(string text)
-    {
-        _filterCts?.Cancel();
-        _filterCts?.Dispose();
-        _filterCts = null;
-
-        if (string.IsNullOrWhiteSpace(text))
-        {
-            FilteredPlugins = Plugins;
-            return;
-        }
-
-        var cts = new CancellationTokenSource();
-        _filterCts = cts;
-        try
-        {
-            await Task.Delay(SearchDebounceMs, cts.Token);
-        }
-        catch (OperationCanceledException)
-        {
-            return;
-        }
-
-        if (cts.IsCancellationRequested)
-            return;
-
-        var filtered = new List<PluginItemViewModel>();
-        foreach (var p in Plugins)
-        {
-            if (p.Name.Contains(text, StringComparison.OrdinalIgnoreCase) ||
-                p.Description.Contains(text, StringComparison.OrdinalIgnoreCase) ||
-                p.ActionKeywordsText.Contains(text, StringComparison.OrdinalIgnoreCase))
-            {
-                filtered.Add(p);
-            }
-        }
-        FilteredPlugins = filtered;
-    }
+    partial void OnSearchTextChanged(string value) => OnPropertyChanged(nameof(FilteredPlugins));
 
     private void LoadPlugins()
     {
@@ -114,9 +76,6 @@ public partial class PluginsSettingsViewModel : ObservableObject, IDisposable
     public void Dispose()
     {
         _settings.PropertyChanged -= _settingsPropertyChangedHandler;
-        _filterCts?.Cancel();
-        _filterCts?.Dispose();
-        _filterCts = null;
 
         foreach (var plugin in Plugins)
         {
@@ -310,12 +269,8 @@ public partial class PluginItemViewModel : ObservableObject, IDisposable
             }
         }
 
-        // Avalonia settings panel is created lazily on first expand; detect support cheaply
-        // by checking whether the plugin overrides the default (null-returning) interface method.
-        if (HasSettings && _settingProvider != null)
-        {
-            HasNativeAvaloniaSettings = OverridesAvaloniaSettingPanel(_settingProvider);
-        }
+        // The Avalonia settings panel is created lazily on first expand; assume it exists until creation says otherwise.
+        HasNativeAvaloniaSettings = HasSettings;
 
         // Listen to metadata changes
         _metadataChangedHandler = (_, args) =>
@@ -341,47 +296,11 @@ public partial class PluginItemViewModel : ObservableObject, IDisposable
         _plugin.Metadata.PropertyChanged -= _metadataChangedHandler;
     }
 
-    private static readonly Dictionary<Type, bool> s_overridesAvaloniaPanel = new();
-
-    private static bool OverridesAvaloniaSettingPanel(ISettingProvider provider)
-    {
-        var type = provider.GetType();
-        lock (s_overridesAvaloniaPanel)
-        {
-            if (s_overridesAvaloniaPanel.TryGetValue(type, out var cached))
-                return cached;
-
-            var result = false;
-            try
-            {
-                var map = type.GetInterfaceMap(typeof(ISettingProvider));
-                for (var i = 0; i < map.InterfaceMethods.Length; i++)
-                {
-                    if (map.InterfaceMethods[i].Name == nameof(ISettingProvider.CreateSettingPanelAvalonia))
-                    {
-                        result = map.TargetMethods[i].DeclaringType != typeof(ISettingProvider);
-                        break;
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                result = true; // fall back to probing on expand
-            }
-
-            s_overridesAvaloniaPanel[type] = result;
-            return result;
-        }
-    }
-
-    private bool _settingControlCreated;
-
     private void EnsureAvaloniaSettingControl()
     {
-        if (_settingControlCreated || !HasNativeAvaloniaSettings || _settingProvider == null)
+        if (AvaloniaSettingControl != null || !HasNativeAvaloniaSettings || _settingProvider == null)
             return;
 
-        _settingControlCreated = true;
         try
         {
             AvaloniaSettingControl = _settingProvider.CreateSettingPanelAvalonia() as Control;
@@ -395,17 +314,10 @@ public partial class PluginItemViewModel : ObservableObject, IDisposable
             HasNativeAvaloniaSettings = false;
     }
 
-    // Null until first expand so the Expander body template is not instantiated for collapsed rows.
-    [ObservableProperty]
-    private PluginItemViewModel? _expandedBody;
-
     partial void OnIsExpandedChanged(bool value)
     {
-        if (!value)
-            return;
-
-        EnsureAvaloniaSettingControl();
-        ExpandedBody ??= this;
+        if (value)
+            EnsureAvaloniaSettingControl();
     }
 
     [ObservableProperty]

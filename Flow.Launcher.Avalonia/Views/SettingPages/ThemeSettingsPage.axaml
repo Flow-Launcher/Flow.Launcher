@@ -174,9 +174,7 @@
                             </StackPanel>
                             <ComboBox ItemsSource="{Binding AvailableFonts}"
                                       SelectedItem="{Binding QueryFont, Mode=TwoWay}"
-                                      MinWidth="220">
-                                <ComboBox.ItemsPanel><ItemsPanelTemplate><VirtualizingStackPanel /></ItemsPanelTemplate></ComboBox.ItemsPanel>
-                            </ComboBox>
+                                      MinWidth="220" />
                             <ComboBox ItemsSource="{Binding QueryTypefaceOptions}"
                                       SelectedItem="{Binding SelectedQueryTypeface, Mode=TwoWay}"
                                       MinWidth="220">
@@ -198,9 +196,7 @@
                             </StackPanel>
                             <ComboBox ItemsSource="{Binding AvailableFonts}"
                                       SelectedItem="{Binding ResultFont, Mode=TwoWay}"
-                                      MinWidth="220">
-                                <ComboBox.ItemsPanel><ItemsPanelTemplate><VirtualizingStackPanel /></ItemsPanelTemplate></ComboBox.ItemsPanel>
-                            </ComboBox>
+                                      MinWidth="220" />
                             <ComboBox ItemsSource="{Binding ResultTypefaceOptions}"
                                       SelectedItem="{Binding SelectedResultTypeface, Mode=TwoWay}"
                                       MinWidth="220">
@@ -222,9 +218,7 @@
                             </StackPanel>
                             <ComboBox ItemsSource="{Binding AvailableFonts}"
                                       SelectedItem="{Binding ResultSubFont, Mode=TwoWay}"
-                                      MinWidth="220">
-                                <ComboBox.ItemsPanel><ItemsPanelTemplate><VirtualizingStackPanel /></ItemsPanelTemplate></ComboBox.ItemsPanel>
-                            </ComboBox>
+                                      MinWidth="220" />
                             <ComboBox ItemsSource="{Binding ResultSubTypefaceOptions}"
                                       SelectedItem="{Binding SelectedResultSubTypeface, Mode=TwoWay}"
                                       MinWidth="220">

@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using Avalonia.Media;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
@@ -38,8 +37,7 @@ public partial class AboutSettingsViewModel : ObservableObject
         LogLevels = DropdownDataGeneric.GetEnumData<LOGLEVEL>("LogLevel");
         AvailableFonts = SystemFontCache.FontNames;
 
-        RefreshLogFolderSize();
-        RefreshCacheFolderSize();
+        _ = RefreshFolderSizesAsync();
     }
 
     public string Version => Constant.Version switch
@@ -71,47 +69,18 @@ public partial class AboutSettingsViewModel : ObservableObject
         ? $"{Translate("clearcachefolder", "Clear Caches")} ({BytesToReadableString(cacheBytes)})"
         : Translate("clearcachefolder", "Clear Caches");
 
-    // Folder sizes are computed off the UI thread (recursive stat of many files) and published back.
-    private void RefreshLogFolderSize()
+    // Recursively stat'ing the log/cache folders can be slow, so sizes are computed off the UI thread.
+    private async Task RefreshFolderSizesAsync()
     {
-        _ = Task.Run(() => SumFileSizes(GetLogDir())).ContinueWith(t =>
-        {
-            if (!t.IsCompletedSuccessfully) return;
-            Dispatcher.UIThread.Post(() =>
-            {
-                _logFolderBytes = t.Result;
-                OnPropertyChanged(nameof(LogFolderSize));
-            });
-        }, TaskScheduler.Default);
-    }
-
-    private void RefreshCacheFolderSize()
-    {
-        _ = Task.Run(() => SumFileSizes(GetCacheDir())).ContinueWith(t =>
-        {
-            if (!t.IsCompletedSuccessfully) return;
-            Dispatcher.UIThread.Post(() =>
-            {
-                _cacheFolderBytes = t.Result;
-                OnPropertyChanged(nameof(CacheFolderSize));
-            });
-        }, TaskScheduler.Default);
-    }
-
-    private static long SumFileSizes(DirectoryInfo directory)
-    {
-        if (!directory.Exists) return 0;
-        long total = 0;
-        foreach (var file in directory.EnumerateFiles("*", SearchOption.AllDirectories))
-        {
-            total += file.Length;
-        }
-        return total;
+        (_logFolderBytes, _cacheFolderBytes) = await Task.Run(() =>
+            (GetLogFiles().Sum(file => file.Length), GetCacheFiles().Sum(file => file.Length)));
+        OnPropertyChanged(nameof(LogFolderSize));
+        OnPropertyChanged(nameof(CacheFolderSize));
     }
 
     public List<DropdownDataGeneric<LOGLEVEL>> LogLevels { get; }
 
-    public List<string> AvailableFonts { get; }
+    public IReadOnlyList<string> AvailableFonts { get; }
 
     public DropdownDataGeneric<LOGLEVEL>? SelectedLogLevelItem
     {
@@ -335,7 +304,7 @@ public partial class AboutSettingsViewModel : ObservableObject
                 }
             });
 
-        RefreshLogFolderSize();
+        _ = RefreshFolderSizesAsync();
         return success;
     }
 
@@ -386,7 +355,7 @@ public partial class AboutSettingsViewModel : ObservableObject
             }
         }
 
-        RefreshCacheFolderSize();
+        _ = RefreshFolderSizesAsync();
         return success;
     }
 
