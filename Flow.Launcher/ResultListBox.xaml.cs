@@ -5,6 +5,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 using Flow.Launcher.ViewModel;
 
 namespace Flow.Launcher
@@ -66,6 +67,19 @@ namespace Flow.Launcher
                 ItemTemplate = _listItemTemplate;
                 ItemContainerStyle = _listItemContainerStyle;
                 ClearValue(ScrollViewer.HorizontalScrollBarVisibilityProperty);
+            }
+
+            if (SelectedItem != null)
+            {
+                Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(ScrollSelectedItemIntoView));
+            }
+        }
+
+        private void ScrollSelectedItemIntoView()
+        {
+            if (SelectedItem != null)
+            {
+                ScrollIntoView(SelectedItem);
             }
         }
 
