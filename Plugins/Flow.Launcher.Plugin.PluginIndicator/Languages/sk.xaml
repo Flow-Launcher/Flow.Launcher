@@ -3,6 +3,9 @@
 
     <system:String x:Key="flowlauncher_plugin_pluginindicator_result_subtitle">Aktivovať plugin {0} aktivačným príkazom</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_settings_title">Nastavenia: {0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_settings_subtitle">Open the settings page for the {0} plugin</system:String>
+
     <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_name">Plugin Indicator</system:String>
     <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_description">Ponúka návrhy pre akcie pluginov</system:String>
 
