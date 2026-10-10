@@ -42,6 +42,8 @@
     <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">日期和时间格式</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">排序选项</system:String>
     <system:String x:Key="plugin_explorer_everything_installed_path">Everything 路径</system:String>
+    <system:String x:Key="plugin_explorer_everything_15_instance_name">Everything 1.5 instance name: </system:String>
+    <system:String x:Key="plugin_explorer_everything_15_instance_name_tooltip">Leave this blank to use the default Everything 1.5b instance. Only set this if you run a named instance of Everything, or set it to &quot;1.5a&quot; to use Everything 1.5a.</system:String>
     <system:String x:Key="plugin_explorer_launch_hidden">隐藏启动</system:String>
     <system:String x:Key="plugin_explorer_editor_path">编辑器路径</system:String>
     <system:String x:Key="plugin_explorer_shell_path">Shell 路径</system:String>
@@ -137,8 +139,8 @@
     <system:String x:Key="plugin_explorer_fail_to_delete">无法删除 {0}</system:String>
     <system:String x:Key="plugin_explorer_file_not_found">未找到文件：{0}</system:String>
     <system:String x:Key="plugin_explorer_fail_to_open">无法打开 {0}</system:String>
-    <system:String x:Key="plugin_explorer_fail_to_set_text">无法复制文本到剪切板 </system:String>
-    <system:String x:Key="plugin_explorer_fail_to_set_files">无法复制文件/文件夹到剪切板 </system:String>
+    <system:String x:Key="plugin_explorer_fail_to_set_text">无法复制文本到剪切板</system:String>
+    <system:String x:Key="plugin_explorer_fail_to_set_files">无法复制文件/文件夹到剪切板</system:String>
 
     <!--  Special Results  -->
     <system:String x:Key="plugin_explorer_diskfreespace">{0} 可用，共 {1}</system:String>
@@ -149,7 +151,11 @@
 
     <!--  Everything  -->
     <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">加载 Everything SDK 失败</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_architecture_check">Please check whether your system is x86 or x64</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_is_not_running">警告：Everything 服务未运行</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_15_unavailable">Warning: Everything 1.5 is unavailable</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_15_resolution">Ensure Everything is running and verify the configured instance name</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_15_sort_warning">Warning: Everything 1.5 is unavailable. The service may not be running, or the instance name may be invalid</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_query_error">Everything 插件发生了一个错误（回车拷贝具体错误信息）</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by">排序依据</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_name_ascending">名称 ↑</system:String>
@@ -184,6 +190,8 @@
 
     <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">搜索完整路径</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_run_count">启用文件/文件夹运行计数</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_enable_15_support">Use Everything 1.5</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_15_restart_required">Restart Flow Launcher for this change to take effect</system:String>
 
     <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">单击启动或安装 Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_title">Everything 安装</system:String>
