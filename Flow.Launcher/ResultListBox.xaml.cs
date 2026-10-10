@@ -1,9 +1,11 @@
 ﻿using System;
+using System.ComponentModel;
 using System.IO;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 using Flow.Launcher.ViewModel;
 
 namespace Flow.Launcher
@@ -13,9 +15,80 @@ namespace Flow.Launcher
         protected Lock _lock = new();
         private Point _lastpos;
         private ListBoxItem curItem = null;
+        private readonly DataTemplate _listItemTemplate;
+        private readonly Style _listItemContainerStyle;
+        private ResultsViewModel _viewModel;
+
         public ResultListBox()
         {
             InitializeComponent();
+            _listItemTemplate = ItemTemplate;
+            _listItemContainerStyle = ItemContainerStyle;
+            DataContextChanged += OnDataContextChanged;
+            SizeChanged += OnSizeChanged;
+        }
+
+        private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (_viewModel != null)
+            {
+                PropertyChangedEventManager.RemoveHandler(_viewModel, OnViewModelPropertyChanged, nameof(ResultsViewModel.IsGridLayout));
+            }
+
+            _viewModel = e.NewValue as ResultsViewModel;
+            if (_viewModel != null)
+            {
+                PropertyChangedEventManager.AddHandler(_viewModel, OnViewModelPropertyChanged, nameof(ResultsViewModel.IsGridLayout));
+            }
+
+            ApplyLayout();
+        }
+
+        private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(ResultsViewModel.IsGridLayout))
+            {
+                Dispatcher.Invoke(ApplyLayout);
+            }
+        }
+
+        private void ApplyLayout()
+        {
+            if (_viewModel?.IsGridLayout == true)
+            {
+                ItemsPanel = (ItemsPanelTemplate)FindResource("GridItemsPanel");
+                ItemTemplate = (DataTemplate)FindResource("GridResultTemplate");
+                ItemContainerStyle = (Style)FindResource("GridItemContainerStyle");
+                ScrollViewer.SetHorizontalScrollBarVisibility(this, ScrollBarVisibility.Disabled);
+            }
+            else
+            {
+                ClearValue(ItemsPanelProperty);
+                ItemTemplate = _listItemTemplate;
+                ItemContainerStyle = _listItemContainerStyle;
+                ClearValue(ScrollViewer.HorizontalScrollBarVisibilityProperty);
+            }
+
+            if (SelectedItem != null)
+            {
+                Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(ScrollSelectedItemIntoView));
+            }
+        }
+
+        private void ScrollSelectedItemIntoView()
+        {
+            if (SelectedItem != null)
+            {
+                ScrollIntoView(SelectedItem);
+            }
+        }
+
+        private void OnSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (_viewModel != null && e.NewSize.Width > 0)
+            {
+                _viewModel.AvailableWidth = e.NewSize.Width;
+            }
         }
 
         public static readonly DependencyProperty RightClickResultCommandProperty =

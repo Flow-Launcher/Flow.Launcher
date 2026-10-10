@@ -204,6 +204,16 @@
                             Type="CycleHistoryDownHotkey"
                             ValidateKeyGesture="False" />
                     </ui:SettingsCard>
+                    <ui:SettingsCard Header="{DynamicResource ToggleResultLayoutHotkey}">
+                        <ui:SettingsCard.HeaderIcon>
+                            <ui:FontIcon Glyph="&#xF0E2;" />
+                        </ui:SettingsCard.HeaderIcon>
+
+                        <flowlauncher:HotkeyControl
+                            DefaultHotkey=""
+                            Type="ToggleResultLayoutHotkey"
+                            ValidateKeyGesture="False" />
+                    </ui:SettingsCard>
                     <ui:SettingsCard Description="{DynamicResource ReloadPluginHotkeyToolTip}" Header="{DynamicResource ReloadPluginHotkey}">
                         <ui:SettingsCard.HeaderIcon>
                             <ui:FontIcon Glyph="&#xe72c;" />
