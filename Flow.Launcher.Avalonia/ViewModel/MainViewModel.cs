@@ -139,7 +139,7 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
         
         _results.PropertyChanged += (s, e) =>
         {
-            if (e.PropertyName == nameof(ResultsViewModel.SelectedItem) && IsPreviewOn && IsResultsViewActive)
+            if (e.PropertyName == nameof(ResultsViewModel.SelectedItem) && IsResultsViewActive)
             {
                 PreviewSelectedItem = _results.SelectedItem;
             }
@@ -147,7 +147,7 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
         
         _contextMenu.PropertyChanged += (s, e) =>
         {
-            if (e.PropertyName == nameof(ResultsViewModel.SelectedItem) && IsPreviewOn && IsContextMenuViewActive)
+            if (e.PropertyName == nameof(ResultsViewModel.SelectedItem) && IsContextMenuViewActive)
             {
                 PreviewSelectedItem = _contextMenu.SelectedItem;
             }
@@ -155,42 +155,14 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
 
         _historyView.PropertyChanged += (s, e) =>
         {
-            if (e.PropertyName == nameof(ResultsViewModel.SelectedItem) && IsPreviewOn && IsHistoryViewActive)
+            if (e.PropertyName == nameof(ResultsViewModel.SelectedItem) && IsHistoryViewActive)
             {
                 PreviewSelectedItem = _historyView.SelectedItem;
             }
         };
         
         // Subscribe to context menu collection changes for ShowResultsArea (context menu still uses count)
-        ((System.Collections.Specialized.INotifyCollectionChanged)_contextMenu.Results).CollectionChanged += (s, e) => NotifyShowResultsAreaIfChanged();
-        _lastShowResultsArea = ShowResultsArea;
-    }
-
-    private bool _lastShowResultsArea;
-
-    /// <summary>
-    /// Raise ShowResultsArea only when its computed value flips; each notification can re-measure the SizeToContent window.
-    /// </summary>
-    private void NotifyShowResultsAreaIfChanged()
-    {
-        var value = ShowResultsArea;
-        if (value == _lastShowResultsArea) return;
-        _lastShowResultsArea = value;
-        OnPropertyChanged(nameof(ShowResultsArea));
-    }
-
-    private ResultViewModel? GetActiveSelectedItem() => ActiveView switch
-    {
-        ActiveView.Results => Results.SelectedItem,
-        ActiveView.ContextMenu => ContextMenu.SelectedItem,
-        ActiveView.History => HistoryView.SelectedItem,
-        _ => null,
-    };
-
-    partial void OnIsPreviewOnChanged(bool value)
-    {
-        // The preview is only tracked while visible; catch it up (or release it) when toggled.
-        PreviewSelectedItem = value ? GetActiveSelectedItem() : null;
+        ((System.Collections.Specialized.INotifyCollectionChanged)_contextMenu.Results).CollectionChanged += (s, e) => OnPropertyChanged(nameof(ShowResultsArea));
     }
 
     /// <summary>
@@ -279,12 +251,15 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
         OnPropertyChanged(nameof(IsResultsViewActive));
         OnPropertyChanged(nameof(IsContextMenuViewActive));
         OnPropertyChanged(nameof(IsHistoryViewActive));
-        NotifyShowResultsAreaIfChanged();
+        OnPropertyChanged(nameof(ShowResultsArea));
 
-        if (IsPreviewOn)
+        PreviewSelectedItem = value switch
         {
-            PreviewSelectedItem = GetActiveSelectedItem();
-        }
+            ActiveView.Results => Results.SelectedItem,
+            ActiveView.ContextMenu => ContextMenu.SelectedItem,
+            ActiveView.History => HistoryView.SelectedItem,
+            _ => null,
+        };
     }
 
     partial void OnIsQueryRunningChanged(bool value)
@@ -498,15 +473,8 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
         _lastHistoryIndex = 1;
         _queryTextBeforeHistory = string.Empty;
         ActiveView = ActiveView.Results;
-        if (ContextMenu.Results.Count > 0 || ContextMenu.SelectedItem != null)
-        {
-            ContextMenu.Clear();
-        }
-
-        if (HistoryView.Results.Count > 0 || HistoryView.SelectedItem != null)
-        {
-            HistoryView.Clear();
-        }
+        ContextMenu.Clear();
+        HistoryView.Clear();
     }
 
     private void PrepareLastQueryModeBeforeHide()
@@ -626,7 +594,7 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
         }
 
         // Notify ShowResultsArea when query text changes (it depends on QueryText)
-        NotifyShowResultsAreaIfChanged();
+        OnPropertyChanged(nameof(ShowResultsArea));
         _ = QueryAsync(_settings.SearchQueryResultsWithDelay);
     }
 
@@ -700,10 +668,8 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
                 return;
             }
 
-            // Accumulated results; additions and snapshots happen under one lock so channel order matches
-            // growth and the last progressive snapshot always contains every plugin's results.
+            // Accumulated results; additions and snapshots happen under one lock so channel order matches growth.
             var allResults = new List<ResultViewModel>();
-            var progressiveUpdateWritten = false;
 
             // Query all plugins in parallel - results shown progressively as each completes
             var tasks = plugins.Select(async plugin =>
@@ -716,26 +682,19 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
                     allResults.AddRange(pluginResults);
 
                     // Update UI with current accumulated results (progressive update via channel)
-                    if (!token.IsCancellationRequested &&
-                        _resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(allResults.ToList(), token)))
+                    if (!token.IsCancellationRequested)
                     {
-                        progressiveUpdateWritten = true;
+                        _resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(allResults.ToList(), token));
                     }
                 }
             });
 
             await Task.WhenAll(tasks);
 
-            // Final update after all plugins complete, only if no progressive snapshot already carried it
-            if (!token.IsCancellationRequested && !progressiveUpdateWritten)
+            // Final update after all plugins complete
+            if (!token.IsCancellationRequested)
             {
-                List<ResultViewModel> snapshot;
-                lock (allResults)
-                {
-                    snapshot = allResults.ToList();
-                }
-
-                _resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(snapshot, token));
+                _resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(allResults.ToList(), token));
             }
         }
         catch (OperationCanceledException) { }
