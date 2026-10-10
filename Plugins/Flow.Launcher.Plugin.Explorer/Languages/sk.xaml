@@ -42,8 +42,8 @@
     <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Formát dátumu a času</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">Zoradenie:</system:String>
     <system:String x:Key="plugin_explorer_everything_installed_path">Umiestnenie Everything:</system:String>
-    <system:String x:Key="plugin_explorer_everything_15_instance_name">Everything 1.5 instance name: </system:String>
-    <system:String x:Key="plugin_explorer_everything_15_instance_name_tooltip">Leave this blank to use the default Everything 1.5b instance. Only set this if you run a named instance of Everything, or set it to &quot;1.5a&quot; to use Everything 1.5a.</system:String>
+    <system:String x:Key="plugin_explorer_everything_15_instance_name">Názov inštancie Everything 1.5: </system:String>
+    <system:String x:Key="plugin_explorer_everything_15_instance_name_tooltip">Toto pole nechajte prázdne, ak chcete použiť predvolenú inštanciu programu Everything 1.5b. Toto pole vyplňte len v prípade, že používate inštanciu programu Everything s vlastným názvom, alebo ho nastavte na hodnotu &quot;1.5a&quot;, ak chcete použiť Everything 1.5a.</system:String>
     <system:String x:Key="plugin_explorer_launch_hidden">Spustiť skryté</system:String>
     <system:String x:Key="plugin_explorer_editor_path">Cesta k editoru</system:String>
     <system:String x:Key="plugin_explorer_shell_path">Cesta k príkazovému riadku</system:String>
@@ -151,11 +151,11 @@
 
     <!--  Everything  -->
     <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">Nepodarilo sa načítať SDK Everything</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_architecture_check">Please check whether your system is x86 or x64</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_architecture_check">Skontrolujte, či je váš systém x86 alebo x64</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_is_not_running">Upozornenie: Služba Everything nie je spustená</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_15_unavailable">Warning: Everything 1.5 is unavailable</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_15_resolution">Ensure Everything is running and verify the configured instance name</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_15_sort_warning">Warning: Everything 1.5 is unavailable. The service may not be running, or the instance name may be invalid</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_15_unavailable">Upozornenie: Verzia Everything 1.5 nie je k dispozícii</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_15_resolution">Uistite sa, že všetko beží a overte nakonfigurovaný názov inštancie</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_15_sort_warning">Upozornenie: Program Everything 1.5 nie je dostupný. Služba pravdepodobne nebeží alebo názov inštancie je neplatný</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_query_error">Chyba pri dopytovaní Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by">Zoradiť podľa</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_name_ascending">Názov ↑</system:String>
@@ -190,8 +190,8 @@
 
     <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">Vyhľadávanie celej cesty</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_run_count">Povoliť počítadlo spustení súboru/priečinka</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_enable_15_support">Use Everything 1.5</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_15_restart_required">Restart Flow Launcher for this change to take effect</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_enable_15_support">Použiť Everything 1.5</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_15_restart_required">Reštartujte Flow Launcher, aby sa táto zmena prejavila</system:String>
 
     <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Kliknutím spustíte alebo nainštalujete Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_title">Inštalácia Everything</system:String>
