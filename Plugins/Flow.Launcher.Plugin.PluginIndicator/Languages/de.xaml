@@ -3,6 +3,9 @@
 
     <system:String x:Key="flowlauncher_plugin_pluginindicator_result_subtitle">Aktions-Schlüsselwort für Plug-in {0} aktivieren</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_settings_title">Settings: {0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_settings_subtitle">Open the settings page for the {0} plugin</system:String>
+
     <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_name">Plug-in-Indikator</system:String>
     <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_description">Bietet Vorschläge für Aktions-Schlüsselwörter für Plug-ins</system:String>
 
