@@ -31,13 +31,13 @@ namespace Flow.Launcher
         {
             if (_viewModel != null)
             {
-                _viewModel.PropertyChanged -= OnViewModelPropertyChanged;
+                PropertyChangedEventManager.RemoveHandler(_viewModel, OnViewModelPropertyChanged, nameof(ResultsViewModel.IsGridLayout));
             }
 
             _viewModel = e.NewValue as ResultsViewModel;
             if (_viewModel != null)
             {
-                _viewModel.PropertyChanged += OnViewModelPropertyChanged;
+                PropertyChangedEventManager.AddHandler(_viewModel, OnViewModelPropertyChanged, nameof(ResultsViewModel.IsGridLayout));
             }
 
             ApplyLayout();
