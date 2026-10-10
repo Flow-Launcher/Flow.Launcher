@@ -293,6 +293,12 @@ namespace Flow.Launcher.Plugin.Sys
             return Localize.flowlauncher_plugin_sys_plugin_description();
         }
 
+        public object CreateSettingPanelAvalonia()
+        {
+            UpdateLocalizedNameDescription(false);
+            return new Views.Avalonia.SysSettings(_viewModel);
+        }
+
         public void OnCultureInfoChanged(CultureInfo _)
         {
             UpdateLocalizedNameDescription(true);

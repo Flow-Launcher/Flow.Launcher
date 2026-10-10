@@ -104,18 +104,24 @@ internal static class MacGlobalHotkey
         return (int)id;
     }
 
-    internal static void Unregister(int hotkeyId)
+    /// <summary>
+    /// Unregisters a hotkey. Returns false only when the system refused to unregister it; unknown ids are a no-op.
+    /// </summary>
+    internal static bool Unregister(int hotkeyId)
     {
         if (hotkeyId < 0 || !Hotkeys.Remove((uint)hotkeyId, out var hotkey))
         {
-            return;
+            return true;
         }
 
         var status = UnregisterEventHotKey(hotkey.HotKeyRef);
         if (status != NoErr)
         {
             Log.Warn(ClassName, $"UnregisterEventHotKey failed (OSStatus {status}) for id={hotkeyId}");
+            return false;
         }
+
+        return true;
     }
 
     internal static void Shutdown()

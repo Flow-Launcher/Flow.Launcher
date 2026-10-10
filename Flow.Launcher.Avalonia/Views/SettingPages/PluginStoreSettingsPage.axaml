@@ -16,11 +16,23 @@
             <TextBlock Text="{i18n:Localize pluginStore}" Classes="pageTitle"/>
             
             <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10">
+                <TextBlock Text="{i18n:Localize PluginStoreSortingModeComboboxLabel}" VerticalAlignment="Center"
+                           Foreground="{DynamicResource TextFillColorSecondaryBrush}"/>
+                <ComboBox ItemsSource="{Binding SortModes}"
+                          SelectedItem="{Binding SelectedSortModeItem, Mode=TwoWay}"
+                          MinWidth="140">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="vm:PluginStoreSettingsViewModel+SortModeItem">
+                            <TextBlock Text="{Binding Display}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
                 <Button Command="{Binding RefreshExternalPluginsCommand}" ToolTip.Tip="{i18n:Localize refresh}" AutomationProperties.Name="{i18n:Localize refresh}">
                     <ui:FASymbolIcon Symbol="Refresh" FontSize="16"/>
                 </Button>
                 
-                <Button Command="{Binding CheckPluginUpdatesCommand}" ToolTip.Tip="{i18n:Localize checkUpdates}" AutomationProperties.Name="{i18n:Localize checkUpdates}">
+                <Button Command="{Binding CheckPluginUpdatesCommand}" ToolTip.Tip="{i18n:Localize checkPluginUpdatesTooltip}" AutomationProperties.Name="{i18n:Localize checkPluginUpdatesTooltip}">
                     <ui:FASymbolIcon Symbol="Sync" FontSize="16"/>
                 </Button>
                 
@@ -41,6 +53,7 @@
 
 
             <TextBox Grid.Column="2" 
+                     x:Name="SearchTextBox"
                      Width="250"
                      Text="{Binding FilterText, Mode=TwoWay}"
                      PlaceholderText="{i18n:Localize searchplugin}">
@@ -66,7 +79,12 @@
             
             <!-- Plugin list -->
             <ScrollViewer IsVisible="{Binding !IsLoading}" HorizontalScrollBarVisibility="Disabled">
-                <ui:FAItemsRepeater ItemsSource="{Binding FilteredPlugins}">
+              <ItemsControl ItemsSource="{Binding PluginGroups}">
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate x:DataType="vm:PluginStoreSettingsViewModel+PluginStoreGroup">
+                    <StackPanel Margin="0,0,0,16">
+                <TextBlock Text="{Binding Header}" FontWeight="SemiBold" FontSize="16" Margin="0,0,0,8"/>
+                <ui:FAItemsRepeater ItemsSource="{Binding Items}">
                     <ui:FAItemsRepeater.Layout>
                         <ui:FAUniformGridLayout MinItemWidth="216" MinItemHeight="184"
                                               MinColumnSpacing="10" MinRowSpacing="10"
@@ -166,8 +184,9 @@
                                             <TextBlock Text="{i18n:Localize pluginStore_Installed}" FontSize="10" Foreground="{DynamicResource TextOnAccentFillColorPrimaryBrush}"/>
                                         </Border>
                                         <Border Background="{DynamicResource SystemFillColorAttentionBrush}" CornerRadius="4" Padding="6,2"
-                                                IsVisible="{Binding LabelUpdate}">
-                                            <TextBlock Text="{i18n:Localize pluginStore_NewRelease}" FontSize="10" Foreground="{DynamicResource TextOnAccentFillColorPrimaryBrush}"/>
+                                                IsVisible="{Binding LabelUpdate}"
+                                                ToolTip.Tip="{i18n:Localize LabelUpdateToolTip}">
+                                            <TextBlock Text="{i18n:Localize LabelNew}" FontSize="10" Foreground="{DynamicResource TextOnAccentFillColorPrimaryBrush}"/>
                                         </Border>
                                     </StackPanel>
                                 </Grid>
@@ -195,6 +214,10 @@
                     </DataTemplate>
                 </ui:FAItemsRepeater.ItemTemplate>
             </ui:FAItemsRepeater>
+                    </StackPanel>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
         </ScrollViewer>
         </Grid>
     </Grid>

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Xml;
 using Avalonia;
 using Avalonia.Media;
+using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
@@ -39,6 +40,10 @@ public partial class ThemeSettingsViewModel : ObservableObject, IDisposable
         AnimationSpeedOptions = DropdownDataGeneric<AnimationSpeeds>.GetEnumData("AnimationSpeed");
         AvailableFonts = SystemFontCache.FontNames;
         Themes = LoadThemes();
+        CodeHighlightThemeOptions = DropdownDataGeneric<CodeHighlightThemes>.GetEnumData("CodeHighlightTheme");
+        QueryTypefaceOptions = GetTypefaceOptions(_settings.QueryBoxFont);
+        ResultTypefaceOptions = GetTypefaceOptions(_settings.ResultFont);
+        ResultSubTypefaceOptions = GetTypefaceOptions(_settings.ResultSubFont);
 
         _settingsPropertyChangedHandler = (_, e) =>
         {
@@ -48,7 +53,14 @@ public partial class ThemeSettingsViewModel : ObservableObject, IDisposable
             }
         };
         _settings.PropertyChanged += _settingsPropertyChangedHandler;
+
+        // Keeps the clock/date in the preview and the format rows live.
+        _clockTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
+        _clockTimer.Tick += OnClockTick;
+        _clockTimer.Start();
     }
+
+    private readonly DispatcherTimer _clockTimer;
 
     public List<DropdownDataGeneric<ColorSchemes>> ColorSchemeOptions { get; }
 
@@ -74,6 +86,7 @@ public partial class ThemeSettingsViewModel : ObservableObject, IDisposable
             {
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(IsBackdropEnabled));
+                OnPropertyChanged(nameof(IsDropShadowEnabled));
             }
         }
     }
@@ -117,6 +130,9 @@ public partial class ThemeSettingsViewModel : ObservableObject, IDisposable
         }
     }
 
+    /// <summary>Blur themes draw no drop shadow (WPF IsDropShadowEnabled), so the toggle is disabled for them.</summary>
+    public bool IsDropShadowEnabled => SelectedTheme?.HasBlur != true;
+
     public bool DropShadowEffect
     {
         get => _settings.UseDropShadowEffect;
@@ -127,6 +143,7 @@ public partial class ThemeSettingsViewModel : ObservableObject, IDisposable
                 return;
             }
 
+            // ThemeResources (Helper/ThemeLoader.cs) applies the change to the window shadow live.
             _settings.UseDropShadowEffect = value;
             OnPropertyChanged();
         }
@@ -215,8 +232,10 @@ public partial class ThemeSettingsViewModel : ObservableObject, IDisposable
             }
 
             _settings.QueryBoxFont = value;
+            QueryTypefaceOptions = GetTypefaceOptions(value);
             OnPropertyChanged();
-            OnPropertyChanged(nameof(SelectedQueryTypeface));
+            OnPropertyChanged(nameof(QueryTypefaceOptions));
+            SelectedQueryTypeface = FindTypefaceOption(QueryTypefaceOptions, _settings.QueryBoxFontStyle, _settings.QueryBoxFontWeight, _settings.QueryBoxFontStretch);
         }
     }
 
@@ -231,8 +250,10 @@ public partial class ThemeSettingsViewModel : ObservableObject, IDisposable
             }
 
             _settings.ResultFont = value;
+            ResultTypefaceOptions = GetTypefaceOptions(value);
             OnPropertyChanged();
-            OnPropertyChanged(nameof(SelectedResultTypeface));
+            OnPropertyChanged(nameof(ResultTypefaceOptions));
+            SelectedResultTypeface = FindTypefaceOption(ResultTypefaceOptions, _settings.ResultFontStyle, _settings.ResultFontWeight, _settings.ResultFontStretch);
         }
     }
 
@@ -247,13 +268,16 @@ public partial class ThemeSettingsViewModel : ObservableObject, IDisposable
             }
 
             _settings.ResultSubFont = value;
+            ResultSubTypefaceOptions = GetTypefaceOptions(value);
             OnPropertyChanged();
-            OnPropertyChanged(nameof(SelectedResultSubTypeface));
+            OnPropertyChanged(nameof(ResultSubTypefaceOptions));
+            SelectedResultSubTypeface = FindTypefaceOption(ResultSubTypefaceOptions, _settings.ResultSubFontStyle, _settings.ResultSubFontWeight, _settings.ResultSubFontStretch);
         }
     }
 
-    public List<FontTypefaceOption> QueryTypefaceOptions => TypefaceOptions;
+    public List<FontTypefaceOption> QueryTypefaceOptions { get; private set; }
 
+    // Setting a face the new family lacks snaps to the closest available one (FindTypefaceOption fallback) and persists it.
     public FontTypefaceOption? SelectedQueryTypeface
     {
         get => FindTypefaceOption(QueryTypefaceOptions, _settings.QueryBoxFontStyle, _settings.QueryBoxFontWeight, _settings.QueryBoxFontStretch);
@@ -268,10 +292,12 @@ public partial class ThemeSettingsViewModel : ObservableObject, IDisposable
             _settings.QueryBoxFontWeight = value.Weight;
             _settings.QueryBoxFontStretch = value.Stretch;
             OnPropertyChanged();
+            OnPropertyChanged(nameof(QueryFontWeight));
+            OnPropertyChanged(nameof(QueryFontStyle));
         }
     }
 
-    public List<FontTypefaceOption> ResultTypefaceOptions => TypefaceOptions;
+    public List<FontTypefaceOption> ResultTypefaceOptions { get; private set; }
 
     public FontTypefaceOption? SelectedResultTypeface
     {
@@ -287,10 +313,12 @@ public partial class ThemeSettingsViewModel : ObservableObject, IDisposable
             _settings.ResultFontWeight = value.Weight;
             _settings.ResultFontStretch = value.Stretch;
             OnPropertyChanged();
+            OnPropertyChanged(nameof(ResultFontWeight));
+            OnPropertyChanged(nameof(ResultFontStyle));
         }
     }
 
-    public List<FontTypefaceOption> ResultSubTypefaceOptions => TypefaceOptions;
+    public List<FontTypefaceOption> ResultSubTypefaceOptions { get; private set; }
 
     public FontTypefaceOption? SelectedResultSubTypeface
     {
@@ -306,8 +334,24 @@ public partial class ThemeSettingsViewModel : ObservableObject, IDisposable
             _settings.ResultSubFontWeight = value.Weight;
             _settings.ResultSubFontStretch = value.Stretch;
             OnPropertyChanged();
+            OnPropertyChanged(nameof(ResultSubFontWeight));
+            OnPropertyChanged(nameof(ResultSubFontStyle));
         }
     }
+
+    // Preview font faces resolved from the persisted typeface strings.
+    public FontWeight QueryFontWeight => ParseFontWeight(_settings.QueryBoxFontWeight);
+    public FontStyle QueryFontStyle => ParseFontStyle(_settings.QueryBoxFontStyle);
+    public FontWeight ResultFontWeight => ParseFontWeight(_settings.ResultFontWeight);
+    public FontStyle ResultFontStyle => ParseFontStyle(_settings.ResultFontStyle);
+    public FontWeight ResultSubFontWeight => ParseFontWeight(_settings.ResultSubFontWeight);
+    public FontStyle ResultSubFontStyle => ParseFontStyle(_settings.ResultSubFontStyle);
+
+    private static FontWeight ParseFontWeight(string? value) =>
+        Enum.TryParse<FontWeight>(value, true, out var weight) ? weight : FontWeight.Normal;
+
+    private static FontStyle ParseFontStyle(string? value) =>
+        Enum.TryParse<FontStyle>(value, true, out var style) ? style : FontStyle.Normal;
 
     public bool UseGlyphIcons
     {
@@ -403,6 +447,9 @@ public partial class ThemeSettingsViewModel : ObservableObject, IDisposable
 
     public string DateText => DateTime.Now.ToString(DateFormat, CultureInfo.CurrentUICulture);
 
+    /// <summary>Text shown in the preview's empty query box: the custom placeholder, or the default one when blank.</summary>
+    public string PreviewPlaceholderText => string.IsNullOrEmpty(PlaceholderText) ? Translate("queryTextBoxPlaceholder", "Type here to search") : PlaceholderText;
+
     public string ClockAndDateText => $"{Translate("Clock", "Clock")} / {Translate("Date", "Date")}";
 
     public bool ShowPlaceholder
@@ -422,6 +469,7 @@ public partial class ThemeSettingsViewModel : ObservableObject, IDisposable
         {
             _settings.PlaceholderText = value;
             OnPropertyChanged();
+            OnPropertyChanged(nameof(PreviewPlaceholderText));
         }
     }
 
@@ -467,14 +515,8 @@ public partial class ThemeSettingsViewModel : ObservableObject, IDisposable
         {
             _settings.UseSound = value;
             OnPropertyChanged();
-            OnPropertyChanged(nameof(ShowWmpWarning));
-            OnPropertyChanged(nameof(EnableVolumeAdjustment));
         }
     }
-
-    public bool ShowWmpWarning => !_settings.WMPInstalled && UseSound;
-
-    public bool EnableVolumeAdjustment => _settings.WMPInstalled;
 
     public double SoundEffectVolume
     {
@@ -492,6 +534,23 @@ public partial class ThemeSettingsViewModel : ObservableObject, IDisposable
         set
         {
             _settings.ShowBadges = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public List<DropdownDataGeneric<CodeHighlightThemes>> CodeHighlightThemeOptions { get; }
+
+    public CodeHighlightThemes SelectedCodeHighlightTheme
+    {
+        get => Enum.TryParse<CodeHighlightThemes>(_settings.CodeHighlightTheme, true, out var theme) ? theme : CodeHighlightThemes.Auto;
+        set
+        {
+            if (SelectedCodeHighlightTheme == value)
+            {
+                return;
+            }
+
+            _settings.CodeHighlightTheme = value.ToString();
             OnPropertyChanged();
         }
     }
@@ -554,7 +613,7 @@ public partial class ThemeSettingsViewModel : ObservableObject, IDisposable
         ImportSizingFromTheme(themePath);
     }
 
-    // Theme sizing is read from WPF theme XAML; without WPF (non-Windows) import is unavailable and sizes stay unchanged.
+    // Windows reads the theme through WPF (ThemeSettingsViewModel.Windows.cs); other platforms parse the XAML (ThemeSettingsViewModel.CrossPlatform.cs).
     partial void ImportSizingFromTheme(string themePath);
 
     private void UpdateLabels()
@@ -562,7 +621,9 @@ public partial class ThemeSettingsViewModel : ObservableObject, IDisposable
         ColorSchemeOptions.ForEach(x => x.UpdateLabels());
         BackdropTypesList.ForEach(x => x.UpdateLabels());
         AnimationSpeedOptions.ForEach(x => x.UpdateLabels());
+        CodeHighlightThemeOptions.ForEach(x => x.UpdateLabels());
         OnPropertyChanged(nameof(ClockAndDateText));
+        OnPropertyChanged(nameof(PreviewPlaceholderText));
     }
 
     private List<ThemeData> LoadThemes()
@@ -596,16 +657,75 @@ public partial class ThemeSettingsViewModel : ObservableObject, IDisposable
     public void Dispose()
     {
         _settings.PropertyChanged -= _settingsPropertyChangedHandler;
+        _clockTimer.Stop();
+        _clockTimer.Tick -= OnClockTick;
     }
 
-    // Typeface options do not depend on the font family; share one immutable list.
-    private static readonly List<FontTypefaceOption> TypefaceOptions =
+    private void OnClockTick(object? sender, EventArgs e)
+    {
+        OnPropertyChanged(nameof(ClockText));
+        OnPropertyChanged(nameof(DateText));
+    }
+
+    // Names are explicit because FontWeight has aliased values (Normal/Regular, ExtraLight/UltraLight, ...).
+    private static readonly (FontWeight Weight, string Name)[] ProbedWeights =
+    [
+        (FontWeight.Thin, "Thin"), (FontWeight.ExtraLight, "ExtraLight"), (FontWeight.Light, "Light"),
+        (FontWeight.SemiLight, "SemiLight"), (FontWeight.Normal, "Normal"), (FontWeight.Medium, "Medium"),
+        (FontWeight.SemiBold, "SemiBold"), (FontWeight.Bold, "Bold"), (FontWeight.ExtraBold, "ExtraBold"),
+        (FontWeight.Black, "Black"), (FontWeight.ExtraBlack, "ExtraBlack")
+    ];
+
+    private static readonly FontStyle[] ProbedStyles = [FontStyle.Normal, FontStyle.Italic, FontStyle.Oblique];
+
+    // Used when the family's faces cannot be enumerated (unknown family or font manager unavailable).
+    private static readonly List<FontTypefaceOption> FallbackTypefaceOptions =
     [
         new FontTypefaceOption("Normal", "Normal", "Normal", "Normal"),
         new FontTypefaceOption("Bold", "Normal", "Bold", "Normal"),
         new FontTypefaceOption("Italic", "Italic", "Normal", "Normal"),
         new FontTypefaceOption("Bold Italic", "Italic", "Bold", "Normal")
     ];
+
+    /// <summary>Real (non-simulated) weight/style faces the font family provides, like WPF FontFamily.FamilyTypefaces.</summary>
+    private static List<FontTypefaceOption> GetTypefaceOptions(string? familyName)
+    {
+        if (string.IsNullOrWhiteSpace(familyName))
+        {
+            return FallbackTypefaceOptions;
+        }
+
+        var options = new List<FontTypefaceOption>();
+        try
+        {
+            var family = new FontFamily(familyName);
+            foreach (var style in ProbedStyles)
+            {
+                foreach (var (weight, weightName) in ProbedWeights)
+                {
+                    if (!FontManager.Current.TryGetGlyphTypeface(new Typeface(family, style, weight), out var glyphTypeface) ||
+                        glyphTypeface.FontSimulations != FontSimulations.None ||
+                        glyphTypeface.Weight != weight ||
+                        glyphTypeface.Style != style)
+                    {
+                        continue;
+                    }
+
+                    var styleName = style.ToString();
+                    var display = style == FontStyle.Normal ? weightName
+                        : weight == FontWeight.Normal ? styleName
+                        : $"{weightName} {styleName}";
+                    options.Add(new FontTypefaceOption(display, styleName, weightName, nameof(FontStretch.Normal)));
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Flow.Launcher.Infrastructure.Logger.Log.Exception(nameof(ThemeSettingsViewModel), $"Failed to enumerate typefaces of <{familyName}>", ex);
+        }
+
+        return options.Count > 0 ? options : FallbackTypefaceOptions;
+    }
 
     private static FontTypefaceOption? FindTypefaceOption(IEnumerable<FontTypefaceOption> options, string? style, string? weight, string? stretch)
     {

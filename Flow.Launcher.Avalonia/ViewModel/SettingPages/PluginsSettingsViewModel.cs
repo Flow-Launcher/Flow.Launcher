@@ -44,6 +44,8 @@ public partial class PluginsSettingsViewModel : ObservableObject, IDisposable
             }
         };
         _settings.PropertyChanged += _settingsPropertyChangedHandler;
+
+        _ = CheckForUpdatesSilentlyAsync();
     }
 
     [ObservableProperty]
@@ -53,16 +55,33 @@ public partial class PluginsSettingsViewModel : ObservableObject, IDisposable
     [ObservableProperty]
     private string _searchText = string.Empty;
 
-    public IEnumerable<PluginItemViewModel> FilteredPlugins => 
-        string.IsNullOrWhiteSpace(SearchText) 
-            ? Plugins 
-            : Plugins.Where(p => 
-                p.Name.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
-                p.Description.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
+    public IEnumerable<PluginItemViewModel> FilteredPlugins =>
+        string.IsNullOrWhiteSpace(SearchText)
+            ? Plugins
+            : Plugins.Where(p =>
+                App.API.FuzzySearch(SearchText, p.Name).IsSearchPrecisionScoreMet() ||
+                App.API.FuzzySearch(SearchText, p.Description).IsSearchPrecisionScoreMet() ||
                 p.ActionKeywordsText.Contains(SearchText, StringComparison.OrdinalIgnoreCase)
             );
 
     partial void OnSearchTextChanged(string value) => OnPropertyChanged(nameof(FilteredPlugins));
+
+    /// <summary>
+    /// Filters the list down to the given plugin and expands it.
+    /// </summary>
+    public void FocusPlugin(string pluginId)
+    {
+        var target = Plugins.FirstOrDefault(p => string.Equals(p.ID, pluginId, StringComparison.OrdinalIgnoreCase));
+        if (target == null) return;
+
+        foreach (var plugin in Plugins)
+        {
+            plugin.IsExpanded = false;
+        }
+
+        SearchText = target.Name;
+        target.IsExpanded = true;
+    }
 
     private void LoadPlugins()
     {
@@ -70,9 +89,100 @@ public partial class PluginsSettingsViewModel : ObservableObject, IDisposable
         var mode = SelectedDisplayModeItem?.Value ?? DisplayMode.OnOff;
         foreach (var plugin in allPlugins.OrderBy(p => p.Metadata.Disabled).ThenBy(p => p.Metadata.Name))
         {
-            Plugins.Add(new PluginItemViewModel(plugin, _settings) { Mode = mode });
+            var item = new PluginItemViewModel(plugin, _settings) { Mode = mode };
+            item.UpdateStateChanged += OnItemUpdateStateChanged;
+            Plugins.Add(item);
         }
     }
+
+    #region Updates
+
+    public int AvailableUpdatesCount => Plugins.Count(p => p.HasUpdate);
+    public bool HasAvailableUpdates => AvailableUpdatesCount > 0;
+
+    private void OnItemUpdateStateChanged()
+    {
+        OnPropertyChanged(nameof(AvailableUpdatesCount));
+        OnPropertyChanged(nameof(HasAvailableUpdates));
+    }
+
+    private bool _updatesChecked;
+
+    private async Task CheckForUpdatesSilentlyAsync()
+    {
+        if (_updatesChecked) return;
+        _updatesChecked = true;
+
+        try
+        {
+            await CheckForUpdatesCoreAsync();
+        }
+        catch (Exception e)
+        {
+            _updatesChecked = false;
+            App.API.LogException(nameof(PluginsSettingsViewModel), "Failed to check for plugin updates", e);
+        }
+    }
+
+    [RelayCommand]
+    private Task CheckPluginUpdates() => CheckForUpdatesCoreAsync();
+
+    private async Task CheckForUpdatesCoreAsync()
+    {
+        await App.API.UpdatePluginManifestAsync();
+        var manifest = App.API.GetPluginManifest();
+
+        foreach (var item in Plugins)
+        {
+            var manifestPlugin = manifest.FirstOrDefault(p => p.ID == item.ID);
+            if (manifestPlugin != null &&
+                System.Version.TryParse(item.RawVersion, out var current) &&
+                System.Version.TryParse(manifestPlugin.Version, out var latest) &&
+                current < latest &&
+                !App.API.PluginModified(item.ID))
+            {
+                item.UpdateInfo = new PluginUpdateInfo
+                {
+                    ID = item.ID,
+                    Name = item.Name,
+                    Author = item.Author,
+                    CurrentVersion = item.RawVersion,
+                    NewVersion = manifestPlugin.Version,
+                    IcoPath = item.IconPath,
+                    PluginExistingMetadata = item.Metadata,
+                    PluginNewUserPlugin = manifestPlugin
+                };
+            }
+            else
+            {
+                item.UpdateInfo = null;
+            }
+        }
+
+        OnItemUpdateStateChanged();
+    }
+
+    [RelayCommand]
+    private async Task UpdateAllPlugins()
+    {
+        var updates = Plugins.Where(p => p.UpdateInfo != null).Select(p => p.UpdateInfo!).ToList();
+        if (updates.Count == 0) return;
+
+        if (global::Avalonia.Application.Current?.ApplicationLifetime is not global::Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime desktop)
+            return;
+
+        var owner = desktop.Windows.FirstOrDefault(w => w.IsActive) ?? desktop.MainWindow;
+        if (owner == null) return;
+
+        var window = new Views.Dialogs.PluginUpdateWindow(updates);
+        var updated = await window.ShowDialog<bool>(owner);
+        if (updated)
+        {
+            await CheckForUpdatesCoreAsync();
+        }
+    }
+
+    #endregion
     public void Dispose()
     {
         _settings.PropertyChanged -= _settingsPropertyChangedHandler;
@@ -242,6 +352,7 @@ public partial class PluginItemViewModel : ObservableObject, IDisposable
     private readonly ISettingProvider? _settingProvider;
     private readonly Internationalization _i18n;
     private readonly PropertyChangedEventHandler _metadataChangedHandler;
+    private readonly PropertyChangedEventHandler _settingsChangedHandler;
 
     public PluginItemViewModel(PluginPair plugin, Settings settings)
     {
@@ -281,6 +392,23 @@ public partial class PluginItemViewModel : ObservableObject, IDisposable
                 OnPropertyChanged(nameof(ActionKeywordsText));
         };
         _plugin.Metadata.PropertyChanged += _metadataChangedHandler;
+
+        _settingsChangedHandler = (_, args) =>
+        {
+            switch (args.PropertyName)
+            {
+                case nameof(Settings.SearchQueryResultsWithDelay):
+                    OnPropertyChanged(nameof(SearchDelayEnabled));
+                    break;
+                case nameof(Settings.SearchDelayTime):
+                    OnPropertyChanged(nameof(DefaultSearchDelay));
+                    break;
+                case nameof(Settings.ShowHomePage):
+                    OnPropertyChanged(nameof(HomeEnabled));
+                    break;
+            }
+        };
+        _settings.PropertyChanged += _settingsChangedHandler;
         
         _ = LoadIconAsync();
     }
@@ -294,6 +422,7 @@ public partial class PluginItemViewModel : ObservableObject, IDisposable
     public void Dispose()
     {
         _plugin.Metadata.PropertyChanged -= _metadataChangedHandler;
+        _settings.PropertyChanged -= _settingsChangedHandler;
     }
 
     private void EnsureAvaloniaSettingControl()
@@ -308,11 +437,22 @@ public partial class PluginItemViewModel : ObservableObject, IDisposable
         catch (Exception ex)
         {
             Flow.Launcher.Infrastructure.Logger.Log.Exception(nameof(PluginItemViewModel), $"Failed to create Avalonia settings for {Name}", ex);
+            AvaloniaSettingControl = CreateErrorSettingPanel(string.Format(
+                _i18n.GetTranslation("errorCreatingSettingPanel"), Name, Environment.NewLine, ex.Message));
         }
 
         if (AvaloniaSettingControl == null)
             HasNativeAvaloniaSettings = false;
     }
+
+    private static Control CreateErrorSettingPanel(string text) => new TextBox
+    {
+        Text = text,
+        IsReadOnly = true,
+        TextWrapping = TextWrapping.Wrap,
+        HorizontalAlignment = global::Avalonia.Layout.HorizontalAlignment.Stretch,
+        Foreground = Brushes.IndianRed
+    };
 
     partial void OnIsExpandedChanged(bool value)
     {
@@ -406,12 +546,27 @@ public partial class PluginItemViewModel : ObservableObject, IDisposable
         get => _plugin.Metadata.Priority;
         set
         {
+            value = Math.Clamp(value, -999, 999);
             if (_plugin.Metadata.Priority != value)
             {
                 _plugin.Metadata.Priority = value;
                 PluginSettingsObject.Priority = value;
                 OnPropertyChanged();
             }
+        }
+    }
+
+    /// <summary>
+    /// Number box binding for <see cref="Priority"/>: empty input becomes 0 and the value is clamped to ±999.
+    /// </summary>
+    public double PriorityInput
+    {
+        get => Priority;
+        set
+        {
+            Priority = double.IsNaN(value) ? 0 : (int)Math.Round(value);
+            // Always refresh so the box shows the normalized value even when Priority did not change.
+            OnPropertyChanged();
         }
     }
 
@@ -427,8 +582,9 @@ public partial class PluginItemViewModel : ObservableObject, IDisposable
             }
             else
             {
-                _plugin.Metadata.SearchDelayTime = (int)value;
-                PluginSettingsObject.SearchDelayTime = (int)value;
+                var delay = Math.Clamp((int)value, 0, 1000);
+                _plugin.Metadata.SearchDelayTime = delay;
+                PluginSettingsObject.SearchDelayTime = delay;
             }
             OnPropertyChanged();
             OnPropertyChanged(nameof(SearchDelayTimeText));
@@ -442,6 +598,47 @@ public partial class PluginItemViewModel : ObservableObject, IDisposable
     public bool SearchDelayEnabled => _settings.SearchQueryResultsWithDelay;
     public string DefaultSearchDelay => _settings.SearchDelayTime.ToString();
     public bool HomeEnabled => _settings.ShowHomePage && PluginManager.IsHomePlugin(_plugin.Metadata.ID);
+    public bool HideActionKeywordPanel => _plugin.Metadata.HideActionKeywordPanel;
+    public bool ShowActionKeywordPanel => !HideActionKeywordPanel;
+
+    public PluginMetadata Metadata => _plugin.Metadata;
+    public string RawVersion => _plugin.Metadata.Version;
+
+    private PluginUpdateInfo? _updateInfo;
+
+    public event Action? UpdateStateChanged;
+
+    public PluginUpdateInfo? UpdateInfo
+    {
+        get => _updateInfo;
+        set
+        {
+            if (_updateInfo == value) return;
+            _updateInfo = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(HasUpdate));
+            OnPropertyChanged(nameof(UpdateVersionText));
+            UpdateStateChanged?.Invoke();
+        }
+    }
+
+    public bool HasUpdate => _updateInfo != null;
+
+    /// <summary>"old → new" version text shown next to the update button.</summary>
+    public string UpdateVersionText => _updateInfo == null ? string.Empty : $"v{_updateInfo.CurrentVersion} → v{_updateInfo.NewVersion}";
+
+    [RelayCommand]
+    private async Task UpdatePlugin()
+    {
+        if (_updateInfo == null) return;
+
+        var success = await PluginInstaller.UpdatePluginAndCheckRestartAsync(
+            _updateInfo.PluginNewUserPlugin, _updateInfo.PluginExistingMetadata);
+        if (success)
+        {
+            UpdateInfo = null;
+        }
+    }
 
     [RelayCommand]
     private void OpenSettings()
@@ -497,11 +694,16 @@ public partial class PluginItemViewModel : ObservableObject, IDisposable
     [RelayCommand]
     private async Task SetActionKeywords()
     {
-        // Simple dialog to edit keywords
         var textBox = new TextBox
         {
             Text = ActionKeywordsText,
             AcceptsReturn = false
+        };
+        var errorText = new TextBlock
+        {
+            Foreground = Brushes.IndianRed,
+            TextWrapping = TextWrapping.Wrap,
+            IsVisible = false
         };
 
         var dialog = new FAContentDialog
@@ -510,21 +712,23 @@ public partial class PluginItemViewModel : ObservableObject, IDisposable
             Content = new StackPanel
             {
                 Spacing = 10,
-                Children = 
+                Children =
                 {
                     new TextBlock { Text = _i18n.GetTranslation("actionKeywordsDescription") },
-                    textBox
+                    textBox,
+                    errorText
                 }
             },
             PrimaryButtonText = _i18n.GetTranslation("done"),
             CloseButtonText = _i18n.GetTranslation("cancel")
         };
 
-        var result = await dialog.ShowAsync();
-        if (result == FAContentDialogResult.Primary)
+        var oldKeywords = _plugin.Metadata.ActionKeywords;
+        List<string> newKeywords = [];
+
+        dialog.PrimaryButtonClick += (_, args) =>
         {
-            var oldKeywords = _plugin.Metadata.ActionKeywords;
-            var newKeywords = textBox.Text?
+            newKeywords = textBox.Text?
                 .Split(Query.ActionKeywordSeparator, StringSplitOptions.RemoveEmptyEntries)
                 .Select(k => k.Trim())
                 .Where(k => !string.IsNullOrEmpty(k))
@@ -536,6 +740,29 @@ public partial class PluginItemViewModel : ObservableObject, IDisposable
                 newKeywords.Add(Query.GlobalPluginWildcardSign);
             }
 
+            string? error = null;
+            var added = newKeywords.Except(oldKeywords, StringComparer.Ordinal).ToList();
+            var removed = oldKeywords.Except(newKeywords, StringComparer.Ordinal).ToList();
+            if (added.Count == 0 && removed.Count == 0)
+            {
+                error = _i18n.GetTranslation("newActionKeywordsSameAsOld");
+            }
+            else if (added.Any(App.API.ActionKeywordAssigned))
+            {
+                error = _i18n.GetTranslation("newActionKeywordsHasBeenAssigned");
+            }
+
+            if (error != null)
+            {
+                errorText.Text = error;
+                errorText.IsVisible = true;
+                args.Cancel = true;
+            }
+        };
+
+        var result = await dialog.ShowAsync();
+        if (result == FAContentDialogResult.Primary)
+        {
             var addedKeywords = newKeywords.Except(oldKeywords, StringComparer.Ordinal).ToList();
             var removedKeywords = oldKeywords.Except(newKeywords, StringComparer.Ordinal).ToList();
 

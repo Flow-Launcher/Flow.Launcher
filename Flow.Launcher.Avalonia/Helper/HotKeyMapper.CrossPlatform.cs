@@ -21,9 +21,9 @@ internal static partial class HotKeyMapper
 
     static partial void UnregisterHotkey(int hotkeyId)
     {
-        if (OperatingSystem.IsMacOS())
+        if (OperatingSystem.IsMacOS() && !MacGlobalHotkey.Unregister(hotkeyId))
         {
-            MacGlobalHotkey.Unregister(hotkeyId);
+            throw new InvalidOperationException($"UnregisterEventHotKey failed for hotkey id {hotkeyId}");
         }
     }
 
@@ -35,8 +35,8 @@ internal static partial class HotKeyMapper
         }
     }
 
-    // Fullscreen detection is Win32-only.
-    private static partial bool IsForegroundWindowFullscreen() => false;
+    private static partial bool IsForegroundWindowFullscreen() =>
+        OperatingSystem.IsMacOS() && MacScreens.IsFrontmostWindowFullscreen();
 
     internal static partial bool CheckAvailability(HotkeyModel hotkey)
     {

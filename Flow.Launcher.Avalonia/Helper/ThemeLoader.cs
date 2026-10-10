@@ -303,7 +303,8 @@ public sealed partial class ThemeLoader
         }
     }
 
-    private bool IsBlurTheme() =>
+    /// <summary>True when the theme declares a blur backdrop (ThemeBlurEnabled); the drop shadow is disabled for these, as in WPF.</summary>
+    public bool IsBlurTheme() =>
         bool.TryParse(ResourceText("ThemeBlurEnabled"), out var enabled) && enabled;
 
     private string? ResourceText(string key) =>
@@ -347,6 +348,16 @@ public sealed partial class ThemeLoader
         declared != null && (declared == property || declared.EndsWith("." + property, StringComparison.Ordinal));
 
     private string? StyleText(string styleKey, string property) => FindSetter(styleKey, property)?.Text;
+
+    /// <summary>Numeric setter value of <paramref name="styleKey"/> (BasedOn chain and {StaticResource} references resolved), or null.</summary>
+    public double? StyleDouble(string styleKey, string property)
+    {
+        var text = StyleText(styleKey, property);
+        return MarkupKey(text) is { } key ? ResourceDouble(key) : ParseDouble(text);
+    }
+
+    /// <summary>Numeric resource (e.g. &lt;system:Double x:Key="ResultItemHeight"&gt;), or null.</summary>
+    public double? ResourceDouble(string key) => ParseDouble(ResourceText(key));
 
     private Color? StyleColor(string styleKey, string property, ThemeVariant variant, bool applyStyleOpacity = false)
     {
@@ -561,8 +572,11 @@ public class ThemeResources : ResourceDictionary
 {
     private static readonly string ClassName = nameof(ThemeResources);
     private const string ThemeNameKey = "FlowLauncherThemeName";
+    private const string WindowShadowKey = "WindowShadow";
+    private static readonly BoxShadows DefaultWindowShadow = BoxShadows.Parse("0 18 48 0 #26000000");
 
     private readonly Settings? _settings;
+    private bool _isBlurTheme;
 
     public ThemeResources()
     {
@@ -596,25 +610,45 @@ public class ThemeResources : ResourceDictionary
 
     private void OnSettingsPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
-        if (e.PropertyName != nameof(Settings.Theme) || _settings == null)
+        if (_settings == null)
         {
             return;
         }
 
-        var theme = _settings.Theme;
+        if (e.PropertyName == nameof(Settings.UseDropShadowEffect))
+        {
+            RunOnUiThread(UpdateShadow);
+        }
+        else if (e.PropertyName == nameof(Settings.Theme))
+        {
+            var theme = _settings.Theme;
+            RunOnUiThread(() => Load(theme));
+        }
+    }
+
+    private static void RunOnUiThread(Action action)
+    {
         if (Dispatcher.UIThread.CheckAccess())
         {
-            Load(theme);
+            action();
         }
         else
         {
-            Dispatcher.UIThread.Post(() => Load(theme));
+            Dispatcher.UIThread.Post(action);
         }
+    }
+
+    // The window shadow follows Settings.UseDropShadowEffect and is off for blur themes (WPF IsDropShadowEnabled).
+    private void UpdateShadow()
+    {
+        var enabled = _settings is { UseDropShadowEffect: true } && !_isBlurTheme;
+        this[WindowShadowKey] = enabled ? DefaultWindowShadow : new BoxShadows();
     }
 
     private void Load(string themeName)
     {
         Dictionary<string, object> light = new(), dark = new();
+        _isBlurTheme = false;
         try
         {
             var path = ThemeLoader.GetThemePath(themeName);
@@ -625,6 +659,7 @@ public class ThemeResources : ResourceDictionary
             else
             {
                 var theme = ThemeLoader.Load(path);
+                _isBlurTheme = theme.IsBlurTheme();
                 light = theme.Resolve(ThemeVariant.Light);
                 dark = theme.Resolve(ThemeVariant.Dark);
                 Log.Info(ClassName, $"Theme <{themeName}> applied: {light.Count} light / {dark.Count} dark resources resolved");
@@ -637,6 +672,7 @@ public class ThemeResources : ResourceDictionary
 
         ReplaceVariant(ThemeVariant.Light, light);
         ReplaceVariant(ThemeVariant.Dark, dark);
+        UpdateShadow();
         // Raises a resources-changed notification on the owner so every DynamicResource re-resolves.
         this[ThemeNameKey] = themeName;
     }

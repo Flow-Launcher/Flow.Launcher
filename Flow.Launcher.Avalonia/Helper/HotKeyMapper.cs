@@ -63,13 +63,14 @@ internal static partial class HotKeyMapper
 
         if (previousHotkeyId >= 0)
         {
-            UnregisterHotkey(previousHotkeyId);
+            TryUnregisterHotkey(previousHotkeyId, previousHotkeyString);
             _toggleHotkeyId = -1;
         }
 
         if (!TryRegisterHotkey(hotkeyString, OnToggleHotkey, out var newHotkeyId))
         {
             Log.Error(ClassName, $"Failed to register hotkey: {hotkeyString}");
+            ShowHotkeyError("registerHotkeyFailed", hotkeyString);
 
             if (!string.IsNullOrWhiteSpace(previousHotkeyString))
             {
@@ -99,7 +100,7 @@ internal static partial class HotKeyMapper
     {
         if (_toggleHotkeyId >= 0)
         {
-            UnregisterHotkey(_toggleHotkeyId);
+            TryUnregisterHotkey(_toggleHotkeyId, _toggleHotkeyString);
             _toggleHotkeyId = -1;
         }
 
@@ -141,6 +142,7 @@ internal static partial class HotKeyMapper
                 _mainViewModel?.ShowWithInjectedQuery(hotkey.ActionKeyword);
             }, out var hotkeyId))
         {
+            ShowHotkeyError("registerHotkeyFailed", hotkey.Hotkey);
             return false;
         }
 
@@ -157,9 +159,37 @@ internal static partial class HotKeyMapper
 
         if (_customQueryHotkeyIds.TryGetValue(hotkeyString, out var hotkeyId))
         {
-            UnregisterHotkey(hotkeyId);
+            TryUnregisterHotkey(hotkeyId, hotkeyString);
             _customQueryHotkeyIds.Remove(hotkeyString);
         }
+    }
+
+    /// <summary>
+    /// Unregisters a hotkey; a failure is logged and reported to the user, like the WPF mapper does.
+    /// </summary>
+    private static void TryUnregisterHotkey(int hotkeyId, string hotkeyString)
+    {
+        try
+        {
+            UnregisterHotkey(hotkeyId);
+        }
+        catch (Exception e)
+        {
+            Log.Exception(ClassName, $"Error removing hotkey: {hotkeyString}", e);
+            ShowHotkeyError("unregisterHotkeyFailed", hotkeyString);
+        }
+    }
+
+    private static void ShowHotkeyError(string messageKey, string hotkeyString)
+    {
+        var api = App.API;
+        if (api is null)
+        {
+            return;
+        }
+
+        var message = string.Format(api.GetTranslation(messageKey), hotkeyString);
+        api.ShowMsgBox(message, api.GetTranslation("MessageBoxTitle"));
     }
 
     private static void OnToggleHotkey()
@@ -196,17 +226,13 @@ internal static partial class HotKeyMapper
     static partial void ShutdownHotkeySystem();
 
     /// <summary>
-    /// Cleanup and unregister all hotkeys.
+    /// Cleanup and unregister all hotkeys. The platform backend unregisters every remaining hotkey, so no
+    /// per-hotkey failure prompts are shown while exiting.
     /// </summary>
     internal static void Shutdown()
     {
-        RemoveToggleHotkey();
-
-        foreach (var hotkeyId in _customQueryHotkeyIds.Values)
-        {
-            UnregisterHotkey(hotkeyId);
-        }
-
+        _toggleHotkeyId = -1;
+        _toggleHotkeyString = string.Empty;
         _customQueryHotkeyIds.Clear();
         ShutdownHotkeySystem();
         Log.Info(ClassName, "HotKeyMapper shutdown");

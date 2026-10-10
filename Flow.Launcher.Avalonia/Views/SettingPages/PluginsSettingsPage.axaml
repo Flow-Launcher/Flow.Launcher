@@ -35,6 +35,14 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
+                <Button Command="{Binding CheckPluginUpdatesCommand}"
+                        ToolTip.Tip="{i18n:Localize checkPluginUpdatesTooltip}">
+                    <ui:FASymbolIcon Symbol="Sync" FontSize="16"/>
+                </Button>
+                <Button Classes="accent"
+                        Command="{Binding UpdateAllPluginsCommand}"
+                        Content="{i18n:Localize updateAllPluginsButtonContent}"
+                        IsVisible="{Binding HasAvailableUpdates}"/>
                 <Button Command="{Binding OpenHelperCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
                         ToolTip.Tip="{i18n:Localize flowlauncher_settings}">
                     <ui:FASymbolIcon Symbol="Help" FontSize="16"/>
@@ -88,6 +96,14 @@
 
                                     <!-- Conditional Controls -->
                                     <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="10" VerticalAlignment="Center" Margin="10,0,0,0" HorizontalAlignment="Right">
+                                        <!-- Update -->
+                                        <StackPanel Orientation="Horizontal" Spacing="8" IsVisible="{Binding HasUpdate}">
+                                            <TextBlock Text="{Binding UpdateVersionText}" VerticalAlignment="Center"
+                                                       Foreground="{DynamicResource TextFillColorSecondaryBrush}" FontSize="12"/>
+                                            <Button Classes="accent" Content="{i18n:Localize updatebtn}"
+                                                    Command="{Binding UpdatePluginCommand}"/>
+                                        </StackPanel>
+
                                         <!-- On/Off -->
                                         <ToggleSwitch IsChecked="{Binding PluginState}" 
                                                       OnContent="" OffContent=""
@@ -97,19 +113,29 @@
                                         <StackPanel Orientation="Horizontal" Spacing="10" 
                                                     IsVisible="{Binding IsPrioritySelected}">
                                             <TextBlock Text="{i18n:Localize priority}" VerticalAlignment="Center"/>
-                                            <ui:FANumberBox Value="{Binding Priority}" SpinButtonPlacementMode="Inline" Width="100" SmallChange="1" LargeChange="10"/>
+                                            <ui:FANumberBox Value="{Binding PriorityInput}" SpinButtonPlacementMode="Inline" Width="100"
+                                                            Minimum="-999" Maximum="999" SmallChange="1" LargeChange="10"
+                                                            ToolTip.Tip="{i18n:Localize priorityToolTip}"/>
                                         </StackPanel>
 
                                         <!-- Search Delay -->
                                         <StackPanel Orientation="Horizontal" Spacing="10"
                                                     IsVisible="{Binding IsSearchDelaySelected}">
                                             <TextBlock Text="{i18n:Localize searchDelay}" VerticalAlignment="Center"/>
-                                            <ui:FANumberBox Value="{Binding PluginSearchDelayTime}" SpinButtonPlacementMode="Inline" Width="100" Minimum="0" SmallChange="10" LargeChange="100"/>
+                                            <ui:FANumberBox Value="{Binding PluginSearchDelayTime}" SpinButtonPlacementMode="Inline" Width="100"
+                                                            Minimum="0" Maximum="1000" SmallChange="10" LargeChange="100"
+                                                            PlaceholderText="{Binding DefaultSearchDelay}"
+                                                            IsEnabled="{Binding SearchDelayEnabled}"
+                                                            ToolTip.Tip="{i18n:Localize searchDelayNumberBoxToolTip}"
+                                                            ToolTip.ShowOnDisabled="True"/>
                                         </StackPanel>
 
                                         <!-- Home On/Off -->
                                         <ToggleSwitch IsChecked="{Binding PluginHomeState}"
                                                       OnContent="" OffContent=""
+                                                      IsEnabled="{Binding HomeEnabled}"
+                                                      ToolTip.Tip="{i18n:Localize homeToggleBoxToolTip}"
+                                                      ToolTip.ShowOnDisabled="True"
                                                       IsVisible="{Binding IsHomeOnOffSelected}"/>
                                     </StackPanel>
                                 </Grid>
@@ -118,15 +144,16 @@
                             <Expander.Content>
                                 <StackPanel Spacing="15">
                                     <!-- Action Keywords -->
-                                    <Grid ColumnDefinitions="*,Auto">
+                                    <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding ShowActionKeywordPanel}">
                                         <StackPanel Spacing="5">
                                             <TextBlock Text="{i18n:Localize actionKeywords}" FontWeight="Bold"/>
                                             <TextBlock Text="{Binding ActionKeywordsText}" TextWrapping="Wrap" Foreground="{DynamicResource TextFillColorSecondaryBrush}"/>
                                         </StackPanel>
-                                        <Button Grid.Column="1" Content="{i18n:Localize edit}" Command="{Binding SetActionKeywordsCommand}"/>
+                                        <Button Grid.Column="1" Content="{i18n:Localize edit}" Command="{Binding SetActionKeywordsCommand}"
+                                                ToolTip.Tip="{i18n:Localize actionKeywordsTooltip}"/>
                                     </Grid>
 
-                                    <Separator/>
+                                    <Separator IsVisible="{Binding ShowActionKeywordPanel}"/>
 
                                     <!-- Settings Panel -->
                                     <ContentControl Content="{Binding AvaloniaSettingControl}" 

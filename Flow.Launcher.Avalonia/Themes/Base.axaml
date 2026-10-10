@@ -17,7 +17,8 @@
         <Setter Property="Padding" Value="0" />
         <Setter Property="CornerRadius" Value="{DynamicResource WindowCornerRadius}" />
         <Setter Property="ClipToBounds" Value="True" />
-        <Setter Property="BoxShadow" Value="0 18 48 0 #26000000" />
+        <!-- WindowShadow is set by ThemeResources (Helper/ThemeLoader.cs) from Settings.UseDropShadowEffect; none for blur themes. -->
+        <Setter Property="BoxShadow" Value="{DynamicResource WindowShadow}" />
     </Style>
 
     <!-- Query Box Background -->

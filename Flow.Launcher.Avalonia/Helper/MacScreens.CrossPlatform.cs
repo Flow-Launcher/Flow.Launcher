@@ -11,6 +11,9 @@ internal static class MacScreens
 {
     private const string CoreGraphics = "/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics";
     private const string CoreFoundation = "/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation";
+    private const string ObjC = "/usr/lib/libobjc.A.dylib";
+
+    private const uint MaxDisplays = 32;
 
     // CGWindowListOption
     private const uint OnScreenOnly = 1 << 0;
@@ -22,6 +25,10 @@ internal static class MacScreens
     private static readonly IntPtr LayerKey = CreateKey("kCGWindowLayer");
     private static readonly IntPtr OwnerPidKey = CreateKey("kCGWindowOwnerPID");
     private static readonly IntPtr BoundsKey = CreateKey("kCGWindowBounds");
+
+    private static readonly IntPtr SharedWorkspaceSel = sel_registerName("sharedWorkspace");
+    private static readonly IntPtr FrontmostApplicationSel = sel_registerName("frontmostApplication");
+    private static readonly IntPtr ProcessIdentifierSel = sel_registerName("processIdentifier");
 
     /// <summary>
     /// Gets the mouse cursor location.
@@ -92,6 +99,110 @@ internal static class MacScreens
         }
     }
 
+    /// <summary>
+    /// Whether the frontmost application shows a window covering a whole display (native full screen, or a
+    /// borderless full-screen game/video window). Mirrors the Win32 foreground-window-equals-monitor check.
+    /// </summary>
+    internal static bool IsFrontmostWindowFullscreen()
+    {
+        var frontmostPid = GetFrontmostApplicationPid();
+        if (frontmostPid is not { } pid || pid == Environment.ProcessId)
+        {
+            return false;
+        }
+
+        var displays = GetDisplayBounds();
+        if (displays.Length == 0)
+        {
+            return false;
+        }
+
+        var windows = CGWindowListCopyWindowInfo(OnScreenOnly | ExcludeDesktopElements, 0);
+        if (windows == IntPtr.Zero)
+        {
+            return false;
+        }
+
+        try
+        {
+            var count = CFArrayGetCount(windows);
+            for (nint i = 0; i < count; i++)
+            {
+                var window = CFArrayGetValueAtIndex(windows, i);
+                if (GetInt(window, OwnerPidKey) != pid)
+                {
+                    continue;
+                }
+
+                var bounds = CFDictionaryGetValue(window, BoundsKey);
+                if (bounds == IntPtr.Zero || !CGRectMakeWithDictionaryRepresentation(bounds, out var rect))
+                {
+                    continue;
+                }
+
+                foreach (var display in displays)
+                {
+                    if (CoversDisplay(rect, display))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+        finally
+        {
+            CFRelease(windows);
+        }
+    }
+
+    private static bool CoversDisplay(CGRect window, CGRect display) =>
+        window.X <= display.X + 0.5 && window.Y <= display.Y + 0.5
+        && window.X + window.Width >= display.X + display.Width - 0.5
+        && window.Y + window.Height >= display.Y + display.Height - 0.5;
+
+    /// <summary>
+    /// Bounds of the active displays in global display points (top-left origin, same space as window bounds).
+    /// </summary>
+    private static CGRect[] GetDisplayBounds()
+    {
+        var ids = new uint[MaxDisplays];
+        if (CGGetActiveDisplayList(MaxDisplays, ids, out var count) != 0 || count == 0)
+        {
+            return [];
+        }
+
+        var bounds = new CGRect[count];
+        for (var i = 0; i < count; i++)
+        {
+            bounds[i] = CGDisplayBounds(ids[i]);
+        }
+
+        return bounds;
+    }
+
+    private static int? GetFrontmostApplicationPid()
+    {
+        var workspaceClass = objc_getClass("NSWorkspace");
+        if (workspaceClass == IntPtr.Zero)
+        {
+            return null;
+        }
+
+        var pool = objc_autoreleasePoolPush();
+        try
+        {
+            var workspace = objc_msgSend(workspaceClass, SharedWorkspaceSel);
+            var application = workspace == IntPtr.Zero ? IntPtr.Zero : objc_msgSend(workspace, FrontmostApplicationSel);
+            return application == IntPtr.Zero ? null : objc_msgSend_int(application, ProcessIdentifierSel);
+        }
+        finally
+        {
+            objc_autoreleasePoolPop(pool);
+        }
+    }
+
     private static int? GetInt(IntPtr dictionary, IntPtr key)
     {
         var number = CFDictionaryGetValue(dictionary, key);
@@ -129,6 +240,12 @@ internal static class MacScreens
     [return: MarshalAs(UnmanagedType.I1)]
     private static extern bool CGRectMakeWithDictionaryRepresentation(IntPtr dictionary, out CGRect rect);
 
+    [DllImport(CoreGraphics)]
+    private static extern int CGGetActiveDisplayList(uint maxDisplays, [Out] uint[] activeDisplays, out uint displayCount);
+
+    [DllImport(CoreGraphics)]
+    private static extern CGRect CGDisplayBounds(uint display);
+
     [DllImport(CoreFoundation)]
     private static extern nint CFArrayGetCount(IntPtr array);
 
@@ -147,4 +264,22 @@ internal static class MacScreens
 
     [DllImport(CoreFoundation)]
     private static extern void CFRelease(IntPtr value);
+
+    [DllImport(ObjC)]
+    private static extern IntPtr objc_getClass(string name);
+
+    [DllImport(ObjC)]
+    private static extern IntPtr sel_registerName(string name);
+
+    [DllImport(ObjC)]
+    private static extern IntPtr objc_msgSend(IntPtr receiver, IntPtr selector);
+
+    [DllImport(ObjC, EntryPoint = "objc_msgSend")]
+    private static extern int objc_msgSend_int(IntPtr receiver, IntPtr selector);
+
+    [DllImport(ObjC)]
+    private static extern IntPtr objc_autoreleasePoolPush();
+
+    [DllImport(ObjC)]
+    private static extern void objc_autoreleasePoolPop(IntPtr pool);
 }
