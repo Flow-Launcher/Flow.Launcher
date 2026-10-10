@@ -496,6 +496,21 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         public int MaxResultsToShow { get; set; } = 5;
 
+        private ResultLayout _resultLayout = ResultLayout.List;
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public ResultLayout ResultLayout
+        {
+            get => _resultLayout;
+            set
+            {
+                if (_resultLayout != value)
+                {
+                    _resultLayout = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public int ActivateTimes { get; set; }
 
         public ObservableCollection<CustomPluginHotkey> CustomPluginHotkeys { get; set; } = new ObservableCollection<CustomPluginHotkey>();
@@ -770,5 +785,15 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         [EnumLocalizeKey(nameof(Localize.executedHistory))]
         LastOpened
+    }
+
+    [EnumLocalize]
+    public enum ResultLayout
+    {
+        [EnumLocalizeKey(nameof(Localize.ResultLayoutList))]
+        List,
+
+        [EnumLocalizeKey(nameof(Localize.ResultLayoutGrid))]
+        Grid
     }
 }

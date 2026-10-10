@@ -552,6 +552,22 @@
                 </ui:SettingsExpander.Items>
             </ui:SettingsExpander>
 
+            <ui:SettingsCard
+                Margin="0 4 0 0"
+                Description="{DynamicResource ResultLayoutToolTip}"
+                Header="{DynamicResource ResultLayout}">
+                <ui:SettingsCard.HeaderIcon>
+                    <ui:FontIcon Glyph="&#xF0E2;" />
+                </ui:SettingsCard.HeaderIcon>
+
+                <ComboBox
+                    MinWidth="160"
+                    DisplayMemberPath="Display"
+                    ItemsSource="{Binding ResultLayouts}"
+                    SelectedValue="{Binding Settings.ResultLayout}"
+                    SelectedValuePath="Value" />
+            </ui:SettingsCard>
+
             <ui:InfoBar
                 Title=""
                 Margin="0 4 0 0"

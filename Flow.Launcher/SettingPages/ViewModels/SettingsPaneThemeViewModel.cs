@@ -218,6 +218,8 @@ public partial class SettingsPaneThemeViewModel : BaseModel
     public class AnimationSpeedData : DropdownDataGeneric<AnimationSpeeds> { }
     public List<AnimationSpeedData> AnimationSpeeds { get; } = DropdownDataGeneric<AnimationSpeeds>.GetValues<AnimationSpeedData>("AnimationSpeed");
 
+    public List<ResultLayoutLocalized> ResultLayouts { get; } = ResultLayoutLocalized.GetValues();
+
     public class BackdropTypeData : DropdownDataGeneric<BackdropTypes> { }
 
     public List<BackdropTypeData> BackdropTypesList { get; } =
