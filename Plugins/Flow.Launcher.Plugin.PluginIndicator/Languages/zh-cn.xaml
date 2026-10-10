@@ -4,7 +4,7 @@
     <system:String x:Key="flowlauncher_plugin_pluginindicator_result_subtitle">激活 {0} 插件的关键字</system:String>
 
     <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_settings_title">设置：{0}</system:String>
-    <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_settings_subtitle">Open the settings page for the {0} plugin</system:String>
+    <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_settings_subtitle">打开 {0} 插件的设置页面</system:String>
 
     <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_name">插件关键词提示</system:String>
     <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_description">提供插件关键词搜索提示</system:String>
