@@ -9,7 +9,7 @@ using Flow.Launcher.Plugin.Explorer.Search.IProvider;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 {
-    public class EverythingSearchManager : IIndexProvider, IContentIndexProvider, IPathIndexProvider
+    public class EverythingSearchManager : IIndexProvider, IContentIndexProvider, IPathIndexProvider, IDisposable
     {
         private Settings Settings { get; }
         private readonly Lock _syncRoot = new();
@@ -191,5 +191,19 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         public bool IsFastSortOption(EverythingSortOption sortOption) => api.IsFastSortOption(sortOption);
 
         public Task IncrementRunCounterAsync(string fileOrFolder) => api.IncrementRunCounterAsync(fileOrFolder);
+
+        /// <summary>
+        /// Disposes the underlying Everything API instance if it implements <see cref="IDisposable"/>.
+        /// </summary>
+        public void Dispose()
+        {
+            lock (_syncRoot)
+            {
+                if (api is IDisposable disposable)
+                {
+                    disposable.Dispose();
+                }
+            }
+        }
     }
 }

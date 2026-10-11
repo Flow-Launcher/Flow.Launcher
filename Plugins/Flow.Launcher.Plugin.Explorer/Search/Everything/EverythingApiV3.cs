@@ -9,7 +9,7 @@ using Flow.Launcher.Plugin.Explorer.Search.Everything.Exceptions;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 {
-    public class EverythingApiV3 : IEverythingApi
+    public class EverythingApiV3 : IEverythingApi, IDisposable
     {
         private const int BufferSize = 4096;
         private readonly SemaphoreSlim _semaphore = new(1, 1);
@@ -218,7 +218,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 {
                     if (!Everything3ApiDllImport.Everything3_AddSearchSort(searchState, sortPropertyId, ascending))
                     {
-                        CheckEverything3Call(nameof(Everything3ApiDllImport.Everything3_AddSearchSort), false);
+                        // AddSearchSort returning false means the sort was not applied; surface this as an error
+                        // even when the native API reports EVERYTHING3_OK, to avoid silently returning unsorted results.
+                        throw new InvalidCallException();
                     }
                 }
 
@@ -368,6 +370,15 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
             _ = Everything3ApiDllImport.Everything3_DestroyClient(_client);
             _client = IntPtr.Zero;
+        }
+
+        /// <summary>
+        /// Releases the named pipe client handle when the instance is disposed.
+        /// </summary>
+        public void Dispose()
+        {
+            DestroyEverythingClient(_client);
+            _semaphore.Dispose();
         }
 
         /// <summary>
