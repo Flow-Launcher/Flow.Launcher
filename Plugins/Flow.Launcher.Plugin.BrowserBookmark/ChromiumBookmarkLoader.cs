@@ -50,7 +50,17 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
             }
 
             var source = name + (Path.GetFileName(profile) == "Default" ? "" : $" ({Path.GetFileName(profile)})");
-            var profileBookmarks = LoadBookmarksFromFile(bookmarkPath, source);
+            List<Bookmark> profileBookmarks;
+            try
+            {
+                profileBookmarks = LoadBookmarksFromFile(bookmarkPath, source);
+            }
+            catch (Exception ex)
+            {
+                // Skip a profile whose bookmarks cannot be read, e.g. locked or access denied.
+                Main.Context.API.LogException(ClassName, $"Failed to load bookmarks: {bookmarkPath}", ex);
+                continue;
+            }
 
             // Load favicons after loading bookmarks
             if (Main._settings.EnableFavicons)
