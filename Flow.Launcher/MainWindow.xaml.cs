@@ -59,6 +59,7 @@ namespace Flow.Launcher
         // Window Context Menu
         private readonly ContextMenu _contextMenu = new();
         private readonly MainViewModel _viewModel;
+        private readonly Flow.Launcher.VimMode.VimManager _vimManager;
 
         // Window Event: Key Event
         private bool _isArrowKeyPressed = false;
@@ -96,6 +97,8 @@ namespace Flow.Launcher
 
             InitializeComponent();
             UpdatePosition();
+
+            _vimManager = new Flow.Launcher.VimMode.VimManager(this, _viewModel, QueryTextBox, VimBlockCaret, VimModeIndicator, _settings);
 
             SyncSoundEffectsState();
             RegisterSoundEffectsEvent();
@@ -479,6 +482,12 @@ namespace Flow.Launcher
             }
 
             var specialKeyState = GlobalHotkey.CheckModifiers();
+            
+            if (_vimManager != null && _vimManager.HandlePreviewKeyDown(e))
+            {
+                return;
+            }
+
             switch (e.Key)
             {
                 case Key.Down:
@@ -1460,7 +1469,7 @@ namespace Flow.Launcher
             if (_viewModel.QueryText != QueryTextBox.Text)
             {
                 BindingExpression be = QueryTextBox.GetBindingExpression(TextBox.TextProperty);
-                be.UpdateSource();
+                be?.UpdateSource();
             }
         }
 
@@ -1585,6 +1594,7 @@ namespace Flow.Launcher
                     UnregisterSoundEffectsEvent();
                     DisposeSoundEffects();
                     _viewModel.ActualApplicationThemeChanged -= ViewModel_ActualApplicationThemeChanged;
+                    _vimManager?.Dispose();
                 }
 
                 _disposed = true;

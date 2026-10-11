@@ -84,6 +84,16 @@
 
             <ui:SettingsCard
                 Margin="0 4 0 0"
+                Description="{DynamicResource enableAdvancedVimModeToolTip}"
+                Header="{DynamicResource enableAdvancedVimMode}">
+                <ui:ToggleSwitch
+                    IsOn="{Binding Settings.EnableVimMode}"
+                    OffContent="{DynamicResource disable}"
+                    OnContent="{DynamicResource enable}" />
+            </ui:SettingsCard>
+
+            <ui:SettingsCard
+                Margin="0 4 0 0"
                 Description="{DynamicResource hideNotifyIconToolTip}"
                 Header="{DynamicResource hideNotifyIcon}">
                 <ui:ToggleSwitch
