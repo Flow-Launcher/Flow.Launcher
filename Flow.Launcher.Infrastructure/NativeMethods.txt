@@ -48,6 +48,7 @@ OleUninitialize
 
 GetKeyboardLayout
 GetWindowThreadProcessId
+GetGUIThreadInfo
 ActivateKeyboardLayout
 GetKeyboardLayoutList
 PostMessage

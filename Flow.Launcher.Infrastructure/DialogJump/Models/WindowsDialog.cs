@@ -59,7 +59,7 @@ namespace Flow.Launcher.Infrastructure.DialogJump.Models
             if (fileEditor != HWND.Null && GetClassName(fileEditor) == "ComboBoxEx32") return DialogType.Open;
 
             // Is it a Windows Save or Save As file dialog?
-            fileEditor = PInvoke.GetDlgItem(handle, 0x0000);
+            fileEditor = PInvoke.FindWindowEx(handle, HWND.Null, "DUIViewWndClassName", null);
             if (fileEditor != HWND.Null && GetClassName(fileEditor) == "DUIViewWndClassName") return DialogType.SaveOrSaveAs;
 
             return DialogType.Others;
@@ -111,7 +111,6 @@ namespace Flow.Launcher.Infrastructure.DialogJump.Models
 
         private readonly DialogType _dialogType;
 
-        private bool _legacy { get; set; } = false;
         private HWND _pathControl { get; set; } = HWND.Null;
         private HWND _pathEditor { get; set; } = HWND.Null;
         private HWND _fileEditor { get; set; } = HWND.Null;
@@ -153,28 +152,22 @@ namespace Flow.Launcher.Infrastructure.DialogJump.Models
                 return JumpFolderWithFileEditor(path, false);
             }
 
-            // Alt-D or Ctrl-L to focus on the path input box
-            // "ComboBoxEx32" is not visible when the path editor is not with the keyboard focus
-            _inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.LMENU, VirtualKeyCode.VK_D);
-            // _inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.LCONTROL, VirtualKeyCode.VK_L);
-
-            if (_pathControl.IsNull && !GetPathControlEditor())
-            {
-                // https://github.com/idkidknow/Flow.Launcher.Plugin.DirQuickJump/issues/1
-                // The dialog is a legacy one, so we can only edit file editor directly.
-                Log.Debug(ClassName, "Legacy dialog, using legacy jump folder method");
-                return JumpFolderWithFileEditor(path, true);
-            }
+            // Ctrl-L focuses the address bar without conflicting with localized dialog mnemonics.
+            _pathControl = HWND.Null;
+            _pathEditor = HWND.Null;
+            GetPathControlEditor();
+            if (_pathControl.IsNull) return JumpFolderWithFileEditor(path, true);
+            _inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.LCONTROL, VirtualKeyCode.VK_L);
 
             var timeOut = !SpinWait.SpinUntil(() =>
             {
-                var style = PInvoke.GetWindowLongPtr(_pathControl, WINDOW_LONG_PTR_INDEX.GWL_STYLE);
-                return (style & (int)WINDOW_STYLE.WS_VISIBLE) != 0;
+                // Modern dialogs create the address editor after processing Ctrl-L.
+                if ((_pathControl.IsNull || _pathEditor.IsNull) && !GetPathControlEditor()) return false;
+                return IsPathEditorFocused();
             }, 1000);
             if (timeOut)
             {
-                // Path control is not visible, so we can only edit file editor directly.
-                Log.Debug(ClassName, "Path control is not visible, using legacy jump folder method");
+                Log.Debug(ClassName, "Path editor did not receive focus, using legacy jump folder method");
                 return JumpFolderWithFileEditor(path, true);
             }
 
@@ -218,33 +211,33 @@ namespace Flow.Launcher.Infrastructure.DialogJump.Models
 
         #region Get Handles
 
+        private unsafe bool IsPathEditorFocused()
+        {
+            // Save dialogs can keep the ComboBoxEx32 container hidden while its edit has focus.
+            var threadId = PInvoke.GetWindowThreadProcessId(new(Handle), null);
+            var info = new GUITHREADINFO { cbSize = (uint)sizeof(GUITHREADINFO) };
+            return PInvoke.GetGUIThreadInfo(threadId, &info) && info.hwndFocus == _pathEditor;
+        }
+
         private bool GetPathControlEditor()
         {
             // Get the handle of the path editor
             // Must use PInvoke.FindWindowEx because PInvoke.GetDlgItem(Handle, 0x0000) will get another control
-            _pathControl = PInvoke.FindWindowEx(new(Handle), HWND.Null, "WorkerW", null); // 0x0000
-            _pathControl = PInvoke.FindWindowEx(_pathControl, HWND.Null, "ReBarWindow32", null); // 0xA005
-            _pathControl = PInvoke.FindWindowEx(_pathControl, HWND.Null, "Address Band Root", null); // 0xA205
-            _pathControl = PInvoke.FindWindowEx(_pathControl, HWND.Null, "msctls_progress32", null); // 0x0000
-            _pathControl = PInvoke.FindWindowEx(_pathControl, HWND.Null, "ComboBoxEx32", null); // 0xA205
-            if (_pathControl == HWND.Null)
+            if ((_pathControl = PInvoke.FindWindowEx(new(Handle), HWND.Null, "WorkerW", null)).IsNull ||
+                (_pathControl = PInvoke.FindWindowEx(_pathControl, HWND.Null, "ReBarWindow32", null)).IsNull ||
+                (_pathControl = PInvoke.FindWindowEx(_pathControl, HWND.Null, "Address Band Root", null)).IsNull ||
+                (_pathControl = PInvoke.FindWindowEx(_pathControl, HWND.Null, "msctls_progress32", null)).IsNull ||
+                (_pathControl = PInvoke.FindWindowEx(_pathControl, HWND.Null, "ComboBoxEx32", null)).IsNull)
             {
                 _pathEditor = HWND.Null;
-                _legacy = true;
-                Log.Info(ClassName, "Legacy dialog");
             }
             else
             {
                 _pathEditor = PInvoke.GetDlgItem(_pathControl, 0xA205); // ComboBox
                 _pathEditor = PInvoke.GetDlgItem(_pathEditor, 0xA205); // Edit
-                if (_pathEditor == HWND.Null)
-                {
-                    _legacy = true;
-                    Log.Error(ClassName, "Failed to find path editor handle");
-                }
             }
 
-            return !_legacy;
+            return !_pathEditor.IsNull;
         }
 
         private bool GetFileEditor()
@@ -259,11 +252,20 @@ namespace Flow.Launcher.Infrastructure.DialogJump.Models
             else
             {
                 // Get the handle of the file name editor of Save / SaveAs file dialog
-                _fileEditor = PInvoke.GetDlgItem(new(Handle), 0x0000); // DUIViewWndClassName
-                _fileEditor = PInvoke.GetDlgItem(_fileEditor, 0x0000); // DirectUIHWND
-                _fileEditor = PInvoke.GetDlgItem(_fileEditor, 0x0000); // FloatNotifySink
-                _fileEditor = PInvoke.GetDlgItem(_fileEditor, 0x0000); // ComboBox
-                _fileEditor = PInvoke.GetDlgItem(_fileEditor, 0x03E9); // Edit
+                var dialogView = PInvoke.FindWindowEx(new(Handle), HWND.Null, "DUIViewWndClassName", null);
+                if (dialogView.IsNull) return false;
+                var directUI = PInvoke.FindWindowEx(dialogView, HWND.Null, "DirectUIHWND", null);
+                if (directUI.IsNull) return false;
+
+                // Several siblings have ID 0; locate the sink containing the file name edit.
+                var sink = HWND.Null;
+                while (!(sink = PInvoke.FindWindowEx(directUI, sink, "FloatNotifySink", null)).IsNull)
+                {
+                    var comboBox = PInvoke.FindWindowEx(sink, HWND.Null, "ComboBox", null);
+                    if (comboBox.IsNull) continue;
+                    _fileEditor = PInvoke.GetDlgItem(comboBox, 0x03E9);
+                    if (!_fileEditor.IsNull) break;
+                }
             }
 
             if (_fileEditor == HWND.Null)
