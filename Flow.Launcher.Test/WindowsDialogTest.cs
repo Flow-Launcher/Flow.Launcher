@@ -35,10 +35,24 @@ public class WindowsDialogTest
     [DllImport("kernel32.dll")]
     private static extern uint GetCurrentThreadId();
 
-    [TestCase(false)]
-    [TestCase(true)]
+    [DllImport("user32.dll")]
+    private static extern bool IsWindow(IntPtr hwnd);
+
+    [DllImport("user32.dll")]
+    private static extern bool IsWindowVisible(IntPtr hwnd);
+
+    [DllImport("user32.dll")]
+    private static extern bool RegisterHotKey(IntPtr hwnd, int id, uint modifiers, uint key);
+
+    [DllImport("user32.dll")]
+    private static extern bool UnregisterHotKey(IntPtr hwnd, int id);
+
+    [TestCase(false, false)]
+    [TestCase(true, false)]
+    [TestCase(false, true)]
+    [TestCase(true, true)]
     [Apartment(ApartmentState.STA)]
-    public void JumpFolder_PreservesFileNameAcrossRepeatedNavigation(bool save)
+    public void JumpFolder_PreservesFileNameAcrossRepeatedNavigation(bool save, bool hotkeyModifierHeld)
     {
         var root = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
         var first = Directory.CreateDirectory(Path.Combine(root, "first")).FullName;
@@ -89,7 +103,15 @@ public class WindowsDialogTest
                         PInvoke.SetForegroundWindow(handle);
                         return PInvoke.GetForegroundWindow() == handle;
                     }, 3000), Is.True, "Dialog is not foreground.");
-                    Assert.That(tab.JumpFolder(destination, false), Is.True);
+                    if (hotkeyModifierHeld)
+                    {
+                        // Reproduce the Dialog Jump hotkey: its handler runs while Alt is still held.
+                        PressHotkeyAndJump(tab, destination);
+                    }
+                    else
+                    {
+                        Assert.That(tab.JumpFolder(destination, false), Is.True);
+                    }
                     // Wait for the shell to process Enter before reopening the address editor.
                     Thread.Sleep(250);
                     new InputSimulator().Keyboard.ModifiedKeyStroke(VirtualKeyCode.LCONTROL, VirtualKeyCode.VK_L);
@@ -134,18 +156,25 @@ public class WindowsDialogTest
         {
             var dialog = PInvoke.FindWindowEx(HWND.Null, HWND.Null, "#32770", title);
             if (!dialog.IsNull) PInvoke.PostMessage(dialog, 0x0010, 0, 0);
-        }, null, 3000, Timeout.Infinite);
-        var elapsed = Stopwatch.StartNew();
+        }, null, 15000, Timeout.Infinite);
+        var elapsed = new Stopwatch();
         var worker = Task.Run(() =>
         {
             HWND handle = HWND.Null;
             try
             {
+                // Wait for the real modal first so the discovery failure cannot race ShowDialog.
+                Assert.That(SpinWait.SpinUntil(() =>
+                {
+                    var dialog = PInvoke.FindWindowEx(HWND.Null, HWND.Null, "#32770", title);
+                    return !dialog.IsNull && IsWindowVisible((IntPtr)dialog);
+                }, 10000), Is.True, "Dialog did not open.");
+                elapsed.Start();
                 if (!SpinWait.SpinUntil(() =>
                 {
                     handle = PInvoke.FindWindowEx(HWND.Null, HWND.Null, "#32770", title + " missing");
                     return !handle.IsNull;
-                }, 200)) throw new TimeoutException("Dialog did not open.");
+                }, 200)) throw new TimeoutException("Dialog discovery timed out.");
             }
             finally
             {
@@ -163,6 +192,32 @@ public class WindowsDialogTest
         finally
         {
             owner.Close();
+        }
+    }
+
+    private static void PressHotkeyAndJump(IDialogJumpDialogWindowTab tab, string destination)
+    {
+        const int hotkeyId = 0x4696;
+        const uint modAlt = 0x0001, modNoRepeat = 0x4000;
+        // F13 avoids clashing with a running Flow Launcher; the registration swallows it like the real hotkey.
+        Assert.That(RegisterHotKey(IntPtr.Zero, hotkeyId, modAlt | modNoRepeat, (uint)VirtualKeyCode.F13), Is.True, "Could not register the test hotkey.");
+        var keyboard = new InputSimulator().Keyboard;
+        Task release = null;
+        try
+        {
+            keyboard.KeyDown(VirtualKeyCode.LMENU);
+            keyboard.KeyPress(VirtualKeyCode.F13);
+            // The user lets go of Alt shortly after the hotkey fires.
+            release = Task.Delay(300).ContinueWith(_ => keyboard.KeyUp(VirtualKeyCode.LMENU), TaskScheduler.Default);
+            Assert.That(tab.JumpFolder(destination, false), Is.True);
+        }
+        finally
+        {
+#pragma warning disable VSTHRD002
+            release?.Wait();
+#pragma warning restore VSTHRD002
+            if (release == null) keyboard.KeyUp(VirtualKeyCode.LMENU);
+            UnregisterHotKey(IntPtr.Zero, hotkeyId);
         }
     }
 
@@ -186,6 +241,9 @@ public class WindowsDialogTest
     public void JumpFolder_LegacySaveDialogFallsBackWithoutWaitingForAddressBar()
     {
         var title = $"Flow legacy save {Guid.NewGuid()}";
+        var root = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString())).FullName;
+        var initial = Directory.CreateDirectory(Path.Combine(root, "initial")).FullName;
+        var destination = Directory.CreateDirectory(Path.Combine(root, "destination")).FullName;
         using var owner = new System.Windows.Forms.Form { Width = 200, Height = 100 };
         owner.Show();
         var ownerHandle = new HWND(owner.Handle);
@@ -193,6 +251,7 @@ public class WindowsDialogTest
         {
             AutoUpgradeEnabled = false,
             Title = title,
+            InitialDirectory = initial,
             FileName = "preserve-me",
         };
         var worker = Task.Run(() =>
@@ -205,21 +264,48 @@ public class WindowsDialogTest
                     handle = PInvoke.FindWindowEx(HWND.Null, HWND.Null, "#32770", title);
                     return !handle.IsNull;
                 }, 10000), Is.True, "Legacy dialog did not open.");
+                Assert.That(SpinWait.SpinUntil(() => GetLegacyDialogText(handle, CDM_GETFOLDERPATH) == initial, 5000), Is.True,
+                    $"Legacy dialog did not open in the initial folder: {GetLegacyDialogText(handle, CDM_GETFOLDERPATH)}.");
                 var dialog = new WindowsDialog().CheckDialogWindow((IntPtr)handle);
                 Assert.That(dialog, Is.Not.Null);
                 using var tab = dialog.GetCurrentTab();
                 var elapsed = Stopwatch.StartNew();
-                Assert.That(tab.JumpFolder(Path.GetTempPath(), false), Is.True);
+                Assert.That(tab.JumpFolder(destination, false), Is.True);
                 Assert.That(elapsed.Elapsed, Is.LessThan(TimeSpan.FromMilliseconds(500)));
+                Assert.That(SpinWait.SpinUntil(() => GetLegacyDialogText(handle, CDM_GETFOLDERPATH) == destination, 3000), Is.True,
+                    $"Current folder: {GetLegacyDialogText(handle, CDM_GETFOLDERPATH)}, file: {GetLegacyDialogText(handle, CDM_GETSPEC)}.");
+                Assert.That(IsWindow((IntPtr)handle), Is.True, "Legacy dialog closed instead of navigating.");
+                Assert.That(GetLegacyDialogText(handle, CDM_GETSPEC), Is.EqualTo("preserve-me"));
             }
             finally
             {
                 CloseDialog(handle, ownerHandle);
             }
         });
-        nativeDialog.ShowDialog(owner);
+        try
+        {
+            nativeDialog.ShowDialog(owner);
 #pragma warning disable VSTHRD002
-        worker.GetAwaiter().GetResult();
+            worker.GetAwaiter().GetResult();
 #pragma warning restore VSTHRD002
+        }
+        finally
+        {
+            Directory.Delete(root, true);
+        }
+    }
+
+    private const uint CDM_GETSPEC = 0x0464; // WM_USER + 100
+    private const uint CDM_GETFOLDERPATH = 0x0466; // WM_USER + 102
+
+    [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+    private static extern IntPtr SendMessage(IntPtr hwnd, uint message, IntPtr wParam, char[] lParam);
+
+    private static string GetLegacyDialogText(HWND handle, uint message)
+    {
+        var buffer = new char[1024];
+        var length = (int)SendMessage((IntPtr)handle, message, buffer.Length, buffer);
+        // The returned length includes the terminating null character.
+        return length > 1 ? new string(buffer, 0, length - 1) : string.Empty;
     }
 }

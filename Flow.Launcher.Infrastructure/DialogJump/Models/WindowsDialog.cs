@@ -4,6 +4,7 @@ using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Plugin;
 using Windows.Win32;
 using Windows.Win32.Foundation;
+using Windows.Win32.UI.Input.KeyboardAndMouse;
 using Windows.Win32.UI.WindowsAndMessaging;
 using WindowsInput;
 using WindowsInput.Native;
@@ -157,6 +158,14 @@ namespace Flow.Launcher.Infrastructure.DialogJump.Models
             _pathEditor = HWND.Null;
             GetPathControlEditor();
             if (_pathControl.IsNull) return JumpFolderWithFileEditor(path, true);
+
+            // The Dialog Jump hotkey (Alt+G by default) runs while its modifiers are still held,
+            // which would turn Ctrl-L into Ctrl-Alt-L and Enter into Alt-Enter. This runs off the UI thread,
+            // so allow time for a slow release.
+            if (!SpinWait.SpinUntil(() => !AreModifierKeysDown(), 5000))
+            {
+                Log.Debug(ClassName, "Modifier keys are still held, sending Ctrl-L anyway");
+            }
             _inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.LCONTROL, VirtualKeyCode.VK_L);
 
             var timeOut = !SpinWait.SpinUntil(() =>
@@ -208,6 +217,21 @@ namespace Flow.Launcher.Infrastructure.DialogJump.Models
         #endregion
 
         #region Helper Methods
+
+        private static readonly VIRTUAL_KEY[] _modifierKeys =
+        [
+            VIRTUAL_KEY.VK_SHIFT, VIRTUAL_KEY.VK_CONTROL, VIRTUAL_KEY.VK_MENU, VIRTUAL_KEY.VK_LWIN, VIRTUAL_KEY.VK_RWIN
+        ];
+
+        private static bool AreModifierKeysDown()
+        {
+            foreach (var key in _modifierKeys)
+            {
+                if ((PInvoke.GetAsyncKeyState((int)key) & 0x8000) != 0) return true;
+            }
+
+            return false;
+        }
 
         #region Get Handles
 

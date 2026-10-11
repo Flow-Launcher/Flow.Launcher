@@ -9,6 +9,7 @@ UnhookWindowsHookEx
 CallNextHookEx
 GetModuleHandle
 GetKeyState
+GetAsyncKeyState
 VIRTUAL_KEY
 
 EnumWindows
