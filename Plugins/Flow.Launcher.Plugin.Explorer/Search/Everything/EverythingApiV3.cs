@@ -76,10 +76,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 token.ThrowIfCancellationRequested();
 
                 if (!EverythingClientConnected())
-                {
-                    _client = IntPtr.Zero;
                     throw new IPCErrorException();
-                }
             }
             finally
             {
@@ -137,14 +134,14 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                     }
                     catch (IPCErrorException)
                     {
+                        // Drop the broken connection so the next call reconnects; run counter failures are non-fatal.
                         DestroyEverythingClient(_client);
-                        throw;
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                /*ignored*/
+                Main.Context?.API?.LogDebug(nameof(EverythingApiV3), $"Failed to increment run count: {ex.Message}");
             }
             finally
             {
@@ -171,6 +168,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             }
             catch (IPCErrorException)
             {
+                // Callers rely on IPCErrorException to tell that the Everything service is unavailable.
                 DestroyEverythingClient(_client);
                 throw;
             }
@@ -268,11 +266,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 if (searchState != IntPtr.Zero)
                     _ = Everything3ApiDllImport.Everything3_DestroySearchState(searchState);
 
-                if (!completed)
+                // Keep the connection on success or cancellation (frequent while typing); only drop it on failure.
+                if (!completed && !token.IsCancellationRequested)
                     DestroyEverythingClient(_client);
             }
-
-            await Task.CompletedTask;
         }
 
         private bool TryCreateSearchResult(IntPtr resultList, nuint resultIndex, bool includeRunCount, out SearchResult result)
@@ -355,14 +352,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
         private bool EverythingClientConnected()
         {
-            if (_client == IntPtr.Zero)
-                _client = Everything3ApiDllImport.Everything3_ConnectW(_instanceName);
+            if (_client != IntPtr.Zero && Everything3ApiDllImport.Everything3_GetMajorVersion(_client) != 0)
+                return true;
 
-            if (_client == IntPtr.Zero || Everything3ApiDllImport.Everything3_GetMajorVersion(_client) == 0)
-            {
-                DestroyEverythingClient(_client);
-                _client = Everything3ApiDllImport.Everything3_ConnectW(_instanceName);
-            }
+            DestroyEverythingClient(_client);
+            _client = Everything3ApiDllImport.Everything3_ConnectW(_instanceName);
 
             return _client != IntPtr.Zero;
         }
