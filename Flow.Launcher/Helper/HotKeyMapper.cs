@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Windows.Input;
+using Flow.Launcher.Infrastructure;
 using ChefKeys;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.DialogJump;
 using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Plugin;
 using Flow.Launcher.ViewModel;
 using NHotkey;
 using NHotkey.Wpf;
@@ -16,6 +20,7 @@ internal static class HotKeyMapper
 
     private static Settings _settings;
     private static MainViewModel _mainViewModel;
+    private static readonly Dictionary<string, Func<int, int, SpecialKeyState, bool>> _winComboCallbacks = new();
 
     internal static void Initialize()
     {
@@ -82,6 +87,26 @@ internal static class HotKeyMapper
         }
         catch (Exception e)
         {
+            if (hotkey.Win && hotkey.CharKey != Key.None)
+            {
+                App.API.LogDebug(ClassName,
+                    $"|HotkeyMapper.SetHotkey|RegisterHotKey failed for {hotkeyStr} ({e.Message}); falling back to global keyboard callback.");
+                try
+                {
+                    SetWithGlobalCallback(hotkey, action);
+                }
+                catch (Exception fallbackEx)
+                {
+                    App.API.LogError(ClassName,
+                        string.Format("|HotkeyMapper.SetHotkey|Fallback global callback registration also failed for {2}: {0} \nStackTrace:{1}",
+                                      fallbackEx.Message,
+                                      fallbackEx.StackTrace,
+                                      hotkeyStr));
+                    App.API.ShowMsgBox(Localize.registerHotkeyFailed(hotkeyStr), Localize.MessageBoxTitle());
+                }
+                return;
+            }
+
             App.API.LogError(ClassName,
                 string.Format("|HotkeyMapper.SetHotkey|Error registering hotkey {2}: {0} \nStackTrace:{1}",
                               e.Message,
@@ -93,6 +118,146 @@ internal static class HotKeyMapper
         }
     }
 
+    private static void SetWithGlobalCallback(HotkeyModel hotkey, EventHandler<HotkeyEventArgs> action)
+    {
+        const ushort VK_LWIN = 0x5B;
+        const ushort VK_RWIN = 0x5C;
+
+        string hotkeyStr = hotkey.ToString();
+        if (_winComboCallbacks.TryGetValue(hotkeyStr, out var existing))
+        {
+            App.API.RemoveGlobalKeyboardCallback(existing);
+            _winComboCallbacks.Remove(hotkeyStr);
+        }
+
+        int expectedVkCode = KeyInterop.VirtualKeyFromKey(hotkey.CharKey);
+        bool needCtrl = hotkey.Ctrl;
+        bool needAlt = hotkey.Alt;
+        bool needShift = hotkey.Shift;
+
+        // State tracking for Win-key suppression and replay
+        bool winSuppressed = false;
+        ushort pressedWinVk = 0;
+        bool comboFired = false;
+        bool winReplayed = false;
+        bool skipNextWinDown = false;
+        bool skipNextWinUp = false;
+        int skipNextKeyCode = 0;
+
+        Func<int, int, SpecialKeyState, bool> callback = (keyEvent, vkCode, state) =>
+        {
+            bool isDown = keyEvent == (int)KeyEvent.WM_KEYDOWN || keyEvent == (int)KeyEvent.WM_SYSKEYDOWN;
+            bool isUp = keyEvent == (int)KeyEvent.WM_KEYUP || keyEvent == (int)KeyEvent.WM_SYSKEYUP;
+            bool isWin = vkCode == VK_LWIN || vkCode == VK_RWIN;
+
+            // Skip sentinels: ignore events we injected ourselves
+            if (isDown && isWin && skipNextWinDown) { skipNextWinDown = false; return true; }
+            if (isUp && isWin && skipNextWinUp) { skipNextWinUp = false; return true; }
+            if (isDown && skipNextKeyCode != 0 && vkCode == skipNextKeyCode) { skipNextKeyCode = 0; return true; }
+
+            // Suppress Win keydown and start tracking
+            if (isDown && isWin && !winSuppressed)
+            {
+                winSuppressed = true;
+                pressedWinVk = (ushort)vkCode;
+                comboFired = false;
+                winReplayed = false;
+                return false;
+            }
+
+            // Suppress repeated Win keydowns (auto-repeat or both Win keys held simultaneously)
+            // while already tracking, to prevent the second keydown from reaching the system.
+            if (isDown && isWin && winSuppressed)
+                return false;
+
+            // Win keyup while tracking
+            if (isUp && isWin && winSuppressed && vkCode == pressedWinVk)
+            {
+                ushort winVk = pressedWinVk;
+                bool fired = comboFired;
+                bool replayed = winReplayed;
+
+                winSuppressed = false;
+                pressedWinVk = 0;
+                comboFired = false;
+                winReplayed = false;
+
+                if (fired)
+                {
+                    if (replayed)
+                    {
+                        // Win-down was injected during replay; clean it up so Win doesn't stay
+                        // stuck pressed in the system key state.
+                        skipNextWinUp = true;
+                        Win32Helper.InjectKeyUp(winVk);
+                    }
+                    return false;
+                }
+
+                if (replayed)
+                {
+                    // Already injected Win+key, close the sequence with Win up
+                    skipNextWinUp = true;
+                    Win32Helper.InjectKeyUp(winVk);
+                    return false;
+                }
+
+                // Bare Win press — replay Win down+up so Start Menu and Win-only shortcuts still work
+                skipNextWinDown = true;
+                skipNextWinUp = true;
+                Win32Helper.InjectKeyDown(winVk);
+                Win32Helper.InjectKeyUp(winVk);
+                return false;
+            }
+
+            // While Win is suppressed and a non-Win key arrives
+            if (winSuppressed && isDown)
+            {
+                bool isModifier = vkCode is 0x10 or 0x11 or 0x12  // Shift, Ctrl, Alt
+                    or 0xA0 or 0xA1  // LShift, RShift
+                    or 0xA2 or 0xA3  // LCtrl, RCtrl
+                    or 0xA4 or 0xA5  // LAlt, RAlt
+                    or VK_LWIN or VK_RWIN;
+
+                if (isModifier) return true; // let modifier keys flow naturally
+
+                // Note: state.WinPressed is false because we suppressed Win keydown,
+                // so we use winSuppressed here instead.
+                bool isOurHotkey = vkCode == expectedVkCode
+                    && state.CtrlPressed == needCtrl
+                    && state.AltPressed == needAlt
+                    && state.ShiftPressed == needShift;
+
+                if (isOurHotkey && !comboFired)
+                {
+                    comboFired = true;
+                    action?.Invoke(null, null);
+                    return false;
+                }
+
+                if (!comboFired && !winReplayed)
+                {
+                    // Not our hotkey — replay Win+key so system shortcuts (Win+D, Win+L, …) still work
+                    winReplayed = true;
+                    skipNextWinDown = true;
+                    skipNextKeyCode = vkCode;
+                    Win32Helper.InjectKeyDown(pressedWinVk);
+                    Win32Helper.InjectKeyDown((ushort)vkCode);
+                    return false;
+                }
+            }
+
+            // Suppress the char key-up that matches the suppressed key-down
+            if (comboFired && isUp && vkCode == expectedVkCode)
+                return false;
+
+            return true;
+        };
+
+        _winComboCallbacks[hotkeyStr] = callback;
+        App.API.RegisterGlobalKeyboardCallback(callback);
+    }
+
     internal static void RemoveHotkey(string hotkeyStr)
     {
         try
@@ -100,6 +265,13 @@ internal static class HotKeyMapper
             if (hotkeyStr == "LWin" || hotkeyStr == "RWin")
             {
                 RemoveWithChefKeys(hotkeyStr);
+                return;
+            }
+
+            if (_winComboCallbacks.TryGetValue(hotkeyStr, out var callback))
+            {
+                App.API.RemoveGlobalKeyboardCallback(callback);
+                _winComboCallbacks.Remove(hotkeyStr);
                 return;
             }
 

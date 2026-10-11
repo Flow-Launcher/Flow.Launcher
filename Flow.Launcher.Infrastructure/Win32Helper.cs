@@ -161,6 +161,31 @@ namespace Flow.Launcher.Infrastructure
             return handle.Equals(PInvoke.GetForegroundWindow());
         }
 
+        /// <summary>
+        /// Brings <paramref name="window"/> to the foreground even when the calling context does not
+        /// hold foreground permission (e.g. a WH_KEYBOARD_LL hook callback).  Unlike a plain
+        /// SetForegroundWindow call, this temporarily attaches the current thread's input queue to
+        /// the foreground thread, which causes Windows to honour the request.
+        /// </summary>
+        public static void ForceForeground(Window window)
+        {
+            var hwnd = new HWND((nint)GetWindowHandle(window));
+            var foregroundHwnd = PInvoke.GetForegroundWindow();
+            uint foreThread = PInvoke.GetWindowThreadProcessId(foregroundHwnd);
+            uint appThread  = PInvoke.GetCurrentThreadId();
+
+            if (foreThread != appThread)
+            {
+                PInvoke.AttachThreadInput(foreThread, appThread, true);
+                PInvoke.SetForegroundWindow(hwnd);
+                PInvoke.AttachThreadInput(foreThread, appThread, false);
+            }
+            else
+            {
+                PInvoke.SetForegroundWindow(hwnd);
+            }
+        }
+
         #endregion
 
         #region Task Switching
@@ -1031,6 +1056,28 @@ namespace Flow.Launcher.Infrastructure
                 Marshal.FreeHGlobal(_ptr);
                 return true;
             }
+        }
+
+        #endregion
+
+        #region Keyboard Input
+
+        public static unsafe void InjectKeyDown(ushort vk)
+        {
+            Span<INPUT> inputs = stackalloc INPUT[1];
+            inputs[0].type = INPUT_TYPE.INPUT_KEYBOARD;
+            inputs[0].Anonymous.ki.wVk = (VIRTUAL_KEY)vk;
+            inputs[0].Anonymous.ki.dwFlags = 0;
+            PInvoke.SendInput(inputs, Marshal.SizeOf<INPUT>());
+        }
+
+        public static unsafe void InjectKeyUp(ushort vk)
+        {
+            Span<INPUT> inputs = stackalloc INPUT[1];
+            inputs[0].type = INPUT_TYPE.INPUT_KEYBOARD;
+            inputs[0].Anonymous.ki.wVk = (VIRTUAL_KEY)vk;
+            inputs[0].Anonymous.ki.dwFlags = KEYBD_EVENT_FLAGS.KEYEVENTF_KEYUP;
+            PInvoke.SendInput(inputs, Marshal.SizeOf<INPUT>());
         }
 
         #endregion
