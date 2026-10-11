@@ -1,0 +1,41 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:dialogs="using:Flow.Launcher.Avalonia.Views.Dialogs"
+        mc:Ignorable="d"
+        d:DesignWidth="420"
+        d:DesignHeight="180"
+        x:Class="Flow.Launcher.Avalonia.Views.Dialogs.ProgressBoxWindow"
+        x:DataType="dialogs:ProgressBoxWindow"
+        Width="420"
+        Height="180"
+        CanResize="False"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid RowDefinitions="Auto,Auto,*,Auto" Margin="20">
+        <TextBlock FontSize="20"
+                   FontWeight="SemiBold"
+                   Text="{Binding TitleText}" />
+
+        <TextBlock Grid.Row="1"
+                   Margin="0,8,0,0"
+                   Text="{Binding ProgressText}" />
+
+        <ProgressBar Grid.Row="2"
+                     Margin="0,16,0,0"
+                     Minimum="0"
+                     Maximum="100"
+                     IsIndeterminate="{Binding IsIndeterminate}"
+                     Value="{Binding ProgressValue}" />
+
+        <StackPanel Grid.Row="3"
+                    Margin="0,18,0,0"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Spacing="10">
+            <Button Content="Hide" Click="OnHideClick" />
+            <Button Content="Cancel" Click="OnCancelClick" />
+        </StackPanel>
+    </Grid>
+</Window>

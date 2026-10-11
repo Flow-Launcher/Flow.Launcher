@@ -1,0 +1,53 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i18n="using:Flow.Launcher.Avalonia.Resource"
+        xmlns:views="using:Flow.Launcher.Avalonia.Views.SettingPages"
+        xmlns:ui="using:FluentAvalonia.UI.Controls"
+        mc:Ignorable="d"
+        d:DesignWidth="960"
+        d:DesignHeight="640"
+        x:Class="Flow.Launcher.Avalonia.Views.SettingPages.ReleaseNotesWindow"
+        x:DataType="views:ReleaseNotesWindow"
+        Title="{i18n:Localize releaseNotes}"
+        Width="960"
+        Height="640"
+        MinWidth="760"
+        MinHeight="480"
+        WindowStartupLocation="CenterOwner">
+
+    <Grid RowDefinitions="Auto,*,Auto" Margin="20">
+        <StackPanel Grid.Row="0" Spacing="8">
+            <TextBlock Text="{i18n:Localize releaseNotes}"
+                       FontSize="24"
+                       FontWeight="SemiBold" />
+            <StackPanel Orientation="Horizontal" Spacing="10">
+                <Button Content="{i18n:Localize seeMoreReleaseNotes}"
+                        Click="OnOpenWebsiteClick" />
+                <Button Content="{i18n:Localize refresh}"
+                        IsEnabled="{Binding IsNotLoading}"
+                        Click="OnRefreshClick" />
+                <ui:ProgressRing Width="24"
+                                 Height="24"
+                                 IsActive="{Binding IsLoading}"
+                                 IsVisible="{Binding IsLoading}" />
+            </StackPanel>
+        </StackPanel>
+
+        <TextBox Grid.Row="1"
+                 Margin="0,16,0,0"
+                 AcceptsReturn="True"
+                 IsReadOnly="True"
+                 TextWrapping="Wrap"
+                 Text="{Binding ReleaseNotesText}" />
+
+        <StackPanel Grid.Row="2"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Spacing="10"
+                    Margin="0,16,0,0">
+            <Button Content="{i18n:Localize closeWindow}" Click="OnCloseClick" />
+        </StackPanel>
+    </Grid>
+</Window>

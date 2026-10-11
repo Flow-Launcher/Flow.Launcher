@@ -440,6 +440,11 @@ namespace Flow.Launcher.Plugin.Program
             return new ProgramSetting(Context, _settings);
         }
 
+        public object CreateSettingPanelAvalonia()
+        {
+            return new Views.Avalonia.ProgramSetting(Context, _settings);
+        }
+
         public string GetTranslatedPluginTitle()
         {
             return Context.API.GetTranslation("flowlauncher_plugin_program_plugin_name");

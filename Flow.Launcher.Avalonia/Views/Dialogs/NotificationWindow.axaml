@@ -1,0 +1,70 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:dialogs="using:Flow.Launcher.Avalonia.Views.Dialogs"
+        mc:Ignorable="d"
+        d:DesignWidth="360"
+        d:DesignHeight="120"
+        x:Class="Flow.Launcher.Avalonia.Views.Dialogs.NotificationWindow"
+        x:DataType="dialogs:NotificationWindow"
+        Width="360"
+        Height="120"
+        CanResize="False"
+        ShowInTaskbar="False"
+        SystemDecorations="None"
+        Topmost="True"
+        Background="Transparent"
+        TransparencyLevelHint="AcrylicBlur">
+
+    <Border Margin="12"
+            Padding="16"
+            CornerRadius="12"
+            Background="#DD1F1F1F"
+            BorderBrush="#33FFFFFF"
+            BorderThickness="1">
+        <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto">
+            <Image Grid.RowSpan="2"
+                   Width="28"
+                   Height="28"
+                   Margin="0,0,12,0"
+                   VerticalAlignment="Top"
+                   Source="{Binding NotificationIcon}" />
+
+            <TextBlock Grid.Column="1"
+                       FontSize="16"
+                       FontWeight="SemiBold"
+                       Foreground="White"
+                       Text="{Binding TitleText}" />
+
+            <Button Grid.Column="2"
+                    Width="28"
+                    Height="28"
+                    Padding="0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Foreground="#CCFFFFFF"
+                    Click="OnCloseClick"
+                    Content="✕" />
+
+            <StackPanel Grid.Row="1"
+                        Grid.Column="1"
+                        Grid.ColumnSpan="2"
+                        Margin="0,8,0,0"
+                        Spacing="10">
+                <TextBlock Foreground="#E5FFFFFF"
+                           TextWrapping="Wrap"
+                           MaxLines="3"
+                           Text="{Binding SubtitleText}" />
+
+                <Button HorizontalAlignment="Left"
+                        IsVisible="{Binding HasActionButton}"
+                        Classes="accent"
+                        Content="{Binding ActionButtonText}"
+                        Click="OnActionClick" />
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>

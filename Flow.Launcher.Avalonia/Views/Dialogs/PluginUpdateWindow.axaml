@@ -1,0 +1,56 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:dialogs="using:Flow.Launcher.Avalonia.Views.Dialogs"
+        mc:Ignorable="d"
+        d:DesignWidth="560"
+        d:DesignHeight="420"
+        x:Class="Flow.Launcher.Avalonia.Views.Dialogs.PluginUpdateWindow"
+        x:DataType="dialogs:PluginUpdateWindow"
+        Width="560"
+        Height="420"
+        CanResize="False"
+        WindowStartupLocation="CenterOwner">
+
+    <Grid RowDefinitions="Auto,*,Auto,Auto" Margin="20">
+        <TextBlock FontSize="22"
+                   FontWeight="SemiBold"
+                   Text="{Binding TitleText}" />
+
+        <Border Grid.Row="1"
+                Margin="0,16,0,0"
+                Padding="12"
+                BorderBrush="#33000000"
+                BorderThickness="1"
+                CornerRadius="8">
+            <ScrollViewer>
+                <ItemsControl ItemsSource="{Binding Plugins}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <CheckBox Margin="0,0,0,10"
+                                      IsChecked="{Binding IsSelected, Mode=TwoWay}"
+                                      Content="{Binding DisplayText}" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Border>
+
+        <CheckBox Grid.Row="2"
+                  Margin="0,14,0,0"
+                  Content="Restart after updating plugins"
+                  IsChecked="{Binding Restart, Mode=TwoWay}" />
+
+        <StackPanel Grid.Row="3"
+                    Margin="0,16,0,0"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Spacing="10">
+            <Button Content="Cancel" Click="OnCancelClick" />
+            <Button Classes="accent"
+                    Content="{Binding UpdateButtonText}"
+                    Click="OnUpdateClick" />
+        </StackPanel>
+    </Grid>
+</Window>

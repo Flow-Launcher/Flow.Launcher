@@ -1,0 +1,235 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="using:Flow.Launcher.Avalonia.Views.Controls"
+             x:Class="Flow.Launcher.Avalonia.Views.Controls.Card"
+             x:DataType="controls:Card"
+             mc:Ignorable="d">
+
+    <UserControl.Styles>
+        <!-- Default Card Style -->
+        <Style Selector="controls|Card">
+            <Setter Property="Template">
+                <ControlTemplate TargetType="controls:Card">
+                    <Border x:Name="CardBorder"
+                            Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+                            BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                            BorderThickness="1"
+                            CornerRadius="5"
+                            MinHeight="68"
+                            Padding="0,15"
+                            Margin="0,4,0,0">
+                        <Grid ColumnDefinitions="Auto,*,Auto">
+                            <!-- Icon -->
+                            <TextBlock x:Name="IconText"
+                                       Grid.Column="0"
+                                       Text="{TemplateBinding Icon}"
+                                       FontFamily="{StaticResource SymbolThemeFontFamily}"
+                                       FontSize="20"
+                                       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                       VerticalAlignment="Center"
+                                       Margin="24,0,16,0"
+                                       IsVisible="{TemplateBinding Icon, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                            
+                            <!-- Spacer when no icon -->
+                            <Border Grid.Column="0" 
+                                    Width="24" 
+                                    IsVisible="{TemplateBinding Icon, Converter={x:Static StringConverters.IsNullOrEmpty}}" />
+
+                            <!-- Title and Subtitle -->
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock Text="{TemplateBinding Title}"
+                                           Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                           TextWrapping="Wrap" />
+                                <TextBlock Text="{TemplateBinding Sub}"
+                                           Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                           FontSize="12"
+                                           TextWrapping="Wrap"
+                                           Padding="0,0,24,0"
+                                           IsVisible="{TemplateBinding Sub, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                            </StackPanel>
+
+                            <!-- Content (right side) -->
+                            <ContentPresenter Grid.Column="2"
+                                              Content="{TemplateBinding Content}"
+                                              HorizontalAlignment="Right"
+                                              VerticalAlignment="Center"
+                                              Margin="0,0,16,0" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter>
+        </Style>
+
+        <!-- Inside Card Style (nested inside ExCard) -->
+        <Style Selector="controls|Card.inside">
+            <Setter Property="Template">
+                <ControlTemplate TargetType="controls:Card">
+                    <Border Background="Transparent"
+                            BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                            BorderThickness="0,1,0,0"
+                            MinHeight="68"
+                            Padding="0,15">
+                        <Grid ColumnDefinitions="Auto,*,Auto">
+                            <TextBlock Grid.Column="0"
+                                       Text="{TemplateBinding Icon}"
+                                       FontFamily="{StaticResource SymbolThemeFontFamily}"
+                                       FontSize="20"
+                                       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                       VerticalAlignment="Center"
+                                       Margin="24,0,16,0"
+                                       IsVisible="{TemplateBinding Icon, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                            <Border Grid.Column="0" Width="24" 
+                                    IsVisible="{TemplateBinding Icon, Converter={x:Static StringConverters.IsNullOrEmpty}}" />
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock Text="{TemplateBinding Title}"
+                                           Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                           TextWrapping="Wrap" />
+                                <TextBlock Text="{TemplateBinding Sub}"
+                                           Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                           FontSize="12"
+                                           TextWrapping="Wrap"
+                                           Padding="0,0,24,0"
+                                           IsVisible="{TemplateBinding Sub, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                            </StackPanel>
+                            <ContentPresenter Grid.Column="2"
+                                              Content="{TemplateBinding Content}"
+                                              HorizontalAlignment="Right"
+                                              VerticalAlignment="Center"
+                                              Margin="0,0,16,0" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter>
+        </Style>
+
+        <!-- InsideFit Card Style (nested with extra padding) -->
+        <Style Selector="controls|Card.insidefit">
+            <Setter Property="Template">
+                <ControlTemplate TargetType="controls:Card">
+                    <Border Background="Transparent"
+                            BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                            BorderThickness="0,1,0,0"
+                            MinHeight="68"
+                            Padding="35,15,26,15">
+                        <Grid ColumnDefinitions="Auto,*,Auto">
+                            <TextBlock Grid.Column="0"
+                                       Text="{TemplateBinding Icon}"
+                                       FontFamily="{StaticResource SymbolThemeFontFamily}"
+                                       FontSize="20"
+                                       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                       VerticalAlignment="Center"
+                                       Margin="0,0,16,0"
+                                       IsVisible="{TemplateBinding Icon, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock Text="{TemplateBinding Title}"
+                                           Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                           TextWrapping="Wrap" />
+                                <TextBlock Text="{TemplateBinding Sub}"
+                                           Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                           FontSize="12"
+                                           TextWrapping="Wrap"
+                                           Padding="0,0,24,0"
+                                           IsVisible="{TemplateBinding Sub, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                            </StackPanel>
+                            <ContentPresenter Grid.Column="2"
+                                              Content="{TemplateBinding Content}"
+                                              HorizontalAlignment="Right"
+                                              VerticalAlignment="Center"
+                                              Margin="0,0,0,0" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter>
+        </Style>
+
+        <!-- First/Middle/Last styles for CardGroup -->
+        <Style Selector="controls|Card.first, controls|Card.middle, controls|Card.last">
+            <Setter Property="Template">
+                <ControlTemplate TargetType="controls:Card">
+                    <Border Background="Transparent"
+                            BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                            MinHeight="68"
+                            Padding="0,15">
+                        <Border.Styles>
+                            <Style Selector="Border">
+                                <Setter Property="BorderThickness" Value="0" />
+                            </Style>
+                        </Border.Styles>
+                        <Grid ColumnDefinitions="Auto,*,Auto">
+                            <TextBlock Grid.Column="0"
+                                       Text="{TemplateBinding Icon}"
+                                       FontFamily="{StaticResource SymbolThemeFontFamily}"
+                                       FontSize="20"
+                                       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                       VerticalAlignment="Center"
+                                       Margin="24,0,16,0"
+                                       IsVisible="{TemplateBinding Icon, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                            <Border Grid.Column="0" Width="24" 
+                                    IsVisible="{TemplateBinding Icon, Converter={x:Static StringConverters.IsNullOrEmpty}}" />
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock Text="{TemplateBinding Title}"
+                                           Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                           TextWrapping="Wrap" />
+                                <TextBlock Text="{TemplateBinding Sub}"
+                                           Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                           FontSize="12"
+                                           TextWrapping="Wrap"
+                                           Padding="0,0,24,0"
+                                           IsVisible="{TemplateBinding Sub, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                            </StackPanel>
+                            <ContentPresenter Grid.Column="2"
+                                              Content="{TemplateBinding Content}"
+                                              HorizontalAlignment="Right"
+                                              VerticalAlignment="Center"
+                                              Margin="0,0,16,0" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter>
+        </Style>
+
+        <Style Selector="controls|Card.middle, controls|Card.last">
+            <Setter Property="Template">
+                <ControlTemplate TargetType="controls:Card">
+                    <Border Background="Transparent"
+                            BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                            BorderThickness="0,1,0,0"
+                            MinHeight="68"
+                            Padding="0,15">
+                        <Grid ColumnDefinitions="Auto,*,Auto">
+                            <TextBlock Grid.Column="0"
+                                       Text="{TemplateBinding Icon}"
+                                       FontFamily="{StaticResource SymbolThemeFontFamily}"
+                                       FontSize="20"
+                                       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                       VerticalAlignment="Center"
+                                       Margin="24,0,16,0"
+                                       IsVisible="{TemplateBinding Icon, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                            <Border Grid.Column="0" Width="24" 
+                                    IsVisible="{TemplateBinding Icon, Converter={x:Static StringConverters.IsNullOrEmpty}}" />
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock Text="{TemplateBinding Title}"
+                                           Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                           TextWrapping="Wrap" />
+                                <TextBlock Text="{TemplateBinding Sub}"
+                                           Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                           FontSize="12"
+                                           TextWrapping="Wrap"
+                                           Padding="0,0,24,0"
+                                           IsVisible="{TemplateBinding Sub, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                            </StackPanel>
+                            <ContentPresenter Grid.Column="2"
+                                              Content="{TemplateBinding Content}"
+                                              HorizontalAlignment="Right"
+                                              VerticalAlignment="Center"
+                                              Margin="0,0,16,0" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter>
+        </Style>
+    </UserControl.Styles>
+
+</UserControl>
