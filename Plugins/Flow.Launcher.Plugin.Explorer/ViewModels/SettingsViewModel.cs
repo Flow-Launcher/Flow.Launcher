@@ -6,6 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Forms;
 using CommunityToolkit.Mvvm.Input;
@@ -39,6 +40,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             InitialUsingEverything15 = settings.EnableEverything15Support;
             InitialEverything15InstanceName = settings.Everything15InstanceName;
             InitializeEngineSelection();
+            Settings.SearchEngineSelectionChanged += OnSearchEngineSelectionChanged;
             InitializeActionKeywordModels();
         }
 
@@ -101,6 +103,17 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             _selectedIndexSearchEngine = IndexSearchEngines.First(x => x.Value == Settings.IndexSearchEngine);
             _selectedContentSearchEngine = ContentIndexSearchEngines.First(x => x.Value == Settings.ContentSearchEngine);
             _selectedPathEnumerationEngine = PathEnumerationEngines.First(x => x.Value == Settings.PathEnumerationEngine);
+        }
+
+        private void OnSearchEngineSelectionChanged(object? sender, EventArgs e)
+        {
+            _selectedIndexSearchEngine = IndexSearchEngines.First(x => x.Value == Settings.IndexSearchEngine);
+            _selectedContentSearchEngine = ContentIndexSearchEngines.First(x => x.Value == Settings.ContentSearchEngine);
+            _selectedPathEnumerationEngine = PathEnumerationEngines.First(x => x.Value == Settings.PathEnumerationEngine);
+
+            OnPropertyChanged(nameof(SelectedIndexSearchEngine));
+            OnPropertyChanged(nameof(SelectedContentSearchEngine));
+            OnPropertyChanged(nameof(SelectedPathEnumerationEngine));
         }
 
         #endregion
@@ -632,9 +645,9 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                     // update the message to let user know in the settings panel.
                     return Visibility.Visible;
                 }
-                catch (Exception ex) when (ex is DllNotFoundException || ex is EntryPointNotFoundException)
+                catch (Exception ex) when (ex is DllNotFoundException or EntryPointNotFoundException or PlatformNotSupportedException)
                 {
-                    return Visibility.Collapsed;
+                    return Visibility.Visible;
                 }
             }
         }
@@ -656,9 +669,15 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                         ? Localize.flowlauncher_plugin_everything_15_sort_warning()
                         : Localize.flowlauncher_plugin_everything_is_not_running();
                 }
-                catch (Exception ex) when (ex is DllNotFoundException || ex is EntryPointNotFoundException)
+                catch (Exception ex) when (ex is DllNotFoundException or EntryPointNotFoundException or PlatformNotSupportedException)
                 {
-                    return Localize.flowlauncher_plugin_everything_sdk_issue();
+                    return ex switch
+                    {
+                        PlatformNotSupportedException =>
+                            Localize.flowlauncher_plugin_everything_unsupported_architecture(
+                                RuntimeInformation.ProcessArchitecture),
+                        _ => Localize.flowlauncher_plugin_everything_sdk_issue(),
+                    };
                 }
             }
         }
