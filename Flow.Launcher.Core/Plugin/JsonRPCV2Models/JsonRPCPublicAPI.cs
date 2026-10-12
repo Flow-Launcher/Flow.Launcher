@@ -89,6 +89,11 @@ namespace Flow.Launcher.Core.Plugin.JsonRPCV2Models
             _api.ShowMsg(title, subTitle, iconPath, useMainWindowAsOwner);
         }
 
+        public void ShowNotification(string title, string subTitle = "", NotificationSeverity severity = NotificationSeverity.Informational)
+        {
+            _api.ShowNotification(title, subTitle, severity);
+        }
+
         public void OpenSettingDialog()
         {
             _api.OpenSettingDialog();
