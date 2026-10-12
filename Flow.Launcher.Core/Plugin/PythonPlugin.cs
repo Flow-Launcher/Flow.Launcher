@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,6 +23,9 @@ namespace Flow.Launcher.Core.Plugin
                 CreateNoWindow = true,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
+                // Matches PYTHONIOENCODING below for output read as text by Execute.
+                StandardOutputEncoding = Encoding.UTF8,
+                StandardErrorEncoding = Encoding.UTF8,
             };
 
             var path = Path.Combine(Constant.ProgramDirectory, JsonRPC);
@@ -29,6 +33,8 @@ namespace Flow.Launcher.Core.Plugin
             // Prevent Python from writing .py[co] files.
             // Because .pyc contains location infos which will prevent python portable.
             _startInfo.EnvironmentVariables["PYTHONDONTWRITEBYTECODE"] = "1";
+            // Flow reads plugin output as UTF-8; on Windows, Python uses the ANSI code page for pipes.
+            _startInfo.EnvironmentVariables["PYTHONIOENCODING"] = "utf-8";
 
             _startInfo.EnvironmentVariables["FLOW_VERSION"] = Constant.Version;
             _startInfo.EnvironmentVariables["FLOW_PROGRAM_DIRECTORY"] = Constant.ProgramDirectory;
