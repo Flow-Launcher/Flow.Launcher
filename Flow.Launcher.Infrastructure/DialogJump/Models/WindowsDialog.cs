@@ -160,11 +160,12 @@ namespace Flow.Launcher.Infrastructure.DialogJump.Models
             if (_pathControl.IsNull) return JumpFolderWithFileEditor(path, true);
 
             // The Dialog Jump hotkey (Alt+G by default) runs while its modifiers are still held,
-            // which would turn Ctrl-L into Ctrl-Alt-L and Enter into Alt-Enter. This runs off the UI thread,
-            // so allow time for a slow release.
-            if (!SpinWait.SpinUntil(() => !AreModifierKeysDown(), 5000))
+            // which would turn Ctrl-L into Ctrl-Alt-L and Enter into Alt-Enter. Allow a brief
+            // release window without holding the navigation lock for several seconds.
+            if (!SpinWait.SpinUntil(() => !AreModifierKeysDown(), 500))
             {
-                Log.Debug(ClassName, "Modifier keys are still held, sending Ctrl-L anyway");
+                Log.Debug(ClassName, "Modifier keys are still held, cancelling dialog jump");
+                return false;
             }
             _inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.LCONTROL, VirtualKeyCode.VK_L);
 
