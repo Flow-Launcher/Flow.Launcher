@@ -734,8 +734,10 @@ namespace Flow.Launcher.ViewModel
 
         public bool IsGridNavigationActive { get; private set; }
 
+        private bool IsQueryResultsGridSelected() => QueryResultsSelected() && Results.IsGridLayout;
+
         private bool IsQueryResultsGridShown() =>
-            QueryResultsSelected() && Results.IsGridLayout && Results.Visibility == Visibility.Visible;
+            IsQueryResultsGridSelected() && Results.Visibility == Visibility.Visible;
 
         public void ReturnControlToSearchBox()
         {
@@ -868,6 +870,12 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void IncreaseMaxResult()
         {
+            if (IsQueryResultsGridSelected())
+            {
+                Results.GrowGrid();
+                return;
+            }
+
             if (Settings.MaxResultsToShow == 17)
                 return;
 
@@ -877,6 +885,12 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void DecreaseMaxResult()
         {
+            if (IsQueryResultsGridSelected())
+            {
+                Results.ShrinkGrid();
+                return;
+            }
+
             if (Settings.MaxResultsToShow == 2)
                 return;
 

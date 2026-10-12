@@ -33,12 +33,14 @@ namespace Flow.Launcher
             if (_viewModel != null)
             {
                 PropertyChangedEventManager.RemoveHandler(_viewModel, OnViewModelPropertyChanged, nameof(ResultsViewModel.IsGridLayout));
+                PropertyChangedEventManager.RemoveHandler(_viewModel, OnViewModelPropertyChanged, nameof(ResultsViewModel.GridColumns));
             }
 
             _viewModel = e.NewValue as ResultsViewModel;
             if (_viewModel != null)
             {
                 PropertyChangedEventManager.AddHandler(_viewModel, OnViewModelPropertyChanged, nameof(ResultsViewModel.IsGridLayout));
+                PropertyChangedEventManager.AddHandler(_viewModel, OnViewModelPropertyChanged, nameof(ResultsViewModel.GridColumns));
             }
 
             ApplyLayout();
@@ -46,9 +48,14 @@ namespace Flow.Launcher
 
         private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(ResultsViewModel.IsGridLayout))
+            switch (e.PropertyName)
             {
-                Dispatcher.Invoke(ApplyLayout);
+                case nameof(ResultsViewModel.IsGridLayout):
+                    Dispatcher.Invoke(ApplyLayout);
+                    break;
+                case nameof(ResultsViewModel.GridColumns):
+                    Dispatcher.Invoke(ScheduleScrollSelectedItemIntoView);
+                    break;
             }
         }
 
@@ -69,6 +76,11 @@ namespace Flow.Launcher
                 ClearValue(ScrollViewer.HorizontalScrollBarVisibilityProperty);
             }
 
+            ScheduleScrollSelectedItemIntoView();
+        }
+
+        private void ScheduleScrollSelectedItemIntoView()
+        {
             if (SelectedItem != null)
             {
                 Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(ScrollSelectedItemIntoView));

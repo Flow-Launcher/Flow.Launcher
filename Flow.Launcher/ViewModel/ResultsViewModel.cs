@@ -51,6 +51,10 @@ namespace Flow.Launcher.ViewModel
                         OnPropertyChanged(nameof(IsGridLayout));
                         OnPropertyChanged(nameof(MaxHeight));
                         break;
+                    case nameof(_settings.GridColumnCount):
+                    case nameof(_settings.GridRowCount):
+                        OnGridGeometryChanged();
+                        break;
                 }
             };
         }
@@ -65,28 +69,31 @@ namespace Flow.Launcher.ViewModel
         {
             get
             {
+                if (IsGridLayout)
+                {
+                    return VisibleGridRows * GridCellSize;
+                }
+
                 var newResultsCount = MaxResults;
                 if (IsPreviewOn)
                 {
-                    newResultsCount = (int)Math.Ceiling(380 / _settings.ItemHeightSize);
+                    newResultsCount = (int)Math.Ceiling(MinPreviewHeight / _settings.ItemHeightSize);
                     if (newResultsCount < MaxResults)
                     {
                         newResultsCount = MaxResults;
                     }
                 }
-                var height = newResultsCount * _settings.ItemHeightSize;
-                return IsGridLayout ? Math.Max(GridCellHeight, height) : height;
+                return newResultsCount * _settings.ItemHeightSize;
             }
         }
+
+        private const double MinPreviewHeight = 380;
 
         public double ItemHeightSize
         {
             get => _settings.ItemHeightSize;
             set => _settings.ItemHeightSize = value;
         }
-
-        public const double GridCellWidth = 96;
-        public const double GridCellHeight = 96;
 
         public bool SupportsGridLayout { get; init; }
 
@@ -100,13 +107,48 @@ namespace Flow.Launcher.ViewModel
             {
                 _availableWidth = value;
                 OnPropertyChanged();
-                OnPropertyChanged(nameof(GridColumns));
+                OnPropertyChanged(nameof(GridCellSize));
+                OnPropertyChanged(nameof(MaxHeight));
             }
         }
 
-        public int GridColumns => Math.Max(1, (int)(AvailableWidth / GridCellWidth));
+        private GridSize GridSize =>
+            _settings == null ? new GridSize(1, 1) : new GridSize(_settings.GridColumnCount, _settings.GridRowCount).Clamped();
 
-        private int GridPageSize => Math.Max(1, (int)(MaxHeight / GridCellHeight)) * GridColumns;
+        public int GridColumns => GridSize.Columns;
+
+        public double GridCellSize => AvailableWidth / GridColumns;
+
+        private int VisibleGridRows
+        {
+            get
+            {
+                if (!IsPreviewOn || GridCellSize <= 0)
+                {
+                    return GridSize.Rows;
+                }
+                return Math.Max(GridSize.Rows, (int)Math.Ceiling(MinPreviewHeight / GridCellSize));
+            }
+        }
+
+        private int GridPageSize => VisibleGridRows * GridColumns;
+
+        public void GrowGrid() => SetGridSize(GridSize.Grow());
+
+        public void ShrinkGrid() => SetGridSize(GridSize.Shrink());
+
+        private void SetGridSize(GridSize size)
+        {
+            _settings.GridColumnCount = size.Columns;
+            _settings.GridRowCount = size.Rows;
+        }
+
+        private void OnGridGeometryChanged()
+        {
+            OnPropertyChanged(nameof(GridColumns));
+            OnPropertyChanged(nameof(GridCellSize));
+            OnPropertyChanged(nameof(MaxHeight));
+        }
 
         public int SelectedIndex { get; set; }
 

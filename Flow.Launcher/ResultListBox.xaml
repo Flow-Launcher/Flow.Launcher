@@ -61,8 +61,8 @@
                         </Grid.RowDefinitions>
                         <Grid
                             Grid.Row="0"
-                            Width="48"
-                            Height="48"
+                            Width="{Binding DataContext.GridCellSize, RelativeSource={RelativeSource AncestorType=ListBox}, Converter={StaticResource SizeRatioConverter}, ConverterParameter=0.5}"
+                            Height="{Binding DataContext.GridCellSize, RelativeSource={RelativeSource AncestorType=ListBox}, Converter={StaticResource SizeRatioConverter}, ConverterParameter=0.5}"
                             HorizontalAlignment="Center">
                             <Image
                                 x:Name="ImageIcon"
@@ -93,7 +93,7 @@
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 FontFamily="{Binding Glyph.FontFamily}"
-                                FontSize="32"
+                                FontSize="{Binding DataContext.GridCellSize, RelativeSource={RelativeSource AncestorType=ListBox}, Converter={StaticResource SizeRatioConverter}, ConverterParameter=0.33}"
                                 Style="{DynamicResource ItemGlyph}"
                                 Text="{Binding Glyph.Glyph}"
                                 Visibility="{Binding ShowGlyph}" />
@@ -142,7 +142,7 @@
         </DataTemplate>
 
         <Style x:Key="GridItemContainerStyle" TargetType="{x:Type ListBoxItem}">
-            <Setter Property="Height" Value="{x:Static vm:ResultsViewModel.GridCellHeight}" />
+            <Setter Property="Height" Value="{Binding DataContext.GridCellSize, RelativeSource={RelativeSource AncestorType=ListBox}}" />
             <Setter Property="Visibility" Value="Visible" />
             <EventSetter Event="MouseEnter" Handler="OnMouseEnter" />
             <EventSetter Event="MouseMove" Handler="OnMouseMove" />

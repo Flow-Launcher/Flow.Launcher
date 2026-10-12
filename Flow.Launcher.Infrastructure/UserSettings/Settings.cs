@@ -533,6 +533,9 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
 
+        public int GridColumnCount { get; set; } = 6;
+        public int GridRowCount { get; set; } = 3;
+
         public int ActivateTimes { get; set; }
 
         public ObservableCollection<CustomPluginHotkey> CustomPluginHotkeys { get; set; } = new ObservableCollection<CustomPluginHotkey>();

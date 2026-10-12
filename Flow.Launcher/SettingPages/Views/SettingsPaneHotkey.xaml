@@ -252,7 +252,7 @@
                             <cc:HotkeyDisplay Margin="4 0 0 0" Keys="Ctrl+]" />
                         </StackPanel>
                     </ui:SettingsCard>
-                    <ui:SettingsCard Header="{DynamicResource QuickHeightHotkey}">
+                    <ui:SettingsCard Description="{DynamicResource QuickHeightHotkeyToolTip}" Header="{DynamicResource QuickHeightHotkey}">
                         <ui:SettingsCard.HeaderIcon>
                             <ui:FontIcon Glyph="&#xe7eb;" />
                         </ui:SettingsCard.HeaderIcon>
