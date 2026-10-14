@@ -60,8 +60,10 @@ namespace Flow.Launcher.Plugin.Calculator
             try
             {
                 var search = query.Search;
+                // Keep the user's original input so the history shows what they typed
+                // rather than the normalized expression used for evaluation.
+                var originalQuery = query.Search;
                 bool isFunctionPresent = FunctionRegex.IsMatch(search);
-                bool isValidResultToAddHistory = true;
                 // Mages is case sensitive, so we need to convert all function names to lower case.
                 search = FunctionRegex.Replace(search, m => m.Value.ToLowerInvariant());
 
@@ -122,14 +124,28 @@ namespace Flow.Launcher.Plugin.Calculator
 
                 if (result.ToString() == "NaN")
                 {
-                    result = Localize.flowlauncher_plugin_calculator_not_a_number();
-                    isValidResultToAddHistory = false;
+                    if (!_settings.ShowErrorMessage) return EmptyResults;
+                    return
+                    [
+                        new Result
+                        {
+                            Title = Localize.flowlauncher_plugin_calculator_not_a_number(),
+                            IcoPath = IcoPath
+                        }
+                    ];
                 }
 
                 if (result is Function)
                 {
-                    result = Localize.flowlauncher_plugin_calculator_expression_not_complete();
-                    isValidResultToAddHistory = false;
+                    if (!_settings.ShowErrorMessage) return EmptyResults;
+                    return
+                    [
+                        new Result
+                        {
+                            Title = Localize.flowlauncher_plugin_calculator_expression_not_complete(),
+                            IcoPath = IcoPath
+                        }
+                    ];
                 }
 
                 if (!string.IsNullOrEmpty(result.ToString()))
@@ -140,9 +156,9 @@ namespace Flow.Launcher.Plugin.Calculator
                     var results = new List<Result>();
                     var resultObject = new Result
                     {
-                        Title = newResult,
+                        Title = $"= {newResult}",
                         IcoPath = IcoPath,
-                        Score = 300,
+                        Score = HistoryItem.HistoryItemScore,
                         // Check context nullability for unit testing
                         SubTitle = Context == null
                             ? string.Empty
@@ -150,36 +166,32 @@ namespace Flow.Launcher.Plugin.Calculator
                         CopyText = newResult
                     };
 
-                    resultObject.Action = BuildResultAction(resultObject, newResult, expression);
+                    resultObject.Action = BuildResultAction(newResult, originalQuery);
 
                     if (_settings.EnableHistory && _settings.HistoryCreationMode == HistoryCreationMode.OnQuery)
                     {
-                        var item = HistoryHelper.CreatePendingHistoryItem(Context, resultObject, newResult, expression);
-                        History.AddOrUpdate(item);
+                        History.AddOrUpdate(new PendingHistoryItem(originalQuery, newResult, DateTime.Now));
                     }
                     results.Add(resultObject);
-                    var historyItems = _settings.EnableHistory
-                        ? History.GetItemsExcluding(expression)
-                        : [];
+
                     var resultsToReturn = new List<Result>();
                     if (_settings.EnableHistory)
                     {
-                        foreach (var item in historyItems)
+                        foreach (var item in History.GetItemsExcluding(originalQuery))
                         {
                             var timeDeltaStr = HistoryHelper.GetTimeDeltaString(Context, item.CalculatedAt);
-                            var historySubtitle = Context == null
-                                ? string.Format(CultureInfo.CurrentCulture, "{0}", timeDeltaStr)
-                                : Localize.flowlauncher_plugin_calculator_history_subtitle(timeDeltaStr);
                             resultsToReturn.Add(new Result
                             {
-                                Title = item.Query,
-                                SubTitle = $"{item.CopyText} - {historySubtitle}",
-                                IcoPath = item.IcoPath,
-                                BadgeIcoPath = item.BadgeIcoPath,
-                                ShowBadge = item.ShowBadge,
-                                Score = item.Score,
-                                CopyText = item.CopyText,
-                                Action = item.Action
+                                Title = $"{item.Query} = {item.CalcResult}",
+                                SubTitle = Context == null
+                                    ? timeDeltaStr
+                                    : Localize.flowlauncher_plugin_calculator_history_subtitle(timeDeltaStr),
+                                IcoPath = HistoryItem.IcoPath,
+                                BadgeIcoPath = HistoryItem.BadgeIconPath,
+                                ShowBadge = true,
+                                Score = HistoryItem.HistoryItemScore,
+                                CopyText = item.CalcResult,
+                                Action = CreateChangeQueryAction(item.Query)
                             });
                         }
                     }
@@ -208,16 +220,15 @@ namespace Flow.Launcher.Plugin.Calculator
 
         private Func<ActionContext, bool> BuildResultAction
         (
-            Result result,
             string newResult,
-            string expression
+            string originalQuery
         )
         {
 
             var action = 
                 !_settings.EnableHistory || _settings.HistoryCreationMode == HistoryCreationMode.OnQuery
                 ? CreateClipboardAction(newResult) 
-                : CreateClipboardActionWithHistory(result, newResult, expression);
+                : CreateClipboardActionWithHistory(newResult, originalQuery);
 
             return action;
                 
@@ -243,17 +254,31 @@ namespace Flow.Launcher.Plugin.Calculator
             };
         }
 
-        private Func<ActionContext, bool> CreateClipboardActionWithHistory(Result resultObject, string newResult, string expression)
+        private Func<ActionContext, bool> CreateClipboardActionWithHistory(string newResult, string originalQuery)
         {
             var baseAction = CreateClipboardAction(newResult);
             return (actionContext) =>
             {
                 if (baseAction(actionContext))
                 {
-                    var item = new HistoryItem(resultObject, newResult, expression, DateTime.Now);
+                    var item = new HistoryItem(originalQuery, newResult, DateTime.Now);
                     History.AddOrUpdate(item);
                     return true;
                 }
+                return false;
+            };
+        }
+
+        /// <summary>
+        /// Creates an action that switches the current query to a stored history query,
+        /// letting the user re-run it while the normal result remains available for copying.
+        /// Returns false so the launcher stays open on the re-run expression.
+        /// </summary>
+        private Func<ActionContext, bool> CreateChangeQueryAction(string query)
+        {
+            return (_) =>
+            {
+                Context.API.ChangeQuery(query, true);
                 return false;
             };
         }

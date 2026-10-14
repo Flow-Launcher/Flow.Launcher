@@ -57,10 +57,7 @@ public class History
         if (currentItem != null)
         {
             currentItem.CalculatedAt = item.CalculatedAt;
-            currentItem.Title = item.Title;
-            currentItem.SubTitle = item.SubTitle;
-            currentItem.CopyText = item.CopyText;
-            currentItem.Action = item.Action;
+            currentItem.CalcResult = item.CalcResult;
         }
         else
         {
@@ -91,16 +88,16 @@ public class History
     }
 
     /// <summary>
-    /// Retrieves a list of history items, sorted by calculation date in descending order, excluding the specified expression.
+    /// Retrieves a list of history items, sorted by calculation date in descending order, excluding the specified query.
     /// </summary>
-    /// <param name="expression">The expression to exclude from the results.</param>
+    /// <param name="query">The query to exclude from the results.</param>
     /// <returns>A list of history items matching the criteria.</returns>
-    public List<HistoryItem> GetItemsExcluding(string expression)
+    public List<HistoryItem> GetItemsExcluding(string query)
     {
         lock (_syncRoot)
         {
             return Items
-                .Where(x => x.Query != expression)
+                .Where(x => x.Query != query)
                 .OrderByDescending(x => x.CalculatedAt)
                 .ToList();
         }
@@ -114,9 +111,7 @@ public class History
     {
         if (Items.Count >= MaxItems)
         {
-
-            Items = Items.OrderBy(x => x.CalculatedAt).ToList();
-            Items.RemoveAt(0);
+            Items.Remove(Items.MinBy(x => x.CalculatedAt)!);
         }
         Items.Add(item);
     }

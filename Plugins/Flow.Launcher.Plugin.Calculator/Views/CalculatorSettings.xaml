@@ -104,7 +104,17 @@
             VerticalAlignment="Center"
             FontSize="14"
             Text="{DynamicResource flowlauncher_plugin_calculator_history_creation_mode}"
-            IsEnabled="{Binding EnableHistory}" />
+            IsEnabled="{Binding EnableHistory}">
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Style.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.5" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
         <ComboBox
             x:Name="HistoryCreationModeComboBox"
             Grid.Row="5"

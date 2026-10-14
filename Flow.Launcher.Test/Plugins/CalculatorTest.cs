@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Flow.Launcher.Plugin.Calculator;
 using Flow.Launcher.Plugin.Calculator.Storage;
@@ -99,9 +100,10 @@ namespace Flow.Launcher.Test.Plugins
             WaitForHistoryDebounce();
 
             ClassicAssert.AreEqual(1, GetHistory().Items.Count);
-            ClassicAssert.AreEqual("1+1", GetHistory().Items[0].Query);
-            ClassicAssert.AreEqual("2", GetHistory().Items[0].CopyText);
-            ClassicAssert.IsNotEmpty(GetHistory().Items[0].SubTitle);
+            var item = GetHistory().Items[0];
+            ClassicAssert.AreEqual("1+1", item.Query);
+            ClassicAssert.AreEqual("2", item.CalcResult);
+            ClassicAssert.AreNotEqual(default(DateTime), item.CalculatedAt);
         }
 
         [Test]
@@ -115,7 +117,25 @@ namespace Flow.Launcher.Test.Plugins
             var results = _plugin.Query(new Plugin.Query { Search = "2+2" });
 
             ClassicAssert.AreEqual(1, results.Count);
-            ClassicAssert.AreEqual("4", results[0].Title);
+            ClassicAssert.AreEqual("4", results[0].CopyText);
+        }
+
+        [Test]
+        public void CalculationHistory_ShowsQueryAndResultWithChangeQueryAction()
+        {
+            _settings.EnableHistory = true;
+            _settings.HistoryCreationMode = HistoryCreationMode.OnQuery;
+
+            _plugin.Query(new Plugin.Query { Search = "1+1" });
+            WaitForHistoryDebounce();
+
+            var results = _plugin.Query(new Plugin.Query { Search = "5+5" });
+
+            var historyResult = results.FirstOrDefault(x => x.ShowBadge);
+            ClassicAssert.IsNotNull(historyResult);
+            ClassicAssert.AreEqual("1+1 = 2", historyResult!.Title);
+            ClassicAssert.AreEqual("2", historyResult.CopyText);
+            ClassicAssert.IsNotNull(historyResult.Action);
         }
 
         // Basic operations
@@ -166,7 +186,7 @@ namespace Flow.Launcher.Test.Plugins
             {
                 Search = expression
             });
-            return results.Count > 0 ? results[0].Title : string.Empty;
+            return results.Count > 0 ? results[0].CopyText : string.Empty;
         }
 
         private void WaitForHistoryDebounce()
