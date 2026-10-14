@@ -104,30 +104,39 @@ namespace Flow.Launcher.Infrastructure.Storage
             if (!File.Exists(BackupFilePath))
                 return default;
 
+            T? data;
+
             try
             {
                 await using var source = File.OpenRead(BackupFilePath);
-                var data = await JsonSerializer.DeserializeAsync<T>(source) ?? default;
-
-                if (data != null)
-                    RestoreBackup();
-
-                return data;
+                data = await JsonSerializer.DeserializeAsync<T>(source) ?? default;
             }
             catch (JsonException)
             {
                 return default;
             }
+
+            if (data != null)
+                RestoreBackup();
+
+            return data;
         }
 
         private void RestoreBackup()
         {
-            Log.Info(ClassName, $"Failed to load settings.json, {BackupFilePath} restored successfully");
+            try
+            {
+                if (File.Exists(FilePath))
+                    File.Replace(BackupFilePath, FilePath, null);
+                else
+                    File.Move(BackupFilePath, FilePath);
 
-            if (File.Exists(FilePath))
-                File.Replace(BackupFilePath, FilePath, null);
-            else
-                File.Move(BackupFilePath, FilePath);
+                Log.Info(ClassName, $"Failed to load settings.json, {BackupFilePath} restored successfully");
+            }
+            catch (System.Exception e) when (e is IOException or UnauthorizedAccessException)
+            {
+                Log.Exception(ClassName, $"Loaded {BackupFilePath} but failed to restore it to {FilePath}", e);
+            }
         }
 
         public T Load()
@@ -217,9 +226,12 @@ namespace Flow.Launcher.Infrastructure.Storage
             // User may delete the directory, so we need to check it
             FilesFolders.ValidateDirectory(DirectoryPath);
 
-            await using var tempOutput = File.OpenWrite(TempFilePath);
-            await JsonSerializer.SerializeAsync(tempOutput, Data,
-                new JsonSerializerOptions { WriteIndented = true });
+            await using (var tempOutput = new FileStream(TempFilePath, FileMode.Create, FileAccess.Write, FileShare.None))
+            {
+                await JsonSerializer.SerializeAsync(tempOutput, Data,
+                    new JsonSerializerOptions { WriteIndented = true });
+            }
+
             AtomicWriteSetting();
         }
 

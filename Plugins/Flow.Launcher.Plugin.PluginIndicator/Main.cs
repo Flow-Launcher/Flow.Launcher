@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Flow.Launcher.Plugin.PluginIndicator
 {
-    public class Main : IPlugin, IPluginI18n, IHomeQuery
+    public class Main : IPlugin, IPluginI18n, IHomeQuery, IContextMenu
     {
         internal static PluginInitContext Context { get; private set; }
 
@@ -38,6 +38,7 @@ namespace Flow.Launcher.Plugin.PluginIndicator
                     SubTitle = Localize.flowlauncher_plugin_pluginindicator_result_subtitle(plugin.Name),
                     Score = score,
                     IcoPath = plugin.IcoPath,
+                    ContextData = plugin,
                     AutoCompleteText = $"{keyword}{Plugin.Query.TermSeparator}",
                     Action = c =>
                     {
@@ -46,6 +47,23 @@ namespace Flow.Launcher.Plugin.PluginIndicator
                     }
                 };
             return [.. results];
+        }
+
+        public List<Result> LoadContextMenus(Result selectedResult)
+        {
+            if (selectedResult.ContextData is not PluginMetadata plugin)
+                return [];
+
+            return new List<Result>
+            {
+                new Result
+                {
+                    Title = Localize.flowlauncher_plugin_pluginindicator_plugin_settings_title(plugin.Name),
+                    SubTitle = Localize.flowlauncher_plugin_pluginindicator_plugin_settings_subtitle(plugin.Name),
+                    IcoPath = plugin.IcoPath, // icon of indicated plugin
+                    Action = _ => Context.API.OpenPluginSettingsWindow(plugin.ID)
+                }
+            };
         }
 
         private static Dictionary<string, List<PluginPair>> GetNonGlobalPlugins()

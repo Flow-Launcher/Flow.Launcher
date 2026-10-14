@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -9,36 +8,59 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure.UserSettings;
 using ToolGood.Words.Pinyin;
 using Flow.Launcher.Infrastructure.Logger;
+using System.Threading;
 
 namespace Flow.Launcher.Infrastructure
 {
     public class PinyinAlphabet : IAlphabet
     {
-        private readonly ConcurrentDictionary<string, (string translation, TranslationMapping map)> _pinyinCache = new();
-        private readonly Settings _settings;
-        private ReadOnlyDictionary<string, string> currentDoublePinyinTable;
+        private sealed record PinyinConfiguration(
+            long Revision,
+            bool ShouldUsePinyin,
+            bool UseDoublePinyin,
+            ReadOnlyDictionary<string, string> DoublePinyinTable,
+            ReadOnlyDictionary<string, string[]> PolyphonicPhraseOverrides,
+            int MaxPolyphonicPhraseLength);
 
+        private readonly record struct CachedTranslation(
+            long Revision,
+            string Translation,
+            TranslationMapping Map);
+
+        private readonly Lock _configurationLock = new();
+        private readonly Settings _settings;
+        private PinyinConfiguration _configuration;
+        private readonly Dictionary<string, CachedTranslation> _pinyinCache = new();
+        private readonly Func<string, string[]> _getPinyinList;
+        
         public PinyinAlphabet()
+            : this(Ioc.Default.GetRequiredService<Settings>())
         {
-            _settings = Ioc.Default.GetRequiredService<Settings>();
-            LoadDoublePinyinTable();
+        }
+
+        public PinyinAlphabet(Settings settings)
+            : this(settings, content => WordsHelper.GetPinyinList(content))
+        {
+        }
+
+        internal PinyinAlphabet(Settings settings, Func<string, string[]> getPinyinList)
+        {
+            ArgumentNullException.ThrowIfNull(settings);
+            ArgumentNullException.ThrowIfNull(getPinyinList);
+
+            _settings = settings;
+            _getPinyinList = getPinyinList;
+            _configuration = CreateConfiguration(0);
 
             _settings.PropertyChanged += (sender, e) =>
             {
                 switch (e.PropertyName)
                 {
                     case nameof(Settings.ShouldUsePinyin):
-                        if (_settings.ShouldUsePinyin)
-                        {
-                            Reload();
-                        }
-                        break;
                     case nameof(Settings.UseDoublePinyin):
+                    case nameof(Settings.UsePolyphonicPhraseOverrides):
                     case nameof(Settings.DoublePinyinSchema):
-                        if (_settings.UseDoublePinyin)
-                        {
-                            Reload();
-                        }
+                        Reload();
                         break;
                 }
             };
@@ -46,79 +68,192 @@ namespace Flow.Launcher.Infrastructure
 
         public void Reload()
         {
-            LoadDoublePinyinTable();
-            _pinyinCache.Clear();
+            lock (_configurationLock)
+            {
+                _configuration = CreateConfiguration(_configuration.Revision + 1);
+                _pinyinCache.Clear();
+            }
         }
 
-        private void CreateDoublePinyinTableFromStream(Stream jsonStream)
+        private PinyinConfiguration CreateConfiguration(long revision)
         {
-            var table = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, string>>>(jsonStream) ??
+            var shouldUsePinyin = _settings.ShouldUsePinyin;
+            var useDoublePinyin = _settings.UseDoublePinyin;
+            var doublePinyinSchema = _settings.DoublePinyinSchema;
+            var usePolyphonicPhraseOverrides = _settings.UsePolyphonicPhraseOverrides;
+            var doublePinyinTable = LoadDoublePinyinTable(useDoublePinyin, doublePinyinSchema);
+            var (polyphonicPhraseOverrides, maxPolyphonicPhraseLength) =
+                LoadPolyphonicPhraseOverrides(shouldUsePinyin, usePolyphonicPhraseOverrides);
+
+            return new PinyinConfiguration(
+                revision,
+                shouldUsePinyin,
+                useDoublePinyin,
+                doublePinyinTable,
+                polyphonicPhraseOverrides,
+                maxPolyphonicPhraseLength);
+        }
+
+        private static JsonSerializerOptions GetOptions()
+        {
+            return new JsonSerializerOptions
+            {
+                ReadCommentHandling = JsonCommentHandling.Skip
+            };
+        }
+
+        private static (ReadOnlyDictionary<string, string[]> overrides, int maxPhraseLength)
+            CreatePolyphonicPhraseOverridesFromStream(Stream jsonStream, JsonSerializerOptions options)
+        {
+            var overrides = JsonSerializer.Deserialize<Dictionary<string, string[]>>(jsonStream, options) ??
+                throw new InvalidOperationException("Failed to deserialize polyphonic pinyin phrase overrides: result is null");
+
+            var maxPhraseLength = 0;
+            foreach (var phrase in overrides.Keys)
+            {
+                maxPhraseLength = Math.Max(maxPhraseLength, phrase.Length);
+            }
+
+            return (new ReadOnlyDictionary<string, string[]>(overrides), maxPhraseLength);
+        }
+
+        private static (ReadOnlyDictionary<string, string[]> overrides, int maxPhraseLength)
+            LoadPolyphonicPhraseOverrides(bool shouldUsePinyin, bool usePolyphonicPhraseOverrides)
+        {
+            if (!shouldUsePinyin || !usePolyphonicPhraseOverrides)
+            {
+                return EmptyPolyphonicPhraseOverrides();
+            }
+
+            var overridesPath = Path.Combine(AppContext.BaseDirectory, "Resources", "polyphonic_pinyin.json");
+            try
+            {
+                using var fs = File.OpenRead(overridesPath);
+                return CreatePolyphonicPhraseOverridesFromStream(fs, GetOptions());
+            }
+            catch (System.Exception e)
+            {
+                Log.Exception(nameof(PinyinAlphabet), $"Failed to load polyphonic pinyin phrase overrides from file: {overridesPath}", e);
+                return EmptyPolyphonicPhraseOverrides();
+            }
+        }
+
+        private static (ReadOnlyDictionary<string, string[]> overrides, int maxPhraseLength) EmptyPolyphonicPhraseOverrides() =>
+            (new ReadOnlyDictionary<string, string[]>(new Dictionary<string, string[]>()), 0);
+
+        private static ReadOnlyDictionary<string, string> CreateDoublePinyinTableFromStream(
+            Stream jsonStream,
+            DoublePinyinSchemas doublePinyinSchema)
+        {
+            var table = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, string>>>(jsonStream, GetOptions()) ??
                 throw new InvalidOperationException("Failed to deserialize double pinyin table: result is null");
 
-            var schemaKey = _settings.DoublePinyinSchema.ToString();
+            var schemaKey = doublePinyinSchema.ToString();
             if (!table.TryGetValue(schemaKey, out var schemaDict))
             {
                 throw new ArgumentException($"DoublePinyinSchema '{schemaKey}' is invalid or double pinyin table is broken.");
             }
 
-            currentDoublePinyinTable = new ReadOnlyDictionary<string, string>(schemaDict);
+            return new ReadOnlyDictionary<string, string>(schemaDict);
         }
 
-        private void LoadDoublePinyinTable()
+        private static ReadOnlyDictionary<string, string> LoadDoublePinyinTable(
+            bool useDoublePinyin,
+            DoublePinyinSchemas doublePinyinSchema)
         {
-            if (!_settings.UseDoublePinyin)
+            if (!useDoublePinyin)
             {
-                currentDoublePinyinTable = new ReadOnlyDictionary<string, string>(new Dictionary<string, string>());
-                return;
+                return EmptyDoublePinyinTable();
             }
 
             var tablePath = Path.Combine(AppContext.BaseDirectory, "Resources", "double_pinyin.json");
             try
             {
                 using var fs = File.OpenRead(tablePath);
-                CreateDoublePinyinTableFromStream(fs);
+                return CreateDoublePinyinTableFromStream(fs, doublePinyinSchema);
             }
             catch (FileNotFoundException e)
             {
                 Log.Exception(nameof(PinyinAlphabet), $"Double pinyin table file not found: {tablePath}", e);
-                currentDoublePinyinTable = new ReadOnlyDictionary<string, string>(new Dictionary<string, string>());
+                return EmptyDoublePinyinTable();
             }
             catch (DirectoryNotFoundException e)
             {
                 Log.Exception(nameof(PinyinAlphabet), $"Directory not found for double pinyin table: {tablePath}", e);
-                currentDoublePinyinTable = new ReadOnlyDictionary<string, string>(new Dictionary<string, string>());
+                return EmptyDoublePinyinTable();
             }
             catch (UnauthorizedAccessException e)
             {
                 Log.Exception(nameof(PinyinAlphabet), $"Access denied to double pinyin table: {tablePath}", e);
-                currentDoublePinyinTable = new ReadOnlyDictionary<string, string>(new Dictionary<string, string>());
+                return EmptyDoublePinyinTable();
             }
             catch (System.Exception e)
             {
                 Log.Exception(nameof(PinyinAlphabet), $"Failed to load double pinyin table from file: {tablePath}", e);
-                currentDoublePinyinTable = new ReadOnlyDictionary<string, string>(new Dictionary<string, string>());
+                return EmptyDoublePinyinTable();
             }
         }
+
+        private static ReadOnlyDictionary<string, string> EmptyDoublePinyinTable() =>
+            new(new Dictionary<string, string>());
 
         public bool ShouldTranslate(string stringToTranslate)
         {
             // If the query (stringToTranslate) does NOT contain Chinese characters, 
             // we should translate the target string to pinyin for matching
-            return _settings.ShouldUsePinyin && !ContainsChinese(stringToTranslate);
+            lock (_configurationLock)
+            {
+                return _configuration.ShouldUsePinyin && !ContainsChinese(stringToTranslate);
+            }
         }
 
         public (string translation, TranslationMapping map) Translate(string content)
         {
-            if (!_settings.ShouldUsePinyin || !ContainsChinese(content))
+            if (!ContainsChinese(content))
                 return (content, null);
 
-            return _pinyinCache.TryGetValue(content, out var cached) ? cached : BuildCacheFromContent(content);
+            while (true)
+            {
+                PinyinConfiguration configuration;
+                lock (_configurationLock)
+                {
+                    configuration = _configuration;
+                    if (!configuration.ShouldUsePinyin)
+                    {
+                        return (content, null);
+                    }
+
+                    if (_pinyinCache.TryGetValue(content, out var cached) && cached.Revision == configuration.Revision)
+                    {
+                        return (cached.Translation, cached.Map);
+                    }
+                }
+
+                var result = BuildCacheFromContent(content, configuration);
+
+                lock (_configurationLock)
+                {
+                    // A settings reload may have completed while this translation was being built.
+                    // In that case, discard the stale result and rebuild from the latest snapshot.
+                    if (_configuration.Revision != configuration.Revision)
+                    {
+                        continue;
+                    }
+
+                    _pinyinCache[content] = new CachedTranslation(configuration.Revision, result.translation, result.map);
+                    return result;
+                }
+            }
         }
 
-        private (string translation, TranslationMapping map) BuildCacheFromContent(string content)
+        private (string translation, TranslationMapping map) BuildCacheFromContent(
+            string content,
+            PinyinConfiguration configuration)
         {
-            var resultList = WordsHelper.GetPinyinList(content);
-            var resultBuilder = new StringBuilder(_settings.UseDoublePinyin ? 3 : 4); // Pre-allocate with estimated capacity
+            var resultList = _getPinyinList(content);
+            ApplyPolyphonicPhraseOverrides(content, resultList, configuration);
+
+            var resultBuilder = new StringBuilder(configuration.UseDoublePinyin ? 3 : 4); // Pre-allocate with estimated capacity
             var map = new TranslationMapping();
 
             var previousIsChinese = false;
@@ -127,7 +262,9 @@ namespace Flow.Launcher.Infrastructure
             {
                 if (IsChineseCharacter(content[i]))
                 {
-                    var translated = _settings.UseDoublePinyin ? ToDoublePinyin(resultList[i]) : resultList[i];
+                    var translated = configuration.UseDoublePinyin
+                        ? ToDoublePinyin(resultList[i], configuration.DoublePinyinTable)
+                        : resultList[i];
 
                     if (i > 0 && content[i - 1] != ' ')
                     {
@@ -158,9 +295,35 @@ namespace Flow.Launcher.Infrastructure
             map.EndConstruct();
 
             var translation = resultBuilder.ToString();
-            var result = (translation, map);
+            return (translation, map);
+        }
 
-            return _pinyinCache[content] = result;
+        private static void ApplyPolyphonicPhraseOverrides(
+            string content,
+            string[] resultList,
+            PinyinConfiguration configuration)
+        {
+            for (var start = 0; start < content.Length; start++)
+            {
+                var longestCandidate = Math.Min(configuration.MaxPolyphonicPhraseLength, content.Length - start);
+                for (var length = longestCandidate; length > 1; length--)
+                {
+                    var phrase = content.Substring(start, length);
+                    if (!configuration.PolyphonicPhraseOverrides.TryGetValue(phrase, out var pinyin) ||
+                        pinyin.Length != length || start + length > resultList.Length)
+                    {
+                        continue;
+                    }
+
+                    for (var i = 0; i < length; i++)
+                    {
+                        resultList[start + i] = pinyin[i];
+                    }
+
+                    start += length - 1;
+                    break;
+                }
+            }
         }
 
         /// <summary>
@@ -186,9 +349,11 @@ namespace Flow.Launcher.Infrastructure
                    (c >= 0x3400 && c <= 0x4DBF);       // CJK Extension A
         }
 
-        private string ToDoublePinyin(string fullPinyin)
+        private static string ToDoublePinyin(
+            string fullPinyin,
+            ReadOnlyDictionary<string, string> doublePinyinTable)
         {
-            return currentDoublePinyinTable.TryGetValue(fullPinyin, out var doublePinyinValue)
+            return doublePinyinTable.TryGetValue(fullPinyin, out var doublePinyinValue)
                 ? doublePinyinValue
                 : fullPinyin;
         }

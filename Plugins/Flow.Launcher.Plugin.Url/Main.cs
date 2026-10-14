@@ -159,6 +159,13 @@ namespace Flow.Launcher.Plugin.Url
             switch (endpoint.AddressFamily)
             {
                 case System.Net.Sockets.AddressFamily.InterNetwork:
+                    // Reject IPv4 addresses with fewer than four octets
+                    if (ipPart.Split('.').Length != 4)
+                    {
+                        isValid = false;
+                        return true;
+                    }
+
                     isValid = !endpoint.Address.Equals(IPAddress.Any);
                     return true;
                 case System.Net.Sockets.AddressFamily.InterNetworkV6:

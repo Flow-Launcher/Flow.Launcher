@@ -800,6 +800,24 @@
                     SelectedValuePath="Value" />
             </ui:SettingsCard>
 
+            <!--  Code highlight theme for markdown preview code blocks  -->
+            <ui:SettingsCard
+                Margin="0 14 0 0"
+                Description="{DynamicResource CodeHighlightThemeTooltip}"
+                Header="{DynamicResource CodeHighlightTheme}">
+                <ui:SettingsCard.HeaderIcon>
+                    <ui:FontIcon Glyph="&#xe943;" />
+                </ui:SettingsCard.HeaderIcon>
+
+                <ComboBox
+                    MinWidth="180"
+                    DisplayMemberPath="Display"
+                    FontSize="14"
+                    ItemsSource="{Binding CodeHighlightThemes}"
+                    SelectedValue="{Binding CodeHighlightTheme, Mode=TwoWay}"
+                    SelectedValuePath="Value" />
+            </ui:SettingsCard>
+
             <!--  Theme folder  -->
             <ui:SettingsCard Margin="0 14 0 0" Header="{DynamicResource ThemeFolder}">
                 <ui:SettingsCard.HeaderIcon>
