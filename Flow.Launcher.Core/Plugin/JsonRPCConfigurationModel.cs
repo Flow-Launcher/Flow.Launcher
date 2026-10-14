@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using YamlDotNet.Serialization;
 
 namespace Flow.Launcher.Core.Plugin
 {
