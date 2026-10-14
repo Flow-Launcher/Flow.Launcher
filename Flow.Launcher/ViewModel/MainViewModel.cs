@@ -873,6 +873,10 @@ namespace Flow.Launcher.ViewModel
             }
             else if (!QueryResultsSelected())
             {
+                await ReturnFromContextMenuAsync();
+            }
+            else if (!QueryResultsSelected())
+            {
                 SelectedResults = Results;
                 PreviewSelectedItem = Results.SelectedItem;
                 await UpdatePreviewAsync();

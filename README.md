@@ -365,6 +365,9 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
   <a href="https://github.com/Calapine">
     <img src='https://avatars.githubusercontent.com/u/76205879?v=4' width="10%"/>
   </a>
+  <a href="https://github.com/JakobOstgren">
+    <img src='https://avatars.githubusercontent.com/u/230895476?v=4' width="10%"/>
+  </a>
 </p>
 <p align="center">
   <a href="https://appwrite.io">

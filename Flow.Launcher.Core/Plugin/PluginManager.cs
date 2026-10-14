@@ -412,7 +412,7 @@ namespace Flow.Launcher.Core.Plugin
 
         public static ICollection<PluginPair> ValidPluginsForHomeQuery()
         {
-            return [.. _homePlugins.Where(p => !PluginModified(p.Metadata.ID))];
+            return [.. _homePlugins.Where(p => !p.Metadata.Disabled && !PluginModified(p.Metadata.ID))];
         }
 
         public static async Task<List<Result>> QueryForPluginAsync(PluginPair pair, Query query, CancellationToken token)
