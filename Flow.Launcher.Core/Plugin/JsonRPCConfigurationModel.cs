@@ -5,6 +5,10 @@ namespace Flow.Launcher.Core.Plugin
 {
     public class JsonRpcConfigurationModel
     {
+        // Never used, but allows parsing to succeed when .yml declares the $schema for Intellisense
+        [YamlMember(Alias = "$schema", DefaultValuesHandling = DefaultValuesHandling.OmitNull)]
+        public string? Schema { get; set; }
+        
         public List<SettingField> Body { get; set; }
         public void Deconstruct(out List<SettingField> Body)
         {
