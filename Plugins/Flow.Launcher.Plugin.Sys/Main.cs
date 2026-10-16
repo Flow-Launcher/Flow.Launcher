@@ -55,13 +55,12 @@ namespace Flow.Launcher.Plugin.Sys
 
         private const uint WmSysCommand = 0x0112;
         private const int ScMonitorPower = 0xF170;
-        private const uint SmtoAbortIfHung = 0x0002;
         private static readonly IntPtr HwndBroadcast = new(0xFFFF);
 
         [DllImport("user32.dll", SetLastError = true)]
-        private static extern IntPtr SendMessageTimeout(
-            IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam,
-            uint flags, uint timeout, out IntPtr result);
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool SendNotifyMessage(
+            IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
 
         internal static PluginInitContext Context { get; private set; }
         private Settings _settings;
@@ -261,9 +260,10 @@ namespace Flow.Launcher.Plugin.Sys
                     // On S0 systems SetSuspendState may hibernate instead of entering Modern Standby.
                     // Turning off the display can start a Modern Standby session, but Windows controls
                     // whether and when the system reaches the low-power sleep phase.
+                    // SendNotifyMessage does not wait for other windows to process the broadcast.
                     Marshal.SetLastPInvokeError(0);
-                    if (SendMessageTimeout(HwndBroadcast, WmSysCommand, new IntPtr(ScMonitorPower),
-                        new IntPtr(2), SmtoAbortIfHung, 250, out _) != IntPtr.Zero)
+                    if (SendNotifyMessage(HwndBroadcast, WmSysCommand, new IntPtr(ScMonitorPower),
+                        new IntPtr(2)))
                     {
                         return;
                     }
