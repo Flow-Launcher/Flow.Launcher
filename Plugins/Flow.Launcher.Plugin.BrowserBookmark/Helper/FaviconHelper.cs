@@ -78,7 +78,7 @@ public static class FaviconHelper
         {
             using (var ms = new MemoryStream(data))
             {
-                var svg = new SKSvg();
+                using var svg = new SKSvg();
                 if (svg.Load(ms) != null && svg.Picture != null)
                 {
                     bitmap = new SKBitmap((int)svg.Picture.CullRect.Width, (int)svg.Picture.CullRect.Height);

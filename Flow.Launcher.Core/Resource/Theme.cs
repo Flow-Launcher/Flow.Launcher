@@ -811,19 +811,18 @@ namespace Flow.Launcher.Core.Resource
             return Colors.Transparent; // Default is transparent
         }
 
-        private void ApplyPreviewBackground(Color? bgColor = null)
+        private void ApplyPreviewBackground(Style windowBorderStyle, Color? bgColor = null)
         {
             if (bgColor == null) return;
 
             // Create a new Style for the preview
             var previewStyle = new Style(typeof(Border));
 
-            // Get the original WindowBorderStyle
-            if (Application.Current.Resources.Contains("WindowBorderStyle") &&
-                Application.Current.Resources["WindowBorderStyle"] is Style originalStyle)
+            // Copy the selected theme's style before its resources are installed globally.
+            if (windowBorderStyle != null)
             {
                 // Copy the original style, including the base style if it exists
-                ThemeHelper.CopyStyle(originalStyle, previewStyle);
+                ThemeHelper.CopyStyle(windowBorderStyle, previewStyle);
             }
 
             // Apply background color (remove transparency in color)
@@ -919,7 +918,7 @@ namespace Flow.Launcher.Core.Resource
 
             // Select background color based on ColorScheme and SystemBG
             Color selectedBG = useDarkMode ? DarkBG : LightBG;
-            ApplyPreviewBackground(selectedBG);
+            ApplyPreviewBackground(dict["WindowBorderStyle"] as Style, selectedBG);
 
             bool isBlurAvailable = hasBlur && Win32Helper.IsBackdropSupported(); // Windows 11 미만이면 hasBlur를 강제 false
 
