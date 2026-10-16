@@ -163,7 +163,9 @@ namespace Flow.Launcher.Plugin.Sys
             previousState = default;
             try
             {
-                if (!PInvoke.OpenProcessToken(Process.GetCurrentProcess().SafeHandle, TOKEN_ACCESS_MASK.TOKEN_ADJUST_PRIVILEGES | TOKEN_ACCESS_MASK.TOKEN_QUERY, out var tokenHandle))
+                var tokenOpened = PInvoke.OpenProcessToken(Process.GetCurrentProcess().SafeHandle, TOKEN_ACCESS_MASK.TOKEN_ADJUST_PRIVILEGES | TOKEN_ACCESS_MASK.TOKEN_QUERY, out var tokenHandle);
+                using var token = tokenHandle;
+                if (!tokenOpened)
                 {
                     return false;
                 }
@@ -180,7 +182,7 @@ namespace Flow.Launcher.Plugin.Sys
                 };
 
                 Span<byte> previous = stackalloc byte[sizeof(TOKEN_PRIVILEGES)];
-                if (!PInvoke.AdjustTokenPrivileges(tokenHandle, false, &privileges, previous, out var _))
+                if (!PInvoke.AdjustTokenPrivileges(token, false, &privileges, previous, out var _))
                 {
                     return false;
                 }
@@ -212,14 +214,16 @@ namespace Flow.Launcher.Plugin.Sys
 
             try
             {
-                if (!PInvoke.OpenProcessToken(Process.GetCurrentProcess().SafeHandle, TOKEN_ACCESS_MASK.TOKEN_ADJUST_PRIVILEGES | TOKEN_ACCESS_MASK.TOKEN_QUERY, out var tokenHandle))
+                var tokenOpened = PInvoke.OpenProcessToken(Process.GetCurrentProcess().SafeHandle, TOKEN_ACCESS_MASK.TOKEN_ADJUST_PRIVILEGES | TOKEN_ACCESS_MASK.TOKEN_QUERY, out var tokenHandle);
+                using var token = tokenHandle;
+                if (!tokenOpened)
                 {
                     Context.API.LogWarn(ClassName, "Failed to reopen the process token while restoring the shutdown privilege");
                     return;
                 }
 
                 Marshal.SetLastPInvokeError((int)WIN32_ERROR.NO_ERROR);
-                if (!PInvoke.AdjustTokenPrivileges(tokenHandle, false, &previousState, null, out var _) ||
+                if (!PInvoke.AdjustTokenPrivileges(token, false, &previousState, null, out var _) ||
                     Marshal.GetLastPInvokeError() == (int)WIN32_ERROR.ERROR_NOT_ALL_ASSIGNED)
                 {
                     Context.API.LogWarn(ClassName, "Failed to restore the shutdown privilege");
