@@ -53,6 +53,16 @@ namespace Flow.Launcher.Plugin.Sys
 
         private const string Documentation = "https://flowlauncher.com/docs/#/usage-tips";
 
+        private const uint WmSysCommand = 0x0112;
+        private const int ScMonitorPower = 0xF170;
+        private const uint SmtoAbortIfHung = 0x0002;
+        private static readonly IntPtr HwndBroadcast = new(0xFFFF);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern IntPtr SendMessageTimeout(
+            IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam,
+            uint flags, uint timeout, out IntPtr result);
+
         internal static PluginInitContext Context { get; private set; }
         private Settings _settings;
         private SettingsViewModel _viewModel;
@@ -237,6 +247,33 @@ namespace Flow.Launcher.Plugin.Sys
 
         private static void Suspend(bool hibernate)
         {
+            if (!hibernate)
+            {
+                if (!PInvoke.GetPwrCapabilities(out var capabilities))
+                {
+                    Context.API.LogWarn(ClassName, $"Failed to read system power capabilities: {Marshal.GetLastPInvokeError()}");
+                    ShowSuspendFailed();
+                    return;
+                }
+
+                if (capabilities.AoAc)
+                {
+                    // On S0 systems SetSuspendState may hibernate instead of entering Modern Standby.
+                    // Turning off the display can start a Modern Standby session, but Windows controls
+                    // whether and when the system reaches the low-power sleep phase.
+                    Marshal.SetLastPInvokeError(0);
+                    if (SendMessageTimeout(HwndBroadcast, WmSysCommand, new IntPtr(ScMonitorPower),
+                        new IntPtr(2), SmtoAbortIfHung, 250, out _) != IntPtr.Zero)
+                    {
+                        return;
+                    }
+
+                    Context.API.LogWarn(ClassName, $"Failed to request display off for Modern Standby: {Marshal.GetLastPInvokeError()}");
+                    ShowSuspendFailed();
+                    return;
+                }
+            }
+
             // SetSuspendState requires the SE_SHUTDOWN_NAME privilege. Flow keeps running
             // afterwards, so the privilege is disabled again once the call returns.
             if (!EnableShutdownPrivilege(out var previousState))
@@ -261,6 +298,11 @@ namespace Flow.Launcher.Plugin.Sys
                 }
             }
 
+            ShowSuspendFailed();
+        }
+
+        private static void ShowSuspendFailed()
+        {
             Context.API.ShowMsgBox(
                 Localize.flowlauncher_plugin_sys_dlgtext_suspend_failed(),
                 Localize.flowlauncher_plugin_sys_dlgtitle_error(),
