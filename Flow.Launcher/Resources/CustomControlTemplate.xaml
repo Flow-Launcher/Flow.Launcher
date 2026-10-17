@@ -54,6 +54,12 @@
         <MenuItem Command="ApplicationCommands.SelectAll" Header="{DynamicResource selectAll}" />
     </ContextMenu>
 
+    <!--  Context Menu for read-only TextBox  -->
+    <ContextMenu x:Key="ReadOnlyTextBoxContextMenu">
+        <MenuItem Command="ApplicationCommands.Copy" Header="{DynamicResource copy}" />
+        <MenuItem Command="ApplicationCommands.SelectAll" Header="{DynamicResource selectAll}" />
+    </ContextMenu>
+
     <!--  Content Control for foreground  -->
     <Style TargetType="{x:Type ContentControl}">
         <Setter Property="Foreground" Value="{DynamicResource Color05B}" />

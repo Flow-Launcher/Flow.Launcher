@@ -93,6 +93,15 @@ public class PreviewMarkdownScrollViewer : MarkdownScrollViewer
         }
     }
 
+    public PreviewMarkdownScrollViewer()
+    {
+        // Bring-into-view is not needed in the preview panel, 
+        // and it doesn't work correctly anyway inside nested content blocks, 
+        // where it scrolls to the top of the block instead of the focused part, 
+        // such as a clicked code block
+        AddHandler(RequestBringIntoViewEvent, new RequestBringIntoViewEventHandler((_, e) => e.Handled = true), handledEventsToo: true);
+    }
+
     protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
     {
         base.OnPropertyChanged(e);
