@@ -66,6 +66,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_logoff_computer">Opravdu se chcete odhlásit?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_error">Chyba</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_empty_recycle_bin_failed">Nepodařilo se vyprázdnit koš. K tomu může dojít, jestliže:{0}- Některé položky jsou v současné době používány{0}- Některé položky nelze odstranit z důvodu oprávnění{0}Prosím zavřete všechny aplikace, které mohou tyto soubory používat a zkuste to znovu.</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_suspend_failed">Failed to put the computer to sleep or hibernate.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_command_keyword_setting_window_title">Nastavení klíčového slova příkazu</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword">Klíčové slovo pro vlastní příkaz</system:String>
