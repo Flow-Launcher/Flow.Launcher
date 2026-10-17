@@ -66,6 +66,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_logoff_computer">Ви впевнені, що хочете вийти з системи?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_error">Помилка</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_empty_recycle_bin_failed">Не вдалося очистити кошик. Це може статися, якщо:{0}- Деякі елементи зараз використовуються{0}- Деякі елементи не можна видалити через обмеження доступу{0}Закрийте всі застосунки, які можуть використовувати ці файли, і спробуйте ще раз.</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_suspend_failed">Failed to put the computer to sleep or hibernate.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_command_keyword_setting_window_title">Налаштування ключового слова команди</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword">Власне ключове слово команди</system:String>

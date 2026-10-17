@@ -42,6 +42,8 @@
     <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Tarih ve saat biçimi</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">Sıralama Seçeneği:</system:String>
     <system:String x:Key="plugin_explorer_everything_installed_path">Everything Kurulumu:</system:String>
+    <system:String x:Key="plugin_explorer_everything_15_instance_name">Everything 1.5 instance name: </system:String>
+    <system:String x:Key="plugin_explorer_everything_15_instance_name_tooltip">Leave this blank to use the default Everything 1.5b instance. Only set this if you run a named instance of Everything, or set it to &quot;1.5a&quot; to use Everything 1.5a.</system:String>
     <system:String x:Key="plugin_explorer_launch_hidden">Gizli Başlat</system:String>
     <system:String x:Key="plugin_explorer_editor_path">Metin Düzenleyici</system:String>
     <system:String x:Key="plugin_explorer_shell_path">Komut İstemi</system:String>
@@ -49,7 +51,7 @@
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">Programın çalışma klasörü olarak sonuç klasörünü kullan</system:String>
     <system:String x:Key="plugin_explorer_display_more_info_in_tooltip">Araç ipuçlarında boyut ve yaş gibi daha fazla bilgi göster</system:String>
     <system:String x:Key="plugin_explorer_default_open_in_file_manager">Klasörü varsayılan Dosya Yöneticisi'nde açmak için Enter tuşuna basın</system:String>
-    <system:String x:Key="plugin_explorer_boost_home_folder_score">Prioritize home folders (Documents, Desktop, Downloads, etc.) in search results</system:String>
+    <system:String x:Key="plugin_explorer_boost_home_folder_score">Arama sonuçlarında ana klasörlere (Belgeler, Masaüstü, İndirilenler vb.) öncelik ver</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Yol Araması İçin Dizin Aramasını Kullan</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Dizin Oluşturma Seçenekleri</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">Ara:</system:String>
@@ -149,7 +151,11 @@
 
     <!--  Everything  -->
     <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">Everything SDK'sini yükleme başarısız oldu</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_architecture_check">Please check whether your system is x86 or x64</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_is_not_running">Everything Servisi çalışmıyor</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_15_unavailable">Warning: Everything 1.5 is unavailable</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_15_resolution">Ensure Everything is running and verify the configured instance name</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_15_sort_warning">Warning: Everything 1.5 is unavailable. The service may not be running, or the instance name may be invalid</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_query_error">Sorgu Everything üzerinde çalıştırılırken hata oluştu</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by">Şuna Göre Sırala</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_name_ascending">İsim ↑</system:String>
@@ -184,6 +190,8 @@
 
     <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">Tam Yolu Ara</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_run_count">Dosya/Klasör Çalıştırma Sayısını Aç</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_enable_15_support">Use Everything 1.5</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_15_restart_required">Restart Flow Launcher for this change to take effect</system:String>
 
     <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Everything'i yükle veya başlat</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_title">Everything Kurulumu</system:String>
