@@ -1,0 +1,69 @@
+name: Windows architecture packages
+
+on:
+  workflow_dispatch:
+  pull_request:
+
+permissions:
+  contents: read
+
+env:
+  DOTNET_CLI_TELEMETRY_OPTOUT: 1
+  NUGET_CERT_REVOCATION_MODE: offline
+
+jobs:
+  test:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 9.0.x
+      - name: Restore
+        run: dotnet restore Flow.Launcher.sln
+      - name: Build
+        run: dotnet build Flow.Launcher.sln --no-restore -c Release
+      - name: Initialize Windows Search
+        shell: powershell
+        run: |
+          sc.exe config WSearch start= auto
+          net.exe start WSearch
+      - name: Test
+        run: dotnet test Flow.Launcher.sln --no-build -c Release --verbosity normal
+
+  package:
+    needs: test
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        runtime:
+          - win-x64
+          - win-arm64
+    steps:
+      - uses: actions/checkout@v7
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 9.0.x
+      - name: Publish portable package
+        shell: pwsh
+        run: |
+          $version = "ci-$($env:GITHUB_SHA.Substring(0, 7))"
+          .\Scripts\publish_portable.ps1 `
+            -RuntimeIdentifier "${{ matrix.runtime }}" `
+            -ArtifactsDirectory "$env:RUNNER_TEMP\flow-launcher" `
+            -Version $version
+      - name: Upload portable package and validation reports
+        uses: actions/upload-artifact@v7
+        with:
+          name: Flow-Launcher-${{ matrix.runtime }}-portable
+          if-no-files-found: error
+          compression-level: 0
+          path: |
+            ${{ runner.temp }}\flow-launcher\packages\Flow-Launcher-*-${{ matrix.runtime }}-Portable.zip
+            ${{ runner.temp }}\flow-launcher\packages\Flow-Launcher-*-${{ matrix.runtime }}-Portable.zip.sha256
+            ${{ runner.temp }}\flow-launcher\reports\${{ matrix.runtime }}\architecture.json
+            ${{ runner.temp }}\flow-launcher\reports\${{ matrix.runtime }}\architecture.csv
+            ${{ runner.temp }}\flow-launcher\reports\${{ matrix.runtime }}\package-manifest.json
