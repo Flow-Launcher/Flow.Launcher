@@ -611,7 +611,7 @@ namespace Flow.Launcher
             ImageLoader.LoadAsync(path, loadFullImage, cacheImage);
 
         public Task<bool> UpdatePluginManifestAsync(bool usePrimaryUrlOnly = false, CancellationToken token = default) =>
-            PluginsManifest.UpdateManifestAsync(usePrimaryUrlOnly, token);
+            PluginsManifest.UpdateManifestAsync(_settings, usePrimaryUrlOnly, token);
 
         public IReadOnlyList<UserPlugin> GetPluginManifest() => PluginsManifest.UserPlugins ?? [];
 
