@@ -6,7 +6,7 @@ namespace Flow.Launcher.Core.Plugin
 {
     public class JsonRpcConfigurationModel
     {
-        // Never used, but allows parsing to succeed when .yml declares the $schema for Intellisense
+        // Not used by the codebase, purpose is to declare the $schema for Intellisense.
         [YamlMember(Alias = "$schema", DefaultValuesHandling = DefaultValuesHandling.OmitNull)]
         public string? Schema { get; set; }
         
