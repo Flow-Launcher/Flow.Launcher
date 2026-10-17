@@ -12,7 +12,7 @@ namespace Flow.Launcher
     {
         protected Lock _lock = new();
         private Point _lastpos;
-        private ListBoxItem curItem = null;
+        private ResultViewModel _currentResult = null;
         public ResultListBox()
         {
             InitializeComponent();
@@ -60,9 +60,12 @@ namespace Flow.Launcher
         {
             lock (_lock)
             {
-                curItem = (ListBoxItem)sender;
-                var p = e.GetPosition((IInputElement)sender);
-                _lastpos = p;
+                if (sender is FrameworkElement { DataContext: ResultViewModel result })
+                {
+                    _currentResult = result;
+                    var p = e.GetPosition((IInputElement)sender);
+                    _lastpos = p;
+                }
             }
         }
 
@@ -82,9 +85,9 @@ namespace Flow.Launcher
         {
             lock (_lock)
             {
-                if (curItem != null)
+                if (_currentResult != null && sender is ListBox listBox)
                 {
-                    curItem.IsSelected = true;
+                    listBox.SelectedItem = _currentResult;
                 }
             }
         }
