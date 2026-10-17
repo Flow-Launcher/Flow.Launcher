@@ -112,6 +112,7 @@ namespace Flow.Launcher
             SelectNextItemHotkey,
             SelectNextItemHotkey2,
             DialogJumpHotkey,
+            ToggleResultLayoutHotkey,
         }
 
         // We can initialize settings in static field because it has been constructed in App constuctor
@@ -144,6 +145,7 @@ namespace Flow.Launcher
                     HotkeyType.SelectNextItemHotkey => _settings.SelectNextItemHotkey,
                     HotkeyType.SelectNextItemHotkey2 => _settings.SelectNextItemHotkey2,
                     HotkeyType.DialogJumpHotkey => _settings.DialogJumpHotkey,
+                    HotkeyType.ToggleResultLayoutHotkey => _settings.ToggleResultLayoutHotkey,
                     _ => throw new System.NotImplementedException("Hotkey type not set")
                 };
             }
@@ -205,6 +207,9 @@ namespace Flow.Launcher
                         break;
                     case HotkeyType.DialogJumpHotkey:
                         _settings.DialogJumpHotkey = value;
+                        break;
+                    case HotkeyType.ToggleResultLayoutHotkey:
+                        _settings.ToggleResultLayoutHotkey = value;
                         break;
                     default:
                         throw new System.NotImplementedException("Hotkey type not set");

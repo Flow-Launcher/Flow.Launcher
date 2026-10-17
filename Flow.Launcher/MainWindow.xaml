@@ -212,6 +212,10 @@
             Key="{Binding CycleHistoryDownHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
             Command="{Binding ForwardHistoryCommand}"
             Modifiers="{Binding CycleHistoryDownHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
+        <KeyBinding
+            Key="{Binding ToggleResultLayoutHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
+            Command="{Binding ToggleResultLayoutCommand}"
+            Modifiers="{Binding ToggleResultLayoutHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
     </Window.InputBindings>
 
     <Border MouseDown="OnMouseDown" Style="{DynamicResource WindowBorderStyle}">
@@ -251,6 +255,7 @@
                             InputMethod.PreferredImeState="{Binding StartWithEnglishMode, Converter={StaticResource BoolToIMEStateConverter}}"
                             PreviewDragOver="QueryTextBox_OnPreviewDragOver"
                             PreviewKeyUp="QueryTextBox_KeyUp"
+                            PreviewMouseDown="QueryTextBox_PreviewMouseDown"
                             Style="{DynamicResource QueryBoxStyle}"
                             Text="{Binding QueryText, Mode=OneWay}"
                             TextChanged="QueryTextBox_TextChanged1"
@@ -434,6 +439,27 @@
                                 LeftClickResultCommand="{Binding LeftClickResultCommand}"
                                 RightClickResultCommand="{Binding RightClickResultCommand}" />
                         </ContentControl>
+                        <Border Padding="18 0 18 8">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Results.IsGridLayout}" Value="True" />
+                                                <Condition Binding="{Binding Results.Visibility}" Value="Visible" />
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <TextBlock
+                                FontSize="{Binding ResultSubItemFontSize}"
+                                Style="{DynamicResource ItemSubTitleStyle}"
+                                Text="{Binding Results.SelectedItem.Result.SubTitle}"
+                                TextTrimming="CharacterEllipsis" />
+                        </Border>
                     </StackPanel>
 
                     <GridSplitter
