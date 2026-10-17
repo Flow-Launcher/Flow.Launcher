@@ -182,28 +182,39 @@ namespace Flow.Launcher.Plugin.Explorer
                     contextMenus.Add(new Result
                     {
                         Title = Localize.plugin_explorer_deletefilefolder(),
-                        SubTitle = isFile ? Localize.plugin_explorer_deletefile_subtitle(): Localize.plugin_explorer_deletefolder_subtitle(),
+                        SubTitle = Settings.DeleteToRecycleBin
+                            ? Localize.plugin_explorer_move_to_recycle_bin_subtitle()
+                            : isFile ? Localize.plugin_explorer_deletefile_subtitle() : Localize.plugin_explorer_deletefolder_subtitle(),
                         Action = (context) =>
                         {
                             try
                             {
-                                if (Context.API.ShowMsgBox(
-                                        Localize.plugin_explorer_delete_folder_link(record.FullPath),
+                                if (Settings.ConfirmBeforeDeleting && Context.API.ShowMsgBox(
+                                        Settings.DeleteToRecycleBin
+                                            ? Localize.plugin_explorer_move_to_recycle_bin_confirmation(record.FullPath)
+                                            : Localize.plugin_explorer_delete_folder_link(record.FullPath),
                                         Localize.plugin_explorer_deletefilefolder(),
                                         MessageBoxButton.OKCancel,
                                         MessageBoxImage.Warning)
                                     == MessageBoxResult.Cancel)
                                     return false;
 
-                                if (isFile)
+                                if (Settings.DeleteToRecycleBin)
+                                    record.FullPath.MoveToRecycleBin();
+                                else if (isFile)
                                     File.Delete(record.FullPath);
                                 else
                                     Directory.Delete(record.FullPath, true);
 
                                 _ = Task.Run(() =>
                                 {
-                                    Context.API.ShowMsg(Localize.plugin_explorer_deletefilefoldersuccess(),
-                                        Localize.plugin_explorer_deletefilefoldersuccess_detail(record.FullPath),
+                                    Context.API.ShowMsg(
+                                        Settings.DeleteToRecycleBin
+                                            ? Localize.plugin_explorer_move_to_recycle_bin_success()
+                                            : Localize.plugin_explorer_deletefilefoldersuccess(),
+                                        Settings.DeleteToRecycleBin
+                                            ? Localize.plugin_explorer_move_to_recycle_bin_success_detail(record.FullPath)
+                                            : Localize.plugin_explorer_deletefilefoldersuccess_detail(record.FullPath),
                                         Constants.ExplorerIconImageFullPath);
                                 });
                             }
