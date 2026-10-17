@@ -19,7 +19,7 @@
     <system:String x:Key="flowlauncher_plugin_calculator_show_error_message">Show error message when calculation fails</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_enable_history">Enable History</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_history_subtitle">{0}</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_time_just_now">just now</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_time_just_now">Just now</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_time_minute_ago">1 minute ago</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_time_minutes_ago">{0} minutes ago</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_time_hour_ago">1 hour ago</system:String>
