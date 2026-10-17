@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -154,11 +154,14 @@ namespace Flow.Launcher.Plugin.Calculator
                     string newResult = FormatResult(roundedResult);
                     
                     var results = new List<Result>();
+
+                    // Calculation Result
                     var resultObject = new Result
                     {
                         Title = $"= {newResult}",
                         IcoPath = IcoPath,
-                        Score = HistoryItem.HistoryItemScore,
+                        // Max score keeps the calculation result above the history entries, which use the lower history score
+                        Score = Result.MaxScore,
                         // Check context nullability for unit testing
                         SubTitle = Context == null
                             ? string.Empty
