@@ -1,4 +1,4 @@
-using System.Reflection;
+﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Flow.Launcher.Core.Plugin;
@@ -292,11 +292,12 @@ namespace Flow.Launcher.Test
                 AlwaysPreview = false
             };
             var viewModel = CreatePreviewViewModel(settings, ResultAreaColumnPreviewShown);
-            SetExternalPreviewVisible(viewModel, true);
             viewModel.PreviewSelectedItem = ViewModel("Normal", PreviewVisibility.Optional, settings);
+            SetExternalPreviewVisible(viewModel, true);
 
             // Setup correctness assertions
             ClassicAssert.IsTrue(viewModel.ExternalPreviewVisible); // external is marked visible
+            ClassicAssert.IsFalse(viewModel.InternalPreviewVisible); // internal is marked hidden
             ClassicAssert.IsFalse(PluginManager.UseExternalPreview()); // no plugin that provides external previews
             ClassicAssert.IsFalse(settings.AlwaysPreview); // global AlwaysPreview setting is off
 
