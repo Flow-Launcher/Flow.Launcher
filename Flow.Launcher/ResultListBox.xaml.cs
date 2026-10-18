@@ -13,6 +13,7 @@ namespace Flow.Launcher
         protected Lock _lock = new();
         private Point _lastpos;
         private ListBoxItem curItem = null;
+
         public ResultListBox()
         {
             InitializeComponent();
@@ -23,14 +24,8 @@ namespace Flow.Launcher
 
         public ICommand RightClickResultCommand
         {
-            get
-            {
-                return (ICommand)GetValue(RightClickResultCommandProperty);
-            }
-            set
-            {
-                SetValue(RightClickResultCommandProperty, value);
-            }
+            get => (ICommand)GetValue(RightClickResultCommandProperty);
+            set => SetValue(RightClickResultCommandProperty, value);
         }
 
         public static readonly DependencyProperty LeftClickResultCommandProperty =
@@ -38,14 +33,17 @@ namespace Flow.Launcher
 
         public ICommand LeftClickResultCommand
         {
-            get
-            {
-                return (ICommand)GetValue(LeftClickResultCommandProperty);
-            }
-            set
-            {
-                SetValue(LeftClickResultCommandProperty, value);
-            }
+            get => (ICommand)GetValue(LeftClickResultCommandProperty);
+            set => SetValue(LeftClickResultCommandProperty, value);
+        }
+
+        public static readonly DependencyProperty MouseSelectCommandProperty =
+            DependencyProperty.Register("MouseSelectCommand", typeof(ICommand), typeof(ResultListBox), new UIPropertyMetadata(null));
+
+        public ICommand MouseSelectCommand
+        {
+            get => (ICommand)GetValue(MouseSelectCommandProperty);
+            set => SetValue(MouseSelectCommandProperty, value);
         }
 
         private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -53,6 +51,17 @@ namespace Flow.Launcher
             if (e.AddedItems.Count > 0 && e.AddedItems[0] != null)
             {
                 ScrollIntoView(e.AddedItems[0]);
+                return;
+            }
+
+            // When grid mode and home page plugin results are enabled, ensures the result list's scroll
+            // position is reset to the top so the first home page result is shown.
+            if (e.AddedItems.Count == 0 && DataContext is ResultsViewModel { ResetScrollToTopWhenSelectionCleared: true } viewModel)
+            {
+                if (viewModel.Results.Count > 0)
+                {
+                    ScrollIntoView(viewModel.Results[0]);
+                }
             }
         }
 
@@ -73,7 +82,9 @@ namespace Flow.Launcher
                 var p = e.GetPosition((IInputElement)sender);
                 if (_lastpos != p)
                 {
+                    _lastpos = p;
                     ((ListBoxItem)sender).IsSelected = true;
+                    MouseSelectCommand?.Execute(false);
                 }
             }
         }
@@ -85,6 +96,7 @@ namespace Flow.Launcher
                 if (curItem != null)
                 {
                     curItem.IsSelected = true;
+                    MouseSelectCommand?.Execute(false);
                 }
             }
         }

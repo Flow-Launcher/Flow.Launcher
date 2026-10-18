@@ -37,6 +37,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     public class SearchPrecisionData : DropdownDataGeneric<SearchPrecisionScore> { }
     public class LastQueryModeData : DropdownDataGeneric<LastQueryMode> { }
     public class DoublePinyinSchemaData : DropdownDataGeneric<DoublePinyinSchemas> { }
+    public class PinnedLayoutData : DropdownDataGeneric<PinnedLayoutOptions> { }
 
     public bool StartFlowLauncherOnSystemStartup
     {
@@ -147,6 +148,9 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     public List<LastQueryModeData> LastQueryModes { get; } =
         DropdownDataGeneric<LastQueryMode>.GetValues<LastQueryModeData>("LastQuery");
 
+    public List<PinnedLayoutData> PinnedLayouts { get; } =
+        DropdownDataGeneric<PinnedLayoutOptions>.GetValues<PinnedLayoutData>("PinnedLayout");
+
     public List<HistoryStyleLocalized> HistoryStyles { get; } = HistoryStyleLocalized.GetValues();
 
     public bool EnableDialogJump
@@ -234,6 +238,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         DropdownDataGeneric<DialogJumpWindowPositions>.UpdateLabels(DialogJumpWindowPositions);
         DropdownDataGeneric<DialogJumpResultBehaviours>.UpdateLabels(DialogJumpResultBehaviours);
         DropdownDataGeneric<DialogJumpFileResultBehaviours>.UpdateLabels(DialogJumpFileResultBehaviours);
+        DropdownDataGeneric<PinnedLayoutOptions>.UpdateLabels(PinnedLayouts);
         // Since we are using Binding instead of DynamicResource, we need to manually trigger the update
         OnPropertyChanged(nameof(AlwaysPreviewToolTip));
         Settings.CustomExplorer.OnDisplayNameChanged();

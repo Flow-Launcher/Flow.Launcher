@@ -209,6 +209,10 @@
             Command="{Binding ReverseHistoryCommand}"
             Modifiers="{Binding CycleHistoryUpHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
         <KeyBinding
+            Key="{Binding Settings.GridModeHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
+            Command="{Binding ToggleGridModeCommand}"
+            Modifiers="{Binding Settings.GridModeHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
+        <KeyBinding
             Key="{Binding CycleHistoryDownHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
             Command="{Binding ForwardHistoryCommand}"
             Modifiers="{Binding CycleHistoryDownHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
@@ -358,33 +362,26 @@
                     <ContentControl.Style>
                         <Style TargetType="ContentControl">
                             <Setter Property="Visibility" Value="Visible" />
+
                             <Style.Triggers>
                                 <MultiDataTrigger>
                                     <MultiDataTrigger.Conditions>
-                                        <Condition Binding="{Binding ElementName=ResultListBox, Path=Items.Count}" Value="0" />
-                                        <Condition Binding="{Binding ElementName=ResultContextMenu, Path=Visibility}" Value="Collapsed" />
-                                        <Condition Binding="{Binding ElementName=History, Path=Visibility}" Value="Collapsed" />
+                                        <Condition Binding="{Binding ActualHeight, ElementName=PinnedResultGrid}" Value="0" />
+
+                                        <Condition Binding="{Binding HasItems, ElementName=ResultListBox}" Value="False" />
+
+                                        <Condition Binding="{Binding Visibility, ElementName=History}" Value="Collapsed" />
+
+                                        <Condition Binding="{Binding Visibility, ElementName=ResultContextMenu}" Value="Collapsed" />
                                     </MultiDataTrigger.Conditions>
-                                    <MultiDataTrigger.Setters>
-                                        <Setter Property="Visibility" Value="Collapsed" />
-                                        <Setter Property="Margin" Value="0" />
-                                        <Setter Property="Height" Value="0" />
-                                    </MultiDataTrigger.Setters>
+
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Setter Property="Height" Value="0" />
                                 </MultiDataTrigger>
                             </Style.Triggers>
-                            <!--<Style.Triggers>
-                                <DataTrigger Binding="{Binding ElementName=ResultListBox, Path=Visibility}" Value="Visible">
-                                    <Setter Property="Visibility" Value="Visible" />
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding ElementName=ResultContextMenu, Path=Visibility}" Value="Visible">
-                                    <Setter Property="Visibility" Value="Visible" />
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding ElementName=History, Path=Visibility}" Value="Visible">
-                                    <Setter Property="Visibility" Value="Visible" />
-                                </DataTrigger>
-                            </Style.Triggers>-->
                         </Style>
                     </ContentControl.Style>
+
                     <Rectangle
                         Name="MiddleSeparator"
                         Width="Auto"
@@ -413,11 +410,16 @@
                         x:Name="ResultArea"
                         Grid.Column="0"
                         Grid.ColumnSpan="{Binding ResultAreaColumn}">
+
+                        <!--  Pinned Results Grid  -->
+                        <flowlauncher:PinnedResultGrid x:Name="PinnedResultGrid" />
+
                         <ContentControl>
                             <flowlauncher:ResultListBox
                                 x:Name="ResultListBox"
                                 DataContext="{Binding Results}"
                                 LeftClickResultCommand="{Binding LeftClickResultCommand}"
+                                MouseSelectCommand="{Binding MouseSelectCommand}"
                                 RightClickResultCommand="{Binding RightClickResultCommand}" />
                         </ContentControl>
                         <ContentControl>
