@@ -1,10 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using YamlDotNet.Serialization;
 
 namespace Flow.Launcher.Core.Plugin
 {
     public class JsonRpcConfigurationModel
     {
+        // Not used by the codebase, purpose is to declare the $schema for Intellisense.
+        [YamlMember(Alias = "$schema", DefaultValuesHandling = DefaultValuesHandling.OmitNull)]
+        public string? Schema { get; set; }
+        
         public List<SettingField> Body { get; set; }
         public void Deconstruct(out List<SettingField> Body)
         {
