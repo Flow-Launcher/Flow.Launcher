@@ -240,7 +240,7 @@ namespace Flow.Launcher.Plugin.Calculator
         {
 
             var action = 
-                !_settings.EnableHistory || _settings.HistoryCreationMode == HistoryCreationMode.OnQuery
+                !_settings.EnableHistory
                 ? CreateClipboardAction(newResult) 
                 : CreateClipboardActionWithHistory(newResult, originalQuery);
 
@@ -273,13 +273,21 @@ namespace Flow.Launcher.Plugin.Calculator
             var baseAction = CreateClipboardAction(newResult);
             return (actionContext) =>
             {
-                if (baseAction(actionContext))
+                if (_settings.HistoryCreationMode == HistoryCreationMode.OnQuery)
                 {
-                    var item = new HistoryItem(originalQuery, newResult, DateTime.Now);
-                    History.AddOrUpdate(item);
-                    return true;
+                    // Executing the result implies the calculation is intended, so worth saving to history
+                    History.FlushPending();
+                    return baseAction(actionContext);
                 }
-                return false;
+
+                if (!baseAction(actionContext))
+                {
+                    return false;
+                }
+
+                var item = new HistoryItem(originalQuery, newResult, DateTime.Now);
+                History.AddOrUpdate(item);
+                return true;
             };
         }
 
