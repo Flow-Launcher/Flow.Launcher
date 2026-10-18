@@ -167,8 +167,8 @@ namespace Flow.Launcher.Plugin.Calculator
                     {
                         Title = $"= {newResult}",
                         IcoPath = IcoPath,
-                        // Keep the calculation result just above the history entries, which use the lower history score
-                        Score = HistoryItem.HistoryItemScore + 1,
+                        // Max score keeps the calculation result above the history entries, which use the lower history score
+                        Score = Result.MaxScore,
                         // Check context nullability for unit testing
                         SubTitle = Context == null
                             ? string.Empty
