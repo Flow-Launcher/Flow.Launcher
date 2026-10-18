@@ -276,7 +276,8 @@ namespace Flow.Launcher.Plugin.Calculator
                 if (_settings.HistoryCreationMode == HistoryCreationMode.OnQuery)
                 {
                     // Executing the result implies the calculation is intended, so worth saving to history
-                    History.FlushPending();
+                    History.CancelPending();
+                    History.AddOrUpdate(new HistoryItem(originalQuery, newResult, DateTime.Now));
                     return baseAction(actionContext);
                 }
 
