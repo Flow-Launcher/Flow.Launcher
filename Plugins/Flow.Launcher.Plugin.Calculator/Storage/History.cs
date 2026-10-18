@@ -45,7 +45,12 @@ public class History
     /// </summary>
     /// <param name="item">The history item to add or update.</param>
     public void AddOrUpdate(HistoryItem item)
-        => AddOrUpdateInternal(item);
+    {
+        lock (_syncRoot)
+        {
+            AddOrUpdateInternal(item);
+        }
+    }
 
     /// <summary>
     /// Unlocked internal helper to add a history item, or update its fields if the query already exists.
@@ -115,6 +120,26 @@ public class History
         }
         Items.Add(item);
     }
+
+    /// <summary>
+    /// Cancels a pending debounced history item so it is not saved, for example when the
+    /// query is cleared or becomes incomplete, or when history is disabled or switched to OnEnter.
+    /// </summary>
+    public void CancelPending()
+    {
+        lock (_syncRoot)
+        {
+            _pendingItem = null;
+            // Stop the timer so a previously scheduled flush cannot commit the cancelled item.
+            _debounceTimer?.Change(Timeout.Infinite, Timeout.Infinite);
+        }
+    }
+
+    /// <summary>
+    /// Immediately flushes the currently pending history item, bypassing the debounce delay.
+    /// </summary>
+    public void FlushPending()
+        => FlushPendingItem();
 
     /// <summary>
     /// Flushes the currently pending history item by adding it to the list.

@@ -12,7 +12,7 @@ using Mages.Core;
 
 namespace Flow.Launcher.Plugin.Calculator
 {
-    public class Main : IPlugin, IPluginI18n, ISettingProvider
+    public class Main : IPlugin, IPluginI18n, ISettingProvider, ISavable
     {
         private static readonly Regex ThousandGroupRegex = MainRegexHelper.GetThousandGroupRegex();
         private static readonly Regex NumberRegex = MainRegexHelper.GetNumberRegex();
@@ -39,7 +39,7 @@ namespace Flow.Launcher.Plugin.Calculator
             Context = context;
             _settings = context.API.LoadSettingJsonStorage<Settings>();
             History = context.API.LoadSettingJsonStorage<History>();
-            _viewModel = new SettingsViewModel(_settings);
+            _viewModel = new SettingsViewModel(_settings, History.CancelPending);
 
             MagesEngine = new Engine(new Configuration
             {
@@ -52,6 +52,13 @@ namespace Flow.Launcher.Plugin.Calculator
 
         public List<Result> Query(Query query)
         {
+            // Invalidate any debounced history entry as soon as the query changes, so an
+            // earlier complete result is not saved while the user is still editing the expression.
+            if (_settings.EnableHistory && _settings.HistoryCreationMode == HistoryCreationMode.OnQuery)
+            {
+                History.CancelPending();
+            }
+
             if (string.IsNullOrWhiteSpace(query.Search))
             {
                 return EmptyResults;
@@ -160,8 +167,8 @@ namespace Flow.Launcher.Plugin.Calculator
                     {
                         Title = $"= {newResult}",
                         IcoPath = IcoPath,
-                        // Max score keeps the calculation result above the history entries, which use the lower history score
-                        Score = Result.MaxScore,
+                        // Keep the calculation result just above the history entries, which use the lower history score
+                        Score = HistoryItem.HistoryItemScore + 1,
                         // Check context nullability for unit testing
                         SubTitle = Context == null
                             ? string.Empty
@@ -532,12 +539,22 @@ namespace Flow.Launcher.Plugin.Calculator
 
         public Control CreateSettingPanel()
         {
-            return new CalculatorSettings(_settings);
+            return new CalculatorSettings(_viewModel);
         }
 
         public void OnCultureInfoChanged(CultureInfo newCulture)
         {
             DecimalSeparatorLocalized.UpdateLabels(_viewModel.AllDecimalSeparator);
+            HistoryCreationModeLocalized.UpdateLabels(_viewModel.AllHistoryCreationMode);
+        }
+
+        /// <summary>
+        /// Flushes any debounced history entry before Flow persists the plugin settings,
+        /// so a calculation entered just before shutdown is not lost.
+        /// </summary>
+        public void Save()
+        {
+            History?.FlushPending();
         }
     }
 }

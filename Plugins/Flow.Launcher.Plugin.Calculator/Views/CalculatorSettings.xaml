@@ -135,7 +135,7 @@
             Grid.ColumnSpan="2"
             Margin="{StaticResource SettingPanelItemTopBottomMargin}"
             VerticalAlignment="Center"
-            Foreground="Orange"
+            Foreground="{DynamicResource InfoBarWarningIcon}"
             Text="{DynamicResource flowlauncher_plugin_calculator_history_creation_mode_warning}"
             TextAlignment="Left"
             TextWrapping="Wrap"

@@ -138,6 +138,33 @@ namespace Flow.Launcher.Test.Plugins
             ClassicAssert.IsNotNull(historyResult.Action);
         }
 
+        [Test]
+        public void CalculationHistory_IncompleteQueryDoesNotSavePreviousResult()
+        {
+            _settings.EnableHistory = true;
+            _settings.HistoryCreationMode = HistoryCreationMode.OnQuery;
+
+            _plugin.Query(new Plugin.Query { Search = "2" });
+            // An incomplete expression invalidates the pending "2" entry.
+            _plugin.Query(new Plugin.Query { Search = "2+" });
+            WaitForHistoryDebounce();
+
+            ClassicAssert.AreEqual(0, GetHistory().Items.Count);
+        }
+
+        [Test]
+        public void CalculationHistory_FlushesPendingItemOnSave()
+        {
+            _settings.EnableHistory = true;
+            _settings.HistoryCreationMode = HistoryCreationMode.OnQuery;
+
+            _plugin.Query(new Plugin.Query { Search = "3+3" });
+            _plugin.Save();
+
+            ClassicAssert.AreEqual(1, GetHistory().Items.Count);
+            ClassicAssert.AreEqual("3+3", GetHistory().Items[0].Query);
+        }
+
         // Basic operations
         [TestCase(@"1+1", "2")]
         [TestCase(@"2-1", "1")]
@@ -191,11 +218,7 @@ namespace Flow.Launcher.Test.Plugins
 
         private void WaitForHistoryDebounce()
         {
-            var flushPendingItemMethod = typeof(History).GetMethod("FlushPendingItem", BindingFlags.NonPublic | BindingFlags.Instance);
-            Assert.That(flushPendingItemMethod, Is.Not.Null,
-                "Could not find method 'FlushPendingItem' on Flow.Launcher.Plugin.Calculator.Storage.History");
-
-            flushPendingItemMethod!.Invoke(GetHistory(), null);
+            GetHistory().FlushPending();
         }
 
         private History GetHistory()
