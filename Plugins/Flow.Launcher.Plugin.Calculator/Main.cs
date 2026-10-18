@@ -167,8 +167,10 @@ namespace Flow.Launcher.Plugin.Calculator
                     {
                         Title = $"= {newResult}",
                         IcoPath = IcoPath,
-                        // Slightly less than Max score keeps the calculation result above the history entries, which use the lower history score
-                        Score = Result.MaxScore-100,
+                        // Sorts above history but stays below user set topmost results (that would have max score)
+                        Score = HistoryItem.HistoryItemScore + 1,
+                        // Keep result scores deterministic so usage never reorders the calculator block
+                        AddSelectedCount = false,
                         // Check context nullability for unit testing
                         SubTitle = Context == null
                             ? string.Empty
@@ -200,6 +202,8 @@ namespace Flow.Launcher.Plugin.Calculator
                                 BadgeIcoPath = HistoryItem.BadgeIconPath,
                                 ShowBadge = true,
                                 Score = HistoryItem.HistoryItemScore,
+                                // Keep history ordered by recency, not by how often each entry was run
+                                AddSelectedCount = false,
                                 CopyText = item.CalcResult,
                                 Action = CreateChangeQueryAction(item.Query)
                             });
