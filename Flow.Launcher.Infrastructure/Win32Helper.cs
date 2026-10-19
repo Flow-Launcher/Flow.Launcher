@@ -164,12 +164,13 @@ namespace Flow.Launcher.Infrastructure
         /// <summary>
         /// Brings <paramref name="window"/> to the foreground even when the calling context does not
         /// hold foreground permission (e.g. after a WH_KEYBOARD_LL hook swallowed the triggering key,
-        /// so no process "received the last input event").
+        /// so no process "received the last input event"). Escalates only as far as needed: a plain
+        /// SetForegroundWindow first, so the usual paths (WM_HOTKEY, tray icon) inject nothing.
         /// </summary>
         public static unsafe void ForceForeground(Window window)
         {
             var hwnd = new HWND((nint)GetWindowHandle(window));
-            if (hwnd == PInvoke.GetForegroundWindow())
+            if (hwnd == PInvoke.GetForegroundWindow() || PInvoke.SetForegroundWindow(hwnd))
                 return;
 
             // Windows grants foreground rights to the process that sent the last input event.

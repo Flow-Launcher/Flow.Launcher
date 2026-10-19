@@ -51,12 +51,13 @@ public partial class HotkeyControlDialog : ContentDialog
 
         InitializeComponent();
 
-        // TODO: This is a temporary way to enforce changing only the open flow hotkey to Win, and will be removed by PR #3157
+        // TODO: This is a temporary way to enforce changing only the open flow hotkey to Win (or Win+key), and will be removed by PR #3157
         isOpenFlowHotkey = _hotkeySettings.RegisteredHotkeys
                              .Any(x => x.DescriptionResourceKey == "flowlauncherHotkey"
                                     && x.Hotkey.ToString() == hotkey);
 
         ChefKeysManager.StartMenuEnableBlocking = true;
+        HotKeyMapper.SuspendWinComboHotkey = true;
         ChefKeysManager.Start();
 
         // Cancel/Save explicitly clean up ChefKeys before calling Hide(). The Closed handler
@@ -64,6 +65,7 @@ public partial class HotkeyControlDialog : ContentDialog
         this.Closed += (_, _) =>
         {
             ChefKeysManager.StartMenuEnableBlocking = false;
+            HotKeyMapper.SuspendWinComboHotkey = false;
             ChefKeysManager.Stop();
         };
 
@@ -127,6 +129,7 @@ public partial class HotkeyControlDialog : ContentDialog
     private void Cancel(object sender, RoutedEventArgs routedEventArgs)
     {
         ChefKeysManager.StartMenuEnableBlocking = false;
+        HotKeyMapper.SuspendWinComboHotkey = false;
         ChefKeysManager.Stop();
         UnregisterWinComboInterceptor();
 
@@ -137,6 +140,7 @@ public partial class HotkeyControlDialog : ContentDialog
     private void Save(object sender, RoutedEventArgs routedEventArgs)
     {
         ChefKeysManager.StartMenuEnableBlocking = false;
+        HotKeyMapper.SuspendWinComboHotkey = false;
         ChefKeysManager.Stop();
         UnregisterWinComboInterceptor();
 

@@ -265,9 +265,9 @@ namespace Flow.Launcher
                                     }
 
                                     // Update position & Activate
-                                    // ForceForeground ensures the window gets focus even when invoked
-                                    // from a WH_KEYBOARD_LL hook, which does not grant foreground
-                                    // permission the way WM_HOTKEY does.
+                                    // ForceForeground ensures the window gets focus even when opened by
+                                    // the Win+key keyboard hook, which (unlike WM_HOTKEY) does not grant
+                                    // foreground permission.
                                     UpdatePosition();
                                     Win32Helper.ForceForeground(this);
                                     Activate();

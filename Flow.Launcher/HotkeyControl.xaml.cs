@@ -278,6 +278,8 @@ namespace Flow.Launcher
             {
                 bool hotkeyAvailable;
                 // TODO: This is a temporary way to enforce changing only the open flow hotkey to Win, and will be removed by PR #3157
+                // Win+key combos are also allowed here: Windows may reserve them, so HotKeyMapper registers them
+                // through a keyboard hook instead and the usual availability check would wrongly reject them.
                 if (keyModel.ToString() == "LWin" || keyModel.ToString() == "RWin"
                     || (Type == HotkeyType.Hotkey && keyModel.Win && keyModel.CharKey != Key.None))
                 {

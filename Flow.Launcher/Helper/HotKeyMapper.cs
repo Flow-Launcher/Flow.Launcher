@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows.Input;
 using Flow.Launcher.Infrastructure;
 using ChefKeys;
@@ -20,7 +19,16 @@ internal static class HotKeyMapper
 
     private static Settings _settings;
     private static MainViewModel _mainViewModel;
-    private static readonly Dictionary<string, Func<int, int, SpecialKeyState, bool>> _winComboCallbacks = new();
+    // Keyboard-hook fallback for a Win+key toggle hotkey that Windows refuses to register.
+    // Only one may exist: each instance suppresses and replays the Win key on its own.
+    private static string _winComboHotkeyStr;
+    private static Func<int, int, SpecialKeyState, bool> _winComboCallback;
+
+    /// <summary>
+    /// While true, the Win+key fallback lets all keys through untouched, so the hotkey
+    /// dialog can record a combination even when the current hotkey is a Win+key combo.
+    /// </summary>
+    internal static bool SuspendWinComboHotkey { get; set; }
 
     internal static void Initialize()
     {
@@ -87,7 +95,10 @@ internal static class HotKeyMapper
         }
         catch (Exception e)
         {
-            if (hotkey.Win && hotkey.CharKey != Key.None)
+            // Windows reserves many Win+key combos (Win+A, Win+D, …). For the main toggle
+            // hotkey only, fall back to the keyboard hook instead of failing.
+            if (hotkey.Win && hotkey.CharKey != Key.None
+                && action == (EventHandler<HotkeyEventArgs>)OnToggleHotkey)
             {
                 App.API.LogDebug(ClassName,
                     $"|HotkeyMapper.SetHotkey|RegisterHotKey failed for {hotkeyStr} ({e.Message}); falling back to global keyboard callback.");
@@ -123,12 +134,7 @@ internal static class HotKeyMapper
         const ushort VK_LWIN = 0x5B;
         const ushort VK_RWIN = 0x5C;
 
-        string hotkeyStr = hotkey.ToString();
-        if (_winComboCallbacks.TryGetValue(hotkeyStr, out var existing))
-        {
-            App.API.RemoveGlobalKeyboardCallback(existing);
-            _winComboCallbacks.Remove(hotkeyStr);
-        }
+        RemoveWinComboCallback();
 
         int expectedVkCode = KeyInterop.VirtualKeyFromKey(hotkey.CharKey);
         bool needCtrl = hotkey.Ctrl;
@@ -158,6 +164,12 @@ internal static class HotKeyMapper
             // Suppress Win keydown and start tracking
             if (isDown && isWin && !winSuppressed)
             {
+                // In Game Mode or over a fullscreen app the hotkey would be ignored anyway, and
+                // while the hotkey dialog is recording it must see the real keys, so don't
+                // intercept or inject anything: leave the Win key sequence untouched.
+                if (SuspendWinComboHotkey || _mainViewModel.ShouldIgnoreHotkeys())
+                    return true;
+
                 winSuppressed = true;
                 pressedWinVk = (ushort)vkCode;
                 comboFired = false;
@@ -216,8 +228,7 @@ internal static class HotKeyMapper
                 bool isModifier = vkCode is 0x10 or 0x11 or 0x12  // Shift, Ctrl, Alt
                     or 0xA0 or 0xA1  // LShift, RShift
                     or 0xA2 or 0xA3  // LCtrl, RCtrl
-                    or 0xA4 or 0xA5  // LAlt, RAlt
-                    or VK_LWIN or VK_RWIN;
+                    or 0xA4 or 0xA5; // LAlt, RAlt
 
                 if (isModifier) return true; // let modifier keys flow naturally
 
@@ -258,8 +269,19 @@ internal static class HotKeyMapper
             return true;
         };
 
-        _winComboCallbacks[hotkeyStr] = callback;
+        _winComboHotkeyStr = hotkey.ToString();
+        _winComboCallback = callback;
         App.API.RegisterGlobalKeyboardCallback(callback);
+    }
+
+    private static void RemoveWinComboCallback()
+    {
+        if (_winComboCallback == null)
+            return;
+
+        App.API.RemoveGlobalKeyboardCallback(_winComboCallback);
+        _winComboCallback = null;
+        _winComboHotkeyStr = null;
     }
 
     internal static void RemoveHotkey(string hotkeyStr)
@@ -272,10 +294,9 @@ internal static class HotKeyMapper
                 return;
             }
 
-            if (_winComboCallbacks.TryGetValue(hotkeyStr, out var callback))
+            if (_winComboCallback != null && hotkeyStr == _winComboHotkeyStr)
             {
-                App.API.RemoveGlobalKeyboardCallback(callback);
-                _winComboCallbacks.Remove(hotkeyStr);
+                RemoveWinComboCallback();
                 return;
             }
 
