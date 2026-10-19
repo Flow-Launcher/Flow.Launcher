@@ -7,10 +7,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using Flow.Launcher.Plugin.SharedCommands;
+using Version = SemanticVersioning.Version;
 
 namespace Flow.Launcher.Plugin.PluginsManager
 {
-    internal class PluginsManager
+    public class PluginsManager
     {
         private const string ZipSuffix = "zip";
 
@@ -92,7 +93,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             if (PluginExists(plugin.ID))
             {
                 if (Context.API.GetAllPlugins()
-                    .Any(x => x.Metadata.ID == plugin.ID && x.Metadata.Version.CompareTo(plugin.Version) < 0))
+                    .Any(x => x.Metadata.ID == plugin.ID && IsUpdateAvailable(x.Metadata.Version, plugin.Version)))
                 {
                     var updateDetail = !plugin.IsFromLocalInstallPath ? plugin.Name : plugin.LocalInstallPath;
 
@@ -275,9 +276,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 from existingPlugin in Context.API.GetAllPlugins()
                 join pluginUpdateSource in updateSource
                     on existingPlugin.Metadata.ID equals pluginUpdateSource.ID
-                where string.Compare(existingPlugin.Metadata.Version, pluginUpdateSource.Version,
-                          StringComparison.InvariantCulture) <
-                      0 // if current version precedes version of the plugin from update source (e.g. PluginsManifest)
+                where IsUpdateAvailable(existingPlugin.Metadata.Version, pluginUpdateSource.Version)
                       && !Context.API.PluginModified(existingPlugin.Metadata.ID)
                 select
                     new
@@ -839,6 +838,48 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     string.Format(Context.API.GetTranslation("plugin_pluginsmanager_plugin_modified_error"), plugin.Name));
                 return false;
             }
+        }
+
+        public static bool IsUpdateAvailable(string currentVersion, string latestVersion)
+        {
+            if (TryParseSemanticVersion(currentVersion, out var current) &&
+                TryParseSemanticVersion(latestVersion, out var latest))
+            {
+                return current < latest;
+            }
+
+            // Third-party plugins may use version formats that are not valid semantic versions.
+            // Preserve the previous comparison behavior so those plugins are not silently omitted.
+            return string.Compare(currentVersion, latestVersion, StringComparison.InvariantCulture) < 0;
+        }
+
+        private static bool TryParseSemanticVersion(string value, out Version version)
+        {
+            if (Version.TryParse(value, out version))
+            {
+                return true;
+            }
+
+            if (string.IsNullOrEmpty(value))
+            {
+                return false;
+            }
+
+            var suffixIndex = value.IndexOfAny(new[] { '-', '+' });
+            var coreLength = suffixIndex >= 0 ? suffixIndex : value.Length;
+            var componentCount = value[..coreLength].Split('.').Length;
+
+            if (componentCount is not (1 or 2))
+            {
+                return false;
+            }
+
+            var missingComponents = componentCount == 1 ? ".0.0" : ".0";
+            var normalized = suffixIndex >= 0
+                ? value.Insert(suffixIndex, missingComponents)
+                : value + missingComponents;
+
+            return Version.TryParse(normalized, out version);
         }
     }
 }

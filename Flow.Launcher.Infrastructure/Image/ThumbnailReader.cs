@@ -30,8 +30,6 @@ namespace Flow.Launcher.Infrastructure.Image
     {
         // Based on https://stackoverflow.com/questions/21751747/extract-thumbnail-for-any-file-in-windows
 
-        private static readonly Guid GUID_IShellItem = typeof(IShellItem).GUID;
-
         private static readonly HRESULT S_EXTRACTIONFAILED = (HRESULT)0x8004B200;
 
         private static readonly HRESULT S_PATHNOTFOUND = (HRESULT)0x8004B205;
@@ -91,19 +89,15 @@ namespace Flow.Launcher.Infrastructure.Image
         /// <exception cref="InvalidOperationException">If the shell item does not expose IShellItemImageFactory or if an unexpected error occurs while obtaining the image.</exception>
         private static unsafe HBITMAP GetHBitmap(string fileName, int width, int height, ThumbnailOptions options)
         {
-            var retCode = PInvoke.SHCreateItemFromParsingName(
-                fileName,
-                null,
-                GUID_IShellItem,
-                out var nativeShellItem);
+            var retCode = PInvoke.SHCreateItemFromParsingName<IShellItem>(fileName, null, out var shellItem);
 
             if (retCode != HRESULT.S_OK)
                 throw Marshal.GetExceptionForHR(retCode);
 
-            if (nativeShellItem is not IShellItemImageFactory imageFactory)
+            if (shellItem is not IShellItemImageFactory imageFactory)
             {
-                Marshal.ReleaseComObject(nativeShellItem);
-                nativeShellItem = null;
+                Marshal.ReleaseComObject(shellItem);
+                shellItem = null;
                 throw new InvalidOperationException("Failed to get IShellItemImageFactory");
             }
 
@@ -139,9 +133,9 @@ namespace Flow.Launcher.Infrastructure.Image
             }
             finally
             {
-                if (nativeShellItem != null)
+                if (shellItem != null)
                 {
-                    Marshal.ReleaseComObject(nativeShellItem);
+                    Marshal.ReleaseComObject(shellItem);
                 }
             }
 

@@ -31,6 +31,7 @@ namespace Flow.Launcher
 
         private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
         {
+            e.Handled = true;
             DialogResult = false;
             Close();
         }

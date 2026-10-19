@@ -47,12 +47,40 @@
                             Foreground="{DynamicResource Color04B}"
                             Text="{Binding PluginPair.Metadata.Description}"
                             TextWrapping="WrapWithOverflow" />
+                        <StackPanel
+                            Margin="0 2 0 0"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            Visibility="{Binding UpdateButtonVisibility}">
+                            <TextBlock
+                                FontSize="11"
+                                Foreground="{DynamicResource Color08B}"
+                                Text="{Binding PluginPair.Metadata.Version, StringFormat='v{0}'}" />
+                            <ui:FontIcon
+                                Margin="4 0 0 0"
+                                FontSize="8"
+                                Foreground="{DynamicResource Color08B}"
+                                Glyph="&#xf0af;" />
+                            <TextBlock
+                                Margin="4 0 0 0"
+                                FontSize="11"
+                                Foreground="{DynamicResource Color05B}"
+                                Text="{Binding NewVersion, StringFormat='v{0}'}" />
+                        </StackPanel>
                     </StackPanel>
 
                     <StackPanel
                         Grid.Column="2"
                         HorizontalAlignment="Right"
                         Orientation="Horizontal">
+                        <Button
+                            VerticalAlignment="Center"
+                            Margin="0 0 8 0"
+                            Padding="12 4"
+                            Command="{Binding UpdatePluginCommand}"
+                            Content="{DynamicResource updatebtn}"
+                            Style="{DynamicResource AccentButtonStyle}"
+                            Visibility="{Binding UpdateButtonVisibility}" />
                         <StackPanel
                             x:Name="PriorityControl"
                             VerticalAlignment="Center"

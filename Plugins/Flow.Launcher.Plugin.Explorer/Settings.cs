@@ -89,7 +89,7 @@ namespace Flow.Launcher.Plugin.Explorer
 
         #region SearchEngine
 
-        private EverythingSearchManager EverythingManagerInstance => _everythingManagerInstance ??= new EverythingSearchManager(this);
+        internal EverythingSearchManager EverythingManagerInstance => _everythingManagerInstance ??= new EverythingSearchManager(this);
         private WindowsIndexSearchManager WindowsIndexSearchManager => _windowsIndexSearchManager ??= new WindowsIndexSearchManager(this);
 
         public IndexSearchEngineOption IndexSearchEngine { get; set; } = IndexSearchEngineOption.WindowsIndex;
@@ -163,6 +163,10 @@ namespace Flow.Launcher.Plugin.Explorer
 
         public bool EverythingSearchFullPath { get; set; } = false;
         public bool EverythingEnableRunCount { get; set; } = true;
+
+        // This is only used as a flag to determine whether to show the Everything 1.5 support option in the settings UI, and to determine which instance of Everything API to initialize in the EverythingSearchManager.
+        public bool EnableEverything15Support { get; set; } = false;
+        public string Everything15InstanceName { get; set; } = string.Empty;
 
         #endregion
 

@@ -138,6 +138,8 @@
     <system:String x:Key="ShouldUseDoublePinyin">Use Double Pinyin</system:String>
     <system:String x:Key="ShouldUseDoublePinyinToolTip">Use Double Pinyin instead of Full Pinyin to search.</system:String>
     <system:String x:Key="DoublePinyinSchema">Double Pinyin Schema</system:String>
+    <system:String x:Key="UsePolyphonicPhraseOverrides">Use polyphonic phrase pronunciations</system:String>
+    <system:String x:Key="UsePolyphonicPhraseOverridesToolTip">Use phrase-level pronunciation data to improve Pinyin conversion for polyphonic Chinese characters. This may use additional memory.</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoHe">Xiao He</system:String>
     <system:String x:Key="DoublePinyinSchemasZiRanMa">Zi Ran Ma</system:String>
     <system:String x:Key="DoublePinyinSchemasWeiRuan">Wei Ruan</system:String>
@@ -150,7 +152,7 @@
     <system:String x:Key="HelpUsTranslateFlow">Help us translate Flow</system:String>
 
     <system:String x:Key="AlwaysPreview">Always Preview</system:String>
-    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow activates. Press {0} to toggle preview.</system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Always open the preview panel. Press {0} to toggle. Per their own requirements, plugins may override this to always or never for their results.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Shadow effect is not allowed while current theme has blur effect enabled</system:String>
     <system:String x:Key="searchDelay">Search Delay</system:String>
     <system:String x:Key="searchDelayToolTip">Adds a short delay while typing to reduce UI flicker and result load. Recommended if your typing speed is average.</system:String>
@@ -178,8 +180,8 @@
     <system:String x:Key="historyResultsCountForHomePage">Maximum History Results Shown in Home Page</system:String>
     <system:String x:Key="historyStyle">History Style</system:String>
     <system:String x:Key="historyStyleTooltip">Choose the type of history to show in the History and Home Page</system:String>
-    <system:String x:Key="queryHistory">Query history</system:String>
-    <system:String x:Key="executedHistory">Last opened history</system:String>
+    <system:String x:Key="queryHistory">Query History</system:String>
+    <system:String x:Key="executedHistory">Last Opened History</system:String>
     <system:String x:Key="homeToggleBoxToolTip">This can only be edited if plugin supports Home feature and Home Page is enabled.</system:String>
     <system:String x:Key="showAtTopmost">Show Search Window at Foremost</system:String>
     <system:String x:Key="showAtTopmostToolTip">Overrides other programs' 'Always on Top' setting and displays Flow in the foremost position.</system:String>
@@ -322,6 +324,13 @@
     <system:String x:Key="ColorSchemeSystem">System Default</system:String>
     <system:String x:Key="ColorSchemeLight">Light</system:String>
     <system:String x:Key="ColorSchemeDark">Dark</system:String>
+    <system:String x:Key="CodeHighlightTheme">Code Highlight Theme</system:String>
+    <system:String x:Key="CodeHighlightThemeTooltip">Syntax highlighting theme for code blocks in the markdown preview pane.</system:String>
+    <system:String x:Key="CodeHighlightThemeAuto">Auto (match color scheme)</system:String>
+    <system:String x:Key="CodeHighlightThemeVSCodeLight">VS Code Light</system:String>
+    <system:String x:Key="CodeHighlightThemeVSCodeDarkPlus">VS Code Dark+</system:String>
+    <system:String x:Key="CodeHighlightThemeCatppuccinMacchiato">Catppuccin Macchiato</system:String>
+    <system:String x:Key="CodeHighlightThemeOneDark">One Dark</system:String>
     <system:String x:Key="SoundEffect">Sound Effect</system:String>
     <system:String x:Key="SoundEffectTip">Play a small sound when the search window opens</system:String>
     <system:String x:Key="SoundEffectVolume">Sound Effect Volume</system:String>
@@ -483,9 +492,21 @@
     <system:String x:Key="clearcachefolderMessage">Are you sure you want to delete all caches?</system:String>
     <system:String x:Key="clearfolderfailMessage">Failed to clear part of folders and files. Please see log file for more information</system:String>
     <system:String x:Key="welcomewindow">Wizard</system:String>
+    <system:String x:Key="openWelcomeWindow">Open Welcome Window</system:String>
     <system:String x:Key="userdatapath">User Data Location</system:String>
     <system:String x:Key="userdatapathToolTip">User settings and installed plugins are saved in the user data folder. This location may vary depending on whether it's in portable mode or not.</system:String>
     <system:String x:Key="userdatapathButton">Open Folder</system:String>
+    <system:String x:Key="openFolderButton">Open Folder</system:String>
+    <system:String x:Key="devtoolsReportWindow">Report Window</system:String>
+    <system:String x:Key="devtoolsProgressWindow">Progress Window</system:String>
+    <system:String x:Key="devtoolsPluginUpdateWindow">Plugin Update Window</system:String>
+    <system:String x:Key="devtoolsMessageBoxWindow">Message Box Window</system:String>
+    <system:String x:Key="devtoolsMessageBoxOkLabel">OK</system:String>
+    <system:String x:Key="devtoolsMessageBoxOkCancelLabel">OK / Cancel</system:String>
+    <system:String x:Key="devtoolsMessageBoxYesNoLabel">Yes / No</system:String>
+    <system:String x:Key="devtoolsMessageBoxYesNoCancelLabel">Yes / No / Cancel</system:String>
+    <system:String x:Key="devtoolsMessageBoxTestMessage">This is a test message box.</system:String>
+    <system:String x:Key="devtoolsOpenTestWindow">Open Test Window</system:String>
     <system:String x:Key="advanced">Advanced</system:String>
     <system:String x:Key="logLevel">Log Level</system:String>
     <system:String x:Key="LogLevelNONE">Silent</system:String>

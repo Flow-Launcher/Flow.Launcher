@@ -189,6 +189,8 @@ namespace Flow.Launcher
 
         private void Button_Cancel(object sender, RoutedEventArgs e)
         {
+            e.Handled = true;
+
             if (_button == MessageBoxButton.YesNo)
                 // Follow System.Windows.MessageBox behavior
                 return;

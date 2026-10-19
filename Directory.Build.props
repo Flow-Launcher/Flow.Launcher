@@ -1,5 +1,6 @@
 <Project>
   <PropertyGroup>
+    <TargetFramework>net9.0-windows10.0.19041.0</TargetFramework>
     <AccelerateBuildsInVisualStudio>true</AccelerateBuildsInVisualStudio>
     <!-- Workaround https://github.com/dotnet/runtime/issues/109682 -->
     <CETCompat>false</CETCompat>

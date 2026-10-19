@@ -123,9 +123,9 @@
     <system:String x:Key="hideOnStartupToolTip">La ventana de búsqueda de Flow Launcher se oculta en la bandeja del sistema tras el arranque.</system:String>
     <system:String x:Key="hideNotifyIcon">Ocultar icono en la bandeja del sistema</system:String>
     <system:String x:Key="hideNotifyIconToolTip">Cuando el icono está oculto en la bandeja del sistema, se puede abrir el menú de configuración haciendo clic con el botón derecho en la ventana de búsqueda.</system:String>
-    <system:String x:Key="ignoreAccents">Ignorar los acentos en la búsqueda</system:String>
+    <system:String x:Key="ignoreAccents">Ignorar acentos al realizar búsquedas</system:String>
     <system:String x:Key="ignoreAccentsToolTip">Considera equivalentes los caracteres acentuados y los no acentuados.</system:String>
-    <system:String x:Key="promptIgnoreAccents">¿Desearía activar la opción de ignorar los acentos al realizar búsquedas?</system:String>
+    <system:String x:Key="promptIgnoreAccents">¿Desearía activar la opción de ignorar acentos al realizar búsquedas?</system:String>
     <system:String x:Key="querySearchPrecision">Precisión de búsqueda en consultas</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Cambia la puntuación mínima requerida para la coincidencia de los resultados.</system:String>
     <system:String x:Key="SearchPrecisionNone">Ninguna</system:String>

@@ -80,51 +80,43 @@ namespace Flow.Launcher.Plugin.Program
 
         public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
         {
-            var result = await cache.GetOrCreateAsync(query.Search, async entry =>
+            try
             {
-                var resultList = await Task.Run(async () =>
+                var result = await cache.GetOrCreateAsync(query.Search, async entry =>
                 {
-                    // Preparing win32 programs
-                    List<Win32> win32s;
-                    bool win32LockAcquired = false;
-                    try
+                    var resultList = await Task.Run(async () =>
                     {
-                        await _win32sLock.WaitAsync(token);
-                        win32LockAcquired = true;
-                        win32s = [.. _win32s];
-                    }
-                    catch (OperationCanceledException)
-                    {
-                        return emptyResults;
-                    }
-                    finally
-                    {
-                        // Only release the lock if it was acquired
-                        if (win32LockAcquired) _win32sLock.Release();
-                    }
+                        // Preparing win32 programs
+                        List<Win32> win32s;
+                        bool win32LockAcquired = false;
+                        try
+                        {
+                            await _win32sLock.WaitAsync(token);
+                            win32LockAcquired = true;
+                            win32s = [.. _win32s];
+                        }
+                        finally
+                        {
+                            // Only release the lock if it was acquired
+                            if (win32LockAcquired) _win32sLock.Release();
+                        }
 
-                    // Preparing UWP programs
-                    List<UWPApp> uwps;
-                    bool uwpsLockAcquired = false;
-                    try
-                    {
-                        await _uwpsLock.WaitAsync(token);
-                        uwpsLockAcquired = true;
-                        uwps = [.. _uwps];
-                    }
-                    catch (OperationCanceledException)
-                    {
-                        return emptyResults;
-                    }
-                    finally
-                    {
-                        // Only release the lock if it was acquired
-                        if (uwpsLockAcquired) _uwpsLock.Release();
-                    }
+                        // Preparing UWP programs
+                        List<UWPApp> uwps;
+                        bool uwpsLockAcquired = false;
+                        try
+                        {
+                            await _uwpsLock.WaitAsync(token);
+                            uwpsLockAcquired = true;
+                            uwps = [.. _uwps];
+                        }
+                        finally
+                        {
+                            // Only release the lock if it was acquired
+                            if (uwpsLockAcquired) _uwpsLock.Release();
+                        }
 
-                    // Start querying programs
-                    try
-                    {
+                        // Start querying programs
                         // Collect all UWP Windows app directories
                         var uwpsDirectories = _settings.HideDuplicatedWindowsApp ? _uwps
                             .Where(uwp => !string.IsNullOrEmpty(uwp.Location)) // Exclude invalid paths
@@ -143,22 +135,22 @@ namespace Flow.Launcher.Plugin.Program
                             .Select(p => p.Result(query.Search, Context.API))
                             .Where(r => string.IsNullOrEmpty(query.Search) || r?.Score > 0)
                             .ToList();
-                    }
-                    catch (OperationCanceledException)
-                    {
-                        return emptyResults;
-                    }
-                }, token);
+                    }, token);
 
-                resultList = resultList.Count != 0 ? resultList : emptyResults;
+                    resultList = resultList.Count != 0 ? resultList : emptyResults;
 
-                entry.SetSize(resultList.Count);
-                entry.SetSlidingExpiration(TimeSpan.FromHours(8));
+                    entry.SetSize(resultList.Count);
+                    entry.SetSlidingExpiration(TimeSpan.FromHours(8));
 
-                return resultList;
-            });
+                    return resultList;
+                });
 
-            return result;
+                return result;
+            }
+            catch (OperationCanceledException)
+            {
+                return emptyResults;
+            }
         }
 
         private bool HideUninstallersFilter(IProgram program)

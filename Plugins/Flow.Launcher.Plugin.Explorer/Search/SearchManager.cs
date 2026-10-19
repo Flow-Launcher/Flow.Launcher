@@ -291,6 +291,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         private bool IsExcludedFile(SearchResult result)
         {
+            if (string.IsNullOrEmpty(result.FullPath))
+                return false;
+
             string[] excludedFileTypes = Settings.ExcludedFileTypes.Split([','], StringSplitOptions.RemoveEmptyEntries);
             string fileExtension = Path.GetExtension(result.FullPath).TrimStart('.');
 

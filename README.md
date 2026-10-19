@@ -161,9 +161,9 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
 
 <img src="https://user-images.githubusercontent.com/6903107/207159213-662999d3-2c18-4256-b473-c417efca0069.png" width="400">
 
-- Use <kbd>F1</kbd> to toggle the preview panel.
-- Media files will be displayed as large images, otherwise a large icon and full path will be displayed.
-- Turn on preview permanently via Settings (Always Preview).
+- Use <kbd>F1</kbd> to show or hide previews
+- Results can preview media files as large images, show an icon and description, or use markdown with code highlighting.
+- Show previews by default via Settings (Always Preview).
 - Use <kbd>Ctrl</kbd>+<kbd>+</kbd>/<kbd>-</kbd> and <kbd>Ctrl</kbd>+<kbd>[</kbd>/<kbd>]</kbd> to adjust search window width and height quickly if the preview area is too narrow.
 
 ### Customizations
@@ -306,7 +306,7 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
 | <kbd>←</kbd>/<kbd>→</kbd>                                                 | Back to result / Open Context Menu              |
 | <kbd>Ctrl</kbd>+<kbd>O</kbd> , <kbd>Shift</kbd>+<kbd>Enter</kbd>          | Open Context Menu                               |
 | <kbd>Ctrl</kbd>+<kbd>Tab</kbd>                                            | Autocomplete                                    |
-| <kbd>F1</kbd>                                                             | Toggle Preview Panel (default and configurable) |
+| <kbd>F1</kbd>                                                             | Toggle previews                                 |
 | <kbd>Esc</kbd>                                                            | Back to results / hide search window            |
 | <kbd>Ctrl</kbd>+<kbd>C</kbd>                                              | Copy folder / file                              |
 | <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>C</kbd>                             | Copy folder / file path                         |
@@ -364,6 +364,9 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
   </a>
   <a href="https://github.com/Calapine">
     <img src='https://avatars.githubusercontent.com/u/76205879?v=4' width="10%"/>
+  </a>
+  <a href="https://github.com/JakobOstgren">
+    <img src='https://avatars.githubusercontent.com/u/230895476?v=4' width="10%"/>
   </a>
 </p>
 <p align="center">

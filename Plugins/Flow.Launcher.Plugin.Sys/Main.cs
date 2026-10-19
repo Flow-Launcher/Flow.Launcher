@@ -53,6 +53,15 @@ namespace Flow.Launcher.Plugin.Sys
 
         private const string Documentation = "https://flowlauncher.com/docs/#/usage-tips";
 
+        private const uint WmSysCommand = 0x0112;
+        private const int ScMonitorPower = 0xF170;
+        private static readonly IntPtr HwndBroadcast = new(0xFFFF);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool SendNotifyMessage(
+            IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
+
         internal static PluginInitContext Context { get; private set; }
         private Settings _settings;
         private SettingsViewModel _viewModel;
@@ -155,11 +164,17 @@ namespace Flow.Launcher.Plugin.Sys
             }
         }
 
-        private static unsafe bool EnableShutdownPrivilege()
+        private static bool EnableShutdownPrivilege() => EnableShutdownPrivilege(out _);
+
+        /// <param name="previousState">What to pass to <see cref="RestorePrivileges"/> to undo the change.</param>
+        private static unsafe bool EnableShutdownPrivilege(out TOKEN_PRIVILEGES previousState)
         {
+            previousState = default;
             try
             {
-                if (!PInvoke.OpenProcessToken(Process.GetCurrentProcess().SafeHandle, TOKEN_ACCESS_MASK.TOKEN_ADJUST_PRIVILEGES | TOKEN_ACCESS_MASK.TOKEN_QUERY, out var tokenHandle))
+                var tokenOpened = PInvoke.OpenProcessToken(Process.GetCurrentProcess().SafeHandle, TOKEN_ACCESS_MASK.TOKEN_ADJUST_PRIVILEGES | TOKEN_ACCESS_MASK.TOKEN_QUERY, out var tokenHandle);
+                using var token = tokenHandle;
+                if (!tokenOpened)
                 {
                     return false;
                 }
@@ -175,7 +190,8 @@ namespace Flow.Launcher.Plugin.Sys
                     Privileges = new() { e0 = new LUID_AND_ATTRIBUTES { Luid = luid, Attributes = TOKEN_PRIVILEGES_ATTRIBUTES.SE_PRIVILEGE_ENABLED } }
                 };
 
-                if (!PInvoke.AdjustTokenPrivileges(tokenHandle, false, &privileges, null, out var _))
+                Span<byte> previous = stackalloc byte[sizeof(TOKEN_PRIVILEGES)];
+                if (!PInvoke.AdjustTokenPrivileges(token, false, &privileges, previous, out var _))
                 {
                     return false;
                 }
@@ -185,12 +201,112 @@ namespace Flow.Launcher.Plugin.Sys
                     return false;
                 }
 
+                previousState = MemoryMarshal.Read<TOKEN_PRIVILEGES>(previous);
                 return true;
             }
             catch (Exception)
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Puts back the privileges <see cref="EnableShutdownPrivilege(out TOKEN_PRIVILEGES)"/> changed.
+        /// An empty state (the privilege was already enabled) changes nothing.
+        /// </summary>
+        private static unsafe void RestorePrivileges(TOKEN_PRIVILEGES previousState)
+        {
+            if (previousState.PrivilegeCount == 0)
+            {
+                return;
+            }
+
+            try
+            {
+                var tokenOpened = PInvoke.OpenProcessToken(Process.GetCurrentProcess().SafeHandle, TOKEN_ACCESS_MASK.TOKEN_ADJUST_PRIVILEGES | TOKEN_ACCESS_MASK.TOKEN_QUERY, out var tokenHandle);
+                using var token = tokenHandle;
+                if (!tokenOpened)
+                {
+                    Context.API.LogWarn(ClassName, "Failed to reopen the process token while restoring the shutdown privilege");
+                    return;
+                }
+
+                Marshal.SetLastPInvokeError((int)WIN32_ERROR.NO_ERROR);
+                if (!PInvoke.AdjustTokenPrivileges(token, false, &previousState, null, out var _) ||
+                    Marshal.GetLastPInvokeError() == (int)WIN32_ERROR.ERROR_NOT_ALL_ASSIGNED)
+                {
+                    Context.API.LogWarn(ClassName, "Failed to restore the shutdown privilege");
+                }
+            }
+            catch (Exception)
+            {
+                Context.API.LogWarn(ClassName, "Failed to restore the shutdown privilege");
+            }
+        }
+
+        private static void Suspend(bool hibernate)
+        {
+            if (!hibernate)
+            {
+                if (!PInvoke.GetPwrCapabilities(out var capabilities))
+                {
+                    Context.API.LogWarn(ClassName, $"Failed to read system power capabilities: {Marshal.GetLastPInvokeError()}");
+                    ShowSuspendFailed();
+                    return;
+                }
+
+                if (capabilities.AoAc)
+                {
+                    // On S0 systems SetSuspendState may hibernate instead of entering Modern Standby.
+                    // Turning off the display can start a Modern Standby session, but Windows controls
+                    // whether and when the system reaches the low-power sleep phase.
+                    // SendNotifyMessage does not wait for other windows to process the broadcast.
+                    Marshal.SetLastPInvokeError(0);
+                    if (SendNotifyMessage(HwndBroadcast, WmSysCommand, new IntPtr(ScMonitorPower),
+                        new IntPtr(2)))
+                    {
+                        return;
+                    }
+
+                    Context.API.LogWarn(ClassName, $"Failed to request display off for Modern Standby: {Marshal.GetLastPInvokeError()}");
+                    ShowSuspendFailed();
+                    return;
+                }
+            }
+
+            // SetSuspendState requires the SE_SHUTDOWN_NAME privilege. Flow keeps running
+            // afterwards, so the privilege is disabled again once the call returns.
+            if (!EnableShutdownPrivilege(out var previousState))
+            {
+                Context.API.LogWarn(ClassName, "Failed to enable the shutdown privilege");
+            }
+            else
+            {
+                bool suspended;
+                try
+                {
+                    suspended = PInvoke.SetSuspendState(hibernate, false, false);
+                }
+                finally
+                {
+                    RestorePrivileges(previousState);
+                }
+
+                if (suspended)
+                {
+                    return;
+                }
+            }
+
+            ShowSuspendFailed();
+        }
+
+        private static void ShowSuspendFailed()
+        {
+            Context.API.ShowMsgBox(
+                Localize.flowlauncher_plugin_sys_dlgtext_suspend_failed(),
+                Localize.flowlauncher_plugin_sys_dlgtitle_error(),
+                MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         private List<Result> Commands(Query query)
@@ -313,7 +429,7 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\sleep.png",
                     Action = c =>
                     {
-                        PInvoke.SetSuspendState(false, false, false);
+                        Suspend(hibernate: false);
                         return true;
                     }
                 },
@@ -324,7 +440,7 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\hibernate.png",
                     Action= c =>
                     {
-                        PInvoke.SetSuspendState(true, false, false);
+                        Suspend(hibernate: true);
                         return true;
                     }
                 },

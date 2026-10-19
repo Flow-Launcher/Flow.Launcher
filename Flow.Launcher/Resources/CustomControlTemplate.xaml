@@ -169,6 +169,18 @@
         </Setter>
     </Style>
 
+    <Style x:Key="TitleBarButtonPathStyle" TargetType="Path">
+        <Setter Property="Width" Value="46" />
+        <Setter Property="Height" Value="32" />
+        <Setter Property="Stroke" Value="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Path=IsActive, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Value="False">
+                <Setter Property="Opacity" Value="0.5" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
     <!--  Custom Context Menu from UI.WPF.Modern to remove tab focus & focus visual  -->
     <Style x:Key="ContextMenuStyleBase" TargetType="ContextMenu">
         <Setter Property="Background" Value="{DynamicResource MenuFlyoutPresenterBackground}" />

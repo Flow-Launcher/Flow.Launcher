@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>net9.0-windows</TargetFramework>
     <AssemblyName>Flow.Launcher.Plugin.ProcessKiller</AssemblyName>
     <PackageId>Flow.Launcher.Plugin.ProcessKiller</PackageId>
     <Authors>Flow-Launcher</Authors>
@@ -54,7 +53,7 @@
 
   <ItemGroup>
     <PackageReference Include="Flow.Launcher.Localization" Version="0.0.6" />
-    <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.275">
+    <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.298">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

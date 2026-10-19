@@ -554,6 +554,11 @@ namespace Flow.Launcher.Core.Resource
             ThemeHelper.CopyStyle(windowBorderStyle, newWindowBorderStyle);
 
             // Copy Setters, excluding the Effect setter and updating the Margin setter
+            // Only adjust margin if there's actually a shadow effect to remove,
+            // preventing it from shrinking on repeated calls.
+            bool hasEffect = windowBorderStyle.Setters.OfType<Setter>()
+                .Any(s => s.Property == UIElement.EffectProperty);
+
             foreach (var setterBase in windowBorderStyle.Setters)
             {
                 if (setterBase is Setter setter)
@@ -562,7 +567,7 @@ namespace Flow.Launcher.Core.Resource
                     if (setter.Property == UIElement.EffectProperty) continue;
 
                     // Update Margin by subtracting the extra margin we added for the shadow
-                    if (setter.Property == FrameworkElement.MarginProperty)
+                    if (hasEffect && setter.Property == FrameworkElement.MarginProperty)
                     {
                         var currentMargin = (Thickness)setter.Value;
                         var newMargin = new Thickness(
@@ -635,20 +640,8 @@ namespace Flow.Launcher.Core.Resource
                 // Get the actual backdrop type and drop shadow effect settings
                 var (backdropType, useDropShadowEffect) = GetActualValue();
 
-                // Remove OS minimizing/maximizing animation
-                // Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_TRANSITIONS_FORCEDISABLED, 3);
-
-                // The timing of adding the shadow effect should vary depending on whether the theme is transparent.
-                if (BlurEnabled)
-                {
-                    AutoDropShadow(useDropShadowEffect);
-                }
                 SetBlurForWindow(_settings.Theme, backdropType);
-
-                if (!BlurEnabled)
-                {
-                    AutoDropShadow(useDropShadowEffect);
-                }
+                AutoDropShadow(useDropShadowEffect);
             }, DispatcherPriority.Render);
         }
 
@@ -725,12 +718,26 @@ namespace Flow.Launcher.Core.Resource
                 // Apply the blur effect
                 Win32Helper.DWMSetBackdropForWindow(mainWindow, backdropType);
                 ColorizeWindow(theme, backdropType);
+
+                // DWM renders rounded corners for backdrop windows
+                SetWindowCornerPreference("Round");
+
+                // Clear any stale directly-set WindowBorderStyle that might shadow
+                // the merged dictionary entry we just modified above.
+                if (Application.Current.Resources.Contains("WindowBorderStyle"))
+                    Application.Current.Resources.Remove("WindowBorderStyle");
+
+                // For blur themes the resize border defaults to the system thickness.
+                SetResizeBoarderThickness(null);
             }
             else
             {
                 // Apply default style when Blur is disabled
                 Win32Helper.DWMSetBackdropForWindow(mainWindow, BackdropTypes.None);
                 ColorizeWindow(theme, backdropType);
+
+                // Non-blur themes use the default window corner preference
+                SetWindowCornerPreference("Default");
             }
 
             UpdateResourceDictionary(dict);
@@ -738,26 +745,15 @@ namespace Flow.Launcher.Core.Resource
 
         private void AutoDropShadow(bool useDropShadowEffect)
         {
+            if (BlurEnabled)
+                return; // Blur themes have no drop shadow effect
+
             if (useDropShadowEffect)
             {
-                if (BlurEnabled && Win32Helper.IsBackdropSupported())
-                {
-                    // For themes with blur enabled, the window border is rendered by the system,
-                    // so we set corner preference to round and remove drop shadow effect to avoid rendering issues.
-                    SetWindowCornerPreference("Round");
-                    RemoveDropShadowEffectFromCurrentTheme();
-                }
-                else
-                {
-                    // For themes without blur, we set corner preference to default and add drop shadow effect.
-                    SetWindowCornerPreference("Default");
-                    AddDropShadowEffectToCurrentTheme();
-                }
+                AddDropShadowEffectToCurrentTheme();
             }
             else
             {
-                // When drop shadow effect is disabled, we set corner preference to default and remove drop shadow effect.
-                SetWindowCornerPreference("Default");
                 RemoveDropShadowEffectFromCurrentTheme();
             }
         }
@@ -815,19 +811,18 @@ namespace Flow.Launcher.Core.Resource
             return Colors.Transparent; // Default is transparent
         }
 
-        private void ApplyPreviewBackground(Color? bgColor = null)
+        private void ApplyPreviewBackground(Style windowBorderStyle, Color? bgColor = null)
         {
             if (bgColor == null) return;
 
             // Create a new Style for the preview
             var previewStyle = new Style(typeof(Border));
 
-            // Get the original WindowBorderStyle
-            if (Application.Current.Resources.Contains("WindowBorderStyle") &&
-                Application.Current.Resources["WindowBorderStyle"] is Style originalStyle)
+            // Copy the selected theme's style before its resources are installed globally.
+            if (windowBorderStyle != null)
             {
                 // Copy the original style, including the base style if it exists
-                ThemeHelper.CopyStyle(originalStyle, previewStyle);
+                ThemeHelper.CopyStyle(windowBorderStyle, previewStyle);
             }
 
             // Apply background color (remove transparency in color)
@@ -923,7 +918,7 @@ namespace Flow.Launcher.Core.Resource
 
             // Select background color based on ColorScheme and SystemBG
             Color selectedBG = useDarkMode ? DarkBG : LightBG;
-            ApplyPreviewBackground(selectedBG);
+            ApplyPreviewBackground(dict["WindowBorderStyle"] as Style, selectedBG);
 
             bool isBlurAvailable = hasBlur && Win32Helper.IsBackdropSupported(); // Windows 11 미만이면 hasBlur를 강제 false
 

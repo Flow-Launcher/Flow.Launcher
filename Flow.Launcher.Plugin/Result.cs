@@ -285,7 +285,17 @@ namespace Flow.Launcher.Plugin
         /// <summary>
         /// Contains data used to populate the preview section of this result.
         /// </summary>
-        public PreviewInfo Preview { get; set; } = PreviewInfo.Default;
+        public PreviewInfo Preview { get; set; } = new PreviewInfo();
+
+        /// <summary>
+        /// Controls whether Flow Launcher's preview pane is shown for this result.
+        /// </summary>
+        /// <remarks>
+        /// Changing this from the default <see cref="Flow.Launcher.Plugin.PreviewVisibility.Optional"/> will override the user's preferences for whether to show previews.
+        /// </remarks>
+        /// <default><see cref="Flow.Launcher.Plugin.PreviewVisibility.Optional"/></default>
+        [JsonConverter(typeof(JsonStringEnumConverter<PreviewVisibility>))]
+        public PreviewVisibility PreviewVisibility { get; set; } = PreviewVisibility.Optional;
 
         /// <summary>
         /// Determines if the user selection count should be added to the score. This can be useful when set to false to allow the result sequence order to be the same everytime instead of changing based on selection.
@@ -364,7 +374,8 @@ namespace Flow.Launcher.Plugin
                 PreviewPanel = PreviewPanel,
                 ProgressBar = ProgressBar,
                 ProgressBarColor = ProgressBarColor,
-                Preview = Preview,
+                Preview = Preview is null ? null : Preview with { },
+                PreviewVisibility = PreviewVisibility,
                 AddSelectedCount = AddSelectedCount,
                 RecordKey = RecordKey,
                 ShowBadge = ShowBadge,
@@ -378,7 +389,7 @@ namespace Flow.Launcher.Plugin
         public record PreviewInfo
         {
             /// <summary>
-            /// Full image used for preview panel
+            /// Shown in the preview panel. Falls back to the result icon when not set. 
             /// </summary>
             public string PreviewImagePath { get; set; } = null;
 
@@ -388,7 +399,8 @@ namespace Flow.Launcher.Plugin
             public bool IsMedia { get; set; } = false;
 
             /// <summary>
-            /// Result description text that is shown at the bottom of the preview panel.
+            /// Text shown in the preview panel. How it is displayed depends on
+            /// <see cref="ContentType"/>.
             /// </summary>
             /// <remarks>
             /// When a value is not set, the <see cref="SubTitle"/> will be used.
@@ -407,6 +419,12 @@ namespace Flow.Launcher.Plugin
             public string FilePath { get; set; } = null;
 
             /// <summary>
+            /// Controls the preview rendering mode. See <see cref="PreviewContentType"/>.
+            /// </summary>
+            [JsonConverter(typeof(JsonStringEnumConverter<PreviewContentType>))]
+            public PreviewContentType ContentType { get; set; } = PreviewContentType.ImageWithText;
+
+            /// <summary>
             /// Default instance of <see cref="PreviewInfo"/>
             /// </summary>
             public static PreviewInfo Default { get; } = new()
@@ -416,7 +434,52 @@ namespace Flow.Launcher.Plugin
                 IsMedia = false,
                 PreviewDelegate = null,
                 FilePath = null,
+                ContentType = PreviewContentType.ImageWithText,
             };
         }
+    }
+
+    /// <summary>
+    /// Supported preview description rendering modes.
+    /// </summary>
+    public enum PreviewContentType
+    {
+        /// <summary>
+        /// Shows the preview image above the result title, with the description
+        /// rendered as plain text below a separator.
+        /// </summary>
+        [JsonStringEnumMemberName("imageWithText")]
+        ImageWithText,
+
+        /// <summary>
+        /// Shows a scrollable panel with the description rendered as formatted markdown.
+        /// </summary>
+        [JsonStringEnumMemberName("markdown")]
+        Markdown,
+    }
+
+    /// <summary>
+    /// Controls whether the preview pane is shown for a <see cref="Result"/>.
+    /// </summary>
+    public enum PreviewVisibility
+    {
+        /// <summary>
+        /// Only show the preview pane if the user requests it, 
+        /// either via the global "Always Preview" setting or the manual toggle.
+        /// </summary>
+        [JsonStringEnumMemberName("optional")]
+        Optional,
+
+        /// <summary>
+        /// Never show the preview pane for this result, even when the global "Always Preview" setting is on.
+        /// </summary>
+        [JsonStringEnumMemberName("never")]
+        Never,
+
+        /// <summary>
+        /// Always show the preview pane for this result, even when the global "Always Preview" setting is off.
+        /// </summary>
+        [JsonStringEnumMemberName("always")]
+        Always,
     }
 }

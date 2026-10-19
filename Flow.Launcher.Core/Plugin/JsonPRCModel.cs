@@ -58,5 +58,14 @@ namespace Flow.Launcher.Core.Plugin
         public JsonRPCClientRequestModel JsonRPCAction { get; set; }
 
         public Dictionary<string, object> SettingsChange { get; set; }
+
+        /// <summary>
+        /// Redeclared so the plugin's context data is deserialized, since <see cref="Result.ContextData"/> is JsonIgnore'd
+        /// </summary>
+        public new object ContextData
+        {
+            get => base.ContextData;
+            set => base.ContextData = value;
+        }
     }
 }

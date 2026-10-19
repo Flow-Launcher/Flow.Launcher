@@ -17,9 +17,15 @@ public class ShellSettingViewModel : BaseModel
             {
                 Settings.Shell = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(IsCustomTemplateShell));
+                OnPropertyChanged(nameof(IsManagedShellSelected));
             }
         }
     }
+
+    public bool IsCustomTemplateShell => SelectedShell == Shell.CustomTemplate;
+
+    public bool IsManagedShellSelected => SelectedShell is Shell.Cmd or Shell.Powershell or Shell.Pwsh;
 
     public List<int> OnlyMostUsedCMDsNumbers { get; } = [5, 10, 20];
     public int SelectedOnlyMostUsedCMDsNumber
