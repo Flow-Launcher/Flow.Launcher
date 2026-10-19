@@ -163,26 +163,35 @@ namespace Flow.Launcher.Infrastructure
 
         /// <summary>
         /// Brings <paramref name="window"/> to the foreground even when the calling context does not
-        /// hold foreground permission (e.g. a WH_KEYBOARD_LL hook callback).  Unlike a plain
-        /// SetForegroundWindow call, this temporarily attaches the current thread's input queue to
-        /// the foreground thread, which causes Windows to honour the request.
+        /// hold foreground permission (e.g. after a WH_KEYBOARD_LL hook swallowed the triggering key,
+        /// so no process "received the last input event").
         /// </summary>
-        public static void ForceForeground(Window window)
+        public static unsafe void ForceForeground(Window window)
         {
             var hwnd = new HWND((nint)GetWindowHandle(window));
+            if (hwnd == PInvoke.GetForegroundWindow())
+                return;
+
+            // Windows grants foreground rights to the process that sent the last input event.
+            // Injecting an empty mouse input (no movement, no buttons) makes us that process
+            // without any visible side effect. Same approach as PowerToys.
+            Span<INPUT> inputs = stackalloc INPUT[1];
+            inputs[0].type = INPUT_TYPE.INPUT_MOUSE;
+            PInvoke.SendInput(inputs, Marshal.SizeOf<INPUT>());
+
+            if (PInvoke.SetForegroundWindow(hwnd))
+                return;
+
+            // Fallback: attach to the foreground thread's input queue and retry
             var foregroundHwnd = PInvoke.GetForegroundWindow();
             uint foreThread = PInvoke.GetWindowThreadProcessId(foregroundHwnd);
-            uint appThread  = PInvoke.GetCurrentThreadId();
+            uint appThread = PInvoke.GetCurrentThreadId();
 
-            if (foreThread != appThread)
+            if (foreThread != 0 && foreThread != appThread)
             {
                 PInvoke.AttachThreadInput(foreThread, appThread, true);
                 PInvoke.SetForegroundWindow(hwnd);
                 PInvoke.AttachThreadInput(foreThread, appThread, false);
-            }
-            else
-            {
-                PInvoke.SetForegroundWindow(hwnd);
             }
         }
 

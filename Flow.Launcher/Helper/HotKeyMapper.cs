@@ -231,7 +231,11 @@ internal static class HotKeyMapper
                 if (isOurHotkey && !comboFired)
                 {
                     comboFired = true;
-                    action?.Invoke(null, null);
+                    // Defer out of the WH_KEYBOARD_LL callback: the hook must return quickly
+                    // (or Windows ignores its result and lets the key through, e.g. opening
+                    // Quick Settings for Win+A), and the window can only take foreground
+                    // after the swallowed keystroke has finished being processed.
+                    System.Windows.Application.Current?.Dispatcher.BeginInvoke(() => action?.Invoke(null, null));
                     return false;
                 }
 
