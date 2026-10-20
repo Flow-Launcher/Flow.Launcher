@@ -42,8 +42,8 @@
     <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Tarih ve saat biçimi</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">Sıralama Seçeneği:</system:String>
     <system:String x:Key="plugin_explorer_everything_installed_path">Everything Kurulumu:</system:String>
-    <system:String x:Key="plugin_explorer_everything_15_instance_name">Everything 1.5 instance name: </system:String>
-    <system:String x:Key="plugin_explorer_everything_15_instance_name_tooltip">Leave this blank to use the default Everything 1.5b instance. Only set this if you run a named instance of Everything, or set it to &quot;1.5a&quot; to use Everything 1.5a.</system:String>
+    <system:String x:Key="plugin_explorer_everything_15_instance_name">Everything 1.5 örnek adı: </system:String>
+    <system:String x:Key="plugin_explorer_everything_15_instance_name_tooltip">Varsayılan Everything 1.5b örneğini kullanmak için bunu boş bırakın. Bunu yalnızca Everything'in adlandırılmış bir örneğini çalıştırıyorsanız ayarlayın veya Everything 1.5a'yı kullanmak için &quot;1.5a&quot; olarak ayarlayın.</system:String>
     <system:String x:Key="plugin_explorer_launch_hidden">Gizli Başlat</system:String>
     <system:String x:Key="plugin_explorer_editor_path">Metin Düzenleyici</system:String>
     <system:String x:Key="plugin_explorer_shell_path">Komut İstemi</system:String>
@@ -151,11 +151,11 @@
 
     <!--  Everything  -->
     <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">Everything SDK'sini yükleme başarısız oldu</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_architecture_check">Please check whether your system is x86 or x64</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_architecture_check">Lütfen sisteminizin x86 mı yoksa x64 mü olduğunu kontrol edin</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_is_not_running">Everything Servisi çalışmıyor</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_15_unavailable">Warning: Everything 1.5 is unavailable</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_15_resolution">Ensure Everything is running and verify the configured instance name</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_15_sort_warning">Warning: Everything 1.5 is unavailable. The service may not be running, or the instance name may be invalid</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_15_unavailable">Uyarı: Everything 1.5 kullanılamıyor</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_15_resolution">Everything'in çalıştığından emin olun ve yapılandırılmış örnek adını doğrulayın</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_15_sort_warning">Uyarı: Everything 1.5 mevcut değil. Hizmet çalışmıyor olabilir veya örnek adı geçersiz olabilir</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_query_error">Sorgu Everything üzerinde çalıştırılırken hata oluştu</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by">Şuna Göre Sırala</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_name_ascending">İsim ↑</system:String>
@@ -190,8 +190,8 @@
 
     <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">Tam Yolu Ara</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_run_count">Dosya/Klasör Çalıştırma Sayısını Aç</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_enable_15_support">Use Everything 1.5</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_15_restart_required">Restart Flow Launcher for this change to take effect</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_enable_15_support">Everything 1.5 kullan</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_15_restart_required">Bu değişikliğin etkili olması için Flow Launcher'ı yeniden başlatın</system:String>
 
     <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Everything'i yükle veya başlat</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_title">Everything Kurulumu</system:String>
