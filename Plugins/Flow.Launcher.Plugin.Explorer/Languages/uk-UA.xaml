@@ -191,7 +191,7 @@
     <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">Шукати повний шлях</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_run_count">Увімкнути підрахунок запусків файлів / тек</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_15_support">Використовувати Everything 1.5</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_15_restart_required">Restart Flow Launcher for this change to take effect</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_15_restart_required">Перезапустіть Flow Launcher, щоб зміни набули чинності</system:String>
 
     <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Натисніть, щоб запустити або встановити Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_title">Встановлення програми Everything</system:String>
