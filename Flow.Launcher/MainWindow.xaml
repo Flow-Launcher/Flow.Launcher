@@ -351,6 +351,34 @@
                     X2="0"
                     Y1="0"
                     Y2="0" />
+            <Canvas x:Name="VimYankFlash"
+                    ClipToBounds="True"
+                    IsHitTestVisible="False"
+                    Visibility="Collapsed"
+                    Panel.ZIndex="9" />
+            <Rectangle x:Name="VimBlockCaret"
+                       Fill="{DynamicResource BasicSystemAccentColor}"
+                       Opacity="0.5"
+                       Visibility="Collapsed"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Margin="0,0,0,0"
+                       Width="10"
+                       Height="24"
+                       IsHitTestVisible="False"
+                       Panel.ZIndex="10" />
+            <Border
+                x:Name="VimModeIndicator"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Margin="6,2,0,0"
+                Width="6"
+                Height="6"
+                CornerRadius="3"
+                Background="{DynamicResource BasicSystemAccentColor}"
+                Panel.ZIndex="10"
+                IsHitTestVisible="False"
+                Visibility="Collapsed" />
             </Grid>
 
             <Grid x:Name="MiddleSeparatorArea" ClipToBounds="True">
