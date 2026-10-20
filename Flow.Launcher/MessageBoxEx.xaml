@@ -33,6 +33,7 @@
         </Grid.RowDefinitions>
         
         <controls:CustomWindowTitleBar
+            x:Name="TitleBar"
             Grid.Row="0"
             ShowIcon="False"
             ShowTitle="False"
