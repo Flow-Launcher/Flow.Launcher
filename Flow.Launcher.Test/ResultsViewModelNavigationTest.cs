@@ -97,6 +97,7 @@ public class ResultsViewModelNavigationTest
         Thread navigation = null;
         Exception navigationFailure = null;
         var started = false;
+        var blockedOnLock = false;
         var completedDuringRefresh = false;
 
         BindingOperations.AccessCollection(viewModel.Results, () =>
@@ -119,13 +120,18 @@ public class ResultsViewModelNavigationTest
             navigation.Start();
 
             started = navigationStarted.Wait(TimeSpan.FromSeconds(5));
-            completedDuringRefresh = navigation.Join(TimeSpan.FromMilliseconds(200));
+            SpinWait.SpinUntil(
+                () => (navigation.ThreadState & ThreadState.WaitSleepJoin) != 0 || !navigation.IsAlive,
+                TimeSpan.FromSeconds(5));
+            blockedOnLock = (navigation.ThreadState & ThreadState.WaitSleepJoin) != 0;
+            completedDuringRefresh = !navigation.IsAlive;
             viewModel.Results.Clear();
         }, writeAccess: true);
 
         Assert.That(navigation.Join(TimeSpan.FromSeconds(5)), Is.True);
         Assert.That(navigationFailure, Is.Null);
         Assert.That(started, Is.True);
+        Assert.That(blockedOnLock, Is.True);
         Assert.That(completedDuringRefresh, Is.False);
         Assert.That(viewModel.SelectedIndex, Is.EqualTo(-1));
     }

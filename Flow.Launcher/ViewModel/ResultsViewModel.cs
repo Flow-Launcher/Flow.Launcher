@@ -122,12 +122,12 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private int NewPageIndex(int i)
+        private void SelectPage(int offset)
         {
             lock (_collectionLock)
             {
                 var count = Results.Count;
-                return count > 0 ? Math.Clamp(i, 0, count - 1) : -1;
+                SelectedIndex = count > 0 ? Math.Clamp(SelectedIndex + offset, 0, count - 1) : -1;
             }
         }
 
@@ -147,12 +147,12 @@ namespace Flow.Launcher.ViewModel
 
         public void SelectNextPage()
         {
-            SelectedIndex = NewPageIndex(SelectedIndex + MaxResults);
+            SelectPage(MaxResults);
         }
 
         public void SelectPrevPage()
         {
-            SelectedIndex = NewPageIndex(SelectedIndex - MaxResults);
+            SelectPage(-MaxResults);
         }
 
         public void SelectFirstResult()
