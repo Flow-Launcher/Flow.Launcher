@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
@@ -138,12 +138,16 @@ namespace Flow.Launcher.ViewModel
 
         public void SelectNextPage()
         {
-            SelectedIndex = NewIndex(SelectedIndex + MaxResults);
+            SelectedIndex = Results.Count > 0
+                ? Math.Clamp(SelectedIndex + MaxResults, 0, Results.Count - 1)
+                : -1;
         }
 
         public void SelectPrevPage()
         {
-            SelectedIndex = NewIndex(SelectedIndex - MaxResults);
+            SelectedIndex = Results.Count > 0
+                ? Math.Clamp(SelectedIndex - MaxResults, 0, Results.Count - 1)
+                : -1;
         }
 
         public void SelectFirstResult()
