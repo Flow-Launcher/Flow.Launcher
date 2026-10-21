@@ -122,6 +122,15 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        private int NewPageIndex(int i)
+        {
+            lock (_collectionLock)
+            {
+                var count = Results.Count;
+                return count > 0 ? Math.Clamp(i, 0, count - 1) : -1;
+            }
+        }
+
         #endregion
 
         #region Public Methods
@@ -138,16 +147,12 @@ namespace Flow.Launcher.ViewModel
 
         public void SelectNextPage()
         {
-            SelectedIndex = Results.Count > 0
-                ? Math.Clamp(SelectedIndex + MaxResults, 0, Results.Count - 1)
-                : -1;
+            SelectedIndex = NewPageIndex(SelectedIndex + MaxResults);
         }
 
         public void SelectPrevPage()
         {
-            SelectedIndex = Results.Count > 0
-                ? Math.Clamp(SelectedIndex - MaxResults, 0, Results.Count - 1)
-                : -1;
+            SelectedIndex = NewPageIndex(SelectedIndex - MaxResults);
         }
 
         public void SelectFirstResult()

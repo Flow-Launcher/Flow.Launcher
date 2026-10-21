@@ -1,4 +1,6 @@
+using System;
 using System.Threading;
+using System.Windows.Data;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.ViewModel;
@@ -84,6 +86,48 @@ public class ResultsViewModelNavigationTest
         viewModel.SelectPrevResult();
 
         Assert.That(viewModel.SelectedIndex, Is.EqualTo(16));
+    }
+
+    [TestCase(true)]
+    [TestCase(false)]
+    public void PageNavigationWaitsForSynchronizedCollectionRefresh(bool nextPage)
+    {
+        var viewModel = CreateViewModel(17, 15, 15);
+        using var navigationStarted = new ManualResetEventSlim();
+        Thread navigation = null;
+        Exception navigationFailure = null;
+        var started = false;
+        var completedDuringRefresh = false;
+
+        BindingOperations.AccessCollection(viewModel.Results, () =>
+        {
+            navigation = new Thread(() =>
+            {
+                navigationStarted.Set();
+                try
+                {
+                    if (nextPage)
+                        viewModel.SelectNextPage();
+                    else
+                        viewModel.SelectPrevPage();
+                }
+                catch (Exception exception)
+                {
+                    navigationFailure = exception;
+                }
+            }) { IsBackground = true };
+            navigation.Start();
+
+            started = navigationStarted.Wait(TimeSpan.FromSeconds(5));
+            completedDuringRefresh = navigation.Join(TimeSpan.FromMilliseconds(200));
+            viewModel.Results.Clear();
+        }, writeAccess: true);
+
+        Assert.That(navigation.Join(TimeSpan.FromSeconds(5)), Is.True);
+        Assert.That(navigationFailure, Is.Null);
+        Assert.That(started, Is.True);
+        Assert.That(completedDuringRefresh, Is.False);
+        Assert.That(viewModel.SelectedIndex, Is.EqualTo(-1));
     }
 
     private static ResultsViewModel CreateViewModel(int count, int pageSize, int selectedIndex)
