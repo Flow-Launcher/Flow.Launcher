@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using System.Windows;
 using System.Windows.Data;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
@@ -134,6 +135,64 @@ public class ResultsViewModelNavigationTest
         Assert.That(blockedOnLock, Is.True);
         Assert.That(completedDuringRefresh, Is.False);
         Assert.That(viewModel.SelectedIndex, Is.EqualTo(-1));
+    }
+
+    [TestCase(true, 15)]
+    [TestCase(false, 0)]
+    public void PageNavigationWaitsForInitialRefreshSelection(bool nextPage, int expected)
+    {
+        var viewModel = CreateViewModel(0, 15, -1);
+        var refreshThreadId = Environment.CurrentManagedThreadId;
+        using var navigationStarted = new ManualResetEventSlim();
+        Thread navigation = null;
+        Exception navigationFailure = null;
+        var blockedOnLock = false;
+        var visibilityAfterNavigation = Visibility.Collapsed;
+
+        // Pause the real refresh at its initial selection notification. Paging must
+        // wait for the entire refresh transition, including making the list visible.
+        viewModel.PropertyChanged += (_, args) =>
+        {
+            if (args.PropertyName != nameof(ResultsViewModel.SelectedIndex) ||
+                Environment.CurrentManagedThreadId != refreshThreadId)
+                return;
+
+            navigation = new Thread(() =>
+            {
+                navigationStarted.Set();
+                try
+                {
+                    if (nextPage)
+                        viewModel.SelectNextPage();
+                    else
+                        viewModel.SelectPrevPage();
+                    visibilityAfterNavigation = viewModel.Visibility;
+                }
+                catch (Exception exception)
+                {
+                    navigationFailure = exception;
+                }
+            }) { IsBackground = true };
+            navigation.Start();
+            navigationStarted.Wait(TimeSpan.FromSeconds(5));
+            SpinWait.SpinUntil(
+                () => (navigation.ThreadState & ThreadState.WaitSleepJoin) != 0 || !navigation.IsAlive,
+                TimeSpan.FromSeconds(5));
+            blockedOnLock = (navigation.ThreadState & ThreadState.WaitSleepJoin) != 0;
+        };
+
+        var results = new System.Collections.Generic.List<Result>();
+        for (var index = 0; index < 17; index++)
+            results.Add(new Result { Title = $"Result {index}", PluginID = "refresh-test" });
+
+        viewModel.AddResults(results, "refresh-test");
+
+        Assert.That(navigation, Is.Not.Null, "The real refresh must initialize selection.");
+        Assert.That(navigation.Join(TimeSpan.FromSeconds(5)), Is.True);
+        Assert.That(navigationFailure, Is.Null);
+        Assert.That(blockedOnLock, Is.True, "Paging must wait for refresh selection to finish.");
+        Assert.That(visibilityAfterNavigation, Is.EqualTo(Visibility.Visible));
+        Assert.That(viewModel.SelectedIndex, Is.EqualTo(expected));
     }
 
     private static ResultsViewModel CreateViewModel(int count, int pageSize, int selectedIndex)

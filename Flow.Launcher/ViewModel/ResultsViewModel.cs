@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
@@ -212,24 +212,26 @@ namespace Flow.Launcher.ViewModel
                 Results.Update(newResults, token);
                 if (reselect && Results.Any())
                     SelectedItem = Results[0];
-            }
 
-            if (token.IsCancellationRequested)
-                return;
+                if (token.IsCancellationRequested)
+                    return;
 
-            switch (Visibility)
-            {
-                case Visibility.Collapsed when Results.Count > 0:
-                    if (_mainVM == null || // The results are for preview only in appearance page
-                        _mainVM.ResultsSelected(this)) // The results are selected
-                    {
-                        SelectedIndex = 0;
-                        Visibility = Visibility.Visible;
-                    }
-                    break;
-                case Visibility.Visible when Results.Count == 0:
-                    Visibility = Visibility.Collapsed;
-                    break;
+                // Keep initial selection and visibility in the refresh transaction,
+                // so they cannot overwrite a page selection made after the refresh.
+                switch (Visibility)
+                {
+                    case Visibility.Collapsed when Results.Count > 0:
+                        if (_mainVM == null || // The results are for preview only in appearance page
+                            _mainVM.ResultsSelected(this)) // The results are selected
+                        {
+                            SelectedIndex = 0;
+                            Visibility = Visibility.Visible;
+                        }
+                        break;
+                    case Visibility.Visible when Results.Count == 0:
+                        Visibility = Visibility.Collapsed;
+                        break;
+                }
             }
         }
 
