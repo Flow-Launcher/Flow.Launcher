@@ -424,6 +424,11 @@ namespace Flow.Launcher.Plugin.Calculator
             return new CalculatorSettings(_settings);
         }
 
+        public object CreateSettingPanelAvalonia()
+        {
+            return new Views.Avalonia.CalculatorSettings(_viewModel);
+        }
+
         public void OnCultureInfoChanged(CultureInfo newCulture)
         {
             DecimalSeparatorLocalized.UpdateLabels(_viewModel.AllDecimalSeparator);

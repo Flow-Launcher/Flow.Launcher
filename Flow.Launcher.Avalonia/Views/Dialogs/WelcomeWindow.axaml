@@ -1,0 +1,145 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i18n="using:Flow.Launcher.Avalonia.Resource"
+        xmlns:dialogs="using:Flow.Launcher.Avalonia.Views.Dialogs"
+        xmlns:controls="using:Flow.Launcher.Avalonia.Views.Controls"
+        mc:Ignorable="d"
+        d:DesignWidth="550"
+        d:DesignHeight="700"
+        x:Class="Flow.Launcher.Avalonia.Views.Dialogs.WelcomeWindow"
+        x:DataType="dialogs:WelcomeWindow"
+        Width="550"
+        Height="700"
+        CanResize="False"
+        WindowStartupLocation="CenterScreen"
+        Title="{i18n:Localize welcomewindow}">
+
+    <Grid RowDefinitions="*,Auto" Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}">
+        <ScrollViewer Grid.Row="0">
+            <StackPanel Margin="24,20" Spacing="20">
+                <StackPanel IsVisible="{Binding IsPage1}" Spacing="14">
+                    <TextBlock FontSize="24" FontWeight="SemiBold" Text="{i18n:Localize Welcome_Page1_Title}" />
+                    <TextBlock TextWrapping="Wrap" Text="{i18n:Localize Welcome_Page1_Text01}" />
+                    <TextBlock TextWrapping="Wrap" Text="{i18n:Localize Welcome_Page1_Text02}" />
+                    <TextBlock Margin="0,8,0,0" FontWeight="SemiBold" Text="{i18n:Localize language}" />
+                    <ComboBox Width="220"
+                              ItemsSource="{Binding GeneralSettings.Languages}"
+                              SelectedItem="{Binding GeneralSettings.SelectedLanguage, Mode=TwoWay}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Display}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </StackPanel>
+
+                <StackPanel IsVisible="{Binding IsPage2}" Spacing="14">
+                    <TextBlock FontSize="24" FontWeight="SemiBold" Text="{i18n:Localize Welcome_Page2_Title}" />
+                    <TextBlock TextWrapping="Wrap" Text="{i18n:Localize Welcome_Page2_Text01}" />
+                    <TextBlock TextWrapping="Wrap" Text="{i18n:Localize Welcome_Page2_Text02}" />
+                    <TextBlock Margin="0,8,0,0" FontWeight="SemiBold" Text="{i18n:Localize flowlauncherHotkey}" />
+                    <controls:HotkeyControl Hotkey="{Binding Settings.Hotkey, Mode=TwoWay}"
+                                            UnregisterToggleHotkeyWhileRecording="True" />
+                </StackPanel>
+
+                <StackPanel IsVisible="{Binding IsPage3}" Spacing="12">
+                    <TextBlock FontSize="24" FontWeight="SemiBold" Text="{i18n:Localize Welcome_Page3_Title}" />
+                    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="*,Auto">
+                        <TextBlock Grid.Row="0" Margin="0,0,0,10" Text="{i18n:Localize HotkeyUpDownDesc}" />
+                        <controls:HotkeyDisplay Grid.Row="0" Grid.Column="1" Keys="←+→" />
+                        <TextBlock Grid.Row="1" Margin="0,0,0,10" Text="{i18n:Localize HotkeyLeftRightDesc}" />
+                        <controls:HotkeyDisplay Grid.Row="1" Grid.Column="1" Keys="↑+↓" />
+                        <TextBlock Grid.Row="2" Margin="0,0,0,10" Text="{i18n:Localize HotkeyESCDesc}" />
+                        <controls:HotkeyDisplay Grid.Row="2" Grid.Column="1" Keys="ESC" />
+                        <TextBlock Grid.Row="3" Margin="0,0,0,10" Text="{i18n:Localize HotkeyRunDesc}" />
+                        <controls:HotkeyDisplay Grid.Row="3" Grid.Column="1" Keys="ENTER" />
+                        <TextBlock Grid.Row="4" Margin="0,0,0,10" Text="{i18n:Localize HotkeyShiftEnterDesc}" />
+                        <controls:HotkeyDisplay Grid.Row="4" Grid.Column="1" Keys="SHIFT+ENTER" />
+                        <TextBlock Grid.Row="5" Margin="0,0,0,10" Text="{i18n:Localize HotkeyCtrlEnterDesc}" />
+                        <controls:HotkeyDisplay Grid.Row="5" Grid.Column="1" Keys="CTRL+ENTER" />
+                        <TextBlock Grid.Row="6" Text="{i18n:Localize HotkeyCtrlShiftEnterDesc}" />
+                        <controls:HotkeyDisplay Grid.Row="6" Grid.Column="1" Keys="CTRL+SHIFT+ENTER" />
+                    </Grid>
+                </StackPanel>
+
+                <StackPanel IsVisible="{Binding IsPage4}" Spacing="14">
+                    <TextBlock FontSize="24" FontWeight="SemiBold" Text="{i18n:Localize Welcome_Page4_Title}" />
+                    <TextBlock TextWrapping="Wrap" Text="{i18n:Localize Welcome_Page4_Text01}" />
+                    <UniformGrid Columns="2" Rows="2">
+                        <Border Margin="4" Padding="12" CornerRadius="8" Background="{DynamicResource SystemAccentColorLight2}">
+                            <StackPanel>
+                                <TextBlock FontWeight="SemiBold" Text="{i18n:Localize RecommendWeather}" />
+                                <TextBlock Margin="0,6,0,0" TextWrapping="Wrap" Text="{i18n:Localize RecommendWeatherDesc}" />
+                            </StackPanel>
+                        </Border>
+                        <Border Margin="4" Padding="12" CornerRadius="8" Background="{DynamicResource SystemAccentColorLight2}">
+                            <StackPanel>
+                                <TextBlock FontWeight="SemiBold" Text="{i18n:Localize RecommendShell}" />
+                                <TextBlock Margin="0,6,0,0" TextWrapping="Wrap" Text="{i18n:Localize RecommendShellDesc}" />
+                            </StackPanel>
+                        </Border>
+                        <Border Margin="4" Padding="12" CornerRadius="8" Background="{DynamicResource SystemAccentColorLight2}">
+                            <StackPanel>
+                                <TextBlock FontWeight="SemiBold" Text="{i18n:Localize RecommendBluetooth}" />
+                                <TextBlock Margin="0,6,0,0" TextWrapping="Wrap" Text="{i18n:Localize RecommendBluetoothDesc}" />
+                            </StackPanel>
+                        </Border>
+                        <Border Margin="4" Padding="12" CornerRadius="8" Background="{DynamicResource SystemAccentColorLight2}">
+                            <StackPanel>
+                                <TextBlock FontWeight="SemiBold" Text="{i18n:Localize RecommendAcronyms}" />
+                                <TextBlock Margin="0,6,0,0" TextWrapping="Wrap" Text="{i18n:Localize RecommendAcronymsDesc}" />
+                            </StackPanel>
+                        </Border>
+                    </UniformGrid>
+                </StackPanel>
+
+                <StackPanel IsVisible="{Binding IsPage5}" Spacing="14">
+                    <TextBlock FontSize="24" FontWeight="SemiBold" Text="{i18n:Localize Welcome_Page5_Title}" />
+                    <TextBlock TextWrapping="Wrap" Text="{i18n:Localize Welcome_Page5_Text01}" />
+                    <CheckBox Content="{i18n:Localize startFlowLauncherOnSystemStartup}"
+                              IsChecked="{Binding GeneralSettings.StartOnStartup, Mode=TwoWay}" />
+                    <CheckBox Content="{i18n:Localize hideOnStartup}"
+                              IsChecked="{Binding GeneralSettings.HideOnStartup, Mode=TwoWay}" />
+                    <Button Width="140"
+                            HorizontalAlignment="Right"
+                            Classes="accent"
+                            Content="{i18n:Localize done}"
+                            Click="OnCloseClick" />
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+
+        <Border Grid.Row="1"
+                BorderThickness="0,1,0,0"
+                BorderBrush="{DynamicResource ControlStrongStrokeColorDefaultBrush}"
+                Padding="20,16">
+            <Grid ColumnDefinitions="Auto,*,Auto">
+                <Button Grid.Column="0"
+                        Width="100"
+                        Content="{i18n:Localize Skip}"
+                        Click="OnCloseClick" />
+
+                <TextBlock Grid.Column="1"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontSize="14"
+                           Text="{Binding PageDisplay}" />
+
+                <StackPanel Grid.Column="2"
+                            Orientation="Horizontal"
+                            Spacing="8">
+                    <Button Width="40"
+                            IsEnabled="{Binding CanGoBack}"
+                            Click="OnBackClick"
+                            Content="←" />
+                    <Button Width="40"
+                            IsEnabled="{Binding CanGoForward}"
+                            Click="OnNextClick"
+                            Content="→" />
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

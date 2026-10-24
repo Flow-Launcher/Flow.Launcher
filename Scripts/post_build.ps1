@@ -96,6 +96,42 @@ function Pack-Squirrel-Installer ($path, $version, $output) {
     Write-Host "End pack squirrel installer"
 }
 
+function Pack-AvaloniaSquirrel-Installer ($path, $version, $output) {
+    # msbuild based installer generation is not working in appveyor, not sure why
+    Write-Host "Begin pack Avalonia squirrel installer"
+
+    $spec = "$path\Scripts\flowlauncher-avalonia.nuspec"
+    $input = "$path\Output\Avalonia\Release"
+
+    Write-Host "Packing: $spec"
+    Write-Host "Input path:  $input"
+
+    # dotnet pack is not used because ran into issues, need to test installation and starting up if to use it.
+    nuget pack $spec -Version $version -BasePath $input -OutputDirectory $output -Properties Configuration=Release
+
+    $nupkg = "$output\FlowLauncherAvalonia.$version.nupkg"
+    Write-Host "nupkg path: $nupkg"
+    $icon = "$path\Flow.Launcher\Resources\app.ico"
+    Write-Host "icon: $icon"
+    # Squirrel.com: https://github.com/Squirrel/Squirrel.Windows/issues/369
+    New-Alias Squirrel $env:USERPROFILE\.nuget\packages\squirrel.windows\1.9.0\tools\Squirrel.exe -Force
+    # why we need Write-Output: https://github.com/Squirrel/Squirrel.Windows/issues/489#issuecomment-156039327
+    # directory of releaseDir in squirrel can't be same as directory ($nupkg) in releasify
+    $temp = "$output\Temp"
+
+    Squirrel --releasify $nupkg --releaseDir $temp --setupIcon $icon --no-msi | Write-Output
+    Move-Item $temp\* $output -Force
+    Remove-Item $temp
+
+    $file = "$output\Flow-Launcher-Avalonia-Setup.exe"
+    Write-Host "Filename: $file"
+
+    Move-Item "$output\Setup.exe" $file -Force
+
+    Write-Host "End pack Avalonia squirrel installer"
+}
+
+
 function Publish-Self-Contained ($p) {
 
     $csproj  = Join-Path "$p" "Flow.Launcher/Flow.Launcher.csproj" -Resolve
@@ -112,6 +148,14 @@ function Publish-Portable ($outputLocation, $version) {
     mkdir "$env:LocalAppData\FlowLauncher\app-$version\UserData"
     Compress-Archive -Path $env:LocalAppData\FlowLauncher -DestinationPath $outputLocation\Flow-Launcher-Portable.zip
 }
+function Publish-AvaloniaPortable ($outputLocation, $version) {
+
+    & $outputLocation\Flow-Launcher-Avalonia-Setup.exe --silent | Out-Null
+    mkdir "$env:LocalAppData\FlowLauncherAvalonia\app-$version\UserData"
+    Compress-Archive -Path $env:LocalAppData\FlowLauncherAvalonia -DestinationPath $outputLocation\Flow-Launcher-Avalonia-Portable.zip -Force
+}
+
+
 
 function Main {
     $p = Build-Path
@@ -122,12 +166,20 @@ function Main {
 
         Delete-Unused $p $config
 
+        Delete-Unused $p "Avalonia\$config"
+
         Publish-Self-Contained $p
 
         Remove-CreateDumpExe $p $config
 
         $o = "$p\Output\Packages"
         Validate-Directory $o
+
+        $ao = "$o\Avalonia"
+        Validate-Directory $ao
+        Pack-AvaloniaSquirrel-Installer $p $v $ao
+        Publish-AvaloniaPortable $ao $v
+
         Pack-Squirrel-Installer $p $v $o
 
         Publish-Portable $o $v
