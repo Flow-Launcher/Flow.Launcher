@@ -423,6 +423,10 @@
     <system:String x:Key="showBadgesGlobalOnlyToolTip">仅对全局查询结果显示徽章</system:String>
     <system:String x:Key="dialogJumpHotkey">对话框跳转</system:String>
     <system:String x:Key="dialogJumpHotkeyToolTip">输入快捷键以快速导航打开或保存作为对话框窗口到当前文件管理器路径。</system:String>
+    <system:String x:Key="doubleTapHotkey">双击热键</system:String>
+    <system:String x:Key="doubleTapHotkeyToolTip">快速连续按两次相同的键来切换 Flow Launcher。例如，在间隔时间内按两次 Ctrl 将打开/隐藏搜索窗口。</system:String>
+    <system:String x:Key="doubleTapHotkeyInterval">双击间隔</system:String>
+    <system:String x:Key="doubleTapHotkeyIntervalToolTip">两次按键之间的最大时间间隔（毫秒），在此间隔内视为双击。默认为 300ms。</system:String>
     <system:String x:Key="dialogJump">对话框跳转</system:String>
     <system:String x:Key="dialogJumpToolTip">当打开了打开或保存对话框窗口时，快速导航到文件管理器当前路径。</system:String>
     <system:String x:Key="autoDialogJump">自动跳转对话框</system:String>
