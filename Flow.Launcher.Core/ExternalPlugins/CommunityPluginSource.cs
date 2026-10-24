@@ -17,6 +17,8 @@ namespace Flow.Launcher.Core.ExternalPlugins
     {
         private static readonly string ClassName = nameof(CommunityPluginSource);
 
+        internal string ManifestFileUrlForLogging => SanitizeUrlForLogging(ManifestFileUrl);
+
         private string latestEtag = "";
 
         private List<UserPlugin> plugins = [];
@@ -36,7 +38,7 @@ namespace Flow.Launcher.Core.ExternalPlugins
         /// </remarks>
         public async Task<List<UserPlugin>> FetchAsync(CancellationToken token)
         {
-            PublicApi.Instance.LogInfo(ClassName, $"Loading plugins from {ManifestFileUrl}");
+            PublicApi.Instance.LogInfo(ClassName, $"Loading plugins from {ManifestFileUrlForLogging}");
 
             var request = new HttpRequestMessage(HttpMethod.Get, ManifestFileUrl);
 
@@ -54,36 +56,36 @@ namespace Flow.Launcher.Core.ExternalPlugins
                         .ConfigureAwait(false);
                     latestEtag = response.Headers.ETag?.Tag;
 
-                    PublicApi.Instance.LogInfo(ClassName, $"Loaded {plugins.Count} plugins from {ManifestFileUrl}");
+                    PublicApi.Instance.LogInfo(ClassName, $"Loaded {plugins.Count} plugins from {ManifestFileUrlForLogging}");
                     return plugins;
                 }
                 else if (response.StatusCode == HttpStatusCode.NotModified)
                 {
-                    PublicApi.Instance.LogInfo(ClassName, $"Resource {ManifestFileUrl} has not been modified.");
+                    PublicApi.Instance.LogInfo(ClassName, $"Resource {ManifestFileUrlForLogging} has not been modified.");
                     return plugins;
                 }
                 else
                 {
-                    PublicApi.Instance.LogWarn(ClassName, $"Failed to load resource {ManifestFileUrl} with response {response.StatusCode}");
+                    PublicApi.Instance.LogWarn(ClassName, $"Failed to load resource {ManifestFileUrlForLogging} with response {response.StatusCode}");
                     return null;
                 }
             }
             catch (OperationCanceledException) when (token.IsCancellationRequested)
             {
-                PublicApi.Instance.LogDebug(ClassName, $"Fetching from {ManifestFileUrl} was cancelled by caller.");
+                PublicApi.Instance.LogDebug(ClassName, $"Fetching from {ManifestFileUrlForLogging} was cancelled by caller.");
                 return null;
             }
             catch (TaskCanceledException)
             {
                 // Likely an HttpClient timeout or external cancellation not requested by our token
-                PublicApi.Instance.LogWarn(ClassName, $"Fetching from {ManifestFileUrl} timed out.");
+                PublicApi.Instance.LogWarn(ClassName, $"Fetching from {ManifestFileUrlForLogging} timed out.");
                 return null;
             }
             catch (Exception e)
             {
                 if (e is HttpRequestException or WebException or SocketException || e.InnerException is TimeoutException)
                 {
-                    PublicApi.Instance.LogException(ClassName, $"Check your connection and proxy settings to {ManifestFileUrl}.", e);
+                    PublicApi.Instance.LogException(ClassName, $"Check your connection and proxy settings to {ManifestFileUrlForLogging}.", e);
                 }
                 else
                 {
@@ -91,6 +93,15 @@ namespace Flow.Launcher.Core.ExternalPlugins
                 }
                 return null;
             }
+        }
+
+        private static string SanitizeUrlForLogging(string url)
+        {
+            if (!Uri.TryCreate(url, UriKind.Absolute, out var uri))
+                return "[invalid manifest URL]";
+
+            const UriComponents components = UriComponents.SchemeAndServer | UriComponents.Path;
+            return uri.GetComponents(components, UriFormat.UriEscaped);
         }
     }
 }
