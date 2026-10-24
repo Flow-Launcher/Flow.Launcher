@@ -2,7 +2,7 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--  Setting  -->
-    <system:String x:Key="flowlauncher_plugin_sys_skip_confirm">Skip confirmation when Shutting down, Restarting, or Logging off</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_skip_confirm">Kapatırken, Yeniden Başlatırken veya Oturumu Kapatırken onayı atla</system:String>
 
     <!--  Command List  -->
     <system:String x:Key="flowlauncher_plugin_sys_name">Ad</system:String>
@@ -66,6 +66,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_logoff_computer">Oturumu kapatmayı istediğinizden emin misiniz?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_error">Hata</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_empty_recycle_bin_failed">Geri dönüşüm kutusu boşaltılamadı. Bu durum şu durumlarda meydana gelebilir:{0}- Bazı öğeler şu anda kullanımda{0}- Bazı öğeler izinler nedeniyle silinemiyor{0}Lütfen bu dosyaları kullanıyor olabilecek tüm uygulamaları kapatın ve tekrar deneyin.</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_suspend_failed">Bilgisayar uyku veya hazırda bekletme moduna alınamadı.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_command_keyword_setting_window_title">Komut Anahtar Kelimesi Ayarı</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword">Özel Komut Anahtar Kelimesi</system:String>

@@ -66,6 +66,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_logoff_computer">האם אתה בטוח שברצונך להתנתק?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_error">שגיאה</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_empty_recycle_bin_failed">ריקון סל המיחזור נכשל. דבר זה עלול לקרות אם:{0}- חלק מהפריטים נמצאים כעת בשימוש{0}- לא ניתן למחוק חלק מהפריטים עקב הרשאות{0}אנא סגור יישומים שעשויים להשתמש בקבצים אלו ונסה שוב.</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_suspend_failed">Failed to put the computer to sleep or hibernate.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_command_keyword_setting_window_title">הגדרת מילת מפתח לפקודה</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword">מילת מפתח מותאמת לפקודה</system:String>

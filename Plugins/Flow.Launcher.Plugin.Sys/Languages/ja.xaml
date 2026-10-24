@@ -66,6 +66,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_logoff_computer">本当にログオフしますか？</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_error">エラー</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_empty_recycle_bin_failed">ゴミ箱を空にできませんでした。以下の原因が考えられます：{0}ｰ 現在使用中のアイテムがある{0}- 権限が原因で削除できないアイテムがある{0}ファイルを使用中と思われるアプリケーションを終了してから、再度お試しください。</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_suspend_failed">Failed to put the computer to sleep or hibernate.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_command_keyword_setting_window_title">コマンドキーワードの設定</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword">カスタムのコマンドキーワード</system:String>
