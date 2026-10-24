@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -26,9 +27,15 @@ namespace Flow.Launcher.Infrastructure.Image
         private static readonly ConcurrentDictionary<string, string> GuidToKey = new();
         private static ImageHashGenerator _hashGenerator;
         private static readonly bool EnableImageHash = true;
-        public static ImageSource MissingImage => ImageCache[Constant.MissingImgIcon, false];
-        public static ImageSource LoadingImage => ImageCache[Constant.LoadingImgIcon, false];
-        public static ImageSource FolderImage => ImageCache[Constant.FolderIcon, false];
+
+        // Fallbacks are held outside the image cache because the cache evicts its least used entries
+        private static ImageSource _missingImage;
+        private static ImageSource _loadingImage;
+        private static ImageSource _folderImage;
+
+        public static ImageSource MissingImage => _missingImage;
+        public static ImageSource LoadingImage => _loadingImage;
+        public static ImageSource FolderImage => _folderImage;
         public const int SmallIconSize = 64;
         public const int FullIconSize = 256;
         public const int FullImageSize = 320;
@@ -55,12 +62,15 @@ namespace Flow.Launcher.Infrastructure.Image
 
                 ImageCache.Initialize(usage);
 
-                foreach (var icon in new[] { Constant.DefaultIcon, Constant.MissingImgIcon, Constant.LoadingImgIcon, Constant.FolderIcon })
-                {
-                    ImageSource img = new BitmapImage(new Uri(icon));
-                    img.Freeze();
-                    ImageCache[icon, false] = img;
-                }
+                _missingImage = LoadFrozenImage(Constant.MissingImgIcon);
+                _loadingImage = LoadFrozenImage(Constant.LoadingImgIcon);
+                _folderImage = LoadFrozenImage(Constant.FolderIcon);
+
+                // Cache the fallbacks as well so path lookups resolve, the fields above survive eviction
+                ImageCache[Constant.DefaultIcon, false] = LoadFrozenImage(Constant.DefaultIcon);
+                ImageCache[Constant.MissingImgIcon, false] = _missingImage;
+                ImageCache[Constant.LoadingImgIcon, false] = _loadingImage;
+                ImageCache[Constant.FolderIcon, false] = _folderImage;
 
                 return usage;
             });
@@ -101,6 +111,13 @@ namespace Flow.Launcher.Infrastructure.Image
             }
         }
 
+        private static ImageSource LoadFrozenImage(string path)
+        {
+            var image = new BitmapImage(new Uri(path));
+            image.Freeze();
+            return image;
+        }
+
         private class ImageResult
         {
             public ImageResult(ImageSource imageSource, ImageType imageType)
@@ -126,67 +143,99 @@ namespace Flow.Launcher.Infrastructure.Image
 
         private static async ValueTask<ImageResult> LoadInternalAsync(string path, bool loadFullImage = false)
         {
-            ImageResult imageResult;
+            if (string.IsNullOrEmpty(path))
+            {
+                return new ImageResult(MissingImage, ImageType.Error);
+            }
 
+            if (ImageCache.TryGetValue(path, loadFullImage, out var imageSource))
+            {
+                return new ImageResult(imageSource, ImageType.Cache);
+            }
+
+            if (Uri.TryCreate(path, UriKind.RelativeOrAbsolute, out var uriResult)
+                && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps))
+            {
+                return await GetRemoteImageResultAsync(path, uriResult, loadFullImage);
+            }
+
+            if (path.StartsWith("data:image", StringComparison.OrdinalIgnoreCase))
+            {
+                return GetDataImageResult(path);
+            }
+
+            return await GetThumbnailResultWithRetryAsync(path, loadFullImage);
+        }
+
+        private static async ValueTask<ImageResult> GetRemoteImageResultAsync(string path, Uri uriResult, bool loadFullImage)
+        {
             try
             {
-                if (string.IsNullOrEmpty(path))
-                {
-                    return new ImageResult(MissingImage, ImageType.Error);
-                }
-
-                // extra scope for use of same variable name
-                {
-                    if (ImageCache.TryGetValue(path, loadFullImage, out var imageSource))
-                    {
-                        return new ImageResult(imageSource, ImageType.Cache);
-                    }
-                }
-
-                if (Uri.TryCreate(path, UriKind.RelativeOrAbsolute, out var uriResult)
-                    && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps))
-                {
-                    var image = await LoadRemoteImageAsync(loadFullImage, uriResult);
-                    ImageCache[path, loadFullImage] = image;
-                    return new ImageResult(image, ImageType.ImageFile);
-                }
-
-                if (path.StartsWith("data:image", StringComparison.OrdinalIgnoreCase))
-                {
-                    var imageSource = new BitmapImage(new Uri(path));
-                    imageSource.Freeze();
-                    return new ImageResult(imageSource, ImageType.Data);
-                }
-
-                imageResult = await Task.Run(() => GetThumbnailResult(path, loadFullImage));
+                var image = await LoadRemoteImageAsync(loadFullImage, uriResult);
+                ImageCache[path, loadFullImage] = image;
+                return new ImageResult(image, ImageType.ImageFile);
             }
-            catch (System.Exception e)
+            catch (System.Exception ex)
+            {
+                Log.Warn(ClassName, $"Failed to load remote image from url {uriResult}: {ex.Message}");
+                return new ImageResult(MissingImage, ImageType.Error);
+            }
+        }
+
+        private static ImageResult GetDataImageResult(string path)
+        {
+            try
+            {
+                var imageSource = new BitmapImage(new Uri(path));
+                imageSource.Freeze();
+                return new ImageResult(imageSource, ImageType.Data);
+            }
+            catch (System.Exception ex)
+            {
+                Log.Warn(ClassName, $"Failed to load data image from path {path}: {ex.Message}");
+                return new ImageResult(MissingImage, ImageType.Error);
+            }
+        }
+
+        private static async ValueTask<ImageResult> GetThumbnailResultWithRetryAsync(string path, bool loadFullImage)
+        {
+            try
+            {
+                return await Task.Run(() => GetThumbnailResult(path, loadFullImage));
+            }
+            catch (System.Exception firstEx)
             {
                 try
                 {
                     // Get thumbnail may fail for certain images on the first try, retry again has proven to work
-                    imageResult = GetThumbnailResult(path, loadFullImage);
+                    return GetThumbnailResult(path, loadFullImage);
                 }
-                catch (System.Exception e2)
+                catch (System.Exception secondEx)
                 {
-                    Log.Warn(ClassName, $"Failed to get thumbnail for {path} on first try: {e.Message}");
-                    Log.Warn(ClassName, $"Failed to get thumbnail for {path} on second try: {e2.Message}");
+                    Log.Warn(ClassName, $"Failed to get thumbnail for {path} on first try: {firstEx.Message}");
+                    Log.Warn(ClassName, $"Failed to get thumbnail for {path} on second try: {secondEx.Message}");
 
-                    ImageSource image = MissingImage;
-                    ImageCache[path, false] = image;
-                    imageResult = new ImageResult(image, ImageType.Error);
+                    ImageCache[path, false] = MissingImage;
+                    return new ImageResult(MissingImage, ImageType.Error);
                 }
             }
-
-            return imageResult;
         }
 
         private static async Task<BitmapImage> LoadRemoteImageAsync(bool loadFullImage, Uri uriResult)
         {
-            // Download image from url
-            await using var resp = await Http.Http.GetStreamAsync(uriResult);
+            // Read headers first so a bad status is caught before the body is downloaded
+            using var httpResponse = await Http.Http.GetResponseAsync(uriResult, HttpCompletionOption.ResponseHeadersRead);
+
+            // A non-success status would otherwise return the error page body, which only fails later as a decode error
+            if (!httpResponse.IsSuccessStatusCode)
+            {
+                throw new HttpRequestException($"{(int)httpResponse.StatusCode} {httpResponse.ReasonPhrase} for <{uriResult}>");
+            }
+
+            // Read the response body into a buffer the bitmap decoder can read
+            await using var contentStream = await httpResponse.Content.ReadAsStreamAsync();
             await using var buffer = new MemoryStream();
-            await resp.CopyToAsync(buffer);
+            await contentStream.CopyToAsync(buffer);
             buffer.Seek(0, SeekOrigin.Begin);
             var image = new BitmapImage();
             image.BeginInit();
