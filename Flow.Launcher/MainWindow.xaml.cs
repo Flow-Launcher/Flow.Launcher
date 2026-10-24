@@ -265,7 +265,11 @@ namespace Flow.Launcher
                                     }
 
                                     // Update position & Activate
+                                    // ForceForeground ensures the window gets focus even when opened by
+                                    // the Win+key keyboard hook, which (unlike WM_HOTKEY) does not grant
+                                    // foreground permission.
                                     UpdatePosition();
+                                    Win32Helper.ForceForeground(this);
                                     Activate();
 
                                     // Reset preview
