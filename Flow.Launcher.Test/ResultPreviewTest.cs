@@ -17,23 +17,29 @@ namespace Flow.Launcher.Test
             .Where(type => typeof(ResultPreview).IsAssignableFrom(type) && !type.IsAbstract)
             .ToArray();
 
+        // Preview types that must stay out of JSON, for example ones holding a WPF control.
+        // They have no registration on purpose and are dropped when a result is serialized.
+        private static readonly Type[] JsonExcludedPreviewTypes = [];
+
         [Test]
-        public void GivenEveryPreviewType_WhenInspectingDerivedTypes_ThenEachIsRegisteredForDeserialization()
+        public void GivenEveryPreviewType_WhenInspectingDerivedTypes_ThenOnlyJsonSafeTypesAreRegistered()
         {
             var registrations = typeof(ResultPreview)
                 .GetCustomAttributes<JsonDerivedTypeAttribute>()
                 .ToList();
             var registeredTypes = registrations.Select(registration => registration.DerivedType).ToList();
             var discriminators = registrations.Select(registration => registration.TypeDiscriminator).ToList();
+            var jsonSafeTypes = ConcretePreviewTypes.Except(JsonExcludedPreviewTypes).ToList();
 
-            // Without a registration a preview type cannot be deserialized from a plugin response
+            // Without a registration a preview type cannot be deserialized from a plugin response.
+            // If that is intended, the type belongs in JsonExcludedPreviewTypes instead.
             ClassicAssert.IsTrue(
-                ConcretePreviewTypes.All(registeredTypes.Contains),
-                "Every preview type needs a JsonDerivedType registration");
-            ClassicAssert.AreEqual(ConcretePreviewTypes.Length, registeredTypes.Count);
+                jsonSafeTypes.All(registeredTypes.Contains),
+                "Register every JSON-safe preview type with JsonDerivedType, or exclude it explicitly");
+            ClassicAssert.AreEqual(jsonSafeTypes.Count, registeredTypes.Count);
 
             // Each discriminator has to be unique for the serializer to map it back to one type
-            ClassicAssert.AreEqual(ConcretePreviewTypes.Length, discriminators.Distinct().Count());
+            ClassicAssert.AreEqual(registeredTypes.Count, discriminators.Distinct().Count());
         }
 
         // Stands in for a preview type that is only usable inside Flow, such as a WPF control
