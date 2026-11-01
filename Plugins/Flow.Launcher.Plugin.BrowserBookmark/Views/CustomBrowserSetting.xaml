@@ -17,6 +17,15 @@
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="32" ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
     </WindowChrome.WindowChrome>
+    <Window.Resources>
+        <!--  Data-bound ComboBox items expose their type name (ToString) to screen readers unless AutomationProperties.Name is set  -->
+        <Style
+            x:Key="DisplayComboBoxItemStyle"
+            BasedOn="{StaticResource DefaultComboBoxItemStyle}"
+            TargetType="ComboBoxItem">
+            <Setter Property="AutomationProperties.Name" Value="{Binding Display}" />
+        </Style>
+    </Window.Resources>
     <Window.DataContext>
         <local:CustomBrowser />
     </Window.DataContext>
@@ -126,6 +135,7 @@
                             VerticalAlignment="Center"
                             Text="{Binding Name}" />
                         <TextBlock
+                            x:Name="BrowserEngineLabel"
                             Grid.Row="2"
                             Grid.Column="0"
                             Margin="5 10 20 0"
@@ -141,7 +151,9 @@
                             Margin="5 10 10 0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
+                            AutomationProperties.LabeledBy="{Binding ElementName=BrowserEngineLabel}"
                             DisplayMemberPath="Display"
+                            ItemContainerStyle="{StaticResource DisplayComboBoxItemStyle}"
                             ItemsSource="{Binding AllBrowserTypes}"
                             SelectedValue="{Binding BrowserType}"
                             SelectedValuePath="Value" />

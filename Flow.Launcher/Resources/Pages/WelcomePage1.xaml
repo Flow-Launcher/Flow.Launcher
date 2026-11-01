@@ -169,6 +169,7 @@
                             Text="{DynamicResource Welcome_Page1_Text02}"
                             TextWrapping="WrapWithOverflow" />
                         <TextBlock
+                            x:Name="LanguageLabel"
                             Margin="0 30 0 0"
                             FontSize="14"
                             FontWeight="SemiBold"
@@ -176,7 +177,9 @@
                         <ComboBox
                             Width="200"
                             Margin="0 10 0 0"
+                            AutomationProperties.LabeledBy="{Binding ElementName=LanguageLabel}"
                             DisplayMemberPath="Display"
+                            ItemContainerStyle="{StaticResource DisplayComboBoxItemStyle}"
                             ItemsSource="{Binding Languages}"
                             SelectedValue="{Binding CustomLanguage, Mode=TwoWay}"
                             SelectedValuePath="LanguageCode" />

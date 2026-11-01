@@ -10,6 +10,15 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
+    <UserControl.Resources>
+        <!--  Data-bound ComboBox items expose their type name (ToString) to screen readers unless AutomationProperties.Name is set  -->
+        <Style
+            x:Key="DisplayComboBoxItemStyle"
+            BasedOn="{StaticResource DefaultComboBoxItemStyle}"
+            TargetType="ComboBoxItem">
+            <Setter Property="AutomationProperties.Name" Value="{Binding Display}" />
+        </Style>
+    </UserControl.Resources>
 
     <Grid Margin="{StaticResource SettingPanelMargin}">
         <Grid.RowDefinitions>
@@ -24,6 +33,7 @@
         </Grid.ColumnDefinitions>
 
         <TextBlock
+            x:Name="DecimalSeparatorLabel"
             Grid.Row="0"
             Grid.Column="0"
             Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
@@ -38,12 +48,15 @@
             Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
             HorizontalAlignment="Left"
             VerticalAlignment="Center"
+            AutomationProperties.LabeledBy="{Binding ElementName=DecimalSeparatorLabel}"
             DisplayMemberPath="Display"
+            ItemContainerStyle="{StaticResource DisplayComboBoxItemStyle}"
             ItemsSource="{Binding AllDecimalSeparator}"
             SelectedValue="{Binding SelectedDecimalSeparator, Mode=TwoWay}"
             SelectedValuePath="Value" />
 
         <TextBlock
+            x:Name="MaxDecimalPlacesLabel"
             Grid.Row="1"
             Grid.Column="0"
             Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
@@ -57,6 +70,7 @@
             Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
             HorizontalAlignment="Left"
             VerticalAlignment="Center"
+            AutomationProperties.LabeledBy="{Binding ElementName=MaxDecimalPlacesLabel}"
             ItemsSource="{Binding MaxDecimalPlacesRange}"
             SelectedItem="{Binding Settings.MaxDecimalPlaces}" />
 

@@ -21,18 +21,28 @@
             <Setter Property="FontWeight" Value="SemiBold" />
             <Setter Property="Margin" Value="0 6 0 6" />
         </Style>
+        <!--  Data-bound ComboBox items expose their type name (ToString) to screen readers unless AutomationProperties.Name is set  -->
+        <Style
+            x:Key="DisplayComboBoxItemStyle"
+            BasedOn="{StaticResource DefaultComboBoxItemStyle}"
+            TargetType="ComboBoxItem">
+            <Setter Property="AutomationProperties.Name" Value="{Binding Display}" />
+        </Style>
     </UserControl.Resources>
 
     <StackPanel Margin="{StaticResource SettingPanelMargin}" VerticalAlignment="Top">
         <!-- Shell settings -->
         <TextBlock
+            x:Name="ShellSettingsHeader"
             Style="{StaticResource SectionHeaderStyle}"
             Text="{DynamicResource flowlauncher_plugin_cmd_shell_settings}" />
         <ComboBox
             x:Name="ShellComboBox"
             Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
             HorizontalAlignment="Left"
+            AutomationProperties.LabeledBy="{Binding ElementName=ShellSettingsHeader}"
             DisplayMemberPath="Display"
+            ItemContainerStyle="{StaticResource DisplayComboBoxItemStyle}"
             ItemsSource="{Binding AllShells, Mode=OneTime}"
             SelectedValue="{Binding SelectedShell, Mode=TwoWay}"
             SelectedValuePath="Value" />
@@ -122,6 +132,7 @@
                 x:Name="ShowOnlyMostUsedCMDsNumber"
                 Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
                 HorizontalAlignment="Left"
+                AutomationProperties.LabeledBy="{Binding ElementName=ShowOnlyMostUsedCMDs}"
                 IsEnabled="{Binding Settings.ShowOnlyMostUsedCMDs, Mode=OneWay}"
                 ItemsSource="{Binding OnlyMostUsedCMDsNumbers, Mode=OneTime}"
                 SelectedItem="{Binding SelectedOnlyMostUsedCMDsNumber, Mode=TwoWay}" />
