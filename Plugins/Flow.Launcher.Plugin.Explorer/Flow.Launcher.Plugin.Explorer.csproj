@@ -25,10 +25,23 @@
     <None Include="plugin.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="EverythingSDK\x64\Everything.dll">
+    <!-- No-RID builds carry both SDKs because the process architecture is selected at runtime. -->
+    <None Update="EverythingSDK\x64\Everything.dll" Condition="'$(RuntimeIdentifier)' == '' or '$(RuntimeIdentifier)' == 'win-x64'">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="EverythingSDK\x64\Everything3.dll">
+    <None Update="EverythingSDK\x64\Everything3.dll" Condition="'$(RuntimeIdentifier)' == '' or '$(RuntimeIdentifier)' == 'win-x64'">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="EverythingSDK\arm64\Everything.dll" Condition="'$(RuntimeIdentifier)' == '' or '$(RuntimeIdentifier)' == 'win-arm64'">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="EverythingSDK\arm64\Everything3.dll" Condition="'$(RuntimeIdentifier)' == '' or '$(RuntimeIdentifier)' == 'win-arm64'">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="EverythingSDK\LICENSE.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="EverythingSDK\PROVENANCE.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

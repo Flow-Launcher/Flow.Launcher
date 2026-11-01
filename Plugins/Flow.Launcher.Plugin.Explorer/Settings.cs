@@ -92,6 +92,8 @@ namespace Flow.Launcher.Plugin.Explorer
         internal EverythingSearchManager EverythingManagerInstance => _everythingManagerInstance ??= new EverythingSearchManager(this);
         private WindowsIndexSearchManager WindowsIndexSearchManager => _windowsIndexSearchManager ??= new WindowsIndexSearchManager(this);
 
+        internal event EventHandler SearchEngineSelectionChanged;
+
         public IndexSearchEngineOption IndexSearchEngine { get; set; } = IndexSearchEngineOption.WindowsIndex;
 
         [JsonIgnore]
@@ -145,6 +147,36 @@ namespace Flow.Launcher.Plugin.Explorer
             WindowsIndex,
             [Description("plugin_explorer_engine_everything")]
             Everything,
+        }
+
+        internal bool SelectWindowsSearchForEverythingEngines()
+        {
+            var changed = false;
+
+            if (IndexSearchEngine == IndexSearchEngineOption.Everything)
+            {
+                IndexSearchEngine = IndexSearchEngineOption.WindowsIndex;
+                changed = true;
+            }
+
+            if (PathEnumerationEngine == PathEnumerationEngineOption.Everything)
+            {
+                PathEnumerationEngine = PathEnumerationEngineOption.WindowsIndex;
+                changed = true;
+            }
+
+            if (ContentSearchEngine == ContentIndexSearchEngineOption.Everything)
+            {
+                ContentSearchEngine = ContentIndexSearchEngineOption.WindowsIndex;
+                changed = true;
+            }
+
+            if (changed)
+            {
+                SearchEngineSelectionChanged?.Invoke(this, EventArgs.Empty);
+            }
+
+            return changed;
         }
 
         #endregion

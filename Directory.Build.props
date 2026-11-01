@@ -4,5 +4,32 @@
     <AccelerateBuildsInVisualStudio>true</AccelerateBuildsInVisualStudio>
     <!-- Workaround https://github.com/dotnet/runtime/issues/109682 -->
     <CETCompat>false</CETCompat>
+    <RuntimeIdentifier
+      Condition="'$(FlowLauncherRuntimeIdentifier)' != ''">$(FlowLauncherRuntimeIdentifier)</RuntimeIdentifier>
+    <FlowLauncherArchitectureIsolatedOutput
+      Condition="'$(FlowLauncherArchitectureIsolatedOutput)' == '' and '$(FlowLauncherRuntimeIdentifier)' != ''">true</FlowLauncherArchitectureIsolatedOutput>
+    <FlowLauncherProjectDirectoryName>$([System.IO.Path]::GetFileName('$(MSBuildProjectDirectory)'))</FlowLauncherProjectDirectoryName>
+    <FlowLauncherBundledPluginProject
+      Condition="$([System.String]::Copy('$(FlowLauncherProjectDirectoryName)').StartsWith('Flow.Launcher.Plugin.'))">true</FlowLauncherBundledPluginProject>
+    <FlowLauncherOutputRoot
+      Condition="'$(FlowLauncherArchitectureIsolatedOutput)' == 'true' and '$(FlowLauncherOutputRoot)' == ''">$(MSBuildThisFileDirectory)Output\$(Configuration)\$(RuntimeIdentifier)\</FlowLauncherOutputRoot>
+    <FlowLauncherResolvedOutputRoot
+      Condition="'$(FlowLauncherArchitectureIsolatedOutput)' == 'true'">$([MSBuild]::EnsureTrailingSlash('$(FlowLauncherOutputRoot)'))</FlowLauncherResolvedOutputRoot>
+    <OutDir
+      Condition="'$(FlowLauncherArchitectureIsolatedOutput)' == 'true' and '$(FlowLauncherBundledPluginProject)' == 'true'">$(FlowLauncherResolvedOutputRoot)Plugins\$(FlowLauncherProjectDirectoryName)\</OutDir>
+    <OutDir
+      Condition="'$(FlowLauncherArchitectureIsolatedOutput)' == 'true' and '$(FlowLauncherBundledPluginProject)' != 'true'">$(FlowLauncherResolvedOutputRoot)</OutDir>
+    <AppendTargetFrameworkToOutputPath
+      Condition="'$(FlowLauncherArchitectureIsolatedOutput)' == 'true'">false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath
+      Condition="'$(FlowLauncherArchitectureIsolatedOutput)' == 'true'">false</AppendRuntimeIdentifierToOutputPath>
+    <BaseIntermediateOutputPath
+      Condition="'$(FlowLauncherArchitectureIsolatedOutput)' == 'true'">obj\$(RuntimeIdentifier)\</BaseIntermediateOutputPath>
+    <DefaultItemExcludes
+      Condition="'$(FlowLauncherArchitectureIsolatedOutput)' == 'true'">$(DefaultItemExcludes);$(MSBuildProjectDirectory)\obj\**</DefaultItemExcludes>
+    <FlowLauncherResolvedLockRoot
+      Condition="'$(FlowLauncherArchitectureLockRoot)' != ''">$([MSBuild]::EnsureTrailingSlash('$(FlowLauncherArchitectureLockRoot)'))</FlowLauncherResolvedLockRoot>
+    <NuGetLockFilePath
+      Condition="'$(FlowLauncherArchitectureLockRoot)' != ''">$(FlowLauncherResolvedLockRoot)$(MSBuildProjectName).packages.lock.json</NuGetLockFilePath>
   </PropertyGroup>
 </Project>
