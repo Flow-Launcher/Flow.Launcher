@@ -509,6 +509,7 @@
                 <ComboBox
                     MinWidth="160"
                     VerticalAlignment="Center"
+                    AutomationProperties.Name="{DynamicResource BackdropType}"
                     DisplayMemberPath="Display"
                     FontSize="14"
                     IsEnabled="{Binding IsBackdropEnabled}"
@@ -556,6 +557,7 @@
                     <ui:SettingsCard Description="{DynamicResource maxShowResultsToolTip}" Header="{DynamicResource maxShowResults}">
                         <ComboBox
                             Width="100"
+                            AutomationProperties.Name="{DynamicResource maxShowResults}"
                             ItemsSource="{Binding MaxResultsRange}"
                             SelectedItem="{Binding Settings.MaxResultsToShow}" />
                     </ui:SettingsCard>
@@ -807,6 +809,7 @@
 
                 <ComboBox
                     MinWidth="180"
+                    AutomationProperties.Name="{DynamicResource ColorScheme}"
                     DisplayMemberPath="Display"
                     FontSize="14"
                     ItemContainerStyle="{StaticResource DisplayComboBoxItemStyle}"
@@ -826,6 +829,7 @@
 
                 <ComboBox
                     MinWidth="180"
+                    AutomationProperties.Name="{DynamicResource CodeHighlightTheme}"
                     DisplayMemberPath="Display"
                     FontSize="14"
                     ItemContainerStyle="{StaticResource DisplayComboBoxItemStyle}"

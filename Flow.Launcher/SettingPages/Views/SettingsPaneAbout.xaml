@@ -195,6 +195,7 @@
                         </ui:SettingsCard.HeaderIcon>
 
                         <ComboBox
+                            AutomationProperties.Name="{DynamicResource logLevel}"
                             DisplayMemberPath="Display"
                             ItemContainerStyle="{StaticResource DisplayComboBoxItemStyle}"
                             ItemsSource="{Binding LogLevels}"
