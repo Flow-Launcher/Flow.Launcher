@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Flow.Launcher.Plugin.Explorer.ViewModels;
 
-public class EnumBindingModel<T> where T : struct, Enum
+public class EnumBindingModel<T> : BaseModel where T : struct, Enum
 {
     public static IReadOnlyList<EnumBindingModel<T>> CreateList()
     {
@@ -28,6 +28,15 @@ public class EnumBindingModel<T> where T : struct, Enum
             LocalizationKey = description,
             Value = value
         };
+    }
+
+    public static void UpdateLabels(IEnumerable<EnumBindingModel<T>> options)
+    {
+        // Description is translated on every read, so bindings only need to be told it changed
+        foreach (var option in options)
+        {
+            option.OnPropertyChanged(nameof(Description));
+        }
     }
 
     private static string GetDescriptionAttr(T source)
