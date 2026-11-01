@@ -294,6 +294,7 @@ namespace Flow.Launcher.Plugin
         /// When this does not provide a preview, the legacy <see cref="Preview"/> data is used.
         /// A custom <see cref="PreviewPanel"/> takes precedence over both.
         /// </remarks>
+        [JsonConverter(typeof(ResultPreviewConverter))]
         public ResultPreview PreviewDefinition { get; set; }
 
         /// <summary>
