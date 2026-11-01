@@ -101,6 +101,10 @@ namespace Flow.Launcher.Plugin.Calculator
                 }
                 // WORKAROUND END
 
+                // Mages has no percentages ('%' is modulo), so rewrite them to plain arithmetic,
+                // e.g. 200+15% -> (200)*(1+15/100). Modulo like 10%3 is left untouched.
+                expression = PercentageHelper.Rewrite(expression);
+
                 var result = MagesEngine.Interpret(expression);
 
                 if (result == null || string.IsNullOrEmpty(result.ToString()))
