@@ -74,7 +74,8 @@ namespace Flow.Launcher.Test.Plugins
                     {
                       "title": "Answer",
                       "subTitle": "*args in Python",
-                      "richPreview": {
+                      "previewDefinition": {
+                        "type": "blocks",
                         "contentBlocks": [
                           {
                             "type": "markdown",
@@ -95,7 +96,7 @@ namespace Flow.Launcher.Test.Plugins
 
             var result = results.Single();
 
-            var block = result.RichPreview.ContentBlocks.Single();
+            var block = ((BlocksPreview)result.PreviewDefinition).ContentBlocks.Single();
             ClassicAssert.IsInstanceOf<MarkdownPreviewBlock>(block);
             ClassicAssert.AreEqual("**`*args`** collects extra positional arguments.", ((MarkdownPreviewBlock)block).InlineMarkdown);
         }
@@ -110,7 +111,7 @@ namespace Flow.Launcher.Test.Plugins
                     {
                       "title": "Answer",
                       "subTitle": "Out of order discriminator",
-                      "richPreview": {
+                      "previewDefinition": {
                         "contentBlocks": [
                           {
                             "inlineMarkdown": "# Title",
@@ -120,7 +121,8 @@ namespace Flow.Launcher.Test.Plugins
                             "text": "A plain line of text.",
                             "type": "text"
                           }
-                        ]
+                        ],
+                        "type": "blocks"
                       }
                     }
                   ],
@@ -133,7 +135,7 @@ namespace Flow.Launcher.Test.Plugins
                 Search = resultText
             }, default);
 
-            var blocks = results.Single().RichPreview.ContentBlocks;
+            var blocks = ((BlocksPreview)results.Single().PreviewDefinition).ContentBlocks;
 
             ClassicAssert.IsInstanceOf<MarkdownPreviewBlock>(blocks[0]);
             ClassicAssert.AreEqual("# Title", ((MarkdownPreviewBlock)blocks[0]).InlineMarkdown);
@@ -161,7 +163,8 @@ namespace Flow.Launcher.Test.Plugins
                     {
                       "title": "Answer",
                       "subTitle": "Answer with sections",
-                      "richPreview": {
+                      "previewDefinition": {
+                        "type": "blocks",
                         "contentBlocks": [
                           {
                             "type": "separator"
@@ -181,7 +184,7 @@ namespace Flow.Launcher.Test.Plugins
 
             var result = results.Single();
 
-            var block = result.RichPreview.ContentBlocks.Single();
+            var block = ((BlocksPreview)result.PreviewDefinition).ContentBlocks.Single();
             ClassicAssert.IsInstanceOf<SeparatorPreviewBlock>(block);
         }
 
@@ -195,7 +198,8 @@ namespace Flow.Launcher.Test.Plugins
                     {
                       "title": "Answer",
                       "subTitle": "Answer with sections",
-                      "richPreview": {
+                      "previewDefinition": {
+                        "type": "blocks",
                         "contentBlocks": [
                           {
                             "type": "text",
@@ -216,7 +220,7 @@ namespace Flow.Launcher.Test.Plugins
 
             var result = results.Single();
 
-            var block = result.RichPreview.ContentBlocks.Single();
+            var block = ((BlocksPreview)result.PreviewDefinition).ContentBlocks.Single();
             ClassicAssert.IsInstanceOf<TextPreviewBlock>(block);
             ClassicAssert.AreEqual("A plain line of text.", ((TextPreviewBlock)block).Text);
         }

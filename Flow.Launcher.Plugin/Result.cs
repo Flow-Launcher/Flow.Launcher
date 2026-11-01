@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -284,16 +283,18 @@ namespace Flow.Launcher.Plugin
         public string ProgressBarColor { get; set; } = "#26a0da";
 
         /// <summary>
-        /// Contains data used to populate the preview section of this result.
+        /// Legacy preview data, used when <see cref="PreviewDefinition"/> does not provide a preview.
         /// </summary>
         public PreviewInfo Preview { get; set; } = new PreviewInfo();
 
         /// <summary>
-        /// Rich block based preview, an alternative to the old <see cref="Preview"/>.
-        /// Takes precedence over <see cref="Preview"/> when it contains blocks, while the
-        /// custom <see cref="PreviewPanel"/> takes precedence over this.
+        /// The preview to render for this result.
         /// </summary>
-        public RichPreviewInfo RichPreview { get; set; } = new();
+        /// <remarks>
+        /// When this does not provide a preview, the legacy <see cref="Preview"/> data is used.
+        /// A custom <see cref="PreviewPanel"/> takes precedence over both.
+        /// </remarks>
+        public ResultPreview PreviewDefinition { get; set; }
 
         /// <summary>
         /// Controls whether Flow Launcher's preview pane is shown for this result.
@@ -383,7 +384,7 @@ namespace Flow.Launcher.Plugin
                 ProgressBar = ProgressBar,
                 ProgressBarColor = ProgressBarColor,
                 Preview = Preview is null ? null : Preview with { },
-                RichPreview = RichPreview is null ? null : RichPreview with { ContentBlocks = RichPreview.ContentBlocks?.Select(b => b with { }).ToList() },
+                PreviewDefinition = PreviewDefinition?.ClonePreview(),
                 PreviewVisibility = PreviewVisibility,
                 AddSelectedCount = AddSelectedCount,
                 RecordKey = RecordKey,
@@ -396,7 +397,7 @@ namespace Flow.Launcher.Plugin
         /// Info of the preview section of a <see cref="Result"/>
         /// </summary>
         /// <remarks>
-        /// The rich block based alternative is <see cref="RichPreview"/>.
+        /// This is the legacy preview format. Use <see cref="Result.PreviewDefinition"/> for new previews.
         /// </remarks>
         public record PreviewInfo
         {
@@ -440,19 +441,6 @@ namespace Flow.Launcher.Plugin
                 PreviewDelegate = null,
                 FilePath = null,
             };
-        }
-
-        /// <summary>
-        /// A preview made of an ordered list of content blocks, such as markdown.
-        /// This is an alternative to the old <see cref="PreviewInfo"/>.
-        /// </summary>
-        public record RichPreviewInfo
-        {
-            /// <summary>
-            /// Ordered content rendered in the preview panel.
-            /// When populated, this takes precedence over the <see cref="PreviewInfo"/> fields.
-            /// </summary>
-            public IList<PreviewContentBlock> ContentBlocks { get; set; } = [];
         }
     }
 

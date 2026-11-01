@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace Flow.Launcher.Plugin
+﻿namespace Flow.Launcher.Plugin
 {
     /// <summary>
     /// Describes a result of a <see cref="Query"/> executed by a plugin in Dialog Jump window
@@ -45,7 +43,7 @@ namespace Flow.Launcher.Plugin
                 ProgressBar = ProgressBar,
                 ProgressBarColor = ProgressBarColor,
                 Preview = Preview,
-                RichPreview = RichPreview is null ? null : RichPreview with { ContentBlocks = RichPreview.ContentBlocks?.Select(b => b with { }).ToList() },
+                PreviewDefinition = PreviewDefinition?.ClonePreview(),
                 AddSelectedCount = AddSelectedCount,
                 RecordKey = RecordKey,
                 ShowBadge = ShowBadge,
@@ -85,7 +83,7 @@ namespace Flow.Launcher.Plugin
                 ProgressBar = result.ProgressBar,
                 ProgressBarColor = result.ProgressBarColor,
                 Preview = result.Preview,
-                RichPreview = result.RichPreview,
+                PreviewDefinition = result.PreviewDefinition,
                 AddSelectedCount = result.AddSelectedCount,
                 RecordKey = result.RecordKey,
                 ShowBadge = result.ShowBadge,

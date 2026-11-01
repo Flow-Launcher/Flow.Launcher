@@ -84,7 +84,7 @@ namespace Flow.Launcher.Test
             var result = new Result
             {
                 Title = "Markdown",
-                RichPreview = new Result.RichPreviewInfo
+                PreviewDefinition = new BlocksPreview
                 {
                     ContentBlocks = [new MarkdownPreviewBlock { InlineMarkdown = "# Title" }]
                 }
@@ -121,7 +121,7 @@ namespace Flow.Launcher.Test
             {
                 Title = "Custom",
                 PreviewPanel = new Lazy<UserControl>(() => new UserControl()),
-                RichPreview = new Result.RichPreviewInfo
+                PreviewDefinition = new BlocksPreview
                 {
                     ContentBlocks = [new MarkdownPreviewBlock { InlineMarkdown = "# Title" }]
                 }
@@ -150,7 +150,7 @@ namespace Flow.Launcher.Test
                 {
                     Title = "Markdown",
                     PreviewVisibility = PreviewVisibility.Optional,
-                    RichPreview = new Result.RichPreviewInfo
+                    PreviewDefinition = new BlocksPreview
                     {
                         ContentBlocks = [new MarkdownPreviewBlock { InlineMarkdown = "# Title" }]
                     }

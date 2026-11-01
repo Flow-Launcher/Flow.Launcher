@@ -30,7 +30,7 @@ namespace Flow.Launcher.ViewModel
             if (result == null) return;
 
             Result = result;
-            foreach (var block in Result.RichPreview?.ContentBlocks ?? Enumerable.Empty<PreviewContentBlock>())
+            foreach (var block in (Result.PreviewDefinition as BlocksPreview)?.ContentBlocks ?? Enumerable.Empty<PreviewContentBlock>())
             {
                 _previewContentBlocks.Add(new PreviewContentBlockViewModel(block));
             }
