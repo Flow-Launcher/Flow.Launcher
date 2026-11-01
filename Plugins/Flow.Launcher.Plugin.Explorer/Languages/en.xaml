@@ -42,6 +42,8 @@
     <system:String x:Key="plugin_explorer_previewpanel_display_file_age_checkbox">File Age</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_file_info_label">Display File Info</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Date and time format</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_date_format_label">Date format</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_time_format_label">Time format</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">Sort Option:</system:String>
     <system:String x:Key="plugin_explorer_everything_installed_path">Everything Path:</system:String>
     <system:String x:Key="plugin_explorer_everything_15_instance_name">Everything 1.5 instance name: </system:String>
