@@ -73,7 +73,7 @@ namespace Flow.Launcher.ViewModel
 
         public Settings Settings { get; }
 
-        public Visibility ShowDefaultPreview => Result.PreviewPanel == null ? Visibility.Visible : Visibility.Collapsed;
+        public Visibility ShowDefaultPreview => Result.PreviewPanel == null || HasContentBlocks ? Visibility.Visible : Visibility.Collapsed;
 
         public Visibility ShowIcon
         {
@@ -308,8 +308,7 @@ namespace Flow.Launcher.ViewModel
 
         public void LoadPreviewContentBlocks()
         {
-            // Content blocks only render in the default preview area, which is hidden when a custom preview panel is shown.
-            if (ShowDefaultPreview != Visibility.Visible || !HasContentBlocks)
+            if (!HasContentBlocks)
             {
                 return;
             }

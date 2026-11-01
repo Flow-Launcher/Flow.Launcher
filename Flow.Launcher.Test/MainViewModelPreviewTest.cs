@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -114,24 +115,38 @@ namespace Flow.Launcher.Test
         }
 
         [Test]
-        public void GivenPreviewPanelAndContentBlocks_WhenViewModelCreated_ThenCustomPanelTakesPrecedence()
+        public void GivenPreviewPanelAndContentBlocks_WhenViewModelCreated_ThenContentBlocksTakePrecedence()
         {
             var settings = new Settings();
-            var result = new Result
-            {
-                Title = "Custom",
-                PreviewPanel = new Lazy<UserControl>(() => new UserControl()),
-                PreviewDefinition = new BlocksPreview
-                {
-                    ContentBlocks = [new MarkdownPreviewBlock { InlineMarkdown = "# Title" }]
-                }
-            };
+            var viewModel = new ResultViewModel(
+                CustomPreviewResult([new MarkdownPreviewBlock { InlineMarkdown = "# Title" }]),
+                settings);
 
-            var viewModel = new ResultViewModel(result, settings);
-
-            // The custom panel is the most preferred preview source, so it hides the entire default area
-            ClassicAssert.AreEqual(Visibility.Collapsed, viewModel.ShowDefaultPreview);
+            // A preview definition is preferred over the panel, so the default area stays visible
             ClassicAssert.IsTrue(viewModel.HasContentBlocks);
+            ClassicAssert.AreEqual(Visibility.Visible, viewModel.ShowDefaultPreview);
+        }
+
+        [Test]
+        public void GivenPreviewPanelAndContentBlocks_WhenSelected_ThenCustomPanelIsHidden()
+        {
+            var settings = new Settings();
+            var viewModel = CreatePreviewViewModel(settings, ResultAreaColumnPreviewShown);
+            viewModel.PreviewSelectedItem = new ResultViewModel(
+                CustomPreviewResult([new MarkdownPreviewBlock { InlineMarkdown = "# Title" }]),
+                settings);
+
+            ClassicAssert.AreEqual(Visibility.Collapsed, viewModel.ShowCustomizedPreview);
+        }
+
+        [Test]
+        public void GivenPreviewPanelWithoutContentBlocks_WhenSelected_ThenCustomPanelIsShown()
+        {
+            var settings = new Settings();
+            var viewModel = CreatePreviewViewModel(settings, ResultAreaColumnPreviewShown);
+            viewModel.PreviewSelectedItem = new ResultViewModel(CustomPreviewResult(), settings);
+
+            ClassicAssert.AreEqual(Visibility.Visible, viewModel.ShowCustomizedPreview);
         }
 
         [Test]
@@ -398,6 +413,16 @@ namespace Flow.Launcher.Test
 
             ClassicAssert.IsFalse(viewModel.InternalPreviewVisible);
         }
+
+        private static Result CustomPreviewResult(IList<PreviewContentBlock> contentBlocks = null)
+            => new()
+            {
+                Title = "Custom",
+                PreviewPanel = new Lazy<UserControl>(() => new UserControl()),
+                PreviewDefinition = contentBlocks == null
+                    ? null
+                    : new BlocksPreview { ContentBlocks = contentBlocks }
+            };
 
         private static MainViewModel CreatePreviewViewModel(Settings settings, int resultAreaColumn)
         {

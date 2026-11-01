@@ -266,8 +266,11 @@ namespace Flow.Launcher.Plugin
         public string SubTitleToolTip { get; set; }
 
         /// <summary>
-        /// Customized Preview Panel
+        /// A custom control that replaces the default preview area.
         /// </summary>
+        /// <remarks>
+        /// <see cref="PreviewDefinition"/> takes priority over this when both are set.
+        /// </remarks>
         [JsonIgnore]
         public Lazy<UserControl> PreviewPanel { get; set; }
 
@@ -283,16 +286,20 @@ namespace Flow.Launcher.Plugin
         public string ProgressBarColor { get; set; } = "#26a0da";
 
         /// <summary>
-        /// Legacy preview data, used when <see cref="PreviewDefinition"/> does not provide a preview.
+        /// Legacy preview data, used only when neither <see cref="PreviewDefinition"/> nor
+        /// <see cref="PreviewPanel"/> provides a preview.
         /// </summary>
+        /// <remarks>
+        /// New previews should use <see cref="PreviewDefinition"/> if possible.
+        /// </remarks>
         public PreviewInfo Preview { get; set; } = new PreviewInfo();
 
         /// <summary>
         /// The preview to render for this result.
         /// </summary>
         /// <remarks>
-        /// When this does not provide a preview, the legacy <see cref="Preview"/> data is used.
-        /// A custom <see cref="PreviewPanel"/> takes precedence over both.
+        /// When this provides a preview, it takes precedence over both <see cref="PreviewPanel"/> and
+        /// <see cref="Preview"/>.
         /// </remarks>
         [JsonConverter(typeof(ResultPreviewConverter))]
         public ResultPreview PreviewDefinition { get; set; }
