@@ -242,6 +242,7 @@
 
                 <ComboBox
                     MaxWidth="200"
+                    AutomationProperties.Name="{DynamicResource querySearchPrecision}"
                     DisplayMemberPath="Display"
                     ItemContainerStyle="{StaticResource DisplayComboBoxItemStyle}"
                     ItemsSource="{Binding SearchPrecisionScores}"
@@ -255,6 +256,7 @@
                 Header="{DynamicResource lastQueryMode}">
                 <ComboBox
                     MinWidth="210"
+                    AutomationProperties.Name="{DynamicResource lastQueryMode}"
                     DisplayMemberPath="Display"
                     ItemContainerStyle="{StaticResource DisplayComboBoxItemStyle}"
                     ItemsSource="{Binding LastQueryModes}"
@@ -272,6 +274,7 @@
 
                 <ComboBox
                     MaxWidth="200"
+                    AutomationProperties.Name="{DynamicResource historyStyle}"
                     DisplayMemberPath="Display"
                     ItemContainerStyle="{StaticResource DisplayComboBoxItemStyle}"
                     ItemsSource="{Binding HistoryStyles}"
@@ -356,6 +359,7 @@
                         <ComboBox
                             MinWidth="120"
                             MaxWidth="210"
+                            AutomationProperties.Name="{DynamicResource dialogJumpWindowPosition}"
                             DisplayMemberPath="Display"
                             ItemContainerStyle="{StaticResource DisplayComboBoxItemStyle}"
                             ItemsSource="{Binding DialogJumpWindowPositions}"
@@ -366,6 +370,7 @@
                     <ui:SettingsCard Description="{DynamicResource dialogJumpResultBehaviourToolTip}" Header="{DynamicResource dialogJumpResultBehaviour}">
                         <ComboBox
                             MinWidth="120"
+                            AutomationProperties.Name="{DynamicResource dialogJumpResultBehaviour}"
                             DisplayMemberPath="Display"
                             ItemContainerStyle="{StaticResource DisplayComboBoxItemStyle}"
                             ItemsSource="{Binding DialogJumpResultBehaviours}"
@@ -377,6 +382,7 @@
                         <ComboBox
                             MinWidth="120"
                             MaxWidth="240"
+                            AutomationProperties.Name="{DynamicResource dialogJumpFileResultBehaviour}"
                             DisplayMemberPath="Display"
                             ItemContainerStyle="{StaticResource DisplayComboBoxItemStyle}"
                             ItemsSource="{Binding DialogJumpFileResultBehaviours}"
@@ -563,6 +569,7 @@
                 <ui:SettingsExpander.Items>
                     <ui:SettingsCard Header="{DynamicResource DoublePinyinSchema}">
                         <ComboBox
+                            AutomationProperties.Name="{DynamicResource DoublePinyinSchema}"
                             DisplayMemberPath="Display"
                             ItemContainerStyle="{StaticResource DisplayComboBoxItemStyle}"
                             ItemsSource="{Binding DoublePinyinSchemas}"
