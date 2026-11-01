@@ -102,6 +102,9 @@ namespace Flow.Launcher.Plugin.Explorer
         {
             // Update labels for setting view model
             EverythingSortOptionLocalized.UpdateLabels(viewModel.AllEverythingSortOptions);
+            EnumBindingModel<Settings.IndexSearchEngineOption>.UpdateLabels(viewModel.IndexSearchEngines);
+            EnumBindingModel<Settings.ContentIndexSearchEngineOption>.UpdateLabels(viewModel.ContentIndexSearchEngines);
+            EnumBindingModel<Settings.PathEnumerationEngineOption>.UpdateLabels(viewModel.PathEnumerationEngines);
         }
 
         private static void FillQuickAccessLinkNames()
