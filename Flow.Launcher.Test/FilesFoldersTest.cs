@@ -52,6 +52,18 @@ namespace Flow.Launcher.Test
             ClassicAssert.AreEqual(expectedResult, FilesFolders.PathContains(parentPath, path, allowEqual: expectedResult));
         }
 
+        [TestCase(@"c:\foo\plugin.zip", true)]
+        [TestCase(@"c:\foo\plugin.ZIP", true)]
+        [TestCase(@"c:\foo\plugin.Zip", true)]
+        [TestCase(@"\\server\share\plugin.zip", true)]
+        [TestCase(@"c:\foo\plugin.zip.txt", false)]
+        [TestCase(@"c:\foo\zip", false)]
+        [TestCase(@"plugin.zip", false)]
+        public void GivenPath_WhenCheckIsZipFilePath_ThenShouldBeExpectedResult(string path, bool expectedResult)
+        {
+            ClassicAssert.AreEqual(expectedResult, FilesFolders.IsZipFilePath(path));
+        }
+
         [Test]
         public void TryDeleteDirectoryRobust_WhenDirectoryDoesNotExist_ReturnsTrue()
         {
