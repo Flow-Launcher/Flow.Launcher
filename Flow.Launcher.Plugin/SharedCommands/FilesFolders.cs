@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -16,6 +17,10 @@ namespace Flow.Launcher.Plugin.SharedCommands
     public static class FilesFolders
     {
         private const string FileExplorerProgramName = "explorer";
+        private const string OpenPathErrorMessageTemplate = "Unable to open the path {0}, please check if it exists";
+        private const string OpenDownloadedFileBlockedErrorMessageTemplate = "Unable to open the file {0}. It appears to be blocked as downloaded from the Internet. Please open file Properties and check Unblock, then try again.";
+        private const int Win32ErrorAccessDenied = 5;
+        private const int Win32ErrorAccessDisabledByPolicy = 1260;
 
         /// <summary>
         /// Copies the folder and all of its files and folders 
@@ -299,7 +304,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
                 throw;
 #else
                 messageBoxExShow ??= MessageBox.Show;
-                messageBoxExShow(string.Format("Unable to open the path {0}, please check if it exists", fileOrFolderPath));
+                messageBoxExShow(string.Format(OpenPathErrorMessageTemplate, fileOrFolderPath));
 #endif
             }
         }
@@ -325,14 +330,65 @@ namespace Flow.Launcher.Plugin.SharedCommands
                 if (FileExists(filePath))
                     Process.Start(psi);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 #if DEBUG
                 throw;
 #else
                 messageBoxExShow ??= MessageBox.Show;
-                messageBoxExShow(string.Format("Unable to open the path {0}, please check if it exists", filePath));
+                messageBoxExShow(GetOpenFileErrorMessage(filePath, ex));
 #endif
+            }
+        }
+
+        internal static string GetOpenFileErrorMessage(string filePath, Exception exception)
+        {
+            return IsLikelyBlockedDownloadedExecutable(filePath, exception)
+                ? string.Format(OpenDownloadedFileBlockedErrorMessageTemplate, filePath)
+                : string.Format(OpenPathErrorMessageTemplate, filePath);
+        }
+
+        private static bool IsLikelyBlockedDownloadedExecutable(string filePath, Exception exception)
+        {
+            if (!ContainsBlockedLaunchException(exception))
+                return false;
+
+            return HasZoneIdentifierStream(filePath);
+        }
+
+        private static bool ContainsBlockedLaunchException(Exception exception)
+        {
+            for (var current = exception; current != null; current = current.InnerException)
+            {
+                if (current is UnauthorizedAccessException)
+                    return true;
+
+                if (current is Win32Exception win32Exception &&
+                    IsBlockedLaunchWin32Error(win32Exception.NativeErrorCode))
+                    return true;
+            }
+
+            return false;
+        }
+
+        private static bool IsBlockedLaunchWin32Error(int nativeErrorCode)
+        {
+            return nativeErrorCode == Win32ErrorAccessDenied ||
+                nativeErrorCode == Win32ErrorAccessDisabledByPolicy;
+        }
+
+        private static bool HasZoneIdentifierStream(string filePath)
+        {
+            if (!OperatingSystem.IsWindows() || string.IsNullOrWhiteSpace(filePath))
+                return false;
+
+            try
+            {
+                return File.Exists(filePath + ":Zone.Identifier");
+            }
+            catch
+            {
+                return false;
             }
         }
 
