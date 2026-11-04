@@ -602,16 +602,18 @@ namespace Flow.Launcher.Test.PythonDependencies
         [Test]
         public async Task CleanupStaleInstalls_WaitsForRunningInstall()
         {
-            runner.InstallDelay = TimeSpan.FromMilliseconds(300);
             var installer = CreateInstaller();
+            var old = await installer.EnsureInstalledAsync(CreateMetadata("a==1"), pythonPath, CancellationToken.None);
+            runner.InstallDelay = TimeSpan.FromMilliseconds(300);
 
-            var install = installer.EnsureInstalledAsync(CreateMetadata("a==1"), pythonPath, CancellationToken.None);
-            await WaitUntilAsync(() => runner.InstallCalls.Count == 1);
+            var install = installer.EnsureInstalledAsync(CreateMetadata("a==2"), pythonPath, CancellationToken.None);
+            await WaitUntilAsync(() => Directory.GetDirectories(PluginRoot).Length == 2);
             await installer.CleanupStaleInstallsAsync(PluginId);
             var result = await install;
 
             Assert.That(Directory.Exists(result), Is.True);
-            AssertInstalledFor(result, KeyFor("a==1"));
+            AssertInstalledFor(result, KeyFor("a==2"));
+            Assert.That(Directory.Exists(Path.GetDirectoryName(old)), Is.False);
         }
 
         [Test]
@@ -801,6 +803,10 @@ namespace Flow.Launcher.Test.PythonDependencies
 
                 if (arguments.Count > 1 && arguments[0] == "pip" && arguments[1] == "install")
                 {
+                    // uv creates the target as soon as it starts, so a running install already has a folder on disk.
+                    var targetIndex = arguments.ToList().IndexOf("--target");
+                    Directory.CreateDirectory(arguments[targetIndex + 1]);
+
                     if (InstallDelay > TimeSpan.Zero)
                     {
                         await Task.Delay(InstallDelay, token);
@@ -811,8 +817,6 @@ namespace Flow.Launcher.Test.PythonDependencies
                         throw InstallException;
                     }
 
-                    var targetIndex = arguments.ToList().IndexOf("--target");
-                    Directory.CreateDirectory(arguments[targetIndex + 1]);
                     return InstallExitCode != 0
                         ? new ProcessResult(InstallExitCode, "installing", InstallStdErr)
                         : new ProcessResult(0, string.Empty, string.Empty);
