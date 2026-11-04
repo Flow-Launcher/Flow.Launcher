@@ -238,6 +238,11 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
 
         private void NotifyInstalling(PluginMetadata metadata)
         {
+            if (metadata.Disabled && metadata.HomeDisabled)
+            {
+                return;
+            }
+
             try
             {
                 _onInstalling(metadata);

@@ -210,6 +210,20 @@ namespace Flow.Launcher.Test.PythonDependencies
         }
 
         [Test]
+        public async Task DisabledPlugin_InstallsWithoutNotice()
+        {
+            var metadata = CreateMetadata("a==1");
+            metadata.Disabled = true;
+            metadata.HomeDisabled = true;
+            var installer = CreateInstaller();
+
+            var result = await installer.EnsureInstalledAsync(metadata, pythonPath, CancellationToken.None);
+
+            AssertInstalledFor(result, KeyFor("a==1"));
+            Assert.That(installingNotices, Is.Empty);
+        }
+
+        [Test]
         public void ValidationFails_DoesNotNotifyInstalling()
         {
             var installer = CreateInstaller();
