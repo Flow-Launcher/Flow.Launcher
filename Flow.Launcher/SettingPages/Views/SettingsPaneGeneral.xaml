@@ -504,6 +504,30 @@
                 </StackPanel>
             </ui:SettingsCard>
 
+            <ui:SettingsCard Margin="0 4 0 0" Header="{DynamicResource uvFilePath}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBox
+                        Width="300"
+                        Height="34"
+                        Text="{Binding Settings.PluginSettings.UvExecutablePath, TargetNullValue='None'}" />
+                    <Button
+                        Height="34"
+                        Margin="10 0 0 0"
+                        Command="{Binding SelectUvCommand}"
+                        Content="{DynamicResource select}" />
+                </StackPanel>
+            </ui:SettingsCard>
+
+            <ui:SettingsCard
+                Margin="0 4 0 0"
+                Description="{DynamicResource allowUnpinnedPythonDependenciesToolTip}"
+                Header="{DynamicResource allowUnpinnedPythonDependencies}">
+                <ui:ToggleSwitch
+                    IsOn="{Binding Settings.PluginSettings.AllowUnpinnedPythonDependencies}"
+                    OffContent="{DynamicResource disable}"
+                    OnContent="{DynamicResource enable}" />
+            </ui:SettingsCard>
+
             <ui:SettingsCard
                 Margin="0 14 0 0"
                 Description="{DynamicResource typingStartEnTooltip}"

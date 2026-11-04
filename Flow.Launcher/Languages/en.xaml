@@ -121,6 +121,10 @@
     <system:String x:Key="nodeFilePath">Node.js Path</system:String>
     <system:String x:Key="selectNodeExecutable">Please select the Node.js executable</system:String>
     <system:String x:Key="selectPythonExecutable">Please select pythonw.exe</system:String>
+    <system:String x:Key="uvFilePath">uv Path</system:String>
+    <system:String x:Key="selectUvExecutable">Please select uv.exe</system:String>
+    <system:String x:Key="allowUnpinnedPythonDependencies">Allow unpinned Python plugin dependencies</system:String>
+    <system:String x:Key="allowUnpinnedPythonDependenciesToolTip">For plugin development. Lets Python plugins list dependencies without an exact version. Takes effect after restart.</system:String>
     <system:String x:Key="typingStartEn">Always Start Typing in English Mode</system:String>
     <system:String x:Key="typingStartEnTooltip">Temporarily change your input method to English mode when activating Flow.</system:String>
     <system:String x:Key="autoUpdates">Auto Update</system:String>
