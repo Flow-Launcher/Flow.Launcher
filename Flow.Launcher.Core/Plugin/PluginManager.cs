@@ -282,7 +282,14 @@ namespace Flow.Launcher.Core.Plugin
                     // Dependencies are retried on the next start, so the plugin stays enabled
                     // and the user gets this message instead of the generic "would be disabled" one.
                     PublicApi.Instance.LogException(ClassName, $"Fail to install Python dependencies for plugin: {pair.Metadata.Name}", e);
-                    PublicApi.Instance.ShowMsgError(Localize.failedToInitializePluginsTitle(), e.Message);
+                    if (pair.Metadata.Disabled && pair.Metadata.HomeDisabled)
+                    {
+                        PublicApi.Instance.LogDebug(ClassName, $"Skipped dependency error message for disabled plugin <{pair.Metadata.Name}>");
+                    }
+                    else
+                    {
+                        PublicApi.Instance.ShowMsgError(Localize.failedToInitializePluginsTitle(), e.Message);
+                    }
 
                     _allInitializedPlugins.TryAdd(pair.Metadata.ID, pair);
                     _initFailedPlugins.TryAdd(pair.Metadata.ID, pair);
