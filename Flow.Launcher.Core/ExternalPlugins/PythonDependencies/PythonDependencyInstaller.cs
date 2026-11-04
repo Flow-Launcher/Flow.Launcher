@@ -194,6 +194,45 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
             }
         }
 
+        /// <summary>
+        /// Deletes dependency folders of plugins that are no longer installed, for example when the folder
+        /// was still in use during the uninstall. Call it before any install can start.
+        /// </summary>
+        public void RemoveOrphanedDependencies(IReadOnlyCollection<string> installedPluginIds)
+        {
+            // An empty list more likely means the plugins could not be read than that none are installed.
+            if (installedPluginIds.Count == 0 || !Directory.Exists(_dependenciesRoot))
+            {
+                return;
+            }
+
+            var installed = new HashSet<string>(installedPluginIds, StringComparer.OrdinalIgnoreCase);
+            try
+            {
+                foreach (var directory in Directory.EnumerateDirectories(_dependenciesRoot).ToList())
+                {
+                    var pluginId = Path.GetFileName(directory);
+                    if (installed.Contains(pluginId))
+                    {
+                        continue;
+                    }
+
+                    try
+                    {
+                        Directory.Delete(directory, recursive: true);
+                    }
+                    catch (Exception e) when (e is IOException or UnauthorizedAccessException)
+                    {
+                        _logError($"Failed to remove Python dependencies of uninstalled plugin {pluginId}: {e.Message}");
+                    }
+                }
+            }
+            catch (Exception e) when (e is IOException or UnauthorizedAccessException)
+            {
+                _logError($"Failed to look for Python dependencies of uninstalled plugins: {e.Message}");
+            }
+        }
+
         private SemaphoreSlim LockFor(string pluginId)
         {
             return _pluginLocks.GetOrAdd(pluginId, _ => new SemaphoreSlim(1, 1));

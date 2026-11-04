@@ -57,7 +57,7 @@ namespace Flow.Launcher.Test.PythonDependencies
             return new UvLocator(
                 settings,
                 Path.Combine(tempDirectory, "uv"),
-                _ => false,
+                path => path == "uv",
                 () =>
                 {
                     Interlocked.Increment(ref uvLocateCount);
@@ -738,6 +738,41 @@ namespace Flow.Launcher.Test.PythonDependencies
 
             Assert.That(SandboxEntries(), Is.EqualTo(before));
             Assert.That(logged, Is.Not.Empty);
+        }
+
+        [Test]
+        public void RemoveOrphanedDependencies_DeletesOnlyFoldersOfUninstalledPlugins()
+        {
+            var kept = Path.Combine(dependenciesRoot, "Installed-Plugin", "key-00000000", "site-packages");
+            var orphan = Path.Combine(dependenciesRoot, "uninstalled-plugin", "key-00000000", "site-packages");
+            Directory.CreateDirectory(kept);
+            Directory.CreateDirectory(orphan);
+            var installer = CreateInstaller();
+
+            installer.RemoveOrphanedDependencies(new[] { "installed-plugin" });
+
+            Assert.That(Directory.Exists(kept), Is.True);
+            Assert.That(Directory.Exists(Path.Combine(dependenciesRoot, "uninstalled-plugin")), Is.False);
+        }
+
+        [Test]
+        public void RemoveOrphanedDependencies_NoInstalledPlugins_DeletesNothing()
+        {
+            var orphan = Path.Combine(dependenciesRoot, "some-plugin", "site-packages");
+            Directory.CreateDirectory(orphan);
+            var installer = CreateInstaller();
+
+            installer.RemoveOrphanedDependencies(Array.Empty<string>());
+
+            Assert.That(Directory.Exists(orphan), Is.True);
+        }
+
+        [Test]
+        public void RemoveOrphanedDependencies_NoDependenciesRoot_DoesNotThrow()
+        {
+            var installer = CreateInstaller();
+
+            Assert.DoesNotThrow(() => installer.RemoveOrphanedDependencies(new[] { PluginId }));
         }
 
         [Test]
