@@ -1,6 +1,7 @@
 ﻿#nullable enable
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,13 +19,13 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
         private static readonly string[] KeptFolderNames = { UvPythonRuntime.InstallDirectoryName, DependenciesFolderName };
 
         /// <summary>
-        /// Installs the new runtime first. Only when that works is the path updated and the old install removed,
-        /// so a failed install leaves the setting and the old install untouched.
+        /// Installs the new runtime first and only updates the path when that works, so a failed install
+        /// leaves the setting untouched. The old install is left for <see cref="RemoveStale"/> on a later start,
+        /// once the new path has been saved.
         /// </summary>
         public static async Task<bool> TryAsync(
             Func<Task<string>> install,
             Action<string> setPath,
-            Action removeOldInstall,
             Action<Exception> onFailure)
         {
             string path;
@@ -39,7 +40,6 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
             }
 
             setPath(path);
-            removeOldInstall();
             return true;
         }
 
@@ -54,7 +54,18 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
                 return;
             }
 
-            foreach (var entry in Directory.EnumerateFileSystemEntries(envPath).ToList())
+            List<string> entries;
+            try
+            {
+                entries = Directory.EnumerateFileSystemEntries(envPath).ToList();
+            }
+            catch (Exception e) when (e is IOException or UnauthorizedAccessException)
+            {
+                logError($"Could not list {envPath} to remove old Python installs: {e.Message}");
+                return;
+            }
+
+            foreach (var entry in entries)
             {
                 if (KeptFolderNames.Contains(Path.GetFileName(entry), StringComparer.OrdinalIgnoreCase))
                 {

@@ -43,7 +43,7 @@ namespace Flow.Launcher.Test.PythonDependencies
         }
 
         [Test]
-        public async Task Install_Succeeds_InstallsThenSetsPathThenCleansUp()
+        public async Task Install_Succeeds_InstallsThenSetsPath()
         {
             var switched = await PythonRuntimeSwitch.TryAsync(
                 () =>
@@ -52,15 +52,14 @@ namespace Flow.Launcher.Test.PythonDependencies
                     return Task.FromResult("new.exe");
                 },
                 path => events.Add("set " + path),
-                () => events.Add("clean"),
                 _ => events.Add("failed"));
 
             Assert.That(switched, Is.True);
-            Assert.That(events, Is.EqualTo(new[] { "install", "set new.exe", "clean" }));
+            Assert.That(events, Is.EqualTo(new[] { "install", "set new.exe" }));
         }
 
         [Test]
-        public async Task Install_Fails_KeepsOldPathAndDoesNotCleanUp()
+        public async Task Install_Fails_KeepsOldPath()
         {
             var failure = new InvalidOperationException("offline");
             Exception reported = null;
@@ -68,7 +67,6 @@ namespace Flow.Launcher.Test.PythonDependencies
             var switched = await PythonRuntimeSwitch.TryAsync(
                 () => throw failure,
                 path => events.Add("set " + path),
-                () => events.Add("clean"),
                 e => reported = e);
 
             Assert.That(switched, Is.False);

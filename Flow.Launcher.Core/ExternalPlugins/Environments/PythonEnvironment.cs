@@ -50,7 +50,6 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
                 await PythonRuntimeSwitch.TryAsync(
                     () => CreateRuntimeInstaller().InstallAsync(CancellationToken.None),
                     path => PluginsSettingsFilePath = path,
-                    () => PythonRuntimeSwitch.RemoveStale(EnvPath, message => API.LogError(ClassName, message)),
                     e =>
                     {
                         API.ShowMsgError(Localize.failToInstallPythonEnv());
@@ -63,9 +62,15 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
         // install (for example while offline) leaves the user's current Python working.
         protected override void EnsureLatestInstalled(string expectedPath, string currentPath, string installedDirPath)
         {
-            if (expectedPath == currentPath) return;
+            if (expectedPath != currentPath)
+            {
+                InstallEnvironment();
+                return;
+            }
 
-            InstallEnvironment();
+            // The saved setting already points at the uv runtime, so a crash can no longer leave Flow
+            // pointing at a removed install.
+            PythonRuntimeSwitch.RemoveStale(EnvPath, message => API.LogError(ClassName, message));
         }
 
         private PythonRuntimeInstaller CreateRuntimeInstaller()
