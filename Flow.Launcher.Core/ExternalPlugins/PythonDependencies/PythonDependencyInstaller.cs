@@ -16,7 +16,9 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
     internal sealed class PythonDependencyInstaller
     {
         private const string SitePackagesName = "site-packages";
-        private const string PendingRemovalExtension = ".removed";
+
+        // A sibling of the dependencies folder, so a marker can never share a name with a plugin's folder.
+        internal const string PendingRemovalsSuffix = ".removals";
         private const string PythonVersionProbe = "import sys, sysconfig; print(sys.version.split()[0], sys.implementation.name, sysconfig.get_platform(), sysconfig.get_config_var('EXT_SUFFIX') or '')";
         private const int ErrorLinesInMessage = 5;
 
@@ -27,6 +29,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
         private readonly UvLocator _uvLocator;
         private readonly IProcessRunner _runner;
         private readonly string _dependenciesRoot;
+        private readonly string _pendingRemovalsRoot;
         private readonly bool _portable;
         private readonly string _uvCachePath;
         private readonly Action<string> _logError;
@@ -51,6 +54,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
             _uvLocator = uvLocator;
             _runner = runner;
             _dependenciesRoot = dependenciesRoot;
+            _pendingRemovalsRoot = Path.TrimEndingDirectorySeparator(dependenciesRoot) + PendingRemovalsSuffix;
             _portable = portable;
             _uvCachePath = uvCachePath;
             _logError = logError ?? (_ => { });
@@ -183,6 +187,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
                 if (Directory.Exists(pluginRoot))
                 {
                     // Kept outside the folder so it survives a delete that fails halfway through.
+                    Directory.CreateDirectory(_pendingRemovalsRoot);
                     File.WriteAllText(PendingRemovalPath(pluginId), string.Empty);
                     Directory.Delete(pluginRoot, recursive: true);
                 }
@@ -206,7 +211,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
         /// </summary>
         public void RetryPendingRemovals(IReadOnlyCollection<string> installedPluginIds)
         {
-            if (!Directory.Exists(_dependenciesRoot))
+            if (!Directory.Exists(_pendingRemovalsRoot))
             {
                 return;
             }
@@ -214,13 +219,13 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
             var installed = new HashSet<string>(installedPluginIds, StringComparer.OrdinalIgnoreCase);
             try
             {
-                foreach (var pendingFile in Directory.EnumerateFiles(_dependenciesRoot, "*" + PendingRemovalExtension).ToList())
+                foreach (var pendingFile in Directory.EnumerateFiles(_pendingRemovalsRoot).ToList())
                 {
-                    var pluginId = Path.GetFileNameWithoutExtension(pendingFile);
+                    var pluginId = Path.GetFileName(pendingFile);
                     try
                     {
                         var pluginRoot = Path.Combine(_dependenciesRoot, pluginId);
-                        if (!installed.Contains(pluginId) && Directory.Exists(pluginRoot))
+                        if (IsUsableAsFolderName(pluginId) && !installed.Contains(pluginId) && Directory.Exists(pluginRoot))
                         {
                             Directory.Delete(pluginRoot, recursive: true);
                         }
@@ -249,7 +254,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
 
         private string PendingRemovalPath(string pluginId)
         {
-            return Path.Combine(_dependenciesRoot, pluginId + PendingRemovalExtension);
+            return Path.Combine(_pendingRemovalsRoot, pluginId);
         }
 
         private SemaphoreSlim LockFor(string pluginId)

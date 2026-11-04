@@ -740,7 +740,29 @@ namespace Flow.Launcher.Test.PythonDependencies
             Assert.That(logged, Is.Not.Empty);
         }
 
-        private string PendingRemovalFile(string pluginId) => Path.Combine(dependenciesRoot, pluginId + ".removed");
+        private string PendingRemovalsRoot => dependenciesRoot + ".removals";
+
+        private string PendingRemovalFile(string pluginId)
+        {
+            Directory.CreateDirectory(PendingRemovalsRoot);
+            return Path.Combine(PendingRemovalsRoot, pluginId);
+        }
+
+        [Test]
+        public async Task DeleteDependencies_IdThatLooksLikeAMarker_DoesNotTouchOtherPlugin()
+        {
+            var installer = CreateInstaller();
+            await installer.EnsureInstalledAsync(CreateMetadata("a==1"), pythonPath, CancellationToken.None);
+            var other = CreateMetadata("a==1");
+            other.ID = PluginId + ".removed";
+            var otherSitePackages = await installer.EnsureInstalledAsync(other, pythonPath, CancellationToken.None);
+
+            await installer.DeleteDependenciesAsync(PluginId);
+
+            Assert.That(Directory.Exists(PluginRoot), Is.False);
+            Assert.That(Directory.Exists(otherSitePackages), Is.True);
+            Assert.That(logged, Is.Empty);
+        }
 
         [Test]
         public void RetryPendingRemovals_DeletesRecordedFolderOfUninstalledPlugin()

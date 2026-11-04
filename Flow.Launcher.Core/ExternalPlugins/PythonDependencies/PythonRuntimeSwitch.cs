@@ -16,7 +16,12 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
     {
         private const string DependenciesFolderName = "PluginDependencies";
 
-        private static readonly string[] KeptFolderNames = { UvPythonRuntime.InstallDirectoryName, DependenciesFolderName };
+        private static readonly string[] KeptFolderNames =
+        {
+            UvPythonRuntime.InstallDirectoryName,
+            DependenciesFolderName,
+            DependenciesFolderName + PythonDependencyInstaller.PendingRemovalsSuffix
+        };
 
         /// <summary>
         /// Installs the new runtime first and only updates the path when that works, so a failed install

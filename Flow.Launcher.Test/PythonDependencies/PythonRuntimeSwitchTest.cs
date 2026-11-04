@@ -79,6 +79,7 @@ namespace Flow.Launcher.Test.PythonDependencies
         {
             var runtime = MakeFolder("Runtime");
             var dependencies = MakeFolder("PluginDependencies");
+            var removals = MakeFolder("PluginDependencies.removals");
             var embedded = MakeFolder("PythonEmbeddable-v3.11.4");
             var other = MakeFolder("SomethingElse");
             var strayFile = Path.Combine(envPath, "stray.txt");
@@ -88,6 +89,7 @@ namespace Flow.Launcher.Test.PythonDependencies
 
             Assert.That(Directory.Exists(runtime), Is.True);
             Assert.That(Directory.Exists(dependencies), Is.True);
+            Assert.That(Directory.Exists(removals), Is.True);
             Assert.That(Directory.Exists(embedded), Is.False);
             Assert.That(Directory.Exists(other), Is.False);
             Assert.That(File.Exists(strayFile), Is.False);
