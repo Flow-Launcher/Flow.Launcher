@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using Droplex;
+using Flow.Launcher.Core.ExternalPlugins.PythonDependencies;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
@@ -31,7 +32,12 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
             set => PluginSettings.PythonExecutablePath = value;
         }
 
-        internal PythonEnvironment(List<PluginMetadata> pluginMetadataList, PluginsSettings pluginSettings) : base(pluginMetadataList, pluginSettings) { }
+        protected readonly PythonDependencyInstaller _pythonDependencies;
+
+        internal PythonEnvironment(List<PluginMetadata> pluginMetadataList, PluginsSettings pluginSettings, PythonDependencyInstaller pythonDependencies) : base(pluginMetadataList, pluginSettings)
+        {
+            _pythonDependencies = pythonDependencies;
+        }
 
         private JoinableTaskFactory JTF { get; } = new JoinableTaskFactory(new JoinableTaskContext());
 
@@ -61,7 +67,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
         {
             return new PluginPair
             {
-                Plugin = new PythonPlugin(filePath),
+                Plugin = new PythonPlugin(filePath, _pythonDependencies),
                 Metadata = metadata
             };
         }

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Flow.Launcher.Core.ExternalPlugins.PythonDependencies;
 using Flow.Launcher.Core.Plugin.JsonRPCV2Models;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin;
@@ -20,8 +21,13 @@ namespace Flow.Launcher.Core.Plugin
     {
         protected override ProcessStartInfo StartInfo { get; set; }
 
-        public PythonPluginV2(string filename)
+        private readonly string _pythonExecutable;
+        private readonly PythonDependencyInstaller _installer;
+
+        public PythonPluginV2(string filename, PythonDependencyInstaller installer)
         {
+            _pythonExecutable = filename;
+            _installer = installer;
             StartInfo = new ProcessStartInfo { FileName = filename, };
 
             var path = Path.Combine(Constant.ProgramDirectory, JsonRpc);
@@ -31,40 +37,19 @@ namespace Flow.Launcher.Core.Plugin
 
         public override async Task InitAsync(PluginInitContext context)
         {
-            // Run .py files via `-c <code>`
-            if (context.CurrentPluginMetadata.ExecuteFilePath.EndsWith(".py", StringComparison.OrdinalIgnoreCase))
+            var metadata = context.CurrentPluginMetadata;
+            string sitePackages = null;
+            if (metadata.Dependencies is { Count: > 0 })
             {
-                var rootDirectory = context.CurrentPluginMetadata.PluginDirectory;
-                var libDirectory = Path.Combine(rootDirectory, "lib");
-                var libPyWin32Directory = Path.Combine(libDirectory, "win32");
-                var libPyWin32LibDirectory = Path.Combine(libPyWin32Directory, "lib");
-                var pluginDirectory = Path.Combine(rootDirectory, "plugin");
-                var filePath = context.CurrentPluginMetadata.ExecuteFilePath;
+                _installer.CleanupStaleInstalls(metadata.ID);
+                sitePackages = await _installer.EnsureInstalledAsync(metadata, _pythonExecutable, CancellationToken.None);
+            }
 
-                // This makes it easier for plugin authors to import their own modules.
-                // They won't have to add `.`, `./lib`, or `./plugin` to their sys.path manually.
-                // Instead of running the .py file directly, we pass the code we want to run as a CLI argument.
-                // This code sets sys.path for the plugin author and then runs the .py file via runpy.
-                StartInfo.ArgumentList.Add("-c");
-                StartInfo.ArgumentList.Add(
-                    $"""
-                     import sys
-                     sys.path.append(r'{rootDirectory}')
-                     sys.path.append(r'{libDirectory}')
-                     sys.path.append(r'{libPyWin32LibDirectory}')
-                     sys.path.append(r'{libPyWin32Directory}')
-                     sys.path.append(r'{pluginDirectory}')
-                     
-                     import runpy
-                     runpy.run_path(r'{filePath}', None, '__main__')
-                     """
-                );
-            }
-            // Run .pyz files as is
-            else
+            foreach (var argument in PythonLaunchArguments.Build(metadata, sitePackages, v1: false))
             {
-                StartInfo.ArgumentList.Add(context.CurrentPluginMetadata.ExecuteFilePath);
+                StartInfo.ArgumentList.Add(argument);
             }
+
             await base.InitAsync(context);
         }
 

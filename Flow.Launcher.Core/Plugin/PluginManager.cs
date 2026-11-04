@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using Flow.Launcher.Core.ExternalPlugins;
+using Flow.Launcher.Core.ExternalPlugins.PythonDependencies;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.DialogJump;
@@ -33,6 +34,9 @@ namespace Flow.Launcher.Core.Plugin
         private static readonly ConcurrentDictionary<string, List<PluginPair>> _nonGlobalPlugins = [];
 
         private static PluginsSettings Settings;
+
+        internal static PythonDependencyInstaller PythonDependencies { get; private set; }
+
         private static readonly ConcurrentBag<string> ModifiedPlugins = [];
 
         private static readonly ConcurrentBag<PluginPair> _contextMenuPlugins = [];
@@ -205,7 +209,8 @@ namespace Flow.Launcher.Core.Plugin
             Settings.UpdatePluginSettings(metadatas);
 
             // Load plugins
-            var allLoadedPlugins = PluginsLoader.Plugins(metadatas, Settings);
+            PythonDependencies = PythonDependencyInstaller.CreateDefault(Settings);
+            var allLoadedPlugins = PluginsLoader.Plugins(metadatas, Settings, PythonDependencies);
             foreach (var plugin in allLoadedPlugins)
             {
                 if (plugin != null)
