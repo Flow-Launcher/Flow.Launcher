@@ -210,7 +210,7 @@ namespace Flow.Launcher.Test.PythonDependencies
         }
 
         [Test]
-        public async Task DependenciesChanged_InstallsIntoNewKeyAndRemovesOldAfterSuccess()
+        public async Task DependenciesChanged_InstallsIntoNewKey_KeepsOldUntilCleanup()
         {
             var installer = CreateInstaller();
             var oldPath = await installer.EnsureInstalledAsync(CreateMetadata("a==1"), pythonPath, CancellationToken.None);
@@ -219,9 +219,43 @@ namespace Flow.Launcher.Test.PythonDependencies
 
             Assert.That(newPath, Is.Not.EqualTo(oldPath));
             Assert.That(Directory.Exists(newPath), Is.True);
-            Assert.That(Directory.Exists(Path.GetDirectoryName(oldPath)), Is.False);
+            Assert.That(Directory.Exists(oldPath), Is.True);
             Assert.That(DependencyInstallMarker.Load(MarkerPath).Matches(KeyFor("a==2")), Is.True);
             Assert.That(runner.InstallCalls, Has.Count.EqualTo(2));
+
+            installer.CleanupStaleInstalls(PluginId);
+
+            Assert.That(Directory.Exists(Path.GetDirectoryName(oldPath)), Is.False);
+            Assert.That(Directory.Exists(newPath), Is.True);
+        }
+
+        [Test]
+        public void CleanupStaleInstalls_NoValidMarker_DeletesNothing()
+        {
+            var staleDirectory = Path.Combine(dependenciesRoot, PluginId, "0123456789abcdef", "site-packages");
+            Directory.CreateDirectory(staleDirectory);
+            var installer = CreateInstaller();
+
+            installer.CleanupStaleInstalls(PluginId);
+            Assert.That(Directory.Exists(staleDirectory), Is.True);
+
+            File.WriteAllText(MarkerPath, "{not json");
+            installer.CleanupStaleInstalls(PluginId);
+            Assert.That(Directory.Exists(staleDirectory), Is.True);
+        }
+
+        [Test]
+        public async Task MarkerMatches_DoesNotCleanUpStaleInstalls()
+        {
+            var installer = CreateInstaller();
+            var path = await installer.EnsureInstalledAsync(CreateMetadata("a==1"), pythonPath, CancellationToken.None);
+            var staleDirectory = Path.Combine(dependenciesRoot, PluginId, "0123456789abcdef");
+            Directory.CreateDirectory(staleDirectory);
+
+            var result = await installer.EnsureInstalledAsync(CreateMetadata("a==1"), pythonPath, CancellationToken.None);
+
+            Assert.That(result, Is.EqualTo(path));
+            Assert.That(Directory.Exists(staleDirectory), Is.True);
         }
 
         [Test]
@@ -275,6 +309,57 @@ namespace Flow.Launcher.Test.PythonDependencies
             Assert.That(exception.Message, Does.Contain(PluginName));
             Assert.That(exception.InnerException, Is.Not.Null);
             Assert.That(runner.InstallCalls, Is.Empty);
+        }
+
+        [Test]
+        public void UvDownloadTimesOut_TokenNotCancelled_ThrowsPythonDependencyException()
+        {
+            var locator = new UvLocator(
+                settings,
+                Path.Combine(tempDirectory, "uv"),
+                _ => false,
+                () => null,
+                (_, _) => throw new TaskCanceledException("The request was canceled due to the configured HttpClient.Timeout"));
+            var installer = CreateInstaller(locator: locator);
+
+            var exception = Assert.ThrowsAsync<PythonDependencyException>(() =>
+                installer.EnsureInstalledAsync(CreateMetadata("a==1"), pythonPath, CancellationToken.None));
+
+            Assert.That(exception.Message, Does.Contain(PluginName));
+            Assert.That(exception.InnerException, Is.InstanceOf<TaskCanceledException>());
+        }
+
+        [Test]
+        public void UvDownloadCancelled_TokenCancelled_PropagatesOperationCanceledException()
+        {
+            using var source = new CancellationTokenSource();
+            var locator = new UvLocator(
+                settings,
+                Path.Combine(tempDirectory, "uv"),
+                _ => false,
+                () => null,
+                (_, token) =>
+                {
+                    source.Cancel();
+                    token.ThrowIfCancellationRequested();
+                    return Task.FromResult("uv");
+                });
+            var installer = CreateInstaller(locator: locator);
+
+            Assert.CatchAsync<OperationCanceledException>(() =>
+                installer.EnsureInstalledAsync(CreateMetadata("a==1"), pythonPath, source.Token));
+        }
+
+        [Test]
+        public void ProcessTimesOut_TokenNotCancelled_ThrowsPythonDependencyException()
+        {
+            runner.InstallException = new TaskCanceledException("timeout");
+            var installer = CreateInstaller();
+
+            var exception = Assert.ThrowsAsync<PythonDependencyException>(() =>
+                installer.EnsureInstalledAsync(CreateMetadata("a==1"), pythonPath, CancellationToken.None));
+
+            Assert.That(exception.Message, Does.Contain(PluginName));
         }
 
         [Test]
@@ -385,6 +470,7 @@ namespace Flow.Launcher.Test.PythonDependencies
             public int InstallExitCode { get; set; }
             public string InstallStdErr { get; set; } = string.Empty;
             public TimeSpan InstallDelay { get; set; } = TimeSpan.Zero;
+            public Exception InstallException { get; set; }
 
             public IReadOnlyList<Call> Calls
             {
@@ -424,6 +510,11 @@ namespace Flow.Launcher.Test.PythonDependencies
                     if (InstallDelay > TimeSpan.Zero)
                     {
                         await Task.Delay(InstallDelay, token);
+                    }
+
+                    if (InstallException is not null)
+                    {
+                        throw InstallException;
                     }
 
                     if (InstallExitCode != 0)

@@ -159,7 +159,6 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
 
             if (DependencyInstallMarker.Load(markerPath)?.Matches(installKey) == true && Directory.Exists(sitePackages))
             {
-                CleanupStaleInstalls(metadata.ID);
                 return sitePackages;
             }
 
@@ -182,7 +181,6 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
                 markerPath,
                 new DependencyInstallMarker(installKey, dependencies, python, pythonVersion, uvVersion, resolved));
 
-            CleanupStaleInstalls(metadata.ID);
             return sitePackages;
         }
 
@@ -210,7 +208,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
             {
                 return await _uvLocator.GetUvPathAsync(token).ConfigureAwait(false);
             }
-            catch (Exception e) when (e is not OperationCanceledException)
+            catch (Exception e) when (!IsCallerCancellation(e, token))
             {
                 _logError($"Could not locate uv for plugin {metadata.Name}: {e}");
                 throw new PythonDependencyException(DependencyMessages.UvUnavailable(metadata.Name), e);
@@ -243,11 +241,17 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
                 return await _runner.RunAsync(fileName, arguments, useUvEnvironment ? BuildUvEnvironment() : NoEnvironment, token)
                     .ConfigureAwait(false);
             }
-            catch (Exception e) when (e is not OperationCanceledException and not PythonDependencyException)
+            catch (Exception e) when (e is not PythonDependencyException && !IsCallerCancellation(e, token))
             {
                 _logError($"Failed to run {fileName} for plugin {metadata.Name}: {e}");
                 throw new PythonDependencyException(DependencyMessages.InstallFailed(metadata.Name, e.Message), e);
             }
+        }
+
+        // HttpClient timeouts surface as TaskCanceledException while the caller's token is untouched.
+        private static bool IsCallerCancellation(Exception exception, CancellationToken token)
+        {
+            return exception is OperationCanceledException && token.IsCancellationRequested;
         }
 
         private static IReadOnlyList<string> BuildInstallArguments(string sitePackages, string python, IReadOnlyList<string> dependencies)
