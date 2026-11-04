@@ -16,7 +16,7 @@ namespace Flow.Launcher.Test.PythonDependencies
     {
         private const string PluginId = "plugin-id-1";
         private const string PluginName = "Test Plugin";
-        private const string PythonVersionProbeOutput = "3.11.9 AMD64";
+        private const string PythonVersionProbeOutput = "3.11.9 win32";
 
         private string tempDirectory;
         private string dependenciesRoot;
@@ -180,6 +180,10 @@ namespace Flow.Launcher.Test.PythonDependencies
             }));
             Assert.That(install.Environment["UV_NO_CONFIG"], Is.EqualTo("1"));
             Assert.That(install.Environment.ContainsKey("UV_CACHE_DIR"), Is.False);
+
+            var probe = runner.Calls.Single(call => call.IsPythonProbe);
+            Assert.That(probe.FileName, Is.EqualTo(pythonPath));
+            Assert.That(probe.Arguments[1], Does.Contain("sysconfig.get_platform()"));
 
             var marker = DependencyInstallMarker.Load(MarkerPath);
             Assert.That(marker, Is.Not.Null);

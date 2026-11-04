@@ -16,7 +16,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
     internal sealed class PythonDependencyInstaller
     {
         private const string SitePackagesName = "site-packages";
-        private const string PythonVersionProbe = "import sys, platform; print(sys.version.split()[0], platform.machine())";
+        private const string PythonVersionProbe = "import sys, sysconfig; print(sys.version.split()[0], sysconfig.get_platform())";
         private const int ErrorLinesInMessage = 5;
 
         private static readonly IReadOnlyDictionary<string, string> NoEnvironment = new Dictionary<string, string>();
