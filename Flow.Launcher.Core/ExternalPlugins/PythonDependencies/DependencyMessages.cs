@@ -30,6 +30,13 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
                 $"Failed to install Python dependencies for plugin {pluginName}{details}");
         }
 
+        public static string InvalidPluginId(string pluginName)
+        {
+            return Translate(
+                () => Localize.pythonDependencyInvalidPluginId(pluginName),
+                $"Plugin {pluginName} has an ID that cannot be used as a folder name");
+        }
+
         private static string Translate(Func<string> localized, string fallback)
         {
             try

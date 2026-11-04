@@ -498,6 +498,72 @@ namespace Flow.Launcher.Test.PythonDependencies
             Assert.That(Directory.Exists(PluginRoot), Is.False);
         }
 
+        private static readonly string[] UnusablePluginIds =
+        {
+            null, "", " ", ".", "..", "abc.", " abc", "abc ", "a/b", "a\\b", "../other", "..\\other", "/rooted", "C:\\rooted", "a\0b"
+        };
+
+        private void PlantDeletionTargets()
+        {
+            foreach (var folder in new[] { tempDirectory, dependenciesRoot, Path.Combine(dependenciesRoot, "a") })
+            {
+                Directory.CreateDirectory(folder);
+                new DependencyInstallMarker("0123456789abcdef", new[] { "a==1" }, pythonPath, PythonVersionProbeOutput, "uv", new[] { "a==1" }, "0123456789abcdef-00000000")
+                    .Save(Path.Combine(folder, DependencyInstallMarker.FileName));
+            }
+
+            Directory.CreateDirectory(Path.Combine(dependenciesRoot, "other-plugin", "0123456789abcdef-11111111", "site-packages"));
+            Directory.CreateDirectory(Path.Combine(dependenciesRoot, "a", "b", "site-packages"));
+            Directory.CreateDirectory(Path.Combine(tempDirectory, "other", "site-packages"));
+        }
+
+        private string[] SandboxEntries() =>
+            Directory.EnumerateFileSystemEntries(tempDirectory, "*", SearchOption.AllDirectories).Order().ToArray();
+
+        [TestCaseSource(nameof(UnusablePluginIds))]
+        public void EnsureInstalled_UnusablePluginId_ThrowsBeforeTouchingDisk(string pluginId)
+        {
+            PlantDeletionTargets();
+            var before = SandboxEntries();
+            var metadata = CreateMetadata("a==1");
+            metadata.ID = pluginId;
+            var installer = CreateInstaller();
+
+            var exception = Assert.ThrowsAsync<PythonDependencyException>(() =>
+                installer.EnsureInstalledAsync(metadata, pythonPath, CancellationToken.None));
+
+            Assert.That(exception.Message, Does.Contain(PluginName));
+            Assert.That(runner.Calls, Is.Empty);
+            Assert.That(uvLocateCount, Is.EqualTo(0));
+            Assert.That(SandboxEntries(), Is.EqualTo(before));
+        }
+
+        [TestCaseSource(nameof(UnusablePluginIds))]
+        public void CleanupStaleInstalls_UnusablePluginId_DeletesNothing(string pluginId)
+        {
+            PlantDeletionTargets();
+            var before = SandboxEntries();
+            var installer = CreateInstaller();
+
+            installer.CleanupStaleInstalls(pluginId);
+
+            Assert.That(SandboxEntries(), Is.EqualTo(before));
+            Assert.That(logged, Is.Not.Empty);
+        }
+
+        [TestCaseSource(nameof(UnusablePluginIds))]
+        public void RemovePlugin_UnusablePluginId_DeletesNothing(string pluginId)
+        {
+            PlantDeletionTargets();
+            var before = SandboxEntries();
+            var installer = CreateInstaller();
+
+            installer.RemovePlugin(pluginId);
+
+            Assert.That(SandboxEntries(), Is.EqualTo(before));
+            Assert.That(logged, Is.Not.Empty);
+        }
+
         [Test]
         public void RemovePlugin_MissingPlugin_DoesNotThrow()
         {

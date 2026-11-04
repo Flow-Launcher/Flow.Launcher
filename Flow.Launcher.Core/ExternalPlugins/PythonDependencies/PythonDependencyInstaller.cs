@@ -69,6 +69,12 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
                 return null;
             }
 
+            if (!IsUsableAsFolderName(metadata.ID))
+            {
+                _logError($"Plugin {metadata.Name} has the ID '{metadata.ID}', which cannot be used as a folder name");
+                throw new PythonDependencyException(DependencyMessages.InvalidPluginId(metadata.Name));
+            }
+
             if (!_settings.AllowUnpinnedPythonDependencies)
             {
                 var unpinned = DependencyRequirements.FindUnpinned(dependencies);
@@ -92,6 +98,12 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
 
         public void CleanupStaleInstalls(string pluginId)
         {
+            if (!IsUsableAsFolderName(pluginId))
+            {
+                _logError($"Skipped cleaning up Python dependencies of plugin ID '{pluginId}' because it cannot be used as a folder name");
+                return;
+            }
+
             try
             {
                 var pluginRoot = Path.Combine(_dependenciesRoot, pluginId);
@@ -117,6 +129,12 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
 
         public void RemovePlugin(string pluginId)
         {
+            if (!IsUsableAsFolderName(pluginId))
+            {
+                _logError($"Skipped removing Python dependencies of plugin ID '{pluginId}' because it cannot be used as a folder name");
+                return;
+            }
+
             var pluginRoot = Path.Combine(_dependenciesRoot, pluginId);
             try
             {
@@ -140,6 +158,17 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
 
             var sibling = Path.Combine(Path.GetDirectoryName(pythonExecutable) ?? string.Empty, "python.exe");
             return File.Exists(sibling) ? sibling : pythonExecutable;
+        }
+
+        // Windows drops trailing dots and spaces from a folder name, which also rules out "." and "..".
+        private static bool IsUsableAsFolderName(string? pluginId)
+        {
+            return !string.IsNullOrWhiteSpace(pluginId)
+                && pluginId == pluginId.Trim()
+                && !pluginId.EndsWith('.')
+                && pluginId.IndexOfAny(new[] { '/', '\\' }) < 0
+                && pluginId.IndexOfAny(Path.GetInvalidFileNameChars()) < 0
+                && !Path.IsPathRooted(pluginId);
         }
 
         private async Task<string> EnsureInstalledLockedAsync(
