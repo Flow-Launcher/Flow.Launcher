@@ -37,6 +37,9 @@
     <!--  AbstractPluginEnvironment  -->
     <system:String x:Key="failToInstallTypeScriptEnv">Failed to install TypeScript environment. Please try again later</system:String>
     <system:String x:Key="failToInstallPythonEnv">Failed to install Python environment. Please try again later.</system:String>
+    <system:String x:Key="pythonDependencyNotPinned">Plugin {0} lists Python dependencies that are not pinned to an exact version: {1}. Ask the plugin author to pin them (for example requests==2.32.3), or allow unpinned dependencies in Settings &gt; General.</system:String>
+    <system:String x:Key="pythonDependencyUvUnavailable">Could not find or download uv, which is needed to install Python dependencies for plugin {0}. Flow will try again on the next start.</system:String>
+    <system:String x:Key="pythonDependencyInstallFailed">Failed to install Python dependencies for plugin {0}. Flow will try again on the next start.{1}</system:String>
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Failed to register hotkey "{0}". The hotkey may be in use by another program. Change to a different hotkey, or exit another program.</system:String>
