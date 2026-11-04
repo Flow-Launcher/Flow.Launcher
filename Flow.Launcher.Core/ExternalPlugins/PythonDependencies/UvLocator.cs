@@ -20,6 +20,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
         private readonly Func<string, CancellationToken, Task<string>> _downloadAndExtract;
         private readonly SemaphoreSlim _lock = new(1, 1);
         private string? _uvPath;
+        private string? _locatedForSetting;
 
         public UvLocator(
             PluginsSettings settings,
@@ -50,7 +51,13 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
             await _lock.WaitAsync(token).ConfigureAwait(false);
             try
             {
-                return _uvPath ??= await LocateAsync(token).ConfigureAwait(false);
+                if (_uvPath is null || _settings.UvExecutablePath != _locatedForSetting)
+                {
+                    _uvPath = await LocateAsync(token).ConfigureAwait(false);
+                    _locatedForSetting = _settings.UvExecutablePath;
+                }
+
+                return _uvPath;
             }
             finally
             {
@@ -61,26 +68,48 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
         private async Task<string> LocateAsync(CancellationToken token)
         {
             var configured = FilesFolders.ResolveAbsolutePath(_settings.UvExecutablePath);
+            string? staleUv = null;
+            var staleVersionDir = string.Empty;
             if (!string.IsNullOrEmpty(configured) && _fileExists(configured))
             {
-                if (!IsStaleManagedInstall(configured, out var staleVersionDir))
+                if (!IsStaleManagedInstall(configured, out staleVersionDir))
                 {
                     return configured;
                 }
 
-                TryDeleteDirectory(staleVersionDir);
+                staleUv = configured;
             }
 
             var onPath = _findOnPath();
             if (onPath is not null)
             {
+                RemoveStale(staleVersionDir);
                 return onPath;
             }
 
-            var installDir = Path.Combine(_managedRoot, UvRelease.Version);
-            var downloaded = await _downloadAndExtract(installDir, token).ConfigureAwait(false);
+            string downloaded;
+            try
+            {
+                var installDir = Path.Combine(_managedRoot, UvRelease.Version);
+                downloaded = await _downloadAndExtract(installDir, token).ConfigureAwait(false);
+            }
+            catch (Exception) when (staleUv is not null && !token.IsCancellationRequested)
+            {
+                // Offline after a Flow update: the uv downloaded by an older Flow still works.
+                return staleUv;
+            }
+
+            RemoveStale(staleVersionDir);
             _settings.UvExecutablePath = downloaded;
             return downloaded;
+        }
+
+        private static void RemoveStale(string staleVersionDir)
+        {
+            if (staleVersionDir.Length > 0)
+            {
+                TryDeleteDirectory(staleVersionDir);
+            }
         }
 
         private bool IsStaleManagedInstall(string uvPath, out string staleVersionDir)

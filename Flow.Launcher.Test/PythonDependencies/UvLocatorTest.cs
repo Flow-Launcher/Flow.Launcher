@@ -179,5 +179,67 @@ namespace Flow.Launcher.Test.PythonDependencies
             Assert.That(downloads, Is.EqualTo(2));
             Assert.That(result, Does.EndWith("uv.exe"));
         }
+
+        [Test]
+        public async Task ConfiguredManagedOldVersion_DownloadFails_KeepsAndUsesOldUv()
+        {
+            var oldUv = ManagedUv("0.1.0");
+            Directory.CreateDirectory(Path.GetDirectoryName(oldUv));
+            File.WriteAllText(oldUv, "old");
+            settings.UvExecutablePath = oldUv;
+            var locator = new UvLocator(settings, managedRoot,
+                File.Exists,
+                () => null,
+                (_, _) => throw new InvalidOperationException("offline"));
+
+            var result = await locator.GetUvPathAsync(CancellationToken.None);
+
+            Assert.That(result, Is.EqualTo(oldUv));
+            Assert.That(File.Exists(oldUv), Is.True);
+            Assert.That(settings.UvExecutablePath, Is.EqualTo(oldUv));
+        }
+
+        [Test]
+        public async Task ConfiguredManagedOldVersion_UvOnPath_RemovesOldUv()
+        {
+            var oldUv = ManagedUv("0.1.0");
+            Directory.CreateDirectory(Path.GetDirectoryName(oldUv));
+            File.WriteAllText(oldUv, "old");
+            settings.UvExecutablePath = oldUv;
+            var locator = new UvLocator(settings, managedRoot,
+                File.Exists,
+                () => "path/uv.exe",
+                (_, _) => throw new InvalidOperationException("download should not be used"));
+
+            var result = await locator.GetUvPathAsync(CancellationToken.None);
+
+            Assert.That(result, Is.EqualTo("path/uv.exe"));
+            Assert.That(Directory.Exists(Path.GetDirectoryName(oldUv)), Is.False);
+        }
+
+        [Test]
+        public async Task SettingChanged_LocatesAgain()
+        {
+            var chosen = Path.Combine(Path.GetTempPath(), "FlowUvChosen_" + Guid.NewGuid().ToString("N"), "uv.exe");
+            var pathLookups = 0;
+            var locator = new UvLocator(settings, managedRoot,
+                path => path == chosen,
+                () =>
+                {
+                    pathLookups++;
+                    return "path/uv.exe";
+                },
+                (_, _) => throw new InvalidOperationException("download should not be used"));
+
+            var first = await locator.GetUvPathAsync(CancellationToken.None);
+            var cached = await locator.GetUvPathAsync(CancellationToken.None);
+            settings.UvExecutablePath = chosen;
+            var changed = await locator.GetUvPathAsync(CancellationToken.None);
+
+            Assert.That(first, Is.EqualTo("path/uv.exe"));
+            Assert.That(cached, Is.EqualTo("path/uv.exe"));
+            Assert.That(pathLookups, Is.EqualTo(1));
+            Assert.That(changed, Is.EqualTo(chosen));
+        }
     }
 }
