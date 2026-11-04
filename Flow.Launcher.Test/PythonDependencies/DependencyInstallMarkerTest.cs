@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text.Json;
 using Flow.Launcher.Core.ExternalPlugins.PythonDependencies;
 using NUnit.Framework;
 
@@ -93,7 +94,8 @@ namespace Flow.Launcher.Test.PythonDependencies
                 PythonPath,
                 PythonVersion,
                 "0.13.7",
-                new[] { "requests==2.32.3", "urllib3==2.2.1" });
+                new[] { "requests==2.32.3", "urllib3==2.2.1" },
+                "0123456789abcdef-89abcdef");
 
             marker.Save(markerPath);
             var loaded = DependencyInstallMarker.Load(markerPath);
@@ -105,13 +107,15 @@ namespace Flow.Launcher.Test.PythonDependencies
             Assert.That(loaded.PythonVersion, Is.EqualTo(marker.PythonVersion));
             Assert.That(loaded.UvVersion, Is.EqualTo(marker.UvVersion));
             Assert.That(loaded.Resolved, Is.EqualTo(marker.Resolved));
+            Assert.That(loaded.InstallFolder, Is.EqualTo(marker.InstallFolder));
             Assert.That(File.Exists(markerPath + ".tmp"), Is.False);
         }
 
         [Test]
         public void Matches_ComparesInstallKeyOrdinally()
         {
-            var marker = new DependencyInstallMarker("abcdef0123456789", Dependencies, PythonPath, PythonVersion, "0.13.7", Array.Empty<string>());
+            var marker = new DependencyInstallMarker(
+                "abcdef0123456789", Dependencies, PythonPath, PythonVersion, "0.13.7", Array.Empty<string>(), "abcdef0123456789-00000000");
 
             Assert.That(marker.Matches("abcdef0123456789"), Is.True);
             Assert.That(marker.Matches("ABCDEF0123456789"), Is.False);
@@ -130,6 +134,40 @@ namespace Flow.Launcher.Test.PythonDependencies
         {
             var markerPath = Path.Combine(tempDirectory, DependencyInstallMarker.FileName);
             File.WriteAllText(markerPath, "{not json");
+
+            Assert.That(DependencyInstallMarker.Load(markerPath), Is.Null);
+        }
+
+        [Test]
+        public void NewInstallFolder_IsKeyAndEightLowerHex_DiffersEachCall()
+        {
+            var first = DependencyInstallMarker.NewInstallFolder("0123456789abcdef");
+            var second = DependencyInstallMarker.NewInstallFolder("0123456789abcdef");
+
+            Assert.That(first, Does.Match("^0123456789abcdef-[0-9a-f]{8}$"));
+            Assert.That(second, Is.Not.EqualTo(first));
+        }
+
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase("0123456789abcdef")]
+        [TestCase("fedcba9876543210-89abcdef")]
+        [TestCase("0123456789abcdef-89ABCDEF")]
+        [TestCase(@"0123456789abcdef-89abcdef\..\..")]
+        [TestCase("..")]
+        public void Load_InstallFolderMissingOrNotForItsKey_ReturnsNull(string installFolder)
+        {
+            var markerPath = Path.Combine(tempDirectory, DependencyInstallMarker.FileName);
+            File.WriteAllText(markerPath, JsonSerializer.Serialize(new { InstallKey = "0123456789abcdef", InstallFolder = installFolder }));
+
+            Assert.That(DependencyInstallMarker.Load(markerPath), Is.Null);
+        }
+
+        [Test]
+        public void Load_MarkerWrittenBeforeInstallFolderExisted_ReturnsNull()
+        {
+            var markerPath = Path.Combine(tempDirectory, DependencyInstallMarker.FileName);
+            File.WriteAllText(markerPath, """{"InstallKey":"0123456789abcdef","Dependencies":["a==1"],"PythonPath":"p","PythonVersion":"3.11.9","UvVersion":"uv 0.13.7","Resolved":["a==1"]}""");
 
             Assert.That(DependencyInstallMarker.Load(markerPath), Is.Null);
         }

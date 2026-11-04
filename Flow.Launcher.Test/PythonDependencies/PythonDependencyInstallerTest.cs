@@ -95,9 +95,18 @@ namespace Flow.Launcher.Test.PythonDependencies
                 DependencyRequirements.Normalize(dependencies), pythonPath, PythonVersionProbeOutput);
         }
 
-        private string SitePackagesFor(string key) => Path.Combine(dependenciesRoot, PluginId, key, "site-packages");
+        private string PluginRoot => Path.Combine(dependenciesRoot, PluginId);
 
-        private string MarkerPath => Path.Combine(dependenciesRoot, PluginId, DependencyInstallMarker.FileName);
+        private string MarkerPath => Path.Combine(PluginRoot, DependencyInstallMarker.FileName);
+
+        private void AssertInstalledFor(string sitePackages, string key)
+        {
+            var installFolder = Path.GetFileName(Path.GetDirectoryName(sitePackages));
+            Assert.That(Path.GetFileName(sitePackages), Is.EqualTo("site-packages"));
+            Assert.That(Path.GetDirectoryName(Path.GetDirectoryName(sitePackages)), Is.EqualTo(PluginRoot));
+            Assert.That(installFolder, Does.Match("^" + key + "-[0-9a-f]{8}$"));
+            Assert.That(DependencyInstallMarker.Load(MarkerPath)?.InstallFolder, Is.EqualTo(installFolder));
+        }
 
         [Test]
         public async Task EmptyDependencies_ReturnsNull_NoProcessRuns()
@@ -147,7 +156,7 @@ namespace Flow.Launcher.Test.PythonDependencies
 
             var result = await installer.EnsureInstalledAsync(CreateMetadata("requests>=2"), pythonPath, CancellationToken.None);
 
-            Assert.That(result, Is.EqualTo(SitePackagesFor(KeyFor("requests>=2"))));
+            AssertInstalledFor(result, KeyFor("requests>=2"));
             Assert.That(Directory.Exists(result), Is.True);
             Assert.That(runner.InstallCalls, Has.Count.EqualTo(1));
         }
@@ -160,15 +169,14 @@ namespace Flow.Launcher.Test.PythonDependencies
             var result = await installer.EnsureInstalledAsync(CreateMetadata("a==1"), pythonPath, CancellationToken.None);
 
             var key = KeyFor("a==1");
-            var expectedTarget = SitePackagesFor(key);
-            Assert.That(result, Is.EqualTo(expectedTarget));
-            Assert.That(expectedTarget, Does.Contain("deps root"));
+            AssertInstalledFor(result, key);
+            Assert.That(result, Does.Contain("deps root"));
 
             var install = runner.InstallCalls.Single();
             Assert.That(install.FileName, Is.EqualTo("uv"));
             Assert.That(install.Arguments, Is.EqualTo(new[]
             {
-                "pip", "install", "--no-config", "--target", expectedTarget, "--python", pythonPath, "a==1"
+                "pip", "install", "--no-config", "--target", result, "--python", pythonPath, "a==1"
             }));
             Assert.That(install.Environment["UV_NO_CONFIG"], Is.EqualTo("1"));
             Assert.That(install.Environment.ContainsKey("UV_CACHE_DIR"), Is.False);
@@ -230,6 +238,47 @@ namespace Flow.Launcher.Test.PythonDependencies
         }
 
         [Test]
+        public async Task FolderOfSameKeyLeftByStrayWriter_NeverDeletedOrReused()
+        {
+            var key = KeyFor("a==1");
+            var strayFolders = new[] { Path.Combine(PluginRoot, key), Path.Combine(PluginRoot, key + "-0badf00d") };
+            foreach (var folder in strayFolders)
+            {
+                Directory.CreateDirectory(Path.Combine(folder, "site-packages"));
+                File.WriteAllText(Path.Combine(folder, "site-packages", "partial.py"), "still being written");
+            }
+
+            var installer = CreateInstaller();
+            var result = await installer.EnsureInstalledAsync(CreateMetadata("a==1"), pythonPath, CancellationToken.None);
+
+            AssertInstalledFor(result, key);
+            Assert.That(strayFolders, Does.Not.Contain(Path.GetDirectoryName(result)));
+            foreach (var folder in strayFolders)
+            {
+                Assert.That(File.Exists(Path.Combine(folder, "site-packages", "partial.py")), Is.True);
+            }
+
+            installer.CleanupStaleInstalls(PluginId);
+
+            Assert.That(strayFolders.Where(Directory.Exists), Is.Empty);
+            Assert.That(Directory.Exists(result), Is.True);
+        }
+
+        [Test]
+        public async Task OldMarkerWithoutInstallFolder_Reinstalls()
+        {
+            var key = KeyFor("a==1");
+            Directory.CreateDirectory(Path.Combine(PluginRoot, key, "site-packages"));
+            File.WriteAllText(MarkerPath, $$"""{"InstallKey":"{{key}}","Dependencies":["a==1"]}""");
+            var installer = CreateInstaller();
+
+            var result = await installer.EnsureInstalledAsync(CreateMetadata("a==1"), pythonPath, CancellationToken.None);
+
+            AssertInstalledFor(result, key);
+            Assert.That(runner.InstallCalls, Has.Count.EqualTo(1));
+        }
+
+        [Test]
         public void CleanupStaleInstalls_NoValidMarker_DeletesNothing()
         {
             var staleDirectory = Path.Combine(dependenciesRoot, PluginId, "0123456789abcdef", "site-packages");
@@ -272,6 +321,7 @@ namespace Flow.Launcher.Test.PythonDependencies
             Assert.That(exception.Message, Does.Contain(PluginName));
             Assert.That(exception.Message, Does.Contain("version a==2 does not exist"));
             Assert.That(Directory.Exists(oldPath), Is.True);
+            Assert.That(Directory.EnumerateDirectories(PluginRoot), Is.EqualTo(new[] { Path.GetDirectoryName(oldPath) }));
             Assert.That(DependencyInstallMarker.Load(MarkerPath).Matches(KeyFor("a==1")), Is.True);
             Assert.That(logged, Has.Some.Contain("No solution found"));
         }
@@ -437,11 +487,11 @@ namespace Flow.Launcher.Test.PythonDependencies
         {
             var installer = CreateInstaller();
             await installer.EnsureInstalledAsync(CreateMetadata("a==1"), pythonPath, CancellationToken.None);
-            Assert.That(Directory.Exists(Path.Combine(dependenciesRoot, PluginId)), Is.True);
+            Assert.That(Directory.Exists(PluginRoot), Is.True);
 
             installer.RemovePlugin(PluginId);
 
-            Assert.That(Directory.Exists(Path.Combine(dependenciesRoot, PluginId)), Is.False);
+            Assert.That(Directory.Exists(PluginRoot), Is.False);
         }
 
         [Test]
@@ -517,14 +567,11 @@ namespace Flow.Launcher.Test.PythonDependencies
                         throw InstallException;
                     }
 
-                    if (InstallExitCode != 0)
-                    {
-                        return new ProcessResult(InstallExitCode, "installing", InstallStdErr);
-                    }
-
                     var targetIndex = arguments.ToList().IndexOf("--target");
                     Directory.CreateDirectory(arguments[targetIndex + 1]);
-                    return new ProcessResult(0, string.Empty, string.Empty);
+                    return InstallExitCode != 0
+                        ? new ProcessResult(InstallExitCode, "installing", InstallStdErr)
+                        : new ProcessResult(0, string.Empty, string.Empty);
                 }
 
                 if (arguments.Count > 1 && arguments[0] == "pip" && arguments[1] == "freeze")

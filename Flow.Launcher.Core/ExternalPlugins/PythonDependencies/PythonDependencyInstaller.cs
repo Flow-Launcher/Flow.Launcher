@@ -103,7 +103,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
 
                 foreach (var directory in Directory.EnumerateDirectories(pluginRoot))
                 {
-                    if (!marker.Matches(Path.GetFileName(directory)))
+                    if (!string.Equals(Path.GetFileName(directory), marker.InstallFolder, StringComparison.OrdinalIgnoreCase))
                     {
                         TryDeleteDirectory(directory);
                     }
@@ -154,32 +154,44 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
 
             var pluginRoot = Path.Combine(_dependenciesRoot, metadata.ID);
             var markerPath = Path.Combine(pluginRoot, DependencyInstallMarker.FileName);
-            var keyDirectory = Path.Combine(pluginRoot, installKey);
-            var sitePackages = Path.Combine(keyDirectory, SitePackagesName);
 
-            if (DependencyInstallMarker.Load(markerPath)?.Matches(installKey) == true && Directory.Exists(sitePackages))
+            var marker = DependencyInstallMarker.Load(markerPath);
+            if (marker?.Matches(installKey) == true)
             {
-                return sitePackages;
+                var installedSitePackages = Path.Combine(pluginRoot, marker.InstallFolder, SitePackagesName);
+                if (Directory.Exists(installedSitePackages))
+                {
+                    return installedSitePackages;
+                }
             }
 
             var uvPath = await LocateUvAsync(metadata, token).ConfigureAwait(false);
-            PrepareEmptyDirectory(metadata, keyDirectory);
+            var installFolder = CreateInstallFolderName(metadata, pluginRoot, installKey);
+            var installDirectory = Path.Combine(pluginRoot, installFolder);
+            var sitePackages = Path.Combine(installDirectory, SitePackagesName);
 
-            var install = await RunAsync(metadata, uvPath, BuildInstallArguments(sitePackages, python, dependencies), token)
-                .ConfigureAwait(false);
-            if (install.ExitCode != 0)
+            try
             {
-                _logError($"uv failed to install dependencies of plugin {metadata.Name} (exit code {install.ExitCode}). StdOut: {install.StdOut} StdErr: {install.StdErr}");
-                TryDeleteDirectory(keyDirectory);
-                throw new PythonDependencyException(DependencyMessages.InstallFailed(metadata.Name, LastErrorLines(install.StdErr)));
-            }
+                var install = await RunAsync(metadata, uvPath, BuildInstallArguments(sitePackages, python, dependencies), token)
+                    .ConfigureAwait(false);
+                if (install.ExitCode != 0)
+                {
+                    _logError($"uv failed to install dependencies of plugin {metadata.Name} (exit code {install.ExitCode}). StdOut: {install.StdOut} StdErr: {install.StdErr}");
+                    throw new PythonDependencyException(DependencyMessages.InstallFailed(metadata.Name, LastErrorLines(install.StdErr)));
+                }
 
-            var resolved = await FreezeAsync(metadata, uvPath, sitePackages, python, token).ConfigureAwait(false);
-            var uvVersion = await GetUvVersionAsync(metadata, uvPath, token).ConfigureAwait(false);
-            SaveMarker(
-                metadata,
-                markerPath,
-                new DependencyInstallMarker(installKey, dependencies, python, pythonVersion, uvVersion, resolved));
+                var resolved = await FreezeAsync(metadata, uvPath, sitePackages, python, token).ConfigureAwait(false);
+                var uvVersion = await GetUvVersionAsync(metadata, uvPath, token).ConfigureAwait(false);
+                SaveMarker(
+                    metadata,
+                    markerPath,
+                    new DependencyInstallMarker(installKey, dependencies, python, pythonVersion, uvVersion, resolved, installFolder));
+            }
+            catch (Exception)
+            {
+                TryDeleteDirectory(installDirectory);
+                throw;
+            }
 
             return sitePackages;
         }
@@ -272,20 +284,24 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
             return environment;
         }
 
-        private void PrepareEmptyDirectory(PluginMetadata metadata, string directory)
+        // A uv left running by an earlier Flow process may still write to an older folder, so every attempt gets a fresh one.
+        private string CreateInstallFolderName(PluginMetadata metadata, string pluginRoot, string installKey)
         {
             try
             {
-                if (Directory.Exists(directory))
+                Directory.CreateDirectory(pluginRoot);
+                string installFolder;
+                do
                 {
-                    Directory.Delete(directory, recursive: true);
+                    installFolder = DependencyInstallMarker.NewInstallFolder(installKey);
                 }
+                while (Directory.Exists(Path.Combine(pluginRoot, installFolder)));
 
-                Directory.CreateDirectory(Path.GetDirectoryName(directory)!);
+                return installFolder;
             }
             catch (Exception e) when (e is IOException or UnauthorizedAccessException)
             {
-                _logError($"Could not prepare {directory} for plugin {metadata.Name}: {e}");
+                _logError($"Could not prepare {pluginRoot} for plugin {metadata.Name}: {e}");
                 throw new PythonDependencyException(DependencyMessages.InstallFailed(metadata.Name, e.Message), e);
             }
         }

@@ -6,6 +6,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 
 namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
 {
@@ -15,11 +16,13 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
         string PythonPath,
         string PythonVersion,
         string UvVersion,
-        IReadOnlyList<string> Resolved)
+        IReadOnlyList<string> Resolved,
+        string InstallFolder)
     {
         public const string FileName = "install.json";
 
         private const int KeyLength = 16;
+        private const int FolderSuffixBytes = 4;
 
         private static readonly JsonSerializerOptions WriteOptions = new() { WriteIndented = true };
 
@@ -32,12 +35,17 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
             return Convert.ToHexString(hash).ToLowerInvariant().Substring(0, KeyLength);
         }
 
+        public static string NewInstallFolder(string installKey)
+        {
+            return installKey + "-" + Convert.ToHexString(RandomNumberGenerator.GetBytes(FolderSuffixBytes)).ToLowerInvariant();
+        }
+
         public static DependencyInstallMarker? Load(string markerPath)
         {
             try
             {
                 var marker = JsonSerializer.Deserialize<DependencyInstallMarker>(File.ReadAllText(markerPath));
-                return string.IsNullOrEmpty(marker?.InstallKey) ? null : marker;
+                return marker is not null && IsInstallFolderOf(marker.InstallFolder, marker.InstallKey) ? marker : null;
             }
             catch (Exception e) when (e is IOException or UnauthorizedAccessException or JsonException)
             {
@@ -55,6 +63,13 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
         public bool Matches(string installKey)
         {
             return string.Equals(InstallKey, installKey, StringComparison.Ordinal);
+        }
+
+        private static bool IsInstallFolderOf(string? installFolder, string? installKey)
+        {
+            return !string.IsNullOrEmpty(installKey)
+                && installFolder is not null
+                && Regex.IsMatch(installFolder, "^" + Regex.Escape(installKey) + "-[0-9a-f]{" + FolderSuffixBytes * 2 + "}$");
         }
     }
 }
