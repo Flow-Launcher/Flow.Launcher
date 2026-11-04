@@ -53,8 +53,8 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
             process.Start();
             using var cancellation = token.Register(() => TryKill(process));
 
-            var stdOut = process.StandardOutput.ReadToEndAsync(CancellationToken.None);
-            var stdErr = process.StandardError.ReadToEndAsync(CancellationToken.None);
+            var stdOut = process.StandardOutput.ReadToEndAsync(token);
+            var stdErr = process.StandardError.ReadToEndAsync(token);
             var output = Task.WhenAll(stdOut, stdErr);
             try
             {
