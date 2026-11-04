@@ -47,16 +47,25 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
 
             JTF.Run(async () =>
             {
-                try
-                {
-                    PluginsSettingsFilePath = await CreateRuntimeInstaller().InstallAsync(CancellationToken.None);
-                }
-                catch (System.Exception e)
-                {
-                    API.ShowMsgError(Localize.failToInstallPythonEnv());
-                    API.LogException(ClassName, "Failed to install Python environment", e);
-                }
+                await PythonRuntimeSwitch.TryAsync(
+                    () => CreateRuntimeInstaller().InstallAsync(CancellationToken.None),
+                    path => PluginsSettingsFilePath = path,
+                    () => PythonRuntimeSwitch.RemoveStale(EnvPath, message => API.LogError(ClassName, message)),
+                    e =>
+                    {
+                        API.ShowMsgError(Localize.failToInstallPythonEnv());
+                        API.LogException(ClassName, "Failed to install Python environment", e);
+                    });
             });
+        }
+
+        // Unlike the base class this keeps the old install until the new one is in place, so a failed
+        // install (for example while offline) leaves the user's current Python working.
+        protected override void EnsureLatestInstalled(string expectedPath, string currentPath, string installedDirPath)
+        {
+            if (expectedPath == currentPath) return;
+
+            InstallEnvironment();
         }
 
         private PythonRuntimeInstaller CreateRuntimeInstaller()

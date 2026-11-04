@@ -131,7 +131,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
 
         internal abstract void InstallEnvironment();
 
-        private void EnsureLatestInstalled(string expectedPath, string currentPath, string installedDirPath)
+        protected virtual void EnsureLatestInstalled(string expectedPath, string currentPath, string installedDirPath)
         {
             if (expectedPath == currentPath) return;
 
