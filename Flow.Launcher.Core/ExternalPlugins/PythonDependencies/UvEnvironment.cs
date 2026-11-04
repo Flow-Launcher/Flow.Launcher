@@ -9,9 +9,12 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
 {
     internal static class UvEnvironment
     {
-        public static IReadOnlyDictionary<string, string> Build(bool portable, string uvCachePath)
+        /// <summary>
+        /// The proxy Flow's own downloads use right now, or null when there is none.
+        /// </summary>
+        public static string? FlowProxyUrl()
         {
-            return Build(portable, uvCachePath, ProxyUrl(Http.WebProxy.Address, Http.WebProxy.Credentials as NetworkCredential));
+            return ProxyUrl(Http.WebProxy.Address, Http.WebProxy.Credentials as NetworkCredential);
         }
 
         public static IReadOnlyDictionary<string, string> Build(bool portable, string uvCachePath, string? proxyUrl)

@@ -91,7 +91,8 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
                 new ProcessRunner(),
                 Path.Combine(EnvPath, UvPythonRuntime.InstallDirectoryName),
                 DataLocation.PortableDataLocationInUse(),
-                DataLocation.UvCachePath);
+                DataLocation.UvCachePath,
+                proxyUrl: UvEnvironment.FlowProxyUrl);
         }
 
         internal override PluginPair CreatePluginPair(string filePath, PluginMetadata metadata)

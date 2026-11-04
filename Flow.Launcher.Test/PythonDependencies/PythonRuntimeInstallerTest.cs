@@ -53,7 +53,8 @@ namespace Flow.Launcher.Test.PythonDependencies
         private PythonRuntimeInstaller CreateInstaller(
             bool portable = false,
             UvLocator locator = null,
-            TimeSpan? processTimeout = null)
+            TimeSpan? processTimeout = null,
+            Func<string> proxyUrl = null)
         {
             return new PythonRuntimeInstaller(
                 locator ?? CreateLocator(),
@@ -61,7 +62,8 @@ namespace Flow.Launcher.Test.PythonDependencies
                 installDirectory,
                 portable,
                 cachePath,
-                processTimeout);
+                processTimeout,
+                proxyUrl);
         }
 
         [Test]
@@ -111,6 +113,16 @@ namespace Flow.Launcher.Test.PythonDependencies
             await CreateInstaller(portable: false).InstallAsync(CancellationToken.None);
 
             Assert.That(runner.Calls.Single().Environment, Is.EqualTo(new Dictionary<string, string> { ["UV_NO_CONFIG"] = "1" }));
+        }
+
+        [Test]
+        public async Task Install_WithProxy_PassesItToUv()
+        {
+            await CreateInstaller(proxyUrl: () => "http://proxy.local:8080").InstallAsync(CancellationToken.None);
+
+            var environment = runner.Calls.Single().Environment;
+            Assert.That(environment["HTTP_PROXY"], Is.EqualTo("http://proxy.local:8080"));
+            Assert.That(environment["HTTPS_PROXY"], Is.EqualTo("http://proxy.local:8080"));
         }
 
         [Test]

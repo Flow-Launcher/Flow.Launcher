@@ -35,6 +35,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
         private readonly Action<string> _logError;
         private readonly Action<PluginMetadata> _onInstalling;
         private readonly TimeSpan _processTimeout;
+        private readonly Func<string?> _proxyUrl;
         private readonly ConcurrentDictionary<string, SemaphoreSlim> _pluginLocks = new();
         private readonly ConcurrentDictionary<string, CancellationTokenSource> _runningInstalls = new();
         private readonly ConcurrentDictionary<string, string> _pythonVersions = new(StringComparer.OrdinalIgnoreCase);
@@ -48,8 +49,10 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
             string uvCachePath,
             Action<string>? logError = null,
             Action<PluginMetadata>? onInstalling = null,
-            TimeSpan? processTimeout = null)
+            TimeSpan? processTimeout = null,
+            Func<string?>? proxyUrl = null)
         {
+            _proxyUrl = proxyUrl ?? (() => null);
             _settings = settings;
             _uvLocator = uvLocator;
             _runner = runner;
@@ -76,7 +79,8 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
                 message => PublicApi.Instance.LogError(nameof(PythonDependencyInstaller), message),
                 metadata => PublicApi.Instance.ShowMsg(
                     DependencyMessages.InstallingTitle(),
-                    DependencyMessages.InstallingMessage(metadata.Name)));
+                    DependencyMessages.InstallingMessage(metadata.Name)),
+                proxyUrl: UvEnvironment.FlowProxyUrl);
         }
 
         public async Task<string?> EnsureInstalledAsync(PluginMetadata metadata, string pythonExecutable, CancellationToken token)
@@ -452,7 +456,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
             timeout.CancelAfter(_processTimeout);
             try
             {
-                return await _runner.RunAsync(fileName, arguments, useUvEnvironment ? UvEnvironment.Build(_portable, _uvCachePath) : NoEnvironment, timeout.Token)
+                return await _runner.RunAsync(fileName, arguments, useUvEnvironment ? UvEnvironment.Build(_portable, _uvCachePath, _proxyUrl()) : NoEnvironment, timeout.Token)
                     .ConfigureAwait(false);
             }
             catch (OperationCanceledException e) when (timeout.IsCancellationRequested && !token.IsCancellationRequested)

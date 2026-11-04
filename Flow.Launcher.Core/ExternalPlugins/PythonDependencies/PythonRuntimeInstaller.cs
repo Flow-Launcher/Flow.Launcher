@@ -21,6 +21,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
         private readonly bool _portable;
         private readonly string _uvCachePath;
         private readonly TimeSpan _processTimeout;
+        private readonly Func<string?> _proxyUrl;
 
         public PythonRuntimeInstaller(
             UvLocator uvLocator,
@@ -28,8 +29,10 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
             string installDirectory,
             bool portable,
             string uvCachePath,
-            TimeSpan? processTimeout = null)
+            TimeSpan? processTimeout = null,
+            Func<string?>? proxyUrl = null)
         {
+            _proxyUrl = proxyUrl ?? (() => null);
             _uvLocator = uvLocator;
             _runner = runner;
             _installDirectory = installDirectory;
@@ -87,7 +90,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
             timeout.CancelAfter(_processTimeout);
             try
             {
-                return await _runner.RunAsync(uvPath, arguments, UvEnvironment.Build(_portable, _uvCachePath), timeout.Token)
+                return await _runner.RunAsync(uvPath, arguments, UvEnvironment.Build(_portable, _uvCachePath, _proxyUrl()), timeout.Token)
                     .ConfigureAwait(false);
             }
             catch (OperationCanceledException e) when (timeout.IsCancellationRequested && !token.IsCancellationRequested)
