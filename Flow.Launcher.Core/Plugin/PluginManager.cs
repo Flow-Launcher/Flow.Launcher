@@ -1088,7 +1088,7 @@ namespace Flow.Launcher.Core.Plugin
         private static void InstallPythonDependenciesInBackground(PluginMetadata metadata, string pluginDirectory)
         {
             var installer = PythonDependencies;
-            var pythonExecutable = Settings?.PythonExecutablePath;
+            var pythonExecutable = FilesFolders.ResolveAbsolutePath(Settings?.PythonExecutablePath);
             if (installer == null
                 || string.IsNullOrEmpty(metadata.Language)
                 || !AllowedLanguage.IsPython(metadata.Language)
