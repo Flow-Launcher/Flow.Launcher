@@ -48,7 +48,7 @@ Dedicated to making your workflow more seamless. Search everything from applicat
 
 ⚠️ Only trust official channels for downloads and announcements, and be careful of similar-looking domains.
 
-> 🚧 **Microsoft Store update:** We're working on submitting Flow Launcher to the Microsoft Store. It is **not yet published there**. We'll update this page once it is available. In the meantime, please install Flow Launcher from this GitHub repository using the options in the [Installation](#installation) section below.
+> 🚧 **Microsoft Store:** Flow Launcher is **NOT** published in the Microsoft Store yet, and we're currently working on submitting it. We'll update this page once it is available. In the meantime, please install Flow Launcher using the options in the [Installation](#installation) section below.
 
 For installation, use the official methods listed below.
 
