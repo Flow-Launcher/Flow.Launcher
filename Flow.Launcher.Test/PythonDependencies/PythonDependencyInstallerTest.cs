@@ -26,6 +26,7 @@ namespace Flow.Launcher.Test.PythonDependencies
         private FakeProcessRunner runner;
         private int uvLocateCount;
         private List<string> logged;
+        private List<string> installingNotices;
 
         [SetUp]
         public void SetUp()
@@ -39,6 +40,7 @@ namespace Flow.Launcher.Test.PythonDependencies
             runner = new FakeProcessRunner();
             uvLocateCount = 0;
             logged = new List<string>();
+            installingNotices = new List<string>();
         }
 
         [TearDown]
@@ -67,7 +69,8 @@ namespace Flow.Launcher.Test.PythonDependencies
         private PythonDependencyInstaller CreateInstaller(
             FakeProcessRunner processRunner = null,
             UvLocator locator = null,
-            bool portable = false)
+            bool portable = false,
+            Action<PluginMetadata> onInstalling = null)
         {
             return new PythonDependencyInstaller(
                 settings,
@@ -76,7 +79,8 @@ namespace Flow.Launcher.Test.PythonDependencies
                 dependenciesRoot,
                 portable,
                 cachePath,
-                logged.Add);
+                logged.Add,
+                onInstalling ?? (metadata => installingNotices.Add(metadata.Name)));
         }
 
         private static PluginMetadata CreateMetadata(params string[] dependencies)
@@ -188,6 +192,45 @@ namespace Flow.Launcher.Test.PythonDependencies
             var marker = DependencyInstallMarker.Load(MarkerPath);
             Assert.That(marker, Is.Not.Null);
             Assert.That(marker.Matches(key), Is.True);
+        }
+
+        [Test]
+        public async Task FirstInstall_NotifiesInstallingOnce_MarkerMatchDoesNot()
+        {
+            var installer = CreateInstaller();
+
+            await installer.EnsureInstalledAsync(CreateMetadata("a==1"), pythonPath, CancellationToken.None);
+            Assert.That(installingNotices, Is.EqualTo(new[] { PluginName }));
+
+            await installer.EnsureInstalledAsync(CreateMetadata("a==1"), pythonPath, CancellationToken.None);
+            await CreateInstaller(new FakeProcessRunner()).EnsureInstalledAsync(CreateMetadata("a==1"), pythonPath, CancellationToken.None);
+            Assert.That(installingNotices, Has.Count.EqualTo(1));
+        }
+
+        [Test]
+        public void ValidationFails_DoesNotNotifyInstalling()
+        {
+            var installer = CreateInstaller();
+            var invalidId = CreateMetadata("a==1");
+            invalidId.ID = "..";
+
+            Assert.ThrowsAsync<PythonDependencyException>(() =>
+                installer.EnsureInstalledAsync(CreateMetadata("requests>=2"), pythonPath, CancellationToken.None));
+            Assert.ThrowsAsync<PythonDependencyException>(() =>
+                installer.EnsureInstalledAsync(invalidId, pythonPath, CancellationToken.None));
+
+            Assert.That(installingNotices, Is.Empty);
+        }
+
+        [Test]
+        public async Task InstallingNoticeThrows_InstallStillSucceeds()
+        {
+            var installer = CreateInstaller(onInstalling: _ => throw new InvalidOperationException("no window yet"));
+
+            var result = await installer.EnsureInstalledAsync(CreateMetadata("a==1"), pythonPath, CancellationToken.None);
+
+            AssertInstalledFor(result, KeyFor("a==1"));
+            Assert.That(logged, Has.Some.Contain("no window yet"));
         }
 
         [Test]

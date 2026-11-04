@@ -1106,9 +1106,6 @@ namespace Flow.Launcher.Core.Plugin
                 try
                 {
                     metadata.PluginDirectory = pluginDirectory;
-                    PublicApi.Instance.ShowMsg(
-                        Localize.pythonDependencyInstallingTitle(),
-                        Localize.pythonDependencyInstallingMessage(metadata.Name));
                     await installer.EnsureInstalledAsync(metadata, pythonExecutable, CancellationToken.None);
                 }
                 catch (Exception e)

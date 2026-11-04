@@ -28,6 +28,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
         private readonly bool _portable;
         private readonly string _uvCachePath;
         private readonly Action<string> _logError;
+        private readonly Action<PluginMetadata> _onInstalling;
         private readonly ConcurrentDictionary<string, SemaphoreSlim> _pluginLocks = new();
         private readonly ConcurrentDictionary<string, string> _pythonVersions = new(StringComparer.OrdinalIgnoreCase);
 
@@ -38,7 +39,8 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
             string dependenciesRoot,
             bool portable,
             string uvCachePath,
-            Action<string>? logError = null)
+            Action<string>? logError = null,
+            Action<PluginMetadata>? onInstalling = null)
         {
             _settings = settings;
             _uvLocator = uvLocator;
@@ -47,6 +49,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
             _portable = portable;
             _uvCachePath = uvCachePath;
             _logError = logError ?? (_ => { });
+            _onInstalling = onInstalling ?? (_ => { });
         }
 
         public static PythonDependencyInstaller CreateDefault(PluginsSettings settings)
@@ -58,7 +61,10 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
                 DataLocation.PythonDependenciesPath,
                 DataLocation.PortableDataLocationInUse(),
                 DataLocation.UvCachePath,
-                message => PublicApi.Instance.LogError(nameof(PythonDependencyInstaller), message));
+                message => PublicApi.Instance.LogError(nameof(PythonDependencyInstaller), message),
+                metadata => PublicApi.Instance.ShowMsg(
+                    DependencyMessages.InstallingTitle(),
+                    DependencyMessages.InstallingMessage(metadata.Name)));
         }
 
         public async Task<string?> EnsureInstalledAsync(PluginMetadata metadata, string pythonExecutable, CancellationToken token)
@@ -198,6 +204,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
             var installFolder = CreateInstallFolderName(metadata, pluginRoot, installKey);
             var installDirectory = Path.Combine(pluginRoot, installFolder);
             var sitePackages = Path.Combine(installDirectory, SitePackagesName);
+            NotifyInstalling(metadata);
 
             try
             {
@@ -223,6 +230,18 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
             }
 
             return sitePackages;
+        }
+
+        private void NotifyInstalling(PluginMetadata metadata)
+        {
+            try
+            {
+                _onInstalling(metadata);
+            }
+            catch (Exception e)
+            {
+                _logError($"Could not show the installing notice for plugin {metadata.Name}: {e}");
+            }
         }
 
         private async Task<string> GetPythonVersionAsync(PluginMetadata metadata, string python, CancellationToken token)

@@ -8,6 +8,20 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
     /// </summary>
     internal static class DependencyMessages
     {
+        public static string InstallingTitle()
+        {
+            return Translate(
+                () => Localize.pythonDependencyInstallingTitle(),
+                "Installing Python dependencies");
+        }
+
+        public static string InstallingMessage(string pluginName)
+        {
+            return Translate(
+                () => Localize.pythonDependencyInstallingMessage(pluginName),
+                $"Installing dependencies for {pluginName}...");
+        }
+
         public static string NotPinned(string pluginName, string unpinned)
         {
             return Translate(
