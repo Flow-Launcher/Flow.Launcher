@@ -211,7 +211,7 @@ namespace Flow.Launcher.Core.Plugin
 
             // Load plugins
             PythonDependencies = PythonDependencyInstaller.CreateDefault(Settings);
-            PythonDependencies.RemoveOrphanedDependencies([.. metadatas.Select(m => m.ID).Where(id => !string.IsNullOrEmpty(id))]);
+            PythonDependencies.RetryPendingRemovals([.. metadatas.Select(m => m.ID).Where(id => !string.IsNullOrEmpty(id))]);
             var allLoadedPlugins = PluginsLoader.Plugins(metadatas, Settings, PythonDependencies);
             foreach (var plugin in allLoadedPlugins)
             {

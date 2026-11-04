@@ -740,39 +740,90 @@ namespace Flow.Launcher.Test.PythonDependencies
             Assert.That(logged, Is.Not.Empty);
         }
 
+        private string PendingRemovalFile(string pluginId) => Path.Combine(dependenciesRoot, pluginId + ".removed");
+
         [Test]
-        public void RemoveOrphanedDependencies_DeletesOnlyFoldersOfUninstalledPlugins()
+        public void RetryPendingRemovals_DeletesRecordedFolderOfUninstalledPlugin()
         {
-            var kept = Path.Combine(dependenciesRoot, "Installed-Plugin", "key-00000000", "site-packages");
-            var orphan = Path.Combine(dependenciesRoot, "uninstalled-plugin", "key-00000000", "site-packages");
-            Directory.CreateDirectory(kept);
-            Directory.CreateDirectory(orphan);
+            var folder = Path.Combine(dependenciesRoot, "uninstalled-plugin", "key-00000000", "site-packages");
+            Directory.CreateDirectory(folder);
+            File.WriteAllText(PendingRemovalFile("uninstalled-plugin"), string.Empty);
             var installer = CreateInstaller();
 
-            installer.RemoveOrphanedDependencies(new[] { "installed-plugin" });
+            installer.RetryPendingRemovals(new[] { "other-plugin" });
 
-            Assert.That(Directory.Exists(kept), Is.True);
             Assert.That(Directory.Exists(Path.Combine(dependenciesRoot, "uninstalled-plugin")), Is.False);
+            Assert.That(File.Exists(PendingRemovalFile("uninstalled-plugin")), Is.False);
         }
 
         [Test]
-        public void RemoveOrphanedDependencies_NoInstalledPlugins_DeletesNothing()
+        public void RetryPendingRemovals_KeepsUnrecordedFolderOfPluginThatFailedToLoad()
         {
-            var orphan = Path.Combine(dependenciesRoot, "some-plugin", "site-packages");
-            Directory.CreateDirectory(orphan);
+            var folder = Path.Combine(dependenciesRoot, "broken-plugin", "key-00000000", "site-packages");
+            Directory.CreateDirectory(folder);
             var installer = CreateInstaller();
 
-            installer.RemoveOrphanedDependencies(Array.Empty<string>());
+            installer.RetryPendingRemovals(new[] { "other-plugin" });
 
-            Assert.That(Directory.Exists(orphan), Is.True);
+            Assert.That(Directory.Exists(folder), Is.True);
         }
 
         [Test]
-        public void RemoveOrphanedDependencies_NoDependenciesRoot_DoesNotThrow()
+        public void RetryPendingRemovals_PluginInstalledAgain_KeepsFolderAndClearsRecord()
+        {
+            var folder = Path.Combine(dependenciesRoot, "Reinstalled-Plugin", "key-00000000", "site-packages");
+            Directory.CreateDirectory(folder);
+            File.WriteAllText(PendingRemovalFile("Reinstalled-Plugin"), string.Empty);
+            var installer = CreateInstaller();
+
+            installer.RetryPendingRemovals(new[] { "reinstalled-plugin" });
+
+            Assert.That(Directory.Exists(folder), Is.True);
+            Assert.That(File.Exists(PendingRemovalFile("Reinstalled-Plugin")), Is.False);
+        }
+
+        [Test]
+        public void RetryPendingRemovals_NoDependenciesRoot_DoesNotThrow()
         {
             var installer = CreateInstaller();
 
-            Assert.DoesNotThrow(() => installer.RemoveOrphanedDependencies(new[] { PluginId }));
+            Assert.DoesNotThrow(() => installer.RetryPendingRemovals(new[] { PluginId }));
+        }
+
+        [Test]
+        public async Task DeleteDependencies_Succeeds_LeavesNoPendingRecord()
+        {
+            var installer = CreateInstaller();
+            await installer.EnsureInstalledAsync(CreateMetadata("a==1"), pythonPath, CancellationToken.None);
+
+            await installer.DeleteDependenciesAsync(PluginId);
+
+            Assert.That(Directory.Exists(PluginRoot), Is.False);
+            Assert.That(File.Exists(PendingRemovalFile(PluginId)), Is.False);
+            Assert.That(logged, Is.Empty);
+        }
+
+        [Test]
+        public async Task DeleteDependencies_NoDependenciesRoot_LogsNothing()
+        {
+            var installer = CreateInstaller();
+
+            await installer.DeleteDependenciesAsync(PluginId);
+
+            Assert.That(logged, Is.Empty);
+        }
+
+        [Test]
+        public async Task EnsureInstalled_ClearsPendingRemoval()
+        {
+            Directory.CreateDirectory(dependenciesRoot);
+            File.WriteAllText(PendingRemovalFile(PluginId), string.Empty);
+            var installer = CreateInstaller();
+
+            await installer.EnsureInstalledAsync(CreateMetadata("a==1"), pythonPath, CancellationToken.None);
+
+            Assert.That(File.Exists(PendingRemovalFile(PluginId)), Is.False);
+            Assert.That(logged, Is.Empty);
         }
 
         [Test]

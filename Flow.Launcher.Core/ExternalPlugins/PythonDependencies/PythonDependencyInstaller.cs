@@ -16,6 +16,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
     internal sealed class PythonDependencyInstaller
     {
         private const string SitePackagesName = "site-packages";
+        private const string PendingRemovalExtension = ".removed";
         private const string PythonVersionProbe = "import sys, sysconfig; print(sys.version.split()[0], sys.implementation.name, sysconfig.get_platform(), sysconfig.get_config_var('EXT_SUFFIX') or '')";
         private const int ErrorLinesInMessage = 5;
 
@@ -181,12 +182,16 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
                 var pluginRoot = Path.Combine(_dependenciesRoot, pluginId);
                 if (Directory.Exists(pluginRoot))
                 {
+                    // Kept outside the folder so it survives a delete that fails halfway through.
+                    File.WriteAllText(PendingRemovalPath(pluginId), string.Empty);
                     Directory.Delete(pluginRoot, recursive: true);
                 }
+
+                DeleteIfExists(PendingRemovalPath(pluginId));
             }
             catch (Exception e) when (e is IOException or UnauthorizedAccessException)
             {
-                _logError($"Failed to remove Python dependencies of plugin {pluginId}: {e.Message}");
+                _logError($"Failed to remove Python dependencies of plugin {pluginId}, retrying on the next start: {e.Message}");
             }
             finally
             {
@@ -195,13 +200,13 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
         }
 
         /// <summary>
-        /// Deletes dependency folders of plugins that are no longer installed, for example when the folder
-        /// was still in use during the uninstall. Call it before any install can start.
+        /// Finishes removals that <see cref="DeleteDependenciesAsync"/> could not complete, for example because a
+        /// file was still in use. Only folders recorded as removed are touched, so a plugin whose plugin.json
+        /// failed to load this time keeps its dependencies. Call it before any install can start.
         /// </summary>
-        public void RemoveOrphanedDependencies(IReadOnlyCollection<string> installedPluginIds)
+        public void RetryPendingRemovals(IReadOnlyCollection<string> installedPluginIds)
         {
-            // An empty list more likely means the plugins could not be read than that none are installed.
-            if (installedPluginIds.Count == 0 || !Directory.Exists(_dependenciesRoot))
+            if (!Directory.Exists(_dependenciesRoot))
             {
                 return;
             }
@@ -209,17 +214,18 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
             var installed = new HashSet<string>(installedPluginIds, StringComparer.OrdinalIgnoreCase);
             try
             {
-                foreach (var directory in Directory.EnumerateDirectories(_dependenciesRoot).ToList())
+                foreach (var pendingFile in Directory.EnumerateFiles(_dependenciesRoot, "*" + PendingRemovalExtension).ToList())
                 {
-                    var pluginId = Path.GetFileName(directory);
-                    if (installed.Contains(pluginId))
-                    {
-                        continue;
-                    }
-
+                    var pluginId = Path.GetFileNameWithoutExtension(pendingFile);
                     try
                     {
-                        Directory.Delete(directory, recursive: true);
+                        var pluginRoot = Path.Combine(_dependenciesRoot, pluginId);
+                        if (!installed.Contains(pluginId) && Directory.Exists(pluginRoot))
+                        {
+                            Directory.Delete(pluginRoot, recursive: true);
+                        }
+
+                        File.Delete(pendingFile);
                     }
                     catch (Exception e) when (e is IOException or UnauthorizedAccessException)
                     {
@@ -229,8 +235,21 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
             }
             catch (Exception e) when (e is IOException or UnauthorizedAccessException)
             {
-                _logError($"Failed to look for Python dependencies of uninstalled plugins: {e.Message}");
+                _logError($"Failed to look for unfinished Python dependency removals: {e.Message}");
             }
+        }
+
+        private static void DeleteIfExists(string file)
+        {
+            if (File.Exists(file))
+            {
+                File.Delete(file);
+            }
+        }
+
+        private string PendingRemovalPath(string pluginId)
+        {
+            return Path.Combine(_dependenciesRoot, pluginId + PendingRemovalExtension);
         }
 
         private SemaphoreSlim LockFor(string pluginId)
@@ -284,6 +303,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
 
             var pluginRoot = Path.Combine(_dependenciesRoot, metadata.ID);
             var markerPath = Path.Combine(pluginRoot, DependencyInstallMarker.FileName);
+            CancelPendingRemoval(metadata);
 
             var marker = DependencyInstallMarker.Load(markerPath);
             if (marker?.Matches(installKey) == true)
@@ -325,6 +345,19 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
             }
 
             return sitePackages;
+        }
+
+        // The plugin was reinstalled after an uninstall that couldn't delete its folder.
+        private void CancelPendingRemoval(PluginMetadata metadata)
+        {
+            try
+            {
+                DeleteIfExists(PendingRemovalPath(metadata.ID));
+            }
+            catch (Exception e) when (e is IOException or UnauthorizedAccessException)
+            {
+                _logError($"Could not clear the pending removal of plugin {metadata.Name}: {e.Message}");
+            }
         }
 
         private void NotifyInstalling(PluginMetadata metadata)
