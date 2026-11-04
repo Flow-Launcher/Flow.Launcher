@@ -63,25 +63,53 @@ namespace Flow.Launcher.Test.PythonDependencies
                 Is.EqualTo(PythonLaunchArguments.Build(metadata, null, v1: true)));
         }
 
+        private static string DependencyLines(string sitePackages) =>
+            $$"""
+             import site
+             def _flow_add_dependencies(path):
+                 import os
+                 before = list(sys.path)
+                 site.addsitedir(path)
+                 added = [entry for entry in sys.path if entry not in before]
+                 try:
+                     normalize = lambda entry: os.path.normcase(os.path.abspath(entry))
+                     interpreter_dirs = {normalize(entry) for entry in site.getsitepackages() + [site.getusersitepackages()]}
+                     at = next((i for i, entry in enumerate(before) if normalize(entry) in interpreter_dirs), len(before))
+                 except Exception:
+                     at = len(before)
+                 sys.path[:] = before[:at] + added + before[at:]
+             _flow_add_dependencies({{Quoted(sitePackages)}})
+             del _flow_add_dependencies
+             """;
+
         [Test]
-        public void Py_WithDependencies_AddSiteDirBetweenRootAndLib()
+        public void Py_WithDependencies_PrependsDependenciesBetweenRootAndLib()
         {
             var metadata = CreateMetadata("main.py");
+            var rootDirectory = metadata.PluginDirectory;
+            var libDirectory = Path.Combine(rootDirectory, "lib");
+            var libPyWin32Directory = Path.Combine(libDirectory, "win32");
+            var libPyWin32LibDirectory = Path.Combine(libPyWin32Directory, "lib");
+            var pluginDirectory = Path.Combine(rootDirectory, "plugin");
+            var expected =
+                $"""
+                 import sys
+                 sys.path.append({Quoted(rootDirectory)})
+                 {DependencyLines(SitePackages)}
+                 sys.path.append({Quoted(libDirectory)})
+                 sys.path.append({Quoted(libPyWin32LibDirectory)})
+                 sys.path.append({Quoted(libPyWin32Directory)})
+                 sys.path.append({Quoted(pluginDirectory)})
+
+                 import runpy
+                 runpy.run_path({Quoted(metadata.ExecuteFilePath)}, None, '__main__')
+                 """;
 
             var arguments = PythonLaunchArguments.Build(metadata, SitePackages, v1: true);
 
             Assert.That(arguments, Has.Count.EqualTo(2));
             Assert.That(arguments[0], Is.EqualTo("-c"));
-            var snippet = arguments[1];
-            var rootAppend = snippet.IndexOf($"sys.path.append({Quoted(metadata.PluginDirectory)})", System.StringComparison.Ordinal);
-            var siteDir = snippet.IndexOf("addsitedir('", System.StringComparison.Ordinal);
-            var libAppend = snippet.IndexOf($"sys.path.append({Quoted(Path.Combine(metadata.PluginDirectory, "lib"))})", System.StringComparison.Ordinal);
-            Assert.That(rootAppend, Is.GreaterThanOrEqualTo(0));
-            Assert.That(siteDir, Is.GreaterThan(rootAppend));
-            Assert.That(libAppend, Is.GreaterThan(siteDir));
-            Assert.That(snippet, Does.Contain($"site.addsitedir({Quoted(SitePackages)})"));
-            Assert.That(snippet.IndexOf("import site", System.StringComparison.Ordinal), Is.LessThan(siteDir));
-            Assert.That(snippet, Does.EndWith($"runpy.run_path({Quoted(metadata.ExecuteFilePath)}, None, '__main__')"));
+            Assert.That(Normalize(arguments[1]), Is.EqualTo(Normalize(expected)));
         }
 
         [TestCase(true)]
@@ -95,7 +123,7 @@ namespace Flow.Launcher.Test.PythonDependencies
             var snippet = PythonLaunchArguments.Build(metadata, sitePackages, v1)[1];
 
             Assert.That(snippet, Does.Contain(@"sys.path.append('C:\\Users\\O\'Brien José\\Plugins')"));
-            Assert.That(snippet, Does.Contain(@"site.addsitedir('C:\\Users\\O\'Brien José\\Flow\\site-packages')"));
+            Assert.That(snippet, Does.Contain(@"_flow_add_dependencies('C:\\Users\\O\'Brien José\\Flow\\site-packages')"));
             Assert.That(snippet, Does.Not.Contain("r'"));
         }
 
@@ -108,7 +136,7 @@ namespace Flow.Launcher.Test.PythonDependencies
 
             var snippet = PythonLaunchArguments.Build(metadata, sitePackages, v1: false)[1];
 
-            Assert.That(snippet, Does.Contain(@"site.addsitedir('C:\\Users\\O\'Brien José\\Flow\\site-packages')"));
+            Assert.That(snippet, Does.Contain(@"_flow_add_dependencies('C:\\Users\\O\'Brien José\\Flow\\site-packages')"));
             Assert.That(snippet, Does.Contain(@"runpy.run_path('C:\\Users\\O\'Brien José\\Plugins"));
         }
 
@@ -140,10 +168,18 @@ namespace Flow.Launcher.Test.PythonDependencies
 
             var arguments = PythonLaunchArguments.Build(metadata, SitePackages, v1);
 
+            var expected =
+                $"""
+                 import sys
+                 {DependencyLines(SitePackages)}
+
+                 import runpy
+                 runpy.run_path({Quoted(metadata.ExecuteFilePath)}, None, '__main__')
+                 """;
+
             Assert.That(arguments, Has.Count.EqualTo(2));
             Assert.That(arguments[0], Is.EqualTo("-c"));
-            Assert.That(arguments[1], Does.Contain($"site.addsitedir({Quoted(SitePackages)})"));
-            Assert.That(arguments[1], Does.EndWith($"runpy.run_path({Quoted(metadata.ExecuteFilePath)}, None, '__main__')"));
+            Assert.That(Normalize(arguments[1]), Is.EqualTo(Normalize(expected)));
         }
     }
 }

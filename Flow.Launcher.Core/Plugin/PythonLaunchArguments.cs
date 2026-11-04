@@ -46,7 +46,7 @@ namespace Flow.Launcher.Core.Plugin
                 $"sys.path.append({Literal(rootDirectory)})"
             };
 
-            // addsitedir appends, so adding it before lib gives the installed dependencies priority over lib.
+            // The dependencies go ahead of the interpreter's site-packages and therefore ahead of lib too.
             if (sitePackages is not null)
             {
                 lines.AddRange(SiteDirectoryLines(sitePackages));
@@ -64,7 +64,8 @@ namespace Flow.Launcher.Core.Plugin
 
         private static string BuildArchiveSnippet(PluginMetadata metadata, string sitePackages)
         {
-            var lines = new List<string>(SiteDirectoryLines(sitePackages));
+            var lines = new List<string> { "import sys" };
+            lines.AddRange(SiteDirectoryLines(sitePackages));
             lines.Add("");
             lines.AddRange(RunPathLines(metadata.ExecuteFilePath));
             return string.Join("\n", lines);
@@ -73,10 +74,25 @@ namespace Flow.Launcher.Core.Plugin
         // Escaped (not raw) literal: a raw string cannot hold a trailing backslash and any quote in the path would end it.
         private static string Literal(string path) => "'" + path.Replace("\\", "\\\\").Replace("'", "\\'") + "'";
 
+        // site.addsitedir appends, which would let packages installed in the interpreter shadow the pinned ones.
+        // If the interpreter's site-packages cannot be determined, the dependencies stay appended.
         private static string[] SiteDirectoryLines(string sitePackages) => new[]
         {
             "import site",
-            $"site.addsitedir({Literal(sitePackages)})"
+            "def _flow_add_dependencies(path):",
+            "    import os",
+            "    before = list(sys.path)",
+            "    site.addsitedir(path)",
+            "    added = [entry for entry in sys.path if entry not in before]",
+            "    try:",
+            "        normalize = lambda entry: os.path.normcase(os.path.abspath(entry))",
+            "        interpreter_dirs = {normalize(entry) for entry in site.getsitepackages() + [site.getusersitepackages()]}",
+            "        at = next((i for i, entry in enumerate(before) if normalize(entry) in interpreter_dirs), len(before))",
+            "    except Exception:",
+            "        at = len(before)",
+            "    sys.path[:] = before[:at] + added + before[at:]",
+            $"_flow_add_dependencies({Literal(sitePackages)})",
+            "del _flow_add_dependencies"
         };
 
         private static string[] RunPathLines(string executeFilePath) => new[]
