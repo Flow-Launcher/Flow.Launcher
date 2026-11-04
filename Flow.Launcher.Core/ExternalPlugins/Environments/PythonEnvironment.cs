@@ -14,6 +14,10 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
     {
         private static readonly string ClassName = nameof(PythonEnvironment);
 
+        // Python and Python_v2 plugins set up the same runtime one after the other, so the second one
+        // must not take a path changed earlier in this session for a saved one.
+        private static bool _runtimeInstalledThisSession;
+
         internal override string Language => AllowedLanguage.Python;
 
         internal override string EnvName => DataLocation.PythonEnvironmentName;
@@ -49,7 +53,11 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
             {
                 await PythonRuntimeSwitch.TryAsync(
                     () => CreateRuntimeInstaller().InstallAsync(CancellationToken.None),
-                    path => PluginsSettingsFilePath = path,
+                    path =>
+                    {
+                        PluginsSettingsFilePath = path;
+                        _runtimeInstalledThisSession = true;
+                    },
                     e =>
                     {
                         API.ShowMsgError(Localize.failToInstallPythonEnv());
@@ -70,7 +78,10 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
 
             // The saved setting already points at the uv runtime, so a crash can no longer leave Flow
             // pointing at a removed install.
-            PythonRuntimeSwitch.RemoveStale(EnvPath, message => API.LogError(ClassName, message));
+            if (!_runtimeInstalledThisSession)
+            {
+                PythonRuntimeSwitch.RemoveStale(EnvPath, message => API.LogError(ClassName, message));
+            }
         }
 
         private PythonRuntimeInstaller CreateRuntimeInstaller()
