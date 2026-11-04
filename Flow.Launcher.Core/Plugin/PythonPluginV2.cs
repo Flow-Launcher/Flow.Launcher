@@ -41,8 +41,13 @@ namespace Flow.Launcher.Core.Plugin
             string sitePackages = null;
             if (metadata.Dependencies is { Count: > 0 })
             {
-                _installer.CleanupStaleInstalls(metadata.ID);
+                await _installer.CleanupStaleInstallsAsync(metadata.ID);
                 sitePackages = await _installer.EnsureInstalledAsync(metadata, _pythonExecutable, CancellationToken.None);
+            }
+            else
+            {
+                // An update may have dropped all dependencies, and nothing of this plugin is running yet.
+                await _installer.DeleteDependenciesAsync(metadata.ID);
             }
 
             foreach (var argument in PythonLaunchArguments.Build(metadata, sitePackages, v1: false))

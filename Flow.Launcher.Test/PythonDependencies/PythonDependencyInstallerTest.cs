@@ -281,6 +281,21 @@ namespace Flow.Launcher.Test.PythonDependencies
         }
 
         [Test]
+        public async Task MarkerMatches_InstallFolderMissing_Reinstalls()
+        {
+            var installer = CreateInstaller();
+            var first = await installer.EnsureInstalledAsync(CreateMetadata("a==1"), pythonPath, CancellationToken.None);
+            Directory.Delete(Path.GetDirectoryName(first), recursive: true);
+
+            var result = await installer.EnsureInstalledAsync(CreateMetadata("a==1"), pythonPath, CancellationToken.None);
+
+            Assert.That(result, Is.Not.EqualTo(first));
+            Assert.That(Directory.Exists(result), Is.True);
+            AssertInstalledFor(result, KeyFor("a==1"));
+            Assert.That(runner.InstallCalls, Has.Count.EqualTo(2));
+        }
+
+        [Test]
         public async Task DependenciesChanged_InstallsIntoNewKey_KeepsOldUntilCleanup()
         {
             var installer = CreateInstaller();
@@ -294,7 +309,7 @@ namespace Flow.Launcher.Test.PythonDependencies
             Assert.That(DependencyInstallMarker.Load(MarkerPath).Matches(KeyFor("a==2")), Is.True);
             Assert.That(runner.InstallCalls, Has.Count.EqualTo(2));
 
-            installer.CleanupStaleInstalls(PluginId);
+            await installer.CleanupStaleInstallsAsync(PluginId);
 
             Assert.That(Directory.Exists(Path.GetDirectoryName(oldPath)), Is.False);
             Assert.That(Directory.Exists(newPath), Is.True);
@@ -321,7 +336,7 @@ namespace Flow.Launcher.Test.PythonDependencies
                 Assert.That(File.Exists(Path.Combine(folder, "site-packages", "partial.py")), Is.True);
             }
 
-            installer.CleanupStaleInstalls(PluginId);
+            await installer.CleanupStaleInstallsAsync(PluginId);
 
             Assert.That(strayFolders.Where(Directory.Exists), Is.Empty);
             Assert.That(Directory.Exists(result), Is.True);
@@ -342,17 +357,17 @@ namespace Flow.Launcher.Test.PythonDependencies
         }
 
         [Test]
-        public void CleanupStaleInstalls_NoValidMarker_DeletesNothing()
+        public async Task CleanupStaleInstalls_NoValidMarker_DeletesNothing()
         {
             var staleDirectory = Path.Combine(dependenciesRoot, PluginId, "0123456789abcdef", "site-packages");
             Directory.CreateDirectory(staleDirectory);
             var installer = CreateInstaller();
 
-            installer.CleanupStaleInstalls(PluginId);
+            await installer.CleanupStaleInstallsAsync(PluginId);
             Assert.That(Directory.Exists(staleDirectory), Is.True);
 
             File.WriteAllText(MarkerPath, "{not json");
-            installer.CleanupStaleInstalls(PluginId);
+            await installer.CleanupStaleInstallsAsync(PluginId);
             Assert.That(Directory.Exists(staleDirectory), Is.True);
         }
 
@@ -546,12 +561,86 @@ namespace Flow.Launcher.Test.PythonDependencies
         [Test]
         public async Task PythonVersionProbe_RunsOncePerPythonPath()
         {
+            var otherPython = Path.Combine(tempDirectory, "other py", "python.exe");
             var installer = CreateInstaller();
 
             await installer.EnsureInstalledAsync(CreateMetadata("a==1"), pythonPath, CancellationToken.None);
             await installer.EnsureInstalledAsync(CreateMetadata("a==2"), pythonPath, CancellationToken.None);
+            await installer.EnsureInstalledAsync(CreateMetadata("a==3"), otherPython, CancellationToken.None);
+            await installer.EnsureInstalledAsync(CreateMetadata("a==4"), otherPython, CancellationToken.None);
 
-            Assert.That(runner.Calls.Count(call => call.IsPythonProbe), Is.EqualTo(1));
+            var probedPythons = runner.Calls.Where(call => call.IsPythonProbe).Select(call => call.FileName).ToList();
+            Assert.That(probedPythons, Is.EqualTo(new[] { pythonPath, otherPython }));
+        }
+
+        [Test]
+        public async Task PythonVersionProbe_PythonReplacedInPlace_ProbesAgain()
+        {
+            Directory.CreateDirectory(Path.GetDirectoryName(pythonPath));
+            File.WriteAllText(pythonPath, "old");
+            File.SetLastWriteTimeUtc(pythonPath, new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc));
+            var installer = CreateInstaller();
+            await installer.EnsureInstalledAsync(CreateMetadata("a==1"), pythonPath, CancellationToken.None);
+
+            File.SetLastWriteTimeUtc(pythonPath, new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc));
+            await installer.EnsureInstalledAsync(CreateMetadata("a==2"), pythonPath, CancellationToken.None);
+
+            Assert.That(runner.Calls.Count(call => call.IsPythonProbe), Is.EqualTo(2));
+        }
+
+        [Test]
+        public async Task PythonVersionProbe_IncludesImplementationAndAbi()
+        {
+            var installer = CreateInstaller();
+
+            await installer.EnsureInstalledAsync(CreateMetadata("a==1"), pythonPath, CancellationToken.None);
+
+            var probe = runner.Calls.Single(call => call.IsPythonProbe).Arguments[1];
+            Assert.That(probe, Does.Contain("sys.implementation.name").And.Contain("EXT_SUFFIX").And.Contain("sysconfig.get_platform()"));
+        }
+
+        [Test]
+        public async Task CleanupStaleInstalls_WaitsForRunningInstall()
+        {
+            runner.InstallDelay = TimeSpan.FromMilliseconds(300);
+            var installer = CreateInstaller();
+
+            var install = installer.EnsureInstalledAsync(CreateMetadata("a==1"), pythonPath, CancellationToken.None);
+            await WaitUntilAsync(() => runner.InstallCalls.Count == 1);
+            await installer.CleanupStaleInstallsAsync(PluginId);
+            var result = await install;
+
+            Assert.That(Directory.Exists(result), Is.True);
+            AssertInstalledFor(result, KeyFor("a==1"));
+        }
+
+        [Test]
+        public async Task DeleteDependencies_CancelsRunningInstallAndDeletesRoot()
+        {
+            runner.InstallDelay = TimeSpan.FromMinutes(5);
+            var installer = CreateInstaller();
+
+            var install = installer.EnsureInstalledAsync(CreateMetadata("a==1"), pythonPath, CancellationToken.None);
+            await WaitUntilAsync(() => runner.InstallCalls.Count == 1);
+            var delete = installer.DeleteDependenciesAsync(PluginId);
+
+            Assert.That(await Task.WhenAny(delete, Task.Delay(TimeSpan.FromSeconds(10))), Is.SameAs(delete));
+            Assert.That(async () => await install, Throws.InstanceOf<OperationCanceledException>());
+            Assert.That(Directory.Exists(PluginRoot), Is.False);
+        }
+
+        private static async Task WaitUntilAsync(Func<bool> condition)
+        {
+            var deadline = DateTime.UtcNow + TimeSpan.FromSeconds(10);
+            while (!condition())
+            {
+                if (DateTime.UtcNow > deadline)
+                {
+                    Assert.Fail("Timed out waiting for the condition");
+                }
+
+                await Task.Delay(10);
+            }
         }
 
         [Test]
@@ -572,13 +661,13 @@ namespace Flow.Launcher.Test.PythonDependencies
         }
 
         [Test]
-        public async Task RemovePlugin_DeletesPluginRoot()
+        public async Task DeleteDependencies_DeletesPluginRoot()
         {
             var installer = CreateInstaller();
             await installer.EnsureInstalledAsync(CreateMetadata("a==1"), pythonPath, CancellationToken.None);
             Assert.That(Directory.Exists(PluginRoot), Is.True);
 
-            installer.RemovePlugin(PluginId);
+            await installer.DeleteDependenciesAsync(PluginId);
 
             Assert.That(Directory.Exists(PluginRoot), Is.False);
         }
@@ -624,37 +713,37 @@ namespace Flow.Launcher.Test.PythonDependencies
         }
 
         [TestCaseSource(nameof(UnusablePluginIds))]
-        public void CleanupStaleInstalls_UnusablePluginId_DeletesNothing(string pluginId)
+        public async Task CleanupStaleInstalls_UnusablePluginId_DeletesNothing(string pluginId)
         {
             PlantDeletionTargets();
             var before = SandboxEntries();
             var installer = CreateInstaller();
 
-            installer.CleanupStaleInstalls(pluginId);
+            await installer.CleanupStaleInstallsAsync(pluginId);
 
             Assert.That(SandboxEntries(), Is.EqualTo(before));
             Assert.That(logged, Is.Not.Empty);
         }
 
         [TestCaseSource(nameof(UnusablePluginIds))]
-        public void RemovePlugin_UnusablePluginId_DeletesNothing(string pluginId)
+        public async Task DeleteDependencies_UnusablePluginId_DeletesNothing(string pluginId)
         {
             PlantDeletionTargets();
             var before = SandboxEntries();
             var installer = CreateInstaller();
 
-            installer.RemovePlugin(pluginId);
+            await installer.DeleteDependenciesAsync(pluginId);
 
             Assert.That(SandboxEntries(), Is.EqualTo(before));
             Assert.That(logged, Is.Not.Empty);
         }
 
         [Test]
-        public void RemovePlugin_MissingPlugin_DoesNotThrow()
+        public void DeleteDependencies_MissingPlugin_DoesNotThrow()
         {
             var installer = CreateInstaller();
 
-            Assert.DoesNotThrow(() => installer.RemovePlugin("never-installed"));
+            Assert.DoesNotThrowAsync(() => installer.DeleteDependenciesAsync("never-installed"));
         }
 
         private sealed record Call(

@@ -1182,7 +1182,10 @@ namespace Flow.Launcher.Core.Plugin
                 }
                 if (AllowedLanguage.IsPython(plugin.Language))
                 {
-                    PythonDependencies?.RemovePlugin(plugin.ID);
+                    if (PythonDependencies != null)
+                    {
+                        await PythonDependencies.DeleteDependenciesAsync(plugin.ID);
+                    }
                 }
                 Settings.RemovePluginSettings(plugin.ID);
                 {

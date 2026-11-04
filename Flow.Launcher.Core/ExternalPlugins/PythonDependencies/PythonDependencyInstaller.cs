@@ -32,6 +32,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
         private readonly Action<PluginMetadata> _onInstalling;
         private readonly TimeSpan _processTimeout;
         private readonly ConcurrentDictionary<string, SemaphoreSlim> _pluginLocks = new();
+        private readonly ConcurrentDictionary<string, CancellationTokenSource> _runningInstalls = new();
         private readonly ConcurrentDictionary<string, string> _pythonVersions = new(StringComparer.OrdinalIgnoreCase);
 
         public PythonDependencyInstaller(
@@ -96,19 +97,22 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
                 }
             }
 
-            var pluginLock = _pluginLocks.GetOrAdd(metadata.ID, _ => new SemaphoreSlim(1, 1));
+            var pluginLock = LockFor(metadata.ID);
             await pluginLock.WaitAsync(token).ConfigureAwait(false);
+            using var install = CancellationTokenSource.CreateLinkedTokenSource(token);
+            _runningInstalls[metadata.ID] = install;
             try
             {
-                return await EnsureInstalledLockedAsync(metadata, dependencies, pythonExecutable, token).ConfigureAwait(false);
+                return await EnsureInstalledLockedAsync(metadata, dependencies, pythonExecutable, install.Token).ConfigureAwait(false);
             }
             finally
             {
+                _runningInstalls.TryRemove(new KeyValuePair<string, CancellationTokenSource>(metadata.ID, install));
                 pluginLock.Release();
             }
         }
 
-        public void CleanupStaleInstalls(string pluginId)
+        public async Task CleanupStaleInstallsAsync(string pluginId)
         {
             if (!IsUsableAsFolderName(pluginId))
             {
@@ -116,6 +120,20 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
                 return;
             }
 
+            var pluginLock = LockFor(pluginId);
+            await pluginLock.WaitAsync().ConfigureAwait(false);
+            try
+            {
+                DeleteStaleInstalls(pluginId);
+            }
+            finally
+            {
+                pluginLock.Release();
+            }
+        }
+
+        private void DeleteStaleInstalls(string pluginId)
+        {
             try
             {
                 var pluginRoot = Path.Combine(_dependenciesRoot, pluginId);
@@ -139,7 +157,11 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
             }
         }
 
-        public void RemovePlugin(string pluginId)
+        /// <summary>
+        /// Deletes all dependencies of the plugin. An install still running for it, such as the one started
+        /// after a store install, is cancelled first so it cannot write the folder back.
+        /// </summary>
+        public async Task DeleteDependenciesAsync(string pluginId)
         {
             if (!IsUsableAsFolderName(pluginId))
             {
@@ -147,9 +169,16 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
                 return;
             }
 
-            var pluginRoot = Path.Combine(_dependenciesRoot, pluginId);
+            if (_runningInstalls.TryGetValue(pluginId, out var running))
+            {
+                TryCancel(running);
+            }
+
+            var pluginLock = LockFor(pluginId);
+            await pluginLock.WaitAsync().ConfigureAwait(false);
             try
             {
+                var pluginRoot = Path.Combine(_dependenciesRoot, pluginId);
                 if (Directory.Exists(pluginRoot))
                 {
                     Directory.Delete(pluginRoot, recursive: true);
@@ -158,6 +187,27 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
             catch (Exception e) when (e is IOException or UnauthorizedAccessException)
             {
                 _logError($"Failed to remove Python dependencies of plugin {pluginId}: {e.Message}");
+            }
+            finally
+            {
+                pluginLock.Release();
+            }
+        }
+
+        private SemaphoreSlim LockFor(string pluginId)
+        {
+            return _pluginLocks.GetOrAdd(pluginId, _ => new SemaphoreSlim(1, 1));
+        }
+
+        private static void TryCancel(CancellationTokenSource source)
+        {
+            try
+            {
+                source.Cancel();
+            }
+            catch (ObjectDisposedException)
+            {
+                // The install finished in the meantime.
             }
         }
 
