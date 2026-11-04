@@ -20,6 +20,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
         private const int ErrorLinesInMessage = 5;
 
         private static readonly IReadOnlyDictionary<string, string> NoEnvironment = new Dictionary<string, string>();
+        private static readonly TimeSpan DefaultProcessTimeout = TimeSpan.FromMinutes(15);
 
         private readonly PluginsSettings _settings;
         private readonly UvLocator _uvLocator;
@@ -29,6 +30,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
         private readonly string _uvCachePath;
         private readonly Action<string> _logError;
         private readonly Action<PluginMetadata> _onInstalling;
+        private readonly TimeSpan _processTimeout;
         private readonly ConcurrentDictionary<string, SemaphoreSlim> _pluginLocks = new();
         private readonly ConcurrentDictionary<string, string> _pythonVersions = new(StringComparer.OrdinalIgnoreCase);
 
@@ -40,7 +42,8 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
             bool portable,
             string uvCachePath,
             Action<string>? logError = null,
-            Action<PluginMetadata>? onInstalling = null)
+            Action<PluginMetadata>? onInstalling = null,
+            TimeSpan? processTimeout = null)
         {
             _settings = settings;
             _uvLocator = uvLocator;
@@ -50,6 +53,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
             _uvCachePath = uvCachePath;
             _logError = logError ?? (_ => { });
             _onInstalling = onInstalling ?? (_ => { });
+            _processTimeout = processTimeout ?? DefaultProcessTimeout;
         }
 
         public static PythonDependencyInstaller CreateDefault(PluginsSettings settings)
@@ -296,10 +300,17 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
             CancellationToken token,
             bool useUvEnvironment = true)
         {
+            using var timeout = CancellationTokenSource.CreateLinkedTokenSource(token);
+            timeout.CancelAfter(_processTimeout);
             try
             {
-                return await _runner.RunAsync(fileName, arguments, useUvEnvironment ? BuildUvEnvironment() : NoEnvironment, token)
+                return await _runner.RunAsync(fileName, arguments, useUvEnvironment ? BuildUvEnvironment() : NoEnvironment, timeout.Token)
                     .ConfigureAwait(false);
+            }
+            catch (OperationCanceledException e) when (timeout.IsCancellationRequested && !token.IsCancellationRequested)
+            {
+                _logError($"{fileName} did not finish within {_processTimeout} for plugin {metadata.Name}: {e.Message}");
+                throw new PythonDependencyException(DependencyMessages.InstallFailed(metadata.Name, string.Empty), e);
             }
             catch (Exception e) when (e is not PythonDependencyException && !IsCallerCancellation(e, token))
             {

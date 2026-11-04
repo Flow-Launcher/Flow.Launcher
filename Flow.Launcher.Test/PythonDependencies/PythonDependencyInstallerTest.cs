@@ -70,7 +70,8 @@ namespace Flow.Launcher.Test.PythonDependencies
             FakeProcessRunner processRunner = null,
             UvLocator locator = null,
             bool portable = false,
-            Action<PluginMetadata> onInstalling = null)
+            Action<PluginMetadata> onInstalling = null,
+            TimeSpan? processTimeout = null)
         {
             return new PythonDependencyInstaller(
                 settings,
@@ -80,7 +81,8 @@ namespace Flow.Launcher.Test.PythonDependencies
                 portable,
                 cachePath,
                 logged.Add,
-                onInstalling ?? (metadata => installingNotices.Add(metadata.Name)));
+                onInstalling ?? (metadata => installingNotices.Add(metadata.Name)),
+                processTimeout);
         }
 
         private static PluginMetadata CreateMetadata(params string[] dependencies)
@@ -457,6 +459,32 @@ namespace Flow.Launcher.Test.PythonDependencies
                 installer.EnsureInstalledAsync(CreateMetadata("a==1"), pythonPath, CancellationToken.None));
 
             Assert.That(exception.Message, Does.Contain(PluginName));
+        }
+
+        [Test]
+        public void UvHangs_TimesOut_ThrowsPythonDependencyException()
+        {
+            runner.InstallDelay = TimeSpan.FromMinutes(5);
+            var installer = CreateInstaller(processTimeout: TimeSpan.FromMilliseconds(50));
+
+            var exception = Assert.ThrowsAsync<PythonDependencyException>(() =>
+                installer.EnsureInstalledAsync(CreateMetadata("a==1"), pythonPath, CancellationToken.None));
+
+            Assert.That(exception.Message, Does.Contain(PluginName));
+            Assert.That(exception.InnerException, Is.InstanceOf<OperationCanceledException>());
+            Assert.That(logged, Has.Some.Contain("did not finish"));
+            Assert.That(Directory.Exists(PluginRoot) ? Directory.EnumerateDirectories(PluginRoot) : Array.Empty<string>(), Is.Empty);
+        }
+
+        [Test]
+        public void CallerCancelsDuringInstall_PropagatesOperationCanceledException()
+        {
+            runner.InstallDelay = TimeSpan.FromMinutes(5);
+            using var source = new CancellationTokenSource(TimeSpan.FromMilliseconds(50));
+            var installer = CreateInstaller();
+
+            Assert.CatchAsync<OperationCanceledException>(() =>
+                installer.EnsureInstalledAsync(CreateMetadata("a==1"), pythonPath, source.Token));
         }
 
         [Test]

@@ -66,7 +66,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
             {
                 process.Kill(entireProcessTree: true);
             }
-            catch (Exception e) when (e is InvalidOperationException or System.ComponentModel.Win32Exception)
+            catch (Exception e) when (e is InvalidOperationException or System.ComponentModel.Win32Exception or AggregateException)
             {
                 // The process already exited.
             }
