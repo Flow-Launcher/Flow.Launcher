@@ -161,6 +161,41 @@ namespace Flow.Launcher.Infrastructure
             return handle.Equals(PInvoke.GetForegroundWindow());
         }
 
+        /// <summary>
+        /// Brings <paramref name="window"/> to the foreground even when the calling context does not
+        /// hold foreground permission (e.g. after a WH_KEYBOARD_LL hook swallowed the triggering key,
+        /// so no process "received the last input event"). Escalates only as far as needed: a plain
+        /// SetForegroundWindow first, so the usual paths (WM_HOTKEY, tray icon) inject nothing.
+        /// </summary>
+        public static unsafe void ForceForeground(Window window)
+        {
+            var hwnd = new HWND((nint)GetWindowHandle(window));
+            if (hwnd == PInvoke.GetForegroundWindow() || PInvoke.SetForegroundWindow(hwnd))
+                return;
+
+            // Windows grants foreground rights to the process that sent the last input event.
+            // Injecting an empty mouse input (no movement, no buttons) makes us that process
+            // without any visible side effect. Same approach as PowerToys.
+            Span<INPUT> inputs = stackalloc INPUT[1];
+            inputs[0].type = INPUT_TYPE.INPUT_MOUSE;
+            PInvoke.SendInput(inputs, Marshal.SizeOf<INPUT>());
+
+            if (PInvoke.SetForegroundWindow(hwnd))
+                return;
+
+            // Fallback: attach to the foreground thread's input queue and retry
+            var foregroundHwnd = PInvoke.GetForegroundWindow();
+            uint foreThread = PInvoke.GetWindowThreadProcessId(foregroundHwnd);
+            uint appThread = PInvoke.GetCurrentThreadId();
+
+            if (foreThread != 0 && foreThread != appThread)
+            {
+                PInvoke.AttachThreadInput(foreThread, appThread, true);
+                PInvoke.SetForegroundWindow(hwnd);
+                PInvoke.AttachThreadInput(foreThread, appThread, false);
+            }
+        }
+
         #endregion
 
         #region Task Switching
@@ -1031,6 +1066,28 @@ namespace Flow.Launcher.Infrastructure
                 Marshal.FreeHGlobal(_ptr);
                 return true;
             }
+        }
+
+        #endregion
+
+        #region Keyboard Input
+
+        public static unsafe void InjectKeyDown(ushort vk)
+        {
+            Span<INPUT> inputs = stackalloc INPUT[1];
+            inputs[0].type = INPUT_TYPE.INPUT_KEYBOARD;
+            inputs[0].Anonymous.ki.wVk = (VIRTUAL_KEY)vk;
+            inputs[0].Anonymous.ki.dwFlags = 0;
+            PInvoke.SendInput(inputs, Marshal.SizeOf<INPUT>());
+        }
+
+        public static unsafe void InjectKeyUp(ushort vk)
+        {
+            Span<INPUT> inputs = stackalloc INPUT[1];
+            inputs[0].type = INPUT_TYPE.INPUT_KEYBOARD;
+            inputs[0].Anonymous.ki.wVk = (VIRTUAL_KEY)vk;
+            inputs[0].Anonymous.ki.dwFlags = KEYBD_EVENT_FLAGS.KEYEVENTF_KEYUP;
+            PInvoke.SendInput(inputs, Marshal.SizeOf<INPUT>());
         }
 
         #endregion
