@@ -137,7 +137,7 @@ namespace Flow.Launcher.Test.PythonDependencies
             var gate = new TaskCompletionSource<string>(TaskCreationOptions.RunContinuationsAsynchronously);
             var downloads = 0;
             var locator = new UvLocator(settings, managedRoot,
-                path => false,
+                path => path == "downloaded/uv.exe",
                 () => null,
                 (dir, token) =>
                 {
@@ -223,7 +223,7 @@ namespace Flow.Launcher.Test.PythonDependencies
             var chosen = Path.Combine(Path.GetTempPath(), "FlowUvChosen_" + Guid.NewGuid().ToString("N"), "uv.exe");
             var pathLookups = 0;
             var locator = new UvLocator(settings, managedRoot,
-                path => path == chosen,
+                path => path == chosen || path == "path/uv.exe",
                 () =>
                 {
                     pathLookups++;
@@ -240,6 +240,29 @@ namespace Flow.Launcher.Test.PythonDependencies
             Assert.That(cached, Is.EqualTo("path/uv.exe"));
             Assert.That(pathLookups, Is.EqualTo(1));
             Assert.That(changed, Is.EqualTo(chosen));
+        }
+
+        [Test]
+        public async Task CachedUvDeleted_LocatesAgain()
+        {
+            var uvExists = true;
+            var pathLookups = 0;
+            var locator = new UvLocator(settings, managedRoot,
+                path => path == "path/uv.exe" && uvExists,
+                () =>
+                {
+                    pathLookups++;
+                    return uvExists ? "path/uv.exe" : "other/uv.exe";
+                },
+                (_, _) => throw new InvalidOperationException("download should not be used"));
+
+            await locator.GetUvPathAsync(CancellationToken.None);
+            await locator.GetUvPathAsync(CancellationToken.None);
+            uvExists = false;
+            var result = await locator.GetUvPathAsync(CancellationToken.None);
+
+            Assert.That(pathLookups, Is.EqualTo(2));
+            Assert.That(result, Is.EqualTo("other/uv.exe"));
         }
     }
 }

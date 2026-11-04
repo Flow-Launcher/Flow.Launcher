@@ -51,7 +51,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
             await _lock.WaitAsync(token).ConfigureAwait(false);
             try
             {
-                if (_uvPath is null || _settings.UvExecutablePath != _locatedForSetting)
+                if (_uvPath is null || _settings.UvExecutablePath != _locatedForSetting || !_fileExists(_uvPath))
                 {
                     _uvPath = await LocateAsync(token).ConfigureAwait(false);
                     _locatedForSetting = _settings.UvExecutablePath;
