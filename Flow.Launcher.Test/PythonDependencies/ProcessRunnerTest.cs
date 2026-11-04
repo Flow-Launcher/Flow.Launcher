@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Flow.Launcher.Core.ExternalPlugins.PythonDependencies;
@@ -23,12 +22,13 @@ namespace Flow.Launcher.Test.PythonDependencies
         {
             var (fileName, arguments) = LongRunningCommand();
             using var cancellation = new CancellationTokenSource(TimeSpan.FromMilliseconds(300));
-            var stopwatch = Stopwatch.StartNew();
 
+            var run = new ProcessRunner().RunAsync(fileName, arguments, new Dictionary<string, string>(), cancellation.Token);
+
+            // A hang surfaces as TimeoutException, which fails the constraint.
             Assert.That(
-                async () => await new ProcessRunner().RunAsync(fileName, arguments, new Dictionary<string, string>(), cancellation.Token),
+                async () => await run.WaitAsync(TimeSpan.FromSeconds(20)),
                 Throws.InstanceOf<OperationCanceledException>());
-            Assert.That(stopwatch.Elapsed, Is.LessThan(TimeSpan.FromSeconds(20)));
         }
     }
 }

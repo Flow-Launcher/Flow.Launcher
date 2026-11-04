@@ -55,9 +55,10 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
 
             var stdOut = process.StandardOutput.ReadToEndAsync(CancellationToken.None);
             var stdErr = process.StandardError.ReadToEndAsync(CancellationToken.None);
+            var output = Task.WhenAll(stdOut, stdErr);
             try
             {
-                await Task.WhenAll(stdOut, stdErr).WaitAsync(token).ConfigureAwait(false);
+                await output.WaitAsync(token).ConfigureAwait(false);
                 await process.WaitForExitAsync(token).ConfigureAwait(false);
             }
             catch (OperationCanceledException) when (token.IsCancellationRequested)
@@ -65,6 +66,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
                 // A process that survives the kill, or a child still holding the output pipes, must not
                 // hold up the caller past its timeout.
                 await WaitBrieflyForExitAsync(process).ConfigureAwait(false);
+                IgnoreFaults(output);
                 IgnoreFaults(stdOut);
                 IgnoreFaults(stdErr);
                 throw;
