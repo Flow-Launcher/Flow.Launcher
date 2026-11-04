@@ -59,5 +59,20 @@ namespace Flow.Launcher.Test.PythonDependencies
             Assert.That(UvRelease.DownloadUrl(x64Asset),
                 Is.EqualTo("https://github.com/astral-sh/uv/releases/download/0.13.7/uv-x86_64-pc-windows-msvc.zip"));
         }
+
+        [Test]
+        public void UvRelease_ForArchitecture_X86_PicksI686Asset()
+        {
+            var (asset, sha) = UvRelease.ForArchitecture(Architecture.X86);
+
+            Assert.That(asset, Is.EqualTo("uv-i686-pc-windows-msvc.zip"));
+            Assert.That(sha, Is.EqualTo("fa2abbf16f7d12cb01c9b7f313d843218fbd91a9d3fab487cc06a1d6765b27bf"));
+        }
+
+        [Test]
+        public void UvRelease_ForArchitecture_Unsupported_Throws()
+        {
+            Assert.Throws<PlatformNotSupportedException>(() => UvRelease.ForArchitecture(Architecture.Arm));
+        }
     }
 }
