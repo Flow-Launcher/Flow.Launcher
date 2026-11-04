@@ -33,6 +33,7 @@ namespace Flow.Launcher.Core.Plugin
             var path = Path.Combine(Constant.ProgramDirectory, JsonRpc);
             StartInfo.EnvironmentVariables["PYTHONPATH"] = path;
             StartInfo.EnvironmentVariables["PYTHONDONTWRITEBYTECODE"] = "1";
+            PythonEnvironmentVariables.DisableUserSiteForFlowRuntime(StartInfo.EnvironmentVariables, filename);
         }
 
         public override async Task InitAsync(PluginInitContext context)

@@ -33,6 +33,7 @@ namespace Flow.Launcher.Core.Plugin
             // Prevent Python from writing .py[co] files.
             // Because .pyc contains location infos which will prevent python portable.
             _startInfo.EnvironmentVariables["PYTHONDONTWRITEBYTECODE"] = "1";
+            PythonEnvironmentVariables.DisableUserSiteForFlowRuntime(_startInfo.EnvironmentVariables, filename);
 
             _startInfo.EnvironmentVariables["FLOW_VERSION"] = Constant.Version;
             _startInfo.EnvironmentVariables["FLOW_PROGRAM_DIRECTORY"] = Constant.ProgramDirectory;

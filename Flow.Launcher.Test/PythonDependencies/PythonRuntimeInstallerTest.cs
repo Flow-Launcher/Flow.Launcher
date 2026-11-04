@@ -80,6 +80,16 @@ namespace Flow.Launcher.Test.PythonDependencies
         }
 
         [Test]
+        public void IsInstalledIn_OnlyMatchesExecutablesInsideTheRuntimeFolder()
+        {
+            var runtime = Path.Combine(tempDirectory, "Python", "Runtime");
+
+            Assert.That(UvPythonRuntime.IsInstalledIn(Path.Combine(runtime, InstallKey, "pythonw.exe"), runtime), Is.True);
+            Assert.That(UvPythonRuntime.IsInstalledIn(Path.Combine(runtime + "Other", "pythonw.exe"), runtime), Is.False);
+            Assert.That(UvPythonRuntime.IsInstalledIn(Path.Combine(tempDirectory, "Python", "pythonw.exe"), runtime), Is.False);
+        }
+
+        [Test]
         public async Task Install_RunsUvPythonInstall_WithInstallDirectoryAsOneArgument()
         {
             await CreateInstaller().InstallAsync(CancellationToken.None);
