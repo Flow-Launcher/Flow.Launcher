@@ -15,13 +15,16 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
     {
         private const string ExecutableName = "uv.exe";
 
+        // HttpClient's timeout stops at the response headers, so a stalled body would otherwise never end.
+        private static readonly TimeSpan DownloadTimeout = TimeSpan.FromMinutes(10);
+
         public static async Task<string> DownloadAndExtractAsync(string installDir, CancellationToken token)
         {
             var (asset, expectedSha256) = UvRelease.ForArchitecture(RuntimeInformation.OSArchitecture);
             var zipPath = Path.Combine(Path.GetTempPath(), $"flow-uv-{Guid.NewGuid():N}.zip");
             try
             {
-                await Http.DownloadAsync(UvRelease.DownloadUrl(asset), zipPath, token: token).ConfigureAwait(false);
+                await DownloadAsync(UvRelease.DownloadUrl(asset), zipPath, token).ConfigureAwait(false);
                 VerifySha256(zipPath, expectedSha256);
 
                 Directory.CreateDirectory(installDir);
@@ -39,6 +42,20 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
             }
 
             return uvPath;
+        }
+
+        private static async Task DownloadAsync(string url, string zipPath, CancellationToken token)
+        {
+            using var deadline = CancellationTokenSource.CreateLinkedTokenSource(token);
+            deadline.CancelAfter(DownloadTimeout);
+            try
+            {
+                await Http.DownloadAsync(url, zipPath, token: deadline.Token).ConfigureAwait(false);
+            }
+            catch (OperationCanceledException e) when (deadline.IsCancellationRequested && !token.IsCancellationRequested)
+            {
+                throw new TimeoutException($"Downloading uv did not finish within {DownloadTimeout}", e);
+            }
         }
 
         public static void VerifySha256(string filePath, string expectedHex)
