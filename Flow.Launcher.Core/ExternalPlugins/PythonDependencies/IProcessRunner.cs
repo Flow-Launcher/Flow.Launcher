@@ -66,6 +66,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
                 // A process that survives the kill, or a child still holding the output pipes, must not
                 // hold up the caller past its timeout.
                 await WaitBrieflyForExitAsync(process).ConfigureAwait(false);
+                ClosePipes(process);
                 IgnoreFaults(output);
                 IgnoreFaults(stdOut);
                 IgnoreFaults(stdErr);
@@ -84,6 +85,22 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
             catch (Exception e) when (e is TimeoutException or InvalidOperationException)
             {
                 // Give up on it; uv installs into a fresh folder each time, so a leftover process is harmless.
+            }
+        }
+
+        // Disposing the Process leaves its redirected streams open, so a child holding a pipe would keep the reads alive.
+        private static void ClosePipes(Process process)
+        {
+            foreach (var reader in new[] { process.StandardOutput, process.StandardError })
+            {
+                try
+                {
+                    reader.BaseStream.Dispose();
+                }
+                catch (Exception)
+                {
+                    // Closing is best effort; the pending read faults or ends either way.
+                }
             }
         }
 
