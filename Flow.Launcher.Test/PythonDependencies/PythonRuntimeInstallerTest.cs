@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Flow.Launcher.Core.ExternalPlugins.PythonDependencies;
@@ -13,7 +14,7 @@ namespace Flow.Launcher.Test.PythonDependencies
     [TestFixture]
     public class PythonRuntimeInstallerTest
     {
-        private const string InstallKey = "cpython-3.11.17-windows-x86_64-none";
+        private static readonly string InstallKey = UvPythonRuntime.InstallKey;
 
         private string tempDirectory;
         private string installDirectory;
@@ -67,8 +68,15 @@ namespace Flow.Launcher.Test.PythonDependencies
         public void Pin_MatchesTheRuntimeFlowShips()
         {
             Assert.That(UvPythonRuntime.Version, Is.EqualTo("3.11.17"));
-            Assert.That(UvPythonRuntime.InstallKey, Is.EqualTo(InstallKey));
             Assert.That(UvPythonRuntime.InstallDirectoryName, Is.EqualTo("Runtime"));
+        }
+
+        [TestCase(Architecture.X64, "cpython-3.11.17-windows-x86_64-none")]
+        [TestCase(Architecture.Arm64, "cpython-3.11.17-windows-x86_64-none")]
+        [TestCase(Architecture.X86, "cpython-3.11.17-windows-x86-none")]
+        public void InstallKey_FollowsArchitecture(Architecture architecture, string expected)
+        {
+            Assert.That(UvPythonRuntime.InstallKeyFor(architecture), Is.EqualTo(expected));
         }
 
         [Test]
