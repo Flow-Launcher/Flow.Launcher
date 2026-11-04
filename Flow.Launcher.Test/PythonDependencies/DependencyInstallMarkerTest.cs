@@ -164,7 +164,7 @@ namespace Flow.Launcher.Test.PythonDependencies
         }
 
         [Test]
-        public void Load_MarkerWrittenBeforeInstallFolderExisted_ReturnsNull()
+        public void Load_MarkerWithoutInstallFolderField_ReturnsNull()
         {
             var markerPath = Path.Combine(tempDirectory, DependencyInstallMarker.FileName);
             File.WriteAllText(markerPath, """{"InstallKey":"0123456789abcdef","Dependencies":["a==1"],"PythonPath":"p","PythonVersion":"3.11.9","UvVersion":"uv 0.13.7","Resolved":["a==1"]}""");

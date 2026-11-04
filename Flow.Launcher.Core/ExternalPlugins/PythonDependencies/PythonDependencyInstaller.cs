@@ -16,7 +16,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
     internal sealed class PythonDependencyInstaller
     {
         private const string SitePackagesName = "site-packages";
-        private const string PythonVersionProbe = "import sys, sysconfig; print(sys.version.split()[0], sysconfig.get_platform())";
+        private const string PythonVersionProbe = "import sys, sysconfig; print(sys.version.split()[0], sys.implementation.name, sysconfig.get_platform(), sysconfig.get_config_var('EXT_SUFFIX') or '')";
         private const int ErrorLinesInMessage = 5;
 
         private static readonly IReadOnlyDictionary<string, string> NoEnvironment = new Dictionary<string, string>();
@@ -257,7 +257,8 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
 
         private async Task<string> GetPythonVersionAsync(PluginMetadata metadata, string python, CancellationToken token)
         {
-            if (_pythonVersions.TryGetValue(python, out var cached))
+            var cacheKey = VersionCacheKey(python);
+            if (_pythonVersions.TryGetValue(cacheKey, out var cached))
             {
                 return cached;
             }
@@ -270,7 +271,20 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
                 throw new PythonDependencyException(DependencyMessages.InstallFailed(metadata.Name, LastErrorLines(result.StdErr)));
             }
 
-            return _pythonVersions[python] = result.StdOut.Trim();
+            return _pythonVersions[cacheKey] = result.StdOut.Trim();
+        }
+
+        // A Python upgraded in place keeps its path, but its executable gets a new timestamp.
+        private static string VersionCacheKey(string python)
+        {
+            try
+            {
+                return $"{python}|{File.GetLastWriteTimeUtc(python).Ticks}";
+            }
+            catch (Exception e) when (e is IOException or UnauthorizedAccessException or ArgumentException)
+            {
+                return python;
+            }
         }
 
         private async Task<string> LocateUvAsync(PluginMetadata metadata, CancellationToken token)
