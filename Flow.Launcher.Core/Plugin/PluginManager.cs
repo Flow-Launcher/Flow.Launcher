@@ -413,16 +413,22 @@ namespace Flow.Launcher.Core.Plugin
             if (!TryGetNonGlobalPlugins(query.ActionKeyword, out var plugins))
             {
                 if (dialogJump)
-                    return [.. GetGlobalPlugins().Where(p => p.Plugin is IAsyncDialogJump && !PluginModified(p.Metadata.ID))];
+                    return [.. GetGlobalPlugins().Where(p => p.Plugin is IAsyncDialogJump && CanQuery(p))];
                 else
-                    return [.. GetGlobalPlugins().Where(p => !PluginModified(p.Metadata.ID))];
+                    return [.. GetGlobalPlugins().Where(CanQuery)];
             }
 
-            var validPlugins = plugins.Where(p => !p.Metadata.Disabled && !PluginModified(p.Metadata.ID));
+            var validPlugins = plugins.Where(p => !p.Metadata.Disabled && CanQuery(p));
             if (dialogJump)
                 validPlugins = validPlugins.Where(p => p.Plugin is IAsyncDialogJump);
 
             return [.. validPlugins];
+        }
+
+        // A plugin whose dependencies failed to install stays enabled for the next start, but it never finished initializing.
+        private static bool CanQuery(PluginPair pair)
+        {
+            return !PluginModified(pair.Metadata.ID) && !_dependencyFailedPlugins.ContainsKey(pair.Metadata.ID);
         }
 
         private static bool TryGetNonGlobalPlugins(string actionKeyword, out List<PluginPair> plugins)
