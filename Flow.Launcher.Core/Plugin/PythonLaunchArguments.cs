@@ -43,7 +43,7 @@ namespace Flow.Launcher.Core.Plugin
             var lines = new List<string>
             {
                 "import sys",
-                $"sys.path.append(r'{rootDirectory}')"
+                $"sys.path.append({Literal(rootDirectory)})"
             };
 
             // addsitedir appends, so adding it before lib gives the installed dependencies priority over lib.
@@ -52,10 +52,10 @@ namespace Flow.Launcher.Core.Plugin
                 lines.AddRange(SiteDirectoryLines(sitePackages));
             }
 
-            lines.Add($"sys.path.append(r'{libDirectory}')");
-            lines.Add($"sys.path.append(r'{libPyWin32LibDirectory}')");
-            lines.Add($"sys.path.append(r'{libPyWin32Directory}')");
-            lines.Add($"sys.path.append(r'{pluginDirectory}')");
+            lines.Add($"sys.path.append({Literal(libDirectory)})");
+            lines.Add($"sys.path.append({Literal(libPyWin32LibDirectory)})");
+            lines.Add($"sys.path.append({Literal(libPyWin32Directory)})");
+            lines.Add($"sys.path.append({Literal(pluginDirectory)})");
             lines.Add("");
             lines.AddRange(RunPathLines(metadata.ExecuteFilePath));
 
@@ -70,16 +70,19 @@ namespace Flow.Launcher.Core.Plugin
             return string.Join("\n", lines);
         }
 
+        // Escaped (not raw) literal: a raw string cannot hold a trailing backslash and any quote in the path would end it.
+        private static string Literal(string path) => "'" + path.Replace("\\", "\\\\").Replace("'", "\\'") + "'";
+
         private static string[] SiteDirectoryLines(string sitePackages) => new[]
         {
             "import site",
-            $"site.addsitedir(r'{sitePackages}')"
+            $"site.addsitedir({Literal(sitePackages)})"
         };
 
         private static string[] RunPathLines(string executeFilePath) => new[]
         {
             "import runpy",
-            $"runpy.run_path(r'{executeFilePath}', None, '__main__')"
+            $"runpy.run_path({Literal(executeFilePath)}, None, '__main__')"
         };
     }
 }
