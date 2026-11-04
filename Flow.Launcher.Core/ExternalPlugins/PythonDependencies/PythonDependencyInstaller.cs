@@ -56,6 +56,8 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
             _processTimeout = processTimeout ?? DefaultProcessTimeout;
         }
 
+        internal UvLocator UvLocator => _uvLocator;
+
         public static PythonDependencyInstaller CreateDefault(PluginsSettings settings)
         {
             return new PythonDependencyInstaller(
@@ -309,7 +311,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
             timeout.CancelAfter(_processTimeout);
             try
             {
-                return await _runner.RunAsync(fileName, arguments, useUvEnvironment ? BuildUvEnvironment() : NoEnvironment, timeout.Token)
+                return await _runner.RunAsync(fileName, arguments, useUvEnvironment ? UvEnvironment.Build(_portable, _uvCachePath) : NoEnvironment, timeout.Token)
                     .ConfigureAwait(false);
             }
             catch (OperationCanceledException e) when (timeout.IsCancellationRequested && !token.IsCancellationRequested)
@@ -335,17 +337,6 @@ namespace Flow.Launcher.Core.ExternalPlugins.PythonDependencies
             var arguments = new List<string> { "pip", "install", "--no-config", "--target", sitePackages, "--python", python };
             arguments.AddRange(dependencies);
             return arguments;
-        }
-
-        private IReadOnlyDictionary<string, string> BuildUvEnvironment()
-        {
-            var environment = new Dictionary<string, string> { ["UV_NO_CONFIG"] = "1" };
-            if (_portable)
-            {
-                environment["UV_CACHE_DIR"] = _uvCachePath;
-            }
-
-            return environment;
         }
 
         // A uv left running by an earlier Flow process may still write to an older folder, so every attempt gets a fresh one.
