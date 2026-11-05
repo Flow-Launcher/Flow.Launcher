@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -203,6 +204,10 @@ namespace Flow.Launcher.Plugin.Program.Programs
             {
                 var applications = CurrentUserPackages().AsParallel().SelectMany(p =>
                 {
+                    var fullName = p.Id.FullName;
+                    if (ParsedPackages.TryGetValue(fullName, out var parsed))
+                        return parsed;
+
                     UWPPackage u;
                     try
                     {
@@ -222,6 +227,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         throw;
                     }
 #endif
+                    ParsedPackages[fullName] = u.Apps;
                     return u.Apps;
                 }).ToArray();
 
@@ -236,6 +242,12 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 return Array.Empty<UWPApp>();
             }
         }
+
+        // Parsing a package's manifest is ~90% of UWP indexing. FullName includes the version,
+        // so on a Store update only the updated package is parsed again.
+        private static readonly ConcurrentDictionary<string, UWPApp[]> ParsedPackages = new();
+
+        public static void ClearParsedPackages() => ParsedPackages.Clear();
 
         public static bool SupportUWP()
         {

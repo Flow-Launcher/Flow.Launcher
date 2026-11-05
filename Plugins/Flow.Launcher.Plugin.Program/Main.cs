@@ -419,6 +419,7 @@ namespace Flow.Launcher.Plugin.Program
         {
             // Full reindex (startup / settings / manual "Reindex"): re-read every file from scratch.
             Win32.ClearParsedPrograms();
+            UWPPackage.ClearParsedPackages();
             var win32Task = Task.Run(async () =>
             {
                 await Context.API.StopwatchLogInfoAsync(ClassName, "Win32Program index cost", () => IndexWin32ProgramsAsync(resetCache: true));
