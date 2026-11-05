@@ -342,7 +342,9 @@ namespace Flow.Launcher.Plugin.Program
             ResetCache();
         }
 
-        public static async Task IndexWin32ProgramsAsync(bool resetCache)
+        // Only a full reindex updates LastIndexTime: incremental passes (watcher, startup catch-up) must not
+        // postpone the periodic full reindex, which also catches what the memo and watchers can't see.
+        public static async Task IndexWin32ProgramsAsync(bool resetCache, bool fullReindex = false)
         {
             await _win32sLock.WaitAsync();
             try
@@ -358,9 +360,12 @@ namespace Flow.Launcher.Plugin.Program
                     ResetCache();
                 }
                 await Context.API.SaveCacheBinaryStorageAsync<List<Win32>>(Win32CacheName, Context.CurrentPluginMetadata.PluginCacheDirectoryPath);
-                lock (_lastIndexTimeLock)
+                if (fullReindex)
                 {
-                    _settings.LastIndexTime = DateTime.Now;
+                    lock (_lastIndexTimeLock)
+                    {
+                        _settings.LastIndexTime = DateTime.Now;
+                    }
                 }
             }
             catch (Exception e)
@@ -373,7 +378,7 @@ namespace Flow.Launcher.Plugin.Program
             }
         }
 
-        public static async Task IndexUwpProgramsAsync(bool resetCache)
+        public static async Task IndexUwpProgramsAsync(bool resetCache, bool fullReindex = false)
         {
             await _uwpsLock.WaitAsync();
             try
@@ -389,9 +394,12 @@ namespace Flow.Launcher.Plugin.Program
                     ResetCache();
                 }
                 await Context.API.SaveCacheBinaryStorageAsync<List<UWPApp>>(UwpCacheName, Context.CurrentPluginMetadata.PluginCacheDirectoryPath);
-                lock (_lastIndexTimeLock)
+                if (fullReindex)
                 {
-                    _settings.LastIndexTime = DateTime.Now;
+                    lock (_lastIndexTimeLock)
+                    {
+                        _settings.LastIndexTime = DateTime.Now;
+                    }
                 }
             }
             catch (Exception e)
@@ -424,12 +432,12 @@ namespace Flow.Launcher.Plugin.Program
             UWPPackage.ClearParsedPackages();
             var win32Task = Task.Run(async () =>
             {
-                await Context.API.StopwatchLogInfoAsync(ClassName, "Win32Program index cost", () => IndexWin32ProgramsAsync(resetCache: true));
+                await Context.API.StopwatchLogInfoAsync(ClassName, "Win32Program index cost", () => IndexWin32ProgramsAsync(resetCache: true, fullReindex: true));
             });
 
             var uwpTask = Task.Run(async () =>
             {
-                await Context.API.StopwatchLogInfoAsync(ClassName, "UWPProgram index cost", () => IndexUwpProgramsAsync(resetCache: true));
+                await Context.API.StopwatchLogInfoAsync(ClassName, "UWPProgram index cost", () => IndexUwpProgramsAsync(resetCache: true, fullReindex: true));
             });
 
             await Task.WhenAll(win32Task, uwpTask).ConfigureAwait(false);
