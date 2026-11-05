@@ -318,6 +318,8 @@ namespace Flow.Launcher.Plugin.Program
             {
                 Win32.SeedParsedPrograms(_win32s);
                 WatchProgramUpdate();
+                // Catch files added, changed or removed while Flow was closed; with the seeded memo this is cheap.
+                _ = Task.Run(() => IndexWin32ProgramsAsync(resetCache: true));
             }
 
             Context.API.StringMatcherBehaviorChanged += API_StringMatcherBehaviorChanged;

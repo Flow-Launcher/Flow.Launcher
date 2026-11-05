@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Win32;
 using Flow.Launcher.Plugin.Program.Logger;
@@ -71,6 +72,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
         // MemoryPack only tolerates members added at the end; old caches load it as default.
         public DateTime ParsedStamp { get; set; }
         public DateTime ParsedTargetStamp { get; set; } // .lnk target's timestamp at parse time; same rules as above
+        public string MissingTargetPath { get; set; } // .lnk target that didn't exist at parse time (LnkResolvedPath is null then)
 
         private const string ShortcutExtension = "lnk";
         private const string UrlExtension = "url";
@@ -370,6 +372,10 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         }
                     }
                 }
+                else if (!string.IsNullOrEmpty(target))
+                {
+                    program.MissingTargetPath = target; // watched via TargetStamp, so the link is reparsed if it reappears
+                }
 
                 program.LocalizedName = ShellLocalization.GetLocalizedName(path);
 
@@ -605,9 +611,12 @@ namespace Flow.Launcher.Plugin.Program.Programs
             DateTime? lastWrite = null;
             try { lastWrite = Stamp(path); } catch { /* odd registry path: just don't memoize */ }
 
-            if (lastWrite is { } t && ParsedPrograms.TryGetValue(path, out var cached) && cached.ParsedStamp == t &&
+            if (lastWrite is { } t && _parsedPrograms.TryGetValue(path, out var cached) && cached.ParsedStamp == t &&
                 cached.ParsedTargetStamp == TargetStamp(cached))
+            {
+                _parsingPrograms[path] = cached;
                 return cached;
+            }
 
             var program = Extension(path) switch
             {
@@ -621,31 +630,46 @@ namespace Flow.Launcher.Plugin.Program.Programs
             {
                 program.ParsedStamp = w;
                 program.ParsedTargetStamp = TargetStamp(program);
-                ParsedPrograms[path] = program;
+                _parsingPrograms[path] = program;
             }
             return program;
         }
 
         // Parsing a .lnk/.exe (shell link, FileVersionInfo, shell localization) is the expensive part of indexing.
         // Reindexes reuse entries whose file (and, for .lnk, target) timestamps are exactly those recorded at parse time.
-        private static readonly ConcurrentDictionary<string, Win32> ParsedPrograms =
-            new(StringComparer.OrdinalIgnoreCase);
+        // Each pass reads the previous pass's results and records only what it saw, so the memo holds only current
+        // files. Passes are serialized by Main's Win32 index lock.
+        private static ConcurrentDictionary<string, Win32> _parsedPrograms = new(StringComparer.OrdinalIgnoreCase);
+        private static ConcurrentDictionary<string, Win32> _parsingPrograms = new(StringComparer.OrdinalIgnoreCase);
+        private static int _discardParsedPrograms;
 
-        public static void ClearParsedPrograms() => ParsedPrograms.Clear();
+        // Called before a full reindex. Takes effect at the start of the next pass, so a pass already running
+        // can't feed its results into the full one.
+        public static void ClearParsedPrograms() => Interlocked.Exchange(ref _discardParsedPrograms, 1);
+
+        private static void BeginParsePass()
+        {
+            if (Interlocked.Exchange(ref _discardParsedPrograms, 0) == 1)
+                _parsedPrograms = new(StringComparer.OrdinalIgnoreCase);
+            _parsingPrograms = new(StringComparer.OrdinalIgnoreCase);
+        }
+
+        private static void EndParsePass() => _parsedPrograms = _parsingPrograms;
 
         // Compared for exact equality, so a replaced file is caught even if its mtime is older.
         // Not max(write, creation): overwriting in place keeps the creation time, which would hide the change.
         private static DateTime Stamp(string path) => File.GetLastWriteTimeUtc(path);
 
         // A .lnk's description may come from its target exe, so the target's timestamp matters too.
-        // Missing target -> 1601 stamp, so a target that disappears also forces a reparse.
+        // A missing file has a fixed 1601 stamp, so a target that disappears or reappears forces a reparse.
         private static DateTime TargetStamp(Win32 program)
         {
-            if (program.LnkResolvedPath == null || Extension(program.FullPath) != ShortcutExtension)
+            var target = program.LnkResolvedPath ?? program.MissingTargetPath;
+            if (target == null || Extension(program.FullPath) != ShortcutExtension)
                 return default;
             try
             {
-                return Stamp(program.LnkResolvedPath);
+                return Stamp(target);
             }
             catch
             {
@@ -665,7 +689,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 {
                     if (Stamp(program.FullPath) == program.ParsedStamp &&
                         TargetStamp(program) == program.ParsedTargetStamp)
-                        ParsedPrograms.TryAdd(program.FullPath, program);
+                        _parsedPrograms.TryAdd(program.FullPath, program);
                 }
                 catch
                 {
@@ -737,6 +761,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
         {
             try
             {
+                BeginParsePass();
                 var programs = Enumerable.Empty<Win32>();
                 var suffixes = settings.GetSuffixes();
                 var protocols = settings.GetProtocols();
@@ -772,7 +797,9 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 // Materialize first: parsing runs on the calling (below-normal) thread, not on PLINQ pool threads.
                 autoIndexPrograms = ProgramsHasher(autoIndexPrograms.ToArray()).ToArray();
 
-                return programs.Concat(autoIndexPrograms).Where(x => x.Valid).Distinct().ToArray();
+                var result = programs.Concat(autoIndexPrograms).Where(x => x.Valid).Distinct().ToArray();
+                EndParsePass(); // only a completed pass replaces the memo
+                return result;
             }
 #if DEBUG //This is to make developer aware of any unhandled exception and add in handling.
             catch (Exception)

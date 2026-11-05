@@ -27,28 +27,37 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 try
                 {
                     ((IPersistFile)link).Load(path, (int)STGM.STGM_READ);
-                    var hwnd = new HWND(IntPtr.Zero);
-                    // Use SLR_NO_UI to avoid showing any UI during resolution, like Problem with Shortcut dialogs
-                    // https://learn.microsoft.com/en-us/windows/win32/api/shobjidl_core/nf-shobjidl_core-ishelllinka-resolve
-                    // NOSEARCH/NOTRACK/NOLINKINFO: never hunt for a missing target (up to 3s per link, ~136ms avg measured);
-                    // NOUPDATE: never rewrite the .lnk while indexing.
-                    ((IShellLinkW)link).Resolve(hwnd, (uint)(SLR_FLAGS.SLR_NO_UI | SLR_FLAGS.SLR_NOUPDATE |
-                        SLR_FLAGS.SLR_NOSEARCH | SLR_FLAGS.SLR_NOTRACK | SLR_FLAGS.SLR_NOLINKINFO));
                 }
                 catch (COMException e)
                 {
                     ProgramLogger.LogException(
-                        $"|ShellLinkReader|Read|{path}|Error occurred while loading or resolving shell link",
+                        $"|ShellLinkReader|Read|{path}|Error occurred while loading shell link",
                         e
                     );
                     return new ShellLinkReadResult(string.Empty, string.Empty, string.Empty);
                 }
 
-                var target = retrieveTargetPath((IShellLinkW)link, path);
-                if (string.IsNullOrEmpty(target) || !File.Exists(target))
+                var resolved = true;
+                try
                 {
-                    // Target missing: let Windows try to repair the link (and save the fix), but cap the search.
+                    // Use SLR_NO_UI to avoid showing any UI during resolution, like Problem with Shortcut dialogs
+                    // https://learn.microsoft.com/en-us/windows/win32/api/shobjidl_core/nf-shobjidl_core-ishelllinka-resolve
+                    // NOSEARCH/NOTRACK/NOLINKINFO: never hunt for a missing target (up to 3s per link, ~136ms avg measured);
+                    // NOUPDATE: never rewrite the .lnk while indexing.
+                    ((IShellLinkW)link).Resolve(new HWND(IntPtr.Zero), (uint)(SLR_FLAGS.SLR_NO_UI | SLR_FLAGS.SLR_NOUPDATE |
+                        SLR_FLAGS.SLR_NOSEARCH | SLR_FLAGS.SLR_NOTRACK | SLR_FLAGS.SLR_NOLINKINFO));
+                }
+                catch (COMException)
+                {
+                    resolved = false; // fall through to the bounded repair attempt below
+                }
+
+                var target = retrieveTargetPath((IShellLinkW)link, path);
+                if (!resolved || string.IsNullOrEmpty(target) || !File.Exists(target))
+                {
+                    // Target missing: let Windows try to find it, with the search capped.
                     // Measured: 50ms repairs the same links as the 3s default.
+                    // The repair only updates this in-memory link object; the .lnk file is never written.
                     try
                     {
                         ((IShellLinkW)link).Resolve(new HWND(IntPtr.Zero), (uint)SLR_FLAGS.SLR_NO_UI | (50u << 16));
