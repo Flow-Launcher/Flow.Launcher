@@ -316,6 +316,7 @@ namespace Flow.Launcher.Plugin.Program
             }
             else
             {
+                Win32.SeedParsedPrograms(_win32s);
                 WatchProgramUpdate();
             }
 
@@ -344,7 +345,7 @@ namespace Flow.Launcher.Plugin.Program
             await _win32sLock.WaitAsync();
             try
             {
-                var win32S = Win32.All(_settings);
+                var win32S = await RunBelowNormalAsync(() => Win32.All(_settings));
                 _win32s.Clear();
                 foreach (var win32 in win32S)
                 {
@@ -401,8 +402,23 @@ namespace Flow.Launcher.Plugin.Program
             }
         }
 
+        // Indexing is background work: run it on a below-normal thread so it never competes with foreground apps.
+        private static Task<T> RunBelowNormalAsync<T>(Func<T> work)
+        {
+            var tcs = new TaskCompletionSource<T>(TaskCreationOptions.RunContinuationsAsynchronously);
+            new Thread(() =>
+            {
+                try { tcs.SetResult(work()); }
+                catch (Exception e) { tcs.SetException(e); }
+            })
+            { IsBackground = true, Priority = ThreadPriority.BelowNormal, Name = "Program plugin indexer" }.Start();
+            return tcs.Task;
+        }
+
         public static async Task IndexProgramsAsync()
         {
+            // Full reindex (startup / settings / manual "Reindex"): re-read every file from scratch.
+            Win32.ClearParsedPrograms();
             var win32Task = Task.Run(async () =>
             {
                 await Context.API.StopwatchLogInfoAsync(ClassName, "Win32Program index cost", () => IndexWin32ProgramsAsync(resetCache: true));
