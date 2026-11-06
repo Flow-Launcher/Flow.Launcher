@@ -1,7 +1,7 @@
+using System.Runtime.InteropServices;
 using System;
 using System.Collections.Concurrent;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Media;
@@ -14,14 +14,14 @@ namespace Flow.Launcher.Avalonia.Helper;
 /// <summary>
 /// Avalonia-compatible image loader with caching support.
 /// Loads images from file paths, URLs, and data URIs.
-/// Uses Windows Shell API for exe/ico thumbnails.
+/// Icons for other files and folders come from the platform partial (Windows Shell API / macOS .icns).
 /// </summary>
 public static class ImageLoader
 {
     private static readonly string ClassName = nameof(ImageLoader);
 
-    // Thread-safe cache
-    private static readonly ConcurrentDictionary<string, IImage?> _cache = new();
+    // Completed images keyed by (path, decode width); 0 width = full size.
+    private static readonly ConcurrentDictionary<(string Path, int Width), IImage?> _cache = new();
 
     // Default image (lazy loaded)
     private static IImage? _defaultImage;
@@ -37,28 +37,67 @@ public static class ImageLoader
     /// <summary>
     /// Load an image from the given path asynchronously.
     /// Supports local files, HTTP/HTTPS URLs, and data URIs.
-    /// Use with Avalonia's ^ binding operator: {Binding Image^}
+    /// <paramref name="decodeWidth"/> &gt; 0 caps the pixel width of directly decoded raster images.
     /// </summary>
-    public static Task<IImage?> LoadAsync(string? path)
+    public static Task<IImage?> LoadAsync(string? path, int decodeWidth = 0)
     {
         if (string.IsNullOrWhiteSpace(path))
             return Task.FromResult(DefaultImage);
 
+        var key = (path, decodeWidth);
+
         // Check cache first - return immediately without Task.Run overhead
-        if (_cache.TryGetValue(path, out var cached))
+        if (_cache.TryGetValue(key, out var cached))
             return Task.FromResult(cached);
 
         // Load on background thread to avoid blocking UI
-        return Task.Run(() => LoadCore(path));
+        return Task.Run(() => LoadCore(path, decodeWidth));
+    }
+
+    /// <summary>
+    /// Loads an image produced by a plugin icon delegate (<c>Result.Icon</c>, <c>BadgeIcon</c>, <c>PreviewDelegate</c>)
+    /// on the thread pool. The delegate may return an Avalonia <see cref="IImage"/>, a path/URL/data URI,
+    /// encoded image bytes or a stream; anything else (e.g. a WPF ImageSource) yields the default image.
+    /// Results are not cached because the delegate is specific to one result.
+    /// </summary>
+    public static Task<IImage?> LoadFromDelegateAsync(Func<object?> iconDelegate, int decodeWidth = 0)
+    {
+        return Task.Run(async () =>
+        {
+            try
+            {
+                return iconDelegate() switch
+                {
+                    IImage image => image,
+                    string path => await LoadAsync(path, decodeWidth),
+                    byte[] bytes => DecodeStream(new MemoryStream(bytes), decodeWidth),
+                    Stream stream => DecodeStream(stream, decodeWidth),
+                    _ => DefaultImage
+                };
+            }
+            catch (Exception ex)
+            {
+                Log.Exception(ClassName, "Exception when calling the icon delegate of a result", ex);
+                return DefaultImage;
+            }
+        });
+    }
+
+    private static IImage DecodeStream(Stream stream, int decodeWidth)
+    {
+        using (stream)
+        {
+            return Downscale(new Bitmap(stream), decodeWidth);
+        }
     }
 
     /// <summary>
     /// Core loading logic - runs on thread pool when not cached.
     /// </summary>
-    private static async Task<IImage?> LoadCore(string path)
+    private static async Task<IImage?> LoadCore(string path, int decodeWidth)
     {
         // Double-check cache (another thread may have loaded it)
-        if (_cache.TryGetValue(path, out var cached))
+        if (_cache.TryGetValue((path, decodeWidth), out var cached))
             return cached;
 
         try
@@ -76,29 +115,29 @@ public static class ImageLoader
             }
             else if (File.Exists(path))
             {
-                image = LoadFromFile(path);
+                image = await LoadFromFileAsync(path, decodeWidth);
             }
             else if (Directory.Exists(path))
             {
-                // Folder - get shell icon
+                // Folder - get platform icon
                 image = LoadShellThumbnail(path);
             }
 
             // Cache the result (even if null, to avoid repeated attempts)
             image ??= DefaultImage;
-            _cache.TryAdd(path, image);
+            _cache.TryAdd((path, decodeWidth), image);
 
             return image;
         }
         catch (Exception ex)
         {
             Log.Debug(ClassName, $"Failed to load image: {path}, Error: {ex.Message}");
-            _cache.TryAdd(path, DefaultImage);
+            _cache.TryAdd((path, decodeWidth), DefaultImage);
             return DefaultImage;
         }
     }
 
-    private static IImage? LoadFromFile(string path)
+    private static async Task<IImage?> LoadFromFileAsync(string path, int decodeWidth)
     {
         try
         {
@@ -108,10 +147,10 @@ public static class ImageLoader
             if (Array.Exists(DirectLoadExtensions, e => e == ext))
             {
                 using var stream = File.OpenRead(path);
-                return new Bitmap(stream);
+                return Downscale(new Bitmap(stream), decodeWidth);
             }
 
-            // For exe, dll, ico, lnk, and other files - use Windows Shell API
+            // For exe, dll, ico, lnk, icns and other files - use the platform icon loader
             return LoadShellThumbnail(path);
         }
         catch (Exception ex)
@@ -120,6 +159,23 @@ public static class ImageLoader
             return null;
         }
     }
+
+    /// <summary>
+    /// Shrinks bitmaps wider than <paramref name="decodeWidth"/> so small icon slots don't keep and filter
+    /// full-resolution images. Never upscales; 0 keeps the original.
+    /// </summary>
+    private static Bitmap Downscale(Bitmap bitmap, int decodeWidth)
+    {
+        var size = bitmap.PixelSize;
+        if (decodeWidth <= 0 || size.Width <= decodeWidth)
+            return bitmap;
+
+        var height = Math.Max(1, (int)Math.Round(size.Height * (double)decodeWidth / size.Width));
+        var scaled = bitmap.CreateScaledBitmap(new PixelSize(decodeWidth, height), BitmapInterpolationMode.HighQuality);
+        bitmap.Dispose();
+        return scaled;
+    }
+
 
     /// <summary>
     /// Load thumbnail/icon using Windows Shell API (IShellItemImageFactory).
@@ -264,91 +320,6 @@ public static class ImageLoader
         }
     }
 
-    private static async Task<IImage?> LoadFromUrlAsync(string url)
-    {
-        try
-        {
-            await using var stream = await Flow.Launcher.Infrastructure.Http.Http.GetStreamAsync(url);
-            using var memoryStream = new MemoryStream();
-            await stream.CopyToAsync(memoryStream);
-            memoryStream.Position = 0;
-
-            return new Bitmap(memoryStream);
-        }
-        catch (Exception ex)
-        {
-            Log.Debug(ClassName, $"Failed to load URL: {url}, Error: {ex.Message}");
-            return null;
-        }
-    }
-
-    private static IImage? LoadFromDataUri(string dataUri)
-    {
-        try
-        {
-            // Parse data URI: data:image/png;base64,xxxxx
-            var commaIndex = dataUri.IndexOf(',');
-            if (commaIndex < 0)
-                return null;
-
-            var base64Data = dataUri.Substring(commaIndex + 1);
-            var imageData = Convert.FromBase64String(base64Data);
-
-            using var stream = new MemoryStream(imageData);
-            return new Bitmap(stream);
-        }
-        catch (Exception ex)
-        {
-            Log.Debug(ClassName, $"Failed to parse data URI: {ex.Message}");
-            return null;
-        }
-    }
-
-    private static IImage? LoadDefaultImage()
-    {
-        try
-        {
-            var appDir = AppDomain.CurrentDomain.BaseDirectory;
-
-            // Try PNG first
-            var defaultIconPath = Path.Combine(appDir, "Images", "app.png");
-            if (File.Exists(defaultIconPath))
-            {
-                using var stream = File.OpenRead(defaultIconPath);
-                return new Bitmap(stream);
-            }
-
-            // Try ICO via shell
-            defaultIconPath = Path.Combine(appDir, "Images", "app.ico");
-            if (File.Exists(defaultIconPath))
-            {
-                return LoadShellThumbnail(defaultIconPath);
-            }
-        }
-        catch (Exception ex)
-        {
-            Log.Debug(ClassName, $"Failed to load default image: {ex.Message}");
-        }
-
-        return null;
-    }
-
-    /// <summary>
-    /// Try to get a cached image without loading.
-    /// </summary>
-    public static bool TryGetCached(string? path, out IImage? image)
-    {
-        if (!string.IsNullOrWhiteSpace(path) && _cache.TryGetValue(path, out image))
-            return true;
-        image = null;
-        return false;
-    }
-
-    /// <summary>
-    /// Clear the image cache.
-    /// </summary>
-    public static void ClearCache() => _cache.Clear();
-
     #region Windows Shell API P/Invoke
 
     [DllImport("shell32.dll", CharSet = CharSet.Unicode, PreserveSig = true)]
@@ -440,4 +411,89 @@ public static class ImageLoader
     }
 
     #endregion
+
+    private static async Task<IImage?> LoadFromUrlAsync(string url)
+    {
+        try
+        {
+            await using var stream = await Flow.Launcher.Infrastructure.Http.Http.GetStreamAsync(url);
+            using var memoryStream = new MemoryStream();
+            await stream.CopyToAsync(memoryStream);
+            memoryStream.Position = 0;
+
+            return new Bitmap(memoryStream);
+        }
+        catch (Exception ex)
+        {
+            Log.Debug(ClassName, $"Failed to load URL: {url}, Error: {ex.Message}");
+            return null;
+        }
+    }
+
+    private static IImage? LoadFromDataUri(string dataUri)
+    {
+        try
+        {
+            // Parse data URI: data:image/png;base64,xxxxx
+            var commaIndex = dataUri.IndexOf(',');
+            if (commaIndex < 0)
+                return null;
+
+            var base64Data = dataUri.Substring(commaIndex + 1);
+            var imageData = Convert.FromBase64String(base64Data);
+
+            using var stream = new MemoryStream(imageData);
+            return new Bitmap(stream);
+        }
+        catch (Exception ex)
+        {
+            Log.Debug(ClassName, $"Failed to parse data URI: {ex.Message}");
+            return null;
+        }
+    }
+
+    private static IImage? LoadDefaultImage()
+    {
+        try
+        {
+            var appDir = AppDomain.CurrentDomain.BaseDirectory;
+
+            // Try PNG first
+            var defaultIconPath = Path.Combine(appDir, "Images", "app.png");
+            if (File.Exists(defaultIconPath))
+            {
+                using var stream = File.OpenRead(defaultIconPath);
+                return new Bitmap(stream);
+            }
+
+            // Try ICO via the platform loader
+            defaultIconPath = Path.Combine(appDir, "Images", "app.ico");
+            if (File.Exists(defaultIconPath))
+            {
+                return LoadShellThumbnail(defaultIconPath);
+            }
+        }
+        catch (Exception ex)
+        {
+            Log.Debug(ClassName, $"Failed to load default image: {ex.Message}");
+        }
+
+        return null;
+    }
+
+    /// <summary>
+    /// Try to get a cached image without loading.
+    /// </summary>
+    public static bool TryGetCached(string? path, out IImage? image)
+    {
+        if (!string.IsNullOrWhiteSpace(path) && _cache.TryGetValue((path, 0), out image))
+            return true;
+        image = null;
+        return false;
+    }
+
+    /// <summary>
+    /// Clear the image cache.
+    /// </summary>
+    public static void ClearCache() => _cache.Clear();
 }

@@ -1,12 +1,12 @@
+using System.Windows.Input;
+using Flow.Launcher.Infrastructure;
 using System;
 using System.Collections.Generic;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Avalonia.ViewModel;
-using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
-using System.Windows.Input;
 
 namespace Flow.Launcher.Avalonia.Helper;
 
@@ -65,13 +65,14 @@ internal static class HotKeyMapper
 
         if (previousHotkeyId >= 0)
         {
-            GlobalHotkey.Unregister(previousHotkeyId);
+            TryUnregisterHotkey(previousHotkeyId, previousHotkeyString);
             _toggleHotkeyId = -1;
         }
 
         if (!TryRegisterHotkey(hotkeyString, OnToggleHotkey, out var newHotkeyId))
         {
             Log.Error(ClassName, $"Failed to register hotkey: {hotkeyString}");
+            ShowHotkeyError("registerHotkeyFailed", hotkeyString);
 
             if (!string.IsNullOrWhiteSpace(previousHotkeyString))
             {
@@ -101,7 +102,7 @@ internal static class HotKeyMapper
     {
         if (_toggleHotkeyId >= 0)
         {
-            GlobalHotkey.Unregister(_toggleHotkeyId);
+            TryUnregisterHotkey(_toggleHotkeyId, _toggleHotkeyString);
             _toggleHotkeyId = -1;
         }
 
@@ -143,6 +144,7 @@ internal static class HotKeyMapper
                 _mainViewModel?.ShowWithInjectedQuery(hotkey.ActionKeyword);
             }, out var hotkeyId))
         {
+            ShowHotkeyError("registerHotkeyFailed", hotkey.Hotkey);
             return false;
         }
 
@@ -159,9 +161,37 @@ internal static class HotKeyMapper
 
         if (_customQueryHotkeyIds.TryGetValue(hotkeyString, out var hotkeyId))
         {
-            GlobalHotkey.Unregister(hotkeyId);
+            TryUnregisterHotkey(hotkeyId, hotkeyString);
             _customQueryHotkeyIds.Remove(hotkeyString);
         }
+    }
+
+    /// <summary>
+    /// Unregisters a hotkey; a failure is logged and reported to the user, like the WPF mapper does.
+    /// </summary>
+    private static void TryUnregisterHotkey(int hotkeyId, string hotkeyString)
+    {
+        try
+        {
+            GlobalHotkey.Unregister(hotkeyId);
+        }
+        catch (Exception e)
+        {
+            Log.Exception(ClassName, $"Error removing hotkey: {hotkeyString}", e);
+            ShowHotkeyError("unregisterHotkeyFailed", hotkeyString);
+        }
+    }
+
+    private static void ShowHotkeyError(string messageKey, string hotkeyString)
+    {
+        var api = App.API;
+        if (api is null)
+        {
+            return;
+        }
+
+        var message = string.Format(api.GetTranslation(messageKey), hotkeyString);
+        api.ShowMsgBox(message, api.GetTranslation("MessageBoxTitle"));
     }
 
     private static void OnToggleHotkey()
@@ -257,17 +287,13 @@ internal static class HotKeyMapper
     }
 
     /// <summary>
-    /// Cleanup and unregister all hotkeys.
+    /// Cleanup and unregister all hotkeys. The platform backend unregisters every remaining hotkey, so no
+    /// per-hotkey failure prompts are shown while exiting.
     /// </summary>
     internal static void Shutdown()
     {
-        RemoveToggleHotkey();
-
-        foreach (var hotkeyId in _customQueryHotkeyIds.Values)
-        {
-            GlobalHotkey.Unregister(hotkeyId);
-        }
-
+        _toggleHotkeyId = -1;
+        _toggleHotkeyString = string.Empty;
         _customQueryHotkeyIds.Clear();
         GlobalHotkey.Shutdown();
         Log.Info(ClassName, "HotKeyMapper shutdown");

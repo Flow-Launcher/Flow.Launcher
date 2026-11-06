@@ -11,33 +11,42 @@
              x:DataType="vm:GeneralSettingsViewModel">
 
     <ScrollViewer>
-        <StackPanel Spacing="4" Margin="0,18,25,30">
-            <TextBlock Text="{i18n:Localize general}" FontSize="28" FontWeight="SemiBold" Margin="0,0,0,8" />
+        <StackPanel Spacing="4" Margin="0,0,16,24">
+            <TextBlock Text="{i18n:Localize general}" Classes="pageTitle" Margin="0,0,0,12" />
 
             <ui:SettingsExpander Header="{i18n:Localize startFlowLauncherOnSystemStartup}"
-                                IconSource="Power"
+                                IconSource="Play"
                                 IsExpanded="False">
                 <ui:SettingsExpander.Footer>
                     <ToggleSwitch IsChecked="{Binding StartOnStartup}" />
                 </ui:SettingsExpander.Footer>
-                <ui:SettingsExpanderItem Content="{i18n:Localize useLogonTaskForStartup}"
-                                         Description="{i18n:Localize useLogonTaskForStartupTooltip}">
-                    <ui:SettingsExpanderItem.Footer>
-                        <ToggleSwitch IsChecked="{Binding UseLogonTaskForStartup}" />
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
+                <!-- Windows-only option; elsewhere ItemsSource stays unset, so the card has no chevron. -->
+                <ui:SettingsExpander.ItemsSource>
+                    <OnPlatform>
+                        <On Options="Windows">
+                            <Controls>
+                                <ui:SettingsExpanderItem Content="{i18n:Localize useLogonTaskForStartup}"
+                                                         Description="{i18n:Localize useLogonTaskForStartupTooltip}">
+                                    <ui:SettingsExpanderItem.Footer>
+                                        <ToggleSwitch IsChecked="{Binding UseLogonTaskForStartup}" />
+                                    </ui:SettingsExpanderItem.Footer>
+                                </ui:SettingsExpanderItem>
+                            </Controls>
+                        </On>
+                    </OnPlatform>
+                </ui:SettingsExpander.ItemsSource>
             </ui:SettingsExpander>
 
             <ui:SettingsExpander Header="{i18n:Localize hideOnStartup}"
                                 Description="{i18n:Localize hideOnStartupToolTip}"
-                                IconSource="Hide">
+                                IconSource="FullScreenMinimize">
                 <ui:SettingsExpander.Footer>
                     <ToggleSwitch IsChecked="{Binding HideOnStartup}" />
                 </ui:SettingsExpander.Footer>
             </ui:SettingsExpander>
 
             <ui:SettingsExpander Header="{i18n:Localize hideFlowLauncherWhenLoseFocus}"
-                                IconSource="Hide">
+                                IconSource="BackToWindow">
                 <ui:SettingsExpander.Footer>
                     <ToggleSwitch IsChecked="{Binding HideWhenDeactivated}" />
                 </ui:SettingsExpander.Footer>
@@ -53,7 +62,7 @@
 
             <ui:SettingsExpander Header="{i18n:Localize hideNotifyIcon}"
                                 Description="{i18n:Localize hideNotifyIconToolTip}"
-                                IconSource="Hide">
+                                IconSource="Pin">
                 <ui:SettingsExpander.Footer>
                     <ToggleSwitch IsChecked="{Binding HideNotifyIcon}" />
                 </ui:SettingsExpander.Footer>
@@ -68,7 +77,7 @@
             </ui:SettingsExpander>
 
             <ui:SettingsExpander Header="{i18n:Localize SearchWindowPosition}"
-                                IconSource="MoveUp"
+                                IconSource="MapPin"
                                 IsExpanded="False">
                 <ui:SettingsExpander.Footer>
                     <ComboBox ItemsSource="{Binding SearchWindowScreens}"
@@ -115,6 +124,7 @@
             </ui:SettingsExpander>
 
             <ui:SettingsExpander Header="{i18n:Localize AlwaysPreview}"
+                                Description="{Binding AlwaysPreviewToolTip}"
                                 IconSource="PreviewLink">
                 <ui:SettingsExpander.Footer>
                     <ToggleSwitch IsChecked="{Binding AlwaysPreview}" />
@@ -319,6 +329,21 @@
                                   IsVisible="{Binding UseDoublePinyin}" />
                     </ui:SettingsExpanderItem.Footer>
                 </ui:SettingsExpanderItem>
+                <ui:SettingsExpanderItem Content="{i18n:Localize UsePolyphonicPhraseOverrides}"
+                                         Description="{i18n:Localize UsePolyphonicPhraseOverridesToolTip}"
+                                         IsVisible="{Binding ShouldUsePinyin}">
+                    <ui:SettingsExpanderItem.Footer>
+                        <ToggleSwitch IsChecked="{Binding UsePolyphonicPhraseOverrides}" />
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+            </ui:SettingsExpander>
+
+            <ui:SettingsExpander Header="{i18n:Localize ignoreAccents}"
+                                Description="{i18n:Localize ignoreAccentsToolTip}"
+                                IconSource="Character">
+                <ui:SettingsExpander.Footer>
+                    <ToggleSwitch IsChecked="{Binding IgnoreAccents}" />
+                </ui:SettingsExpander.Footer>
             </ui:SettingsExpander>
 
             <ui:SettingsExpander Header="{i18n:Localize defaultFileManager}"
@@ -342,18 +367,28 @@
             </ui:SettingsExpander>
 
             <ui:SettingsExpander Header="{i18n:Localize pythonFilePath}"
-                                Description="{Binding PythonPath}"
                                 IconSource="Code">
                 <ui:SettingsExpander.Footer>
-                    <Button Content="{i18n:Localize select}" Command="{Binding SelectPythonCommand}" />
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <TextBox Width="300"
+                                 Text="{Binding PythonPath, Mode=TwoWay}"
+                                 Watermark="{i18n:Localize none}" />
+                        <Button Content="{i18n:Localize select}" Command="{Binding SelectPythonCommand}" />
+                        <Button Content="{i18n:Localize delete}" Command="{Binding ClearPythonCommand}" />
+                    </StackPanel>
                 </ui:SettingsExpander.Footer>
             </ui:SettingsExpander>
 
             <ui:SettingsExpander Header="{i18n:Localize nodeFilePath}"
-                                Description="{Binding NodePath}"
                                 IconSource="Code">
                 <ui:SettingsExpander.Footer>
-                    <Button Content="{i18n:Localize select}" Command="{Binding SelectNodeCommand}" />
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <TextBox Width="300"
+                                 Text="{Binding NodePath, Mode=TwoWay}"
+                                 Watermark="{i18n:Localize none}" />
+                        <Button Content="{i18n:Localize select}" Command="{Binding SelectNodeCommand}" />
+                        <Button Content="{i18n:Localize delete}" Command="{Binding ClearNodeCommand}" />
+                    </StackPanel>
                 </ui:SettingsExpander.Footer>
             </ui:SettingsExpander>
 

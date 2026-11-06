@@ -60,8 +60,8 @@
   <ItemGroup>
     <PackageReference Include="Flow.Launcher.Localization" Version="0.0.6" />
     <PackageReference Include="InputSimulator" Version="1.0.4" NoWarn="NU1701" />
-    <PackageReference Include="Avalonia" Version="11.2.3" ExcludeAssets="runtime" />
-    <PackageReference Include="FluentAvaloniaUI" Version="2.2.0" ExcludeAssets="runtime" />
+    <PackageReference Include="Avalonia" Version="11.3.22" ExcludeAssets="runtime" />
+    <PackageReference Include="FluentAvaloniaUI" Version="2.4.1" ExcludeAssets="runtime" />
   </ItemGroup>
 
   <!-- Copy plugin output to Avalonia build directory -->

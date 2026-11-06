@@ -648,7 +648,7 @@ namespace Flow.Launcher.Core.Plugin
         /// <returns></returns>
         public static PluginPair GetPluginForId(string id)
         {
-            return GetAllLoadedPlugins().FirstOrDefault(o => o.Metadata.ID == id);
+            return id != null && _allLoadedPlugins.TryGetValue(id, out var plugin) ? plugin : null;
         }
 
         #endregion

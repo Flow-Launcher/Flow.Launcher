@@ -17,9 +17,52 @@ namespace Flow.Launcher.Avalonia.ViewModel.SettingPages
     {
         public PluginStoreSettingsViewModel()
         {
+            SortModes = Enum.GetValues<PluginStoreSortMode>()
+                .Select(m => new SortModeItem(m))
+                .ToList();
+            _selectedSortModeItem = SortModes[0];
+
             // Fire and forget - load async without blocking
             _ = LoadPluginsAsync();
         }
+
+        public enum PluginStoreSortMode
+        {
+            Default,
+            Name,
+            ReleaseDate,
+            UpdatedDate
+        }
+
+        public sealed class SortModeItem
+        {
+            public SortModeItem(PluginStoreSortMode value)
+            {
+                Value = value;
+            }
+
+            public PluginStoreSortMode Value { get; }
+            public string Display => App.API.GetTranslation($"PluginStoreSortMode{Value}");
+        }
+
+        public sealed class PluginStoreGroup
+        {
+            public PluginStoreGroup(string category, IReadOnlyList<PluginStoreItemViewModel> items)
+            {
+                Header = App.API.GetTranslation($"pluginStore_{category}");
+                Items = items;
+            }
+
+            public string Header { get; }
+            public IReadOnlyList<PluginStoreItemViewModel> Items { get; }
+        }
+
+        public IReadOnlyList<SortModeItem> SortModes { get; }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(FilteredPlugins))]
+        [NotifyPropertyChangedFor(nameof(PluginGroups))]
+        private SortModeItem _selectedSortModeItem;
         
         [ObservableProperty]
         private bool _isLoading;
@@ -54,38 +97,63 @@ namespace Flow.Launcher.Avalonia.ViewModel.SettingPages
             var plugins = App.API.GetPluginManifest();
             if (plugins != null && plugins.Count > 0)
             {
-                ExternalPlugins = plugins
-                    .Select(p => new PluginStoreItemViewModel(p))
-                    .OrderByDescending(p => p.Category == PluginStoreItemViewModel.NewRelease)
-                    .ThenByDescending(p => p.Category == PluginStoreItemViewModel.RecentlyUpdated)
-                    .ThenByDescending(p => p.Category == PluginStoreItemViewModel.None)
-                    .ThenByDescending(p => p.Category == PluginStoreItemViewModel.Installed)
-                    .ToList();
+                foreach (var old in ExternalPlugins)
+                {
+                    old.StateChanged -= OnItemStateChanged;
+                }
+
+                var items = plugins.Select(p => new PluginStoreItemViewModel(p)).ToList();
+                foreach (var item in items)
+                {
+                    item.StateChanged += OnItemStateChanged;
+                }
+                ExternalPlugins = items;
             }
+        }
+
+        private void OnItemStateChanged()
+        {
+            OnPropertyChanged(nameof(FilteredPlugins));
+            OnPropertyChanged(nameof(PluginGroups));
+        }
+
+        private void RefreshAllItemStates()
+        {
+            foreach (var item in ExternalPlugins)
+            {
+                item.RefreshState();
+            }
+            OnItemStateChanged();
         }
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(FilteredPlugins))]
+        [NotifyPropertyChangedFor(nameof(PluginGroups))]
         private string _filterText = string.Empty;
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(FilteredPlugins))]
+        [NotifyPropertyChangedFor(nameof(PluginGroups))]
         private bool _showDotNet = true;
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(FilteredPlugins))]
+        [NotifyPropertyChangedFor(nameof(PluginGroups))]
         private bool _showPython = true;
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(FilteredPlugins))]
+        [NotifyPropertyChangedFor(nameof(PluginGroups))]
         private bool _showNodeJs = true;
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(FilteredPlugins))]
+        [NotifyPropertyChangedFor(nameof(PluginGroups))]
         private bool _showExecutable = true;
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(FilteredPlugins))]
+        [NotifyPropertyChangedFor(nameof(PluginGroups))]
         private IList<PluginStoreItemViewModel> _externalPlugins = new List<PluginStoreItemViewModel>();
 
         public IEnumerable<PluginStoreItemViewModel> FilteredPlugins
@@ -94,8 +162,57 @@ namespace Flow.Launcher.Avalonia.ViewModel.SettingPages
             {
                 if (ExternalPlugins == null) return new List<PluginStoreItemViewModel>();
 
-                return ExternalPlugins.Where(SatisfiesFilter);
+                return GetSortedPlugins(ExternalPlugins.Where(SatisfiesFilter));
             }
+        }
+
+        /// <summary>
+        /// Filtered + sorted plugins grouped by category (New release / Recently updated / Plugins / Installed in
+        /// default mode; Plugins / Installed otherwise), preserving sort order.
+        /// </summary>
+        public IReadOnlyList<PluginStoreGroup> PluginGroups
+        {
+            get
+            {
+                var isDefault = CurrentSortMode == PluginStoreSortMode.Default;
+                return FilteredPlugins
+                    .GroupBy(p => isDefault ? p.DefaultCategory : p.InstallCategory)
+                    .Select(g => new PluginStoreGroup(g.Key, g.ToList()))
+                    .ToList();
+            }
+        }
+
+        // The ComboBox may transiently push null while its items change.
+        private PluginStoreSortMode CurrentSortMode => SelectedSortModeItem?.Value ?? PluginStoreSortMode.Default;
+
+        private IList<PluginStoreItemViewModel> GetSortedPlugins(IEnumerable<PluginStoreItemViewModel> plugins)
+        {
+            return CurrentSortMode switch
+            {
+                PluginStoreSortMode.Name => plugins
+                    .OrderBy(p => p.LabelInstalled)
+                    .ThenBy(p => p.Name)
+                    .ToList(),
+
+                PluginStoreSortMode.ReleaseDate => plugins
+                    .OrderBy(p => p.LabelInstalled)
+                    .ThenByDescending(p => p.DateAdded.HasValue)
+                    .ThenByDescending(p => p.DateAdded)
+                    .ToList(),
+
+                PluginStoreSortMode.UpdatedDate => plugins
+                    .OrderBy(p => p.LabelInstalled)
+                    .ThenByDescending(p => p.UpdatedDate.HasValue)
+                    .ThenByDescending(p => p.UpdatedDate)
+                    .ToList(),
+
+                _ => plugins
+                    .OrderByDescending(p => p.DefaultCategory == PluginStoreItemViewModel.NewRelease)
+                    .ThenByDescending(p => p.DefaultCategory == PluginStoreItemViewModel.RecentlyUpdated)
+                    .ThenByDescending(p => p.DefaultCategory == PluginStoreItemViewModel.None)
+                    .ThenByDescending(p => p.DefaultCategory == PluginStoreItemViewModel.Installed)
+                    .ToList(),
+            };
         }
 
         private bool SatisfiesFilter(PluginStoreItemViewModel plugin)
@@ -173,6 +290,7 @@ namespace Flow.Launcher.Avalonia.ViewModel.SettingPages
                 if (!string.IsNullOrEmpty(file))
                 {
                     await PluginInstaller.InstallPluginAndCheckRestartAsync(file);
+                    RefreshAllItemStates();
                 }
             }
         }
@@ -185,7 +303,7 @@ namespace Flow.Launcher.Avalonia.ViewModel.SettingPages
                 silentUpdate: false);
         }
 
-        private static async Task ShowPluginUpdateWindowAsync(List<PluginUpdateInfo> plugins)
+        private async Task ShowPluginUpdateWindowAsync(List<PluginUpdateInfo> plugins)
         {
             try
             {
@@ -196,7 +314,10 @@ namespace Flow.Launcher.Avalonia.ViewModel.SettingPages
                 }
 
                 var dialog = new PluginUpdateWindow(plugins);
-                await dialog.ShowDialog<bool>(desktop.MainWindow);
+                if (await dialog.ShowDialog<bool>(desktop.MainWindow))
+                {
+                    RefreshAllItemStates();
+                }
             }
             catch (Exception ex)
             {

@@ -59,11 +59,20 @@
 
   <ItemGroup>
     <PackageReference Include="Flow.Launcher.Localization" Version="0.0.6" />
+    <PackageReference Include="Avalonia" Version="11.3.22" ExcludeAssets="runtime" />
+    <PackageReference Include="FluentAvaloniaUI" Version="2.4.1" ExcludeAssets="runtime" />
     <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.298">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
+
+  <Target Name="RemoveAvaloniaSettingsNativeAssets" AfterTargets="Build" BeforeTargets="CopyToAvaloniaOutput">
+    <ItemGroup>
+      <AvaloniaSettingsNativeAssets Include="$(OutputPath)runtimes\**\libSkiaSharp.*;$(OutputPath)runtimes\**\libHarfBuzzSharp.*" />
+    </ItemGroup>
+    <Delete Files="@(AvaloniaSettingsNativeAssets)" />
+  </Target>
 
   <!-- Copy plugin output to Avalonia build directory -->
   <Target Name="CopyToAvaloniaOutput" AfterTargets="Build">

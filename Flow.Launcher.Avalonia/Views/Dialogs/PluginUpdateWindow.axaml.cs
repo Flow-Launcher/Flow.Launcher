@@ -7,6 +7,8 @@ using System.Runtime.CompilerServices;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using Avalonia.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using FluentAvalonia.UI.Controls;
 using Flow.Launcher.Avalonia.Resource;
@@ -79,6 +81,18 @@ public partial class PluginUpdateWindow : Window, INotifyPropertyChanged
         Close(false);
     }
 
+    protected override void OnKeyDown(KeyEventArgs e)
+    {
+        if (e.Key == Key.Escape)
+        {
+            e.Handled = true;
+            Close(false);
+            return;
+        }
+
+        base.OnKeyDown(e);
+    }
+
     private string FormatPluginText(PluginUpdateInfo plugin)
     {
         var format = Translate("updatePluginCheckboxContent", "{0}: Update from v{1} to v{2}");
@@ -96,19 +110,20 @@ public partial class PluginUpdateWindow : Window, INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
-    public sealed class PluginUpdateItem
+    public sealed partial class PluginUpdateItem : ObservableObject
     {
         public PluginUpdateItem(PluginUpdateInfo plugin, string displayText)
         {
             Plugin = plugin;
             DisplayText = displayText;
-            IsSelected = true;
+            _isSelected = true;
         }
 
         public PluginUpdateInfo Plugin { get; }
 
         public string DisplayText { get; }
 
-        public bool IsSelected { get; set; }
+        [ObservableProperty]
+        private bool _isSelected;
     }
 }

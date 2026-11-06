@@ -11,6 +11,13 @@ internal sealed class Program
     [STAThread]
     public static void Main(string[] args)
     {
+        if (!Helper.SingleInstance.TryAcquire())
+        {
+            return;
+        }
+
+        AppContext.SetSwitch("Avalonia.Diagnostics.Diagnostic.IsEnabled", true);
+
         // Initialize WPF Application for plugins that rely on Application.Current.Resources
         if (System.Windows.Application.Current == null)
         {

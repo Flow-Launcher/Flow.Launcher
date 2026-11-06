@@ -1,6 +1,7 @@
 using System;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using Flow.Launcher.Avalonia.ViewModel.SettingPages;
 
@@ -13,6 +14,17 @@ public partial class PluginsSettingsPage : UserControl
         InitializeComponent();
         DataContext = new PluginsSettingsViewModel();
         DetachedFromVisualTree += OnDetachedFromVisualTree;
+        AddHandler(KeyDownEvent, OnPageKeyDown, RoutingStrategies.Tunnel);
+    }
+
+    private void OnPageKeyDown(object? sender, KeyEventArgs e)
+    {
+        if (e.Key == Key.F && (e.KeyModifiers & (KeyModifiers.Control | KeyModifiers.Meta)) != 0)
+        {
+            SearchTextBox.Focus();
+            SearchTextBox.SelectAll();
+            e.Handled = true;
+        }
     }
 
     private void OnDetachedFromVisualTree(object? sender, VisualTreeAttachmentEventArgs e)

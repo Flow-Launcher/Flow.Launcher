@@ -1,3 +1,4 @@
+using System.Windows.Media;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Specialized;
@@ -10,7 +11,6 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media;
 using Flow.Launcher.Avalonia.Views.Dialogs;
 using Flow.Launcher.Core;
 using Flow.Launcher.Infrastructure;
@@ -32,7 +32,7 @@ namespace Flow.Launcher.Avalonia;
 /// <summary>
 /// IPublicAPI implementation for the Avalonia host.
 /// </summary>
-public class AvaloniaPublicAPI : IPublicAPI
+public class AvaloniaPublicAPI : IPublicAPI, global::Flow.Launcher.Core.Storage.IRemovable
 {
     private readonly Settings _settings;
     private readonly Func<MainViewModel> _getMainViewModel;
@@ -43,7 +43,6 @@ public class AvaloniaPublicAPI : IPublicAPI
     private readonly object _globalKeyboardHandlersLock = new();
     private readonly List<Func<int, int, SpecialKeyState, bool>> _globalKeyboardHandlers = new();
     private Flow.Launcher.Core.Resource.Theme? _theme;
-    private bool _gameModeStatus;
 
     public AvaloniaPublicAPI(Settings settings, Func<MainViewModel> getMainViewModel, Internationalization i18n)
     {
@@ -51,12 +50,28 @@ public class AvaloniaPublicAPI : IPublicAPI
         _getMainViewModel = getMainViewModel;
         _i18n = i18n;
         Flow.Launcher.Infrastructure.Hotkey.GlobalHotkey.hookedKeyboardCallback = KListenerHookedKeyboardCallback;
+        global::Avalonia.Threading.Dispatcher.UIThread.Post(() =>
+        {
+            if (global::Avalonia.Application.Current is { } app)
+            {
+                app.ActualThemeVariantChanged += (_, _) =>
+                    ActualApplicationThemeChanged?.Invoke(
+                        app,
+                        new ActualApplicationThemeChangedEventArgs
+                        {
+                            IsDark = app.ActualThemeVariant == global::Avalonia.Styling.ThemeVariant.Dark
+                        });
+            }
+        });
     }
 
-#pragma warning disable CS0067
-    public event VisibilityChangedEventHandler? VisibilityChanged;
+    public event VisibilityChangedEventHandler VisibilityChanged
+    {
+        add => _getMainViewModel().VisibilityChanged += value;
+        remove => _getMainViewModel().VisibilityChanged -= value;
+    }
+
     public event ActualApplicationThemeChangedEventHandler? ActualApplicationThemeChanged;
-#pragma warning restore CS0067
     public event EventHandler StringMatcherBehaviorChanged
     {
         add => _settings.StringMatcherBehaviorChanged += value;
@@ -65,17 +80,7 @@ public class AvaloniaPublicAPI : IPublicAPI
 
 
     // Essential for plugins
-    public void ChangeQuery(string query, bool requery = false)
-    {
-        var mainViewModel = _getMainViewModel();
-        if (requery && string.Equals(mainViewModel.QueryText, query, StringComparison.Ordinal))
-        {
-            ReQuery();
-            return;
-        }
-
-        mainViewModel.QueryText = query;
-    }
+    public void ChangeQuery(string query, bool requery = false) => _getMainViewModel().ChangeQueryText(query, requery);
     
     public string GetTranslation(string key) => _i18n.GetTranslation(key);
     
@@ -92,8 +97,9 @@ public class AvaloniaPublicAPI : IPublicAPI
     public void LogException(string className, string message, Exception e, [CallerMemberName] string methodName = "") => Log.Exception(className, message, e, methodName);
 
     // Shell/URL operations
-    public void ShellRun(string cmd, string filename = "cmd.exe") => 
+    public void ShellRun(string cmd, string filename = "cmd.exe") =>
         System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo { FileName = filename, Arguments = $"/c {cmd}", UseShellExecute = true });
+
     public void OpenUrl(string url, bool? inPrivate = null) => OpenUri(new Uri(url), inPrivate);
     public void OpenUrl(Uri url, bool? inPrivate = null) => OpenUri(url, inPrivate);
     public void OpenWebUrl(string url, bool? inPrivate = null) => OpenUri(new Uri(url), inPrivate, true);
@@ -113,36 +119,21 @@ public class AvaloniaPublicAPI : IPublicAPI
                     ? FileNameOrFilePath
                     : Path.Combine(DirectoryPath, FileNameOrFilePath);
 
-            if (Path.GetFileNameWithoutExtension(explorerPath) == "explorer")
+            if (IsSystemFileManager(explorerPath))
             {
-                if (FileNameOrFilePath is null)
-                {
-                    using var explorer = new Process();
-                    explorer.StartInfo = new ProcessStartInfo
-                    {
-                        FileName = DirectoryPath,
-                        UseShellExecute = true
-                    };
-                    explorer.Start();
-                }
-                else
-                {
-                    Win32Helper.OpenFolderAndSelectFile(targetPath);
-                }
+                OpenInSystemFileManager(DirectoryPath, FileNameOrFilePath is null ? null : targetPath);
             }
             else
             {
                 using var explorer = new Process();
-                explorer.StartInfo = new ProcessStartInfo
-                {
-                    FileName = explorerInfo.Path.Replace("%d", DirectoryPath),
-                    UseShellExecute = true,
-                    Arguments = FileNameOrFilePath is null
+                explorer.StartInfo = CreateFileManagerStartInfo(
+                    explorerInfo.Path.Replace("%d", DirectoryPath),
+                    FileNameOrFilePath is null
                         ? explorerInfo.DirectoryArgument.Replace("%d", DirectoryPath)
                         : explorerInfo.FileArgument
                             .Replace("%d", DirectoryPath)
-                            .Replace("%f", targetPath)
-                };
+                            .Replace("%f", targetPath),
+                    targetPath);
                 explorer.Start();
             }
         }
@@ -161,6 +152,35 @@ public class AvaloniaPublicAPI : IPublicAPI
         }
     }
 
+    private static bool IsSystemFileManager(string explorerPath) =>
+        Path.GetFileNameWithoutExtension(explorerPath) == "explorer";
+
+    private static void OpenInSystemFileManager(string directoryPath, string? filePathToSelect)
+    {
+        if (filePathToSelect is null)
+        {
+            using var explorer = new Process();
+            explorer.StartInfo = new ProcessStartInfo
+            {
+                FileName = directoryPath,
+                UseShellExecute = true
+            };
+            explorer.Start();
+        }
+        else
+        {
+            Win32Helper.OpenFolderAndSelectFile(filePathToSelect);
+        }
+    }
+
+    private static ProcessStartInfo CreateFileManagerStartInfo(string fileName, string arguments, string targetPath) =>
+        new ProcessStartInfo
+        {
+            FileName = fileName,
+            UseShellExecute = true,
+            Arguments = arguments
+        };
+
     private void OpenUri(Uri uri, bool? inPrivate = null, bool forceBrowser = false)
     {
         if (uri.IsFile && !uri.LocalPath.FileOrLocationExists())
@@ -176,14 +196,7 @@ public class AvaloniaPublicAPI : IPublicAPI
 
             try
             {
-                if (browserInfo.OpenInTab)
-                {
-                    uri.AbsoluteUri.OpenInBrowserTab(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg, browserInfo.ExtraArgs);
-                }
-                else
-                {
-                    uri.AbsoluteUri.OpenInBrowserWindow(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg, browserInfo.ExtraArgs);
-                }
+                OpenInBrowser(uri.AbsoluteUri, browserInfo, path, inPrivate ?? browserInfo.EnablePrivate);
             }
             catch (Exception e)
             {
@@ -213,6 +226,18 @@ public class AvaloniaPublicAPI : IPublicAPI
         }
     }
 
+    private static void OpenInBrowser(string url, CustomBrowserViewModel browserInfo, string browserPath, bool inPrivate)
+    {
+        if (browserInfo.OpenInTab)
+        {
+            url.OpenInBrowserTab(browserPath, inPrivate, browserInfo.PrivateArg, browserInfo.ExtraArgs);
+        }
+        else
+        {
+            url.OpenInBrowserWindow(browserPath, inPrivate, browserInfo.PrivateArg, browserInfo.ExtraArgs);
+        }
+    }
+
     // Clipboard
     public async void CopyToClipboard(string text, bool directCopy = false, bool showDefaultNotification = true)
     {
@@ -224,11 +249,7 @@ public class AvaloniaPublicAPI : IPublicAPI
         var isFile = File.Exists(text);
         if (directCopy && (isFile || Directory.Exists(text)))
         {
-            var exception = await RetryActionOnStaThreadAsync(() =>
-            {
-                var paths = new StringCollection { text };
-                Clipboard.SetFileDropList(paths);
-            });
+            var exception = await SetClipboardFileDropListAsync(text);
 
             if (exception == null)
             {
@@ -246,7 +267,7 @@ public class AvaloniaPublicAPI : IPublicAPI
             return;
         }
 
-        var textException = await RetryActionOnStaThreadAsync(() => Clipboard.SetText(text));
+        var textException = await SetClipboardTextAsync(text);
         if (textException == null)
         {
             if (showDefaultNotification)
@@ -260,6 +281,16 @@ public class AvaloniaPublicAPI : IPublicAPI
             ShowMsgError(GetTranslation("failedToCopy"));
         }
     }
+
+    private static Task<Exception?> SetClipboardFileDropListAsync(string path) =>
+        RetryActionOnStaThreadAsync(() =>
+        {
+            var paths = new StringCollection { path };
+            Clipboard.SetFileDropList(paths);
+        });
+
+    private static Task<Exception?> SetClipboardTextAsync(string text) =>
+        RetryActionOnStaThreadAsync(() => Clipboard.SetText(text));
 
     private static async Task<Exception?> RetryActionOnStaThreadAsync(Action action, int retryCount = 6, int retryDelay = 150)
     {
@@ -333,6 +364,29 @@ public class AvaloniaPublicAPI : IPublicAPI
         }
     }
 
+    public void RemovePluginSettings(string assemblyName)
+    {
+        foreach (var keyValuePair in _pluginJsonStorages)
+        {
+            var name = keyValuePair.Value.GetType().GetField("AssemblyName")?.GetValue(keyValuePair.Value)?.ToString();
+            if (name == assemblyName)
+            {
+                _pluginJsonStorages.TryRemove(keyValuePair.Key, out _);
+            }
+        }
+    }
+
+    public void RemovePluginCaches(string cacheDirectory)
+    {
+        foreach (var keyValuePair in _pluginBinaryStorages)
+        {
+            if (keyValuePair.Key.Item2 == cacheDirectory)
+            {
+                _pluginBinaryStorages.TryRemove(keyValuePair.Key, out _);
+            }
+        }
+    }
+
     public void SavePluginSettings()
     {
         foreach (var savable in _pluginJsonStorages.Values)
@@ -363,7 +417,7 @@ public class AvaloniaPublicAPI : IPublicAPI
     {
         NotificationWindow.ShowNotification(title, subTitle, iconPath, buttonText, buttonAction);
     }
-    public void OpenSettingDialog() => _getMainViewModel()?.OpenSettings();
+    public void OpenSettingDialog() => global::Flow.Launcher.Avalonia.Views.SettingPages.SettingsWindow.Open();
     public bool OpenPluginSettingsWindow(string pluginId)
     {
         try
@@ -381,7 +435,7 @@ public class AvaloniaPublicAPI : IPublicAPI
 
             if (settingProvider.CreateSettingPanelAvalonia() != null)
             {
-                OpenSettingDialog();
+                global::Flow.Launcher.Avalonia.Views.SettingPages.SettingsWindow.Open(pluginId);
                 return true;
             }
 
@@ -397,6 +451,7 @@ public class AvaloniaPublicAPI : IPublicAPI
         catch (Exception e)
         {
             Log.Exception(nameof(AvaloniaPublicAPI), $"Failed to open plugin settings window for plugin id '{pluginId}'", e);
+            ShowMsgError(GetTranslation("pluginSettingsWindowOpenFailed"));
             return false;
         }
     }
@@ -430,9 +485,9 @@ public class AvaloniaPublicAPI : IPublicAPI
         storage.Save();
     }
 
-    public void ToggleGameMode() => _gameModeStatus = !_gameModeStatus;
-    public void SetGameMode(bool value) => _gameModeStatus = value;
-    public bool IsGameModeOn() => _gameModeStatus;
+    public void ToggleGameMode() => _getMainViewModel().ToggleGameMode();
+    public void SetGameMode(bool value) => _getMainViewModel().GameModeStatus = value;
+    public bool IsGameModeOn() => _getMainViewModel().GameModeStatus;
     public void ReQuery(bool reselect = true) => _getMainViewModel().ReQuery(reselect);
     public void BackToQueryResults() => _getMainViewModel().BackToQueryResults();
     public MessageBoxResult ShowMsgBox(string messageBoxText, string caption = "", MessageBoxButton button = MessageBoxButton.OK, MessageBoxImage icon = MessageBoxImage.None, MessageBoxResult defaultResult = MessageBoxResult.OK)
@@ -445,6 +500,9 @@ public class AvaloniaPublicAPI : IPublicAPI
 
         return System.Windows.MessageBox.Show(messageBoxText, caption, button, icon, defaultResult);
     }
+
+    public ValueTask<ImageSource> LoadImageAsync(string path, bool loadFullImage = false, bool cacheImage = true) =>
+        Flow.Launcher.Infrastructure.Image.ImageLoader.LoadAsync(path, loadFullImage, cacheImage);
     public Task ShowProgressBoxAsync(string caption, Func<Action<double>, Task> reportProgressAsync, Action? cancelProgress = null) =>
         ProgressBoxWindow.ShowAsync(caption, reportProgressAsync, cancelProgress);
     public void StartLoadingBar() => _getMainViewModel().IsQueryRunning = true;
@@ -487,9 +545,6 @@ public class AvaloniaPublicAPI : IPublicAPI
 
         await storage.SaveAsync();
     }
-
-    public ValueTask<ImageSource> LoadImageAsync(string path, bool loadFullImage = false, bool cacheImage = true) =>
-        Flow.Launcher.Infrastructure.Image.ImageLoader.LoadAsync(path, loadFullImage, cacheImage);
 
     public Task<bool> UpdatePluginManifestAsync(bool usePrimaryUrlOnly = false, CancellationToken token = default) =>
         PluginsManifest.UpdateManifestAsync(usePrimaryUrlOnly, token);

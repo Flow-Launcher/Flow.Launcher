@@ -31,6 +31,26 @@ namespace Flow.Launcher.Avalonia.Views.Controls
             }
         }
 
+        public static readonly StyledProperty<string> DefaultHotkeyProperty =
+            AvaloniaProperty.Register<HotkeyControl, string>(nameof(DefaultHotkey), string.Empty);
+
+        /// <summary>Hotkey restored by the recorder dialog's Reset button.</summary>
+        public string DefaultHotkey
+        {
+            get => GetValue(DefaultHotkeyProperty);
+            set => SetValue(DefaultHotkeyProperty, value);
+        }
+
+        public static readonly StyledProperty<string> WindowTitleProperty =
+            AvaloniaProperty.Register<HotkeyControl, string>(nameof(WindowTitle), string.Empty);
+
+        /// <summary>Recorder dialog title; empty uses the default "hotkeyRegTitle".</summary>
+        public string WindowTitle
+        {
+            get => GetValue(WindowTitleProperty);
+            set => SetValue(WindowTitleProperty, value);
+        }
+
         public ObservableCollection<string> KeysToDisplay { get; } = new();
 
         public static readonly DirectProperty<HotkeyControl, bool> UnregisterToggleHotkeyWhileRecordingProperty =
@@ -75,6 +95,15 @@ namespace Flow.Launcher.Avalonia.Views.Controls
             }
         }
 
+        // Mirrors WPF HotkeyControl.SetHotkey: only accept a hotkey that is valid and free (or explicitly taken over).
+        private bool IsAcceptable(string hotkey, bool overwrote)
+        {
+            var model = new HotkeyModel(hotkey);
+            if (!model.Validate(true))
+                return false;
+            return overwrote || hotkey == Hotkey || HotKeyMapper.CheckAvailability(model);
+        }
+
         private async Task OpenHotkeyRecorderDialog()
         {
             var originalHotkey = Hotkey;
@@ -87,10 +116,10 @@ namespace Flow.Launcher.Avalonia.Views.Controls
 
             try
             {
-                var dialog = new HotkeyRecorderDialog(Hotkey);
+                var dialog = new HotkeyRecorderDialog(Hotkey, DefaultHotkey, WindowTitle);
                 var result = await dialog.ShowAsync();
 
-                if (result == HotkeyRecorderDialog.EResultType.Save)
+                if (result == HotkeyRecorderDialog.EResultType.Save && IsAcceptable(dialog.ResultValue, dialog.Overwrote))
                 {
                     Hotkey = dialog.ResultValue;
 
