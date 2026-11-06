@@ -22,7 +22,12 @@ namespace Flow.Launcher.Plugin.WebSearch
 
         private readonly int scoreStandard = 50;
 
-        private readonly int scoreSuggestions = 48;
+        private readonly int scoreSuggestions = 49;
+
+        // Bonus applied to results of the search source that matches the typed action keyword.
+        // It must be greater than the gap between scoreStandard and scoreSuggestions, otherwise
+        // a global action keyword result outranks specific action keyword suggestions.
+        private const int ActionKeywordScoreBonus = 2;
 
         private readonly string SearchSourceGlobalPluginWildCardSign = "*";
 
@@ -44,8 +49,8 @@ namespace Flow.Launcher.Plugin.WebSearch
                 var title = keyword;
                 string subtitle = _context.API.GetTranslation("flowlauncher_plugin_websearch_search") + " " + searchSource.Title;
 
-                // Action Keyword match apear on top
-                var score = searchSource.ActionKeyword == SearchSourceGlobalPluginWildCardSign ? scoreStandard : scoreStandard + 1;
+                // Action Keyword match appear on top
+                var score = searchSource.ActionKeyword == SearchSourceGlobalPluginWildCardSign ? scoreStandard : scoreStandard + ActionKeywordScoreBonus;
 
                 // This populates the associated action keyword search entry
                 if (string.IsNullOrEmpty(keyword))
@@ -106,7 +111,7 @@ namespace Flow.Launcher.Plugin.WebSearch
                 var enumerable = suggestions?.ToList();
                 if (token.IsCancellationRequested || enumerable is not { Count: > 0 })
                     return;
-                
+
                 results.AddRange(enumerable);
 
                 token.ThrowIfCancellationRequested();
@@ -121,7 +126,7 @@ namespace Flow.Launcher.Plugin.WebSearch
                 return new List<Result>();
             }
             //Suggestions appear below actual result, and appear above global action keyword match if non-global;
-            var score = searchSource.ActionKeyword == SearchSourceGlobalPluginWildCardSign ? scoreSuggestions : scoreSuggestions + 1;
+            var score = searchSource.ActionKeyword == SearchSourceGlobalPluginWildCardSign ? scoreSuggestions : scoreSuggestions + ActionKeywordScoreBonus;
 
             var suggestions = await source.SuggestionsAsync(keyword, token).ConfigureAwait(false);
 
