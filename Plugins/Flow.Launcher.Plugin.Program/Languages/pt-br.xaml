@@ -8,10 +8,10 @@
     <system:String x:Key="flowlauncher_plugin_program_add">Adicionar</system:String>
     <system:String x:Key="flowlauncher_plugin_program_name">Nome</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable">Enable</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_enabled">Enabled</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enabled">Ativado</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable">Desativar</system:String>
     <system:String x:Key="flowlauncher_plugin_program_status">Status</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_true">Enabled</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_true">Ativado</system:String>
     <system:String x:Key="flowlauncher_plugin_program_false">Disabled</system:String>
     <system:String x:Key="flowlauncher_plugin_program_location">Local</system:String>
     <system:String x:Key="flowlauncher_plugin_program_all_programs">Todos os Programas</system:String>

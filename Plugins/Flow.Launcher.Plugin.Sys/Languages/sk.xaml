@@ -66,6 +66,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_logoff_computer">Naozaj sa chcete odhlásiť?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_error">Chyba</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_empty_recycle_bin_failed">Nepodarilo sa vyprázdniť kôš. Môže sa to stať, ak:{0}– Niektoré položky sa práve používajú{0}– Niektoré položky sa nedajú odstrániť pre nedostatočné oprávnenia{0}Prosím, ukončite každú aplikáciu, ktorá môže používať tieto súbory a skúste to znova.</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_suspend_failed">Počítač sa nepodarilo uspať alebo hibernovať.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_command_keyword_setting_window_title">Nastavenia kľúčového slova príkazu</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword">Vlastné kľúčové slovo príkazu</system:String>

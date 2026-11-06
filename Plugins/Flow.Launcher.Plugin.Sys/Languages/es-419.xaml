@@ -66,13 +66,14 @@
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_logoff_computer">Are you sure you want to log off?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_error">Error</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_empty_recycle_bin_failed">Failed to empty the recycle bin. This might happen if:{0}- Some items are currently in use{0}- Some items can't be deleted due to permissions{0}Please close any applications that might be using these files and try again.</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_suspend_failed">Failed to put the computer to sleep or hibernate.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_command_keyword_setting_window_title">Command Keyword Setting</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword">Custom Command Keyword</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword_tip">Enter a keyword to search for command: {0}. This keyword is used to match your query.</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_command_keyword">Command Keyword</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_reset">Reset</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_confirm">Confirm</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_confirm">Confirmar</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_cancel">Cancelar</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_input_command_keyword">Please enter a non-empty command keyword</system:String>
 

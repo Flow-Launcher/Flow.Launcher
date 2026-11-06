@@ -136,6 +136,8 @@
     <system:String x:Key="ShouldUseDoublePinyin">Utiliser Double Pinyin</system:String>
     <system:String x:Key="ShouldUseDoublePinyinToolTip">Utilisez Double Pinyin au lieu de Full Pinyin pour rechercher.</system:String>
     <system:String x:Key="DoublePinyinSchema">Schéma double Pinyin</system:String>
+    <system:String x:Key="UsePolyphonicPhraseOverrides">Use polyphonic phrase pronunciations</system:String>
+    <system:String x:Key="UsePolyphonicPhraseOverridesToolTip">Use phrase-level pronunciation data to improve Pinyin conversion for polyphonic Chinese characters. This may use additional memory.</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoHe">Xiao He</system:String>
     <system:String x:Key="DoublePinyinSchemasZiRanMa">Zi Ran Ma</system:String>
     <system:String x:Key="DoublePinyinSchemasWeiRuan">Wei Ruan</system:String>
@@ -327,6 +329,13 @@
     <system:String x:Key="ColorSchemeSystem">Suivre le système</system:String>
     <system:String x:Key="ColorSchemeLight">Clair</system:String>
     <system:String x:Key="ColorSchemeDark">Sombre</system:String>
+    <system:String x:Key="CodeHighlightTheme">Code Highlight Theme</system:String>
+    <system:String x:Key="CodeHighlightThemeTooltip">Syntax highlighting theme for code blocks in the markdown preview pane.</system:String>
+    <system:String x:Key="CodeHighlightThemeAuto">Auto (match color scheme)</system:String>
+    <system:String x:Key="CodeHighlightThemeVSCodeLight">VS Code Light</system:String>
+    <system:String x:Key="CodeHighlightThemeVSCodeDarkPlus">VS Code Dark+</system:String>
+    <system:String x:Key="CodeHighlightThemeCatppuccinMacchiato">Catppuccin Macchiato</system:String>
+    <system:String x:Key="CodeHighlightThemeOneDark">One Dark</system:String>
     <system:String x:Key="SoundEffect">Effet Sonore</system:String>
     <system:String x:Key="SoundEffectTip">Jouer un petit son lorsque la fenêtre de recherche s'ouvre</system:String>
     <system:String x:Key="SoundEffectVolume">Volume de l'effet sonore</system:String>
@@ -487,9 +496,21 @@
     <system:String x:Key="clearcachefolderMessage">Êtes-vous sûr de vouloir supprimer tous les caches ?</system:String>
     <system:String x:Key="clearfolderfailMessage">Échec de l'effacement d'une partie des dossiers et des fichiers. Veuillez consulter le fichier journal pour plus d'informations</system:String>
     <system:String x:Key="welcomewindow">Assistant</system:String>
+    <system:String x:Key="openWelcomeWindow">Open Welcome Window</system:String>
     <system:String x:Key="userdatapath">Emplacement des données utilisateur</system:String>
     <system:String x:Key="userdatapathToolTip">Les paramètres utilisateur et les plugins installés sont enregistrés dans le dossier des données utilisateur. Cet emplacement peut varier selon que vous soyez en mode portable ou non.</system:String>
     <system:String x:Key="userdatapathButton">Ouvrir le dossier</system:String>
+    <system:String x:Key="openFolderButton">Ouvrir le dossier</system:String>
+    <system:String x:Key="devtoolsReportWindow">Report Window</system:String>
+    <system:String x:Key="devtoolsProgressWindow">Progress Window</system:String>
+    <system:String x:Key="devtoolsPluginUpdateWindow">Plugin Update Window</system:String>
+    <system:String x:Key="devtoolsMessageBoxWindow">Message Box Window</system:String>
+    <system:String x:Key="devtoolsMessageBoxOkLabel">Ok</system:String>
+    <system:String x:Key="devtoolsMessageBoxOkCancelLabel">OK / Cancel</system:String>
+    <system:String x:Key="devtoolsMessageBoxYesNoLabel">Yes / No</system:String>
+    <system:String x:Key="devtoolsMessageBoxYesNoCancelLabel">Yes / No / Cancel</system:String>
+    <system:String x:Key="devtoolsMessageBoxTestMessage">This is a test message box.</system:String>
+    <system:String x:Key="devtoolsOpenTestWindow">Open Test Window</system:String>
     <system:String x:Key="advanced">Avancé</system:String>
     <system:String x:Key="logLevel">Niveau de journalisation</system:String>
     <system:String x:Key="LogLevelNONE">Silencieux</system:String>
@@ -532,7 +553,7 @@
     <system:String x:Key="defaultBrowser_newWindow">Nouvelle fenêtre</system:String>
     <system:String x:Key="defaultBrowser_newTab">Nouvel onglet</system:String>
     <system:String x:Key="defaultBrowser_parameter">Mode privé</system:String>
-    <system:String x:Key="defaultBrowser_extraArgs">Extra Args</system:String>
+    <system:String x:Key="defaultBrowser_extraArgs">Arguments supplémentaires</system:String>
     <system:String x:Key="defaultBrowser_default">Par défaut</system:String>
     <system:String x:Key="defaultBrowser_new_profile">Nouveau profil</system:String>
 
