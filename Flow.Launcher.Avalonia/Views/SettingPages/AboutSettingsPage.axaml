@@ -1,0 +1,104 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
+             xmlns:vm="using:Flow.Launcher.Avalonia.ViewModel.SettingPages"
+             xmlns:i18n="using:Flow.Launcher.Avalonia.Resource"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+             x:Class="Flow.Launcher.Avalonia.Views.SettingPages.AboutSettingsPage"
+             x:DataType="vm:AboutSettingsViewModel">
+
+    <ScrollViewer>
+        <StackPanel Margin="20" Spacing="16">
+            <ui:SettingsExpander Header="{i18n:Localize version}"
+                                Description="{Binding Version}"
+                                IconSource="Info">
+                <ui:SettingsExpander.Footer>
+                    <WrapPanel Orientation="Horizontal">
+                        <Button Content="{i18n:Localize checkUpdates}" Command="{Binding UpdateAppCommand}" Margin="0,0,8,8" />
+                        <Button Content="{i18n:Localize BecomeASponsor}" Command="{Binding OpenSponsorPageCommand}" Classes="accent" Margin="0,0,8,8" />
+                    </WrapPanel>
+                </ui:SettingsExpander.Footer>
+            </ui:SettingsExpander>
+
+            <ui:SettingsExpander Header="{i18n:Localize releaseNotes}"
+                                Description="{Binding ReleaseNotesUrl}"
+                                IconSource="Bookmarks">
+                <ui:SettingsExpander.Footer>
+                    <WrapPanel Orientation="Horizontal">
+                        <Button Content="{i18n:Localize releaseNotes}" Command="{Binding OpenReleaseNotesCommand}" Margin="0,0,8,8" />
+                        <Button Content="{i18n:Localize welcomewindow}" Command="{Binding OpenWelcomeCommand}" Margin="0,0,8,8" />
+                    </WrapPanel>
+                </ui:SettingsExpander.Footer>
+            </ui:SettingsExpander>
+
+            <ui:SettingsExpander Header="{i18n:Localize userdatapath}"
+                                Description="{i18n:Localize userdatapathToolTip}"
+                                IconSource="FolderOpen">
+                <ui:SettingsExpander.Footer>
+                    <Button Content="{i18n:Localize userdatapathButton}" Command="{Binding OpenParentOfSettingsFolderCommand}" />
+                </ui:SettingsExpander.Footer>
+            </ui:SettingsExpander>
+
+            <ui:SettingsExpander Header="{i18n:Localize website}"
+                                Description="Flow Launcher web resources"
+                                IconSource="World">
+                <ui:SettingsExpander.Footer>
+                    <WrapPanel Orientation="Horizontal">
+                        <Button Content="{i18n:Localize website}" Command="{Binding OpenWebsiteCommand}" Margin="0,0,8,8" />
+                        <Button Content="{i18n:Localize documentation}" Command="{Binding OpenDocumentationCommand}" Margin="0,0,8,8" />
+                        <Button Content="{i18n:Localize github}" Command="{Binding OpenGitHubCommand}" Margin="0,0,8,8" />
+                        <Button Content="{i18n:Localize crowdin}" Command="{Binding OpenCrowdinCommand}" Margin="0,0,8,8" />
+                        <Button Content="{i18n:Localize icons}" Command="{Binding OpenIconsWebsiteCommand}" Margin="0,0,8,8" />
+                    </WrapPanel>
+                </ui:SettingsExpander.Footer>
+            </ui:SettingsExpander>
+
+            <ui:SettingsExpander Header="{i18n:Localize devtool}"
+                                Description="Folders and cleanup tools"
+                                IconSource="DeveloperTools">
+                <ui:SettingsExpander.Footer>
+                    <WrapPanel Orientation="Horizontal">
+                        <Button Content="{Binding CacheFolderSize}" Command="{Binding AskClearCacheFolderConfirmationCommand}" Margin="0,0,8,8" />
+                        <Button Content="{Binding LogFolderSize}" Command="{Binding AskClearLogFolderConfirmationCommand}" Margin="0,0,8,8" />
+                        <Button Content="{i18n:Localize settingfolder}" Command="{Binding OpenSettingsFolderCommand}" Margin="0,0,8,8" />
+                        <Button Content="{i18n:Localize logfolder}" Command="{Binding OpenLogsFolderCommand}" Margin="0,0,8,8" />
+                        <Button Content="{i18n:Localize cachefolder}" Command="{Binding OpenCacheFolderCommand}" Margin="0,0,8,8" />
+                    </WrapPanel>
+                </ui:SettingsExpander.Footer>
+            </ui:SettingsExpander>
+
+            <ui:SettingsExpander Header="{i18n:Localize advanced}"
+                                Description="Advanced application options"
+                                IconSource="Settings">
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsExpanderItem Content="{i18n:Localize logLevel}">
+                        <ComboBox ItemsSource="{Binding LogLevels}"
+                                  SelectedItem="{Binding SelectedLogLevelItem, Mode=TwoWay}"
+                                  Width="180">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Display}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </ui:SettingsExpanderItem>
+
+                    <ui:SettingsExpanderItem Content="{i18n:Localize settingWindowFontTitle}">
+                        <StackPanel Orientation="Horizontal" Spacing="12">
+                            <Button Content="{i18n:Localize commonReset}" Command="{Binding ResetSettingWindowFontCommand}" />
+                            <ComboBox ItemsSource="{Binding AvailableFonts}"
+                                      SelectedItem="{Binding SettingWindowFont, Mode=TwoWay}"
+                                      Width="260" />
+                        </StackPanel>
+                    </ui:SettingsExpanderItem>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
+
+            <TextBlock HorizontalAlignment="Center"
+                       Foreground="Gray"
+                       Text="{Binding ActivatedTimes}" />
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

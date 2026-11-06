@@ -61,6 +61,9 @@
   </ItemGroup>
   
   <ItemGroup>
+    <PackageReference Include="Avalonia" Version="11.2.3" ExcludeAssets="runtime" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="FluentAvaloniaUI" Version="2.2.0" ExcludeAssets="runtime" />
     <PackageReference Include="ini-parser" Version="2.5.2" />
     <PackageReference Include="MemoryPack" Version="1.21.4" />
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="9.0.9" />
@@ -70,5 +73,27 @@
     </PackageReference>
     <PackageReference Include="NLog" Version="6.0.4" />
   </ItemGroup>
+
+  <!-- Copy plugin output to Avalonia build directory -->
+  <Target Name="RemoveAvaloniaSettingsNativeAssets" AfterTargets="Build" BeforeTargets="CopyToAvaloniaOutput">
+    <ItemGroup>
+      <AvaloniaSettingsNativeAssets Include="$(OutputPath)runtimes\**\libSkiaSharp.*;$(OutputPath)runtimes\**\libHarfBuzzSharp.*" />
+    </ItemGroup>
+    <Delete Files="@(AvaloniaSettingsNativeAssets)" />
+  </Target>
+
+  <Target Name="CopyToAvaloniaOutput" AfterTargets="Build">
+    <PropertyGroup>
+      <AvaloniaPluginDir>..\..\Output\Avalonia\$(Configuration)\Plugins\$(AssemblyName)\</AvaloniaPluginDir>
+      <PluginOutputDir>$([MSBuild]::EnsureTrailingSlash('$(OutputPath)'))</PluginOutputDir>
+    </PropertyGroup>
+    <ItemGroup>
+      <PluginFiles Include="$(PluginOutputDir)**\*.*" Exclude="$(PluginOutputDir)runtimes\**\*.*" />
+      <PluginWindowsRuntimeFiles Include="$(PluginOutputDir)runtimes\**\*.*"
+                                 Exclude="$(PluginOutputDir)runtimes\linux*\**\*.*;$(PluginOutputDir)runtimes\osx*\**\*.*;$(PluginOutputDir)runtimes\unix*\**\*.*;$(PluginOutputDir)runtimes\browser*\**\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(PluginFiles)" DestinationFolder="$(AvaloniaPluginDir)%(RecursiveDir)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(PluginWindowsRuntimeFiles)" DestinationFolder="$(AvaloniaPluginDir)runtimes\%(RecursiveDir)" SkipUnchangedFiles="true" />
+  </Target>
 
 </Project>
