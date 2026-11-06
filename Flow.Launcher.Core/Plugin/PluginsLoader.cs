@@ -149,7 +149,7 @@ namespace Flow.Launcher.Core.Plugin
                 {
                     return new PluginPair
                     {
-                        Plugin = new ExecutablePlugin(metadata.ExecuteFilePath),
+                        Plugin = new ExecutablePluginV2(metadata.ExecuteFilePath),
                         Metadata = metadata
                     };
                 });

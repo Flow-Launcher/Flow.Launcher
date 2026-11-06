@@ -9,6 +9,7 @@ UnhookWindowsHookEx
 CallNextHookEx
 GetModuleHandle
 GetKeyState
+GetAsyncKeyState
 VIRTUAL_KEY
 
 EnumWindows
@@ -48,6 +49,7 @@ OleUninitialize
 
 GetKeyboardLayout
 GetWindowThreadProcessId
+GetGUIThreadInfo
 ActivateKeyboardLayout
 GetKeyboardLayoutList
 PostMessage
