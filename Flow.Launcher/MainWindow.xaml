@@ -88,13 +88,8 @@
                     VerticalAlignment="Center"
                     Visibility="{Binding IsErrorVisible, Converter={StaticResource BoolToVisibilityConverter}}">
                     <TextBlock
-                        FontSize="16"
-                        FontWeight="SemiBold"
-                        Foreground="{DynamicResource Color10B}"
-                        Style="{DynamicResource SettingTitleLabel}"
-                        Text="{Binding LoadErrorMessage}"
-                        TextWrapping="Wrap"
-                        VerticalAlignment="Center" />
+                        Style="{DynamicResource PreviewContentErrorStyle}"
+                        Text="{Binding LoadErrorMessage}" />
                 </Border>
             </Grid>
         </DataTemplate>
