@@ -42,6 +42,14 @@
     <system:String x:Key="registerHotkeyFailed">Failed to register hotkey "{0}". The hotkey may be in use by another program. Change to a different hotkey, or exit another program.</system:String>
     <system:String x:Key="unregisterHotkeyFailed">Failed to unregister hotkey "{0}". Please try again or see log for details</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
+    <system:String x:Key="deepLinkUnrecognizedTitle">Unrecognized Flow Launcher link</system:String>
+    <system:String x:Key="deepLinkUnrecognizedSubtitle">The link "{0}" is not supported by this version of Flow Launcher.</system:String>
+    <system:String x:Key="deepLinkInstallInvalidTitle">Invalid plugin install link</system:String>
+    <system:String x:Key="deepLinkInstallInvalidSubtitle">A plugin install link must contain exactly one of: path, id, or url.</system:String>
+    <system:String x:Key="deepLinkInstallFileNotFound">Plugin package not found: {0}</system:String>
+    <system:String x:Key="deepLinkInstallPluginNotFound">No plugin with id "{0}" was found in the plugin store.</system:String>
+    <system:String x:Key="deepLinkInstallHttpsOnly">Plugin install links must use an https download URL.</system:String>
+    <system:String x:Key="deepLinkManifestUpdateFailed">Could not load the plugin store manifest. Check your internet connection and try again.</system:String>
     <system:String x:Key="couldnotStartCmd">Could not start {0}</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Invalid Flow Launcher plugin file format</system:String>
     <system:String x:Key="setAsTopMostInThisQuery">Set as topmost in this query</system:String>
@@ -189,6 +197,9 @@
     <system:String x:Key="autoRestartAfterChangingToolTip">Restart Flow Launcher automatically after installing/uninstalling/updating plugin via Plugin Store</system:String>
     <system:String x:Key="showUnknownSourceWarning">Show unknown source warning</system:String>
     <system:String x:Key="showUnknownSourceWarningToolTip">Show warning when installing plugins from unknown sources</system:String>
+    <system:String x:Key="enableDeepLinkProtocol">Allow websites to open Flow Launcher</system:String>
+    <system:String x:Key="enableDeepLinkProtocolToolTip">Handle flow-launcher:// links from browsers and other applications. Plugin installs always ask for confirmation.</system:String>
+    <system:String x:Key="enableDeepLinkProtocolFailed">Error setting deep link protocol registration</system:String>
     <system:String x:Key="autoUpdatePlugins">Auto update plugins</system:String>
     <system:String x:Key="autoUpdatePluginsToolTip">Automatically check plugin updates and notify if there are any updates available</system:String>
 
@@ -280,6 +291,7 @@
     <system:String x:Key="ZipFileNotHavePluginJson">Zip file does not have a valid plugin.json configuration</system:String>
     <system:String x:Key="InstallFromUnknownSourceTitle">Installing from an unknown source</system:String>
     <system:String x:Key="InstallFromUnknownSourceSubtitle">This plugin is from an unknown source and it may contain potential risks!{0}{0}Please ensure you understand where this plugin is from and that it is safe.{0}{0}Would you like to continue still?{0}{0}(You can switch off this warning in general section of setting window)</system:String>
+    <system:String x:Key="UnknownPluginAuthor">Unknown</system:String>
     <system:String x:Key="ZipFiles">Zip files</system:String>
     <system:String x:Key="SelectZipFile">Please select zip file</system:String>
     <system:String x:Key="installLocalPluginTooltip">Install plugin from local path</system:String>
