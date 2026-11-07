@@ -316,7 +316,10 @@ namespace Flow.Launcher.Plugin.Program
             }
             else
             {
+                Win32.SeedParsedPrograms(_win32s);
                 WatchProgramUpdate();
+                // Catch files added, changed or removed while Flow was closed; with the seeded memo this is cheap.
+                _ = Task.Run(() => IndexWin32ProgramsAsync(resetCache: true));
             }
 
             Context.API.StringMatcherBehaviorChanged += API_StringMatcherBehaviorChanged;
@@ -339,12 +342,14 @@ namespace Flow.Launcher.Plugin.Program
             ResetCache();
         }
 
-        public static async Task IndexWin32ProgramsAsync(bool resetCache)
+        // Only a full reindex updates LastIndexTime: incremental passes (watcher, startup catch-up) must not
+        // postpone the periodic full reindex, which also catches what the memo and watchers can't see.
+        public static async Task IndexWin32ProgramsAsync(bool resetCache, bool fullReindex = false)
         {
             await _win32sLock.WaitAsync();
             try
             {
-                var win32S = Win32.All(_settings);
+                var win32S = await RunBelowNormalAsync(() => Win32.All(_settings));
                 _win32s.Clear();
                 foreach (var win32 in win32S)
                 {
@@ -355,9 +360,12 @@ namespace Flow.Launcher.Plugin.Program
                     ResetCache();
                 }
                 await Context.API.SaveCacheBinaryStorageAsync<List<Win32>>(Win32CacheName, Context.CurrentPluginMetadata.PluginCacheDirectoryPath);
-                lock (_lastIndexTimeLock)
+                if (fullReindex)
                 {
-                    _settings.LastIndexTime = DateTime.Now;
+                    lock (_lastIndexTimeLock)
+                    {
+                        _settings.LastIndexTime = DateTime.Now;
+                    }
                 }
             }
             catch (Exception e)
@@ -370,7 +378,7 @@ namespace Flow.Launcher.Plugin.Program
             }
         }
 
-        public static async Task IndexUwpProgramsAsync(bool resetCache)
+        public static async Task IndexUwpProgramsAsync(bool resetCache, bool fullReindex = false)
         {
             await _uwpsLock.WaitAsync();
             try
@@ -386,9 +394,12 @@ namespace Flow.Launcher.Plugin.Program
                     ResetCache();
                 }
                 await Context.API.SaveCacheBinaryStorageAsync<List<UWPApp>>(UwpCacheName, Context.CurrentPluginMetadata.PluginCacheDirectoryPath);
-                lock (_lastIndexTimeLock)
+                if (fullReindex)
                 {
-                    _settings.LastIndexTime = DateTime.Now;
+                    lock (_lastIndexTimeLock)
+                    {
+                        _settings.LastIndexTime = DateTime.Now;
+                    }
                 }
             }
             catch (Exception e)
@@ -401,16 +412,32 @@ namespace Flow.Launcher.Plugin.Program
             }
         }
 
+        // Indexing is background work: run it on a below-normal thread so it never competes with foreground apps.
+        private static Task<T> RunBelowNormalAsync<T>(Func<T> work)
+        {
+            var tcs = new TaskCompletionSource<T>(TaskCreationOptions.RunContinuationsAsynchronously);
+            new Thread(() =>
+            {
+                try { tcs.SetResult(work()); }
+                catch (Exception e) { tcs.SetException(e); }
+            })
+            { IsBackground = true, Priority = ThreadPriority.BelowNormal, Name = "Program plugin indexer" }.Start();
+            return tcs.Task;
+        }
+
         public static async Task IndexProgramsAsync()
         {
+            // Full reindex (startup / settings / manual "Reindex"): re-read every file from scratch.
+            Win32.ClearParsedPrograms();
+            UWPPackage.ClearParsedPackages();
             var win32Task = Task.Run(async () =>
             {
-                await Context.API.StopwatchLogInfoAsync(ClassName, "Win32Program index cost", () => IndexWin32ProgramsAsync(resetCache: true));
+                await Context.API.StopwatchLogInfoAsync(ClassName, "Win32Program index cost", () => IndexWin32ProgramsAsync(resetCache: true, fullReindex: true));
             });
 
             var uwpTask = Task.Run(async () =>
             {
-                await Context.API.StopwatchLogInfoAsync(ClassName, "UWPProgram index cost", () => IndexUwpProgramsAsync(resetCache: true));
+                await Context.API.StopwatchLogInfoAsync(ClassName, "UWPProgram index cost", () => IndexUwpProgramsAsync(resetCache: true, fullReindex: true));
             });
 
             await Task.WhenAll(win32Task, uwpTask).ConfigureAwait(false);
