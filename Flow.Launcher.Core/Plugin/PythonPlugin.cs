@@ -1,9 +1,9 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Flow.Launcher.Core.ExternalPlugins.PythonDependencies;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin;
 
@@ -12,9 +12,13 @@ namespace Flow.Launcher.Core.Plugin
     internal class PythonPlugin : JsonRPCPlugin
     {
         private readonly ProcessStartInfo _startInfo;
+        private readonly string _pythonExecutable;
+        private readonly PythonDependencyInstaller _installer;
 
-        public PythonPlugin(string filename)
+        public PythonPlugin(string filename, PythonDependencyInstaller installer)
         {
+            _pythonExecutable = filename;
+            _installer = installer;
             _startInfo = new ProcessStartInfo
             {
                 FileName = filename,
@@ -29,6 +33,7 @@ namespace Flow.Launcher.Core.Plugin
             // Prevent Python from writing .py[co] files.
             // Because .pyc contains location infos which will prevent python portable.
             _startInfo.EnvironmentVariables["PYTHONDONTWRITEBYTECODE"] = "1";
+            PythonEnvironmentVariables.DisableUserSiteForFlowRuntime(_startInfo.EnvironmentVariables, filename);
 
             _startInfo.EnvironmentVariables["FLOW_VERSION"] = Constant.Version;
             _startInfo.EnvironmentVariables["FLOW_PROGRAM_DIRECTORY"] = Constant.ProgramDirectory;
@@ -53,49 +58,27 @@ namespace Flow.Launcher.Core.Plugin
 
         public override async Task InitAsync(PluginInitContext context)
         {
-            // Run .py files via `-c <code>`
-            if (context.CurrentPluginMetadata.ExecuteFilePath.EndsWith(".py", StringComparison.OrdinalIgnoreCase))
+            var metadata = context.CurrentPluginMetadata;
+            string sitePackages = null;
+            if (metadata.Dependencies is { Count: > 0 })
             {
-                var rootDirectory = context.CurrentPluginMetadata.PluginDirectory;
-                var libDirectory = Path.Combine(rootDirectory, "lib");
-                var libPyWin32Directory = Path.Combine(libDirectory, "win32");
-                var libPyWin32LibDirectory = Path.Combine(libPyWin32Directory, "lib");
-                var pluginDirectory = Path.Combine(rootDirectory, "plugin");
-
-                // This makes it easier for plugin authors to import their own modules.
-                // They won't have to add `.`, `./lib`, or `./plugin` to their sys.path manually.
-                // Instead of running the .py file directly, we pass the code we want to run as a CLI argument.
-                // This code sets sys.path for the plugin author and then runs the .py file via runpy.
-                _startInfo.ArgumentList.Add("-c");
-                _startInfo.ArgumentList.Add(
-                    $"""
-                     import sys
-                     sys.path.append(r'{rootDirectory}')
-                     sys.path.append(r'{libDirectory}')
-                     sys.path.append(r'{libPyWin32LibDirectory}')
-                     sys.path.append(r'{libPyWin32Directory}')
-                     sys.path.append(r'{pluginDirectory}')
-
-                     import runpy
-                     runpy.run_path(r'{context.CurrentPluginMetadata.ExecuteFilePath}', None, '__main__')
-                     """
-                );
-                // Plugins always expect the JSON data to be in the third argument
-                // (we're always setting it as _startInfo.ArgumentList[2] = ...).
-                _startInfo.ArgumentList.Add("");
+                await _installer.CleanupStaleInstallsAsync(metadata.ID);
+                sitePackages = await _installer.EnsureInstalledAsync(metadata, _pythonExecutable, CancellationToken.None);
             }
-            // Run .pyz files as is
             else
             {
-                // No need for -B flag because we're using PYTHONDONTWRITEBYTECODE env variable now,
-                // but the plugins still expect data to be sent as the third argument, so we're keeping
-                // the flag here, even though it's not necessary anymore.
-                _startInfo.ArgumentList.Add("-B");
-                _startInfo.ArgumentList.Add(context.CurrentPluginMetadata.ExecuteFilePath);
-                // Plugins always expect the JSON data to be in the third argument
-                // (we're always setting it as _startInfo.ArgumentList[2] = ...).
-                _startInfo.ArgumentList.Add("");
+                // An update may have dropped all dependencies, and nothing of this plugin is running yet.
+                await _installer.DeleteDependenciesAsync(metadata.ID);
             }
+
+            foreach (var argument in PythonLaunchArguments.Build(metadata, sitePackages, v1: true))
+            {
+                _startInfo.ArgumentList.Add(argument);
+            }
+
+            // Plugins always expect the JSON data to be in the third argument
+            // (we're always setting it as _startInfo.ArgumentList[2] = ...).
+            _startInfo.ArgumentList.Add("");
 
             await base.InitAsync(context);
             _startInfo.WorkingDirectory = context.CurrentPluginMetadata.PluginDirectory;
