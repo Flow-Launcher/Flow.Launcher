@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Windows;
 using System.Windows.Data;
+using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.ViewModel;
@@ -87,6 +88,66 @@ public class ResultsViewModelNavigationTest
         viewModel.SelectPrevResult();
 
         Assert.That(viewModel.SelectedIndex, Is.EqualTo(16));
+    }
+
+    [Test]
+    public void PageNavigationUsesVisibleRowsWhenPreviewIsOn()
+    {
+        // Preview reserves enough space for its minimum usable height.
+        const int resultCount = 17;
+        const int configuredPageSize = 3;
+        const int startingIndex = 0;
+        var viewModel = CreateViewModel(resultCount, configuredPageSize, startingIndex, previewVisible: true);
+        var expectedVisibleRows = (int)Math.Ceiling(Constant.PreviewMinimumHeight / viewModel.ItemHeightSize);
+
+        viewModel.SelectNextPage();
+
+        Assert.That(viewModel.SelectedIndex, Is.EqualTo(expectedVisibleRows));
+    }
+
+    [Test]
+    public void PageNavigationClampsToLastResultWhenPreviewHasFewerResultsThanVisibleRows()
+    {
+        const int resultCount = 3;
+        const int configuredPageSize = 3;
+        const int startingIndex = 0;
+        var viewModel = CreateViewModel(resultCount, configuredPageSize, startingIndex, previewVisible: true);
+        var expectedVisibleRows = (int)Math.Ceiling(Constant.PreviewMinimumHeight / viewModel.ItemHeightSize);
+
+        viewModel.SelectNextPage();
+
+        Assert.That(expectedVisibleRows, Is.GreaterThan(resultCount));
+        Assert.That(viewModel.SelectedIndex, Is.EqualTo(resultCount - 1));
+    }
+
+    [Test]
+    public void PageNavigationUsesConfiguredRowsWhenPreviewIsOff()
+    {
+        const int resultCount = 17;
+        const int configuredPageSize = 3;
+        const int startingIndex = 0;
+        var viewModel = CreateViewModel(resultCount, configuredPageSize, startingIndex);
+
+        viewModel.SelectNextPage();
+
+        Assert.That(viewModel.SelectedIndex, Is.EqualTo(configuredPageSize));
+    }
+
+    [Test]
+    public void PreviewDoesNotReduceConfiguredPageSize()
+    {
+        // Preview can expand the list, but it must not shrink a larger configured page.
+        const int resultCount = 17;
+        const int configuredPageSize = 8;
+        const int startingIndex = 0;
+        var viewModel = CreateViewModel(resultCount, configuredPageSize, startingIndex, previewVisible: true);
+        var expectedVisibleRows = Math.Max(
+            configuredPageSize,
+            (int)Math.Ceiling(Constant.PreviewMinimumHeight / viewModel.ItemHeightSize));
+
+        viewModel.SelectNextPage();
+
+        Assert.That(viewModel.SelectedIndex, Is.EqualTo(expectedVisibleRows));
     }
 
     [TestCase(true)]
@@ -195,10 +256,18 @@ public class ResultsViewModelNavigationTest
         Assert.That(viewModel.SelectedIndex, Is.EqualTo(expected));
     }
 
-    private static ResultsViewModel CreateViewModel(int count, int pageSize, int selectedIndex)
+    private static ResultsViewModel CreateViewModel(
+        int count,
+        int pageSize,
+        int selectedIndex,
+        bool previewVisible = false)
     {
-        var settings = new Settings { MaxResultsToShow = pageSize };
-        var viewModel = new ResultsViewModel(settings, null);
+        var settings = new Settings
+        {
+            MaxResultsToShow = pageSize
+        };
+
+        var viewModel = new ResultsViewModel(settings, null, previewVisible);
         for (var index = 0; index < count; index++)
         {
             viewModel.Results.Add(new ResultViewModel(new Result { Title = $"Result {index}" }, settings));

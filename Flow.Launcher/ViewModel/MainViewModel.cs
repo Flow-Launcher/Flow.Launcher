@@ -166,27 +166,24 @@ namespace Flow.Launcher.ViewModel
             _userSelectedRecord = _userSelectedRecordStorage.Load();
             _topMostRecord = new FlowLauncherJsonStorageTopMostRecord();
 
+            InternalPreviewVisible = Settings.AlwaysPreview;
+
             ContextMenu = new ResultsViewModel(Settings, this)
             {
                 LeftClickResultCommand = OpenResultCommand,
-                RightClickResultCommand = ToggleContextMenuCommand,
-                IsPreviewOn = Settings.AlwaysPreview
+                RightClickResultCommand = ToggleContextMenuCommand
             };
             Results = new ResultsViewModel(Settings, this)
             {
                 LeftClickResultCommand = OpenResultCommand,
-                RightClickResultCommand = ToggleContextMenuCommand,
-                IsPreviewOn = Settings.AlwaysPreview
+                RightClickResultCommand = ToggleContextMenuCommand
             };
             History = new ResultsViewModel(Settings, this)
             {
                 LeftClickResultCommand = OpenResultCommand,
-                RightClickResultCommand = ToggleContextMenuCommand,
-                IsPreviewOn = Settings.AlwaysPreview
+                RightClickResultCommand = ToggleContextMenuCommand
             };
             _selectedResults = Results;
-
-            ResultAreaColumn = Settings.AlwaysPreview ? ResultAreaColumnPreviewShown : ResultAreaColumnPreviewHidden;
 
             Results.PropertyChanged += OnResultsPropertyChanged;
             History.PropertyChanged += OnHistoryPropertyChanged;
@@ -1130,8 +1127,8 @@ namespace Flow.Launcher.ViewModel
 
         #region Preview
 
-        private static readonly int ResultAreaColumnPreviewShown = 1;
-        private static readonly int ResultAreaColumnPreviewHidden = 3;
+        private const int ResultsColumnSpanWithPreview = 1;
+        private const int ResultsColumnSpanWithoutPreview = 3;
 
         private bool? _selectedItemFromQueryResults;
 
@@ -1150,25 +1147,24 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        private bool _internalPreviewVisible;
         public bool InternalPreviewVisible
         {
-            get
+            get => _internalPreviewVisible;
+            private set
             {
-                if (ResultAreaColumn == ResultAreaColumnPreviewShown)
-                    return true;
+                if (_internalPreviewVisible == value)
+                    return;
 
-                if (ResultAreaColumn == ResultAreaColumnPreviewHidden)
-                    return false;
-#if DEBUG
-                throw new NotImplementedException("ResultAreaColumn should match ResultAreaColumnPreviewShown/ResultAreaColumnPreviewHidden value");
-#else
-                App.API.LogError(ClassName, "ResultAreaColumnPreviewHidden/ResultAreaColumnPreviewShown int value not implemented", "InternalPreviewVisible");
-                return false;
-#endif
+                _internalPreviewVisible = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(ResultAreaColumn));
             }
         }
 
-        public int ResultAreaColumn { get; set; } = ResultAreaColumnPreviewShown;
+        public int ResultAreaColumn => InternalPreviewVisible
+            ? ResultsColumnSpanWithPreview
+            : ResultsColumnSpanWithoutPreview;
 
         // Tracks whether Flow opened an external preview.
         // This can be stale if external preview program closes the preview or exit without notifying Flow.
@@ -1249,13 +1245,13 @@ namespace Flow.Launcher.ViewModel
 
         private void ShowInternalPreview()
         {
-            ResultAreaColumn = ResultAreaColumnPreviewShown;
+            InternalPreviewVisible = true;
             PreviewSelectedItem?.LoadPreviewImage();
         }
 
         private void HideInternalPreview()
         {
-            ResultAreaColumn = ResultAreaColumnPreviewHidden;
+            InternalPreviewVisible = false;
         }
 
         // Determines whether the preview pane should be visible.

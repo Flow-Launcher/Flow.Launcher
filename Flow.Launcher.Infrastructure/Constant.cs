@@ -59,5 +59,7 @@ namespace Flow.Launcher.Infrastructure
         public const string Docs = "https://flowlauncher.com/docs";
 
         public const string SystemLanguageCode = "system";
+
+        public const double PreviewMinimumHeight = 380;
     }
 }
