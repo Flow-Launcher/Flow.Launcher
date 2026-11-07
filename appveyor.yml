@@ -24,7 +24,7 @@ assembly_info:
   assembly_file_version: $(flowVersion)
   assembly_informational_version: $(flowVersion)
 
-image: Visual Studio 2022
+image: Visual Studio 2026
 platform: Any CPU
 configuration: Release
 before_build:
