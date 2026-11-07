@@ -6,7 +6,19 @@ namespace Flow.Launcher.SettingPages.ViewModels;
 
 public class DropdownDataGeneric<TValue> : BaseModel where TValue : Enum
 {
-    public string Display { get; set; }
+    private string _display;
+    public string Display
+    {
+        get => _display;
+        set
+        {
+            if (_display != value)
+            {
+                _display = value;
+                OnPropertyChanged();
+            }
+        }
+    }
     public TValue Value { get; private init; }
     public string LocalizationKey { get; set; }
 

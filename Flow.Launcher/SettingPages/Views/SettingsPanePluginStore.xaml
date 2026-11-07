@@ -131,6 +131,7 @@
                     Orientation="Horizontal"
                     Spacing="8">
                     <TextBlock
+                        x:Name="SortModeLabel"
                         VerticalAlignment="Center"
                         FontSize="14"
                         Foreground="{DynamicResource Color15B}"
@@ -142,7 +143,9 @@
                         MinWidth="150"
                         MaxWidth="150"
                         HorizontalContentAlignment="Left"
+                        AutomationProperties.LabeledBy="{Binding ElementName=SortModeLabel}"
                         Background="{DynamicResource Color00B}"
+                        ItemContainerStyle="{StaticResource DisplayComboBoxItemStyle}"
                         ItemsSource="{Binding SortModes}"
                         DisplayMemberPath="Display"
                         SelectedValuePath="Value" 
