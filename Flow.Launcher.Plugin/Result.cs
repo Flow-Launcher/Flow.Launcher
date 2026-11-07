@@ -266,8 +266,11 @@ namespace Flow.Launcher.Plugin
         public string SubTitleToolTip { get; set; }
 
         /// <summary>
-        /// Customized Preview Panel
+        /// A custom control that replaces the default preview area.
         /// </summary>
+        /// <remarks>
+        /// <see cref="PreviewDefinition"/> takes priority over this when both are set.
+        /// </remarks>
         [JsonIgnore]
         public Lazy<UserControl> PreviewPanel { get; set; }
 
@@ -283,9 +286,23 @@ namespace Flow.Launcher.Plugin
         public string ProgressBarColor { get; set; } = "#26a0da";
 
         /// <summary>
-        /// Contains data used to populate the preview section of this result.
+        /// Legacy preview data, used only when neither <see cref="PreviewDefinition"/> nor
+        /// <see cref="PreviewPanel"/> provides a preview.
         /// </summary>
+        /// <remarks>
+        /// New previews should use <see cref="PreviewDefinition"/> if possible.
+        /// </remarks>
         public PreviewInfo Preview { get; set; } = new PreviewInfo();
+
+        /// <summary>
+        /// The preview to render for this result.
+        /// </summary>
+        /// <remarks>
+        /// When this provides a preview, it takes precedence over both <see cref="PreviewPanel"/> and
+        /// <see cref="Preview"/>.
+        /// </remarks>
+        [JsonConverter(typeof(ResultPreviewConverter))]
+        public ResultPreview PreviewDefinition { get; set; }
 
         /// <summary>
         /// Controls whether Flow Launcher's preview pane is shown for this result.
@@ -375,6 +392,7 @@ namespace Flow.Launcher.Plugin
                 ProgressBar = ProgressBar,
                 ProgressBarColor = ProgressBarColor,
                 Preview = Preview is null ? null : Preview with { },
+                PreviewDefinition = PreviewDefinition?.ClonePreview(),
                 PreviewVisibility = PreviewVisibility,
                 AddSelectedCount = AddSelectedCount,
                 RecordKey = RecordKey,
@@ -386,6 +404,9 @@ namespace Flow.Launcher.Plugin
         /// <summary>
         /// Info of the preview section of a <see cref="Result"/>
         /// </summary>
+        /// <remarks>
+        /// This is the legacy preview format. Use <see cref="Result.PreviewDefinition"/> for new previews.
+        /// </remarks>
         public record PreviewInfo
         {
             /// <summary>
@@ -399,8 +420,7 @@ namespace Flow.Launcher.Plugin
             public bool IsMedia { get; set; } = false;
 
             /// <summary>
-            /// Text shown in the preview panel. How it is displayed depends on
-            /// <see cref="ContentType"/>.
+            /// Text shown in the preview panel.
             /// </summary>
             /// <remarks>
             /// When a value is not set, the <see cref="SubTitle"/> will be used.
@@ -419,12 +439,6 @@ namespace Flow.Launcher.Plugin
             public string FilePath { get; set; } = null;
 
             /// <summary>
-            /// Controls the preview rendering mode. See <see cref="PreviewContentType"/>.
-            /// </summary>
-            [JsonConverter(typeof(JsonStringEnumConverter<PreviewContentType>))]
-            public PreviewContentType ContentType { get; set; } = PreviewContentType.ImageWithText;
-
-            /// <summary>
             /// Default instance of <see cref="PreviewInfo"/>
             /// </summary>
             public static PreviewInfo Default { get; } = new()
@@ -434,28 +448,8 @@ namespace Flow.Launcher.Plugin
                 IsMedia = false,
                 PreviewDelegate = null,
                 FilePath = null,
-                ContentType = PreviewContentType.ImageWithText,
             };
         }
-    }
-
-    /// <summary>
-    /// Supported preview description rendering modes.
-    /// </summary>
-    public enum PreviewContentType
-    {
-        /// <summary>
-        /// Shows the preview image above the result title, with the description
-        /// rendered as plain text below a separator.
-        /// </summary>
-        [JsonStringEnumMemberName("imageWithText")]
-        ImageWithText,
-
-        /// <summary>
-        /// Shows a scrollable panel with the description rendered as formatted markdown.
-        /// </summary>
-        [JsonStringEnumMemberName("markdown")]
-        Markdown,
     }
 
     /// <summary>
