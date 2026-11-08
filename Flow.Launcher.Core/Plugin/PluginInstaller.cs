@@ -363,7 +363,7 @@ public static class PluginInstaller
     {
         var allPluginsHotReloaded = true;
         // Set only for failures PluginManager.ReloadPluginAsync doesn't already notify the user about
-        // (download/update failures, or hot reload being off) so the aggregate message below doesn't
+        // (download/update failures) so the aggregate message below doesn't
         // duplicate the per-plugin notification a failed reload attempt already showed
         var anyUnnotifiedFailure = false;
         var updateResults = await Task.WhenAll(resultsForUpdate.Select(async plugin =>
