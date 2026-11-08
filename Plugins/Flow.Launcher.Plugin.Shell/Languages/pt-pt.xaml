@@ -17,4 +17,14 @@
     <system:String x:Key="flowlauncher_plugin_cmd_history">Mostrar este número dos comandos mais usados:</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_command_not_found">Comando não encontrado: {0}</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_error_running_command">Erro ao executar o comando: {0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_error_no_exe_path_set">Caminho do executável não definido. Verifique as definições do plugin.</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_custom_template_exe_path">Caminho do executável</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_custom_template_browse">Explorar...</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_custom_template_browse_filter_exe">Ficheiros executáveis</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_custom_template_browse_filter_all">Todos os ficheiros</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_custom_template_arguments">Modelo de argumentos</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_custom_template_exe_path_tooltip">Pode ser um caminho absoluto ou um nome resolvido via PATH. Exemplo: cmd.exe</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_custom_template_arguments_tooltip">Utilize {command} como marcador de posição. Exemplo: /k &quot;{command}&quot;</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_shell_settings">Definições da &quot;shell&quot;</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_other_settings">Outras definições</system:String>
 </ResourceDictionary>

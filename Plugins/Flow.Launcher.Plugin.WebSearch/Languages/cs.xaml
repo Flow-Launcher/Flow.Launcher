@@ -18,8 +18,8 @@
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">Aktivační příkaz</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_url">URL</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_search">Hledat</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Use Search Query Autocomplete</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_max_suggestions">Max Suggestions</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Používejte automatické dokončování vyhledávaných výrazů</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_max_suggestions">Maximální počet návrhů</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">Automatické doplnění údajů z:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">Vyberte webové vyhledávání</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">Opravdu chcete odstranit {0}?</system:String>
@@ -31,8 +31,8 @@
         Obecný vzorec pro vyhledávání Netflixu je tedy https://www.netflix.com/search?q={q}
     </system:String>
 
-    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_title">Copy URL</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_subtitle">Copy search URL to clipboard</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_title">Kopírovat URL adresu</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_subtitle">Kopírovat URL do schránky</system:String>
 
     <!--  web search edit  -->
     <system:String x:Key="flowlauncher_plugin_websearch_title">Název</system:String>
@@ -46,7 +46,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_input_url">Zadejte URL</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword_exist">Zadaný aktivační příkaz již existuje, zadejte jiný aktivační příkaz</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_succeed">Úspěšné</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_edit_failed">Failed to update search source. The item may have been removed.</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_edit_failed">Nepodařilo se aktualizovat zdroj vyhledávání. Položka byla odstraněna.</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_iconpath_hint">Poznámka: Obrázky do této složky vkládat nemusíte, po aktualizaci Flow Launcheru zmizí. Flow Launcher automaticky zkopíruje obrázky mimo tuto složku do vlastního umístění obrázků pluginu.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_websearch_plugin_name">Webové vyhledávání</system:String>

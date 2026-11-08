@@ -7,6 +7,7 @@
 
     <!--  Main  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_copy_failed">Falha ao definir o URL na área de transferência</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_open_failed">Falha ao abrir o URL no navegador</system:String>
 
     <!--  Settings  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Dados do marcador</system:String>
