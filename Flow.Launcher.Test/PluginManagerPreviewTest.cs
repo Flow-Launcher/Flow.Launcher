@@ -25,9 +25,10 @@ namespace Flow.Launcher.Test
                 }
             };
 
-            var exception = Assert.Throws<InvalidOperationException>(
+            var exception = Assert.Throws<InvalidPreviewBlockException>(
                 () => PluginManager.ThrowIfBlocksPreviewInvalid(results));
 
+            ClassicAssert.AreEqual(1, exception.BlockIndex);
             ClassicAssert.IsTrue(exception.Message.Contains("index 1"), exception.Message);
         }
 

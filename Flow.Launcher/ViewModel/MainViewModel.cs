@@ -288,7 +288,7 @@ namespace Flow.Launcher.ViewModel
                         // make a clone to avoid possible issue that plugin will also change the list and items when updating view model
                         resultsCopy = DeepCloneResults(e.Results, false, token);
                     }
-                    catch (InvalidOperationException exception)
+                    catch (InvalidPreviewBlockException exception)
                     {
                         App.API.LogException(ClassName, $"Invalid results update from plugin <{pair.Metadata.Name}>", exception);
                         resultsCopy = [PluginManager.CreatePluginFailedResult(pair.Metadata, e.Query, exception)];

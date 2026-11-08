@@ -463,9 +463,16 @@ namespace Flow.Launcher.Core.Plugin
                 // null will be fine since the results will only be added into queue if the token hasn't been cancelled
                 return null;
             }
+            catch (InvalidPreviewBlockException e)
+            {
+                PublicApi.Instance.LogException(ClassName,
+                    $"Plugin <{metadata.Name}> returned a preview block at index {e.BlockIndex} that Flow cannot render", e);
+
+                // The failed result replaces the rejected results so nothing invalid reaches the view model
+                results = [CreatePluginFailedResult(metadata, query, e)];
+            }
             catch (Exception e)
             {
-                // The failed result replaces whatever the plugin returned, so a rejected result cannot be rendered
                 results = [CreatePluginFailedResult(metadata, query, e)];
             }
             return results;
@@ -656,6 +663,7 @@ namespace Flow.Launcher.Core.Plugin
         /// <remarks>
         /// Only the blocks preview is checked. Other preview types have no validation yet.
         /// </remarks>
+        /// <exception cref="InvalidPreviewBlockException">A block in a blocks preview cannot be rendered.</exception>
         public static void ThrowIfBlocksPreviewInvalid(IReadOnlyList<Result> results)
         {
             foreach (var result in results)
@@ -667,7 +675,8 @@ namespace Flow.Launcher.Core.Plugin
 
                 if (blocks.TryGetInvalidBlockIndex(out var invalidIndex))
                 {
-                    throw new InvalidOperationException(
+                    throw new InvalidPreviewBlockException(
+                        invalidIndex,
                         $"Preview block at index {invalidIndex} of result \"{result.Title}\" is null");
                 }
             }
