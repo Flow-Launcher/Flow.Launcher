@@ -7,6 +7,11 @@ namespace Flow.Launcher.SettingPages.ViewModels;
 public class DropdownDataGeneric<TValue> : BaseModel where TValue : Enum
 {
     private string _display;
+
+    /// <summary>
+    /// The localized text of the option, used for both the ComboBox text and the item name read by screen readers.
+    /// Raises <see cref="BaseModel.PropertyChanged"/> so both update when <see cref="UpdateLabels{TR}"/> runs after a language change.
+    /// </summary>
     public string Display
     {
         get => _display;
