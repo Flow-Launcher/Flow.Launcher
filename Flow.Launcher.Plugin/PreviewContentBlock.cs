@@ -12,6 +12,7 @@ namespace Flow.Launcher.Plugin
     [JsonDerivedType(typeof(TextPreviewBlock), "text")]
     public abstract record PreviewContentBlock
     {
+        private protected PreviewContentBlock() { }
     }
 
     /// <summary>
