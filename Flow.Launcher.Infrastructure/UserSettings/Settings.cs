@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -196,10 +196,61 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
 
-        public bool UseClock { get; set; } = true;
-        public bool UseDate { get; set; } = false;
-        public string TimeFormat { get; set; } = "hh:mm tt";
-        public string DateFormat { get; set; } = "MM'/'dd ddd";
+        private bool _useClock = true;
+        public bool UseClock
+        {
+            get => _useClock;
+            set
+            {
+                if (_useClock != value)
+                {
+                    _useClock = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private bool _useDate = false;
+        public bool UseDate
+        {
+            get => _useDate;
+            set
+            {
+                if (_useDate != value)
+                {
+                    _useDate = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _timeFormat = "hh:mm tt";
+        public string TimeFormat
+        {
+            get => _timeFormat;
+            set
+            {
+                if (_timeFormat != value)
+                {
+                    _timeFormat = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _dateFormat = "MM'/'dd ddd";
+        public string DateFormat
+        {
+            get => _dateFormat;
+            set
+            {
+                if (_dateFormat != value)
+                {
+                    _dateFormat = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
         public bool FirstLaunch { get; set; } = true;
 
         public double SettingWindowWidth { get; set; } = 1000;
