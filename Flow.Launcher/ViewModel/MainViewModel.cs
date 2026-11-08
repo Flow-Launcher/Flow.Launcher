@@ -281,8 +281,18 @@ namespace Flow.Launcher.ViewModel
                 }
                 else
                 {
-                    // make a clone to avoid possible issue that plugin will also change the list and items when updating view model
-                    resultsCopy = DeepCloneResults(e.Results, false, token);
+                    try
+                    {
+                        PluginManager.ThrowIfBlocksPreviewInvalid(e.Results);
+
+                        // make a clone to avoid possible issue that plugin will also change the list and items when updating view model
+                        resultsCopy = DeepCloneResults(e.Results, false, token);
+                    }
+                    catch (InvalidOperationException exception)
+                    {
+                        App.API.LogException(ClassName, $"Invalid results update from plugin <{pair.Metadata.Name}>", exception);
+                        resultsCopy = [PluginManager.CreatePluginFailedResult(pair.Metadata, e.Query, exception)];
+                    }
                 }
 
                 foreach (var result in resultsCopy)
