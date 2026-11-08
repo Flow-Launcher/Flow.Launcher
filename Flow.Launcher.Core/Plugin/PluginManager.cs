@@ -211,11 +211,10 @@ namespace Flow.Launcher.Core.Plugin
                         ModifiedPlugins.TryAdd(id, 0);
                     }
 
-                    // The plugin is unloaded and won't run again until a restart, so callers that don't
-                    // surface their own outcome-specific message (e.g. a plugin calling the public
-                    // ReloadPluginAsync/ReloadAllPluginsAsync API directly) still leave the user informed
                     pluginName ??= PluginConfig.GetPluginMetadata(pluginDirectory)?.Name ?? id;
-                    ShowRestartRequired(pluginName);
+                    PublicApi.Instance.ShowMsgError(
+                        Localize.pluginHotReloadFailedTitle(),
+                        Localize.pluginHotReloadFailedMessage(pluginName));
                 }
 
                 return success;
@@ -224,15 +223,6 @@ namespace Flow.Launcher.Core.Plugin
             {
                 semaphore.Release();
             }
-        }
-
-        private static void ShowRestartRequired(string pluginName)
-        {
-            PublicApi.Instance.ShowMsgErrorWithButton(
-                Localize.pluginHotReloadFailedTitle(),
-                Localize.pluginHotReloadRestartButton(),
-                PublicApi.Instance.RestartApp,
-                Localize.pluginHotReloadFailedMessage(pluginName));
         }
 
         /// <summary>
@@ -1496,12 +1486,6 @@ namespace Flow.Launcher.Core.Plugin
                 {
                     ModifiedPlugins.TryAdd(plugin.ID, 0);
                 }
-            }
-
-            if (removePluginFromSettings &&
-                (!fullyUnloaded || (!deleted && Directory.Exists(plugin.PluginDirectory))))
-            {
-                ShowRestartRequired(plugin.Name);
             }
 
             return true;

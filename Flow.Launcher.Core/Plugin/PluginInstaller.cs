@@ -194,7 +194,12 @@ public static class PluginInstaller
                 Localize.uninstallbtn(),
                 Localize.UninstallSuccessHotReload(oldPlugin.Name));
         }
-        // Unload failure is reported by PluginManager with a restart action.
+        else
+        {
+            PublicApi.Instance.ShowMsg(
+                Localize.uninstallbtn(),
+                Localize.UninstallSuccessNoRestart(oldPlugin.Name));
+        }
     }
 
     /// <summary>

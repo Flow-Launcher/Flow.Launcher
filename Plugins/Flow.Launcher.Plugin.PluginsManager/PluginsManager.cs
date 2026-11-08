@@ -771,7 +771,15 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                                 "plugin_pluginsmanager_uninstall_success_hot_reload"),
                                             x.Metadata.Name));
                                 }
-                                // The uninstall path reports when a restart is required.
+                                else
+                                {
+                                    Context.API.ShowMsg(
+                                        Context.API.GetTranslation("plugin_pluginsmanager_uninstall_title"),
+                                        string.Format(
+                                            Context.API.GetTranslation(
+                                                "plugin_pluginsmanager_uninstall_success_no_restart"),
+                                            x.Metadata.Name));
+                                }
 
                                 return true;
                             }
