@@ -106,6 +106,10 @@ namespace Flow.Launcher.Plugin.Explorer
             return Localize.plugin_explorer_plugin_description();
         }
 
+        /// <summary>
+        /// Refreshes the localized option labels of the setting view model after the UI language changes.
+        /// </summary>
+        /// <param name="newCulture">The culture of the new UI language.</param>
         public void OnCultureInfoChanged(CultureInfo newCulture)
         {
             // Update labels for setting view model
