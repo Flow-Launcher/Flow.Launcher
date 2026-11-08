@@ -83,10 +83,8 @@ namespace Flow.Launcher.Plugin.WebSearch
             var keyword = _searchSource.ActionKeyword;
             if (!_context.API.ActionKeywordAssigned(keyword))
             {
-                var id = _context.CurrentPluginMetadata.ID;
-                _context.API.AddActionKeyword(id, keyword);
-
                 _searchSources.Add(_searchSource);
+                Main.UpdateActionKeywords(_context, _searchSources);
 
                 Close();
             }
@@ -103,16 +101,13 @@ namespace Flow.Launcher.Plugin.WebSearch
             var oldKeyword = _oldSearchSource.ActionKeyword;
             if (!_context.API.ActionKeywordAssigned(newKeyword) || oldKeyword == newKeyword)
             {
-                var id = _context.CurrentPluginMetadata.ID;
-                _context.API.RemoveActionKeyword(id, oldKeyword);
-                _context.API.AddActionKeyword(id, newKeyword);
-
                 var index = _searchSources.IndexOf(_oldSearchSource);
                 
                 // Only update if we found the item in the collection
                 if (index >= 0 && index < _searchSources.Count)
                 {
                     _searchSources[index] = _searchSource;
+                    Main.UpdateActionKeywords(_context, _searchSources);
                     Close();
                 }
                 else

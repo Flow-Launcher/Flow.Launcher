@@ -184,7 +184,25 @@ namespace Flow.Launcher.Plugin.WebSearch
 
                 // Custom images directory is in the WebSearch's data location folder
                 CustomImagesDirectory = Path.Combine(_context.CurrentPluginMetadata.PluginSettingsDirectoryPath, "CustomIcons");
+
+                UpdateActionKeywords(context, _settings.SearchSources);
             };
+        }
+
+        internal static void UpdateActionKeywords(PluginInitContext context, IEnumerable<SearchSource> sources)
+        {
+            var metadata = context.CurrentPluginMetadata;
+            var enabledKeywords = sources
+                .Where(source => source.Enabled && !string.IsNullOrWhiteSpace(source.ActionKeyword))
+                .Select(source => source.ActionKeyword)
+                .Distinct()
+                .ToArray();
+
+            foreach (var keyword in metadata.ActionKeywords.Except(enabledKeywords).ToArray())
+                context.API.RemoveActionKeyword(metadata.ID, keyword);
+
+            foreach (var keyword in enabledKeywords.Except(metadata.ActionKeywords))
+                context.API.AddActionKeyword(metadata.ID, keyword);
         }
 
         #region ISettingProvider Members
