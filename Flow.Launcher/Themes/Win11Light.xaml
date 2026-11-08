@@ -255,7 +255,13 @@
         <Setter Property="Foreground" Value="{DynamicResource SubTitleForeground}" />
     </Style>
     <Style
-        x:Key="PreviewBlockTextStyle"
+        x:Key="PreviewBlockTextNormalStyle"
+        BasedOn="{StaticResource BasePreviewBlockTextStyle}"
+        TargetType="{x:Type TextBox}">
+        <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
+    </Style>
+    <Style
+        x:Key="PreviewBlockTextMutedStyle"
         BasedOn="{StaticResource BasePreviewBlockTextStyle}"
         TargetType="{x:Type TextBox}">
         <Setter Property="Foreground" Value="{DynamicResource SubTitleForeground}" />

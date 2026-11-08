@@ -212,7 +212,13 @@
         <Setter Property="Foreground" Value="{m:DynamicColor SystemControlPageTextBaseMediumBrush}" />
     </Style>
     <Style
-        x:Key="PreviewBlockTextStyle"
+        x:Key="PreviewBlockTextNormalStyle"
+        BasedOn="{StaticResource BasePreviewBlockTextStyle}"
+        TargetType="{x:Type TextBox}">
+        <Setter Property="Foreground" Value="{m:DynamicColor SystemControlPageTextBaseHighBrush}" />
+    </Style>
+    <Style
+        x:Key="PreviewBlockTextMutedStyle"
         BasedOn="{StaticResource BasePreviewBlockTextStyle}"
         TargetType="{x:Type TextBox}">
         <Setter Property="Foreground" Value="{m:DynamicColor SystemControlPageTextBaseMediumBrush}" />
