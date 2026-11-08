@@ -12,6 +12,26 @@
     <!--  Icon for Theme Type Label  -->
     <Geometry x:Key="circle_half_stroke_solid">F1 M512,512z M0,0z M448,256C448,150,362,64,256,64L256,448C362,448,448,362,448,256z M0,256A256,256,0,1,1,512,256A256,256,0,1,1,0,256z</Geometry>
 
+    <!--  Data-bound ComboBox items expose their type name (ToString) to screen readers unless AutomationProperties.Name is set  -->
+    <Style
+        x:Key="DisplayComboBoxItemStyle"
+        BasedOn="{StaticResource DefaultComboBoxItemStyle}"
+        TargetType="ComboBoxItem">
+        <Setter Property="AutomationProperties.Name" Value="{Binding Display}" />
+    </Style>
+    <Style
+        x:Key="DisplayNameComboBoxItemStyle"
+        BasedOn="{StaticResource DefaultComboBoxItemStyle}"
+        TargetType="ComboBoxItem">
+        <Setter Property="AutomationProperties.Name" Value="{Binding DisplayName}" />
+    </Style>
+    <Style
+        x:Key="FamilyTypefaceComboBoxItemStyle"
+        BasedOn="{StaticResource DefaultComboBoxItemStyle}"
+        TargetType="ComboBoxItem">
+        <Setter Property="AutomationProperties.Name" Value="{Binding AdjustedFaceNames[en-us]}" />
+    </Style>
+
     <!--  Setting Controls  -->
     <Style x:Key="SettingGrid" TargetType="ItemsControl">
         <Setter Property="Focusable" Value="False" />

@@ -125,6 +125,7 @@
                                 Margin="12 4 12 0"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Top"
+                                AutomationProperties.Name="{DynamicResource queryBoxFont}"
                                 IsSynchronizedWithCurrentItem="False"
                                 ItemsSource="{Binding Source={StaticResource SortedFonts}}"
                                 SelectedItem="{Binding SelectedQueryBoxFont}" />
@@ -133,6 +134,8 @@
                                 Margin="12 8 12 8"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Top"
+                                AutomationProperties.Name="{DynamicResource queryBoxFontStyle}"
+                                ItemContainerStyle="{StaticResource FamilyTypefaceComboBoxItemStyle}"
                                 ItemsSource="{Binding SelectedQueryBoxFont.FamilyTypefaces}"
                                 SelectedItem="{Binding SelectedQueryBoxFontFaces}">
                                 <ComboBox.ItemTemplate>
@@ -184,6 +187,7 @@
                                 Margin="12 4 12 0"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Top"
+                                AutomationProperties.Name="{DynamicResource resultItemFont}"
                                 IsSynchronizedWithCurrentItem="False"
                                 ItemsSource="{Binding Source={StaticResource SortedFonts}}"
                                 SelectedItem="{Binding SelectedResultFont}" />
@@ -192,6 +196,8 @@
                                 Margin="12 4 12 8"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Top"
+                                AutomationProperties.Name="{DynamicResource resultItemFontStyle}"
+                                ItemContainerStyle="{StaticResource FamilyTypefaceComboBoxItemStyle}"
                                 ItemsSource="{Binding SelectedResultFont.FamilyTypefaces}"
                                 SelectedItem="{Binding SelectedResultFontFaces}">
                                 <ComboBox.ItemTemplate>
@@ -227,6 +233,7 @@
                                 Margin="12 4 12 0"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Top"
+                                AutomationProperties.Name="{DynamicResource resultSubItemFont}"
                                 IsSynchronizedWithCurrentItem="False"
                                 ItemsSource="{Binding Source={StaticResource SortedFonts}}"
                                 SelectedItem="{Binding SelectedResultSubFont}" />
@@ -235,6 +242,8 @@
                                 Margin="12 4 12 8"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Top"
+                                AutomationProperties.Name="{DynamicResource resultSubItemFontStyle}"
+                                ItemContainerStyle="{StaticResource FamilyTypefaceComboBoxItemStyle}"
                                 ItemsSource="{Binding SelectedResultSubFont.FamilyTypefaces}"
                                 SelectedItem="{Binding SelectedResultSubFontFaces}">
                                 <ComboBox.ItemTemplate>
@@ -500,9 +509,11 @@
                 <ComboBox
                     MinWidth="160"
                     VerticalAlignment="Center"
+                    AutomationProperties.Name="{DynamicResource BackdropType}"
                     DisplayMemberPath="Display"
                     FontSize="14"
                     IsEnabled="{Binding IsBackdropEnabled}"
+                    ItemContainerStyle="{StaticResource DisplayComboBoxItemStyle}"
                     ItemsSource="{Binding BackdropTypesList}"
                     SelectedValue="{Binding BackdropType, Mode=TwoWay}"
                     SelectedValuePath="Value" />
@@ -546,6 +557,7 @@
                     <ui:SettingsCard Description="{DynamicResource maxShowResultsToolTip}" Header="{DynamicResource maxShowResults}">
                         <ComboBox
                             Width="100"
+                            AutomationProperties.Name="{DynamicResource maxShowResults}"
                             ItemsSource="{Binding MaxResultsRange}"
                             SelectedItem="{Binding Settings.MaxResultsToShow}" />
                     </ui:SettingsCard>
@@ -577,6 +589,7 @@
                         MinWidth="180"
                         Margin="10 0 18 0"
                         VerticalAlignment="Center"
+                        AutomationProperties.Name="{DynamicResource Clock}"
                         FontSize="14"
                         ItemsSource="{Binding TimeFormatList}"
                         SelectedItem="{Binding TimeFormat}" />
@@ -602,6 +615,7 @@
                         MinWidth="180"
                         Margin="10 0 18 0"
                         VerticalAlignment="Center"
+                        AutomationProperties.Name="{DynamicResource Date}"
                         FontSize="14"
                         ItemsSource="{Binding DateFormatList}"
                         SelectedItem="{Binding DateFormat}" />
@@ -656,8 +670,10 @@
                             <ComboBox
                                 MinWidth="160"
                                 VerticalAlignment="Center"
+                                AutomationProperties.Name="{DynamicResource AnimationSpeed}"
                                 DisplayMemberPath="Display"
                                 FontSize="14"
+                                ItemContainerStyle="{StaticResource DisplayComboBoxItemStyle}"
                                 ItemsSource="{Binding AnimationSpeeds}"
                                 SelectedValue="{Binding Settings.AnimationSpeed}"
                                 SelectedValuePath="Value" />
@@ -793,8 +809,10 @@
 
                 <ComboBox
                     MinWidth="180"
+                    AutomationProperties.Name="{DynamicResource ColorScheme}"
                     DisplayMemberPath="Display"
                     FontSize="14"
+                    ItemContainerStyle="{StaticResource DisplayComboBoxItemStyle}"
                     ItemsSource="{Binding ColorSchemes}"
                     SelectedValue="{Binding ColorScheme, Mode=TwoWay}"
                     SelectedValuePath="Value" />
@@ -811,8 +829,10 @@
 
                 <ComboBox
                     MinWidth="180"
+                    AutomationProperties.Name="{DynamicResource CodeHighlightTheme}"
                     DisplayMemberPath="Display"
                     FontSize="14"
+                    ItemContainerStyle="{StaticResource DisplayComboBoxItemStyle}"
                     ItemsSource="{Binding CodeHighlightThemes}"
                     SelectedValue="{Binding CodeHighlightTheme, Mode=TwoWay}"
                     SelectedValuePath="Value" />
