@@ -181,17 +181,11 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 return;
             }
 
-            var hotReloaded = Context.API.IsHotReloadAfterChangingEnabled() && await Context.API.ReloadPluginAsync(plugin.ID);
+            var hotReloaded = await Context.API.ReloadPluginAsync(plugin.ID);
             if (hotReloaded)
             {
                 Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_installing_plugin"),
                     string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_success_hot_reload"),
-                        plugin.Name));
-            }
-            else if (!Context.API.IsHotReloadAfterChangingEnabled())
-            {
-                Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_installing_plugin"),
-                    string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_success_no_restart"),
                         plugin.Name));
             }
             // Hot reload was attempted and failed: PluginManager.ReloadPluginAsync already notified the user
@@ -355,7 +349,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                             return;
                                         }
 
-                                        var hotReloaded = Context.API.IsHotReloadAfterChangingEnabled() && await Context.API.ReloadPluginAsync(x.ID);
+                                        var hotReloaded = await Context.API.ReloadPluginAsync(x.ID);
                                         if (hotReloaded)
                                         {
                                             Context.API.ShowMsg(
@@ -363,15 +357,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                                 string.Format(
                                                     Context.API.GetTranslation(
                                                         "plugin_pluginsmanager_update_success_hot_reload"),
-                                                    x.Name));
-                                        }
-                                        else if (!Context.API.IsHotReloadAfterChangingEnabled())
-                                        {
-                                            Context.API.ShowMsg(
-                                                Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
-                                                string.Format(
-                                                    Context.API.GetTranslation(
-                                                        "plugin_pluginsmanager_update_success_no_restart"),
                                                     x.Name));
                                         }
                                         // Hot reload was attempted and failed: PluginManager.ReloadPluginAsync already notified the user
@@ -441,7 +426,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                         var anyPluginSuccess = false;
                         var allPluginsHotReloaded = true;
                         // Set only for failures ReloadPluginAsync doesn't already notify the user about
-                        // (download/update failures, or hot reload being off) so the aggregate message
+                        // (download/update failures) so the aggregate message
                         // below doesn't duplicate the per-plugin notification a failed reload already showed
                         var anyUnnotifiedFailure = false;
                         await Task.WhenAll(resultsForUpdate.Select(async plugin =>
@@ -474,14 +459,10 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
                                 anyPluginSuccess = true;
 
-                                if (!Context.API.IsHotReloadAfterChangingEnabled() || !await Context.API.ReloadPluginAsync(plugin.ID))
+                                if (!await Context.API.ReloadPluginAsync(plugin.ID))
                                 {
                                     allPluginsHotReloaded = false;
-                                    if (!Context.API.IsHotReloadAfterChangingEnabled())
-                                    {
-                                        anyUnnotifiedFailure = true;
-                                    }
-                                    // else: reload was attempted and failed, and ReloadPluginAsync already notified the user
+                                    // ReloadPluginAsync already notified the user if reload failed.
                                 }
                             }
                             catch (Exception ex)

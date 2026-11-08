@@ -7,7 +7,6 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure;
@@ -57,9 +56,6 @@ namespace Flow.Launcher.Core.Plugin
         {
             _assemblyLoaders[id] = loader;
         }
-
-        private static bool HotReloadEnabled =>
-            Ioc.Default.GetRequiredService<Infrastructure.UserSettings.Settings>().HotReloadAfterChanging;
 
         #region Save & Dispose & Reload Plugin
 
@@ -215,14 +211,12 @@ namespace Flow.Launcher.Core.Plugin
                         ModifiedPlugins.TryAdd(id, 0);
                     }
 
-                    // The plugin is unloaded and won't run again until a restart, so callers that don't
-                    // surface their own outcome-specific message (e.g. a plugin calling the public
-                    // ReloadPluginAsync/ReloadAllPluginsAsync API directly) still leave the user informed
                     pluginName ??= PluginConfig.GetPluginMetadata(pluginDirectory)?.Name ?? id;
                     PublicApi.Instance.ShowMsgError(
                         Localize.pluginHotReloadFailedTitle(),
                         Localize.pluginHotReloadFailedMessage(pluginName));
                 }
+
                 return success;
             }
             finally
@@ -1413,7 +1407,7 @@ namespace Flow.Launcher.Core.Plugin
                 var pluginPairs = GetAllInitializedPlugins(includeFailed: true).Where(p => p.Metadata.ID == plugin.ID).ToList();
                 foreach (var pluginPair in pluginPairs)
                 {
-                    if (removePluginFromSettings && HotReloadEnabled)
+                    if (removePluginFromSettings)
                     {
                         fullyUnloaded = await UnloadPluginAsync(pluginPair);
                     }

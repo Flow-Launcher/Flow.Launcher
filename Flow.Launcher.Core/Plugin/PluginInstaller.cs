@@ -26,7 +26,7 @@ public static class PluginInstaller
     private static readonly SemaphoreSlim UpdatePluginsSemaphore = new(1, 1);
 
     /// <summary>
-    /// Installs a plugin and restarts the application if required by settings. Prompts user for confirmation and handles download if needed.
+    /// Installs a plugin and hot reloads it. Prompts user for confirmation and handles download if needed.
     /// </summary>
     /// <param name="newPlugin">The plugin to install.</param>
     /// <returns>A Task representing the asynchronous install operation.</returns>
@@ -94,24 +94,18 @@ public static class PluginInstaller
             return; // do not restart on failure
         }
 
-        var hotReloaded = Settings.HotReloadAfterChanging && await PluginManager.ReloadPluginAsync(newPlugin.ID);
+        var hotReloaded = await PluginManager.ReloadPluginAsync(newPlugin.ID);
         if (hotReloaded)
         {
             PublicApi.Instance.ShowMsg(
                 Localize.installbtn(),
                 Localize.InstallSuccessHotReload(newPlugin.Name));
         }
-        else if (!Settings.HotReloadAfterChanging)
-        {
-            PublicApi.Instance.ShowMsg(
-                Localize.installbtn(),
-                Localize.InstallSuccessNoRestart(newPlugin.Name));
-        }
         // Hot reload was attempted and failed: PluginManager.ReloadPluginAsync already notified the user
     }
 
     /// <summary>
-    /// Installs a plugin from a local zip file and restarts the application if required by settings. Validates the zip and prompts user for confirmation.
+    /// Installs a plugin from a local zip file. Validates the zip and prompts user for confirmation.
     /// </summary>
     /// <param name="filePath">The path to the plugin zip file.</param>
     /// <returns>A Task representing the asynchronous install operation.</returns>
@@ -156,7 +150,7 @@ public static class PluginInstaller
     }
 
     /// <summary>
-    /// Uninstalls a plugin and restarts the application if required by settings. Prompts user for confirmation and whether to keep plugin settings.
+    /// Uninstalls a plugin and hot unloads it when possible. Prompts user for confirmation and whether to keep plugin settings.
     /// </summary>
     /// <param name="oldPlugin">The plugin metadata to uninstall.</param>
     /// <returns>A Task representing the asynchronous uninstall operation.</returns>
@@ -193,7 +187,7 @@ public static class PluginInstaller
             return; // don not restart on failure
         }
 
-        if (Settings.HotReloadAfterChanging && !PublicApi.Instance.PluginModified(oldPlugin.ID))
+        if (!PublicApi.Instance.PluginModified(oldPlugin.ID))
         {
             // The plugin was fully unloaded and its directory deleted, so no restart is needed
             PublicApi.Instance.ShowMsg(
@@ -209,7 +203,7 @@ public static class PluginInstaller
     }
 
     /// <summary>
-    /// Updates a plugin to a new version and restarts the application if required by settings. Prompts user for confirmation and handles download if needed.
+    /// Updates a plugin to a new version and hot reloads it. Prompts user for confirmation and handles download if needed.
     /// </summary>
     /// <param name="newPlugin">The new plugin version to install.</param>
     /// <param name="oldPlugin">The existing plugin metadata to update.</param>
@@ -256,18 +250,12 @@ public static class PluginInstaller
             return false; // do not restart on failure
         }
 
-        var hotReloaded = Settings.HotReloadAfterChanging && await PluginManager.ReloadPluginAsync(oldPlugin.ID);
+        var hotReloaded = await PluginManager.ReloadPluginAsync(oldPlugin.ID);
         if (hotReloaded)
         {
             PublicApi.Instance.ShowMsg(
                 Localize.updatebtn(),
                 Localize.UpdateSuccessHotReload(newPlugin.Name));
-        }
-        else if (!Settings.HotReloadAfterChanging)
-        {
-            PublicApi.Instance.ShowMsg(
-                Localize.updatebtn(),
-                Localize.UpdateSuccessNoRestart(newPlugin.Name));
         }
         // Hot reload was attempted and failed: PluginManager.ReloadPluginAsync already notified the user
 
@@ -405,14 +393,10 @@ public static class PluginInstaller
                     return null;
                 }
 
-                if (!Settings.HotReloadAfterChanging || !await PluginManager.ReloadPluginAsync(plugin.ID))
+                if (!await PluginManager.ReloadPluginAsync(plugin.ID))
                 {
                     allPluginsHotReloaded = false;
-                    if (!Settings.HotReloadAfterChanging)
-                    {
-                        anyUnnotifiedFailure = true;
-                    }
-                    // else: reload was attempted and failed, and PluginManager already notified the user
+                    // ReloadPluginAsync already notified the user if reload failed.
                 }
 
                 return plugin;

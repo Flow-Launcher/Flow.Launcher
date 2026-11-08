@@ -183,8 +183,6 @@
     <system:String x:Key="homeToggleBoxToolTip">This can only be edited if plugin supports Home feature and Home Page is enabled.</system:String>
     <system:String x:Key="showAtTopmost">Show Search Window at Foremost</system:String>
     <system:String x:Key="showAtTopmostToolTip">Overrides other programs' 'Always on Top' setting and displays Flow in the foremost position.</system:String>
-    <system:String x:Key="hotReloadAfterChanging">Hot reload after modifying plugin via Plugin Store</system:String>
-    <system:String x:Key="hotReloadAfterChangingToolTip">Reload plugins in place after installing/uninstalling/updating them via Plugin Store, without restarting Flow Launcher. If a reload fails, a restart is still required.</system:String>
     <system:String x:Key="showUnknownSourceWarning">Show unknown source warning</system:String>
     <system:String x:Key="showUnknownSourceWarningToolTip">Show warning when installing plugins from unknown sources</system:String>
     <system:String x:Key="autoUpdatePlugins">Auto update plugins</system:String>
