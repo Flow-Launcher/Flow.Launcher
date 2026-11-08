@@ -857,6 +857,8 @@
         <Setter Property="FontSize" Value="12" />
         <Setter Property="FontWeight" Value="Normal" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="IsReadOnly" Value="True" />
+        <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="TextAlignment" Value="Left" />
         <Setter Property="TextWrapping" Value="Wrap" />
@@ -868,7 +870,13 @@
         <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
     <Style
-        x:Key="PreviewBlockTextStyle"
+        x:Key="PreviewBlockTextNormalStyle"
+        BasedOn="{StaticResource BasePreviewBlockTextStyle}"
+        TargetType="{x:Type TextBox}">
+        <Setter Property="Foreground" Value="{DynamicResource Color04B}" />
+    </Style>
+    <Style
+        x:Key="PreviewBlockTextMutedStyle"
         BasedOn="{StaticResource BasePreviewBlockTextStyle}"
         TargetType="{x:Type TextBox}">
         <Setter Property="Foreground" Value="#8f8f8f" />

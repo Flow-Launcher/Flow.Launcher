@@ -84,5 +84,29 @@ namespace Flow.Launcher.Test
 
             ClassicAssert.AreEqual(JsonValueKind.Null, preview.ValueKind);
         }
+
+        [Test]
+        public void GivenTextBlockWithoutEmphasis_WhenSerialized_ThenEmphasisIsNormal()
+        {
+            var json = JsonSerializer.Serialize<PreviewContentBlock>(new TextPreviewBlock { Text = "Line" });
+            using var document = JsonDocument.Parse(json);
+
+            var emphasis = document.RootElement.GetProperty(nameof(TextPreviewBlock.Emphasis)).GetString();
+            ClassicAssert.AreEqual("normal", emphasis);
+        }
+
+        [Test]
+        public void GivenMutedTextBlock_WhenSerializedAndDeserialized_ThenEmphasisIsKept()
+        {
+            var block = new TextPreviewBlock { Text = "Details", Emphasis = PreviewTextEmphasis.Muted };
+
+            var json = JsonSerializer.Serialize<PreviewContentBlock>(block);
+            using var document = JsonDocument.Parse(json);
+            var emphasis = document.RootElement.GetProperty(nameof(TextPreviewBlock.Emphasis)).GetString();
+            ClassicAssert.AreEqual("muted", emphasis);
+
+            var roundTripped = JsonSerializer.Deserialize<PreviewContentBlock>(json);
+            ClassicAssert.AreEqual(PreviewTextEmphasis.Muted, ((TextPreviewBlock)roundTripped).Emphasis);
+        }
     }
 }

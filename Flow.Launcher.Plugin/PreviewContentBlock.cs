@@ -47,6 +47,12 @@ namespace Flow.Launcher.Plugin
     public sealed record TextPreviewBlock : PreviewContentBlock
     {
         /// <summary>
+        /// How prominently the text is shown.
+        /// </summary>
+        [JsonConverter(typeof(JsonStringEnumConverter<PreviewTextEmphasis>))]
+        public PreviewTextEmphasis Emphasis { get; set; } = PreviewTextEmphasis.Normal;
+
+        /// <summary>
         /// The plain text to display. When this is not null or empty, it is used instead of <see cref="FilePath"/>.
         /// </summary>
         public string Text { get; set; }
@@ -58,5 +64,23 @@ namespace Flow.Launcher.Plugin
         /// Files larger than 1 MiB are not loaded and an error is shown instead.
         /// </summary>
         public string FilePath { get; set; }
+    }
+
+    /// <summary>
+    /// How prominently the text of a <see cref="TextPreviewBlock"/> is shown.
+    /// </summary>
+    public enum PreviewTextEmphasis
+    {
+        /// <summary>
+        /// Default prominence.
+        /// </summary>
+        [JsonStringEnumMemberName("normal")]
+        Normal,
+
+        /// <summary>
+        /// Reduced prominence.
+        /// </summary>
+        [JsonStringEnumMemberName("muted")]
+        Muted
     }
 }
