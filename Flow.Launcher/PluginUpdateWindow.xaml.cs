@@ -3,9 +3,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core.Plugin;
-using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher
 {
@@ -14,11 +12,9 @@ namespace Flow.Launcher
         public List<PluginUpdateInfo> Plugins { get; set; } = new();
         public bool Restart { get; set; }
 
-        private readonly Settings _settings = Ioc.Default.GetRequiredService<Settings>();
-
         public PluginUpdateWindow(List<PluginUpdateInfo> allPlugins)
         {
-            Restart = !_settings.HotReloadAfterChanging;
+            Restart = false;
             InitializeComponent();
             foreach (var plugin in allPlugins)
             {
