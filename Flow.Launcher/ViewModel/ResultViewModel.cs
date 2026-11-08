@@ -22,6 +22,7 @@ namespace Flow.Launcher.ViewModel
         private static readonly Dictionary<string, string> Fonts = new();
         private readonly ObservableCollection<PreviewContentBlockViewModel> _previewContentBlocks = new();
         private CancellationTokenSource _previewContentBlocksLoadCancellation;
+        private bool _previewContentBlocksLoadRequested;
 
         public ResultViewModel(Result result, Settings settings)
         {
@@ -308,11 +309,13 @@ namespace Flow.Launcher.ViewModel
 
         public void LoadPreviewContentBlocks()
         {
-            if (!HasContentBlocks)
+            // A second request while this result is already loading would read the same files again
+            if (!HasContentBlocks || _previewContentBlocksLoadRequested)
             {
                 return;
             }
 
+            _previewContentBlocksLoadRequested = true;
             _previewContentBlocksLoadCancellation ??= new CancellationTokenSource();
             _ = LoadPreviewContentBlocksAsync(_previewContentBlocksLoadCancellation.Token);
         }
@@ -322,6 +325,9 @@ namespace Flow.Launcher.ViewModel
             _previewContentBlocksLoadCancellation?.Cancel();
             _previewContentBlocksLoadCancellation?.Dispose();
             _previewContentBlocksLoadCancellation = null;
+
+            // Selecting the result again should be able to load the blocks that were cancelled
+            _previewContentBlocksLoadRequested = false;
         }
 
         private async Task LoadPreviewContentBlocksAsync(CancellationToken cancellationToken)
