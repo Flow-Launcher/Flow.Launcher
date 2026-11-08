@@ -451,6 +451,7 @@ namespace Flow.Launcher.Core.Plugin
                 if (results == null)
                     return null;
                 UpdatePluginMetadata(results, metadata, query);
+                ThrowIfBlocksPreviewInvalid(results);
 
                 metadata.QueryCount += 1;
                 metadata.AvgQueryTime =
@@ -464,19 +465,8 @@ namespace Flow.Launcher.Core.Plugin
             }
             catch (Exception e)
             {
-                Result r = new()
-                {
-                    Title = Localize.pluginFailedToRespond(metadata.Name),
-                    SubTitle = Localize.pluginFailedToRespondSubtitle(),
-                    AutoCompleteText = query.TrimmedQuery,
-                    IcoPath = Constant.ErrorIcon,
-                    PluginDirectory = metadata.PluginDirectory,
-                    ActionKeywordAssigned = query.ActionKeyword,
-                    PluginID = metadata.ID,
-                    OriginQuery = query,
-                    Action = _ => { throw new FlowPluginException(metadata, e);}
-                };
-                results.Add(r);
+                // The failed result replaces whatever the plugin returned, so a rejected result cannot be rendered
+                results = [CreatePluginFailedResult(metadata, query, e)];
             }
             return results;
         }
@@ -517,6 +507,7 @@ namespace Flow.Launcher.Core.Plugin
                 if (results == null)
                     return null;
                 UpdatePluginMetadata(results, metadata, query);
+                ThrowIfBlocksPreviewInvalid(results);
 
                 token.ThrowIfCancellationRequested();
             }
@@ -553,6 +544,7 @@ namespace Flow.Launcher.Core.Plugin
                 if (results == null)
                     return null;
                 UpdatePluginMetadata(results, metadata, query);
+                ThrowIfBlocksPreviewInvalid(results);
 
                 token.ThrowIfCancellationRequested();
             }
@@ -635,6 +627,49 @@ namespace Flow.Launcher.Core.Plugin
                 // Plugins may have multi-actionkeywords eg. WebSearches. In this scenario it needs to be overriden on the plugin level
                 if (metadata.ActionKeywords.Count == 1)
                     r.ActionKeywordAssigned = query.ActionKeyword;
+            }
+        }
+
+        /// <summary>
+        /// Creates the result shown when a plugin fails, whose action reports the original exception.
+        /// </summary>
+        public static Result CreatePluginFailedResult(PluginMetadata metadata, Query query, Exception exception)
+        {
+            return new Result
+            {
+                Title = Localize.pluginFailedToRespond(metadata.Name),
+                SubTitle = Localize.pluginFailedToRespondSubtitle(),
+                AutoCompleteText = query.TrimmedQuery,
+                IcoPath = Constant.ErrorIcon,
+                PluginDirectory = metadata.PluginDirectory,
+                ActionKeywordAssigned = query.ActionKeyword,
+                PluginID = metadata.ID,
+                OriginQuery = query,
+                Action = _ => { throw new FlowPluginException(metadata, exception); }
+            };
+        }
+
+        /// <summary>
+        /// Rejects results whose blocks preview cannot be rendered, so a malformed payload fails the
+        /// plugin query instead of breaking the query update later.
+        /// </summary>
+        /// <remarks>
+        /// Only the blocks preview is checked. Other preview types have no validation yet.
+        /// </remarks>
+        public static void ThrowIfBlocksPreviewInvalid(IReadOnlyList<Result> results)
+        {
+            foreach (var result in results)
+            {
+                if (result.PreviewDefinition is not BlocksPreview blocks)
+                {
+                    continue;
+                }
+
+                if (blocks.TryGetInvalidBlockIndex(out var invalidIndex))
+                {
+                    throw new InvalidOperationException(
+                        $"Preview block at index {invalidIndex} of result \"{result.Title}\" is null");
+                }
             }
         }
 
