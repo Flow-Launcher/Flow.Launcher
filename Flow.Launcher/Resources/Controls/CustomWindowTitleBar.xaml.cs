@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Shell;
 
 namespace Flow.Launcher.Resources.Controls
 {
@@ -113,6 +114,7 @@ namespace Flow.Launcher.Resources.Controls
 
         private Window _hostWindow;
         private WindowState _lastNonMinimizedWindowState = WindowState.Normal;
+        private bool? _savedUseAeroCaptionButtons;
 
         private Button MinimizeButtonElement => FindName("MinimizeButton") as Button;
         private Button MaximizeButtonElement => FindName("MaximizeButton") as Button;
@@ -242,6 +244,14 @@ namespace Flow.Launcher.Resources.Controls
                 return;
             }
 
+            // Disable system caption buttons since this control provides custom ones
+            var chrome = WindowChrome.GetWindowChrome(_hostWindow);
+            if (chrome != null)
+            {
+                _savedUseAeroCaptionButtons = chrome.UseAeroCaptionButtons;
+                chrome.UseAeroCaptionButtons = false;
+            }
+
             if (IconSource is null)
             {
                 IconSource = _hostWindow.Icon ?? DefaultWindowIcon;
@@ -267,6 +277,17 @@ namespace Flow.Launcher.Resources.Controls
             if (_hostWindow == null)
             {
                 return;
+            }
+
+            // Restore original system caption buttons if we disabled them
+            if (_savedUseAeroCaptionButtons.HasValue)
+            {
+                var chrome = WindowChrome.GetWindowChrome(_hostWindow);
+                if (chrome != null)
+                {
+                    chrome.UseAeroCaptionButtons = _savedUseAeroCaptionButtons.Value;
+                }
+                _savedUseAeroCaptionButtons = null;
             }
 
             _hostWindow.StateChanged -= HostWindow_StateChanged;
