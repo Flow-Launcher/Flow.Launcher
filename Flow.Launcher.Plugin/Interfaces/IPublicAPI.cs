@@ -94,6 +94,17 @@ namespace Flow.Launcher.Plugin
         void ShowMsgErrorWithButton(string title, string buttonText, Action buttonAction, string subTitle = "");
 
         /// <summary>
+        /// Show an inline notification bar in the Flow Launcher main window.
+        /// Unlike <see cref="ShowMsg"/>, this displays directly inside the application window and
+        /// cannot be blocked by OS notification settings.
+        /// The notification bar remains visible until the user closes it.
+        /// </summary>
+        /// <param name="title">Notification title</param>
+        /// <param name="subTitle">Optional notification subtitle</param>
+        /// <param name="severity">Severity level that controls the icon and accent color</param>
+        void ShowNotification(string title, string subTitle = "", NotificationSeverity severity = NotificationSeverity.Informational);
+
+        /// <summary>
         /// Show the MainWindow when hiding
         /// </summary>
         void ShowMainWindow();
