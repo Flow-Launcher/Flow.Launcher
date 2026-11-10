@@ -36,6 +36,8 @@ public static class PluginInstaller
             .Select(pair => pair.Metadata.ID)
             .ToHashSet(StringComparer.OrdinalIgnoreCase);
         var failedPlugins = new List<string>();
+        var attemptedCount = 0;
+        var installedCount = 0;
 
         foreach (var manifestPlugin in PublicApi.Instance.GetPluginManifest()
                      .Where(plugin => string.Equals(plugin.Language, AllowedLanguage.CSharp, StringComparison.OrdinalIgnoreCase)
@@ -47,6 +49,7 @@ public static class PluginInstaller
                 continue;
             }
 
+            attemptedCount++;
             var filePath = Path.Combine(Path.GetTempPath(), $"{manifestPlugin.ID}-{Guid.NewGuid():N}.zip");
             try
             {
@@ -75,6 +78,7 @@ public static class PluginInstaller
                 }
 
                 StartupInstalledCSharpPlugins[installedPlugin.Metadata.ID] = installedPlugin.Metadata;
+                installedCount++;
             }
             catch (Exception e)
             {
@@ -96,6 +100,9 @@ public static class PluginInstaller
                 }
             }
         }
+
+        PublicApi.Instance.LogInfo(ClassName,
+            $"Startup C# plugin install finished: {installedCount} installed, {failedPlugins.Count} failed, {attemptedCount} attempted");
 
         if (failedPlugins.Count > 0)
         {
