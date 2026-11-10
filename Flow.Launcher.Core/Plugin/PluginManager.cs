@@ -1461,8 +1461,9 @@ namespace Flow.Launcher.Core.Plugin
                 UnregisterPluginActionKeywords(plugin.ID);
             }
 
-            // When the plugin was fully unloaded, its directory can be removed right away and
-            // no restart is needed; otherwise mark it for deletion on next startup
+            // Intentional for test_hotreload_uninstall_jjw24: when hot unload succeeds, delete the
+            // plugin directory immediately rather than waiting for startup cleanup.
+            // Preserve the marker fallback if unload or immediate deletion cannot complete safely.
             var deleted = false;
             if (fullyUnloaded)
             {

@@ -626,6 +626,9 @@ namespace Flow.Launcher
         public Task<bool> UninstallPluginAsync(PluginMetadata pluginMetadata, bool removePluginSettings = false) =>
             PluginManager.UninstallPluginAsync(pluginMetadata, removePluginSettings);
 
+        public Task<bool> UninstallStartupInstalledCSharpPluginsAsync() =>
+            PluginInstaller.UninstallStartupInstalledCSharpPluginsAsync();
+
         public Task<bool> ReloadPluginAsync(string id) => PluginManager.ReloadPluginAsync(id);
 
         public Task<bool> ReloadAllPluginsAsync() => PluginManager.ReloadAllPluginsAsync();

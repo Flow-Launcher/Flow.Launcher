@@ -97,6 +97,13 @@ public class Settings : BaseModel
         },
         new()
         {
+            Key = "Uninstall Startup C# Plugins",
+            Keyword = "Uninstall Startup C# Plugins",
+            Name = "Uninstall Startup C# Plugins",
+            Description = "Uninstalls C# plugins downloaded and hot-reloaded automatically during this startup"
+        },
+        new()
+        {
             Key = "Check For Update",
             Keyword = "Check For Update"
         },

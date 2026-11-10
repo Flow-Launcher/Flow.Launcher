@@ -37,6 +37,7 @@ namespace Flow.Launcher.Plugin.Sys
             {"Settings", "flowlauncher_plugin_sys_setting_cmd"},
             {"Reload Plugin Data", "flowlauncher_plugin_sys_reload_plugin_data_cmd"},
             {"Reload All Plugins", "flowlauncher_plugin_sys_reload_all_plugins_cmd"},
+            {"Uninstall Startup C# Plugins", "flowlauncher_plugin_sys_uninstall_startup_csharp_plugins_cmd"},
             {"Check For Update", "flowlauncher_plugin_sys_check_for_update_cmd"},
             {"Open Log Location", "flowlauncher_plugin_sys_open_log_location_cmd"},
             {"Flow Launcher Tips", "flowlauncher_plugin_sys_open_docs_tips_cmd"},
@@ -477,6 +478,36 @@ namespace Flow.Launcher.Plugin.Sys
                                 }
                             },
                             TaskScheduler.Current);
+                        return true;
+                    }
+                },
+                new Result
+                {
+                    Title = "Uninstall Startup C# Plugins",
+                    IcoPath = "Images\\app.png",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe74d"),
+                    Action = c =>
+                    {
+                        Context.API.HideMainWindow();
+                        _ = Context.API.UninstallStartupInstalledCSharpPluginsAsync().ContinueWith(t =>
+                        {
+                            if (t.Status == TaskStatus.RanToCompletion && t.Result)
+                            {
+                                Context.API.ShowMsg(
+                                    Localize.flowlauncher_plugin_sys_dlgtitle_success(),
+                                    Localize.flowlauncher_plugin_sys_uninstall_startup_csharp_plugins());
+                            }
+                            else
+                            {
+                                if (t.Exception != null)
+                                {
+                                    Context.API.LogException(ClassName, "Failed to uninstall startup-installed C# plugins", t.Exception);
+                                }
+                                Context.API.ShowMsgError(
+                                    Localize.flowlauncher_plugin_sys_uninstall_startup_csharp_plugins_cmd(),
+                                    Localize.flowlauncher_plugin_sys_uninstall_startup_csharp_plugins_failed());
+                            }
+                        }, TaskScheduler.Current);
                         return true;
                     }
                 },

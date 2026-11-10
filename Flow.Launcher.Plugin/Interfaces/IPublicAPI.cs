@@ -604,6 +604,11 @@ namespace Flow.Launcher.Plugin
         public Task<bool> UninstallPluginAsync(PluginMetadata pluginMetadata, bool removePluginSettings = false);
 
         /// <summary>
+        /// Uninstalls C# plugins installed from the manifest during the current startup sequence.
+        /// </summary>
+        public Task<bool> UninstallStartupInstalledCSharpPluginsAsync();
+
+        /// <summary>
         /// Fully reload one plugin in place, without restarting the app: dispose the running instance,
         /// unload its assembly (for .NET plugins), and load and initialize the plugin again from disk.
         /// If the plugin was just installed or updated, the newly installed version is loaded.

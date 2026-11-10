@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
@@ -24,6 +25,114 @@ public static class PluginInstaller
     private static readonly Settings Settings = Ioc.Default.GetRequiredService<Settings>();
 
     private static readonly SemaphoreSlim UpdatePluginsSemaphore = new(1, 1);
+    private static readonly ConcurrentDictionary<string, PluginMetadata> StartupInstalledCSharpPlugins = new(StringComparer.OrdinalIgnoreCase);
+
+    /// <summary>
+    /// Installs missing C# plugins from the already-loaded manifest and hot reloads them without restarting Flow Launcher.
+    /// </summary>
+    public static async Task InstallCSharpPluginsFromManifestAsync()
+    {
+        var installedPluginIds = PublicApi.Instance.GetAllPlugins()
+            .Select(pair => pair.Metadata.ID)
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+        var failedPlugins = new List<string>();
+
+        foreach (var manifestPlugin in PublicApi.Instance.GetPluginManifest()
+                     .Where(plugin => string.Equals(plugin.Language, AllowedLanguage.CSharp, StringComparison.OrdinalIgnoreCase)
+                         && !string.IsNullOrWhiteSpace(plugin.ID)
+                         && !string.IsNullOrWhiteSpace(plugin.UrlDownload)))
+        {
+            if (!installedPluginIds.Add(manifestPlugin.ID))
+            {
+                continue;
+            }
+
+            var filePath = Path.Combine(Path.GetTempPath(), $"{manifestPlugin.ID}-{Guid.NewGuid():N}.zip");
+            try
+            {
+                await PublicApi.Instance.HttpDownloadAsync(manifestPlugin.UrlDownload, filePath);
+
+                if (!PublicApi.Instance.InstallPlugin(manifestPlugin, filePath))
+                {
+                    failedPlugins.Add(manifestPlugin.Name);
+                    continue;
+                }
+
+                if (!await PluginManager.ReloadPluginAsync(manifestPlugin.ID))
+                {
+                    failedPlugins.Add(manifestPlugin.Name);
+                    continue;
+                }
+
+                var installedPlugin = PublicApi.Instance.GetAllPlugins()
+                    .FirstOrDefault(pair => string.Equals(pair.Metadata.ID, manifestPlugin.ID, StringComparison.OrdinalIgnoreCase));
+                if (installedPlugin == null)
+                {
+                    PublicApi.Instance.LogError(ClassName,
+                        $"C# plugin {manifestPlugin.Name} was reloaded but is not present in the loaded plugin list");
+                    failedPlugins.Add(manifestPlugin.Name);
+                    continue;
+                }
+
+                StartupInstalledCSharpPlugins[installedPlugin.Metadata.ID] = installedPlugin.Metadata;
+            }
+            catch (Exception e)
+            {
+                PublicApi.Instance.LogException(ClassName, $"Failed to install C# plugin {manifestPlugin.Name} from the manifest", e);
+                failedPlugins.Add(manifestPlugin.Name);
+            }
+            finally
+            {
+                try
+                {
+                    if (File.Exists(filePath))
+                    {
+                        File.Delete(filePath);
+                    }
+                }
+                catch (Exception e)
+                {
+                    PublicApi.Instance.LogException(ClassName, $"Failed to delete temporary plugin archive {filePath}", e);
+                }
+            }
+        }
+
+        if (failedPlugins.Count > 0)
+        {
+            PublicApi.Instance.ShowMsgError(
+                "Some C# plugins could not be installed automatically",
+                string.Join(Environment.NewLine, failedPlugins));
+        }
+    }
+
+    /// <summary>
+    /// Uninstalls C# plugins installed and hot-reloaded by this startup sequence.
+    /// </summary>
+    public static async Task<bool> UninstallStartupInstalledCSharpPluginsAsync()
+    {
+        var allUninstalled = true;
+        foreach (var plugin in StartupInstalledCSharpPlugins.Values.ToArray())
+        {
+            try
+            {
+                if (await PublicApi.Instance.UninstallPluginAsync(plugin, removePluginSettings: true))
+                {
+                    StartupInstalledCSharpPlugins.TryRemove(plugin.ID, out _);
+                }
+                else
+                {
+                    allUninstalled = false;
+                }
+            }
+            catch (Exception e)
+            {
+                PublicApi.Instance.LogException(ClassName, $"Failed to uninstall startup-installed C# plugin {plugin.Name}", e);
+                allUninstalled = false;
+            }
+        }
+
+        return allUninstalled;
+    }
 
     /// <summary>
     /// Installs a plugin and hot reloads it. Prompts user for confirmation and handles download if needed.
