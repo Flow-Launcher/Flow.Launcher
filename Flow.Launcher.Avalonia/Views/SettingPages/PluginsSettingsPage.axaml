@@ -1,0 +1,210 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
+             xmlns:vm="using:Flow.Launcher.Avalonia.ViewModel.SettingPages"
+             xmlns:i18n="using:Flow.Launcher.Avalonia.Resource"
+             xmlns:conv="using:Avalonia.Data.Converters"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+             x:Class="Flow.Launcher.Avalonia.Views.SettingPages.PluginsSettingsPage"
+             x:DataType="vm:PluginsSettingsViewModel">
+
+    <UserControl.Styles>
+        <Style Selector="Expander.pluginItem">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        </Style>
+        <Style Selector="Expander.pluginItem /template/ ToggleButton#ExpanderHeader">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        </Style>
+    </UserControl.Styles>
+
+    <Grid RowDefinitions="Auto,Auto,*" Margin="0,0,16,0">
+        <!-- Header -->
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="0,0,0,12">
+            <TextBlock Text="{i18n:Localize plugins}" Classes="pageTitle"/>
+            
+            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10">
+                <TextBlock Text="{i18n:Localize FilterComboboxLabel}" VerticalAlignment="Center" Foreground="{DynamicResource TextFillColorSecondaryBrush}"/>
+                <ComboBox ItemsSource="{Binding DisplayModes}" 
+                          SelectedItem="{Binding SelectedDisplayModeItem, Mode=TwoWay}"
+                          MinWidth="150">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="vm:PluginsSettingsViewModel+DisplayModeItem">
+                            <TextBlock Text="{Binding Display}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <Button Command="{Binding CheckPluginUpdatesCommand}"
+                        ToolTip.Tip="{i18n:Localize checkPluginUpdatesTooltip}">
+                    <ui:SymbolIcon Symbol="Sync" FontSize="16"/>
+                </Button>
+                <Button Classes="accent"
+                        Command="{Binding UpdateAllPluginsCommand}"
+                        Content="{i18n:Localize updateAllPluginsButtonContent}"
+                        IsVisible="{Binding HasAvailableUpdates}"/>
+                <Button Command="{Binding OpenHelperCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                        ToolTip.Tip="{i18n:Localize flowlauncher_settings}">
+                    <ui:SymbolIcon Symbol="Help" FontSize="16"/>
+                </Button>
+            </StackPanel>
+        </Grid>
+
+        <!-- Search Box -->
+        <TextBox Grid.Row="1" 
+                 x:Name="SearchTextBox"
+                 Text="{Binding SearchText, Mode=TwoWay}"
+                 Watermark="{i18n:Localize searchplugin}"
+                 Margin="0,0,0,10">
+            <TextBox.InnerRightContent>
+                <Button Theme="{StaticResource TransparentButton}"
+                        IsVisible="{Binding SearchText, Converter={x:Static conv:StringConverters.IsNotNullOrEmpty}}"
+                        Click="ClearSearchText_Click">
+                    <ui:SymbolIcon Symbol="Dismiss" FontSize="12"/>
+                </Button>
+            </TextBox.InnerRightContent>
+        </TextBox>
+
+        <!-- Plugin List (virtualized) -->
+        <ItemsControl Grid.Row="2" ItemsSource="{Binding FilteredPlugins}">
+            <ItemsControl.Template>
+                <ControlTemplate TargetType="ItemsControl">
+                    <ScrollViewer>
+                        <ItemsPresenter Name="PART_ItemsPresenter" ItemsPanel="{TemplateBinding ItemsPanel}" />
+                    </ScrollViewer>
+                </ControlTemplate>
+            </ItemsControl.Template>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:PluginItemViewModel">
+                        <Expander Classes="pluginItem" HorizontalAlignment="Stretch" Margin="0,0,10,10" IsExpanded="{Binding IsExpanded}">
+                            <Expander.Header>
+                                <Grid ColumnDefinitions="Auto,*,Auto" HorizontalAlignment="Stretch">
+                                    <!-- Icon -->
+                                    <Image Grid.Column="0" Source="{Binding Icon}" Width="32" Height="32" Margin="0,0,15,0" VerticalAlignment="Center" 
+                                           RenderOptions.BitmapInterpolationMode="HighQuality" />
+                                    
+                                    <!-- Info -->
+                                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding Name}" FontWeight="Bold" />
+                                        <TextBlock Text="{Binding Description}" Foreground="{DynamicResource TextFillColorSecondaryBrush}" FontSize="12" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" MaxLines="1"/>
+                                    </StackPanel>
+
+                                    <!-- Conditional Controls -->
+                                    <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="10" VerticalAlignment="Center" Margin="10,0,0,0" HorizontalAlignment="Right">
+                                        <!-- Update -->
+                                        <StackPanel Orientation="Horizontal" Spacing="8" IsVisible="{Binding HasUpdate}">
+                                            <TextBlock Text="{Binding UpdateVersionText}" VerticalAlignment="Center"
+                                                       Foreground="{DynamicResource TextFillColorSecondaryBrush}" FontSize="12"/>
+                                            <Button Classes="accent" Content="{i18n:Localize updatebtn}"
+                                                    Command="{Binding UpdatePluginCommand}"/>
+                                        </StackPanel>
+
+                                        <!-- On/Off -->
+                                        <ToggleSwitch IsChecked="{Binding PluginState}" 
+                                                      OnContent="" OffContent=""
+                                                      IsVisible="{Binding IsOnOffSelected}"/>
+                                        
+                                        <!-- Priority -->
+                                        <StackPanel Orientation="Horizontal" Spacing="10" 
+                                                    IsVisible="{Binding IsPrioritySelected}">
+                                            <TextBlock Text="{i18n:Localize priority}" VerticalAlignment="Center"/>
+                                            <ui:NumberBox Value="{Binding PriorityInput}" SpinButtonPlacementMode="Inline" Width="100"
+                                                            Minimum="-999" Maximum="999" SmallChange="1" LargeChange="10"
+                                                            ToolTip.Tip="{i18n:Localize priorityToolTip}"/>
+                                        </StackPanel>
+
+                                        <!-- Search Delay -->
+                                        <StackPanel Orientation="Horizontal" Spacing="10"
+                                                    IsVisible="{Binding IsSearchDelaySelected}">
+                                            <TextBlock Text="{i18n:Localize searchDelay}" VerticalAlignment="Center"/>
+                                            <ui:NumberBox Value="{Binding PluginSearchDelayTime}" SpinButtonPlacementMode="Inline" Width="100"
+                                                            Minimum="0" Maximum="1000" SmallChange="10" LargeChange="100"
+                                                            PlaceholderText="{Binding DefaultSearchDelay}"
+                                                            IsEnabled="{Binding SearchDelayEnabled}"
+                                                            ToolTip.Tip="{i18n:Localize searchDelayNumberBoxToolTip}"
+                                                            ToolTip.ShowOnDisabled="True"/>
+                                        </StackPanel>
+
+                                        <!-- Home On/Off -->
+                                        <ToggleSwitch IsChecked="{Binding PluginHomeState}"
+                                                      OnContent="" OffContent=""
+                                                      IsEnabled="{Binding HomeEnabled}"
+                                                      ToolTip.Tip="{i18n:Localize homeToggleBoxToolTip}"
+                                                      ToolTip.ShowOnDisabled="True"
+                                                      IsVisible="{Binding IsHomeOnOffSelected}"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Expander.Header>
+                            
+                            <Expander.Content>
+                                <StackPanel Spacing="15">
+                                    <!-- Action Keywords -->
+                                    <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding ShowActionKeywordPanel}">
+                                        <StackPanel Spacing="5">
+                                            <TextBlock Text="{i18n:Localize actionKeywords}" FontWeight="Bold"/>
+                                            <TextBlock Text="{Binding ActionKeywordsText}" TextWrapping="Wrap" Foreground="{DynamicResource TextFillColorSecondaryBrush}"/>
+                                        </StackPanel>
+                                        <Button Grid.Column="1" Content="{i18n:Localize edit}" Command="{Binding SetActionKeywordsCommand}"
+                                                ToolTip.Tip="{i18n:Localize actionKeywordsTooltip}"/>
+                                    </Grid>
+
+                                    <Separator IsVisible="{Binding ShowActionKeywordPanel}"/>
+
+                                    <!-- Settings Panel -->
+                                    <ContentControl Content="{Binding AvaloniaSettingControl}" 
+                                                    IsVisible="{Binding HasNativeAvaloniaSettings}"
+                                                    HorizontalContentAlignment="Stretch"/>
+                                    
+                                    <StackPanel Orientation="Horizontal" Spacing="10"
+                                                IsVisible="{Binding HasWpfOnlySettings}">
+                                        <ui:SymbolIcon Symbol="Open" FontSize="14" Foreground="{DynamicResource TextFillColorSecondaryBrush}"/>
+                                        <TextBlock Text="{i18n:Localize plugin_settings_open_in_wpf_window}" 
+                                                   Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                                   FontStyle="Italic"
+                                                   VerticalAlignment="Center"/>
+                                        <Button Command="{Binding OpenSettingsCommand}" 
+                                                Content="{i18n:Localize openSettings}"/>
+                                    </StackPanel>
+
+                                    <Separator/>
+
+                                    <!-- Footer -->
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <StackPanel Orientation="Horizontal" Spacing="15" VerticalAlignment="Center">
+                                            <StackPanel Orientation="Horizontal" Spacing="5">
+                                                <ui:SymbolIcon Symbol="Contact" FontSize="14"/>
+                                                <TextBlock Text="{Binding Author}" />
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal" Spacing="5">
+                                                <ui:SymbolIcon Symbol="Tag" FontSize="14"/>
+                                                <TextBlock Text="{Binding Version}" />
+                                            </StackPanel>
+                                            <TextBlock Text="{Binding InitTime}" Foreground="{DynamicResource TextFillColorSecondaryBrush}" FontSize="12" VerticalAlignment="Center"/>
+                                            <TextBlock Text="{Binding QueryTime}" Foreground="{DynamicResource TextFillColorSecondaryBrush}" FontSize="12" VerticalAlignment="Center"/>
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10">
+                                            <Button Command="{Binding OpenSourceCodeLinkCommand}" ToolTip.Tip="{i18n:Localize website}">
+                                                <ui:SymbolIcon Symbol="Globe"/>
+                                            </Button>
+                                            <Button Command="{Binding OpenPluginDirectoryCommand}" ToolTip.Tip="{i18n:Localize pluginDirectory}">
+                                                <ui:SymbolIcon Symbol="Folder"/>
+                                            </Button>
+                                            <Button Command="{Binding OpenDeletePluginWindowCommand}" ToolTip.Tip="{i18n:Localize plugin_uninstall}">
+                                                <ui:SymbolIcon Symbol="Delete"/>
+                                            </Button>
+                                        </StackPanel>
+                                    </Grid>
+                                </StackPanel>
+                            </Expander.Content>
+                        </Expander>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+    </Grid>
+</UserControl>

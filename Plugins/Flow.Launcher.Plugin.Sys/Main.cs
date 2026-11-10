@@ -72,6 +72,12 @@ namespace Flow.Launcher.Plugin.Sys
             return new SysSettings(_viewModel);
         }
 
+        public object CreateSettingPanelAvalonia()
+        {
+            UpdateLocalizedNameDescription(false);
+            return new Views.Avalonia.SysSettings(_viewModel);
+        }
+
         public List<Result> Query(Query query)
         {
             if (query.Search.StartsWith(ThemeSelector.Keyword))

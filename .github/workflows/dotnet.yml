@@ -53,6 +53,20 @@ jobs:
       - name: Perform post_build tasks
         shell: powershell
         run: .\Scripts\post_build.ps1
+      - name: Upload Avalonia Setup
+        uses: actions/upload-artifact@v7
+        with:
+          name: Avalonia Setup
+          path: |
+            Output\Packages\Avalonia\Flow-Launcher-Avalonia-Setup.exe
+          compression-level: 0
+      - name: Upload Avalonia Portable Version
+        uses: actions/upload-artifact@v7
+        with:
+          name: Avalonia Portable Version
+          path: |
+            Output\Packages\Avalonia\Flow-Launcher-Avalonia-Portable.zip
+          compression-level: 0
       - name: Upload Plugin Nupkg
         uses: actions/upload-artifact@v7
         with:

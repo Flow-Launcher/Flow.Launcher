@@ -1,0 +1,81 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
+             xmlns:local="using:Flow.Launcher.Plugin.BrowserBookmark.Views.Avalonia"
+             xmlns:models="using:Flow.Launcher.Plugin.BrowserBookmark.Models"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+             x:Class="Flow.Launcher.Plugin.BrowserBookmark.Views.Avalonia.SettingsControl"
+             x:DataType="local:SettingsViewModel">
+
+    <StackPanel Spacing="10" Margin="0,0,10,0">
+        <ui:SettingsExpander Header="{DynamicResource flowlauncher_plugin_browserbookmark_loadBrowserFrom}"
+                             IconSource="Globe"
+                             Description="Select which browsers to load bookmarks from"
+                             IsExpanded="True">
+            <ui:SettingsExpander.Items>
+                <ui:SettingsExpanderItem Content="Chrome">
+                    <ui:SettingsExpanderItem.Footer>
+                        <ToggleSwitch IsChecked="{Binding LoadChromeBookmark}" OnContent="" OffContent="" />
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+                <ui:SettingsExpanderItem Content="Edge">
+                    <ui:SettingsExpanderItem.Footer>
+                        <ToggleSwitch IsChecked="{Binding LoadEdgeBookmark}" OnContent="" OffContent="" />
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+                <ui:SettingsExpanderItem Content="Firefox">
+                    <ui:SettingsExpanderItem.Footer>
+                        <ToggleSwitch IsChecked="{Binding LoadFirefoxBookmark}" OnContent="" OffContent="" />
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+            </ui:SettingsExpander.Items>
+        </ui:SettingsExpander>
+
+        <ui:SettingsExpander Header="{DynamicResource flowlauncher_plugin_browserbookmark_others}"
+                             IconSource="Library"
+                             Description="Manage custom Chromium-based browsers">
+            <ui:SettingsExpander.Items>
+                <ui:SettingsExpanderItem>
+                    <Grid RowDefinitions="*,Auto">
+                        <ListBox Grid.Row="0"
+                                 ItemsSource="{Binding Settings.CustomChromiumBrowsers}"
+                                 SelectedItem="{Binding SelectedCustomBrowser}"
+                                 Height="200"
+                                 Background="{DynamicResource CardBackgroundFillColorDefault}"
+                                 BorderBrush="{DynamicResource ControlStrokeColorDefault}"
+                                 BorderThickness="1"
+                                 CornerRadius="4">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate x:DataType="models:CustomBrowser">
+                                    <Grid ColumnDefinitions="2*,*,3*">
+                                        <TextBlock Grid.Column="0" Text="{Binding Name}" VerticalAlignment="Center" Margin="10,5"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding BrowserType}" VerticalAlignment="Center" Margin="5" Foreground="{DynamicResource TextFillColorSecondaryBrush}"/>
+                                        <TextBlock Grid.Column="2" Text="{Binding DataDirectoryPath}" VerticalAlignment="Center" Margin="5" Foreground="{DynamicResource TextFillColorSecondaryBrush}" TextTrimming="CharacterEllipsis"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                        
+                        <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="10" Margin="0,10,0,0" HorizontalAlignment="Right">
+                            <Button Content="{DynamicResource flowlauncher_plugin_browserbookmark_addBrowserBookmark}" Command="{Binding NewCustomBrowserCommand}" />
+                            <Button Content="{DynamicResource flowlauncher_plugin_browserbookmark_editBrowserBookmark}" Command="{Binding EditCustomBrowserCommand}" />
+                            <Button Content="{DynamicResource flowlauncher_plugin_browserbookmark_removeBrowserBookmark}" Command="{Binding DeleteCustomBrowserCommand}" />
+                        </StackPanel>
+                    </Grid>
+                </ui:SettingsExpanderItem>
+            </ui:SettingsExpander.Items>
+        </ui:SettingsExpander>
+
+        <ui:SettingsExpander Header="Options" IconSource="Settings">
+             <ui:SettingsExpander.Items>
+                <ui:SettingsExpanderItem Content="{DynamicResource flowlauncher_plugin_browserbookmark_enable_favicons}">
+                    <ui:SettingsExpanderItem.Footer>
+                        <ToggleSwitch IsChecked="{Binding Settings.EnableFavicons}" OnContent="" OffContent="" />
+                    </ui:SettingsExpanderItem.Footer>
+                </ui:SettingsExpanderItem>
+             </ui:SettingsExpander.Items>
+        </ui:SettingsExpander>
+    </StackPanel>
+</UserControl>

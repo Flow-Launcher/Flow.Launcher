@@ -221,6 +221,11 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
         return new SettingsControl(_settings);
     }
 
+    public object CreateSettingPanelAvalonia()
+    {
+        return new Views.Avalonia.SettingsControl(_settings);
+    }
+
     public List<Result> LoadContextMenus(Result selectedResult)
     {
         return new List<Result>()

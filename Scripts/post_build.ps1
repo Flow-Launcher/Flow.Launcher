@@ -47,11 +47,11 @@ function Delete-Unused ($path, $config) {
     Remove-Item -Path $target -Include "*.xml" -Recurse
 }
 
-function Remove-CreateDumpExe ($path, $config) {
+function Remove-CreateDumpExe ($path, $config, $depsFile) {
     $target = "$path\Output\$config"
 
-    $depjson = Get-Content $target\Flow.Launcher.deps.json -raw
-    $depjson -replace '(?s)(.createdump.exe": {.*?}.*?\n)\s*', "" | Out-File $target\Flow.Launcher.deps.json -Encoding UTF8
+    $depjson = Get-Content $target\$depsFile -raw
+    $depjson -replace '(?s)(.createdump.exe": {.*?}.*?\n)\s*', "" | Out-File $target\$depsFile -Encoding UTF8
     Remove-Item -Path $target -Include "*createdump.exe" -Recurse
 }
 
@@ -96,14 +96,56 @@ function Pack-Squirrel-Installer ($path, $version, $output) {
     Write-Host "End pack squirrel installer"
 }
 
-function Publish-Self-Contained ($p) {
+function Pack-AvaloniaSquirrel-Installer ($path, $version, $output) {
+    # msbuild based installer generation is not working in appveyor, not sure why
+    Write-Host "Begin pack Avalonia squirrel installer"
 
-    $csproj  = Join-Path "$p" "Flow.Launcher/Flow.Launcher.csproj" -Resolve
-    $profile = Join-Path "$p" "Flow.Launcher/Properties/PublishProfiles/Net9.0-SelfContained.pubxml" -Resolve
+    $spec = "$path\Scripts\flowlauncher-avalonia.nuspec"
+    $input = "$path\Output\Avalonia\Release"
+
+    Write-Host "Packing: $spec"
+    Write-Host "Input path:  $input"
+
+    # dotnet pack is not used because ran into issues, need to test installation and starting up if to use it.
+    nuget pack $spec -Version $version -BasePath $input -OutputDirectory $output -Properties Configuration=Release
+
+    $nupkg = "$output\FlowLauncherAvalonia.$version.nupkg"
+    Write-Host "nupkg path: $nupkg"
+    $icon = "$path\Flow.Launcher\Resources\app.ico"
+    Write-Host "icon: $icon"
+    # Squirrel.com: https://github.com/Squirrel/Squirrel.Windows/issues/369
+    New-Alias Squirrel $env:USERPROFILE\.nuget\packages\squirrel.windows\1.9.0\tools\Squirrel.exe -Force
+    # why we need Write-Output: https://github.com/Squirrel/Squirrel.Windows/issues/489#issuecomment-156039327
+    # directory of releaseDir in squirrel can't be same as directory ($nupkg) in releasify
+    $temp = "$output\Temp"
+
+    Squirrel --releasify $nupkg --releaseDir $temp --setupIcon $icon --no-msi | Write-Output
+    Move-Item $temp\* $output -Force
+    Remove-Item $temp
+
+    $file = "$output\Flow-Launcher-Avalonia-Setup.exe"
+    Write-Host "Filename: $file"
+
+    Move-Item "$output\Setup.exe" $file -Force
+
+    Write-Host "End pack Avalonia squirrel installer"
+}
+
+
+function Publish-Self-Contained ($p, $project) {
+
+    $csproj  = Join-Path "$p" "$project/$project.csproj" -Resolve
+    $profile = Join-Path "$p" "$project/Properties/PublishProfiles/Net9.0-SelfContained.pubxml" -Resolve
 
     # we call dotnet publish on the main project. 
     # The other projects should have been built in Release at this point.
     dotnet publish -c Release $csproj /p:PublishProfile=$profile
+}
+
+function Remove-RidLessRuntimes ($path, $config) {
+    # The win-x64 self-contained publish flattens native assets into the app root;
+    # the runtimes\ folder left by the RID-less build is no longer referenced by deps.json.
+    Remove-Item -Path "$path\Output\$config\runtimes" -Recurse -Force -ErrorAction SilentlyContinue
 }
 
 function Publish-Portable ($outputLocation, $version) {
@@ -112,6 +154,14 @@ function Publish-Portable ($outputLocation, $version) {
     mkdir "$env:LocalAppData\FlowLauncher\app-$version\UserData"
     Compress-Archive -Path $env:LocalAppData\FlowLauncher -DestinationPath $outputLocation\Flow-Launcher-Portable.zip
 }
+function Publish-AvaloniaPortable ($outputLocation, $version) {
+
+    & $outputLocation\Flow-Launcher-Avalonia-Setup.exe --silent | Out-Null
+    mkdir "$env:LocalAppData\FlowLauncherAvalonia\app-$version\UserData"
+    Compress-Archive -Path $env:LocalAppData\FlowLauncherAvalonia -DestinationPath $outputLocation\Flow-Launcher-Avalonia-Portable.zip -Force
+}
+
+
 
 function Main {
     $p = Build-Path
@@ -122,12 +172,26 @@ function Main {
 
         Delete-Unused $p $config
 
-        Publish-Self-Contained $p
+        Delete-Unused $p "Avalonia\$config"
 
-        Remove-CreateDumpExe $p $config
+        Publish-Self-Contained $p "Flow.Launcher"
+
+        Remove-CreateDumpExe $p $config "Flow.Launcher.deps.json"
+
+        Publish-Self-Contained $p "Flow.Launcher.Avalonia"
+
+        Remove-RidLessRuntimes $p "Avalonia\$config"
+
+        Remove-CreateDumpExe $p "Avalonia\$config" "Flow.Launcher.Avalonia.deps.json"
 
         $o = "$p\Output\Packages"
         Validate-Directory $o
+
+        $ao = "$o\Avalonia"
+        Validate-Directory $ao
+        Pack-AvaloniaSquirrel-Installer $p $v $ao
+        Publish-AvaloniaPortable $ao $v
+
         Pack-Squirrel-Installer $p $v $o
 
         Publish-Portable $o $v

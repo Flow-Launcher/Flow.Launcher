@@ -217,5 +217,10 @@ namespace Flow.Launcher.Plugin.ProcessKiller
         {
             return new SettingsControl(_viewModel);
         }
+
+        public object CreateSettingPanelAvalonia()
+        {
+            return new Views.Avalonia.SettingsControl(_viewModel);
+        }
     }
 }

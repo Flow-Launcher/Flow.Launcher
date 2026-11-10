@@ -1,0 +1,47 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        d:DesignWidth="420"
+        x:Class="Flow.Launcher.Avalonia.Views.Dialogs.MessageBoxWindow"
+        MinWidth="360"
+        MaxWidth="560"
+        SizeToContent="WidthAndHeight"
+        CanResize="False"
+        ShowInTaskbar="False"
+        Topmost="True"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*" Margin="20">
+        <TextBlock x:Name="IconText"
+                   Grid.RowSpan="2"
+                   Margin="0,0,14,0"
+                   FontSize="28"
+                   IsVisible="False" />
+
+        <TextBlock x:Name="CaptionText"
+                   Grid.Column="1"
+                   FontSize="18"
+                   FontWeight="SemiBold"
+                   TextWrapping="Wrap" />
+
+        <SelectableTextBlock x:Name="MessageText"
+                             Grid.Row="1"
+                             Grid.Column="1"
+                             Margin="0,8,0,0"
+                             TextWrapping="Wrap" />
+
+        <StackPanel Grid.Row="2"
+                    Grid.ColumnSpan="2"
+                    Margin="0,20,0,0"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Spacing="10">
+            <Button x:Name="YesButton" MinWidth="80" Click="OnButtonClick" />
+            <Button x:Name="NoButton" MinWidth="80" Click="OnButtonClick" />
+            <Button x:Name="OkButton" MinWidth="80" Click="OnButtonClick" />
+            <Button x:Name="CancelButton" MinWidth="80" Click="OnButtonClick" />
+        </StackPanel>
+    </Grid>
+</Window>

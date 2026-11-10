@@ -1,0 +1,49 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:sys="using:Flow.Launcher.Plugin.Sys"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Flow.Launcher.Plugin.Sys.Views.Avalonia.SysSettings"
+             x:DataType="sys:SettingsViewModel">
+
+    <Grid RowDefinitions="Auto,Auto,*,Auto" Margin="0,0,10,0">
+        <CheckBox Grid.Row="0"
+                  Margin="0,0,0,6"
+                  Content="{DynamicResource flowlauncher_plugin_sys_skip_confirm}"
+                  IsChecked="{Binding Settings.SkipPowerActionConfirmation}" />
+
+        <Grid Grid.Row="1" ColumnDefinitions="2*,6*,2*" Margin="8,6">
+            <TextBlock Grid.Column="0" FontWeight="SemiBold" Text="{DynamicResource flowlauncher_plugin_sys_name}" />
+            <TextBlock Grid.Column="1" FontWeight="SemiBold" Text="{DynamicResource flowlauncher_plugin_sys_desc}" />
+            <TextBlock Grid.Column="2" FontWeight="SemiBold" Text="{DynamicResource flowlauncher_plugin_sys_command}" />
+        </Grid>
+
+        <ListBox x:Name="CommandList"
+                 Grid.Row="2"
+                 MinHeight="300"
+                 BorderBrush="DarkGray"
+                 BorderThickness="1"
+                 ItemsSource="{Binding Settings.Commands}"
+                 SelectedItem="{Binding Settings.SelectedCommand, Mode=TwoWay}"
+                 DoubleTapped="OnCommandDoubleTapped">
+            <ListBox.ItemTemplate>
+                <DataTemplate x:DataType="sys:Command">
+                    <Grid ColumnDefinitions="2*,6*,2*">
+                        <TextBlock Grid.Column="0" Margin="0,0,8,0" Text="{Binding Name}" TextTrimming="CharacterEllipsis" />
+                        <TextBlock Grid.Column="1" Margin="0,0,8,0" Text="{Binding Description}" TextTrimming="CharacterEllipsis" />
+                        <TextBlock Grid.Column="2" Text="{Binding Keyword}" TextTrimming="CharacterEllipsis" />
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <Button Grid.Row="3"
+                Width="100"
+                Margin="0,6,0,0"
+                HorizontalAlignment="Right"
+                HorizontalContentAlignment="Center"
+                Click="OnEditCommandKeywordClick"
+                Content="{DynamicResource flowlauncher_plugin_sys_edit}" />
+    </Grid>
+</UserControl>

@@ -1,0 +1,261 @@
+using System;
+using System.ComponentModel;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using CommunityToolkit.Mvvm.ComponentModel;
+using DynamicData;
+using DynamicData.Binding;
+using Flow.Launcher.Infrastructure.UserSettings;
+
+namespace Flow.Launcher.Avalonia.ViewModel;
+
+/// <summary>
+/// ViewModel for the results list.
+/// Uses DynamicData SourceList for automatic sorting by score.
+/// </summary>
+public partial class ResultsViewModel : ObservableObject, IDisposable
+{
+    private readonly Settings _settings;
+    private readonly SourceList<ResultViewModel> _sourceList = new();
+    private readonly ReadOnlyObservableCollection<ResultViewModel> _results;
+    private readonly IDisposable _subscription;
+
+    [ObservableProperty]
+    private ResultViewModel? _selectedItem;
+
+    [ObservableProperty]
+    private int _selectedIndex;
+
+    [ObservableProperty]
+    private bool _isVisible = true;
+
+    /// <summary>
+    /// Sorted results collection bound to the UI.
+    /// Automatically sorted by Score descending.
+    /// </summary>
+    public ReadOnlyObservableCollection<ResultViewModel> Results => _results;
+
+    public Settings Settings => _settings;
+
+    public int MaxHeight => (int)(_settings.MaxResultsToShow * _settings.ItemHeightSize);
+
+    public ResultsViewModel(Settings settings)
+    {
+        _settings = settings;
+
+        // Connect SourceList to sorted ReadOnlyObservableCollection
+        _subscription = _sourceList.Connect()
+            .AutoRefresh(r => r.Score)
+            .Sort(SortExpressionComparer<ResultViewModel>.Descending(r => r.Score))
+            .Bind(out _results)
+            .Subscribe();
+
+        _settings.PropertyChanged += OnSettingsPropertyChanged;
+    }
+
+    // The result list height follows the max-results setting live (Ctrl+= / Ctrl+-, window resize, settings page).
+    private void OnSettingsPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName is nameof(Settings.MaxResultsToShow) or nameof(Settings.ItemHeightSize))
+        {
+            OnPropertyChanged(nameof(MaxHeight));
+        }
+    }
+
+    /// <summary>
+    /// Replace all results with new ones using atomic Edit to prevent flickering.
+    /// Edit batches changes and fires only one notification at the end.
+    /// </summary>
+    public void ReplaceResults(IEnumerable<ResultViewModel> newResults, bool reselect = true)
+    {
+        var previousSelection = SelectedItem;
+        var resultsList = newResults.ToList();
+        foreach (var r in resultsList)
+        {
+            r.Settings = _settings;
+        }
+
+        // Update highlight data and score for items that will be kept by EditDiff.
+        // This is necessary because EditDiff reuses existing ResultViewModel instances
+        // based on Title+SubTitle equality, but highlight indices are query-specific.
+        // For example, "Chrome" highlighted for "chr" [0,1,2] vs "chrome" [0,1,2,3,4,5].
+        var existingItems = new Dictionary<(string PluginId, string RecordKey, string Query, string Title, string SubTitle), ResultViewModel>(_sourceList.Count);
+        foreach (var existingItem in _sourceList.Items)
+        {
+            existingItems.TryAdd(ResultViewModelComparer.GetIdentityKey(existingItem), existingItem);
+        }
+        foreach (var newItem in resultsList)
+        {
+            if (existingItems.TryGetValue(ResultViewModelComparer.GetIdentityKey(newItem), out var existing))
+            {
+                existing.PluginResult = newItem.PluginResult;
+                existing.HistoryItem = newItem.HistoryItem;
+                existing.IconPath = newItem.IconPath;
+                existing.Glyph = newItem.Glyph;
+                existing.TitleHighlightData = newItem.TitleHighlightData;
+                existing.Score = newItem.Score;
+            }
+        }
+
+        // EditDiff calculates minimal changes needed - items with same Title+SubTitle are kept
+        _sourceList.EditDiff(resultsList, ResultViewModelComparer.Instance);
+
+        // Select first item after replacement, unless the caller asked to keep the
+        // previous selection (re-query) and that item survived the diff.
+        var keptIndex = !reselect && previousSelection != null ? _results.IndexOf(previousSelection) : -1;
+        if (keptIndex >= 0)
+        {
+            SelectedIndex = keptIndex;
+            SelectedItem = previousSelection;
+        }
+        else if (_results.Count > 0)
+        {
+            SelectedIndex = 0;
+            SelectedItem = _results[0];
+        }
+        else
+        {
+            SelectedItem = null;
+            SelectedIndex = -1;
+        }
+    }
+
+    public void ReplaceResultsForPlugin(string pluginId, IEnumerable<ResultViewModel> pluginResults)
+    {
+        var mergedResults = _sourceList.Items
+            .Where(result => !string.Equals(ResultViewModelComparer.GetPluginId(result), pluginId, StringComparison.Ordinal))
+            .Concat(pluginResults)
+            .ToList();
+
+        ReplaceResults(mergedResults);
+    }
+
+    public void AddResult(ResultViewModel result)
+    {
+        result.Settings = _settings;
+        _sourceList.Add(result);
+
+        // Select first item if nothing selected
+        if (SelectedItem == null && _results.Count > 0)
+        {
+            SelectedIndex = 0;
+            SelectedItem = _results[0];
+        }
+    }
+
+    public void Clear()
+    {
+        _sourceList.Clear();
+        SelectedItem = null;
+        SelectedIndex = -1;
+    }
+
+    public void SelectNextItem()
+    {
+        if (_results.Count == 0) return;
+
+        var newIndex = SelectedIndex + 1;
+        if (newIndex >= _results.Count)
+        {
+            newIndex = 0; // Wrap to beginning
+        }
+
+        SelectedIndex = newIndex;
+        SelectedItem = _results[newIndex];
+    }
+
+    public void SelectPrevItem()
+    {
+        if (_results.Count == 0) return;
+
+        var newIndex = SelectedIndex - 1;
+        if (newIndex < 0)
+        {
+            newIndex = _results.Count - 1; // Wrap to end
+        }
+
+        SelectedIndex = newIndex;
+        SelectedItem = _results[newIndex];
+    }
+
+    public void SelectNextPage() => SelectPage(_settings.MaxResultsToShow);
+
+    public void SelectPrevPage() => SelectPage(-_settings.MaxResultsToShow);
+
+    private void SelectPage(int offset)
+    {
+        var count = _results.Count;
+        if (count == 0) return;
+
+        var index = Math.Clamp(SelectedIndex + offset, 0, count - 1);
+        SelectedIndex = index;
+        SelectedItem = _results[index];
+    }
+
+    public void SelectFirstResult() => SelectIndex(0);
+
+    public void SelectLastResult() => SelectIndex(_results.Count - 1);
+
+    // Wraps around like the WPF ResultsViewModel.NewIndex.
+    private void SelectIndex(int index)
+    {
+        var count = _results.Count;
+        if (count == 0) return;
+
+        index = ((index % count) + count) % count;
+        SelectedIndex = index;
+        SelectedItem = _results[index];
+    }
+
+    partial void OnSelectedIndexChanged(int value)
+    {
+        if (value >= 0 && value < _results.Count)
+        {
+            SelectedItem = _results[value];
+        }
+    }
+
+    public void Dispose()
+    {
+        _settings.PropertyChanged -= OnSettingsPropertyChanged;
+        _subscription.Dispose();
+        _sourceList.Dispose();
+    }
+
+    /// <summary>
+    /// Comparer for EditDiff - considers results equal if Title and SubTitle match.
+    /// </summary>
+    private class ResultViewModelComparer : IEqualityComparer<ResultViewModel>
+    {
+        public static readonly ResultViewModelComparer Instance = new();
+
+        public bool Equals(ResultViewModel? x, ResultViewModel? y)
+        {
+            if (ReferenceEquals(x, y)) return true;
+            if (x is null || y is null) return false;
+            return GetIdentityKey(x).Equals(GetIdentityKey(y));
+        }
+
+        public int GetHashCode(ResultViewModel obj)
+        {
+            return GetIdentityKey(obj).GetHashCode();
+        }
+
+        // History rows are never replaced by a plugin's ResultsUpdated batch, even when recorded from that plugin.
+        public static string GetPluginId(ResultViewModel item)
+        {
+            return item.HistoryItem != null ? string.Empty : item.PluginResult?.PluginID ?? string.Empty;
+        }
+
+        public static (string PluginId, string RecordKey, string Query, string Title, string SubTitle) GetIdentityKey(ResultViewModel item)
+        {
+            return (
+                item.PluginResult?.PluginID ?? item.HistoryItem?.PluginID ?? string.Empty,
+                item.PluginResult?.RecordKey ?? item.HistoryItem?.RecordKey ?? string.Empty,
+                item.HistoryItem?.Query ?? string.Empty,
+                item.Title,
+                item.SubTitle);
+        }
+    }
+}
