@@ -60,7 +60,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Flow.Launcher.Localization" Version="0.0.6" />
+    <PackageReference Include="Flow.Launcher.Localization" Version="0.0.7" />
   </ItemGroup>
 
   <!-- Copy plugin output to Avalonia build directory -->

@@ -14,22 +14,27 @@ internal static partial class AutoStartup
         Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
         "Library", "LaunchAgents", $"{LaunchAgentLabel}.plist");
 
-    // macOS has a single mechanism, so the logon task / registry choice does not matter.
+    // XDG Autostart: desktop sessions start every entry in $XDG_CONFIG_HOME/autostart at login.
+    private static string LinuxAutostartPath => Path.Combine(LinuxDesktopEntry.ConfigHome, "autostart", LinuxDesktopEntry.FileName);
+
+    private static string StartupFilePath => OperatingSystem.IsMacOS() ? LaunchAgentPath : LinuxAutostartPath;
+
+    // macOS and Linux each have a single mechanism, so the logon task / registry choice does not matter.
     internal static partial void CheckIsEnabled(bool useLogonTaskForStartup)
     {
         EnsureSupported();
 
         try
         {
-            var expected = BuildLaunchAgentPlist();
-            if (!File.Exists(LaunchAgentPath) || File.ReadAllText(LaunchAgentPath) != expected)
+            var expected = BuildStartupFile();
+            if (!File.Exists(StartupFilePath) || File.ReadAllText(StartupFilePath) != expected)
             {
-                WriteLaunchAgent(expected);
+                WriteStartupFile(expected);
             }
         }
         catch (Exception e)
         {
-            App.API?.LogError(ClassName, $"Failed to check launch agent: {e}");
+            App.API?.LogError(ClassName, $"Failed to check the startup entry: {e}");
             throw;
         }
     }
@@ -41,7 +46,7 @@ internal static partial class AutoStartup
         try
         {
             // File.Delete is a no-op when the file does not exist.
-            File.Delete(LaunchAgentPath);
+            File.Delete(StartupFilePath);
         }
         catch (Exception e)
         {
@@ -50,25 +55,25 @@ internal static partial class AutoStartup
         }
     }
 
-    internal static partial void ChangeToViaLogonTask() => EnableLaunchAgent();
+    internal static partial void ChangeToViaLogonTask() => EnableStartupFile();
 
-    internal static partial void ChangeToViaRegistry() => EnableLaunchAgent();
+    internal static partial void ChangeToViaRegistry() => EnableStartupFile();
 
     private static void EnsureSupported()
     {
-        if (!OperatingSystem.IsMacOS())
+        if (!OperatingSystem.IsMacOS() && !OperatingSystem.IsLinux())
         {
-            throw new PlatformNotSupportedException("Start at login is only supported on Windows and macOS.");
+            throw new PlatformNotSupportedException("Start at login is only supported on Windows, macOS and Linux.");
         }
     }
 
-    private static void EnableLaunchAgent()
+    private static void EnableStartupFile()
     {
         EnsureSupported();
 
         try
         {
-            WriteLaunchAgent(BuildLaunchAgentPlist());
+            WriteStartupFile(BuildStartupFile());
         }
         catch (Exception e)
         {
@@ -78,15 +83,18 @@ internal static partial class AutoStartup
     }
 
     /// <summary>
-    /// The plist is written (not loaded via launchctl): launchd picks it up at the next login.
+    /// The file is only written: launchd (macOS) and the desktop session (Linux) pick it up at the next login.
     /// </summary>
-    private static void WriteLaunchAgent(string content)
+    private static void WriteStartupFile(string content)
     {
-        Directory.CreateDirectory(Path.GetDirectoryName(LaunchAgentPath)!);
-        var tempPath = LaunchAgentPath + ".tmp";
+        Directory.CreateDirectory(Path.GetDirectoryName(StartupFilePath)!);
+        var tempPath = StartupFilePath + ".tmp";
         File.WriteAllText(tempPath, content, new UTF8Encoding(false));
-        File.Move(tempPath, LaunchAgentPath, true);
+        File.Move(tempPath, StartupFilePath, true);
     }
+
+    private static string BuildStartupFile() =>
+        OperatingSystem.IsMacOS() ? BuildLaunchAgentPlist() : LinuxDesktopEntry.Build(autostart: true);
 
     private static string BuildLaunchAgentPlist()
     {
@@ -116,10 +124,10 @@ internal static partial class AutoStartup
     }
 
     /// <summary>
-    /// The running executable: the apphost inside the .app bundle (Contents/MacOS/Flow.Launcher.Avalonia),
+    /// The running executable: the apphost (inside the .app bundle on macOS, the install folder on Linux),
     /// or "dotnet Flow.Launcher.Avalonia.dll" when started through the muxer (development builds).
     /// </summary>
-    private static string[] GetLaunchArguments()
+    internal static string[] GetLaunchArguments()
     {
         var processPath = Environment.ProcessPath
             ?? throw new InvalidOperationException("Cannot determine the path of the running executable.");

@@ -1,5 +1,6 @@
 using System;
 using Avalonia.Controls;
+using Avalonia.Controls.Platform;
 using Flow.Launcher.Avalonia.Helper;
 
 namespace Flow.Launcher.Avalonia.Views.Dialogs;
@@ -24,5 +25,14 @@ public partial class NotificationWindow
                 MacWindowShape.ClearBackgroundIfTransparent(this);
             }
         };
+    }
+
+    // Tiling window managers float utility windows and, unlike dialogs, do not focus them when they appear.
+    partial void InitializeWindowType()
+    {
+        if (OperatingSystem.IsLinux())
+        {
+            X11Properties.SetNetWmWindowType(this, X11NetWmWindowType.Utility);
+        }
     }
 }

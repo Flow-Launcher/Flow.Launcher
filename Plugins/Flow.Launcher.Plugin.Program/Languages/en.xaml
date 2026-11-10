@@ -97,5 +97,6 @@
     <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success_message">Successfully disabled this program from displaying in your query</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator_not_supported_message">This app is not intended to be run as administrator</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_failed">Unable to run {0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_no_terminal">Unable to run {0}: no terminal emulator was found. Set the TERMINAL environment variable to your terminal.</system:String>
 
 </ResourceDictionary>

@@ -138,3 +138,35 @@ jobs:
           path: |
             Output/macOS/Flow-Launcher-macOS-${{ matrix.rid }}.zip
           compression-level: 0
+
+  build-linux:
+
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        rid: [linux-x64, linux-arm64]
+    env:
+      FlowVersion: 1.20.2
+      BUILD_NUMBER: ${{ github.run_number }}
+    steps:
+      - uses: actions/checkout@v7
+      - name: Set Flow.Launcher.csproj version
+        uses: vers-one/dotnet-project-version-updater@v1.8
+        with:
+          file: |
+            "**/SolutionAssemblyInfo.cs"
+          version: ${{ env.FlowVersion }}.${{ env.BUILD_NUMBER }}
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 10.0.x
+      - name: Build Flow Launcher for Linux
+        run: Scripts/linux/build.sh ${{ matrix.rid }}
+      - name: Upload Linux tarball
+        uses: actions/upload-artifact@v7
+        with:
+          name: Linux App (${{ matrix.rid }})
+          path: |
+            Output/Linux/flow-launcher-${{ matrix.rid }}.tar.gz
+          compression-level: 0

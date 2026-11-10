@@ -61,7 +61,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Flow.Launcher.Localization" Version="0.0.6" />
+    <PackageReference Include="Flow.Launcher.Localization" Version="0.0.7" />
     <PackageReference Include="InputSimulator" Version="1.0.4" NoWarn="NU1701" Condition="$(TargetFramework.Contains('-windows'))" />
     <PackageReference Include="Avalonia" Version="12.1.4" ExcludeAssets="runtime" />
     <PackageReference Include="FluentAvaloniaUI" Version="3.1.0" ExcludeAssets="runtime" />

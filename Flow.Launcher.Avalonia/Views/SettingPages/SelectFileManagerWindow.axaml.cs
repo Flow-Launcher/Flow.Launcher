@@ -106,15 +106,18 @@ public partial class SelectFileManagerWindow : Window, INotifyPropertyChanged
         {
             Title = Translate("fileManager_path", "File manager executable"),
             AllowMultiple = false,
-            FileTypeFilter =
-            [
-                new FilePickerFileType("Executable files")
-                {
-                    // macOS file managers are .app bundles.
-                    Patterns = OperatingSystem.IsWindows() ? ["*.exe", "*.cmd", "*.bat", "*.com"] : ["*.app"]
-                },
-                FilePickerFileTypes.All
-            ]
+            // Windows executables have extensions and macOS file managers are .app bundles; Linux executables have no
+            // pattern to filter on.
+            FileTypeFilter = OperatingSystem.IsLinux()
+                ? [FilePickerFileTypes.All]
+                :
+                [
+                    new FilePickerFileType("Executable files")
+                    {
+                        Patterns = OperatingSystem.IsWindows() ? ["*.exe", "*.cmd", "*.bat", "*.com"] : ["*.app"]
+                    },
+                    FilePickerFileTypes.All
+                ]
         });
 
         var selectedPath = files.FirstOrDefault()?.Path.LocalPath;
@@ -197,6 +200,14 @@ public partial class SelectFileManagerWindow : Window, INotifyPropertyChanged
             return File.Exists(path) || (!OperatingSystem.IsWindows() && Directory.Exists(path));
         }
 
+        if (!OperatingSystem.IsWindows())
+        {
+            // A bare command name runs through PATH lookup (no /usr/bin/which on e.g. NixOS).
+            return (Environment.GetEnvironmentVariable("PATH") ?? string.Empty)
+                .Split(Path.PathSeparator, StringSplitOptions.RemoveEmptyEntries)
+                .Any(directory => File.Exists(Path.Combine(directory, path)));
+        }
+
         return await System.Threading.Tasks.Task.Run(() =>
         {
             try
@@ -205,7 +216,7 @@ public partial class SelectFileManagerWindow : Window, INotifyPropertyChanged
                 {
                     StartInfo = new ProcessStartInfo
                     {
-                        FileName = OperatingSystem.IsWindows() ? "where" : "/usr/bin/which",
+                        FileName = "where",
                         Arguments = path,
                         RedirectStandardOutput = true,
                         UseShellExecute = false,

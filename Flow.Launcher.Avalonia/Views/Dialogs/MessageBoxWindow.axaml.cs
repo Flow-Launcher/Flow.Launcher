@@ -29,6 +29,11 @@ public partial class MessageBoxWindow : Window
     {
         _button = button;
         AvaloniaXamlLoader.Load(this);
+        if (System.OperatingSystem.IsLinux())
+        {
+            // Tiling window managers float (and focus) dialog windows instead of tiling them.
+            X11Properties.SetNetWmWindowType(this, global::Avalonia.Controls.Platform.X11NetWmWindowType.Dialog);
+        }
 
         var title = string.IsNullOrEmpty(caption) ? Constant.FlowLauncherFullName : caption;
         Title = title;

@@ -1,6 +1,6 @@
 # Flow Launcher on macOS
 
-The Avalonia front end (`Flow.Launcher.Avalonia`) runs on macOS 13 or later, on Apple Silicon (`osx-arm64`) and Intel (`osx-x64`) Macs. Linux is not supported.
+The Avalonia front end (`Flow.Launcher.Avalonia`) runs on macOS 13 or later, on Apple Silicon (`osx-arm64`) and Intel (`osx-x64`) Macs. For Linux, see [linux.md](linux.md).
 
 ## Build
 
@@ -59,4 +59,3 @@ User data (settings, logs, cache, plugins installed from the store) is stored in
 - Python and Node.js runtimes for plugins are not installed automatically. Set the interpreter paths manually in Settings → General.
 - The `{clipboard}` and `{active_explorer_path}` custom shortcuts are unavailable.
 - ProcessKiller does not show window titles.
-- Linux is not supported.

@@ -6,12 +6,17 @@ namespace Flow.Launcher.Avalonia.Helper;
 
 internal static partial class HotKeyMapper
 {
-    // Global hotkeys use Carbon RegisterEventHotKey on macOS; other platforms have no global hotkey backend.
+    // Global hotkeys use Carbon RegisterEventHotKey on macOS, and the GlobalShortcuts portal (Wayland) or X11 key
+    // grabs on Linux; other platforms have no global hotkey backend.
     static partial void InitializeHotkeySystem()
     {
         if (OperatingSystem.IsMacOS())
         {
             MacGlobalHotkey.Initialize();
+        }
+        else if (OperatingSystem.IsLinux())
+        {
+            LinuxGlobalHotkey.Initialize();
         }
         else
         {
@@ -25,6 +30,11 @@ internal static partial class HotKeyMapper
         {
             throw new InvalidOperationException($"UnregisterEventHotKey failed for hotkey id {hotkeyId}");
         }
+
+        if (OperatingSystem.IsLinux())
+        {
+            LinuxGlobalHotkey.Unregister(hotkeyId);
+        }
     }
 
     static partial void ShutdownHotkeySystem()
@@ -33,13 +43,23 @@ internal static partial class HotKeyMapper
         {
             MacGlobalHotkey.Shutdown();
         }
+        else if (OperatingSystem.IsLinux())
+        {
+            LinuxGlobalHotkey.Shutdown();
+        }
     }
 
     private static partial bool IsForegroundWindowFullscreen() =>
-        OperatingSystem.IsMacOS() && MacScreens.IsFrontmostWindowFullscreen();
+        OperatingSystem.IsMacOS() ? MacScreens.IsFrontmostWindowFullscreen()
+        : OperatingSystem.IsLinux() && LinuxGlobalHotkey.IsForegroundWindowFullscreen();
 
     internal static partial bool CheckAvailability(HotkeyModel hotkey)
     {
+        if (OperatingSystem.IsLinux())
+        {
+            return LinuxGlobalHotkey.CheckAvailability(hotkey);
+        }
+
         if (!TryGetRegistrationParts(hotkey, out var keyCode, out var modifiers))
         {
             return false;
@@ -59,6 +79,18 @@ internal static partial class HotKeyMapper
     private static partial bool TryRegisterHotkey(string hotkeyString, Action callback, out int hotkeyId)
     {
         hotkeyId = -1;
+
+        if (OperatingSystem.IsLinux())
+        {
+            hotkeyId = LinuxGlobalHotkey.Register(hotkeyString, callback);
+            if (hotkeyId < 0)
+            {
+                Log.Error(ClassName, $"Failed to register hotkey: {hotkeyString}");
+                return false;
+            }
+
+            return true;
+        }
 
         if (!OperatingSystem.IsMacOS())
         {

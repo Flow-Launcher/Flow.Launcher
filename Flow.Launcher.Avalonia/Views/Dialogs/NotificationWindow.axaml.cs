@@ -38,6 +38,7 @@ public partial class NotificationWindow : Window, INotifyPropertyChanged
         _closeTimer.Tick += (_, _) => CloseWindow();
 
         InitializeComponent();
+        InitializeWindowType();
         DataContext = this;
 
         Opened += OnOpened;
@@ -154,6 +155,9 @@ public partial class NotificationWindow : Window, INotifyPropertyChanged
 
     // Platform hook: shape the native window to match the rounded NotificationBorder.
     partial void InitializeWindowShape();
+
+    // Platform hook: how the window manager should treat the notification (floating, never focused).
+    partial void InitializeWindowType();
 
     private static void RepositionActiveWindows(Screen screen)
     {

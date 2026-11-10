@@ -58,7 +58,7 @@
   
   <ItemGroup>
     <PackageReference Include="Droplex" Version="1.7.0" Condition="$(TargetFramework.Contains('-windows'))" />
-    <PackageReference Include="Flow.Launcher.Localization" Version="0.0.6" />
+    <PackageReference Include="Flow.Launcher.Localization" Version="0.0.7" />
     <PackageReference Include="FSharp.Core" Version="9.0.303" />
     <PackageReference Include="Meziantou.Framework.Win32.Jobs" Version="3.4.5" Condition="$(TargetFramework.Contains('-windows'))" />
     <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="3.0.1" />

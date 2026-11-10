@@ -1,3 +1,4 @@
+using System;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
@@ -31,7 +32,11 @@ namespace Flow.Launcher.Avalonia.Views.Controls
             // Swallow every key while recording, like the Windows hook, so Escape/Enter/Space can be recorded too.
             e.Handled = true;
 
-            var key = MacKeyMap.GetKey(e.PhysicalKey);
+            // X11 reports the layout's letter as the logical key (Avalonia's Key numbering is WPF's), and the
+            // hotkey backends grab letters by keysym; other keys are stored by physical position.
+            var key = OperatingSystem.IsLinux() && e.Key is >= Key.A and <= Key.Z
+                ? (WpfKey)(int)e.Key
+                : MacKeyMap.GetKey(e.PhysicalKey);
             var modifiers = e.KeyModifiers;
 
             // Don't treat modifiers as main keys

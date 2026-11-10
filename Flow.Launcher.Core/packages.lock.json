@@ -4,9 +4,9 @@
     "net10.0": {
       "Flow.Launcher.Localization": {
         "type": "Direct",
-        "requested": "[0.0.6, )",
-        "resolved": "0.0.6",
-        "contentHash": "WNI/TLGPDr3XdOW8gaALN0Uyz9h+bzqOaNZev2nHEuA3HW9o7XuqaM6C0PqNi96mNgxiypwWpVazBNzaylJ2Aw=="
+        "requested": "[0.0.7, )",
+        "resolved": "0.0.7",
+        "contentHash": "HfwBl4zQh8JIrAK+s88xHjdFeYVGBidPlnB13jpGocRfxzIrPpbVFHc82cfQ1K7TzUJQjaBqPzKDLnjRs9ArMQ=="
       },
       "FSharp.Core": {
         "type": "Direct",
@@ -187,7 +187,7 @@
           "Ben.Demystifier": "[0.4.1, )",
           "BitFaster.Caching": "[2.5.4, )",
           "CommunityToolkit.Mvvm": "[8.4.0, )",
-          "Flow.Launcher.Localization": "[0.0.6, )",
+          "Flow.Launcher.Localization": "[0.0.7, )",
           "Flow.Launcher.Plugin": "[5.3.2, )",
           "MemoryPack": "[1.21.4, )",
           "Microsoft.VisualStudio.Threading": "[17.14.15, )",
@@ -232,9 +232,9 @@
       },
       "Flow.Launcher.Localization": {
         "type": "Direct",
-        "requested": "[0.0.6, )",
-        "resolved": "0.0.6",
-        "contentHash": "WNI/TLGPDr3XdOW8gaALN0Uyz9h+bzqOaNZev2nHEuA3HW9o7XuqaM6C0PqNi96mNgxiypwWpVazBNzaylJ2Aw=="
+        "requested": "[0.0.7, )",
+        "resolved": "0.0.7",
+        "contentHash": "HfwBl4zQh8JIrAK+s88xHjdFeYVGBidPlnB13jpGocRfxzIrPpbVFHc82cfQ1K7TzUJQjaBqPzKDLnjRs9ArMQ=="
       },
       "FSharp.Core": {
         "type": "Direct",
@@ -479,7 +479,7 @@
           "Ben.Demystifier": "[0.4.1, )",
           "BitFaster.Caching": "[2.5.4, )",
           "CommunityToolkit.Mvvm": "[8.4.0, )",
-          "Flow.Launcher.Localization": "[0.0.6, )",
+          "Flow.Launcher.Localization": "[0.0.7, )",
           "Flow.Launcher.Plugin": "[5.3.2, )",
           "InputSimulator": "[1.0.4, )",
           "MemoryPack": "[1.21.4, )",

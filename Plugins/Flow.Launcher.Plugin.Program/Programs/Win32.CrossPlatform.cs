@@ -14,7 +14,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
 {
     /// <summary>
     /// macOS program source: application bundles (*.app) are indexed as <see cref="Win32"/> entries so the
-    /// plugin's cache, disabling and scoring work unchanged.
+    /// plugin's cache, disabling and scoring work unchanged. Linux desktop entries live in Win32.Linux.CrossPlatform.cs.
     /// </summary>
     public partial class Win32
     {
@@ -37,6 +37,12 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
         private partial void Launch(ActionContext c)
         {
+            if (OperatingSystem.IsLinux())
+            {
+                LaunchDesktopEntry();
+                return;
+            }
+
             var info = new ProcessStartInfo(OpenCommand) { ArgumentList = { "-a", FullPath } };
 
             _ = Task.Run(() => Main.StartProcess(Process.Start, info));
@@ -44,6 +50,12 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
         private partial void OpenContainingFolder()
         {
+            if (OperatingSystem.IsLinux())
+            {
+                OpenDesktopEntryFolder();
+                return;
+            }
+
             // Reveal the bundle in Finder
             var info = new ProcessStartInfo(OpenCommand) { ArgumentList = { "-R", FullPath } };
 
@@ -71,9 +83,14 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
         public static partial Win32[] All(Settings settings)
         {
+            if (OperatingSystem.IsLinux())
+            {
+                return AllDesktopEntries(settings);
+            }
+
             if (!OperatingSystem.IsMacOS())
             {
-                Main.Context.API.LogWarn(nameof(Win32), "Program indexing is only supported on Windows and macOS");
+                Main.Context.API.LogWarn(nameof(Win32), "Program indexing is only supported on Windows, macOS and Linux");
                 return Array.Empty<Win32>();
             }
 
@@ -107,6 +124,12 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
         public static partial void WatchProgramUpdate(Settings settings)
         {
+            if (OperatingSystem.IsLinux())
+            {
+                WatchDesktopEntryDirectories(settings);
+                return;
+            }
+
             if (!OperatingSystem.IsMacOS())
                 return;
 

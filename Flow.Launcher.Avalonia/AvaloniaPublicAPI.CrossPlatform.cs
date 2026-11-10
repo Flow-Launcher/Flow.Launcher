@@ -69,7 +69,8 @@ public partial class AvaloniaPublicAPI
     private partial void StartShellCommand(string cmd, string filename)
     {
         var shell = string.Equals(filename, "cmd.exe", StringComparison.OrdinalIgnoreCase)
-            ? Environment.GetEnvironmentVariable("SHELL") is { Length: > 0 } userShell ? userShell : "/bin/zsh"
+            ? Environment.GetEnvironmentVariable("SHELL") is { Length: > 0 } userShell ? userShell
+            : OperatingSystem.IsMacOS() ? "/bin/zsh" : "/bin/sh"
             : filename;
 
         var startInfo = new ProcessStartInfo(shell) { UseShellExecute = false };
@@ -78,12 +79,20 @@ public partial class AvaloniaPublicAPI
         Process.Start(startInfo)?.Dispose();
     }
 
-    // Settings written on Windows keep "explorer" as the default entry; "Finder" is the macOS default entry.
+    // Settings written on Windows keep "explorer" as the default entry; "Finder" is the macOS default entry and
+    // "xdg-open" the Linux one.
     private partial bool IsSystemFileManager(string explorerPath) =>
-        Path.GetFileNameWithoutExtension(explorerPath) is "explorer" or "finder";
+        Path.GetFileNameWithoutExtension(explorerPath) is "explorer" or "finder" or "xdg-open";
 
     private partial void OpenInSystemFileManager(string directoryPath, string? filePathToSelect)
     {
+        if (OperatingSystem.IsLinux() && filePathToSelect is not null)
+        {
+            // xdg-open cannot select an item; file managers implementing org.freedesktop.FileManager1 can.
+            _ = LinuxFileManager.ShowItemOrOpenFolderAsync(filePathToSelect, directoryPath);
+            return;
+        }
+
         if (!OperatingSystem.IsMacOS())
         {
             Process.Start(new ProcessStartInfo { FileName = directoryPath, UseShellExecute = true })?.Dispose();

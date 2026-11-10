@@ -84,7 +84,9 @@ public partial class App : Application
 
             AutoStartup();
 
-            SingleInstance.StartListening(() => Dispatcher.UIThread.Post(() => API?.ShowMainWindow()));
+            SingleInstance.StartListening(
+                onShow: () => Dispatcher.UIThread.Post(() => API?.ShowMainWindow()),
+                onToggle: () => Dispatcher.UIThread.Post(() => _mainVM?.ToggleFlowLauncher()));
 
             Dispatcher.UIThread.Post(async () => await InitializePluginsAsync(), DispatcherPriority.Background);
 

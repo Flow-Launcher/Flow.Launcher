@@ -84,6 +84,7 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
         InitializeWindowShape();
+        InitializeWindowType();
 
         // Get the ViewModel and Settings from DI
         _viewModel = Ioc.Default.GetRequiredService<MainViewModel>();
@@ -197,7 +198,16 @@ public partial class MainWindow : Window
             _settings.Save();
 
             var welcomeWindow = new WelcomeWindow();
-            welcomeWindow.Show(this);
+            // A dialog shown during startup (e.g. a hotkey registration error) can hide the search window before
+            // Loaded runs, and Avalonia refuses to show a window over a hidden owner.
+            if (IsVisible)
+            {
+                welcomeWindow.Show(this);
+            }
+            else
+            {
+                welcomeWindow.Show();
+            }
         }
 
         // Focus the query text box when window loads
@@ -725,6 +735,9 @@ public partial class MainWindow : Window
 
     // Platform hook: shape the native window to match the rounded WindowBorder.
     partial void InitializeWindowShape();
+
+    // Platform hook: how the window manager should treat the search window (e.g. floating rather than tiled).
+    partial void InitializeWindowType();
 
     // Platform hook: the "open" sound played when the window is summoned (Settings.UseSound).
     partial void PlayOpenSound();

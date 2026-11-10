@@ -9,9 +9,17 @@ namespace Flow.Launcher.Plugin.Url
 #pragma warning restore FLAN0005
     {
         // Opens the url with the configured browser. On macOS BrowserPath may be an app name or an .app bundle path
-        // and is launched through /usr/bin/open; elsewhere it must be an executable.
+        // and is launched through /usr/bin/open; elsewhere it must be an executable path or a command name on PATH.
         private partial void OpenInCustomBrowser(string url)
         {
+            var browserPath = Settings.BrowserPath?.Trim().Trim('"') ?? string.Empty;
+            if (!OperatingSystem.IsMacOS() && browserPath.Length == 0)
+            {
+                // Like Windows, an empty path means the default browser, which xdg-open picks on Linux
+                Context.API.OpenWebUrl(url);
+                return;
+            }
+
             var browserArgs = new List<string>();
             if (Settings.OpenInNewBrowserWindow)
                 browserArgs.Add("--new-window");
@@ -43,7 +51,7 @@ namespace Flow.Launcher.Plugin.Url
             }
             else
             {
-                psi.FileName = Settings.BrowserPath;
+                psi.FileName = browserPath;
                 foreach (var arg in browserArgs)
                     psi.ArgumentList.Add(arg);
                 psi.ArgumentList.Add(url);

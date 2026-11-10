@@ -6,6 +6,7 @@ using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Controls.Platform;
 using Avalonia.Platform;
 using Flow.Launcher.Avalonia.Helper;
 using Flow.Launcher.Infrastructure.Logger;
@@ -70,11 +71,23 @@ public partial class MainWindow
         };
     }
 
-    // The WPF app plays Resources/open.wav through SoundPlayer/MediaPlayer; macOS plays it with afplay, started in
-    // the background so showing the window never waits for the sound.
+    // A normal top-level window is tiled by tiling window managers (Hyprland, Sway and i3 via XWayland/X11).
+    // _NET_WM_WINDOW_TYPE_UTILITY makes them float it at the position Flow chooses, and stacking desktops
+    // (GNOME, KDE) keep treating it as a borderless, taskbar-less panel.
+    partial void InitializeWindowType()
+    {
+        if (OperatingSystem.IsLinux())
+        {
+            X11Properties.SetNetWmWindowType(this, X11NetWmWindowType.Dialog);
+        }
+    }
+
+    // The WPF app plays Resources/open.wav through SoundPlayer/MediaPlayer; macOS plays it with afplay and Linux with
+    // the first of pw-play (PipeWire), paplay (PulseAudio) and aplay (ALSA, no volume control) on PATH, started in the
+    // background so showing the window never waits for the sound.
     partial void PlayOpenSound()
     {
-        if (!OperatingSystem.IsMacOS() || _settings == null)
+        if (!(OperatingSystem.IsMacOS() || OperatingSystem.IsLinux()) || _settings == null)
         {
             return;
         }
@@ -88,16 +101,23 @@ public partial class MainWindow
         var volume = Math.Clamp(_settings.SoundVolume / 100.0, 0.0, 1.0);
         try
         {
-            var startInfo = new ProcessStartInfo("/usr/bin/afplay")
+            var startInfo = OperatingSystem.IsMacOS() ? new ProcessStartInfo("/usr/bin/afplay") : CreateLinuxSoundStartInfo(volume);
+            if (startInfo is null)
             {
-                UseShellExecute = false,
-                CreateNoWindow = true,
-            };
-            startInfo.ArgumentList.Add("-v");
-            startInfo.ArgumentList.Add(volume.ToString(CultureInfo.InvariantCulture));
+                return;
+            }
+
+            startInfo.UseShellExecute = false;
+            startInfo.CreateNoWindow = true;
+            if (OperatingSystem.IsMacOS())
+            {
+                startInfo.ArgumentList.Add("-v");
+                startInfo.ArgumentList.Add(volume.ToString(CultureInfo.InvariantCulture));
+            }
+
             startInfo.ArgumentList.Add(soundPath);
 
-            // Disposing the handle does not stop afplay.
+            // Disposing the handle does not stop the player.
             using var process = Process.Start(startInfo);
         }
         catch (Exception e)
@@ -106,8 +126,49 @@ public partial class MainWindow
         }
     }
 
-    private partial Screen? GetCursorScreen() =>
-        OperatingSystem.IsMacOS() && MacScreens.TryGetCursorLocation(out var x, out var y) ? ScreenAtMacPoint(x, y) : null;
+    private static ProcessStartInfo? CreateLinuxSoundStartInfo(double volume)
+    {
+        var directories = (Environment.GetEnvironmentVariable("PATH") ?? string.Empty)
+            .Split(Path.PathSeparator, StringSplitOptions.RemoveEmptyEntries);
+        string? Find(string name) => directories.Select(d => Path.Combine(d, name)).FirstOrDefault(File.Exists);
+
+        if (Find("pw-play") is { } pwPlay)
+        {
+            var startInfo = new ProcessStartInfo(pwPlay);
+            startInfo.ArgumentList.Add($"--volume={volume.ToString(CultureInfo.InvariantCulture)}");
+            return startInfo;
+        }
+
+        if (Find("paplay") is { } paplay)
+        {
+            var startInfo = new ProcessStartInfo(paplay);
+            startInfo.ArgumentList.Add($"--volume={(int)Math.Round(volume * 65536)}");
+            return startInfo;
+        }
+
+        if (Find("aplay") is { } aplay)
+        {
+            var startInfo = new ProcessStartInfo(aplay);
+            startInfo.ArgumentList.Add("--quiet");
+            return startInfo;
+        }
+
+        Log.Warn(ClassName, "No sound player (pw-play, paplay, aplay) found; the open sound is not played");
+        return null;
+    }
+
+    private partial Screen? GetCursorScreen()
+    {
+        if (OperatingSystem.IsMacOS())
+        {
+            return MacScreens.TryGetCursorLocation(out var x, out var y) ? ScreenAtMacPoint(x, y) : null;
+        }
+
+        // X11 root coordinates and Avalonia's X11 screen bounds are both physical pixels.
+        return OperatingSystem.IsLinux() && LinuxGlobalHotkey.TryGetPointerPosition(out var px, out var py)
+            ? Screens.All.FirstOrDefault(screen => screen.Bounds.Contains(new PixelPoint(px, py)))
+            : null;
+    }
 
     private partial Screen? GetForegroundWindowScreen() =>
         OperatingSystem.IsMacOS() && MacScreens.TryGetFrontmostWindowCenter(out var x, out var y) ? ScreenAtMacPoint(x, y) : null;

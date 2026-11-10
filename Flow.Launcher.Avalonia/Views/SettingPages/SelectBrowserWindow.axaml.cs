@@ -135,15 +135,18 @@ public partial class SelectBrowserWindow : Window, INotifyPropertyChanged
         {
             Title = Translate("defaultBrowser_path", "Browser executable"),
             AllowMultiple = false,
-            FileTypeFilter =
-            [
-                new FilePickerFileType("Executable files")
-                {
-                    // macOS browsers are .app bundles.
-                    Patterns = OperatingSystem.IsWindows() ? ["*.exe", "*.cmd", "*.bat", "*.com"] : ["*.app"]
-                },
-                FilePickerFileTypes.All
-            ]
+            // Windows executables have extensions and macOS browsers are .app bundles; Linux executables have no
+            // pattern to filter on.
+            FileTypeFilter = OperatingSystem.IsLinux()
+                ? [FilePickerFileTypes.All]
+                :
+                [
+                    new FilePickerFileType("Executable files")
+                    {
+                        Patterns = OperatingSystem.IsWindows() ? ["*.exe", "*.cmd", "*.bat", "*.com"] : ["*.app"]
+                    },
+                    FilePickerFileTypes.All
+                ]
         });
 
         var selectedPath = files.FirstOrDefault()?.Path.LocalPath;

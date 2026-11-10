@@ -6,6 +6,8 @@ using Avalonia;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
+using Avalonia.Svg;
+using Avalonia.Threading;
 using Flow.Launcher.Infrastructure.Logger;
 
 namespace Flow.Launcher.Avalonia.Helper;
@@ -27,6 +29,8 @@ public static partial class ImageLoader
 
     // Image file extensions that Avalonia can load directly
     private static readonly string[] DirectLoadExtensions = [".png", ".jpg", ".jpeg", ".gif", ".bmp", ".webp"];
+
+    private const string SvgExtension = ".svg";
 
     /// <summary>
     /// Default image shown when no icon is available.
@@ -149,6 +153,11 @@ public static partial class ImageLoader
                 return Downscale(new Bitmap(stream), decodeWidth);
             }
 
+            if (ext == SvgExtension)
+            {
+                return await LoadSvgAsync(path);
+            }
+
             // For exe, dll, ico, lnk, icns and other files - use the platform icon loader
             return await LoadPlatformIconAsync(path);
         }
@@ -173,6 +182,27 @@ public static partial class ImageLoader
         var scaled = bitmap.CreateScaledBitmap(new PixelSize(decodeWidth, height), BitmapInterpolationMode.HighQuality);
         bitmap.Dispose();
         return scaled;
+    }
+
+    /// <summary>
+    /// SVGs stay vector images (drawn at whatever size the icon slot has), so <c>decodeWidth</c> does not apply.
+    /// The file is parsed here on the thread pool; <see cref="SvgImage"/> is an AvaloniaObject and is created on the UI thread.
+    /// </summary>
+    private static async Task<IImage?> LoadSvgAsync(string path)
+    {
+        SvgSource source;
+        await using (var stream = File.OpenRead(path))
+        {
+            source = SvgSource.Load(stream, null);
+        }
+
+        if (source.Picture is null)
+        {
+            Log.Debug(ClassName, $"SVG has no drawable content: {path}");
+            return null;
+        }
+
+        return await Dispatcher.UIThread.InvokeAsync(() => new SvgImage { Source = source });
     }
 
     /// <summary>
