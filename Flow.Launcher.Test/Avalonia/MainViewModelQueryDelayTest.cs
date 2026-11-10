@@ -172,7 +172,7 @@ namespace Flow.Launcher.Test.Avalonia
             await queryTask;
         }
 
-        private sealed class RecordingPlugin : IAsyncPlugin
+        private sealed class RecordingPlugin : IAsyncPlugin, IAsyncHomeQuery
         {
             public TaskCompletionSource<Query> QueryStarted { get; } = new(TaskCreationOptions.RunContinuationsAsynchronously);
             public DateTimeOffset QueryStartedAt { get; private set; }
@@ -193,6 +193,8 @@ namespace Flow.Launcher.Test.Avalonia
                     }
                 });
             }
+
+            public Task<List<Result>> HomeQueryAsync(CancellationToken token) => QueryAsync(new Query(), token);
         }
     }
 }

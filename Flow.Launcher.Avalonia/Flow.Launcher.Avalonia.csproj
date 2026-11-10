@@ -75,6 +75,9 @@
     <Content Include="..\Flow.Launcher\Resources\Light.xaml;..\Flow.Launcher\Resources\Dark.xaml" Link="Resources\%(Filename)%(Extension)">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="..\Flow.Launcher\Resources\open.wav" Link="Resources\open.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\Flow.Launcher\Languages\*.xaml" Link="Languages\%(Filename)%(Extension)">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -97,5 +100,14 @@
     <Resource Include="WpfResources\CustomControlTemplate.xaml" />
     <Resource Include="WpfResources\SettingWindowStyle.xaml" />
   </ItemGroup>
+
+  <!-- Windows build: drop SkiaSharp/HarfBuzzSharp native assets for non-Windows RIDs.
+       The cross-platform net10.0 target keeps all RIDs. -->
+  <Target Name="TrimNativeRuntimeAssets" AfterTargets="ResolvePackageAssets" Condition="$(TargetFramework.Contains('-windows'))">
+    <ItemGroup>
+      <RuntimeTargetsCopyLocalItems Remove="@(RuntimeTargetsCopyLocalItems)"
+                                    Condition="!$([System.String]::Copy('%(RuntimeIdentifier)').StartsWith('win'))" />
+    </ItemGroup>
+  </Target>
 
 </Project>

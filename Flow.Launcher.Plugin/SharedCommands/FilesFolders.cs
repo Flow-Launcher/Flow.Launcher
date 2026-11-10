@@ -343,7 +343,8 @@ namespace Flow.Launcher.Plugin.SharedCommands
         ///</summary>
         public static bool IsZipFilePath(string querySearchString, bool checkFileExists = false)
         {
-            if (IsLocationPathString(querySearchString) && querySearchString.Split('.').Last() == "zip")
+            if (IsLocationPathString(querySearchString)
+                && Path.GetExtension(querySearchString).Equals(".zip", StringComparison.OrdinalIgnoreCase))
             {
                 if (checkFileExists)
                     return FileExists(querySearchString);

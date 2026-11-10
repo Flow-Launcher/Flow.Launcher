@@ -47,11 +47,11 @@ function Delete-Unused ($path, $config) {
     Remove-Item -Path $target -Include "*.xml" -Recurse
 }
 
-function Remove-CreateDumpExe ($path, $config) {
+function Remove-CreateDumpExe ($path, $config, $depsFile) {
     $target = "$path\Output\$config"
 
-    $depjson = Get-Content $target\Flow.Launcher.deps.json -raw
-    $depjson -replace '(?s)(.createdump.exe": {.*?}.*?\n)\s*', "" | Out-File $target\Flow.Launcher.deps.json -Encoding UTF8
+    $depjson = Get-Content $target\$depsFile -raw
+    $depjson -replace '(?s)(.createdump.exe": {.*?}.*?\n)\s*', "" | Out-File $target\$depsFile -Encoding UTF8
     Remove-Item -Path $target -Include "*createdump.exe" -Recurse
 }
 
@@ -132,14 +132,21 @@ function Pack-AvaloniaSquirrel-Installer ($path, $version, $output) {
 }
 
 
-function Publish-Self-Contained ($p) {
+function Publish-Self-Contained ($p, $project) {
 
-    $csproj  = Join-Path "$p" "Flow.Launcher/Flow.Launcher.csproj" -Resolve
-    $profile = Join-Path "$p" "Flow.Launcher/Properties/PublishProfiles/Net10.0-SelfContained.pubxml" -Resolve
+    $csproj  = Join-Path "$p" "$project/$project.csproj" -Resolve
+    $profile = Join-Path "$p" "$project/Properties/PublishProfiles/Net10.0-SelfContained.pubxml" -Resolve
 
     # we call dotnet publish on the main project. 
     # The other projects should have been built in Release at this point.
-    dotnet publish -c Release $csproj /p:PublishProfile=$profile
+    # -f: the Avalonia project also targets the cross-platform net10.0 TFM; publish the Windows one.
+    dotnet publish -c Release $csproj -f net10.0-windows10.0.19041.0 /p:PublishProfile=$profile
+}
+
+function Remove-RidLessRuntimes ($path, $config) {
+    # The win-x64 self-contained publish flattens native assets into the app root;
+    # the runtimes\ folder left by the RID-less build is no longer referenced by deps.json.
+    Remove-Item -Path "$path\Output\$config\runtimes" -Recurse -Force -ErrorAction SilentlyContinue
 }
 
 function Publish-Portable ($outputLocation, $version) {
@@ -168,9 +175,15 @@ function Main {
 
         Delete-Unused $p "Avalonia\$config"
 
-        Publish-Self-Contained $p
+        Publish-Self-Contained $p "Flow.Launcher"
 
-        Remove-CreateDumpExe $p $config
+        Remove-CreateDumpExe $p $config "Flow.Launcher.deps.json"
+
+        Publish-Self-Contained $p "Flow.Launcher.Avalonia"
+
+        Remove-RidLessRuntimes $p "Avalonia\$config"
+
+        Remove-CreateDumpExe $p "Avalonia\$config" "Flow.Launcher.Avalonia.deps.json"
 
         $o = "$p\Output\Packages"
         Validate-Directory $o

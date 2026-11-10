@@ -9,7 +9,7 @@ namespace Flow.Launcher.Plugin.Calculator
     {
         public Control CreateSettingPanel()
         {
-            return new CalculatorSettings(_settings);
+            return new CalculatorSettings(_viewModel);
         }
     }
 }

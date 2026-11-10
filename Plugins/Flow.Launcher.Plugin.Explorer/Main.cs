@@ -15,7 +15,7 @@ using System.Globalization;
 
 namespace Flow.Launcher.Plugin.Explorer
 {
-    public class Main : ISettingProvider, IAsyncPlugin, IContextMenu, IPluginI18n, IAsyncDialogJump
+    public class Main : ISettingProvider, IAsyncPlugin, IContextMenu, IPluginI18n, IAsyncDialogJump, IDisposable
     {
         internal static PluginInitContext Context { get; set; }
 
@@ -49,6 +49,14 @@ namespace Flow.Launcher.Plugin.Explorer
             var sdkDirectory = Path.Combine(Context.CurrentPluginMetadata.PluginDirectory, "EverythingSDK", "x64");
             Settings.EverythingManagerInstance.InitializeApi(sdkDirectory);
             return Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// Disposes the underlying Everything API client when the plugin is unloaded.
+        /// </summary>
+        public void Dispose()
+        {
+            Settings.EverythingManagerInstance.Dispose();
         }
 
         public List<Result> LoadContextMenus(Result selectedResult)
