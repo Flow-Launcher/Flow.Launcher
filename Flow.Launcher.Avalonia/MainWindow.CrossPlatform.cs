@@ -71,14 +71,34 @@ public partial class MainWindow
         };
     }
 
-    // A normal top-level window is tiled by tiling window managers (Hyprland, Sway and i3 via XWayland/X11).
-    // _NET_WM_WINDOW_TYPE_UTILITY makes them float it at the position Flow chooses, and stacking desktops
-    // (GNOME, KDE) keep treating it as a borderless, taskbar-less panel.
+    /// <summary>
+    /// Wayland app id of the search window. It differs from the app's id (used by the settings and other windows) so
+    /// compositor rules can float exactly this window; matching on the title does not work there, because rules are
+    /// evaluated before the title is set and the compositor's tiled size would then leak into the window width.
+    /// </summary>
+    internal const string LinuxSearchWindowAppId = Program.LinuxAppId + ".Search";
+
+    // Tiling window managers tile normal top-level windows. On X11 (XWayland), _NET_WM_WINDOW_TYPE_DIALOG makes them
+    // float and focus the search window at the position Flow chooses; stacking desktops (GNOME, KDE) keep treating
+    // it as a borderless panel. Wayland has no window types and clients cannot position themselves, so there the
+    // compositor places it, and tiling compositors need a window rule on its app id (docs/linux.md).
     partial void InitializeWindowType()
     {
         if (OperatingSystem.IsLinux())
         {
             X11Properties.SetNetWmWindowType(this, X11NetWmWindowType.Dialog);
+            WaylandProperties.SetAppId(this, LinuxSearchWindowAppId);
+        }
+    }
+
+    // Avalonia's Wayland backend recreates the toplevel on every Show and commits it under the app-wide app id before
+    // applying the window's own one, so the compositor's first configure suggests the size of a normal (tiled) window
+    // and Avalonia adopts its width. Put the configured width back once; a tiling compositor still has the last word.
+    partial void RestoreWidthAfterShow()
+    {
+        if (OperatingSystem.IsLinux() && _settings != null && Math.Abs(Width - _settings.WindowSize) >= 1)
+        {
+            SetCurrentValue(WidthProperty, _settings.WindowSize);
         }
     }
 

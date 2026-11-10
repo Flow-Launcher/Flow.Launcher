@@ -28,6 +28,7 @@
             libxcb
             libxkbcommon
             openssl
+            wayland
             zlib
           ];
         in

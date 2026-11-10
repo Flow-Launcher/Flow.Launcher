@@ -49,6 +49,8 @@
     <PackageReference Include="Markdown.Avalonia" Version="12.0.0-a3" />
     <!-- SVG icons (Helper/ImageLoader.cs); the version Markdown.Avalonia already brings in -->
     <PackageReference Include="Svg.Controls.Avalonia" Version="12.0.0.1" />
+    <!-- Native Wayland windowing on Linux (Program.CrossPlatform.cs) -->
+    <PackageReference Include="Avalonia.Wayland" Version="12.1.4" Condition="!$(TargetFramework.Contains('-windows'))" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="DynamicData" Version="9.0.4" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.12" />

@@ -41,17 +41,27 @@ internal sealed partial class Program
     // SizeToContent window that resizes twice in quick succession (results arriving in batches) keeps drawing at
     // the intermediate size, so AppKit shows the content stretched/squashed until the next resize (see also
     // #21477, #20971). OpenGL and Software are unaffected.
-    // Linux: WM_CLASS is the desktop entry's app id (Helper/LinuxDesktopEntry), so desktops match windows to the
-    // entry (name, icon) and compositor window rules can target the class.
+    // Linux: WM_CLASS / the Wayland app id is the desktop entry's app id (Helper/LinuxDesktopEntry), so desktops match
+    // windows to the entry (name, icon) and compositor window rules can target it. UseNativeWayland may switch to
+    // the native Wayland backend (Program.CrossPlatform.cs).
     public static AppBuilder BuildAvaloniaApp()
-        => AppBuilder.Configure<App>()
+    {
+        var builder = AppBuilder.Configure<App>()
             .UsePlatformDetect()
             .With(new MacOSPlatformOptions { ShowInDock = false, DisableSetProcessName = true })
             .With(new AvaloniaNativePlatformOptions
             {
                 RenderingMode = [AvaloniaNativeRenderingMode.OpenGl, AvaloniaNativeRenderingMode.Software]
             })
-            .With(new X11PlatformOptions { WmClass = LinuxAppId })
+            .With(new X11PlatformOptions { WmClass = LinuxAppId });
+
+        UseNativeWayland(ref builder);
+
+        return builder
             .WithInterFont()
             .LogToTrace();
+    }
+
+    // Linux only: Avalonia's native Wayland backend instead of XWayland.
+    static partial void UseNativeWayland(ref AppBuilder builder);
 }

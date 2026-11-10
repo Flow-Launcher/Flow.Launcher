@@ -27,12 +27,14 @@ public partial class NotificationWindow
         };
     }
 
-    // Tiling window managers float utility windows and, unlike dialogs, do not focus them when they appear.
+    // X11: tiling window managers float utility windows and, unlike dialogs, do not focus them when they appear.
+    // Wayland: a dedicated app id, so compositor rules can float, place and not focus notifications (docs/linux.md).
     partial void InitializeWindowType()
     {
         if (OperatingSystem.IsLinux())
         {
             X11Properties.SetNetWmWindowType(this, X11NetWmWindowType.Utility);
+            WaylandProperties.SetAppId(this, Program.LinuxAppId + ".Notification");
         }
     }
 }

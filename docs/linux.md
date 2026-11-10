@@ -1,6 +1,6 @@
 # Flow Launcher on Linux
 
-The Avalonia front end (`Flow.Launcher.Avalonia`) runs on Linux (`linux-x64`, `linux-arm64`) under X11 and under Wayland through XWayland. It needs an X server (XWayland is enough), a D-Bus session bus, and for Wayland hotkeys an `xdg-desktop-portal` with the GlobalShortcuts interface.
+The Avalonia front end (`Flow.Launcher.Avalonia`) runs on Linux (`linux-x64`, `linux-arm64`) as a native Wayland client in Wayland sessions and as an X11 client otherwise. It needs a D-Bus session bus, and for Wayland hotkeys an `xdg-desktop-portal` with the GlobalShortcuts interface.
 
 ## Build
 
@@ -29,7 +29,7 @@ dotnet Output/Avalonia/Debug/net10.0/Flow.Launcher.Avalonia.dll
 
 ### NixOS
 
-`flake.nix` provides a development shell with the .NET 10 SDK, `jj`, and the native libraries Avalonia loads at run time (X11, xcb, fontconfig, ICU, OpenGL):
+`flake.nix` provides a development shell with the .NET 10 SDK, `jj`, and the native libraries Avalonia loads at run time (Wayland, X11, xcb, fontconfig, ICU, OpenGL):
 
 ```sh
 nix develop
@@ -81,9 +81,60 @@ Custom query hotkeys (Settings → Hotkey) use the same backend, so on Hyprland 
 
 ## Windows and window managers
 
-The search window is an X11 dialog-type window (`_NET_WM_WINDOW_TYPE_DIALOG`), so tiling window managers float and focus it, and Flow places it on the display chosen in Settings → General → **Search Window Location**. Under X11 the display with the mouse cursor is detected; under Wayland the cursor position is not available to XWayland apps, so that option falls back to the primary display. The "Focus" option (display of the active window) always falls back to the primary display. The windows' X11 class (`WM_CLASS`) is `com.flowlauncher.FlowLauncher`, for compositor window rules.
+### Wayland and X11
 
-X11 has no blur-behind protocol shared by window managers, so blur themes (such as the default Win11Light) are drawn with an opaque background.
+In a Wayland session Flow uses Avalonia's native Wayland backend; without a reachable Wayland compositor it falls back to X11. Set `FLOW_LAUNCHER_BACKEND=x11` to run through XWayland instead, e.g. if your compositor misbehaves with the Wayland backend.
+
+Each window type has its own id, for compositor window rules:
+
+| Window | Wayland app id | X11 class (`WM_CLASS`) |
+|---|---|---|
+| Search window | `com.flowlauncher.FlowLauncher.Search` | `com.flowlauncher.FlowLauncher` |
+| Notifications | `com.flowlauncher.FlowLauncher.Notification` | `com.flowlauncher.FlowLauncher` |
+| Settings and other windows | `com.flowlauncher.FlowLauncher` | `com.flowlauncher.FlowLauncher` |
+
+Under X11 (including XWayland) the search window is a dialog-type window (`_NET_WM_WINDOW_TYPE_DIALOG`), so tiling window managers float and focus it without rules, and Flow places it on the display chosen in Settings → General → **Search Window Location**.
+
+Wayland has no window types, and clients cannot position their windows: the compositor decides where the search window goes and whether it tiles. **Search Window Location** therefore has no effect under Wayland; use a window rule instead. Tiling compositors need a rule to float the search window:
+
+- **Hyprland** keeps floating windows at the size it chose and does not follow the client when the window resizes itself. The search window grows and shrinks with the number of results, so let Hyprland draw no border, shadow or blur around it; the theme draws its own. Without that, a frame with an empty area shows below short result lists. `no_follow_mouse` keeps Hyprland from moving focus away (which hides the window) when the pointer is elsewhere:
+
+  ```lua
+  -- hyprland.lua
+  hl.window_rule({
+      name = "flow-launcher",
+      match = { class = "^com\\.flowlauncher\\.FlowLauncher\\.Search$" },
+      float = true,
+      move = { "(monitor_w - window_w) * 0.5", "monitor_h * 0.2" },
+      no_follow_mouse = true,
+      decorate = false,
+      border_size = 0,
+      rounding = 0,
+      no_shadow = true,
+      no_blur = true,
+  })
+  ```
+
+- **Sway**:
+
+  ```
+  for_window [app_id="^com\.flowlauncher\.FlowLauncher\.Search$"] floating enable, border none
+  ```
+
+- **niri**:
+
+  ```kdl
+  window-rule {
+      match app-id="^com\\.flowlauncher\\.FlowLauncher\\.Search$"
+      open-floating true
+  }
+  ```
+
+Stacking desktops (GNOME, KDE Plasma) need no rules.
+
+The display with the mouse cursor is only known under X11; elsewhere the "Mouse cursor" location falls back to the primary display. The "Focus" option (display of the active window) always falls back to the primary display.
+
+Blur themes (such as the default Win11Light) are drawn with an opaque background: X11 has no blur-behind protocol shared by window managers, and Avalonia's Wayland backend does not request compositor blur.
 
 ## Bundled plugins
 
@@ -102,3 +153,4 @@ X11 has no blur-behind protocol shared by window managers, so blur themes (such 
 - Python and Node.js runtimes for plugins are not installed automatically. Set the interpreter paths in Settings → General; the file picker there uses `zenity` or `kdialog`.
 - Global keyboard hooks for plugins (key interception outside Flow's windows) are not available.
 - "Ignore hotkeys in fullscreen mode" only detects fullscreen windows under X11.
+- On Hyprland under Wayland, the search window keeps the height it had when it appeared (usually that of the full home page list); the empty part below shorter lists is invisible with the rule above but still takes clicks.

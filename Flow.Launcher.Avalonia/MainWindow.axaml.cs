@@ -639,6 +639,7 @@ public partial class MainWindow : Window
             SynchronizeQueryTextBoxText();
             ApplyQueryTextBoxSelection(request.Mode);
             Show();
+            RestoreWidthAfterShow();
         }
 
         if (request.ActivateWindow)
@@ -738,6 +739,9 @@ public partial class MainWindow : Window
 
     // Platform hook: how the window manager should treat the search window (e.g. floating rather than tiled).
     partial void InitializeWindowType();
+
+    // Platform hook: undo a width the window system imposed while (re)mapping the window.
+    partial void RestoreWidthAfterShow();
 
     // Platform hook: the "open" sound played when the window is summoned (Settings.UseSound).
     partial void PlayOpenSound();
