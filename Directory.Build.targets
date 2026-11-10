@@ -12,4 +12,14 @@
 		</ProjectReference>
 	  </ItemGroup>
 	</Target>
+
+	<!-- Some native NuGet packages (e.g. SkiaSharp/HarfBuzzSharp 3.x) ship .pdb files next to their native
+	     binaries (~100 MB per architecture); never copy them into build or publish output.
+	     RuntimeTargetsCopyLocalItems: RID-less build; NativeCopyLocalItems: RID-specific publish. -->
+	<Target Name="RemoveNativePackagePdbs" AfterTargets="ResolvePackageAssets">
+	  <ItemGroup>
+		<RuntimeTargetsCopyLocalItems Remove="@(RuntimeTargetsCopyLocalItems)" Condition="'%(Extension)' == '.pdb'" />
+		<NativeCopyLocalItems Remove="@(NativeCopyLocalItems)" Condition="'%(Extension)' == '.pdb'" />
+	  </ItemGroup>
+	</Target>
 </Project>
