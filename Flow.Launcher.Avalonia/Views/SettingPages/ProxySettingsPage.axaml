@@ -13,36 +13,36 @@
     <StackPanel Spacing="4" Margin="0,0,16,24">
         <TextBlock Text="{i18n:Localize proxy}" Classes="pageTitle" Margin="0,0,0,12" />
 
-        <ui:SettingsExpander Header="{i18n:Localize enableProxy}"
+        <ui:FASettingsExpander Header="{i18n:Localize enableProxy}"
                             IconSource="Globe">
-            <ui:SettingsExpander.Footer>
+            <ui:FASettingsExpander.Footer>
                 <ToggleSwitch IsChecked="{Binding ProxyEnabled}" />
-            </ui:SettingsExpander.Footer>
-        </ui:SettingsExpander>
+            </ui:FASettingsExpander.Footer>
+        </ui:FASettingsExpander>
 
-        <ui:SettingsExpander Header="{i18n:Localize server}">
-            <ui:SettingsExpander.Footer>
+        <ui:FASettingsExpander Header="{i18n:Localize server}">
+            <ui:FASettingsExpander.Footer>
                 <TextBox Text="{Binding ProxyServer}" MinWidth="200" IsEnabled="{Binding ProxyEnabled}" />
-            </ui:SettingsExpander.Footer>
-        </ui:SettingsExpander>
+            </ui:FASettingsExpander.Footer>
+        </ui:FASettingsExpander>
 
-        <ui:SettingsExpander Header="{i18n:Localize port}">
-            <ui:SettingsExpander.Footer>
+        <ui:FASettingsExpander Header="{i18n:Localize port}">
+            <ui:FASettingsExpander.Footer>
                 <NumericUpDown Value="{Binding ProxyPort}" Minimum="1" Maximum="65535" IsEnabled="{Binding ProxyEnabled}" />
-            </ui:SettingsExpander.Footer>
-        </ui:SettingsExpander>
+            </ui:FASettingsExpander.Footer>
+        </ui:FASettingsExpander>
 
-        <ui:SettingsExpander Header="{i18n:Localize userName}">
-            <ui:SettingsExpander.Footer>
+        <ui:FASettingsExpander Header="{i18n:Localize userName}">
+            <ui:FASettingsExpander.Footer>
                 <TextBox Text="{Binding ProxyUserName}" MinWidth="200" IsEnabled="{Binding ProxyEnabled}" />
-            </ui:SettingsExpander.Footer>
-        </ui:SettingsExpander>
+            </ui:FASettingsExpander.Footer>
+        </ui:FASettingsExpander>
 
-        <ui:SettingsExpander Header="{i18n:Localize password}">
-            <ui:SettingsExpander.Footer>
+        <ui:FASettingsExpander Header="{i18n:Localize password}">
+            <ui:FASettingsExpander.Footer>
                 <TextBox Text="{Binding ProxyPassword}" PasswordChar="*" MinWidth="200" IsEnabled="{Binding ProxyEnabled}" />
-            </ui:SettingsExpander.Footer>
-        </ui:SettingsExpander>
+            </ui:FASettingsExpander.Footer>
+        </ui:FASettingsExpander>
 
         <Button Content="{i18n:Localize testProxy}"
                 Command="{Binding TestProxyCommand}"

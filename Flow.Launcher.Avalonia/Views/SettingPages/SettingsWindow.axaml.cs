@@ -62,7 +62,7 @@ public partial class SettingsWindow : Window
 
     private void NavigateToPlugin(string pluginId)
     {
-        var item = NavView.MenuItems.OfType<NavigationViewItem>().FirstOrDefault(i => i.Tag as string == "Plugins");
+        var item = NavView.MenuItems.OfType<FANavigationViewItem>().FirstOrDefault(i => i.Tag as string == "Plugins");
         if (item != null && !ReferenceEquals(NavView.SelectedItem, item))
             NavView.SelectedItem = item; // triggers LoadPage via SelectionChanged
 
@@ -157,9 +157,9 @@ public partial class SettingsWindow : Window
         }
     }
 
-    private void NavView_SelectionChanged(object? sender, NavigationViewSelectionChangedEventArgs e)
+    private void NavView_SelectionChanged(object? sender, FANavigationViewSelectionChangedEventArgs e)
     {
-        if (e.SelectedItem is NavigationViewItem item && item.Tag is string tag)
+        if (e.SelectedItem is FANavigationViewItem item && item.Tag is string tag)
         {
             LoadPage(tag);
         }

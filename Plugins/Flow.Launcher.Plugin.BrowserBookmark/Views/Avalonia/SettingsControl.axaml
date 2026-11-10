@@ -10,34 +10,34 @@
              x:DataType="local:SettingsViewModel">
 
     <StackPanel Spacing="10" Margin="0,0,10,0">
-        <ui:SettingsExpander Header="{DynamicResource flowlauncher_plugin_browserbookmark_loadBrowserFrom}"
+        <ui:FASettingsExpander Header="{DynamicResource flowlauncher_plugin_browserbookmark_loadBrowserFrom}"
                              IconSource="Globe"
                              Description="Select which browsers to load bookmarks from"
                              IsExpanded="True">
-            <ui:SettingsExpander.Items>
-                <ui:SettingsExpanderItem Content="Chrome">
-                    <ui:SettingsExpanderItem.Footer>
+            <ui:FASettingsExpander.Items>
+                <ui:FASettingsExpanderItem Content="Chrome">
+                    <ui:FASettingsExpanderItem.Footer>
                         <ToggleSwitch IsChecked="{Binding LoadChromeBookmark}" OnContent="" OffContent="" />
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
-                <ui:SettingsExpanderItem Content="Edge">
-                    <ui:SettingsExpanderItem.Footer>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
+                <ui:FASettingsExpanderItem Content="Edge">
+                    <ui:FASettingsExpanderItem.Footer>
                         <ToggleSwitch IsChecked="{Binding LoadEdgeBookmark}" OnContent="" OffContent="" />
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
-                <ui:SettingsExpanderItem Content="Firefox">
-                    <ui:SettingsExpanderItem.Footer>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
+                <ui:FASettingsExpanderItem Content="Firefox">
+                    <ui:FASettingsExpanderItem.Footer>
                         <ToggleSwitch IsChecked="{Binding LoadFirefoxBookmark}" OnContent="" OffContent="" />
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
-            </ui:SettingsExpander.Items>
-        </ui:SettingsExpander>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
+            </ui:FASettingsExpander.Items>
+        </ui:FASettingsExpander>
 
-        <ui:SettingsExpander Header="{DynamicResource flowlauncher_plugin_browserbookmark_others}"
+        <ui:FASettingsExpander Header="{DynamicResource flowlauncher_plugin_browserbookmark_others}"
                              IconSource="Library"
                              Description="Manage custom Chromium-based browsers">
-            <ui:SettingsExpander.Items>
-                <ui:SettingsExpanderItem>
+            <ui:FASettingsExpander.Items>
+                <ui:FASettingsExpanderItem>
                     <Grid RowDefinitions="*,Auto">
                         <ListBox Grid.Row="0"
                                  ItemsSource="{Binding Settings.CustomChromiumBrowsers}"
@@ -64,18 +64,18 @@
                             <Button Content="{DynamicResource flowlauncher_plugin_browserbookmark_removeBrowserBookmark}" Command="{Binding DeleteCustomBrowserCommand}" />
                         </StackPanel>
                     </Grid>
-                </ui:SettingsExpanderItem>
-            </ui:SettingsExpander.Items>
-        </ui:SettingsExpander>
+                </ui:FASettingsExpanderItem>
+            </ui:FASettingsExpander.Items>
+        </ui:FASettingsExpander>
 
-        <ui:SettingsExpander Header="Options" IconSource="Settings">
-             <ui:SettingsExpander.Items>
-                <ui:SettingsExpanderItem Content="{DynamicResource flowlauncher_plugin_browserbookmark_enable_favicons}">
-                    <ui:SettingsExpanderItem.Footer>
+        <ui:FASettingsExpander Header="Options" IconSource="Settings">
+             <ui:FASettingsExpander.Items>
+                <ui:FASettingsExpanderItem Content="{DynamicResource flowlauncher_plugin_browserbookmark_enable_favicons}">
+                    <ui:FASettingsExpanderItem.Footer>
                         <ToggleSwitch IsChecked="{Binding Settings.EnableFavicons}" OnContent="" OffContent="" />
-                    </ui:SettingsExpanderItem.Footer>
-                </ui:SettingsExpanderItem>
-             </ui:SettingsExpander.Items>
-        </ui:SettingsExpander>
+                    </ui:FASettingsExpanderItem.Footer>
+                </ui:FASettingsExpanderItem>
+             </ui:FASettingsExpander.Items>
+        </ui:FASettingsExpander>
     </StackPanel>
 </UserControl>

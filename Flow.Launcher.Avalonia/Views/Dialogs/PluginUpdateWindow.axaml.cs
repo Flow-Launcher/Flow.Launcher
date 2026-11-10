@@ -56,7 +56,7 @@ public partial class PluginUpdateWindow : Window, INotifyPropertyChanged
         var selectedPlugins = Plugins.Where(x => x.IsSelected).Select(x => x.Plugin).ToList();
         if (selectedPlugins.Count == 0)
         {
-            var dialog = new ContentDialog
+            var dialog = new FAContentDialog
             {
                 Title = Translate("updatePluginNoSelected", "No plugin selected"),
                 CloseButtonText = Translate("commonOK", "OK")

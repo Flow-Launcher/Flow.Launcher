@@ -135,7 +135,7 @@ function Pack-AvaloniaSquirrel-Installer ($path, $version, $output) {
 function Publish-Self-Contained ($p, $project) {
 
     $csproj  = Join-Path "$p" "$project/$project.csproj" -Resolve
-    $profile = Join-Path "$p" "$project/Properties/PublishProfiles/Net9.0-SelfContained.pubxml" -Resolve
+    $profile = Join-Path "$p" "$project/Properties/PublishProfiles/Net10.0-SelfContained.pubxml" -Resolve
 
     # we call dotnet publish on the main project. 
     # The other projects should have been built in Release at this point.

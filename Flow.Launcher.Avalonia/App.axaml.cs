@@ -230,7 +230,7 @@ public partial class App : Application
 
         _trayOpen = new NativeMenuItem();
         _trayOpen.Click += (_, _) => _mainVM?.ToggleFlowLauncher();
-        var gameMode = new NativeMenuItem { ToggleType = NativeMenuItemToggleType.CheckBox };
+        var gameMode = new NativeMenuItem { ToggleType = MenuItemToggleType.CheckBox };
         gameMode.Click += (_, _) =>
         {
             API?.ToggleGameMode();

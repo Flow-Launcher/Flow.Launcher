@@ -73,6 +73,7 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
     private int _lastHistoryIndex = 1;
     private string _currentQueryOriginalText = string.Empty;
     private string _lastQueryActionKeyword = string.Empty;
+    private bool _previousIsHomeQuery = true;
     private CancellationTokenSource? _progressBarDelayTokenSource;
 
     // The result (and the view it came from) whose context menu is open, and the unfiltered menu items.
@@ -281,22 +282,7 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
                     continue;
                 }
 
-                var latestFullUpdateIndex = pendingUpdates.FindLastIndex(update => !update.IsPluginUpdate);
-                if (latestFullUpdateIndex >= 0)
-                {
-                    await ApplyResultsUpdateAsync(pendingUpdates[latestFullUpdateIndex]);
-                    for (var i = latestFullUpdateIndex + 1; i < pendingUpdates.Count; i++)
-                    {
-                        await ApplyResultsUpdateAsync(pendingUpdates[i]);
-                    }
-                }
-                else
-                {
-                    foreach (var update in pendingUpdates)
-                    {
-                        await ApplyResultsUpdateAsync(update);
-                    }
-                }
+                await ApplyResultsUpdatesBatchAsync(pendingUpdates);
 
                 // Coalesce updates that arrive within the next frame into the following batch
                 await Task.Delay(16);
@@ -308,31 +294,73 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
         }
     }
 
-    private async Task ApplyResultsUpdateAsync(ResultsForUpdate update)
+    private async Task ApplyResultsUpdatesBatchAsync(List<ResultsForUpdate> pendingUpdates)
     {
-        if (update.Token.IsCancellationRequested)
+        var token = pendingUpdates[^1].Token;
+        if (token.IsCancellationRequested)
         {
             return;
         }
 
-        var sortedResults = update.Results
-            .OrderByDescending(r => r.Score)
-            .ToList();
-
         await Dispatcher.UIThread.InvokeAsync(() =>
         {
-            if (update.Token.IsCancellationRequested) return;
-            if (update.IsPluginUpdate)
+            if (token.IsCancellationRequested) return;
+
+            var latestFullUpdateIndex = pendingUpdates.FindLastIndex(update => !update.IsPluginUpdate);
+            if (latestFullUpdateIndex >= 0)
             {
-                Results.ReplaceResultsForPlugin(update.PluginId!, sortedResults);
+                var fullUpdate = pendingUpdates[latestFullUpdateIndex];
+                if (!fullUpdate.Token.IsCancellationRequested)
+                {
+                    Results.ReplaceResults(fullUpdate.Results, fullUpdate.ReselectFirst);
+                }
+
+                var trailingPluginUpdates = GatherPluginUpdates(pendingUpdates, latestFullUpdateIndex + 1, out var clearExisting, out var reselect);
+                if (trailingPluginUpdates.Count > 0 || clearExisting)
+                {
+                    Results.ReplaceResultsForPlugins(trailingPluginUpdates, clearExisting, reselect);
+                }
             }
             else
             {
-                Results.ReplaceResults(sortedResults, update.ReselectFirst);
+                var pluginUpdates = GatherPluginUpdates(pendingUpdates, 0, out var clearExisting, out var reselect);
+                if (pluginUpdates.Count > 0 || clearExisting)
+                {
+                    Results.ReplaceResultsForPlugins(pluginUpdates, clearExisting, reselect);
+                }
             }
 
             HasResults = Results.Results.Count > 0;
         });
+    }
+
+    private static List<KeyValuePair<string, IReadOnlyList<ResultViewModel>>> GatherPluginUpdates(
+        List<ResultsForUpdate> updates,
+        int startIndex,
+        out bool clearExisting,
+        out bool reselectFirst)
+    {
+        clearExisting = false;
+        reselectFirst = true;
+        var perPlugin = new Dictionary<string, IReadOnlyList<ResultViewModel>>(StringComparer.Ordinal);
+
+        for (var i = startIndex; i < updates.Count; i++)
+        {
+            var update = updates[i];
+            if (update.Token.IsCancellationRequested || string.IsNullOrEmpty(update.PluginId))
+                continue;
+
+            if (update.ClearExistingResults)
+            {
+                clearExisting = true;
+                perPlugin.Clear();
+            }
+
+            reselectFirst = update.ReselectFirst;
+            perPlugin[update.PluginId] = update.Results;
+        }
+
+        return perPlugin.ToList();
     }
 
     partial void OnActiveViewChanged(ActiveView value)
@@ -1441,6 +1469,10 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
             }
 
             query.IsReQuery = isReQuery;
+            var previousActionKeyword = _lastQueryActionKeyword;
+            var shouldClearExisting = _previousIsHomeQuery || query.IsHomeQuery ||
+                                      !string.Equals(previousActionKeyword, query.ActionKeyword, StringComparison.Ordinal);
+            _previousIsHomeQuery = query.IsHomeQuery;
             _currentQueryOriginalText = query.OriginalQuery ?? string.Empty;
             _lastQueryActionKeyword = query.ActionKeyword;
 
@@ -1461,56 +1493,105 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
                     : null;
             }
 
-            // Accumulated results; additions and snapshots happen under one lock so channel order matches growth.
-            var allResults = new List<ResultViewModel>();
+            var clearFlagLock = new object();
+            var clearExistingPending = shouldClearExisting;
+            bool ConsumeClearExisting()
+            {
+                lock (clearFlagLock)
+                {
+                    if (!clearExistingPending)
+                        return false;
+                    clearExistingPending = false;
+                    return true;
+                }
+            }
+
+            var homeHistoryResults = new List<ResultViewModel>();
             if (query.IsHomeQuery && _settings.ShowHistoryResultsForHomePage)
             {
-                allResults.AddRange(CreateHistoryResults(_history.LastOpenedHistoryItems, _settings.MaxHistoryResultsToShowForHomePage));
+                homeHistoryResults.AddRange(CreateHistoryResults(_history.LastOpenedHistoryItems, _settings.MaxHistoryResultsToShowForHomePage));
             }
 
             if (plugins.Count == 0)
             {
-                if (allResults.Count == 0)
+                if (homeHistoryResults.Count == 0)
                 {
                     ClearQueryResults();
                 }
                 else
                 {
-                    _resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(allResults.ToList(), token, pluginId: null, reselectFirst: reselect));
+                    _resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(homeHistoryResults, token, pluginId: null, reselectFirst: reselect));
                 }
 
                 return;
             }
 
-            if (allResults.Count > 0)
+            if (homeHistoryResults.Count > 0)
             {
-                _resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(allResults.ToList(), token, pluginId: null, reselectFirst: reselect));
+                ConsumeClearExisting();
+                _resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(homeHistoryResults, token, pluginId: null, reselectFirst: reselect));
             }
 
-            // Query all plugins in parallel - results shown progressively as each completes
+            // Query all plugins in parallel - each plugin updates only its own slice unless action keyword / home state changed
+            var allPluginResults = new List<ResultViewModel>();
+            var hasAnyPluginEmitted = 0;
+
+            // If no plugin returns within 50ms (e.g. slow query), emit empty array to clear stale previous results
+            _ = Task.Run(async () =>
+            {
+                try
+                {
+                    await Task.Delay(50, token);
+                    if (!token.IsCancellationRequested && Volatile.Read(ref hasAnyPluginEmitted) == 0 && homeHistoryResults.Count == 0)
+                    {
+                        var clearForThisBatch = ConsumeClearExisting();
+                        _resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(
+                            Array.Empty<ResultViewModel>(),
+                            token,
+                            pluginId: null,
+                            reselectFirst: reselect,
+                            clearExistingResults: clearForThisBatch));
+                    }
+                }
+                catch (OperationCanceledException) { }
+            }, token);
+
             var tasks = plugins.Select(async plugin =>
             {
                 var pluginResults = await QueryPluginAsync(plugin, query, token, searchDelay);
                 if (token.IsCancellationRequested) return;
 
-                lock (allResults)
+                Interlocked.Exchange(ref hasAnyPluginEmitted, 1);
+
+                lock (allPluginResults)
                 {
-                    allResults.AddRange(pluginResults);
-
-                    // Update UI with current accumulated results (progressive update via channel)
-                    if (!token.IsCancellationRequested)
-                    {
-                        _resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(allResults.ToList(), token, pluginId: null, reselectFirst: reselect));
-                    }
+                    allPluginResults.AddRange(pluginResults);
                 }
-            });
 
+                var clearForThisBatch = ConsumeClearExisting();
+                _resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(
+                    pluginResults,
+                    token,
+                    pluginId: plugin.Metadata.ID,
+                    reselectFirst: reselect,
+                    clearExistingResults: clearForThisBatch));
+            });
             await Task.WhenAll(tasks);
 
-            // Final update after all plugins complete
+            // Final check: if all plugins completed and zero results were produced, flush empty full update to clear
             if (!token.IsCancellationRequested)
             {
-                _resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(allResults.ToList(), token, pluginId: null, reselectFirst: reselect));
+                lock (allPluginResults)
+                {
+                    if (allPluginResults.Count == 0 && homeHistoryResults.Count == 0)
+                    {
+                        _resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(
+                            Array.Empty<ResultViewModel>(),
+                            token,
+                            pluginId: null,
+                            reselectFirst: reselect));
+                    }
+                }
             }
         }
         catch (OperationCanceledException) { }
@@ -2145,13 +2226,20 @@ internal readonly struct ResultsForUpdate
     public CancellationToken Token { get; }
     public string? PluginId { get; }
     public bool ReselectFirst { get; }
+    public bool ClearExistingResults { get; }
     public bool IsPluginUpdate => !string.IsNullOrEmpty(PluginId);
 
-    public ResultsForUpdate(IReadOnlyList<ResultViewModel> results, CancellationToken token, string? pluginId = null, bool reselectFirst = true)
+    public ResultsForUpdate(
+        IReadOnlyList<ResultViewModel> results,
+        CancellationToken token,
+        string? pluginId = null,
+        bool reselectFirst = true,
+        bool clearExistingResults = false)
     {
         Results = results;
         Token = token;
         PluginId = pluginId;
         ReselectFirst = reselectFirst;
+        ClearExistingResults = clearExistingResults;
     }
 }

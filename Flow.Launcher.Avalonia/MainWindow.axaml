@@ -19,11 +19,10 @@
         CanResize="{Binding !Settings.KeepMaxResults}"
         ShowInTaskbar="False"
         Topmost="{Binding Settings.ShowAtTopmost}"
-        SystemDecorations="None"
+        WindowDecorations="None"
         TransparencyLevelHint="AcrylicBlur"
         Background="Transparent"
         ExtendClientAreaToDecorationsHint="True"
-        ExtendClientAreaChromeHints="NoChrome"
         SizeToContent="Height"
         IsVisible="{Binding MainWindowVisibility, Mode=TwoWay}">
 
@@ -116,7 +115,7 @@
                                  FontWeight="{Binding QueryBoxFontWeight}"
                                  FontStyle="{Binding QueryBoxFontStyle}"
                                  MinHeight="{Binding Settings.WindowHeightSize}"
-                                 Watermark="{Binding PlaceholderText}"
+                                 PlaceholderText="{Binding PlaceholderText}"
                                  AcceptsReturn="False"
                                  ClearSelectionOnLostFocus="False"
                                  ContextFlyout="{x:Null}"

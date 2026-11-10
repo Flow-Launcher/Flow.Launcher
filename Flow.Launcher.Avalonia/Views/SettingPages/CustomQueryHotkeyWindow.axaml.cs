@@ -116,7 +116,7 @@ public partial class CustomQueryHotkeyWindow : Window, INotifyPropertyChanged
 
     private async System.Threading.Tasks.Task ShowMessageAsync(string message)
     {
-        var dialog = new ContentDialog
+        var dialog = new FAContentDialog
         {
             Title = Title,
             Content = message,

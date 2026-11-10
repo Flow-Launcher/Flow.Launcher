@@ -3,6 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ui="using:FluentAvalonia.UI.Controls"
+        xmlns:chrome="using:Avalonia.Controls.Chrome"
         xmlns:i18n="using:Flow.Launcher.Avalonia.Resource"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Flow.Launcher.Avalonia.Views.SettingPages.SettingsWindow"
@@ -56,35 +57,35 @@
     </Window.Styles>
 
     <Panel>
-        <ui:NavigationView Name="NavView"
+        <ui:FANavigationView Name="NavView"
                              PaneDisplayMode="Left"
                              OpenPaneLength="220"
                              IsPaneToggleButtonVisible="False"
                              IsSettingsVisible="False">
-            <ui:NavigationView.PaneHeader>
+            <ui:FANavigationView.PaneHeader>
                 <!-- Clears the traffic lights and puts the first item's top (header + 3 grid margin + 2 item margin)
                      on the content panel's top edge (NavigationViewContentMargin.Top). -->
                 <Border Height="35" />
-            </ui:NavigationView.PaneHeader>
-            <ui:NavigationView.MenuItems>
-                <ui:NavigationViewItem Content="{i18n:Localize general}" Tag="General" IconSource="Setting" IsSelected="True" />
-                <ui:NavigationViewItem Content="{i18n:Localize plugin}" Tag="Plugins" IconSource="Library" />
-                <ui:NavigationViewItem Content="{i18n:Localize pluginStore}" Tag="PluginStore" IconSource="Shop" />
-                <ui:NavigationViewItem Content="{i18n:Localize theme}" Tag="Theme" IconSource="DarkTheme" />
-                <ui:NavigationViewItem Content="{i18n:Localize hotkey}" Tag="Hotkey" IconSource="Keyboard" />
-                <ui:NavigationViewItem Content="{i18n:Localize proxy}" Tag="Proxy" IconSource="Globe" />
-                <ui:NavigationViewItem Content="{i18n:Localize about}" Tag="About" IconSource="Help" />
-            </ui:NavigationView.MenuItems>
+            </ui:FANavigationView.PaneHeader>
+            <ui:FANavigationView.MenuItems>
+                <ui:FANavigationViewItem Content="{i18n:Localize general}" Tag="General" IconSource="Setting" IsSelected="True" />
+                <ui:FANavigationViewItem Content="{i18n:Localize plugin}" Tag="Plugins" IconSource="Library" />
+                <ui:FANavigationViewItem Content="{i18n:Localize pluginStore}" Tag="PluginStore" IconSource="Shop" />
+                <ui:FANavigationViewItem Content="{i18n:Localize theme}" Tag="Theme" IconSource="DarkTheme" />
+                <ui:FANavigationViewItem Content="{i18n:Localize hotkey}" Tag="Hotkey" IconSource="Keyboard" />
+                <ui:FANavigationViewItem Content="{i18n:Localize proxy}" Tag="Proxy" IconSource="Globe" />
+                <ui:FANavigationViewItem Content="{i18n:Localize about}" Tag="About" IconSource="Help" />
+            </ui:FANavigationView.MenuItems>
 
             <!-- Pages scroll themselves; an outer ScrollViewer would give them infinite height and defeat virtualization. -->
             <ContentControl Name="ContentFrame" Margin="28,22,6,0" />
-        </ui:NavigationView>
+        </ui:FANavigationView>
 
         <!-- Draggable title bar strip spanning the whole window width. -->
         <Border Height="{StaticResource SettingsTitleBarHeight}"
                 VerticalAlignment="Top"
                 Background="Transparent"
-                IsHitTestVisible="False">
+                chrome:WindowDecorationProperties.ElementRole="TitleBar">
             <!-- Same 28px band as the traffic lights so the title lines up with them. -->
             <TextBlock Text="{Binding $parent[Window].Title}"
                        HorizontalAlignment="Center"

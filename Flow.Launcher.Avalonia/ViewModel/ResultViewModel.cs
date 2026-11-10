@@ -57,8 +57,25 @@ public partial class ResultViewModel : ObservableObject
             if (ReferenceEquals(_pluginResult, value))
                 return;
 
+            var oldIconPath = _pluginResult?.IcoPath;
+            var oldIcoPathAbsolute = _pluginResult?.IcoPathAbsolute;
+            var oldIconDelegate = _pluginResult?.Icon;
+            var oldBadge = _pluginResult?.BadgeIcoPath;
+            var oldBadgeDelegate = _pluginResult?.BadgeIcon;
+
             _pluginResult = value;
-            ResetImages();
+
+            var iconChanged = oldIconPath != value?.IcoPath ||
+                              oldIcoPathAbsolute != value?.IcoPathAbsolute ||
+                              !Equals(oldIconDelegate, value?.Icon);
+            var badgeChanged = oldBadge != value?.BadgeIcoPath ||
+                               !Equals(oldBadgeDelegate, value?.BadgeIcon);
+
+            if (iconChanged || badgeChanged)
+            {
+                ResetImages(iconChanged, badgeChanged);
+            }
+
             _customPreviewResolved = false;
             _customPreviewControl = null;
             // Every result-derived property may have changed.
@@ -160,18 +177,24 @@ public partial class ResultViewModel : ObservableObject
         OnPropertyChanged(nameof(SubTitleFontStretch));
     }
 
-    private void ResetImages()
+    private void ResetImages(bool resetIcon = true, bool resetBadge = true)
     {
-        _imageTask = null;
-        _listIconTask = null;
-        _badgeImageTask = null;
-        _previewImageTask = null;
-        OnPropertyChanged(nameof(Image));
-        OnPropertyChanged(nameof(ListIcon));
-        OnPropertyChanged(nameof(BadgeImage));
-        OnPropertyChanged(nameof(PreviewImage));
-    }
+        if (resetIcon)
+        {
+            _imageTask = null;
+            _listIconTask = null;
+            _previewImageTask = null;
+            OnPropertyChanged(nameof(Image));
+            OnPropertyChanged(nameof(ListIcon));
+            OnPropertyChanged(nameof(PreviewImage));
+        }
 
+        if (resetBadge)
+        {
+            _badgeImageTask = null;
+            OnPropertyChanged(nameof(BadgeImage));
+        }
+    }
     /// <summary>
     /// Loads <paramref name="path"/>, or calls the plugin's icon delegate when no path is given.
     /// </summary>

@@ -28,7 +28,7 @@
                 <Button Content="{i18n:Localize refresh}"
                         IsEnabled="{Binding IsNotLoading}"
                         Click="OnRefreshClick" />
-                <ui:ProgressRing Width="24"
+                <ui:FAProgressRing Width="24"
                                  Height="24"
                                  IsActive="{Binding IsLoading}"
                                  IsVisible="{Binding IsLoading}" />
