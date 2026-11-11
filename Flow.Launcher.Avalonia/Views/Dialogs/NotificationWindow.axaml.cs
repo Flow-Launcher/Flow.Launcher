@@ -74,12 +74,28 @@ public partial class NotificationWindow : Window, INotifyPropertyChanged
 
     public static void ShowNotification(string title, string subTitle, string iconPath, string? actionButtonText = null, Action? buttonAction = null)
     {
+        var handled = false;
+        ShowPlatformNotification(title, subTitle, iconPath, actionButtonText, buttonAction, ref handled);
+        if (handled)
+        {
+            return;
+        }
+
+        ShowWindow(title, subTitle, iconPath, actionButtonText, buttonAction);
+    }
+
+    private static void ShowWindow(string title, string subTitle, string iconPath, string? actionButtonText, Action? buttonAction)
+    {
         Dispatcher.UIThread.Post(() =>
         {
             var window = new NotificationWindow(title, subTitle, iconPath, actionButtonText, buttonAction);
             window.Show();
         });
     }
+
+    // Platform hook: show the notification through the system instead of a Flow window; set handled when it did.
+    static partial void ShowPlatformNotification(string title, string subTitle, string iconPath, string? actionButtonText,
+        Action? buttonAction, ref bool handled);
 
     private void InitializeComponent()
     {

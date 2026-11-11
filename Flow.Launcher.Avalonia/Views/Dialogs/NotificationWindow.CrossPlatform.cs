@@ -37,4 +37,26 @@ public partial class NotificationWindow
             WaylandProperties.SetAppId(this, Program.LinuxAppId + ".Notification");
         }
     }
+
+    // Linux: the desktop's notification server; Flow's own window only when none is reachable.
+    static partial void ShowPlatformNotification(string title, string subTitle, string iconPath, string? actionButtonText,
+        Action? buttonAction, ref bool handled)
+    {
+        if (!OperatingSystem.IsLinux())
+        {
+            return;
+        }
+
+        handled = true;
+        _ = ShowThroughServerAsync(title, subTitle, iconPath, actionButtonText, buttonAction);
+    }
+
+    private static async System.Threading.Tasks.Task ShowThroughServerAsync(string title, string subTitle, string iconPath,
+        string? actionButtonText, Action? buttonAction)
+    {
+        if (!await LinuxDesktopNotifications.TryShowAsync(title, subTitle, iconPath, actionButtonText, buttonAction))
+        {
+            ShowWindow(title, subTitle, iconPath, actionButtonText, buttonAction);
+        }
+    }
 }

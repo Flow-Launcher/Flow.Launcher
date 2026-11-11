@@ -53,6 +53,8 @@ Unpack the tarball anywhere and start `flow-launcher-<rid>/Flow.Launcher.Avaloni
 
 Flow Launcher runs as a tray app (StatusNotifierItem; on GNOME this needs the AppIndicator extension). Only one instance runs at a time: launching it again shows the search window of the running instance, and launching it with `--toggle` toggles the window.
 
+Notifications (from Flow and from plugins) go to the desktop's notification server (`org.freedesktop.Notifications`: GNOME, KDE Plasma, mako, dunst, swaync, ...), so they follow its placement, styling and do-not-disturb settings. Notification buttons become notification actions where the server supports them. Without a notification server Flow shows its own notification windows.
+
 User data (settings, logs, cache, plugins installed from the store) is stored in `$XDG_CONFIG_HOME/FlowLauncher` (`~/.config/FlowLauncher`).
 
 **Start Flow Launcher on system startup** (Settings → General) writes the XDG autostart entry `~/.config/autostart/com.flowlauncher.FlowLauncher.desktop` for the running executable. Turning the setting off deletes it.
@@ -98,7 +100,7 @@ Each window type has its own id, for compositor window rules:
 | Window | Wayland app id | X11 class (`WM_CLASS`) |
 |---|---|---|
 | Search window | `com.flowlauncher.FlowLauncher.Search` | `com.flowlauncher.FlowLauncher` |
-| Notifications | `com.flowlauncher.FlowLauncher.Notification` | `com.flowlauncher.FlowLauncher` |
+| Notifications (only without a notification server) | `com.flowlauncher.FlowLauncher.Notification` | `com.flowlauncher.FlowLauncher` |
 | Settings and other windows | `com.flowlauncher.FlowLauncher` | `com.flowlauncher.FlowLauncher` |
 
 Under X11 (including XWayland) the search window is a dialog-type window (`_NET_WM_WINDOW_TYPE_DIALOG`), so tiling window managers float and focus it without rules, and Flow places it on the display chosen in Settings → General → **Search Window Location**.
