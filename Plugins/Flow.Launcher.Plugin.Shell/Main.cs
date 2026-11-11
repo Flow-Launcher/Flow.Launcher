@@ -73,7 +73,7 @@ namespace Flow.Launcher.Plugin.Shell
                                     !c.SpecialKeyState.AltPressed &&
                                     !c.SpecialKeyState.WinPressed;
 
-                                Execute(Process.Start, PrepareProcessStartInfo(m, runAsAdministrator));
+                                Execute(AppProcess.Start, PrepareProcessStartInfo(m, runAsAdministrator));
                                 return true;
                             },
                             CopyText = m
@@ -113,7 +113,7 @@ namespace Flow.Launcher.Plugin.Shell
                                 !c.SpecialKeyState.AltPressed &&
                                 !c.SpecialKeyState.WinPressed;
 
-                            Execute(Process.Start, PrepareProcessStartInfo(m.Key, runAsAdministrator));
+                            Execute(AppProcess.Start, PrepareProcessStartInfo(m.Key, runAsAdministrator));
                             return true;
                         },
                         CopyText = m.Key
@@ -143,7 +143,7 @@ namespace Flow.Launcher.Plugin.Shell
                         !c.SpecialKeyState.AltPressed &&
                         !c.SpecialKeyState.WinPressed;
 
-                    Execute(Process.Start, PrepareProcessStartInfo(cmd, runAsAdministrator));
+                    Execute(AppProcess.Start, PrepareProcessStartInfo(cmd, runAsAdministrator));
                     return true;
                 },
                 CopyText = cmd
@@ -168,7 +168,7 @@ namespace Flow.Launcher.Plugin.Shell
                             !c.SpecialKeyState.AltPressed &&
                             !c.SpecialKeyState.WinPressed;
 
-                        Execute(Process.Start, PrepareProcessStartInfo(m.Key, runAsAdministrator));
+                        Execute(AppProcess.Start, PrepareProcessStartInfo(m.Key, runAsAdministrator));
                         return true;
                     },
                     CopyText = m.Key

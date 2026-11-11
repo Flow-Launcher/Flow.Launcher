@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher.Plugin.Url
 {
@@ -57,7 +58,7 @@ namespace Flow.Launcher.Plugin.Url
                 psi.ArgumentList.Add(url);
             }
 
-            using var process = Process.Start(psi);
+            using var process = AppProcess.Start(psi);
             if (OperatingSystem.IsMacOS())
             {
                 process.WaitForExit();

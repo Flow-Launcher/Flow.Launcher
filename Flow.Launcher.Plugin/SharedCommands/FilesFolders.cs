@@ -291,7 +291,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
             try
             {
                 if (LocationExists(fileOrFolderPath) || FileExists(fileOrFolderPath))
-                    Process.Start(psi);
+                    AppProcess.Start(psi);
             }
             catch (Exception)
             {
@@ -323,7 +323,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
             try
             {
                 if (FileExists(filePath))
-                    Process.Start(psi);
+                    AppProcess.Start(psi);
             }
             catch (Exception)
             {

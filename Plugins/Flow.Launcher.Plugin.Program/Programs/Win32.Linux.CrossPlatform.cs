@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Flow.Launcher.Plugin.Program.Logger;
 using Flow.Launcher.Plugin.Program.Views.Models;
+using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
@@ -271,17 +272,14 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     return;
                 }
 
-                Main.StartProcess(StartDetached, info);
+                // Desktop file id (without ".desktop") names the app's systemd scope.
+                var applicationId = Path.GetFileNameWithoutExtension(FullPath);
+                Main.StartProcess(startInfo =>
+                {
+                    AppProcess.Start(startInfo, applicationId)?.Dispose();
+                    return null;
+                }, info);
             });
-        }
-
-        /// <summary>
-        /// Starts the app without keeping a handle to it; it keeps running when Flow exits.
-        /// </summary>
-        private static Process StartDetached(ProcessStartInfo info)
-        {
-            Process.Start(info)?.Dispose();
-            return null;
         }
 
         [SupportedOSPlatform("linux")]

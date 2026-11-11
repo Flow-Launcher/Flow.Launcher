@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Plugin.SharedCommands;
 using Tmds.DBus.Protocol;
 
 namespace Flow.Launcher.Avalonia.Helper;
@@ -36,7 +37,7 @@ internal static class LinuxFileManager
 
         try
         {
-            Process.Start(new ProcessStartInfo { FileName = directoryPath, UseShellExecute = true })?.Dispose();
+            AppProcess.Start(new ProcessStartInfo { FileName = directoryPath, UseShellExecute = true })?.Dispose();
         }
         catch (Exception e)
         {

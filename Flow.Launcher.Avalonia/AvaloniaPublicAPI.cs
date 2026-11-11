@@ -132,16 +132,14 @@ public partial class AvaloniaPublicAPI : IPublicAPI, global::Flow.Launcher.Core.
             }
             else
             {
-                using var explorer = new Process();
-                explorer.StartInfo = CreateFileManagerStartInfo(
+                AppProcess.Start(CreateFileManagerStartInfo(
                     explorerInfo.Path.Replace("%d", DirectoryPath),
                     FileNameOrFilePath is null
                         ? explorerInfo.DirectoryArgument.Replace("%d", DirectoryPath)
                         : explorerInfo.FileArgument
                             .Replace("%d", DirectoryPath)
                             .Replace("%f", targetPath),
-                    targetPath);
-                explorer.Start();
+                    targetPath))?.Dispose();
             }
         }
         catch (COMException ex) when (ex.ErrorCode == unchecked((int)0x80004004))
@@ -198,7 +196,7 @@ public partial class AvaloniaPublicAPI : IPublicAPI, global::Flow.Launcher.Core.
         {
             try
             {
-                Process.Start(new ProcessStartInfo
+                AppProcess.Start(new ProcessStartInfo
                 {
                     FileName = uri.AbsoluteUri,
                     UseShellExecute = true
@@ -287,11 +285,13 @@ public partial class AvaloniaPublicAPI : IPublicAPI, global::Flow.Launcher.Core.
         var exePath = Environment.ProcessPath;
         if (!string.IsNullOrWhiteSpace(exePath))
         {
-            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+            // In its own scope on Linux: Flow's own unit (e.g. its autostart service) stops when this process exits
+            // and would take the new instance with it.
+            AppProcess.Start(new System.Diagnostics.ProcessStartInfo
             {
                 FileName = exePath,
                 UseShellExecute = true
-            });
+            })?.Dispose();
         }
 
         if (global::Avalonia.Application.Current?.ApplicationLifetime is global::Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime desktop)

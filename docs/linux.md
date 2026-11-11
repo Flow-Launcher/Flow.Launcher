@@ -55,6 +55,8 @@ Flow Launcher runs as a tray app (StatusNotifierItem; on GNOME this needs the Ap
 
 Notifications (from Flow and from plugins) go to the desktop's notification server (`org.freedesktop.Notifications`: GNOME, KDE Plasma, mako, dunst, swaync, ...), so they follow its placement, styling and do-not-disturb settings. Notification buttons become notification actions where the server supports them. Without a notification server Flow shows its own notification windows.
 
+In a systemd user session, every program Flow starts for you (apps, files, folders, URLs, shell commands) runs in its own transient scope, `app-flowlauncher-<app>-<random>.scope`, like `uwsm app` and other launchers do; under uwsm it goes into `app-graphical.slice`. The program therefore outlives Flow: when Flow exits, restarts or crashes, systemd would otherwise stop everything in Flow's own unit (e.g. its autostart service) with it. Plugins start programs this way through `Flow.Launcher.Plugin.SharedCommands.AppProcess`. Without a systemd user session programs are started directly.
+
 User data (settings, logs, cache, plugins installed from the store) is stored in `$XDG_CONFIG_HOME/FlowLauncher` (`~/.config/FlowLauncher`).
 
 **Start Flow Launcher on system startup** (Settings → General) writes the XDG autostart entry `~/.config/autostart/com.flowlauncher.FlowLauncher.desktop` for the running executable. Turning the setting off deletes it.

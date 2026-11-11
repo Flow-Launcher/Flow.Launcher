@@ -12,6 +12,7 @@ using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
+using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Avalonia.Helper;
 using Flow.Launcher.Avalonia.Views.Dialogs;
 
@@ -76,7 +77,7 @@ public partial class AvaloniaPublicAPI
         var startInfo = new ProcessStartInfo(shell) { UseShellExecute = false };
         startInfo.ArgumentList.Add("-c");
         startInfo.ArgumentList.Add(cmd);
-        Process.Start(startInfo)?.Dispose();
+        AppProcess.Start(startInfo)?.Dispose();
     }
 
     // Settings written on Windows keep "explorer" as the default entry; "Finder" is the macOS default entry and
@@ -95,7 +96,7 @@ public partial class AvaloniaPublicAPI
 
         if (!OperatingSystem.IsMacOS())
         {
-            Process.Start(new ProcessStartInfo { FileName = directoryPath, UseShellExecute = true })?.Dispose();
+            AppProcess.Start(new ProcessStartInfo { FileName = directoryPath, UseShellExecute = true })?.Dispose();
             return;
         }
 
@@ -134,7 +135,7 @@ public partial class AvaloniaPublicAPI
     {
         if (!OperatingSystem.IsMacOS())
         {
-            Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true })?.Dispose();
+            AppProcess.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true })?.Dispose();
             return;
         }
 
@@ -150,7 +151,7 @@ public partial class AvaloniaPublicAPI
             // A plain executable (e.g. a CLI wrapper); call it like Windows does.
             var direct = new ProcessStartInfo(browserPath) { UseShellExecute = false };
             AddBrowserArguments(direct.ArgumentList, url, browserInfo, inPrivate);
-            Process.Start(direct)?.Dispose();
+            AppProcess.Start(direct)?.Dispose();
             return;
         }
 
