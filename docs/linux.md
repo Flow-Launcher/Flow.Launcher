@@ -37,7 +37,15 @@ nix develop -c Scripts/linux/build.sh
 nix develop -c dotnet Output/Avalonia/Debug/net10.0/Flow.Launcher.Avalonia.dll
 ```
 
-Start built binaries from that shell (or with `nix-ld` providing the same libraries). A tarball built on NixOS uses the Nix store's dynamic loader; build on another distribution (or use the CI artifact) for a tarball that runs elsewhere.
+Start development builds from that shell. A tarball built on NixOS uses the Nix store's dynamic loader; build on another distribution (or use the CI artifact) for a tarball that runs elsewhere.
+
+To install Flow for your user on NixOS, run:
+
+```sh
+Scripts/linux/install-nixos.sh            # into ~/.local; pass another prefix as the first argument
+```
+
+It builds the self-contained app, installs it to `~/.local/share/flow-launcher/app`, links `~/.local/bin/flow-launcher`, and adds the flake's `runtime-libs` package (the libraries above plus glibc and libstdc++) as `~/.local/share/flow-launcher/runtime`, a Nix GC root. The app's binaries are patched to load everything from there, so no `LD_LIBRARY_PATH` is set and programs started from Flow do not inherit one. Quit Flow before running it again to update.
 
 ## Install
 
@@ -97,7 +105,7 @@ Under X11 (including XWayland) the search window is a dialog-type window (`_NET_
 
 Wayland has no window types, and clients cannot position their windows: the compositor decides where the search window goes and whether it tiles. **Search Window Location** therefore has no effect under Wayland; use a window rule instead. Tiling compositors need a rule to float the search window:
 
-- **Hyprland** keeps floating windows at the size it chose and does not follow the client when the window resizes itself. The search window grows and shrinks with the number of results, so let Hyprland draw no border, shadow or blur around it; the theme draws its own. Without that, a frame with an empty area shows below short result lists. `no_follow_mouse` keeps Hyprland from moving focus away (which hides the window) when the pointer is elsewhere:
+- **Hyprland** keeps floating windows at the size they had when they appeared and does not follow the client when it resizes itself. So under Hyprland the search window always has the height of the longest result list (or of the preview panel, if taller), and the visible part ends below the last result; the rest of the window is transparent. Let Hyprland draw no border, shadow or blur around it (the theme draws its own), or the empty part shows as a frame. `no_follow_mouse` keeps Hyprland from moving focus away (which hides the window) when the pointer is elsewhere:
 
   ```lua
   -- hyprland.lua
@@ -153,4 +161,4 @@ Blur themes (such as the default Win11Light) are drawn with an opaque background
 - Python and Node.js runtimes for plugins are not installed automatically. Set the interpreter paths in Settings → General; the file picker there uses `zenity` or `kdialog`.
 - Global keyboard hooks for plugins (key interception outside Flow's windows) are not available.
 - "Ignore hotkeys in fullscreen mode" only detects fullscreen windows under X11.
-- On Hyprland under Wayland, the search window keeps the height it had when it appeared (usually that of the full home page list); the empty part below shorter lists is invisible with the rule above but still takes clicks.
+- On Hyprland under Wayland, the transparent part of the search window below short result lists still takes clicks.

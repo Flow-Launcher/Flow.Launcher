@@ -88,7 +88,76 @@ public partial class MainWindow
         {
             X11Properties.SetNetWmWindowType(this, X11NetWmWindowType.Dialog);
             WaylandProperties.SetAppId(this, LinuxSearchWindowAppId);
+
+            if (Program.UsesNativeWayland && !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("HYPRLAND_INSTANCE_SIGNATURE"))
+                && this.FindControl<Border>("WindowBorder") is { } border)
+            {
+                ReserveFullHeight(border);
+            }
         }
+    }
+
+    // Hyprland keeps a floating Wayland window at the size it had when it was mapped and ignores the client's later
+    // size changes (it only clamps to the min/max size hints). A search window that sizes to its results would be
+    // cut off when the list grows. So on Hyprland the window always has the height of the longest possible list
+    // (or of the preview panel, whichever is taller), also pinned through the min/max hints; the visible border
+    // stays top-aligned at the content's height and the rest of the window is transparent (docs/linux.md has the
+    // rule that keeps Hyprland from framing it). Window.MinHeight alone would only set the hints: a top-level
+    // window's layout ignores its own min/max, so the height is set explicitly instead of sizing to content.
+    private void ReserveFullHeight(Border windowBorder)
+    {
+        windowBorder.VerticalAlignment = global::Avalonia.Layout.VerticalAlignment.Top;
+        LayoutUpdated += (_, _) =>
+        {
+            var height = FullContentHeight(windowBorder);
+            if (height <= 0)
+            {
+                return;
+            }
+
+            // A finished drag-resize switches back to sizing to content (ApplyUserResize).
+            if (SizeToContent != SizeToContent.Manual)
+            {
+                SizeToContent = SizeToContent.Manual;
+            }
+
+            if (Math.Abs(Height - height) >= 0.5 || Math.Abs(MinHeight - height) >= 0.5 || Math.Abs(MaxHeight - height) >= 0.5)
+            {
+                MinHeight = height;
+                MaxHeight = height;
+                Height = height;
+            }
+        };
+    }
+
+    // Height of WindowBorder with the result list at its maximum: the always-visible query box plus the vertical
+    // margins, borders and paddings of the elements around the list, plus the list's MaxHeight.
+    private double FullContentHeight(Border windowBorder)
+    {
+        if (_viewModel == null
+            || this.FindControl<Control>("QueryBoxArea") is not { } queryBoxArea
+            || this.FindControl<Control>("MiddleSeparator") is not { } separator
+            || this.FindControl<Border>("ResultAreaBorder") is not { } resultAreaBorder
+            || this.FindControl<Control>("ResultArea") is not { } resultArea
+            || this.FindControl<Control>("ResultListBox") is not { } resultListBox
+            || this.FindControl<Control>("PreviewPanelContainer") is not { } previewContainer)
+        {
+            return 0;
+        }
+
+        static double Outer(Thickness margin) => margin.Top + margin.Bottom;
+        static double Inner(Border border) => border.BorderThickness.Top + border.BorderThickness.Bottom
+                                              + border.Padding.Top + border.Padding.Bottom;
+
+        var list = Outer(resultArea.Margin) + Outer(resultListBox.Margin) + _viewModel.Results.MaxHeight;
+        var preview = Outer(previewContainer.Margin) + previewContainer.MinHeight;
+
+        var height = Outer(windowBorder.Margin) + Inner(windowBorder)
+                     + queryBoxArea.DesiredSize.Height
+                     + Outer(separator.Margin) + (double.IsNaN(separator.Height) ? 0 : separator.Height)
+                     + Outer(resultAreaBorder.Margin) + Inner(resultAreaBorder)
+                     + Math.Max(list, preview);
+        return Math.Ceiling(height);
     }
 
     // Avalonia's Wayland backend recreates the toplevel on every Show and commits it under the app-wide app id before
