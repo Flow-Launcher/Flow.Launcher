@@ -7,23 +7,22 @@ The Avalonia front end (`Flow.Launcher.Avalonia`) runs on Linux (`linux-x64`, `l
 Requirements: the .NET 10 SDK (see `global.json`) and `tar`.
 
 ```sh
-Scripts/linux/build.sh              # linux-x64 (default)
+Scripts/linux/build.sh                        # host architecture (linux-x64 or linux-arm64)
 Scripts/linux/build.sh linux-arm64
+Scripts/linux/build.sh linux-x64 linux-arm64  # build plugins once, cross-publish both RIDs
 ```
 
 The script:
 
-1. publishes `Flow.Launcher.Avalonia` for `net10.0` as a self-contained ReadyToRun Release build for the given runtime into `Output/Linux/flow-launcher-<rid>/`;
-2. builds every bundled plugin that targets `net10.0` into `Plugins/` (the Windows-only Explorer and WindowsSettings plugins are skipped). Native assets of other platforms are removed;
-3. packs the folder as `Output/Linux/flow-launcher-<rid>.tar.gz`.
+1. builds `Scripts/Flow.Launcher.CrossPlatform.slnx` (`net10.0`, Release) once in parallel so every bundled cross-platform plugin lands in `Output/Avalonia/Release/net10.0/Plugins/` (the Windows-only Explorer and WindowsSettings plugins are skipped);
+2. for each requested runtime, publishes `Flow.Launcher.Avalonia` as a self-contained ReadyToRun Release build into `Output/Linux/flow-launcher-<rid>/`, copies the bundled plugins while stripping native assets of other platforms/architectures, and packs `Output/Linux/flow-launcher-<rid>.tar.gz`.
 
-CI (`.github/workflows/dotnet.yml`, job `build-linux`) runs the script on Ubuntu for both runtimes and uploads the tarballs as the `Linux App (<rid>)` artifacts.
+CI (`.github/workflows/dotnet.yml`, job `build-linux`) runs `Scripts/linux/build.sh linux-x64 linux-arm64` in a single Ubuntu job and uploads `Linux App (linux-x64)` and `Linux App (linux-arm64)`.
 
-For development, the app also runs from the build output:
+Cross-platform projects target only the host OS framework by default (`net10.0` on Linux/macOS, `net10.0-windows10.0.19041.0` on Windows); pass `-p:BuildAllTargetFrameworks=true` to compile both. For development, the app runs directly from the build output:
 
 ```sh
-dotnet build Flow.Launcher.Avalonia -f net10.0
-dotnet build Plugins/<plugin>/<plugin>.csproj -f net10.0   # bundled plugins land in Output/Avalonia/Debug/net10.0/Plugins
+dotnet build Scripts/Flow.Launcher.CrossPlatform.slnx
 dotnet Output/Avalonia/Debug/net10.0/Flow.Launcher.Avalonia.dll
 ```
 

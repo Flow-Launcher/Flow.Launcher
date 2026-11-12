@@ -7,29 +7,28 @@ The Avalonia front end (`Flow.Launcher.Avalonia`) runs on macOS 13 or later, on 
 Requirements: macOS with the .NET 10 SDK (see `global.json`). The other tools the script uses (`codesign`, `iconutil`, `sips`, `plutil`) ship with macOS.
 
 ```sh
-Scripts/macos/build-app.sh            # Apple Silicon (osx-arm64, default)
-Scripts/macos/build-app.sh osx-x64    # Intel
+Scripts/macos/build-app.sh                          # host architecture (osx-arm64 or osx-x64)
+Scripts/macos/build-app.sh osx-x64                  # Intel
+Scripts/macos/build-app.sh --zip osx-arm64 osx-x64  # build plugins/icon once, cross-publish & zip both RIDs
 ```
 
 The script:
 
-1. publishes `Flow.Launcher.Avalonia` for `net10.0` as a self-contained Release build for the given runtime;
-2. builds every bundled plugin that targets `net10.0` (the Windows-only Explorer and WindowsSettings plugins are skipped);
-3. assembles `Output/macOS/Flow Launcher.app` with `Info.plist` from `Scripts/macos/Info.plist` and an icon generated from `Flow.Launcher/Images/app.png`;
-4. signs the bundle ad hoc (`codesign -s -`) and verifies the signature.
-
-Each run replaces `Output/macOS/Flow Launcher.app`, so building for the other architecture overwrites the previous bundle.
+1. builds `Scripts/Flow.Launcher.CrossPlatform.slnx` (`net10.0`, Release) once in parallel for all bundled cross-platform plugins (the Windows-only Explorer and WindowsSettings plugins are skipped) and generates `AppIcon.icns` from `Flow.Launcher/Images/app.png`;
+2. for each requested runtime, publishes `Flow.Launcher.Avalonia` as a self-contained ReadyToRun Release build;
+3. assembles `Output/macOS/Flow Launcher.app` (or `Output/macOS/<rid>/Flow Launcher.app` when building multiple runtimes at once) with `Info.plist` from `Scripts/macos/Info.plist`, copies the bundled plugins (keeping only that runtime's native assets), and signs the bundle ad hoc (`codesign -s -`);
+4. with `--zip`, packs `Output/macOS/Flow-Launcher-macOS-<rid>.zip` with `ditto` so the `Contents/MacOS` symlink and signature stay intact.
 
 Bundle layout: `codesign` treats every file and folder in `Contents/MacOS` as code, so `Contents/MacOS` holds only the apphost (`Flow.Launcher.Avalonia`) and a symlink to `Flow.Launcher.Avalonia.dll`. The .NET host follows that symlink and uses `Contents/Resources` as the application directory. That folder holds the whole publish output (runtime, assemblies, `Images/`, `Languages/`) and the bundled plugins in `Contents/Resources/Plugins`. Native libraries there are signed one by one before the bundle is signed.
 
-For development, the app also runs unbundled:
+Cross-platform projects target only the host OS framework by default (`net10.0` on macOS/Linux, `net10.0-windows10.0.19041.0` on Windows); pass `-p:BuildAllTargetFrameworks=true` to compile both. For development, the app also runs unbundled:
 
 ```sh
-dotnet build Flow.Launcher.Avalonia -f net10.0
+dotnet build Scripts/Flow.Launcher.CrossPlatform.slnx
 dotnet Output/Avalonia/Debug/net10.0/Flow.Launcher.Avalonia.dll
 ```
 
-CI (`.github/workflows/dotnet.yml`, job `build-macos`) runs this script on a macOS runner for both runtimes and uploads `Flow-Launcher-macOS-osx-arm64.zip` and `Flow-Launcher-macOS-osx-x64.zip` as the `macOS App (<rid>)` artifacts. Unpack them with Finder or `ditto -x -k`, which keep the bundle's symlink and signature intact.
+CI (`.github/workflows/dotnet.yml`, job `build-macos`) runs `Scripts/macos/build-app.sh --zip osx-arm64 osx-x64` in a single macOS job and uploads `macOS App (osx-arm64)` and `macOS App (osx-x64)`. Unpack them with Finder or `ditto -x -k`, which keep the bundle's symlink and signature intact.
 
 ## Install
 

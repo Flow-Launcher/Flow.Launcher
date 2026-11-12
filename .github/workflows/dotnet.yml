@@ -41,15 +41,15 @@ jobs:
       - name: Install vpk
         run: dotnet tool install -g vpk
       - name: Restore dependencies
-        run: nuget restore
+        run: nuget restore Flow.Launcher.sln
       - name: Build
-        run: dotnet build --no-restore -c Release
+        run: dotnet build Flow.Launcher.sln --no-restore -c Release
       - name: Initialize Service
         run: |
           sc config WSearch start= auto # Starts Windows Search service- Needed for running ExplorerTest
           net start WSearch
       - name: Test
-        run: dotnet test --no-build --verbosity normal -c Release
+        run: dotnet test Flow.Launcher.sln --no-build --verbosity normal -c Release
       - name: Perform post_build tasks
         shell: powershell
         run: .\Scripts\post_build.ps1
@@ -94,7 +94,6 @@ jobs:
           name: Full nupkg
           path: |
             Output\Packages\FlowLauncher-*-full.nupkg
-
           compression-level: 0
       - name: Upload Release Information
         uses: actions/upload-artifact@v7
@@ -107,10 +106,6 @@ jobs:
   build-macos:
 
     runs-on: macos-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        rid: [osx-arm64, osx-x64]
     env:
       FlowVersion: 1.20.2
       BUILD_NUMBER: ${{ github.run_number }}
@@ -126,26 +121,26 @@ jobs:
         uses: actions/setup-dotnet@v6
         with:
           dotnet-version: 10.0.x
-      - name: Build Flow Launcher.app
-        run: Scripts/macos/build-app.sh ${{ matrix.rid }}
-      - name: Package app bundle
-        # ditto keeps the Contents/MacOS symlink and the code signature intact; plain zip does not.
-        run: ditto -c -k --sequesterRsrc --keepParent "Output/macOS/Flow Launcher.app" "Output/macOS/Flow-Launcher-macOS-${{ matrix.rid }}.zip"
-      - name: Upload macOS App
+      - name: Build and package Flow Launcher.app (osx-arm64, osx-x64)
+        run: Scripts/macos/build-app.sh --zip osx-arm64 osx-x64
+      - name: Upload macOS App (osx-arm64)
         uses: actions/upload-artifact@v7
         with:
-          name: macOS App (${{ matrix.rid }})
+          name: macOS App (osx-arm64)
           path: |
-            Output/macOS/Flow-Launcher-macOS-${{ matrix.rid }}.zip
+            Output/macOS/Flow-Launcher-macOS-osx-arm64.zip
+          compression-level: 0
+      - name: Upload macOS App (osx-x64)
+        uses: actions/upload-artifact@v7
+        with:
+          name: macOS App (osx-x64)
+          path: |
+            Output/macOS/Flow-Launcher-macOS-osx-x64.zip
           compression-level: 0
 
   build-linux:
 
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        rid: [linux-x64, linux-arm64]
     env:
       FlowVersion: 1.20.2
       BUILD_NUMBER: ${{ github.run_number }}
@@ -161,12 +156,19 @@ jobs:
         uses: actions/setup-dotnet@v6
         with:
           dotnet-version: 10.0.x
-      - name: Build Flow Launcher for Linux
-        run: Scripts/linux/build.sh ${{ matrix.rid }}
-      - name: Upload Linux tarball
+      - name: Build Flow Launcher for Linux (linux-x64, linux-arm64)
+        run: Scripts/linux/build.sh linux-x64 linux-arm64
+      - name: Upload Linux tarball (linux-x64)
         uses: actions/upload-artifact@v7
         with:
-          name: Linux App (${{ matrix.rid }})
+          name: Linux App (linux-x64)
           path: |
-            Output/Linux/flow-launcher-${{ matrix.rid }}.tar.gz
+            Output/Linux/flow-launcher-linux-x64.tar.gz
+          compression-level: 0
+      - name: Upload Linux tarball (linux-arm64)
+        uses: actions/upload-artifact@v7
+        with:
+          name: Linux App (linux-arm64)
+          path: |
+            Output/Linux/flow-launcher-linux-arm64.tar.gz
           compression-level: 0

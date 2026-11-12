@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework></TargetFramework>
-    <TargetFrameworks>net10.0;net10.0-windows10.0.19041.0</TargetFrameworks>
+    <TargetFramework Condition="'$(AllCrossPlatformTargetFrameworks)' == ''">$(HostCrossPlatformTargetFramework)</TargetFramework>
+    <TargetFramework Condition="'$(AllCrossPlatformTargetFrameworks)' != ''"></TargetFramework>
+    <TargetFrameworks>$(AllCrossPlatformTargetFrameworks)</TargetFrameworks>
     <OutputType>Library</OutputType>
     <UseWPF Condition="$(TargetFramework.Contains('-windows'))">true</UseWPF>
     <UseWindowsForms Condition="$(TargetFramework.Contains('-windows'))">true</UseWindowsForms>

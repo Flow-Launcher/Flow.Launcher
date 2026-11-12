@@ -1,8 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework></TargetFramework>
-    <TargetFrameworks>net10.0;net10.0-windows10.0.19041.0</TargetFrameworks>
+    <TargetFramework Condition="'$(AllCrossPlatformTargetFrameworks)' == ''">$(HostCrossPlatformTargetFramework)</TargetFramework>
+    <TargetFramework Condition="'$(AllCrossPlatformTargetFrameworks)' != ''"></TargetFramework>
+    <TargetFrameworks>$(AllCrossPlatformTargetFrameworks)</TargetFrameworks>
     <OutputType>Library</OutputType>
     <ProjectGuid>{C21BFF9C-2C99-4B5F-B7C9-A5E6DDDB37B0}</ProjectGuid>
     <AppDesignerFolder>Properties</AppDesignerFolder>

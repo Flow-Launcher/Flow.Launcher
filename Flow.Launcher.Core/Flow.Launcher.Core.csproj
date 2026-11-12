@@ -1,8 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework></TargetFramework>
-    <TargetFrameworks>net10.0;net10.0-windows10.0.19041.0</TargetFrameworks>
+    <TargetFramework Condition="'$(AllCrossPlatformTargetFrameworks)' == ''">$(HostCrossPlatformTargetFramework)</TargetFramework>
+    <TargetFramework Condition="'$(AllCrossPlatformTargetFrameworks)' != ''"></TargetFramework>
+    <TargetFrameworks>$(AllCrossPlatformTargetFrameworks)</TargetFrameworks>
     <UseWpf Condition="$(TargetFramework.Contains('-windows'))">true</UseWpf>
     <UseWindowsForms Condition="$(TargetFramework.Contains('-windows'))">true</UseWindowsForms>
     <OutputType>Library</OutputType>
@@ -14,7 +15,9 @@
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
-    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <RestorePackagesWithLockFile Condition="'$(RestoreLockedMode)' == 'true'">true</RestorePackagesWithLockFile>
+    <RestorePackagesWithLockFile Condition="'$(RestoreLockedMode)' != 'true'">false</RestorePackagesWithLockFile>
+    <NuGetLockFilePath Condition="'$(RestoreLockedMode)' != 'true'">$(BaseIntermediateOutputPath)packages.lock.json</NuGetLockFilePath>
   </PropertyGroup>
   
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">

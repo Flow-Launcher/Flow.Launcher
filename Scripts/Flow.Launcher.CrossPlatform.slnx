@@ -1,0 +1,18 @@
+<Solution>
+  <Project Path="../Flow.Launcher.Plugin/Flow.Launcher.Plugin.csproj" />
+  <Project Path="../Flow.Launcher.Infrastructure/Flow.Launcher.Infrastructure.csproj" />
+  <Project Path="../Flow.Launcher.Core/Flow.Launcher.Core.csproj" />
+  <Project Path="../Flow.Launcher.Avalonia/Flow.Launcher.Avalonia.csproj" />
+  <Folder Name="/Plugins/">
+    <Project Path="../Plugins/Flow.Launcher.Plugin.BrowserBookmark/Flow.Launcher.Plugin.BrowserBookmark.csproj" />
+    <Project Path="../Plugins/Flow.Launcher.Plugin.Calculator/Flow.Launcher.Plugin.Calculator.csproj" />
+    <Project Path="../Plugins/Flow.Launcher.Plugin.PluginIndicator/Flow.Launcher.Plugin.PluginIndicator.csproj" />
+    <Project Path="../Plugins/Flow.Launcher.Plugin.PluginsManager/Flow.Launcher.Plugin.PluginsManager.csproj" />
+    <Project Path="../Plugins/Flow.Launcher.Plugin.ProcessKiller/Flow.Launcher.Plugin.ProcessKiller.csproj" />
+    <Project Path="../Plugins/Flow.Launcher.Plugin.Program/Flow.Launcher.Plugin.Program.csproj" />
+    <Project Path="../Plugins/Flow.Launcher.Plugin.Shell/Flow.Launcher.Plugin.Shell.csproj" />
+    <Project Path="../Plugins/Flow.Launcher.Plugin.Sys/Flow.Launcher.Plugin.Sys.csproj" />
+    <Project Path="../Plugins/Flow.Launcher.Plugin.Url/Flow.Launcher.Plugin.Url.csproj" />
+    <Project Path="../Plugins/Flow.Launcher.Plugin.WebSearch/Flow.Launcher.Plugin.WebSearch.csproj" />
+  </Folder>
+</Solution>

@@ -3,8 +3,9 @@
   <PropertyGroup>
     <ProjectGuid>{4FD29318-A8AB-4D8F-AA47-60BC241B8DA3}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <TargetFramework></TargetFramework>
-    <TargetFrameworks>net10.0;net10.0-windows10.0.19041.0</TargetFrameworks>
+    <TargetFramework Condition="'$(AllCrossPlatformTargetFrameworks)' == ''">$(HostCrossPlatformTargetFramework)</TargetFramework>
+    <TargetFramework Condition="'$(AllCrossPlatformTargetFrameworks)' != ''"></TargetFramework>
+    <TargetFrameworks>$(AllCrossPlatformTargetFrameworks)</TargetFrameworks>
     <UseWpf Condition="$(TargetFramework.Contains('-windows'))">true</UseWpf>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Flow.Launcher.Infrastructure</RootNamespace>
@@ -14,7 +15,9 @@
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <RestorePackagesWithLockFile Condition="'$(RestoreLockedMode)' == 'true'">true</RestorePackagesWithLockFile>
+    <RestorePackagesWithLockFile Condition="'$(RestoreLockedMode)' != 'true'">false</RestorePackagesWithLockFile>
+    <NuGetLockFilePath Condition="'$(RestoreLockedMode)' != 'true'">$(BaseIntermediateOutputPath)packages.lock.json</NuGetLockFilePath>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
