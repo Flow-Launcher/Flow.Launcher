@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -113,6 +114,22 @@ namespace Flow.Launcher.Test
             Assert.That(unloaded, Is.True, "Collectible load context was not collected after unload");
         }
 
+        [Test]
+        public async Task GivenPluginSettingsSerializedWhenJsonCachesClearedThenLoadContextShouldBeCollectedAsync()
+        {
+            // Given a plugin settings type that went through System.Text.Json the way PluginJsonStorage does
+            var assemblyPath = Path.Combine(AppContext.BaseDirectory, "Flow.Launcher.Plugin.Shell.dll");
+            Assert.That(File.Exists(assemblyPath), Is.True, $"Test assembly not found: {assemblyPath}");
+            var weakReference = LoadSerializeSettingsAndUnload(assemblyPath);
+
+            // When
+            PluginAssemblyLoader.ClearJsonSerializerCaches();
+            var unloaded = await PluginAssemblyLoader.WaitForUnloadAsync(weakReference);
+
+            // Then
+            Assert.That(unloaded, Is.True, "System.Text.Json caches kept the collectible load context alive");
+        }
+
         // Kept in a separate non-inlined method so no strong reference to the load context or its
         // assembly survives in the test method's stack frame, which would prevent collection
         [MethodImpl(MethodImplOptions.NoInlining)]
@@ -121,6 +138,16 @@ namespace Flow.Launcher.Test
             var loader = new PluginAssemblyLoader(assemblyPath);
             var assembly = loader.LoadAssemblyAndDependencies();
             Assert.That(assembly, Is.Not.Null);
+            return PluginAssemblyLoader.UnloadAndGetWeakReference(loader);
+        }
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        private static WeakReference LoadSerializeSettingsAndUnload(string assemblyPath)
+        {
+            var loader = new PluginAssemblyLoader(assemblyPath);
+            var settingsType = loader.LoadAssemblyAndDependencies().GetType("Flow.Launcher.Plugin.Shell.Settings", throwOnError: true);
+            var settings = JsonSerializer.Deserialize("{}", settingsType);
+            JsonSerializer.Serialize(settings, settingsType, new JsonSerializerOptions { WriteIndented = true });
             return PluginAssemblyLoader.UnloadAndGetWeakReference(loader);
         }
 

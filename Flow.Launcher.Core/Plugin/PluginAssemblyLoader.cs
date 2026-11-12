@@ -2,8 +2,10 @@
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Reflection.Metadata;
 using System.Runtime.CompilerServices;
 using System.Runtime.Loader;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Flow.Launcher.Core.Plugin
@@ -32,6 +34,33 @@ namespace Flow.Launcher.Core.Plugin
             var weakReference = new WeakReference(loader);
             loader.Unload();
             return weakReference;
+        }
+
+        /// <summary>
+        /// Drops System.Text.Json's metadata caches. They hold every type that has been serialized, such as
+        /// plugin settings types, and keep their load context alive even after the storage is removed.
+        /// The runtime has no public API for this, so the cache-clearing handler that System.Text.Json
+        /// registers for .NET hot reload is invoked instead.
+        /// </summary>
+        internal static void ClearJsonSerializerCaches()
+        {
+            try
+            {
+                var clearCacheMethods = typeof(JsonSerializer).Assembly
+                    .GetCustomAttributes<MetadataUpdateHandlerAttribute>()
+                    .Select(attribute => attribute.HandlerType.GetMethod("ClearCache",
+                        BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic, [typeof(Type[])]))
+                    .Where(method => method != null);
+
+                foreach (var clearCache in clearCacheMethods)
+                {
+                    clearCache.Invoke(null, [null]);
+                }
+            }
+            catch (Exception e)
+            {
+                PublicApi.Instance.LogException(nameof(PluginAssemblyLoader), "Failed to clear System.Text.Json caches", e);
+            }
         }
 
         /// <summary>
