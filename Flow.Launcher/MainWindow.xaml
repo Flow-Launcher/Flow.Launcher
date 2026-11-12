@@ -87,7 +87,7 @@
             Modifiers="Ctrl+Shift" />
         <KeyBinding
             Key="Enter"
-            Command="{Binding LoadContextMenuCommand}"
+            Command="{Binding ToggleContextMenuCommand}"
             Modifiers="Shift" />
         <KeyBinding Key="Enter" Command="{Binding OpenResultCommand}" />
         <KeyBinding
@@ -194,7 +194,7 @@
             Modifiers="{Binding OpenHistoryHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
         <KeyBinding
             Key="{Binding OpenContextMenuHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
-            Command="{Binding LoadContextMenuCommand}"
+            Command="{Binding ToggleContextMenuCommand}"
             Modifiers="{Binding OpenContextMenuHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
         <KeyBinding
             Key="{Binding SelectNextPageHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"

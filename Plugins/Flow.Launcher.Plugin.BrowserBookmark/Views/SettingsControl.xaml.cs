@@ -48,16 +48,6 @@ public partial class SettingsControl
         }
     }
 
-    public bool OpenInNewBrowserWindow
-    {
-        get => Settings.OpenInNewBrowserWindow;
-        set
-        {
-            Settings.OpenInNewBrowserWindow = value;
-            OnPropertyChanged();
-        }
-    }
-
     private void NewCustomBrowser(object sender, RoutedEventArgs e)
     {
         var newBrowser = new CustomBrowser();

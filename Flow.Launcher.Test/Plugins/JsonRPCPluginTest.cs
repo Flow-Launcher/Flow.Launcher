@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Threading;
 using System.Text;
+using System.Text.Json;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -176,6 +177,34 @@ namespace Flow.Launcher.Test.Plugins
             var result = results.Single();
 
             ClassicAssert.AreEqual(PreviewVisibility.Always, result.PreviewVisibility);
+        }
+
+        [Test]
+        public async Task GivenContextData_WhenDeserializeJsonRpcResult_ThenContextDataIsKeptAsync()
+        {
+            const string resultText =
+                """
+                {
+                  "result": [
+                    {
+                      "title": "Game",
+                      "subTitle": "Launch game",
+                      "contextData": ["game-id", 42]
+                    }
+                  ],
+                  "debugMessage": null
+                }
+                """;
+
+            var results = await QueryAsync(new Query
+            {
+                Search = resultText
+            }, default);
+
+            var contextData = (JsonElement)results.Single().ContextData;
+
+            ClassicAssert.AreEqual("game-id", contextData[0].GetString());
+            ClassicAssert.AreEqual(42, contextData[1].GetInt32());
         }
     }
 }

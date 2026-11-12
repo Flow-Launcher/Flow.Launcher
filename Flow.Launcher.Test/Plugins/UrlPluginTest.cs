@@ -110,6 +110,21 @@ namespace Flow.Launcher.Test.Plugins
         // Empty non host validated ://
         [TestCase("chrome://")]
         [TestCase("moz-extension://")]
+        // IPv4 addresses with fewer than four octets
+        [TestCase("1")]
+        [TestCase("1/")]
+        [TestCase("1/2")]
+        [TestCase("1.2")]
+        [TestCase("1.2:80")]
+        [TestCase("1.2/")]
+        [TestCase("1.2/3")]
+        [TestCase("1.2.3")]
+        [TestCase("1.2.3:80")]
+        [TestCase("1.2.3/4")]
+        [TestCase("192.168")]
+        [TestCase("192.168:80")]
+        [TestCase("192.168/")]
+        [TestCase("192.168/2")]
         public void WhenInvalidUrlThenIsUrlReturnsFalse(string url)
         {
             Assert.That(plugin.IsURL(url), Is.False);

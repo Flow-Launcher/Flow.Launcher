@@ -232,7 +232,7 @@ namespace Flow.Launcher
             // being shown yet, and skipped entirely when the window starts hidden for the same reason.
             if (!_settings.HideOnStartup)
             {
-                Dispatcher.BeginInvoke(new Action(() =>
+                _ = Dispatcher.BeginInvoke((() =>
                 {
                     if (!_viewModel.MainWindowVisibilityStatus) return;
                     Activate();
@@ -500,10 +500,10 @@ namespace Flow.Launcher
                     e.Handled = true;
                     break;
                 case Key.Right:
-                    if (_viewModel.QueryResultsSelected()
-                        && QueryTextBox.CaretIndex == QueryTextBox.Text.Length)            
+                    if ((_viewModel.QueryResultsSelected() || _viewModel.HistorySelected())
+                        && QueryTextBox.CaretIndex == QueryTextBox.Text.Length)
                     {
-                        _viewModel.LoadContextMenuCommand.Execute(null);
+                        _viewModel.ToggleContextMenuCommand.Execute(null);
                         e.Handled = true;
                     }
                     break;

@@ -48,6 +48,8 @@ Dedicated to making your workflow more seamless. Search everything from applicat
 
 ⚠️ Only trust official channels for downloads and announcements, and be careful of similar-looking domains.
 
+> 🚨 **Microsoft Store:** Flow Launcher is **NOT** published in the Microsoft Store yet, and we're currently working on submitting it. We'll update this page once it is available. In the meantime, please install Flow Launcher using the options in the [Installation](#installation) section below.
+
 For installation, use the official methods listed below.
 
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
@@ -365,6 +367,9 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
   <a href="https://github.com/Calapine">
     <img src='https://avatars.githubusercontent.com/u/76205879?v=4' width="10%"/>
   </a>
+  <a href="https://github.com/JakobOstgren">
+    <img src='https://avatars.githubusercontent.com/u/230895476?v=4' width="10%"/>
+  </a>
 </p>
 <p align="center">
   <a href="https://appwrite.io">
@@ -388,6 +393,7 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
 
 - [Why I Chose to Support Flow-Launcher](https://dev.to/appwrite/appwrite-loves-open-source-why-i-chose-to-support-flow-launcher-54pj) - Appwrite
 - [Softpedia Editor's Pick](https://www.softpedia.com/get/System/Launchers-Shutdown-Tools/Flow-Launcher.shtml)
+- [![Featured on AppWK](https://appwk.cn/badges/featured-dark.svg)](https://appwk.cn/apps/flow-launcher)
 
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
