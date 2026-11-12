@@ -571,28 +571,10 @@ namespace Flow.Launcher.Plugin.Sys
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe72c"),
                     Action = c =>
                     {
-                        // Hide the window first then show msg after done because the reload could take a while, so not to make user think it's frozen.
+                        // Hide the window because the reload could take a while. Flow reports the outcome:
+                        // a continuation in this plugin would keep its old assembly loaded through its own reload.
                         Context.API.HideMainWindow();
-                        _ = Context.API.ReloadAllPluginsAsync().ContinueWith(t =>
-                            {
-                                if (t.Status == TaskStatus.RanToCompletion && t.Result)
-                                {
-                                    Context.API.ShowMsg(
-                                        Localize.flowlauncher_plugin_sys_dlgtitle_success(),
-                                        Localize.flowlauncher_plugin_sys_dlgtext_all_plugins_reloaded());
-                                }
-                                else if (t.Exception != null)
-                                {
-                                    // An unexpected exception escaped the per-plugin reload loop, so no
-                                    // individual plugin notification fired for it; ReloadPluginAsync's own
-                                    // per-plugin failure message already covers every plain reload failure
-                                    Context.API.LogException(ClassName, "Failed to reload all plugins", t.Exception);
-                                    Context.API.ShowMsgError(
-                                        Localize.flowlauncher_plugin_sys_reload_all_plugins_cmd(),
-                                        Localize.flowlauncher_plugin_sys_dlgtext_all_plugins_reload_failed());
-                                }
-                            },
-                            TaskScheduler.Current);
+                        _ = Context.API.ReloadAllPluginsAsync();
                         return true;
                     }
                 },

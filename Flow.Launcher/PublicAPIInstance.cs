@@ -628,7 +628,25 @@ namespace Flow.Launcher
 
         public Task<bool> ReloadPluginAsync(string id) => PluginManager.ReloadPluginAsync(id);
 
-        public Task<bool> ReloadAllPluginsAsync() => PluginManager.ReloadAllPluginsAsync();
+        public async Task<bool> ReloadAllPluginsAsync()
+        {
+            try
+            {
+                var allReloaded = await PluginManager.ReloadAllPluginsAsync();
+                // Failed plugins already got their own notification from ReloadPluginAsync
+                if (allReloaded)
+                {
+                    ShowMsg(Localize.success(), Localize.allPluginsReloaded());
+                }
+                return allReloaded;
+            }
+            catch (Exception e)
+            {
+                LogException(ClassName, "Failed to reload all plugins", e);
+                ShowMsgError(Localize.allPluginsReloadFailed());
+                return false;
+            }
+        }
 
         public long StopwatchLogDebug(string className, string message, Action action, [CallerMemberName] string methodName = "") =>
             Stopwatch.Debug(className, message, action, methodName);
