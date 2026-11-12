@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Core.Resource;
@@ -340,6 +341,12 @@ namespace Flow.Launcher.Core.Plugin
                 PublicApi.Instance.LogError(ClassName, $"Plugin with ID {metadata.ID} already loaded");
                 await DisposePluginAsync(pair);
                 return false;
+            }
+
+            var internationalization = Ioc.Default.GetService<Internationalization>();
+            if (internationalization != null)
+            {
+                await internationalization.AddPluginLanguageDirectoryAsync(metadata.PluginDirectory);
             }
 
             var initialized = await InitializePluginAsync(pair);
