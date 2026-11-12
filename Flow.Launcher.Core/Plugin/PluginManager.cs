@@ -7,6 +7,8 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
+using CommunityToolkit.Mvvm.Messaging;
 using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure;
@@ -274,6 +276,7 @@ namespace Flow.Launcher.Core.Plugin
             _register?.UnregisterResultsUpdatedEvent(pair);
             DialogJump.RemoveDialogJumpPlugin(pair);
             _allLoadedPlugins.TryRemove(id, out _);
+            await SendOnUiThreadAsync(new PluginUnloadingMessage(metadata));
 
             // For JsonRPC V2 plugins this kills the child process, releasing its file locks
             await DisposePluginAsync(pair);
@@ -339,7 +342,30 @@ namespace Flow.Launcher.Core.Plugin
                 return false;
             }
 
-            return await InitializePluginAsync(pair);
+            var initialized = await InitializePluginAsync(pair);
+            await SendOnUiThreadAsync(new PluginLoadedMessage(metadata));
+            return initialized;
+        }
+
+        private static async Task SendOnUiThreadAsync<TMessage>(TMessage message) where TMessage : class
+        {
+            try
+            {
+                var dispatcher = Application.Current?.Dispatcher;
+                if (dispatcher == null)
+                {
+                    WeakReferenceMessenger.Default.Send(message);
+                    return;
+                }
+
+                await dispatcher.InvokeAsync(() => WeakReferenceMessenger.Default.Send(message));
+                // Let bindings and layout catch up so dropped visuals are really released before the caller goes on
+                await dispatcher.InvokeAsync(() => { }, DispatcherPriority.ContextIdle);
+            }
+            catch (Exception e)
+            {
+                PublicApi.Instance.LogException(ClassName, $"Failed to send {typeof(TMessage).Name}", e);
+            }
         }
 
         #endregion

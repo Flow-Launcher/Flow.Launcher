@@ -7,9 +7,11 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Mvvm.Messaging;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
+using Flow.Launcher.Storage;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using NUnit.Framework;
@@ -97,6 +99,62 @@ namespace Flow.Launcher.Test
             Assert.That(PluginManager.GetAllInitializedPlugins(includeFailed: true).Any(p => p.Metadata.ID == id), Is.False);
             Assert.That(PluginManager.IsHomePlugin(id), Is.False);
             Assert.That(PluginManager.GetNonGlobalPlugins().ContainsKey(keyword), Is.False);
+        }
+
+        [Test]
+        public async Task GivenInitializedPluginWhenUnloadedThenUnloadingMessageShouldBeSentAsync()
+        {
+            // Given
+            const string id = "HOTRELOAD00000000000000000000003";
+            var pair = CreateFakePluginPair(id, "hotreloadmessage");
+            await PluginManager.InitializePluginAsync(pair);
+            var recipient = new object();
+            PluginMetadata received = null;
+            WeakReferenceMessenger.Default.Register<object, PluginUnloadingMessage>(recipient, (_, message) => received = message.Metadata);
+
+            try
+            {
+                // When
+                await PluginManager.UnloadPluginAsync(pair);
+            }
+            finally
+            {
+                WeakReferenceMessenger.Default.UnregisterAll(recipient);
+            }
+
+            // Then
+            Assert.That(received?.ID, Is.EqualTo(id));
+        }
+
+        [Test]
+        public void GivenOpenedResultWhenAddedToHistoryThenHistoryShouldNotKeepPluginResultAlive()
+        {
+            // Given a plugin result whose action references plugin state, as every real plugin result does
+            var weakResult = CreateHistoryFromPluginResult(out var history);
+
+            // When
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+
+            // Then
+            Assert.That(weakResult.IsAlive, Is.False, "History entry keeps the plugin result alive");
+            Assert.That(history.Query, Is.EqualTo("hrhistory query"));
+        }
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        private static WeakReference CreateHistoryFromPluginResult(out LastOpenedHistoryResult history)
+        {
+            var pluginState = new object();
+            var result = new Result
+            {
+                Title = "title",
+                PluginID = "HOTRELOAD00000000000000000000004",
+                OriginQuery = QueryBuilder.Build("hrhistory query", "hrhistory query", new Dictionary<string, List<PluginPair>>()),
+                Action = _ => pluginState != null
+            };
+            history = new LastOpenedHistoryResult(result);
+            return new WeakReference(result);
         }
 
         [Test]

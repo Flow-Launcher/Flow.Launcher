@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
@@ -197,6 +198,26 @@ namespace Flow.Launcher.ViewModel
             _ = RegisterClockAndDateUpdateAsync();
 
             ThemeManager.Current.ActualApplicationThemeChanged += ThemeManager_ActualApplicationThemeChanged;
+
+            WeakReferenceMessenger.Default.Register<MainViewModel, PluginUnloadingMessage>(this,
+                static (viewModel, message) => viewModel.RemovePluginResults(message.Metadata));
+        }
+
+        private void RemovePluginResults(PluginMetadata metadata)
+        {
+            if (_selectionBeforeContextMenu?.SelectedResult?.PluginID == metadata.ID)
+            {
+                _selectionBeforeContextMenu = null;
+                ContextMenu.Clear();
+            }
+
+            Results.KeepResultsExcept(metadata);
+            ContextMenu.KeepResultsExcept(metadata);
+
+            if (PreviewSelectedItem?.Result.PluginID == metadata.ID)
+            {
+                PreviewSelectedItem = null;
+            }
         }
 
         private void ThemeManager_ActualApplicationThemeChanged(ThemeManager sender, object args)
