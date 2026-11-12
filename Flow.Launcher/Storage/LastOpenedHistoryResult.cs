@@ -45,11 +45,13 @@ public class LastOpenedHistoryResult : Result
         PluginDirectory = result.PluginDirectory;
         Glyph = result.Glyph;
         ExecutedDateTime = DateTime.Now;
-        // Used for Query History style reopening
+        // Used for Query History style reopening. Captures only the query text: capturing the plugin's
+        // result would keep an unloaded plugin's assembly alive for as long as the history entry exists
+        var query = Query;
         Action = _ =>
         {
             App.API.BackToQueryResults();
-            App.API.ChangeQuery(result.OriginQuery.TrimmedQuery);
+            App.API.ChangeQuery(query);
             return false;
         };
         // Used for Last Opened History style reopening, currently need to be assigned at MainViewModel.cs
