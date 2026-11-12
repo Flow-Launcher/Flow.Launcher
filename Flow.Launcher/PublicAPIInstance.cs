@@ -547,6 +547,18 @@ namespace Flow.Launcher
         public void RemoveGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback) =>
             _globalKeyboardHandlers.Remove(callback);
 
+        public void RemovePluginCallbacks(Func<Delegate, bool> belongsToPlugin)
+        {
+            // The keyboard hook walks _globalKeyboardHandlers on the UI thread
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                _globalKeyboardHandlers.RemoveAll(handler => belongsToPlugin(handler));
+                _mainVM.RemoveEventHandlers(belongsToPlugin);
+                _settings.RemoveStringMatcherBehaviorChangedHandlers(belongsToPlugin);
+                Notification.RemoveActions(belongsToPlugin);
+            });
+        }
+
         public void ReQuery(bool reselect = true) => _mainVM.ReQuery(reselect);
 
         public void BackToQueryResults() => _mainVM.BackToQueryResults();

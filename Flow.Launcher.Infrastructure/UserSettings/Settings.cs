@@ -22,6 +22,14 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         public event EventHandler StringMatcherBehaviorChanged;
 
+        internal void RemoveStringMatcherBehaviorChangedHandlers(Func<Delegate, bool> predicate)
+        {
+            foreach (var handler in StringMatcherBehaviorChanged?.GetInvocationList() ?? [])
+            {
+                if (predicate(handler)) StringMatcherBehaviorChanged -= (EventHandler)handler;
+            }
+        }
+
         public void SetStorage(FlowLauncherJsonStorage<Settings> storage)
         {
             _storage = storage;

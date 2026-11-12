@@ -291,6 +291,7 @@ namespace Flow.Launcher.Core.Plugin
             {
                 removable.RemovePluginSettings(metadata.AssemblyName);
                 removable.RemovePluginCaches(metadata.PluginCacheDirectoryPath);
+                removable.RemovePluginCallbacks(handler => PluginAssemblyLoader.BelongsTo(handler, loader));
             }
             PluginAssemblyLoader.ClearJsonSerializerCaches();
 

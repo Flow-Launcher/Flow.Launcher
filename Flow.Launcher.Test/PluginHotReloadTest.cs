@@ -127,6 +127,33 @@ namespace Flow.Launcher.Test
         }
 
         [Test]
+        public void GivenDelegatesWhenCheckedAgainstPluginLoadContextThenOnlyPluginBoundOnesShouldBelongToIt()
+        {
+            // Given
+            var assemblyPath = Path.Combine(AppContext.BaseDirectory, "Flow.Launcher.Plugin.Shell.dll");
+            var loader = new PluginAssemblyLoader(assemblyPath);
+            try
+            {
+                var settingsType = loader.LoadAssemblyAndDependencies().GetType("Flow.Launcher.Plugin.Shell.Settings", throwOnError: true);
+                var pluginObject = Activator.CreateInstance(settingsType);
+                Func<string> boundToPluginObject = pluginObject.ToString;
+                Func<string> flowDelegate = () => "flow";
+
+                // When
+                var pluginDelegateBelongs = PluginAssemblyLoader.BelongsTo(boundToPluginObject, loader);
+                var flowDelegateBelongs = PluginAssemblyLoader.BelongsTo(flowDelegate, loader);
+
+                // Then
+                Assert.That(pluginDelegateBelongs, Is.True);
+                Assert.That(flowDelegateBelongs, Is.False);
+            }
+            finally
+            {
+                loader.Unload();
+            }
+        }
+
+        [Test]
         public void GivenOpenedResultWhenAddedToHistoryThenHistoryShouldNotKeepPluginResultAlive()
         {
             // Given a plugin result whose action references plugin state, as every real plugin result does

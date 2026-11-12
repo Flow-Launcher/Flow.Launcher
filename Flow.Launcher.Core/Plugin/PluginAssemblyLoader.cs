@@ -37,6 +37,15 @@ namespace Flow.Launcher.Core.Plugin
         }
 
         /// <summary>
+        /// Whether a delegate runs code from, or is bound to an object from, the given load context.
+        /// </summary>
+        internal static bool BelongsTo(Delegate handler, AssemblyLoadContext loadContext)
+        {
+            return GetLoadContext(handler.Method.Module.Assembly) == loadContext ||
+                (handler.Target != null && GetLoadContext(handler.Target.GetType().Assembly) == loadContext);
+        }
+
+        /// <summary>
         /// Drops System.Text.Json's metadata caches. They hold every type that has been serialized, such as
         /// plugin settings types, and keep their load context alive even after the storage is removed.
         /// The runtime has no public API for this, so the cache-clearing handler that System.Text.Json

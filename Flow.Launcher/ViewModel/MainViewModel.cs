@@ -1029,6 +1029,19 @@ namespace Flow.Launcher.ViewModel
         public event VisibilityChangedEventHandler VisibilityChanged;
         public event ActualApplicationThemeChangedEventHandler ActualApplicationThemeChanged;
 
+        internal void RemoveEventHandlers(Func<Delegate, bool> predicate)
+        {
+            foreach (var handler in VisibilityChanged?.GetInvocationList() ?? [])
+            {
+                if (predicate(handler)) VisibilityChanged -= (VisibilityChangedEventHandler)handler;
+            }
+
+            foreach (var handler in ActualApplicationThemeChanged?.GetInvocationList() ?? [])
+            {
+                if (predicate(handler)) ActualApplicationThemeChanged -= (ActualApplicationThemeChangedEventHandler)handler;
+            }
+        }
+
         public Visibility ClockPanelVisibility { get; set; }
         public Visibility SearchIconVisibility { get; set; }
         public double ClockPanelOpacity { get; set; } = 1;

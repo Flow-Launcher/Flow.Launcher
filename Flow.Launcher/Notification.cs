@@ -30,6 +30,14 @@ namespace Flow.Launcher
             }
         }
 
+        internal static void RemoveActions(Func<Delegate, bool> predicate)
+        {
+            foreach (var (id, action) in _notificationActions)
+            {
+                if (action != null && predicate(action)) _notificationActions.TryRemove(id, out _);
+            }
+        }
+
         internal static void Uninstall()
         {
             if (!legacy)
