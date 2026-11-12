@@ -1,8 +1,17 @@
 <Project>
   <PropertyGroup>
-    <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
+    <WindowsTargetFramework>net10.0-windows10.0.19041.0</WindowsTargetFramework>
+    <CrossPlatformTargetFramework>net10.0</CrossPlatformTargetFramework>
+    <HostCrossPlatformTargetFramework Condition="$([MSBuild]::IsOSPlatform('Windows'))">$(WindowsTargetFramework)</HostCrossPlatformTargetFramework>
+    <HostCrossPlatformTargetFramework Condition="'$(HostCrossPlatformTargetFramework)' == ''">$(CrossPlatformTargetFramework)</HostCrossPlatformTargetFramework>
+    <!-- Default for Windows-only projects -->
+    <TargetFramework>$(WindowsTargetFramework)</TargetFramework>
+    <!-- Cross-platform projects compile only the host OS TFM by default; pass -p:BuildAllTargetFrameworks=true to compile both -->
+    <AllCrossPlatformTargetFrameworks Condition="'$(BuildAllTargetFrameworks)' == 'true'">$(CrossPlatformTargetFramework);$(WindowsTargetFramework)</AllCrossPlatformTargetFrameworks>
     <AccelerateBuildsInVisualStudio>true</AccelerateBuildsInVisualStudio>
     <!-- Workaround https://github.com/dotnet/runtime/issues/109682 -->
     <CETCompat>false</CETCompat>
+    <!-- Lets non-Windows hosts restore/compile the Windows TFM when BuildAllTargetFrameworks=true -->
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
   </PropertyGroup>
 </Project>

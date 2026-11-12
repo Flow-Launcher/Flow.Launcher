@@ -1,15 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using Droplex;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
-using Flow.Launcher.Plugin.SharedCommands;
-using Microsoft.VisualStudio.Threading;
 
 namespace Flow.Launcher.Core.ExternalPlugins.Environments
 {
-    internal class TypeScriptV2Environment : AbstractPluginEnvironment
+    internal partial class TypeScriptV2Environment : AbstractPluginEnvironment
     {
         private static readonly string ClassName = nameof(TypeScriptV2Environment);
 
@@ -29,28 +26,6 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
         }
 
         internal TypeScriptV2Environment(List<PluginMetadata> pluginMetadataList, PluginsSettings pluginSettings) : base(pluginMetadataList, pluginSettings) { }
-
-        private JoinableTaskFactory JTF { get; } = new JoinableTaskFactory(new JoinableTaskContext());
-
-        internal override void InstallEnvironment()
-        {
-            FilesFolders.RemoveFolderIfExists(InstallPath, (s) => API.ShowMsgBox(s));
-
-            JTF.Run(async () =>
-            {
-                try
-                {
-                    await DroplexPackage.Drop(App.nodejs_16_18_0, InstallPath);
-
-                    PluginsSettingsFilePath = ExecutablePath;
-                }
-                catch (System.Exception e)
-                {
-                    API.ShowMsgError(Localize.failToInstallTypeScriptEnv());
-                    API.LogException(ClassName, "Failed to install TypeScript environment", e);
-                }
-            });
-        }
 
         internal override PluginPair CreatePluginPair(string filePath, PluginMetadata metadata)
         {

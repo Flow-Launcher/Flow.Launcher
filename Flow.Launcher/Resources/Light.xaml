@@ -20,6 +20,18 @@
     <SolidColorBrush x:Key="ClockDateForeground" Color="#44000000" />
     <Color x:Key="ItemSelectedBackgroundColorBrush">#7EFFFFFF</Color>
 
+    <!--  macOS theme (Themes/macOS.xaml): Apple label/separator colors over a translucent material  -->
+    <SolidColorBrush x:Key="MacWindowBorder" Color="#1F000000" />
+    <SolidColorBrush x:Key="MacPrimaryText" Color="#FF1D1D1F" />
+    <SolidColorBrush x:Key="MacSecondaryText" Color="#8C000000" />
+    <SolidColorBrush x:Key="MacPlaceholderText" Color="#4D000000" />
+    <SolidColorBrush x:Key="MacSearchIcon" Color="#66000000" />
+    <SolidColorBrush x:Key="MacSeparator" Color="#14000000" />
+    <SolidColorBrush x:Key="MacThumb" Color="#33000000" />
+    <SolidColorBrush x:Key="MacHotkeyText" Color="#73000000" />
+    <SolidColorBrush x:Key="MacHotkeyBackground" Color="#0F000000" />
+    <Color x:Key="MacSelectedBackgroundColor">#17000000</Color>
+
     <SolidColorBrush x:Key="BasicSystemAccentColor" Color="{m:DynamicColor SystemAccentColor}" />
 
     <SolidColorBrush x:Key="Color00B" Color="#FAFAFA" />

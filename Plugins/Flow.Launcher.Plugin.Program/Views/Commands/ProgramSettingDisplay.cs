@@ -5,7 +5,7 @@ using Flow.Launcher.Plugin.Program.Views.Models;
 
 namespace Flow.Launcher.Plugin.Program.Views.Commands
 {
-    internal static class ProgramSettingDisplay
+    internal static partial class ProgramSettingDisplay
     {
         internal static List<ProgramSource> LoadProgramSources()
         {
@@ -31,18 +31,7 @@ namespace Flow.Launcher.Plugin.Program.Views.Commands
                 Main._win32sLock.Release();
             }
 
-            await Main._uwpsLock.WaitAsync();
-            try
-            {
-                var uwp = Main._uwps
-                            .Where(t1 => !ProgramSetting.ProgramSettingDisplayList.Any(x => x.UniqueIdentifier == t1.UniqueIdentifier))
-                            .Select(x => new ProgramSource(x));
-                ProgramSetting.ProgramSettingDisplayList.AddRange(uwp);
-            }
-            finally
-            {
-                Main._uwpsLock.Release();
-            }
+            await DisplayAllUwpProgramsAsync();
         }
 
         internal static async Task SetProgramSourcesStatusAsync(List<ProgramSource> selectedProgramSourcesToDisable, bool status)
@@ -71,21 +60,7 @@ namespace Flow.Launcher.Plugin.Program.Views.Commands
                 Main._win32sLock.Release();
             }
 
-            await Main._uwpsLock.WaitAsync();
-            try
-            {
-                foreach (var program in Main._uwps)
-                {
-                    if (selectedProgramSourcesToDisable.Any(x => x.UniqueIdentifier == program.UniqueIdentifier && program.Enabled != status))
-                    {
-                        program.Enabled = status;
-                    }
-                }
-            }
-            finally
-            {
-                Main._uwpsLock.Release();
-            }
+            await SetUwpProgramsStatusAsync(selectedProgramSourcesToDisable, status);
         }
 
         internal static void StoreDisabledInSettings()
@@ -106,20 +81,8 @@ namespace Flow.Launcher.Plugin.Program.Views.Commands
 
         internal static async Task<bool> IsReindexRequiredAsync(this List<ProgramSource> selectedItems)
         {
-            // Not in cache
-            await Main._win32sLock.WaitAsync();
-            await Main._uwpsLock.WaitAsync();
-            try
-            {
-                if (selectedItems.Any(t1 => t1.Enabled && !Main._uwps.Any(x => t1.UniqueIdentifier == x.UniqueIdentifier))
-                && selectedItems.Any(t1 => t1.Enabled && !Main._win32s.Any(x => t1.UniqueIdentifier == x.UniqueIdentifier)))
-                    return true;
-            }
-            finally
-            {
-                Main._win32sLock.Release();
-                Main._uwpsLock.Release();
-            }
+            if (await IsNotInCacheAsync(selectedItems))
+                return true;
 
             // ProgramSources holds list of user added directories, 
             // so when we enable/disable we need to reindex to show/not show the programs
@@ -129,5 +92,11 @@ namespace Flow.Launcher.Plugin.Program.Views.Commands
 
             return false;
         }
+
+        private static partial Task DisplayAllUwpProgramsAsync();
+
+        private static partial Task SetUwpProgramsStatusAsync(List<ProgramSource> selectedProgramSourcesToDisable, bool status);
+
+        private static partial Task<bool> IsNotInCacheAsync(List<ProgramSource> selectedItems);
     }
 }

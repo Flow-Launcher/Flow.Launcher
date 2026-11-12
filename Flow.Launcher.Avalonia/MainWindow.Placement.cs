@@ -1,5 +1,3 @@
-using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Plugin.SharedModels;
 using System;
 using System.Linq;
 using Avalonia;
@@ -131,22 +129,8 @@ public partial class MainWindow
         };
     }
 
-    private Screen? GetCursorScreen() => ScreenOf(MonitorInfo.GetCursorDisplayMonitor());
+    // Platform: the screen with the mouse cursor, and the screen of the window that was active before Flow showed.
+    private partial Screen? GetCursorScreen();
 
-    private Screen? GetForegroundWindowScreen() =>
-        ScreenOf(MonitorInfo.GetNearestDisplayMonitor(Win32Helper.GetForegroundWindow()));
-
-    // Avalonia screen coordinates on Windows are the same physical virtual-screen pixels Win32 reports.
-    private Screen? ScreenOf(MonitorInfo? monitor)
-    {
-        if (monitor == null)
-        {
-            return null;
-        }
-
-        var bounds = monitor.Bounds;
-        return Screens.ScreenFromPoint(new PixelPoint(
-            (int)(bounds.X + bounds.Width / 2),
-            (int)(bounds.Y + bounds.Height / 2)));
-    }
+    private partial Screen? GetForegroundWindowScreen();
 }

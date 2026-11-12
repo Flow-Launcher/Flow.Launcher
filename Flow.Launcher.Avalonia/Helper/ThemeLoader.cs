@@ -129,6 +129,13 @@ public sealed partial class ThemeLoader
             var lightBg = ThemeResourceColor("LightBG", variant) ?? windowBackground;
             var darkBg = ThemeResourceColor("DarkBG", variant) ?? lightBg;
             windowBackground = useDark ? darkBg : lightBg;
+
+            // X11 (and XWayland) has no blur-behind protocol shared by window managers, so the translucent blur
+            // colors would show the windows underneath unblurred; paint them opaque there.
+            if (OperatingSystem.IsLinux() && windowBackground is { } translucent)
+            {
+                windowBackground = Color.FromArgb(255, translucent.R, translucent.G, translucent.B);
+            }
         }
 
         SetBrush("WindowBackgroundBrush", windowBackground);

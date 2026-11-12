@@ -74,14 +74,14 @@ namespace Flow.Launcher.Plugin.SharedCommands
 
             try
             {
-                Process.Start(psi)?.Dispose();
+                AppProcess.Start(psi)?.Dispose();
             }
             // This error may be thrown if browser path is incorrect
             catch (Win32Exception)
             {
                 try
                 {
-                    Process.Start(new ProcessStartInfo
+                    AppProcess.Start(new ProcessStartInfo
                     {
                         FileName = url,
                         UseShellExecute = true
@@ -119,14 +119,14 @@ namespace Flow.Launcher.Plugin.SharedCommands
                     psi.FileName = url;
                 }
 
-                Process.Start(psi)?.Dispose();
+                AppProcess.Start(psi)?.Dispose();
             }
             // This error may be thrown if browser path is incorrect
             catch (Win32Exception)
             {
                 try
                 {
-                    Process.Start(new ProcessStartInfo
+                    AppProcess.Start(new ProcessStartInfo
                     {
                         FileName = url,
                         UseShellExecute = true

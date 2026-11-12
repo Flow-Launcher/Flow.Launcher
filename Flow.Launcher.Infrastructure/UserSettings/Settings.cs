@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text.Json.Serialization;
 using System.Windows;
-using System.Windows.Media;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.Logger;
@@ -15,7 +14,7 @@ using Flow.Launcher.Plugin.SharedModels;
 
 namespace Flow.Launcher.Infrastructure.UserSettings
 {
-    public class Settings : BaseModel, IHotkeySettings
+    public partial class Settings : BaseModel, IHotkeySettings
     {
         private FlowLauncherJsonStorage<Settings> _storage;
         private StringMatcher _stringMatcher = null;
@@ -33,9 +32,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             _stringMatcher = Ioc.Default.GetRequiredService<StringMatcher>();
 
             // Initialize application resources after application is created
-            var settingWindowFont = new FontFamily(SettingWindowFont);
-            Application.Current.Resources["SettingWindowFont"] = settingWindowFont;
-            Application.Current.Resources["ContentControlThemeFontFamily"] = settingWindowFont;
+            InitializeSettingWindowFontResources();
 
             PropertyChanged += Settings_PropertyChanged;
         }
@@ -146,15 +143,15 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public double QueryBoxFontSize { get; set; } = 16;
         public double ResultItemFontSize { get; set; } = 16;
         public double ResultSubItemFontSize { get; set; } = 13;
-        public string QueryBoxFont { get; set; } = Win32Helper.GetSystemDefaultFont();
+        public string QueryBoxFont { get; set; } = GetSystemDefaultFont(true);
         public string QueryBoxFontStyle { get; set; }
         public string QueryBoxFontWeight { get; set; }
         public string QueryBoxFontStretch { get; set; }
-        public string ResultFont { get; set; } = Win32Helper.GetSystemDefaultFont();
+        public string ResultFont { get; set; } = GetSystemDefaultFont(true);
         public string ResultFontStyle { get; set; }
         public string ResultFontWeight { get; set; }
         public string ResultFontStretch { get; set; }
-        public string ResultSubFont { get; set; } = Win32Helper.GetSystemDefaultFont();
+        public string ResultSubFont { get; set; } = GetSystemDefaultFont(true);
         public string ResultSubFontStyle { get; set; }
         public string ResultSubFontWeight { get; set; }
         public string ResultSubFontStretch { get; set; }
@@ -177,7 +174,11 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public bool ShowBadges { get; set; } = true;
         public bool ShowBadgesGlobalOnly { get; set; } = false;
 
-        private string _settingWindowFont { get; set; } = Win32Helper.GetSystemDefaultFont(false);
+        private string _settingWindowFont { get; set; } = GetSystemDefaultFont(false);
+
+        /// <summary>Platform default UI font name; <paramref name="useNoto"/> prefers a matching Noto font where supported.</summary>
+        public static partial string GetSystemDefaultFont(bool useNoto);
+
         public string SettingWindowFont
         {
             get => _settingWindowFont;
@@ -187,14 +188,14 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 {
                     _settingWindowFont = value;
                     OnPropertyChanged();
-                    if (Application.Current != null)
-                    {
-                        Application.Current.Resources["SettingWindowFont"] = new FontFamily(value);
-                        Application.Current.Resources["ContentControlThemeFontFamily"] = new FontFamily(value);
-                    }
+                    UpdateSettingWindowFontResources(value);
                 }
             }
         }
+
+        // Implemented in Settings.Windows.cs (WPF application resources); absent elsewhere, so calls compile away.
+        partial void InitializeSettingWindowFontResources();
+        partial void UpdateSettingWindowFontResources(string font);
 
         public bool UseClock { get; set; } = true;
         public bool UseDate { get; set; } = false;
@@ -278,39 +279,10 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             set => CustomExplorerList[CustomExplorerIndex] = value;
         }
 
-        public List<CustomExplorerViewModel> CustomExplorerList { get; set; } = new()
-        {
-            new()
-            {
-                Name = "Explorer",
-                Path = "explorer",
-                DirectoryArgument = "\"%d\"",
-                FileArgument = "/select, \"%f\"",
-                Editable = false
-            },
-            new()
-            {
-                Name = "Total Commander",
-                Path = @"C:\Program Files\totalcmd\TOTALCMD64.exe",
-                DirectoryArgument = "/O /A /S /T \"%d\"",
-                FileArgument = "/O /A /S /T \"%f\""
-            },
-            new()
-            {
-                Name = "Directory Opus",
-                Path = @"C:\Program Files\GPSoftware\Directory Opus\dopusrt.exe",
-                DirectoryArgument = "/cmd Go \"%d\" NEW",
-                FileArgument = "/cmd Go \"%f\" NEW"
+        public List<CustomExplorerViewModel> CustomExplorerList { get; set; } = CreateDefaultCustomExplorerList();
 
-            },
-            new()
-            {
-                Name = "Files",
-                Path = "Files-Stable",
-                DirectoryArgument = "\"%d\"",
-                FileArgument = "-select \"%f\""
-            }
-        };
+        // The first entry is the system file manager (Explorer / Finder).
+        private static partial List<CustomExplorerViewModel> CreateDefaultCustomExplorerList();
 
         public int CustomBrowserIndex { get; set; } = 0;
 
@@ -524,11 +496,10 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public ObservableCollection<CustomShortcutModel> CustomShortcuts { get; set; } = new ObservableCollection<CustomShortcutModel>();
 
         [JsonIgnore]
-        public ObservableCollection<BaseBuiltinShortcutModel> BuiltinShortcuts { get; set; } = new()
-        {
-            new AsyncBuiltinShortcutModel("{clipboard}", "shortcut_clipboard_description", () => Win32Helper.StartSTATaskAsync(Clipboard.GetText)),
-            new BuiltinShortcutModel("{active_explorer_path}", "shortcut_active_explorer_path", FileExplorerHelper.GetActiveExplorerPath)
-        };
+        public ObservableCollection<BaseBuiltinShortcutModel> BuiltinShortcuts { get; set; } = CreateBuiltinShortcuts();
+
+        // Built-in shortcuts depend on platform services (clipboard, active file explorer).
+        private static partial ObservableCollection<BaseBuiltinShortcutModel> CreateBuiltinShortcuts();
 
         public bool DontPromptUpdateMsg { get; set; }
         public bool EnableUpdateLog { get; set; }

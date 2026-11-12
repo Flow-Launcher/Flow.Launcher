@@ -1,3 +1,4 @@
+using System;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -8,7 +9,7 @@ using Avalonia.Rendering;
 namespace Flow.Launcher.Avalonia.Helper;
 
 /// <summary>
-/// Ctrl+Alt+Shift+R toggles Avalonia's FPS / layout-time / render-time
+/// Cmd+Alt+Shift+R (Ctrl+Alt+Shift+R elsewhere) toggles Avalonia's FPS / layout-time / render-time
 /// overlays on every open window (and windows opened while on), and records a <see cref="RenderTrace"/>
 /// for as long as the overlay is on.
 /// </summary>
@@ -27,7 +28,8 @@ internal static class RenderDiagnosticsHotkey
 
     private static void OnKeyDown(Window window, KeyEventArgs e)
     {
-        if (e.Key != Key.R || e.KeyModifiers != (KeyModifiers.Control | KeyModifiers.Alt | KeyModifiers.Shift))
+        var primary = OperatingSystem.IsMacOS() ? KeyModifiers.Meta : KeyModifiers.Control;
+        if (e.Key != Key.R || e.KeyModifiers != (primary | KeyModifiers.Alt | KeyModifiers.Shift))
             return;
 
         e.Handled = true;

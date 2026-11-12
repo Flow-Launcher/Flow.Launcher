@@ -13,18 +13,14 @@ namespace Flow.Launcher.Infrastructure.Hotkey
     /// Listens keyboard globally.
     /// <remarks>Uses WH_KEYBOARD_LL.</remarks>
     /// </summary>
-    public unsafe class GlobalHotkey : IDisposable
+    [System.Runtime.Versioning.SupportedOSPlatform("windows")]
+    public unsafe partial class GlobalHotkey : IDisposable
     {
         private static readonly HOOKPROC _procKeyboard = HookKeyboardCallback;
         private static readonly UnhookWindowsHookExSafeHandle hookId;
 
         public delegate bool KeyboardCallback(KeyEvent keyEvent, int vkCode, SpecialKeyState state);
         public static Func<KeyEvent, int, SpecialKeyState, bool> hookedKeyboardCallback;
-
-        public static System.Windows.Input.Key GetKeyFromVk(int vkCode)
-        {
-            return System.Windows.Input.KeyInterop.KeyFromVirtualKey(vkCode);
-        }
 
         static GlobalHotkey()
         {

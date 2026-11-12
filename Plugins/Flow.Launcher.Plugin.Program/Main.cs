@@ -5,9 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 using Flow.Launcher.Plugin.Program.Programs;
-using Flow.Launcher.Plugin.Program.Views;
 using Flow.Launcher.Plugin.Program.Views.Models;
 using Flow.Launcher.Plugin.SharedCommands;
 using Microsoft.Extensions.Caching.Memory;
@@ -15,7 +13,7 @@ using Path = System.IO.Path;
 
 namespace Flow.Launcher.Plugin.Program
 {
-    public class Main : ISettingProvider, IAsyncPlugin, IPluginI18n, IContextMenu, IAsyncReloadable, IDisposable
+    public partial class Main : ISettingProvider, IAsyncPlugin, IPluginI18n, IContextMenu, IAsyncReloadable, IDisposable
     {
         private static readonly string ClassName = nameof(Main);
 
@@ -23,11 +21,9 @@ namespace Flow.Launcher.Plugin.Program
         private const string UwpCacheName = "UWP";
 
         internal static List<Win32> _win32s { get; private set; }
-        internal static List<UWPApp> _uwps { get; private set; }
         internal static Settings _settings { get; private set; }
 
         internal static SemaphoreSlim _win32sLock = new(1, 1);
-        internal static SemaphoreSlim _uwpsLock = new(1, 1);
 
         internal static PluginInitContext Context { get; private set; }
 
@@ -37,46 +33,6 @@ namespace Flow.Launcher.Plugin.Program
 
         private static readonly MemoryCacheOptions cacheOptions = new() { SizeLimit = 1560 };
         private static MemoryCache cache = new(cacheOptions);
-
-        private static readonly string[] commonUninstallerNames =
-        {
-            "uninst.exe",
-            "unins000.exe",
-            "uninst000.exe",
-            "uninstall.exe"
-        };
-        private static readonly string[] commonUninstallerPrefixs =
-        {
-            "uninstall",//en
-            "卸载",//zh-cn
-            "卸載",//zh-tw
-            "видалити",//uk-UA
-            "удалить",//ru
-            "désinstaller",//fr
-            "アンインストール",//ja
-            "deïnstalleren",//nl
-            "odinstaluj",//pl
-            "afinstallere",//da
-            "deinstallieren",//de
-            "삭제",//ko
-            "деинсталирај",//sr
-            "desinstalar",//pt-pt
-            "desinstalar",//pt-br
-            "desinstalar",//es
-            "desinstalar",//es-419
-            "disinstallare",//it
-            "avinstallere",//nb-NO
-            "odinštalovať",//sk
-            "kaldır",//tr
-            "odinstalovat",//cs
-            "إلغاء التثبيت",//ar
-            "gỡ bỏ",//vi-vn
-            "הסרה"//he
-        };
-        private const string ExeUninstallerSuffix = ".exe";
-        private const string InkUninstallerSuffix = ".lnk";
-
-        private static readonly string WindowsAppPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "WindowsApps");
 
         public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
         {
@@ -101,36 +57,9 @@ namespace Flow.Launcher.Plugin.Program
                             if (win32LockAcquired) _win32sLock.Release();
                         }
 
-                        // Preparing UWP programs
-                        List<UWPApp> uwps;
-                        bool uwpsLockAcquired = false;
-                        try
-                        {
-                            await _uwpsLock.WaitAsync(token);
-                            uwpsLockAcquired = true;
-                            uwps = [.. _uwps];
-                        }
-                        finally
-                        {
-                            // Only release the lock if it was acquired
-                            if (uwpsLockAcquired) _uwpsLock.Release();
-                        }
-
                         // Start querying programs
-                        // Collect all UWP Windows app directories
-                        var uwpsDirectories = _settings.HideDuplicatedWindowsApp ? _uwps
-                            .Where(uwp => !string.IsNullOrEmpty(uwp.Location)) // Exclude invalid paths
-                            .Where(uwp => uwp.Location.StartsWith(WindowsAppPath, StringComparison.OrdinalIgnoreCase)) // Keep system apps
-                            .Select(uwp => uwp.Location.TrimEnd('\\')) // Remove trailing slash
-                            .Distinct(StringComparer.OrdinalIgnoreCase)
-                            .ToArray() : null;
-
-                        return win32s.Cast<IProgram>()
-                            .Concat(uwps)
-                            .AsParallel()
-                            .WithCancellation(token)
-                            .Where(HideUninstallersFilter)
-                            .Where(p => HideDuplicatedWindowsAppFilter(p, uwpsDirectories))
+                        var programs = await GetProgramsToQueryAsync(win32s, token);
+                        return programs
                             .Where(p => p.Enabled)
                             .Select(p => p.Result(query.Search, Context.API))
                             .Where(r => string.IsNullOrEmpty(query.Search) || r?.Score > 0)
@@ -153,56 +82,6 @@ namespace Flow.Launcher.Plugin.Program
             }
         }
 
-        private bool HideUninstallersFilter(IProgram program)
-        {
-            if (!_settings.HideUninstallers) return true;
-            if (program is not Win32 win32) return true;
-
-            // First check the executable path
-            var fileName = Path.GetFileName(win32.ExecutablePath);
-            // For cases when the uninstaller is named like "uninst.exe"
-            if (commonUninstallerNames.Contains(fileName, StringComparer.OrdinalIgnoreCase)) return false;
-            // For cases when the uninstaller is named like "Uninstall Program Name.exe"
-            foreach (var prefix in commonUninstallerPrefixs)
-            {
-                if (fileName.StartsWith(prefix, StringComparison.OrdinalIgnoreCase) &&
-                    fileName.EndsWith(ExeUninstallerSuffix, StringComparison.OrdinalIgnoreCase))
-                    return false;
-            }
-
-            // Second check the lnk path
-            if (!string.IsNullOrEmpty(win32.LnkResolvedPath))
-            {
-                var inkFileName = Path.GetFileName(win32.FullPath);
-                // For cases when the uninstaller is named like "Uninstall Program Name.ink"
-                foreach (var prefix in commonUninstallerPrefixs)
-                {
-                    if (inkFileName.StartsWith(prefix, StringComparison.OrdinalIgnoreCase) &&
-                        inkFileName.EndsWith(InkUninstallerSuffix, StringComparison.OrdinalIgnoreCase))
-                        return false;
-                }
-            }
-
-            return true;
-        }
-
-        private static bool HideDuplicatedWindowsAppFilter(IProgram program, string[] uwpsDirectories)
-        {
-            if (uwpsDirectories == null || uwpsDirectories.Length == 0) return true;
-            if (program is UWPApp) return true;
-
-            var location = program.Location.TrimEnd('\\'); // Ensure trailing slash
-            if (string.IsNullOrEmpty(location))
-                return true; // Keep if location is invalid
-
-            if (!location.StartsWith(WindowsAppPath, StringComparison.OrdinalIgnoreCase))
-                return true; // Keep if not a Windows app
-
-            // Check if the any Win32 executable directory contains UWP Windows app location matches 
-            return !uwpsDirectories.Any(uwpDirectory =>
-                location.StartsWith(uwpDirectory, StringComparison.OrdinalIgnoreCase));
-        }
-
         public async Task InitAsync(PluginInitContext context)
         {
             Context = context;
@@ -210,7 +89,7 @@ namespace Flow.Launcher.Plugin.Program
             _settings = context.API.LoadSettingJsonStorage<Settings>();
 
             var _win32sCount = 0;
-            var _uwpsCount = 0;
+            var uwpCacheEmpty = false;
             await Context.API.StopwatchLogInfoAsync(ClassName, "Preload programs cost", async () =>
             {
                 var pluginCacheDirectory = Context.CurrentPluginMetadata.PluginCacheDirectoryPath;
@@ -285,21 +164,11 @@ namespace Flow.Launcher.Plugin.Program
                     _win32sLock.Release();
                 }
 
-                await _uwpsLock.WaitAsync();
-                try
-                {
-                    _uwps = await context.API.LoadCacheBinaryStorageAsync(UwpCacheName, pluginCacheDirectory, new List<UWPApp>());
-                    _uwpsCount = _uwps.Count;
-                }
-                finally
-                {
-                    _uwpsLock.Release();
-                }
+                uwpCacheEmpty = await LoadUwpCacheAsync(pluginCacheDirectory);
             });
             Context.API.LogInfo(ClassName, $"Number of preload win32 programs <{_win32sCount}>");
-            Context.API.LogInfo(ClassName, $"Number of preload uwps <{_uwpsCount}>");
 
-            var cacheEmpty = _win32sCount == 0 || _uwpsCount == 0;
+            var cacheEmpty = _win32sCount == 0 || uwpCacheEmpty;
 
             bool needReindex;
             lock (_lastIndexTimeLock)
@@ -324,7 +193,7 @@ namespace Flow.Launcher.Plugin.Program
             static void WatchProgramUpdate()
             {
                 Win32.WatchProgramUpdate(_settings);
-                _ = UWPPackage.WatchPackageChangeAsync();
+                WatchUwpPackageChange();
             }
         }
 
@@ -370,37 +239,6 @@ namespace Flow.Launcher.Plugin.Program
             }
         }
 
-        public static async Task IndexUwpProgramsAsync(bool resetCache)
-        {
-            await _uwpsLock.WaitAsync();
-            try
-            {
-                var uwps = UWPPackage.All(_settings);
-                _uwps.Clear();
-                foreach (var uwp in uwps)
-                {
-                    _uwps.Add(uwp);
-                }
-                if (resetCache)
-                {
-                    ResetCache();
-                }
-                await Context.API.SaveCacheBinaryStorageAsync<List<UWPApp>>(UwpCacheName, Context.CurrentPluginMetadata.PluginCacheDirectoryPath);
-                lock (_lastIndexTimeLock)
-                {
-                    _settings.LastIndexTime = DateTime.Now;
-                }
-            }
-            catch (Exception e)
-            {
-                Context.API.LogException(ClassName, "Failed to index Uwp programs", e);
-            }
-            finally
-            {
-                _uwpsLock.Release();
-            }
-        }
-
         public static async Task IndexProgramsAsync()
         {
             var win32Task = Task.Run(async () =>
@@ -408,12 +246,7 @@ namespace Flow.Launcher.Plugin.Program
                 await Context.API.StopwatchLogInfoAsync(ClassName, "Win32Program index cost", () => IndexWin32ProgramsAsync(resetCache: true));
             });
 
-            var uwpTask = Task.Run(async () =>
-            {
-                await Context.API.StopwatchLogInfoAsync(ClassName, "UWPProgram index cost", () => IndexUwpProgramsAsync(resetCache: true));
-            });
-
-            await Task.WhenAll(win32Task, uwpTask).ConfigureAwait(false);
+            await Task.WhenAll(win32Task, IndexUwpProgramsInBackgroundAsync()).ConfigureAwait(false);
         }
 
         internal static void ResetCache()
@@ -433,11 +266,6 @@ namespace Flow.Launcher.Plugin.Program
             {
                 Context.API.LogException(ClassName, "Failed to dispose old program cache", e);
             }
-        }
-
-        public Control CreateSettingPanel()
-        {
-            return new ProgramSetting(Context, _settings);
         }
 
         public object CreateSettingPanelAvalonia()
@@ -507,22 +335,9 @@ namespace Flow.Launcher.Plugin.Program
                 return false;
             }
 
-            await _uwpsLock.WaitAsync();
-            try
+            if (await DisableUwpProgramAsync(programToDelete))
             {
-                var program = _uwps.FirstOrDefault(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier);
-                if (program != null)
-                {
-                    program.Enabled = false;
-                    _settings.DisabledProgramSources.Add(new ProgramSource(program));
-                    // Reindex UWP programs
-                    _ = Task.Run(() => IndexUwpProgramsAsync(resetCache: false));
-                    return true;
-                }
-            }
-            finally
-            {
-                _uwpsLock.Release();
+                return true;
             }
 
             await _win32sLock.WaitAsync();
@@ -571,5 +386,15 @@ namespace Flow.Launcher.Plugin.Program
             Context.API.StringMatcherBehaviorChanged -= API_StringMatcherBehaviorChanged;
             Win32.Dispose();
         }
+
+        private partial Task<ParallelQuery<IProgram>> GetProgramsToQueryAsync(List<Win32> win32s, CancellationToken token);
+
+        private static partial Task<bool> LoadUwpCacheAsync(string pluginCacheDirectory);
+
+        static partial void WatchUwpPackageChange();
+
+        private static partial Task IndexUwpProgramsInBackgroundAsync();
+
+        private static partial Task<bool> DisableUwpProgramAsync(IProgram programToDelete);
     }
 }

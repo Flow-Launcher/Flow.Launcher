@@ -220,19 +220,9 @@ public partial class ResultsViewModel : ObservableObject, IDisposable
         SelectedItem = _results[newIndex];
     }
 
-    public void SelectNextPage() => SelectPage(_settings.MaxResultsToShow);
+    public void SelectNextPage() => SelectIndex(SelectedIndex + _settings.MaxResultsToShow);
 
-    public void SelectPrevPage() => SelectPage(-_settings.MaxResultsToShow);
-
-    private void SelectPage(int offset)
-    {
-        var count = _results.Count;
-        if (count == 0) return;
-
-        var index = Math.Clamp(SelectedIndex + offset, 0, count - 1);
-        SelectedIndex = index;
-        SelectedItem = _results[index];
-    }
+    public void SelectPrevPage() => SelectIndex(SelectedIndex - _settings.MaxResultsToShow);
 
     public void SelectFirstResult() => SelectIndex(0);
 

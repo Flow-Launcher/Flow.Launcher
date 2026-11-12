@@ -1,14 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Controls;
 using System.Threading.Tasks;
 using System.Threading;
 using Flow.Launcher.Plugin.PluginsManager.ViewModels;
-using Flow.Launcher.Plugin.PluginsManager.Views;
 
 namespace Flow.Launcher.Plugin.PluginsManager
 {
-    public class Main : ISettingProvider, IAsyncPlugin, IContextMenu, IPluginI18n
+    public partial class Main : ISettingProvider, IAsyncPlugin, IContextMenu, IPluginI18n
     {
         internal static PluginInitContext Context { get; set; }
 
@@ -19,11 +17,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
         private IContextMenu contextMenu;
 
         internal PluginsManager pluginManager;
-
-        public Control CreateSettingPanel()
-        {
-            return new PluginsManagerSettings(viewModel);
-        }
 
         public object CreateSettingPanelAvalonia()
         {

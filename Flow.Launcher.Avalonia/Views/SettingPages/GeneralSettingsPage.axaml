@@ -54,7 +54,8 @@
 
             <ui:FASettingsExpander Header="{i18n:Localize showTaskbarWhenOpened}"
                                 Description="{i18n:Localize showTaskbarWhenOpenedToolTip}"
-                                IconSource="View">
+                                IconSource="View"
+                                IsVisible="{Binding IsWindowsPlatform}">
                 <ui:FASettingsExpander.Footer>
                     <ToggleSwitch IsChecked="{Binding ShowTaskbarWhenOpened}" />
                 </ui:FASettingsExpander.Footer>
@@ -133,7 +134,8 @@
 
             <ui:FASettingsExpander Header="{i18n:Localize autoUpdates}"
                                 Description="{i18n:Localize autoUpdatesTooltip}"
-                                IconSource="Sync">
+                                IconSource="Sync"
+                                IsVisible="{Binding IsWindowsPlatform}">
                 <ui:FASettingsExpander.Footer>
                     <ToggleSwitch IsChecked="{Binding AutoUpdates}" />
                 </ui:FASettingsExpander.Footer>
@@ -141,7 +143,8 @@
 
             <ui:FASettingsExpander Header="{i18n:Localize portableMode}"
                                 Description="{i18n:Localize portableModeToolTIp}"
-                                IconSource="Library">
+                                IconSource="Library"
+                                IsVisible="{Binding IsWindowsPlatform}">
                 <ui:FASettingsExpander.Footer>
                     <ToggleSwitch IsChecked="{Binding PortableMode}" />
                 </ui:FASettingsExpander.Footer>
@@ -195,7 +198,8 @@
             <ui:FASettingsExpander Header="{i18n:Localize dialogJump}"
                                 Description="{i18n:Localize dialogJumpToolTip}"
                                 IconSource="Target"
-                                IsExpanded="False">
+                                IsExpanded="False"
+                                IsVisible="{Binding IsWindowsPlatform}">
                 <ui:FASettingsExpander.Footer>
                     <ToggleSwitch IsChecked="{Binding EnableDialogJump}" />
                 </ui:FASettingsExpander.Footer>
@@ -299,7 +303,8 @@
 
             <ui:FASettingsExpander Header="{i18n:Localize typingStartEn}"
                                 Description="{i18n:Localize typingStartEnTooltip}"
-                                IconSource="Keyboard">
+                                IconSource="Keyboard"
+                                IsVisible="{Binding IsWindowsPlatform}">
                 <ui:FASettingsExpander.Footer>
                     <ToggleSwitch IsChecked="{Binding AlwaysStartEn}" />
                 </ui:FASettingsExpander.Footer>
@@ -372,7 +377,7 @@
                     <StackPanel Orientation="Horizontal" Spacing="10">
                         <TextBox Width="300"
                                  Text="{Binding PythonPath, Mode=TwoWay}"
-                                 PlaceholderText="{i18n:Localize none}" />
+                                 Watermark="{i18n:Localize none}" />
                         <Button Content="{i18n:Localize select}" Command="{Binding SelectPythonCommand}" />
                         <Button Content="{i18n:Localize delete}" Command="{Binding ClearPythonCommand}" />
                     </StackPanel>
@@ -385,7 +390,7 @@
                     <StackPanel Orientation="Horizontal" Spacing="10">
                         <TextBox Width="300"
                                  Text="{Binding NodePath, Mode=TwoWay}"
-                                 PlaceholderText="{i18n:Localize none}" />
+                                 Watermark="{i18n:Localize none}" />
                         <Button Content="{i18n:Localize select}" Command="{Binding SelectNodeCommand}" />
                         <Button Content="{i18n:Localize delete}" Command="{Binding ClearNodeCommand}" />
                     </StackPanel>

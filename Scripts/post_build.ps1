@@ -139,7 +139,8 @@ function Publish-Self-Contained ($p, $project) {
 
     # we call dotnet publish on the main project. 
     # The other projects should have been built in Release at this point.
-    dotnet publish -c Release $csproj /p:PublishProfile=$profile
+    # -f: the Avalonia project also targets the cross-platform net10.0 TFM; publish the Windows one.
+    dotnet publish -c Release $csproj -f net10.0-windows10.0.19041.0 /p:PublishProfile=$profile
 }
 
 function Remove-RidLessRuntimes ($path, $config) {

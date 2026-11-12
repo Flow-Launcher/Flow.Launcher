@@ -654,22 +654,8 @@ public partial class PluginItemViewModel : ObservableObject, IDisposable
         OpenWpfSettingsWindow();
     }
 
-    private void OpenWpfSettingsWindow()
-    {
-        try
-        {
-            // Create the WPF settings panel and show in a standalone WPF window
-            var settingsControl = _settingProvider!.CreateSettingPanel();
-            if (settingsControl != null)
-            {
-                WpfSettingsWindow.Show(settingsControl, Name);
-            }
-        }
-        catch (Exception ex)
-        {
-            Flow.Launcher.Infrastructure.Logger.Log.Exception(nameof(PluginItemViewModel), $"Failed to open settings for {Name}", ex);
-        }
-    }
+    // Legacy WPF settings panels can only be hosted on Windows; implemented in PluginsSettingsViewModel.Windows.cs.
+    partial void OpenWpfSettingsWindow();
 
     [RelayCommand]
     private void OpenPluginDirectory()

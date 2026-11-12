@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -31,9 +32,41 @@ namespace Flow.Launcher.Core.Plugin
             // Otherwise duplicate assembly will be loaded and some weird behavior will occur, such as WinRT.Runtime.dll
             // will fail due to loading multiple versions in process, each with their own static instance of registration state
             var existAssembly = Default.Assemblies.FirstOrDefault(x => x.FullName == assemblyName.FullName);
+            if (existAssembly != null)
+            {
+                return existAssembly;
+            }
 
-            return existAssembly ?? (assemblyPath == null ? null : LoadFromAssemblyPath(assemblyPath));
+            // The same applies to identical assemblies the host ships but has not loaded yet (e.g. MemoryPack.Core:
+            // a plugin-local copy would keep its own formatter registry, so the host's BinaryStorage could not
+            // serialize plugin types). Returning null defers to the default context, which loads the host's copy.
+            if (HostAssemblyFullNames.Value.Contains(assemblyName.FullName))
+            {
+                return null;
+            }
+
+            return assemblyPath == null ? null : LoadFromAssemblyPath(assemblyPath);
         }
+
+        // Full names of the managed assemblies on the host's trusted platform assembly list (the app's own deps).
+        private static readonly Lazy<HashSet<string>> HostAssemblyFullNames = new(() =>
+        {
+            var names = new HashSet<string>(StringComparer.Ordinal);
+            var tpa = AppContext.GetData("TRUSTED_PLATFORM_ASSEMBLIES") as string ?? string.Empty;
+            foreach (var path in tpa.Split(Path.PathSeparator, StringSplitOptions.RemoveEmptyEntries))
+            {
+                try
+                {
+                    names.Add(AssemblyName.GetAssemblyName(path).FullName);
+                }
+                catch (Exception e) when (e is BadImageFormatException or FileLoadException or FileNotFoundException)
+                {
+                    // Not a managed assembly or no longer present; it cannot be shared anyway.
+                }
+            }
+
+            return names;
+        });
         
         protected override IntPtr LoadUnmanagedDll(string unmanagedDllName)
         {

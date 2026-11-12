@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Controls;
 using Flow.Launcher.Plugin.ProcessKiller.ViewModels;
-using Flow.Launcher.Plugin.ProcessKiller.Views;
 
 namespace Flow.Launcher.Plugin.ProcessKiller
 {
-    public class Main : IPlugin, IPluginI18n, IContextMenu, ISettingProvider
+    public partial class Main : IPlugin, IPluginI18n, IContextMenu, ISettingProvider
     {
         internal static PluginInitContext Context { get; private set; }
 
@@ -211,11 +209,6 @@ namespace Flow.Launcher.Plugin.ProcessKiller
             }
 
             return sortedResults;
-        }
-
-        public Control CreateSettingPanel()
-        {
-            return new SettingsControl(_viewModel);
         }
 
         public object CreateSettingPanelAvalonia()

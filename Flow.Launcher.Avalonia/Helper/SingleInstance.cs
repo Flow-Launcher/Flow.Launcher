@@ -10,21 +10,38 @@ namespace Flow.Launcher.Avalonia.Helper;
 /// <summary>
 /// Per-user single instance guard. The first instance holds an exclusive lock file in the data directory and
 /// listens on a named pipe; later launches connect to the pipe to ask the first instance to show itself and exit.
+/// Launching with <see cref="ToggleArgument"/> asks it to toggle the search window instead, so desktops without a
+/// global hotkey backend (e.g. Wayland compositors without the GlobalShortcuts portal) can bind the command to a key.
 /// </summary>
 public static class SingleInstance
 {
-    private const string ShowMessage = "show";
+    public const string ToggleArgument = "--toggle";
 
-    private static readonly string PipeName = $"FlowLauncher_{Environment.UserName}_SingleInstance";
+    private const string ShowMessage = "show";
+    private const string ToggleMessage = "toggle";
+
+    private static readonly string PipeName = CreatePipeName();
+
+    // On Unix .NET binds the pipe as a socket in the temp directory, but TMPDIR differs between launch environments
+    // (nix develop, systemd units, desktop launchers), so a second launch would miss the first instance. A rooted name
+    // is used as the socket path as is; the per-user runtime directory is the same for every process of the session.
+    private static string CreatePipeName()
+    {
+        var name = $"FlowLauncher_{Environment.UserName}_SingleInstance";
+        return OperatingSystem.IsLinux() && Environment.GetEnvironmentVariable("XDG_RUNTIME_DIR") is { Length: > 0 } runtimeDirectory
+            ? Path.Combine(runtimeDirectory, name)
+            : name;
+    }
 
     private static FileStream? _lockFile;
     private static CancellationTokenSource? _cts;
     private static int _released;
 
     /// <summary>
-    /// Tries to become the first instance. When another instance is running, signals it to show its window and returns false.
+    /// Tries to become the first instance. When another instance is running, signals it to show (or, with
+    /// <see cref="ToggleArgument"/> in <paramref name="args"/>, toggle) its window and returns false.
     /// </summary>
-    public static bool TryAcquire()
+    public static bool TryAcquire(string[] args)
     {
         try
         {
@@ -33,22 +50,17 @@ public static class SingleInstance
             _lockFile = new FileStream(Path.Combine(dir, ".instance.lock"), FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None);
             return true;
         }
-        catch (IOException)
+        catch (Exception e) when (e is IOException or UnauthorizedAccessException)
         {
-            SignalFirstInstance();
-            return false;
-        }
-        catch (UnauthorizedAccessException)
-        {
-            SignalFirstInstance();
+            SignalFirstInstance(Array.IndexOf(args, ToggleArgument) >= 0 ? ToggleMessage : ShowMessage);
             return false;
         }
     }
 
     /// <summary>
-    /// Starts listening for activation requests from later launches. <paramref name="onSecondInstance"/> runs on a thread-pool thread.
+    /// Starts listening for requests from later launches. The callbacks run on a thread-pool thread.
     /// </summary>
-    public static void StartListening(Action onSecondInstance)
+    public static void StartListening(Action onShow, Action onToggle)
     {
         if (_lockFile is null || _cts is not null)
         {
@@ -67,9 +79,14 @@ public static class SingleInstance
                     await server.WaitForConnectionAsync(token);
                     using var reader = new StreamReader(server);
                     var message = await reader.ReadLineAsync(token);
-                    if (message == ShowMessage)
+                    switch (message)
                     {
-                        onSecondInstance();
+                        case ShowMessage:
+                            onShow();
+                            break;
+                        case ToggleMessage:
+                            onToggle();
+                            break;
                     }
                 }
                 catch (OperationCanceledException)
@@ -100,14 +117,14 @@ public static class SingleInstance
         _lockFile = null;
     }
 
-    private static void SignalFirstInstance()
+    private static void SignalFirstInstance(string message)
     {
         try
         {
             using var client = new NamedPipeClientStream(".", PipeName, PipeDirection.Out);
             client.Connect(3000);
             using var writer = new StreamWriter(client) { AutoFlush = true };
-            writer.WriteLine(ShowMessage);
+            writer.WriteLine(message);
         }
         catch (Exception)
         {

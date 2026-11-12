@@ -74,6 +74,11 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
     private string _currentQueryOriginalText = string.Empty;
     private string _lastQueryActionKeyword = string.Empty;
     private bool _previousIsHomeQuery = true;
+
+    // UI thread only. Set when a query must replace (not merge into) the shown results, cleared once a batch of that
+    // query has actually replaced them. A query cancelled by the next keystroke before its first batch arrives would
+    // otherwise lose the clear, and the home page results would stay below the new query's results.
+    private bool _shownResultsPendingClear;
     private CancellationTokenSource? _progressBarDelayTokenSource;
 
     // The result (and the view it came from) whose context menu is open, and the unfiltered menu items.
@@ -320,6 +325,8 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
                 {
                     Results.ReplaceResultsForPlugins(trailingPluginUpdates, clearExisting, reselect);
                 }
+
+                _shownResultsPendingClear = false;
             }
             else
             {
@@ -327,6 +334,11 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
                 if (pluginUpdates.Count > 0 || clearExisting)
                 {
                     Results.ReplaceResultsForPlugins(pluginUpdates, clearExisting, reselect);
+                }
+
+                if (clearExisting)
+                {
+                    _shownResultsPendingClear = false;
                 }
             }
 
@@ -446,7 +458,7 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
 
     private void OnSettingsPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
-        if (global::Avalonia.Application.Current is not null && !Dispatcher.UIThread.CheckAccess())
+        if (!Dispatcher.UIThread.CheckAccess())
         {
             Dispatcher.UIThread.Post(() => OnSettingsPropertyChanged(sender, e));
             return;
@@ -631,7 +643,7 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
     /// </summary>
     public void ReQuery(bool reselect = true)
     {
-        if (global::Avalonia.Application.Current is not null && !Dispatcher.UIThread.CheckAccess())
+        if (!Dispatcher.UIThread.CheckAccess())
         {
             Dispatcher.UIThread.Post(() => ReQuery(reselect));
             return;
@@ -654,7 +666,7 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
 
     public void BackToQueryResults()
     {
-        if (global::Avalonia.Application.Current is not null && !Dispatcher.UIThread.CheckAccess())
+        if (!Dispatcher.UIThread.CheckAccess())
         {
             Dispatcher.UIThread.Post(BackToQueryResults);
             return;
@@ -669,7 +681,7 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
     /// </summary>
     public void ChangeQueryText(string text, bool requery = false)
     {
-        if (global::Avalonia.Application.Current is not null && !Dispatcher.UIThread.CheckAccess())
+        if (!Dispatcher.UIThread.CheckAccess())
         {
             Dispatcher.UIThread.Post(() => ChangeQueryText(text, requery));
             return;
@@ -916,7 +928,7 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
     /// </summary>
     public void Hide()
     {
-        if (global::Avalonia.Application.Current is not null && !Dispatcher.UIThread.CheckAccess())
+        if (!Dispatcher.UIThread.CheckAccess())
         {
             Dispatcher.UIThread.Post(Hide);
             return;
@@ -938,7 +950,7 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
     /// </summary>
     public void Show()
     {
-        if (global::Avalonia.Application.Current is not null && !Dispatcher.UIThread.CheckAccess())
+        if (!Dispatcher.UIThread.CheckAccess())
         {
             Dispatcher.UIThread.Post(Show);
             return;
@@ -957,7 +969,7 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
     /// </summary>
     public void ShowWithInjectedQuery(string queryText)
     {
-        if (global::Avalonia.Application.Current is not null && !Dispatcher.UIThread.CheckAccess())
+        if (!Dispatcher.UIThread.CheckAccess())
         {
             Dispatcher.UIThread.Post(() => ShowWithInjectedQuery(queryText));
             return;
@@ -1470,8 +1482,9 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
 
             query.IsReQuery = isReQuery;
             var previousActionKeyword = _lastQueryActionKeyword;
-            var shouldClearExisting = _previousIsHomeQuery || query.IsHomeQuery ||
+            var shouldClearExisting = _shownResultsPendingClear || _previousIsHomeQuery || query.IsHomeQuery ||
                                       !string.Equals(previousActionKeyword, query.ActionKeyword, StringComparison.Ordinal);
+            _shownResultsPendingClear = shouldClearExisting;
             _previousIsHomeQuery = query.IsHomeQuery;
             _currentQueryOriginalText = query.OriginalQuery ?? string.Empty;
             _lastQueryActionKeyword = query.ActionKeyword;
@@ -1604,6 +1617,7 @@ public partial class MainViewModel : ObservableObject, IResultUpdateRegister
         Results.Clear();
         HasResults = false;
         PluginIconPath = null;
+        _shownResultsPendingClear = false;
     }
 
     private List<ResultViewModel> CreateResultViewModels(IEnumerable<Result> results, PluginPair plugin)

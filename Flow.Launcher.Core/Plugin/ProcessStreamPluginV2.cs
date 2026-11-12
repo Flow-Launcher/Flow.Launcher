@@ -4,27 +4,16 @@ using System.IO.Pipelines;
 using System.Threading.Tasks;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin;
-using Meziantou.Framework.Win32;
 using Nerdbank.Streams;
 
 #nullable enable
 
 namespace Flow.Launcher.Core.Plugin
 {
-    internal abstract class ProcessStreamPluginV2 : JsonRPCPluginV2
+    internal abstract partial class ProcessStreamPluginV2 : JsonRPCPluginV2
     {
-        private static readonly JobObject _jobObject = new();
-
-        static ProcessStreamPluginV2()
-        {
-            _jobObject.SetLimits(new JobObjectLimits()
-            {
-                Flags = JobObjectLimitFlags.KillOnJobClose | JobObjectLimitFlags.DieOnUnhandledException |
-                        JobObjectLimitFlags.SilentBreakawayOk
-            });
-
-            _jobObject.AssignProcess(Process.GetCurrentProcess());
-        }
+        // Windows job object kills plugin processes together with Flow; other platforms have no job object, so they are only killed on dispose/reload.
+        partial void AssignToJobObject(Process process);
 
         protected sealed override IDuplexPipe ClientPipe { get; set; } = null!;
 
@@ -48,7 +37,7 @@ namespace Flow.Launcher.Core.Plugin
             var process = Process.Start(StartInfo);
             ArgumentNullException.ThrowIfNull(process);
             ClientProcess = process;
-            _jobObject.AssignProcess(ClientProcess);
+            AssignToJobObject(ClientProcess);
 
             SetupPipe(ClientProcess);
 

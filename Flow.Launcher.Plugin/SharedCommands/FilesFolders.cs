@@ -13,7 +13,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
     /// <summary>
     /// Commands that are useful to run on files... and folders!
     /// </summary>
-    public static class FilesFolders
+    public static partial class FilesFolders
     {
         private const string FileExplorerProgramName = "explorer";
 
@@ -65,7 +65,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
 #if DEBUG
                 throw;
 #else
-                messageBoxExShow ??= MessageBox.Show;
+                messageBoxExShow ??= DefaultMessageBoxShow;
                 messageBoxExShow(string.Format("Copying path {0} has failed, it will now be deleted for consistency", targetPath));
                 RemoveFolderIfExists(targetPath, messageBoxExShow);
 #endif
@@ -101,7 +101,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
 #if DEBUG
                 throw;
 #else
-                messageBoxExShow ??= MessageBox.Show;
+                messageBoxExShow ??= DefaultMessageBoxShow;
                 messageBoxExShow(string.Format("Unable to verify folders and files between {0} and {1}", fromPath, toPath));
                 return false;
 #endif
@@ -126,7 +126,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
 #if DEBUG
                 throw;
 #else
-                messageBoxExShow ??= MessageBox.Show;
+                messageBoxExShow ??= DefaultMessageBoxShow;
                 messageBoxExShow(string.Format("Not able to delete folder {0}, please go to the location and manually delete it", path));
 #endif
             }
@@ -291,14 +291,14 @@ namespace Flow.Launcher.Plugin.SharedCommands
             try
             {
                 if (LocationExists(fileOrFolderPath) || FileExists(fileOrFolderPath))
-                    Process.Start(psi);
+                    AppProcess.Start(psi);
             }
             catch (Exception)
             {
 #if DEBUG
                 throw;
 #else
-                messageBoxExShow ??= MessageBox.Show;
+                messageBoxExShow ??= DefaultMessageBoxShow;
                 messageBoxExShow(string.Format("Unable to open the path {0}, please check if it exists", fileOrFolderPath));
 #endif
             }
@@ -323,14 +323,14 @@ namespace Flow.Launcher.Plugin.SharedCommands
             try
             {
                 if (FileExists(filePath))
-                    Process.Start(psi);
+                    AppProcess.Start(psi);
             }
             catch (Exception)
             {
 #if DEBUG
                 throw;
 #else
-                messageBoxExShow ??= MessageBox.Show;
+                messageBoxExShow ??= DefaultMessageBoxShow;
                 messageBoxExShow(string.Format("Unable to open the path {0}, please check if it exists", filePath));
 #endif
             }

@@ -1,4 +1,3 @@
-using System.Windows.Forms;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -51,6 +50,9 @@ public partial class GeneralSettingsViewModel : ObservableObject
     public Flow.Launcher.Infrastructure.UserSettings.Settings Settings => _settings;
 
     public string Crowdin => Constant.CrowdinProjectUrl;
+
+    // Hides options backed by Windows-only services (logon task, taskbar, Squirrel updates/portable mode, Dialog Jump, keyboard layout).
+    public bool IsWindowsPlatform { get; } = OperatingSystem.IsWindows();
 
     #region Languages
 
@@ -573,7 +575,8 @@ public partial class GeneralSettingsViewModel : ObservableObject
         }
     }
 
-    private static void SetupDialogJump(bool enabled) => DialogJump.SetupDialogJump(enabled);
+    // Dialog Jump hooks Windows file dialogs; implemented in GeneralSettingsViewModel.Windows.cs only.
+    partial void SetupDialogJump(bool enabled);
 
     public bool ShowDialogJumpWindow
     {
@@ -692,7 +695,10 @@ public partial class GeneralSettingsViewModel : ObservableObject
         {
             Title = _i18n.GetTranslation("selectPythonExecutable"),
             AllowMultiple = false,
-            FileTypeFilter = [new FilePickerFileType("Python") { Patterns = ["pythonw.exe", "python.exe"] }, FilePickerFileTypes.All]
+            // Unix executables have no extension to filter on.
+            FileTypeFilter = OperatingSystem.IsWindows()
+                ? [new FilePickerFileType("Python") { Patterns = ["pythonw.exe", "python.exe"] }, FilePickerFileTypes.All]
+                : [FilePickerFileTypes.All]
         });
 
         var selectedFile = files.FirstOrDefault()?.Path.LocalPath;
@@ -715,7 +721,9 @@ public partial class GeneralSettingsViewModel : ObservableObject
         {
             Title = _i18n.GetTranslation("selectNodeExecutable"),
             AllowMultiple = false,
-            FileTypeFilter = [new FilePickerFileType("Node") { Patterns = ["*.exe"] }, FilePickerFileTypes.All]
+            FileTypeFilter = OperatingSystem.IsWindows()
+                ? [new FilePickerFileType("Node") { Patterns = ["*.exe"] }, FilePickerFileTypes.All]
+                : [FilePickerFileTypes.All]
         });
 
         var selectedFile = files.FirstOrDefault()?.Path.LocalPath;
@@ -769,34 +777,8 @@ public partial class GeneralSettingsViewModel : ObservableObject
         OpenPlatformImeSettings();
     }
 
-    private static void OpenPlatformImeSettings() => Win32Helper.OpenImeSettings();
-
-    public bool KoreanIMERegistryKeyExists
-    {
-        get
-        {
-            var registryKeyExists = Win32Helper.IsKoreanIMEExist();
-            var koreanLanguageInstalled = InputLanguage.InstalledInputLanguages.Cast<InputLanguage>().Any(lang => lang.Culture.Name.StartsWith("ko", StringComparison.OrdinalIgnoreCase));
-            var isWindows11 = Win32Helper.IsWindows11();
-            return (isWindows11 && koreanLanguageInstalled) || registryKeyExists;
-        }
-    }
-
-    public bool LegacyKoreanIMEEnabled
-    {
-        get => Win32Helper.IsLegacyKoreanIMEEnabled();
-        set
-        {
-            if (Win32Helper.SetLegacyKoreanIMEEnabled(value))
-            {
-                OnPropertyChanged();
-            }
-            else
-            {
-                App.API?.ShowMsgError(_i18n.GetTranslation("KoreanImeSettingChangeFailTitle"), _i18n.GetTranslation("KoreanImeSettingChangeFailSubTitle"));
-            }
-        }
-    }
+    // Windows input settings page; the Korean IME section that exposes this command is hidden elsewhere.
+    partial void OpenPlatformImeSettings();
 
     [RelayCommand]
     private async Task OpenCrowdin()

@@ -1,5 +1,3 @@
-using System.Windows.Input;
-using Flow.Launcher.Infrastructure;
 using System;
 using System.Collections.Generic;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -13,7 +11,7 @@ namespace Flow.Launcher.Avalonia.Helper;
 /// <summary>
 /// Hotkey mapper for Avalonia - registers and manages global hotkeys.
 /// </summary>
-internal static class HotKeyMapper
+internal static partial class HotKeyMapper
 {
     private static readonly string ClassName = nameof(HotKeyMapper);
 
@@ -38,7 +36,7 @@ internal static class HotKeyMapper
         }
 
         // Initialize the global hotkey system
-        GlobalHotkey.Initialize();
+        InitializeHotkeySystem();
 
         // Register the main toggle hotkey
         SetToggleHotkey(_settings.Hotkey);
@@ -173,7 +171,7 @@ internal static class HotKeyMapper
     {
         try
         {
-            GlobalHotkey.Unregister(hotkeyId);
+            UnregisterHotkey(hotkeyId);
         }
         catch (Exception e)
         {
@@ -208,83 +206,24 @@ internal static class HotKeyMapper
 
     private static bool ShouldIgnoreHotkeys()
     {
-        return _settings?.IgnoreHotkeysOnFullscreen == true && Win32Helper.IsForegroundWindowFullscreen()
+        return _settings?.IgnoreHotkeysOnFullscreen == true && IsForegroundWindowFullscreen()
             || App.API?.IsGameModeOn() == true;
     }
 
     /// <summary>
     /// Checks if a hotkey is available for registration.
     /// </summary>
-    internal static bool CheckAvailability(HotkeyModel hotkey)
-    {
-        if (!TryGetRegistrationParts(hotkey, out var mods, out var key))
-            return false;
+    internal static partial bool CheckAvailability(HotkeyModel hotkey);
 
-        // Try to register and immediately unregister
-        int id = GlobalHotkey.Register(mods, key, () => { });
-        if (id >= 0)
-        {
-            GlobalHotkey.Unregister(id);
-            return true;
-        }
+    private static partial bool TryRegisterHotkey(string hotkeyString, Action callback, out int hotkeyId);
 
-        return false;
-    }
+    private static partial bool IsForegroundWindowFullscreen();
 
-    private static bool TryRegisterHotkey(string hotkeyString, Action callback, out int hotkeyId)
-    {
-        hotkeyId = -1;
+    static partial void InitializeHotkeySystem();
 
-        if (!TryGetRegistrationParts(new HotkeyModel(hotkeyString), out var modifiers, out var key))
-        {
-            Log.Error(ClassName, $"Failed to parse hotkey: {hotkeyString}");
-            return false;
-        }
+    static partial void UnregisterHotkey(int hotkeyId);
 
-        hotkeyId = GlobalHotkey.Register(modifiers, key, callback);
-
-        if (hotkeyId < 0)
-        {
-            Log.Error(ClassName, $"Failed to register hotkey: {hotkeyString}");
-            return false;
-        }
-
-        return true;
-    }
-
-    private static bool TryGetRegistrationParts(HotkeyModel hotkey, out GlobalHotkey.Modifiers modifiers, out uint key)
-    {
-        modifiers = GlobalHotkey.Modifiers.None;
-        key = 0;
-
-        if (!hotkey.Validate(true))
-        {
-            return false;
-        }
-
-        if (hotkey.Alt)
-        {
-            modifiers |= GlobalHotkey.Modifiers.Alt;
-        }
-
-        if (hotkey.Ctrl)
-        {
-            modifiers |= GlobalHotkey.Modifiers.Control;
-        }
-
-        if (hotkey.Shift)
-        {
-            modifiers |= GlobalHotkey.Modifiers.Shift;
-        }
-
-        if (hotkey.Win)
-        {
-            modifiers |= GlobalHotkey.Modifiers.Win;
-        }
-
-        key = (uint)KeyInterop.VirtualKeyFromKey(hotkey.CharKey);
-        return key != 0;
-    }
+    static partial void ShutdownHotkeySystem();
 
     /// <summary>
     /// Cleanup and unregister all hotkeys. The platform backend unregisters every remaining hotkey, so no
@@ -295,7 +234,7 @@ internal static class HotKeyMapper
         _toggleHotkeyId = -1;
         _toggleHotkeyString = string.Empty;
         _customQueryHotkeyIds.Clear();
-        GlobalHotkey.Shutdown();
+        ShutdownHotkeySystem();
         Log.Info(ClassName, "HotKeyMapper shutdown");
     }
 }

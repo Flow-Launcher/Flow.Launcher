@@ -19,19 +19,22 @@
                              Description="{DynamicResource flowlauncher_plugin_cmd_plugin_description}"
                              IsExpanded="True">
             <ui:FASettingsExpander.Items>
-                <ui:FASettingsExpanderItem Content="{DynamicResource flowlauncher_plugin_cmd_relace_winr}">
+                <ui:FASettingsExpanderItem Content="{DynamicResource flowlauncher_plugin_cmd_relace_winr}"
+                                         IsVisible="{Binding ShowWindowsOnlySettings}">
                     <ui:FASettingsExpanderItem.Footer>
                         <ToggleSwitch IsChecked="{Binding Settings.ReplaceWinR}" OnContent="" OffContent="" />
                     </ui:FASettingsExpanderItem.Footer>
                 </ui:FASettingsExpanderItem>
 
-                <ui:FASettingsExpanderItem Content="{DynamicResource flowlauncher_plugin_cmd_always_run_as_administrator}">
+                <ui:FASettingsExpanderItem Content="{DynamicResource flowlauncher_plugin_cmd_always_run_as_administrator}"
+                                         IsVisible="{Binding ShowWindowsOnlySettings}">
                     <ui:FASettingsExpanderItem.Footer>
                         <ToggleSwitch IsChecked="{Binding Settings.RunAsAdministrator}" OnContent="" OffContent="" />
                     </ui:FASettingsExpanderItem.Footer>
                 </ui:FASettingsExpanderItem>
 
-                <ui:FASettingsExpanderItem Content="{DynamicResource flowlauncher_plugin_cmd_use_windows_terminal}">
+                <ui:FASettingsExpanderItem Content="{DynamicResource flowlauncher_plugin_cmd_use_windows_terminal}"
+                                         IsVisible="{Binding ShowWindowsOnlySettings}">
                     <ui:FASettingsExpanderItem.Footer>
                         <ToggleSwitch IsChecked="{Binding Settings.UseWindowsTerminal}" OnContent="" OffContent="" />
                     </ui:FASettingsExpanderItem.Footer>

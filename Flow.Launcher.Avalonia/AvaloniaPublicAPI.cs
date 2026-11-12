@@ -1,4 +1,3 @@
-using System.Windows.Media;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Specialized;
@@ -32,7 +31,7 @@ namespace Flow.Launcher.Avalonia;
 /// <summary>
 /// IPublicAPI implementation for the Avalonia host.
 /// </summary>
-public class AvaloniaPublicAPI : IPublicAPI, global::Flow.Launcher.Core.Storage.IRemovable
+public partial class AvaloniaPublicAPI : IPublicAPI, global::Flow.Launcher.Core.Storage.IRemovable
 {
     private readonly Settings _settings;
     private readonly Func<MainViewModel> _getMainViewModel;
@@ -49,7 +48,7 @@ public class AvaloniaPublicAPI : IPublicAPI, global::Flow.Launcher.Core.Storage.
         _settings = settings;
         _getMainViewModel = getMainViewModel;
         _i18n = i18n;
-        Flow.Launcher.Infrastructure.Hotkey.GlobalHotkey.hookedKeyboardCallback = KListenerHookedKeyboardCallback;
+        HookGlobalKeyboard();
         global::Avalonia.Threading.Dispatcher.UIThread.Post(() =>
         {
             if (global::Avalonia.Application.Current is { } app)
@@ -64,6 +63,12 @@ public class AvaloniaPublicAPI : IPublicAPI, global::Flow.Launcher.Core.Storage.
             }
         });
     }
+
+    // Low-level keyboard hook (WH_KEYBOARD_LL); Windows only — see AvaloniaPublicAPI.Windows.cs.
+    partial void HookGlobalKeyboard();
+
+    // Legacy WPF plugin settings panels can only be hosted on Windows.
+    private partial bool OpenWpfPluginSettingsWindow(ISettingProvider settingProvider, PluginPair plugin);
 
     public event VisibilityChangedEventHandler VisibilityChanged
     {
@@ -97,8 +102,10 @@ public class AvaloniaPublicAPI : IPublicAPI, global::Flow.Launcher.Core.Storage.
     public void LogException(string className, string message, Exception e, [CallerMemberName] string methodName = "") => Log.Exception(className, message, e, methodName);
 
     // Shell/URL operations
-    public void ShellRun(string cmd, string filename = "cmd.exe") =>
-        System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo { FileName = filename, Arguments = $"/c {cmd}", UseShellExecute = true });
+    public void ShellRun(string cmd, string filename = "cmd.exe") => StartShellCommand(cmd, filename);
+
+    // Windows runs the command through cmd.exe /c; macOS through the user's shell -c.
+    private partial void StartShellCommand(string cmd, string filename);
 
     public void OpenUrl(string url, bool? inPrivate = null) => OpenUri(new Uri(url), inPrivate);
     public void OpenUrl(Uri url, bool? inPrivate = null) => OpenUri(url, inPrivate);
@@ -125,16 +132,14 @@ public class AvaloniaPublicAPI : IPublicAPI, global::Flow.Launcher.Core.Storage.
             }
             else
             {
-                using var explorer = new Process();
-                explorer.StartInfo = CreateFileManagerStartInfo(
+                AppProcess.Start(CreateFileManagerStartInfo(
                     explorerInfo.Path.Replace("%d", DirectoryPath),
                     FileNameOrFilePath is null
                         ? explorerInfo.DirectoryArgument.Replace("%d", DirectoryPath)
                         : explorerInfo.FileArgument
                             .Replace("%d", DirectoryPath)
                             .Replace("%f", targetPath),
-                    targetPath);
-                explorer.Start();
+                    targetPath))?.Dispose();
             }
         }
         catch (COMException ex) when (ex.ErrorCode == unchecked((int)0x80004004))
@@ -152,34 +157,13 @@ public class AvaloniaPublicAPI : IPublicAPI, global::Flow.Launcher.Core.Storage.
         }
     }
 
-    private static bool IsSystemFileManager(string explorerPath) =>
-        Path.GetFileNameWithoutExtension(explorerPath) == "explorer";
+    // Explorer on Windows, Finder on macOS.
+    private partial bool IsSystemFileManager(string explorerPath);
 
-    private static void OpenInSystemFileManager(string directoryPath, string? filePathToSelect)
-    {
-        if (filePathToSelect is null)
-        {
-            using var explorer = new Process();
-            explorer.StartInfo = new ProcessStartInfo
-            {
-                FileName = directoryPath,
-                UseShellExecute = true
-            };
-            explorer.Start();
-        }
-        else
-        {
-            Win32Helper.OpenFolderAndSelectFile(filePathToSelect);
-        }
-    }
+    // Opens the folder, or reveals (selects) filePathToSelect in it.
+    private partial void OpenInSystemFileManager(string directoryPath, string? filePathToSelect);
 
-    private static ProcessStartInfo CreateFileManagerStartInfo(string fileName, string arguments, string targetPath) =>
-        new ProcessStartInfo
-        {
-            FileName = fileName,
-            UseShellExecute = true,
-            Arguments = arguments
-        };
+    private partial ProcessStartInfo CreateFileManagerStartInfo(string fileName, string arguments, string targetPath);
 
     private void OpenUri(Uri uri, bool? inPrivate = null, bool forceBrowser = false)
     {
@@ -212,7 +196,7 @@ public class AvaloniaPublicAPI : IPublicAPI, global::Flow.Launcher.Core.Storage.
         {
             try
             {
-                Process.Start(new ProcessStartInfo
+                AppProcess.Start(new ProcessStartInfo
                 {
                     FileName = uri.AbsoluteUri,
                     UseShellExecute = true
@@ -226,17 +210,8 @@ public class AvaloniaPublicAPI : IPublicAPI, global::Flow.Launcher.Core.Storage.
         }
     }
 
-    private static void OpenInBrowser(string url, CustomBrowserViewModel browserInfo, string browserPath, bool inPrivate)
-    {
-        if (browserInfo.OpenInTab)
-        {
-            url.OpenInBrowserTab(browserPath, inPrivate, browserInfo.PrivateArg, browserInfo.ExtraArgs);
-        }
-        else
-        {
-            url.OpenInBrowserWindow(browserPath, inPrivate, browserInfo.PrivateArg, browserInfo.ExtraArgs);
-        }
-    }
+    // Opens url in the configured browser ("" = system default) in a tab or a new window per browserInfo.
+    private partial void OpenInBrowser(string url, CustomBrowserViewModel browserInfo, string browserPath, bool inPrivate);
 
     // Clipboard
     public async void CopyToClipboard(string text, bool directCopy = false, bool showDefaultNotification = true)
@@ -282,38 +257,9 @@ public class AvaloniaPublicAPI : IPublicAPI, global::Flow.Launcher.Core.Storage.
         }
     }
 
-    private static Task<Exception?> SetClipboardFileDropListAsync(string path) =>
-        RetryActionOnStaThreadAsync(() =>
-        {
-            var paths = new StringCollection { path };
-            Clipboard.SetFileDropList(paths);
-        });
-
-    private static Task<Exception?> SetClipboardTextAsync(string text) =>
-        RetryActionOnStaThreadAsync(() => Clipboard.SetText(text));
-
-    private static async Task<Exception?> RetryActionOnStaThreadAsync(Action action, int retryCount = 6, int retryDelay = 150)
-    {
-        for (var i = 0; i < retryCount; i++)
-        {
-            try
-            {
-                await Win32Helper.StartSTATaskAsync(action).ConfigureAwait(false);
-                return null;
-            }
-            catch (Exception e)
-            {
-                if (i == retryCount - 1)
-                {
-                    return e;
-                }
-
-                await Task.Delay(retryDelay).ConfigureAwait(false);
-            }
-        }
-
-        return null;
-    }
+    // Return the failure (if any) instead of throwing, so the caller decides how to report it.
+    private partial Task<Exception?> SetClipboardFileDropListAsync(string path);
+    private partial Task<Exception?> SetClipboardTextAsync(string text);
 
     // HTTP (delegate to Infrastructure)
     public Task<string> HttpGetStringAsync(string url, CancellationToken token = default) => Infrastructure.Http.Http.GetAsync(url, token);
@@ -339,11 +285,13 @@ public class AvaloniaPublicAPI : IPublicAPI, global::Flow.Launcher.Core.Storage.
         var exePath = Environment.ProcessPath;
         if (!string.IsNullOrWhiteSpace(exePath))
         {
-            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+            // In its own scope on Linux: Flow's own unit (e.g. its autostart service) stops when this process exits
+            // and would take the new instance with it.
+            AppProcess.Start(new System.Diagnostics.ProcessStartInfo
             {
                 FileName = exePath,
                 UseShellExecute = true
-            });
+            })?.Dispose();
         }
 
         if (global::Avalonia.Application.Current?.ApplicationLifetime is global::Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime desktop)
@@ -439,14 +387,7 @@ public class AvaloniaPublicAPI : IPublicAPI, global::Flow.Launcher.Core.Storage.
                 return true;
             }
 
-            var settingsControl = settingProvider.CreateSettingPanel();
-            if (settingsControl == null)
-            {
-                return false;
-            }
-
-            WpfSettingsWindow.Show(settingsControl, plugin.Metadata.Name);
-            return true;
+            return OpenWpfPluginSettingsWindow(settingProvider, plugin);
         }
         catch (Exception e)
         {
@@ -490,19 +431,7 @@ public class AvaloniaPublicAPI : IPublicAPI, global::Flow.Launcher.Core.Storage.
     public bool IsGameModeOn() => _getMainViewModel().GameModeStatus;
     public void ReQuery(bool reselect = true) => _getMainViewModel().ReQuery(reselect);
     public void BackToQueryResults() => _getMainViewModel().BackToQueryResults();
-    public MessageBoxResult ShowMsgBox(string messageBoxText, string caption = "", MessageBoxButton button = MessageBoxButton.OK, MessageBoxImage icon = MessageBoxImage.None, MessageBoxResult defaultResult = MessageBoxResult.OK)
-    {
-        if (System.Windows.Application.Current?.Dispatcher != null)
-        {
-            return System.Windows.Application.Current.Dispatcher.Invoke(() =>
-                System.Windows.MessageBox.Show(messageBoxText, caption, button, icon, defaultResult));
-        }
-
-        return System.Windows.MessageBox.Show(messageBoxText, caption, button, icon, defaultResult);
-    }
-
-    public ValueTask<ImageSource> LoadImageAsync(string path, bool loadFullImage = false, bool cacheImage = true) =>
-        Flow.Launcher.Infrastructure.Image.ImageLoader.LoadAsync(path, loadFullImage, cacheImage);
+    public partial MessageBoxResult ShowMsgBox(string messageBoxText, string caption = "", MessageBoxButton button = MessageBoxButton.OK, MessageBoxImage icon = MessageBoxImage.None, MessageBoxResult defaultResult = MessageBoxResult.OK);
     public Task ShowProgressBoxAsync(string caption, Func<Action<double>, Task> reportProgressAsync, Action? cancelProgress = null) =>
         ProgressBoxWindow.ShowAsync(caption, reportProgressAsync, cancelProgress);
     public void StartLoadingBar() => _getMainViewModel().IsQueryRunning = true;

@@ -591,9 +591,9 @@ public partial class ThemeSettingsViewModel : ObservableObject, IDisposable
         ResultSubItemFontSize = 13;
         WindowHeightSize = 42;
         ItemHeightSize = 58;
-        QueryFont = Win32Helper.GetSystemDefaultFont();
-        ResultFont = Win32Helper.GetSystemDefaultFont();
-        ResultSubFont = Win32Helper.GetSystemDefaultFont();
+        QueryFont = Settings.GetSystemDefaultFont(true);
+        ResultFont = Settings.GetSystemDefaultFont(true);
+        ResultSubFont = Settings.GetSystemDefaultFont(true);
     }
 
     [RelayCommand]
@@ -613,42 +613,8 @@ public partial class ThemeSettingsViewModel : ObservableObject, IDisposable
         ImportSizingFromTheme(themePath);
     }
 
-    private void ImportSizingFromTheme(string themePath)
-    {
-        try
-        {
-            var theme = ThemeLoader.Load(themePath);
-
-            if (theme.StyleDouble("QueryBoxStyle", "FontSize") is { } queryFontSize)
-            {
-                QueryBoxFontSize = queryFontSize;
-            }
-
-            if (theme.StyleDouble("QueryBoxStyle", "Height") is { } height)
-            {
-                WindowHeightSize = height;
-            }
-
-            if (theme.ResourceDouble("ResultItemHeight") is { } itemHeight)
-            {
-                ItemHeightSize = itemHeight;
-            }
-
-            if (theme.StyleDouble("ItemTitleStyle", "FontSize") is { } resultFontSize)
-            {
-                ResultItemFontSize = resultFontSize;
-            }
-
-            if (theme.StyleDouble("ItemSubTitleStyle", "FontSize") is { } subResultFontSize)
-            {
-                ResultSubItemFontSize = subResultFontSize;
-            }
-        }
-        catch (Exception ex)
-        {
-            Flow.Launcher.Infrastructure.Logger.Log.Exception(nameof(ThemeSettingsViewModel), $"Failed to import sizing from <{themePath}>", ex);
-        }
-    }
+    // Windows reads the theme through WPF (ThemeSettingsViewModel.Windows.cs); other platforms parse the XAML (ThemeSettingsViewModel.CrossPlatform.cs).
+    partial void ImportSizingFromTheme(string themePath);
 
     private void UpdateLabels()
     {

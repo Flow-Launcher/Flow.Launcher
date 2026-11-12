@@ -56,6 +56,8 @@ public partial class AboutSettingsViewModel : ObservableObject
     public string GitHub => Constant.GitHub;
     public string Crowdin => Constant.CrowdinProjectUrl;
 
+    // Self-update goes through Squirrel.Windows; there is no updater on other platforms.
+    public bool IsWindowsPlatform { get; } = OperatingSystem.IsWindows();
     public string ActivatedTimes => string.Format(Translate("about_activate_times", "You have activated Flow Launcher {0} times"), _settings.ActivateTimes);
 
     private long? _logFolderBytes;
@@ -360,7 +362,7 @@ public partial class AboutSettingsViewModel : ObservableObject
     [RelayCommand]
     private void ResetSettingWindowFont()
     {
-        SettingWindowFont = Win32Helper.GetSystemDefaultFont(false);
+        SettingWindowFont = Flow.Launcher.Infrastructure.UserSettings.Settings.GetSystemDefaultFont(false);
     }
 
     private bool ClearLogFolder()

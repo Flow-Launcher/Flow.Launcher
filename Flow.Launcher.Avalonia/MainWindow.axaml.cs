@@ -1,5 +1,3 @@
-using System.IO;
-using System.Media;
 using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Animation.Easings;
@@ -85,6 +83,8 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        InitializeWindowShape();
+        InitializeWindowType();
 
         // Get the ViewModel and Settings from DI
         _viewModel = Ioc.Default.GetRequiredService<MainViewModel>();
@@ -93,6 +93,7 @@ public partial class MainWindow : Window
         {
             SaveLastPosition();
             Hide();
+            ReturnFocusAfterHide();
         };
         _viewModel.QueryTextFocusRequested += HandleQueryTextFocusRequest;
         DataContext = _viewModel;
@@ -197,7 +198,16 @@ public partial class MainWindow : Window
             _settings.Save();
 
             var welcomeWindow = new WelcomeWindow();
-            welcomeWindow.Show(this);
+            // A dialog shown during startup (e.g. a hotkey registration error) can hide the search window before
+            // Loaded runs, and Avalonia refuses to show a window over a hidden owner.
+            if (IsVisible)
+            {
+                welcomeWindow.Show(this);
+            }
+            else
+            {
+                welcomeWindow.Show();
+            }
         }
 
         // Focus the query text box when window loads
@@ -621,12 +631,15 @@ public partial class MainWindow : Window
             }
         }
 
+        ActivateApplication();
+
         if (request.ShowWindow)
         {
             // Text and selection are applied before Show() so the first rendered frame never shows stale state.
             SynchronizeQueryTextBoxText();
             ApplyQueryTextBoxSelection(request.Mode);
             Show();
+            RestoreWidthAfterShow();
         }
 
         if (request.ActivateWindow)
@@ -716,24 +729,22 @@ public partial class MainWindow : Window
         }
     }
 
-    private void PlayOpenSound()
-    {
-        var soundPath = Path.Combine(AppContext.BaseDirectory, "Resources", "open.wav");
-        if (!File.Exists(soundPath))
-        {
-            return;
-        }
+    // Platform hooks: bring the app forward before the window is shown/activated, and hand focus back after it hides.
+    partial void ActivateApplication();
 
-        try
-        {
-            using var player = new SoundPlayer(soundPath);
-            player.Play();
-        }
-        catch (Exception e)
-        {
-            Log.Exception(ClassName, "Failed to play the open sound", e);
-        }
-    }
+    partial void ReturnFocusAfterHide();
+
+    // Platform hook: shape the native window to match the rounded WindowBorder.
+    partial void InitializeWindowShape();
+
+    // Platform hook: how the window manager should treat the search window (e.g. floating rather than tiled).
+    partial void InitializeWindowType();
+
+    // Platform hook: undo a width the window system imposed while (re)mapping the window.
+    partial void RestoreWidthAfterShow();
+
+    // Platform hook: the "open" sound played when the window is summoned (Settings.UseSound).
+    partial void PlayOpenSound();
 
     private void SynchronizeQueryTextBoxText()
     {

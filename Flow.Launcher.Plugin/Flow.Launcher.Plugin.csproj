@@ -2,15 +2,23 @@
 
   <PropertyGroup>
     <ProjectGuid>{8451ECDD-2EA4-4966-BB0A-7BBC40138E80}</ProjectGuid>
-    <UseWPF>true</UseWPF>
+    <!-- Keep both TFMs on Windows so Flow.Launcher.Plugin.nupkg ships net10.0 + net10.0-windows; non-Windows hosts build only net10.0 unless BuildAllTargetFrameworks=true -->
+    <TargetFramework Condition="'$(AllCrossPlatformTargetFrameworks)' == '' and !$([MSBuild]::IsOSPlatform('Windows'))">$(CrossPlatformTargetFramework)</TargetFramework>
+    <TargetFramework Condition="'$(AllCrossPlatformTargetFrameworks)' != '' or $([MSBuild]::IsOSPlatform('Windows'))"></TargetFramework>
+    <TargetFrameworks Condition="'$(AllCrossPlatformTargetFrameworks)' != '' or $([MSBuild]::IsOSPlatform('Windows'))">$(CrossPlatformTargetFramework);$(WindowsTargetFramework)</TargetFrameworks>
+    <UseWPF Condition="$(TargetFramework.Contains('-windows'))">true</UseWPF>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Flow.Launcher.Plugin</RootNamespace>
     <AssemblyName>Flow.Launcher.Plugin</AssemblyName>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <!-- Cross-platform build goes to a net10.0 subfolder so it never overwrites the Windows build -->
+    <AppendTargetFrameworkToOutputPath Condition="'$(TargetFramework)' == 'net10.0'">true</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <RestorePackagesWithLockFile Condition="'$(RestoreLockedMode)' == 'true'">true</RestorePackagesWithLockFile>
+    <RestorePackagesWithLockFile Condition="'$(RestoreLockedMode)' != 'true'">false</RestorePackagesWithLockFile>
+    <NuGetLockFilePath Condition="'$(RestoreLockedMode)' != 'true'">$(BaseIntermediateOutputPath)packages.lock.json</NuGetLockFilePath>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -24,7 +32,7 @@
     <RepositoryUrl>https://github.com/Flow-Launcher/Flow.Launcher</RepositoryUrl>
     <PackageDescription>Reference this library if you want to develop a Flow Launcher plugin</PackageDescription>
     <PackageTags>flowlauncher</PackageTags>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild Condition="'$(TargetFrameworks)' != ''">true</GeneratePackageOnBuild>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <PackageReadmeFile>Readme.md</PackageReadmeFile>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -44,7 +52,7 @@
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <Prefer32Bit>false</Prefer32Bit>
-    <DocumentationFile>..\Output\Debug\Flow.Launcher.Plugin.xml</DocumentationFile>
+    <DocumentationFile Condition="$(TargetFramework.Contains('-windows'))">..\Output\Debug\Flow.Launcher.Plugin.xml</DocumentationFile>
   </PropertyGroup>
   
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
