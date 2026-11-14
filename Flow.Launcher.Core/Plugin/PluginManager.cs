@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using Flow.Launcher.Core.ExternalPlugins;
+using Flow.Launcher.Core.ExternalPlugins.PythonDependencies;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.DialogJump;
@@ -29,10 +30,14 @@ namespace Flow.Launcher.Core.Plugin
         private static readonly ConcurrentDictionary<string, PluginPair> _allLoadedPlugins = [];
         private static readonly ConcurrentDictionary<string, PluginPair> _allInitializedPlugins = [];
         private static readonly ConcurrentDictionary<string, PluginPair> _initFailedPlugins = [];
+        private static readonly ConcurrentDictionary<string, PluginPair> _dependencyFailedPlugins = [];
         private static readonly ConcurrentDictionary<string, PluginPair> _globalPlugins = [];
         private static readonly ConcurrentDictionary<string, List<PluginPair>> _nonGlobalPlugins = [];
 
         private static PluginsSettings Settings;
+
+        internal static PythonDependencyInstaller PythonDependencies { get; private set; }
+
         private static readonly ConcurrentBag<string> ModifiedPlugins = [];
 
         private static readonly ConcurrentBag<PluginPair> _contextMenuPlugins = [];
@@ -205,7 +210,9 @@ namespace Flow.Launcher.Core.Plugin
             Settings.UpdatePluginSettings(metadatas);
 
             // Load plugins
-            var allLoadedPlugins = PluginsLoader.Plugins(metadatas, Settings);
+            PythonDependencies = PythonDependencyInstaller.CreateDefault(Settings);
+            PythonDependencies.RetryPendingRemovals([.. metadatas.Select(m => m.ID).Where(id => !string.IsNullOrEmpty(id))]);
+            var allLoadedPlugins = PluginsLoader.Plugins(metadatas, Settings, PythonDependencies);
             foreach (var plugin in allLoadedPlugins)
             {
                 if (plugin != null)
@@ -271,6 +278,25 @@ namespace Flow.Launcher.Core.Plugin
                     PublicApi.Instance.LogInfo(ClassName,
                         $"Total init cost for <{pair.Metadata.Name}> is <{pair.Metadata.InitTime}ms>");
                 }
+                catch (PythonDependencyException e)
+                {
+                    // Dependencies are retried on the next start, so the plugin stays enabled
+                    // and the user gets this message instead of the generic "would be disabled" one.
+                    PublicApi.Instance.LogException(ClassName, $"Fail to install Python dependencies for plugin: {pair.Metadata.Name}", e);
+                    if (pair.Metadata.Disabled && pair.Metadata.HomeDisabled)
+                    {
+                        PublicApi.Instance.LogDebug(ClassName, $"Skipped dependency error message for disabled plugin <{pair.Metadata.Name}>");
+                    }
+                    else
+                    {
+                        PublicApi.Instance.ShowMsgError(Localize.failedToInitializePluginsTitle(), e.Message);
+                    }
+
+                    _allInitializedPlugins.TryAdd(pair.Metadata.ID, pair);
+                    _initFailedPlugins.TryAdd(pair.Metadata.ID, pair);
+                    _dependencyFailedPlugins.TryAdd(pair.Metadata.ID, pair);
+                    return;
+                }
                 catch (Exception e)
                 {
                     PublicApi.Instance.LogException(ClassName, $"Fail to Init plugin: {pair.Metadata.Name}", e);
@@ -309,9 +335,13 @@ namespace Flow.Launcher.Core.Plugin
 
             await Task.WhenAll(initTasks);
 
-            if (!_initFailedPlugins.IsEmpty)
+            var failedNames = _initFailedPlugins.Values
+                .Where(x => !_dependencyFailedPlugins.ContainsKey(x.Metadata.ID))
+                .Select(x => x.Metadata.Name)
+                .ToList();
+            if (failedNames.Count > 0)
             {
-                var failed = string.Join(",", _initFailedPlugins.Values.Select(x => x.Metadata.Name));
+                var failed = string.Join(",", failedNames);
                 PublicApi.Instance.ShowMsg(
                     Localize.failedToInitializePluginsTitle(),
                     Localize.failedToInitializePluginsMessage(failed),
@@ -384,16 +414,22 @@ namespace Flow.Launcher.Core.Plugin
             if (!TryGetNonGlobalPlugins(query.ActionKeyword, out var plugins))
             {
                 if (dialogJump)
-                    return [.. GetGlobalPlugins().Where(p => p.Plugin is IAsyncDialogJump && !PluginModified(p.Metadata.ID))];
+                    return [.. GetGlobalPlugins().Where(p => p.Plugin is IAsyncDialogJump && CanQuery(p))];
                 else
-                    return [.. GetGlobalPlugins().Where(p => !PluginModified(p.Metadata.ID))];
+                    return [.. GetGlobalPlugins().Where(CanQuery)];
             }
 
-            var validPlugins = plugins.Where(p => !p.Metadata.Disabled && !PluginModified(p.Metadata.ID));
+            var validPlugins = plugins.Where(p => !p.Metadata.Disabled && CanQuery(p));
             if (dialogJump)
                 validPlugins = validPlugins.Where(p => p.Plugin is IAsyncDialogJump);
 
             return [.. validPlugins];
+        }
+
+        // A plugin whose dependencies failed to install stays enabled for the next start, but it never finished initializing.
+        private static bool CanQuery(PluginPair pair)
+        {
+            return !PluginModified(pair.Metadata.ID) && !_dependencyFailedPlugins.ContainsKey(pair.Metadata.ID);
         }
 
         private static bool TryGetNonGlobalPlugins(string actionKeyword, out List<PluginPair> plugins)
@@ -1038,6 +1074,8 @@ namespace Flow.Launcher.Core.Plugin
                     ModifiedPlugins.Add(plugin.ID);
                 }
 
+                InstallPythonDependenciesInBackground(newMetadata, newPluginPath);
+
                 return true;
             }
             finally
@@ -1052,6 +1090,37 @@ namespace Flow.Launcher.Core.Plugin
                     PublicApi.Instance.LogException(ClassName, $"Failed to delete temp folder {tempFolderPluginPath}", e);
                 }
             }
+        }
+
+        private static void InstallPythonDependenciesInBackground(PluginMetadata metadata, string pluginDirectory)
+        {
+            var installer = PythonDependencies;
+            var pythonExecutable = FilesFolders.ResolveAbsolutePath(Settings?.PythonExecutablePath);
+            if (installer == null
+                || string.IsNullOrEmpty(metadata.Language)
+                || !AllowedLanguage.IsPython(metadata.Language)
+                || metadata.Dependencies is not { Count: > 0 }
+                || string.IsNullOrEmpty(pythonExecutable)
+                || !File.Exists(pythonExecutable))
+            {
+                return;
+            }
+
+            // Best effort: a failure here is retried when the plugin initializes.
+            // Stale installs are not cleaned up because an older version of this plugin may still be running.
+            _ = Task.Run(async () =>
+            {
+                try
+                {
+                    metadata.PluginDirectory = pluginDirectory;
+                    await installer.EnsureInstalledAsync(metadata, pythonExecutable, CancellationToken.None);
+                }
+                catch (Exception e)
+                {
+                    PublicApi.Instance.LogException(ClassName,
+                        $"Failed to install Python dependencies for plugin {metadata.Name} after store install", e);
+                }
+            });
         }
 
         internal static async Task<bool> UninstallPluginAsync(PluginMetadata plugin, bool removePluginFromSettings, bool removePluginSettings, bool checkModified)
@@ -1112,6 +1181,13 @@ namespace Flow.Launcher.Core.Plugin
                     PublicApi.Instance.ShowMsgError(Localize.failedToRemovePluginCacheTitle(),
                         Localize.failedToRemovePluginCacheMessage(plugin.Name));
                 }
+                if (AllowedLanguage.IsPython(plugin.Language))
+                {
+                    if (PythonDependencies != null)
+                    {
+                        await PythonDependencies.DeleteDependenciesAsync(plugin.ID);
+                    }
+                }
                 Settings.RemovePluginSettings(plugin.ID);
                 {
                     _allLoadedPlugins.TryRemove(plugin.ID, out var _);
@@ -1121,6 +1197,9 @@ namespace Flow.Launcher.Core.Plugin
                 }
                 {
                     _initFailedPlugins.TryRemove(plugin.ID, out var _);
+                }
+                {
+                    _dependencyFailedPlugins.TryRemove(plugin.ID, out var _);
                 }
                 {
                     _globalPlugins.TryRemove(plugin.ID, out var _);
