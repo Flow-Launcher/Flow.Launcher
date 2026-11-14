@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure.UserSettings;
@@ -36,7 +37,22 @@ namespace Flow.Launcher.ViewModel
                     if (args.PropertyName == nameof(PluginPair.Metadata.AvgQueryTime))
                         OnPropertyChanged(nameof(QueryTime));
                 };
+                WeakReferenceMessenger.Default.Register<PluginViewModel, PluginUnloadingMessage>(this,
+                    static (viewModel, message) => viewModel.OnPluginUnloading(message.Metadata));
             }
+        }
+
+        private bool _pluginUnloaded;
+
+        private void OnPluginUnloading(PluginMetadata metadata)
+        {
+            if (metadata.ID != PluginPair.Metadata.ID) return;
+
+            // The setting panel is an instance from the plugin's assembly, so it has to leave the visual tree
+            _pluginUnloaded = true;
+            _settingControl = null;
+            OnPropertyChanged(nameof(HasSettingControl));
+            OnPropertyChanged(nameof(SettingControl));
         }
 
         private async Task LoadIconAsync()
@@ -161,6 +177,7 @@ namespace Flow.Launcher.ViewModel
         public bool HasSettingControl =>
             // Here we do not check if the plugin is initialized successfully
             // So we can let users change settings for initializing or initialization failed plugins
+            !_pluginUnloaded &&
             PluginPair.Plugin is ISettingProvider &&
             (PluginPair.Plugin is not JsonRPCPluginBase jsonRPCPluginBase || // Is not JsonRPC plugin
             jsonRPCPluginBase.NeedCreateSettingPanel()); // Is JsonRPC plugin and need to create setting panel

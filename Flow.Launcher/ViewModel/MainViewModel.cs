@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
@@ -56,6 +57,8 @@ namespace Flow.Launcher.ViewModel
         private CancellationToken _updateToken; // Used to avoid ObjectDisposedException of _updateSource.Token
 
         private ChannelWriter<ResultsForUpdate> _resultsUpdateChannelWriter;
+
+        private readonly ConcurrentDictionary<string, (IResultUpdated Plugin, ResultUpdatedEventHandler Handler)> _resultsUpdatedHandlers = new();
         private Task _resultsViewUpdateTask;
 
         private readonly IReadOnlyList<Result> _emptyResult = new List<Result>();
@@ -195,6 +198,26 @@ namespace Flow.Launcher.ViewModel
             _ = RegisterClockAndDateUpdateAsync();
 
             ThemeManager.Current.ActualApplicationThemeChanged += ThemeManager_ActualApplicationThemeChanged;
+
+            WeakReferenceMessenger.Default.Register<MainViewModel, PluginUnloadingMessage>(this,
+                static (viewModel, message) => viewModel.RemovePluginResults(message.Metadata));
+        }
+
+        private void RemovePluginResults(PluginMetadata metadata)
+        {
+            if (_selectionBeforeContextMenu?.SelectedResult?.PluginID == metadata.ID)
+            {
+                _selectionBeforeContextMenu = null;
+                ContextMenu.Clear();
+            }
+
+            Results.KeepResultsExcept(metadata);
+            ContextMenu.KeepResultsExcept(metadata);
+
+            if (PreviewSelectedItem?.Result.PluginID == metadata.ID)
+            {
+                PreviewSelectedItem = null;
+            }
         }
 
         private void ThemeManager_ActualApplicationThemeChanged(ThemeManager sender, object args)
@@ -273,7 +296,7 @@ namespace Flow.Launcher.ViewModel
         {
             if (pair.Plugin is not IResultUpdated plugin) return;
 
-            plugin.ResultsUpdated += (s, e) =>
+            ResultUpdatedEventHandler handler = (s, e) =>
             {
                 if (_updateQuery == null || e.Query.OriginalQuery != _updateQuery.OriginalQuery || e.Token.IsCancellationRequested)
                 {
@@ -313,6 +336,22 @@ namespace Flow.Launcher.ViewModel
                     App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
                 }
             };
+
+            // Detach any stale handler left by a previous instance that was not unloaded through
+            // the hot reload path, so the new instance always ends up subscribed exactly once
+            UnregisterResultsUpdatedEvent(pair);
+
+            // Track the handler so it can be detached when the plugin is unloaded or reloaded
+            _resultsUpdatedHandlers[pair.Metadata.ID] = (plugin, handler);
+            plugin.ResultsUpdated += handler;
+        }
+
+        public void UnregisterResultsUpdatedEvent(PluginPair pair)
+        {
+            if (_resultsUpdatedHandlers.TryRemove(pair.Metadata.ID, out var entry))
+            {
+                entry.Plugin.ResultsUpdated -= entry.Handler;
+            }
         }
 
         private async Task RegisterClockAndDateUpdateAsync()
@@ -989,6 +1028,19 @@ namespace Flow.Launcher.ViewModel
 
         public event VisibilityChangedEventHandler VisibilityChanged;
         public event ActualApplicationThemeChangedEventHandler ActualApplicationThemeChanged;
+
+        internal void RemoveEventHandlers(Func<Delegate, bool> predicate)
+        {
+            foreach (var handler in VisibilityChanged?.GetInvocationList() ?? [])
+            {
+                if (predicate(handler)) VisibilityChanged -= (VisibilityChangedEventHandler)handler;
+            }
+
+            foreach (var handler in ActualApplicationThemeChanged?.GetInvocationList() ?? [])
+            {
+                if (predicate(handler)) ActualApplicationThemeChanged -= (ActualApplicationThemeChangedEventHandler)handler;
+            }
+        }
 
         public Visibility ClockPanelVisibility { get; set; }
         public Visibility SearchIconVisibility { get; set; }

@@ -71,15 +71,7 @@ namespace Flow.Launcher.Core.Resource
         /// </summary>
         public async Task InitializeLanguageAsync()
         {
-            // Get actual language
-            var languageCode = _settings.Language;
-            if (languageCode == Constant.SystemLanguageCode)
-            {
-                languageCode = SystemLanguageCode;
-            }
-
-            // Get language by language code and change language
-            var language = GetLanguageByLanguageCode(languageCode);
+            var language = CurrentLanguage();
 
             // Add Flow Launcher language directory
             AddFlowLauncherLanguageDirectory();
@@ -124,6 +116,69 @@ namespace Flow.Launcher.Core.Resource
                     _languageDirectories.Add(pluginLanguageDir);
                 }
             }
+        }
+
+        /// <summary>
+        /// Loads the translations of a plugin that was installed, updated or reloaded after startup,
+        /// whose language directory was therefore not picked up by <see cref="InitializeLanguageAsync"/>.
+        /// </summary>
+        public async Task AddPluginLanguageDirectoryAsync(string pluginDirectory)
+        {
+            var languageDirectory = Path.Combine(pluginDirectory, Folder);
+            if (!Directory.Exists(languageDirectory)) return;
+
+            await _langChangeLock.WaitAsync();
+            try
+            {
+                if (_languageDirectories.Contains(languageDirectory)) return;
+                _languageDirectories.Add(languageDirectory);
+
+                await Application.Current.Dispatcher.InvokeAsync(() =>
+                {
+                    // English stays loaded underneath as the fallback, the same as for plugins found at startup
+                    AddLanguageFile(LanguageFile(languageDirectory, DefaultFile), isCurrentLanguage: false);
+
+                    var language = CurrentLanguage();
+                    if (language != AvailableLanguages.English)
+                    {
+                        AddLanguageFile(LanguageFile(languageDirectory, $"{language.LanguageCode}{Extension}"), isCurrentLanguage: true);
+                    }
+                });
+            }
+            catch (Exception e)
+            {
+                PublicApi.Instance.LogException(ClassName, $"Failed to load language files from <{languageDirectory}>", e);
+            }
+            finally
+            {
+                _langChangeLock.Release();
+            }
+        }
+
+        private void AddLanguageFile(string file, bool isCurrentLanguage)
+        {
+            if (string.IsNullOrEmpty(file)) return;
+
+            var dictionary = new ResourceDictionary
+            {
+                Source = new Uri(file, UriKind.Absolute)
+            };
+            Application.Current.Resources.MergedDictionaries.Add(dictionary);
+            if (isCurrentLanguage)
+            {
+                _oldResources.Add(dictionary);
+            }
+        }
+
+        private Language CurrentLanguage()
+        {
+            var languageCode = _settings.Language;
+            if (languageCode == Constant.SystemLanguageCode)
+            {
+                languageCode = SystemLanguageCode;
+            }
+
+            return GetLanguageByLanguageCode(languageCode);
         }
 
         private void LoadDefaultLanguage()
@@ -309,7 +364,6 @@ namespace Flow.Launcher.Core.Resource
         private void LoadLanguage(Language language)
         {
             var flowEnglishFile = Path.Combine(Constant.ProgramDirectory, Folder, DefaultFile);
-            var dicts = Application.Current.Resources.MergedDictionaries;
             var filename = $"{language.LanguageCode}{Extension}";
             var files = _languageDirectories
                 .Select(d => LanguageFile(d, filename))
@@ -318,17 +372,9 @@ namespace Flow.Launcher.Core.Resource
                 .Where(f => !string.IsNullOrEmpty(f) && f != flowEnglishFile)
                 .ToArray();
 
-            if (files.Length > 0)
+            foreach (var f in files)
             {
-                foreach (var f in files)
-                {
-                    var r = new ResourceDictionary
-                    {
-                        Source = new Uri(f, UriKind.Absolute)
-                    };
-                    dicts.Add(r);
-                    _oldResources.Add(r);
-                }
+                AddLanguageFile(f, isCurrentLanguage: true);
             }
         }
 

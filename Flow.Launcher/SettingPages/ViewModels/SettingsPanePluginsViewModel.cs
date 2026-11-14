@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
@@ -100,6 +101,18 @@ public partial class SettingsPanePluginsViewModel : BaseModel
     {
         _settings = settings;
         UpdateEnumDropdownLocalizations();
+        WeakReferenceMessenger.Default.Register<SettingsPanePluginsViewModel, PluginUnloadingMessage>(this,
+            static (viewModel, _) => viewModel.RefreshPluginViewModels());
+        WeakReferenceMessenger.Default.Register<SettingsPanePluginsViewModel, PluginLoadedMessage>(this,
+            static (viewModel, _) => viewModel.RefreshPluginViewModels());
+    }
+
+    private void RefreshPluginViewModels()
+    {
+        if (_pluginViewModels == null) return;
+
+        _pluginViewModels = null;
+        OnPropertyChanged(nameof(PluginViewModels));
     }
 
     private string filterText = string.Empty;

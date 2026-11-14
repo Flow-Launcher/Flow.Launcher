@@ -604,6 +604,28 @@ namespace Flow.Launcher.Plugin
         public Task<bool> UninstallPluginAsync(PluginMetadata pluginMetadata, bool removePluginSettings = false);
 
         /// <summary>
+        /// Fully reload one plugin in place, without restarting the app: dispose the running instance,
+        /// unload its assembly (for .NET plugins), and load and initialize the plugin again from disk.
+        /// If the plugin was just installed or updated, the newly installed version is loaded.
+        /// </summary>
+        /// <param name="id">Plugin id</param>
+        /// <returns>
+        /// True if the plugin is reloaded successfully. False if the reload failed, in which case the
+        /// plugin is marked as modified and an app restart is required.
+        /// </returns>
+        public Task<bool> ReloadPluginAsync(string id);
+
+        /// <summary>
+        /// Fully reload all loaded plugins, without restarting the app. Plugins already marked as
+        /// modified are skipped. See <see cref="ReloadPluginAsync"/>. Flow notifies the user when all
+        /// plugins were reloaded, and for each plugin that failed to reload.
+        /// </summary>
+        /// <returns>
+        /// True if every reloaded plugin succeeded; false if any plugin failed to reload.
+        /// </returns>
+        public Task<bool> ReloadAllPluginsAsync();
+
+        /// <summary>
         /// Log debug message of the time taken to execute a method
         /// Message will only be logged in Debug mode
         /// </summary>
