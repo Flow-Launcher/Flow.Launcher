@@ -4,6 +4,7 @@ SHEmptyRecycleBin
 S_OK
 E_UNEXPECTED
 SetSuspendState
+GetPwrCapabilities
 OpenProcessToken
 WIN32_ERROR
 LookupPrivilegeValue

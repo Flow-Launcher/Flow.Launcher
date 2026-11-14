@@ -122,6 +122,15 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        private void SelectPage(int offset)
+        {
+            lock (_collectionLock)
+            {
+                var count = Results.Count;
+                SelectedIndex = count > 0 ? Math.Clamp(SelectedIndex + offset, 0, count - 1) : -1;
+            }
+        }
+
         #endregion
 
         #region Public Methods
@@ -138,12 +147,12 @@ namespace Flow.Launcher.ViewModel
 
         public void SelectNextPage()
         {
-            SelectedIndex = NewIndex(SelectedIndex + MaxResults);
+            SelectPage(MaxResults);
         }
 
         public void SelectPrevPage()
         {
-            SelectedIndex = NewIndex(SelectedIndex - MaxResults);
+            SelectPage(-MaxResults);
         }
 
         public void SelectFirstResult()
@@ -203,24 +212,26 @@ namespace Flow.Launcher.ViewModel
                 Results.Update(newResults, token);
                 if (reselect && Results.Any())
                     SelectedItem = Results[0];
-            }
 
-            if (token.IsCancellationRequested)
-                return;
+                if (token.IsCancellationRequested)
+                    return;
 
-            switch (Visibility)
-            {
-                case Visibility.Collapsed when Results.Count > 0:
-                    if (_mainVM == null || // The results are for preview only in appearance page
-                        _mainVM.ResultsSelected(this)) // The results are selected
-                    {
-                        SelectedIndex = 0;
-                        Visibility = Visibility.Visible;
-                    }
-                    break;
-                case Visibility.Visible when Results.Count == 0:
-                    Visibility = Visibility.Collapsed;
-                    break;
+                // Keep initial selection and visibility in the refresh transaction,
+                // so they cannot overwrite a page selection made after the refresh.
+                switch (Visibility)
+                {
+                    case Visibility.Collapsed when Results.Count > 0:
+                        if (_mainVM == null || // The results are for preview only in appearance page
+                            _mainVM.ResultsSelected(this)) // The results are selected
+                        {
+                            SelectedIndex = 0;
+                            Visibility = Visibility.Visible;
+                        }
+                        break;
+                    case Visibility.Visible when Results.Count == 0:
+                        Visibility = Visibility.Collapsed;
+                        break;
+                }
             }
         }
 
