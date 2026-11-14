@@ -7,6 +7,7 @@
   "Description": "Install, uninstall or update Flow Launcher plugins via the search window",
   "Author": "Jeremy Wu",
   "Version": "1.0.0",
+  "MinimumAppVersion": "2.2.0",
   "Language": "csharp",
   "Website": "https://github.com/Flow-Launcher/Flow.Launcher",
   "ExecuteFileName": "Flow.Launcher.Plugin.PluginsManager.dll",
