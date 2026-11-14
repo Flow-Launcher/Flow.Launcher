@@ -176,6 +176,18 @@
         <Setter Property="Foreground" Value="#c2c2c2" />
     </Style>
     <Style
+        x:Key="PreviewBlockTextNormalStyle"
+        BasedOn="{StaticResource BasePreviewBlockTextStyle}"
+        TargetType="{x:Type TextBox}">
+        <Setter Property="Foreground" Value="#f5f5f5" />
+    </Style>
+    <Style
+        x:Key="PreviewBlockTextMutedStyle"
+        BasedOn="{StaticResource BasePreviewBlockTextStyle}"
+        TargetType="{x:Type TextBox}">
+        <Setter Property="Foreground" Value="#c2c2c2" />
+    </Style>
+    <Style
         x:Key="PreviewGlyph"
         BasedOn="{StaticResource BasePreviewGlyph}"
         TargetType="{x:Type TextBlock}">
