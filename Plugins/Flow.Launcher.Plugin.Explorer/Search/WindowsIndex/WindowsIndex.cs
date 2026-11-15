@@ -77,7 +77,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         {
             try
             {
-
                 return _reservedPatternMatcher.IsMatch(search)
                     ? AsyncEnumerable.Empty<SearchResult>()
                     : ExecuteWindowsIndexSearchAsync(search, connectionString, token);

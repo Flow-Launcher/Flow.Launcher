@@ -5,6 +5,7 @@
     "Description":"Kill running processes from Flow",
     "Author":"Flow-Launcher",
     "Version": "1.0.0",
+    "MinimumAppVersion": "2.2.0",
     "Language":"csharp",
     "Website":"https://github.com/Flow-Launcher/Flow.Launcher.Plugin.ProcessKiller",
     "IcoPath":"Images\\app.png",
