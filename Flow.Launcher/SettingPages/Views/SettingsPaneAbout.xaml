@@ -195,7 +195,9 @@
                         </ui:SettingsCard.HeaderIcon>
 
                         <ComboBox
+                            AutomationProperties.Name="{DynamicResource logLevel}"
                             DisplayMemberPath="Display"
+                            ItemContainerStyle="{StaticResource DisplayComboBoxItemStyle}"
                             ItemsSource="{Binding LogLevels}"
                             SelectedValue="{Binding LogLevel}"
                             SelectedValuePath="Value" />
@@ -211,6 +213,7 @@
                                 Margin="12 8 0 8"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Top"
+                                AutomationProperties.Name="{DynamicResource settingWindowFontTitle}"
                                 DisplayMemberPath="Source"
                                 ItemsSource="{Binding Source={StaticResource SortedFonts}}"
                                 SelectedValue="{Binding SettingWindowFont, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"

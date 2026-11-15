@@ -43,6 +43,7 @@
                 Orientation="Horizontal"
                 Spacing="8">
                 <TextBlock
+                    x:Name="DisplayModeLabel"
                     VerticalAlignment="Center"
                     FontSize="14"
                     Foreground="{DynamicResource Color15B}"
@@ -54,8 +55,10 @@
                     MinWidth="150"
                     MaxWidth="150"
                     HorizontalContentAlignment="Left"
+                    AutomationProperties.LabeledBy="{Binding ElementName=DisplayModeLabel}"
                     Background="{DynamicResource Color00B}"
                     DisplayMemberPath="Display"
+                    ItemContainerStyle="{StaticResource DisplayComboBoxItemStyle}"
                     ItemsSource="{Binding DisplayModes}"
                     SelectedValue="{Binding SelectedDisplayMode, Mode=TwoWay}"
                     SelectedValuePath="Value" />
