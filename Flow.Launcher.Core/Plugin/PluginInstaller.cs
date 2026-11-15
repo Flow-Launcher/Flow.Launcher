@@ -26,7 +26,7 @@ public static class PluginInstaller
     private static readonly SemaphoreSlim UpdatePluginsSemaphore = new(1, 1);
 
     /// <summary>
-    /// Installs a plugin and restarts the application if required by settings. Prompts user for confirmation and handles download if needed.
+    /// Installs a plugin and hot reloads it. Prompts user for confirmation and handles download if needed.
     /// </summary>
     /// <param name="newPlugin">The plugin to install.</param>
     /// <returns>A Task representing the asynchronous install operation.</returns>
@@ -94,20 +94,18 @@ public static class PluginInstaller
             return; // do not restart on failure
         }
 
-        if (Settings.AutoRestartAfterChanging)
-        {
-            PublicApi.Instance.RestartApp();
-        }
-        else
+        var hotReloaded = await PluginManager.ReloadPluginAsync(newPlugin.ID);
+        if (hotReloaded)
         {
             PublicApi.Instance.ShowMsg(
                 Localize.installbtn(),
-                Localize.InstallSuccessNoRestart(newPlugin.Name));
+                Localize.InstallSuccessHotReload(newPlugin.Name));
         }
+        // Hot reload was attempted and failed: PluginManager.ReloadPluginAsync already notified the user
     }
 
     /// <summary>
-    /// Installs a plugin from a local zip file and restarts the application if required by settings. Validates the zip and prompts user for confirmation.
+    /// Installs a plugin from a local zip file. Validates the zip and prompts user for confirmation.
     /// </summary>
     /// <param name="filePath">The path to the plugin zip file.</param>
     /// <returns>A Task representing the asynchronous install operation.</returns>
@@ -152,7 +150,7 @@ public static class PluginInstaller
     }
 
     /// <summary>
-    /// Uninstalls a plugin and restarts the application if required by settings. Prompts user for confirmation and whether to keep plugin settings.
+    /// Uninstalls a plugin and hot unloads it when possible. Prompts user for confirmation and whether to keep plugin settings.
     /// </summary>
     /// <param name="oldPlugin">The plugin metadata to uninstall.</param>
     /// <returns>A Task representing the asynchronous uninstall operation.</returns>
@@ -189,9 +187,12 @@ public static class PluginInstaller
             return; // don not restart on failure
         }
 
-        if (Settings.AutoRestartAfterChanging)
+        if (!PublicApi.Instance.PluginModified(oldPlugin.ID))
         {
-            PublicApi.Instance.RestartApp();
+            // The plugin was fully unloaded and its directory deleted, so no restart is needed
+            PublicApi.Instance.ShowMsg(
+                Localize.uninstallbtn(),
+                Localize.UninstallSuccessHotReload(oldPlugin.Name));
         }
         else
         {
@@ -202,7 +203,7 @@ public static class PluginInstaller
     }
 
     /// <summary>
-    /// Updates a plugin to a new version and restarts the application if required by settings. Prompts user for confirmation and handles download if needed.
+    /// Updates a plugin to a new version and hot reloads it. Prompts user for confirmation and handles download if needed.
     /// </summary>
     /// <param name="newPlugin">The new plugin version to install.</param>
     /// <param name="oldPlugin">The existing plugin metadata to update.</param>
@@ -249,16 +250,14 @@ public static class PluginInstaller
             return false; // do not restart on failure
         }
 
-        if (Settings.AutoRestartAfterChanging)
-        {
-            PublicApi.Instance.RestartApp();
-        }
-        else
+        var hotReloaded = await PluginManager.ReloadPluginAsync(oldPlugin.ID);
+        if (hotReloaded)
         {
             PublicApi.Instance.ShowMsg(
                 Localize.updatebtn(),
-                Localize.UpdateSuccessNoRestart(newPlugin.Name));
+                Localize.UpdateSuccessHotReload(newPlugin.Name));
         }
+        // Hot reload was attempted and failed: PluginManager.ReloadPluginAsync already notified the user
 
         return true;
     }
@@ -362,6 +361,11 @@ public static class PluginInstaller
         IEnumerable<PluginUpdateInfo> resultsForUpdate,
         bool restart)
     {
+        var allPluginsHotReloaded = true;
+        // Set only for failures PluginManager.ReloadPluginAsync doesn't already notify the user about
+        // (download/update failures) so the aggregate message below doesn't
+        // duplicate the per-plugin notification a failed reload attempt already showed
+        var anyUnnotifiedFailure = false;
         var updateResults = await Task.WhenAll(resultsForUpdate.Select(async plugin =>
         {
             var downloadToFilePath = Path.Combine(Path.GetTempPath(), $"{plugin.Name}-{plugin.NewVersion}.zip");
@@ -377,18 +381,30 @@ public static class PluginInstaller
                 // check if user cancelled download before installing plugin
                 if (cts.IsCancellationRequested)
                 {
+                    allPluginsHotReloaded = false;
+                    anyUnnotifiedFailure = true;
                     return null;
                 }
 
                 if (!await PublicApi.Instance.UpdatePluginAsync(plugin.PluginExistingMetadata, plugin.PluginNewUserPlugin, downloadToFilePath))
                 {
+                    allPluginsHotReloaded = false;
+                    anyUnnotifiedFailure = true;
                     return null;
+                }
+
+                if (!await PluginManager.ReloadPluginAsync(plugin.ID))
+                {
+                    allPluginsHotReloaded = false;
+                    // ReloadPluginAsync already notified the user if reload failed.
                 }
 
                 return plugin;
             }
             catch (Exception e)
             {
+                allPluginsHotReloaded = false;
+                anyUnnotifiedFailure = true;
                 PublicApi.Instance.LogException(ClassName, "Failed to update plugin", e);
                 PublicApi.Instance.ShowMsgError(Localize.ErrorUpdatingPlugin());
                 return null;
@@ -401,11 +417,17 @@ public static class PluginInstaller
 
         if (successfulUpdates.Count == 0) return successfulUpdates;
 
-        if (restart)
+        if (allPluginsHotReloaded)
+        {
+            PublicApi.Instance.ShowMsg(
+                Localize.updatebtn(),
+                Localize.PluginsUpdateSuccessHotReload());
+        }
+        else if (restart)
         {
             PublicApi.Instance.RestartApp();
         }
-        else
+        else if (anyUnnotifiedFailure)
         {
             PublicApi.Instance.ShowMsg(
                 Localize.updatebtn(),

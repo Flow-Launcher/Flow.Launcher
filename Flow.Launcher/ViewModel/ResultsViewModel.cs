@@ -181,6 +181,11 @@ namespace Flow.Launcher.ViewModel
         {
             lock (_collectionLock)
                 Results.Update(Results.Where(r => r.Result.PluginID != metadata.ID).ToList());
+
+            if (SelectedItem?.Result.PluginID == metadata.ID)
+            {
+                SelectedItem = Results.FirstOrDefault();
+            }
         }
 
         /// <summary>

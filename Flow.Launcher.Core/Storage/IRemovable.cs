@@ -1,7 +1,9 @@
-﻿namespace Flow.Launcher.Core.Storage;
+﻿using System;
+
+namespace Flow.Launcher.Core.Storage;
 
 /// <summary>
-/// Remove storage instances from <see cref="Launcher.Plugin.IPublicAPI"/> instance
+/// Remove per-plugin state (storages, callbacks) from <see cref="Launcher.Plugin.IPublicAPI"/> instance
 /// </summary>
 public interface IRemovable
 {
@@ -16,4 +18,11 @@ public interface IRemovable
     /// </summary>
     /// <param name="cacheDirectory"></param>
     public void RemovePluginCaches(string cacheDirectory);
+
+    /// <summary>
+    /// Remove every callback and event handler a plugin registered through the API and did not remove itself,
+    /// such as global keyboard callbacks and <see cref="Launcher.Plugin.IPublicAPI.VisibilityChanged"/> handlers
+    /// </summary>
+    /// <param name="belongsToPlugin">Whether a handler's code comes from the plugin being unloaded</param>
+    public void RemovePluginCallbacks(Func<Delegate, bool> belongsToPlugin);
 }
