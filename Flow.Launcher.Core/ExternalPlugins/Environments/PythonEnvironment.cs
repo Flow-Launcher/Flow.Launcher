@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using Droplex;
+using System.Threading;
+using Flow.Launcher.Core.ExternalPlugins.PythonDependencies;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
@@ -13,13 +14,17 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
     {
         private static readonly string ClassName = nameof(PythonEnvironment);
 
+        // Python and Python_v2 plugins set up the same runtime one after the other, so the second one
+        // must not take a path changed earlier in this session for a saved one.
+        private static bool _runtimeInstalledThisSession;
+
         internal override string Language => AllowedLanguage.Python;
 
         internal override string EnvName => DataLocation.PythonEnvironmentName;
 
         internal override string EnvPath => Path.Combine(DataLocation.PluginEnvironmentsPath, EnvName);
 
-        internal override string InstallPath => Path.Combine(EnvPath, "PythonEmbeddable-v3.11.4");
+        internal override string InstallPath => Path.Combine(EnvPath, UvPythonRuntime.InstallDirectoryName, UvPythonRuntime.InstallKey);
 
         internal override string ExecutablePath => Path.Combine(InstallPath, "pythonw.exe");
 
@@ -31,7 +36,12 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
             set => PluginSettings.PythonExecutablePath = value;
         }
 
-        internal PythonEnvironment(List<PluginMetadata> pluginMetadataList, PluginsSettings pluginSettings) : base(pluginMetadataList, pluginSettings) { }
+        protected readonly PythonDependencyInstaller _pythonDependencies;
+
+        internal PythonEnvironment(List<PluginMetadata> pluginMetadataList, PluginsSettings pluginSettings, PythonDependencyInstaller pythonDependencies) : base(pluginMetadataList, pluginSettings)
+        {
+            _pythonDependencies = pythonDependencies;
+        }
 
         private JoinableTaskFactory JTF { get; } = new JoinableTaskFactory(new JoinableTaskContext());
 
@@ -39,29 +49,57 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
         {
             FilesFolders.RemoveFolderIfExists(InstallPath, (s) => API.ShowMsgBox(s));
 
-            // Python 3.11.4 is no longer Windows 7 compatible. If user is on Win 7 and
-            // uses Python plugin they need to custom install and use v3.8.9
             JTF.Run(async () =>
             {
-                try
-                {
-                    await DroplexPackage.Drop(App.python_3_11_4_embeddable, InstallPath);
-
-                    PluginsSettingsFilePath = ExecutablePath;
-                }
-                catch (System.Exception e)
-                {
-                    API.ShowMsgError(Localize.failToInstallPythonEnv());
-                    API.LogException(ClassName, "Failed to install Python environment", e);
-                }
+                await PythonRuntimeSwitch.TryAsync(
+                    () => CreateRuntimeInstaller().InstallAsync(CancellationToken.None),
+                    path =>
+                    {
+                        PluginsSettingsFilePath = path;
+                        _runtimeInstalledThisSession = true;
+                    },
+                    e =>
+                    {
+                        API.ShowMsgError(Localize.failToInstallPythonEnv());
+                        API.LogException(ClassName, "Failed to install Python environment", e);
+                    });
             });
+        }
+
+        // Unlike the base class this keeps the old install until the new one is in place, so a failed
+        // install (for example while offline) leaves the user's current Python working.
+        protected override void EnsureLatestInstalled(string expectedPath, string currentPath, string installedDirPath)
+        {
+            if (expectedPath != currentPath)
+            {
+                InstallEnvironment();
+                return;
+            }
+
+            // The saved setting already points at the uv runtime, so a crash can no longer leave Flow
+            // pointing at a removed install.
+            if (!_runtimeInstalledThisSession)
+            {
+                PythonRuntimeSwitch.RemoveStale(EnvPath, message => API.LogError(ClassName, message));
+            }
+        }
+
+        private PythonRuntimeInstaller CreateRuntimeInstaller()
+        {
+            return new PythonRuntimeInstaller(
+                _pythonDependencies.UvLocator,
+                new ProcessRunner(),
+                Path.Combine(EnvPath, UvPythonRuntime.InstallDirectoryName),
+                DataLocation.PortableDataLocationInUse(),
+                DataLocation.UvCachePath,
+                proxyUrl: UvEnvironment.FlowProxyUrl);
         }
 
         internal override PluginPair CreatePluginPair(string filePath, PluginMetadata metadata)
         {
             return new PluginPair
             {
-                Plugin = new PythonPlugin(filePath),
+                Plugin = new PythonPlugin(filePath, _pythonDependencies),
                 Metadata = metadata
             };
         }

@@ -28,6 +28,10 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
 
+        public string UvExecutablePath { get; set; } = string.Empty;
+
+        public bool AllowUnpinnedPythonDependencies { get; set; } = false;
+
         /// <summary>
         /// Only used for serialization
         /// </summary>

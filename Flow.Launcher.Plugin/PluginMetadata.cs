@@ -143,6 +143,11 @@ namespace Flow.Launcher.Plugin
         public string MinimumAppVersion { get; set; } = string.Empty;
 
         /// <summary>
+        /// Python libraries the plugin needs, as pinned pip requirement strings. Only used by Python plugins.
+        /// </summary>
+        public List<string> Dependencies { get; set; } = new();
+
+        /// <summary>
         /// The path to the plugin settings directory which is not validated.
         /// It is used to store plugin settings files and data files.
         /// When plugin is deleted, FL will ask users whether to keep its settings.
