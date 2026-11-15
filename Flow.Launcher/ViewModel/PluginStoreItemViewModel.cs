@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core.Plugin;
+using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Plugin;
 using Version = SemanticVersioning.Version;
 
@@ -30,6 +32,31 @@ namespace Flow.Launcher.ViewModel
         public string IcoPath => _newPlugin.IcoPath;
         public DateTime? DateAdded => _newPlugin.DateAdded;
         public DateTime? UpdatedDate => _newPlugin.LatestReleaseDate;
+
+        private bool _imageLoaded = false;
+        private ImageSource _image = ImageLoader.LoadingImage;
+
+        public ImageSource Image
+        {
+            get
+            {
+                if (!_imageLoaded)
+                {
+                    _imageLoaded = true;
+                    _ = LoadIconAsync();
+                }
+
+                return _image;
+            }
+
+            set => _image = value;
+        }
+
+        private async Task LoadIconAsync()
+        {
+            Image = await App.API.LoadImageAsync(_newPlugin.IcoPath);
+            OnPropertyChanged(nameof(Image));
+        }
 
         public bool LabelInstalled => _oldPluginPair != null;
         public bool LabelUpdate => LabelInstalled && new Version(_newPlugin.Version) > new Version(_oldPluginPair.Metadata.Version);
