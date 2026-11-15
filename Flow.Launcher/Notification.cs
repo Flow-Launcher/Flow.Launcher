@@ -2,7 +2,11 @@
 using System.Collections.Concurrent;
 using System.IO;
 using System.Windows;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Plugin;
+using Flow.Launcher.ViewModel;
+using iNKORE.UI.WPF.Modern.Controls;
 using Microsoft.Toolkit.Uwp.Notifications;
 
 namespace Flow.Launcher
@@ -140,6 +144,20 @@ namespace Flow.Launcher
         {
             var msg = new MsgWithButton();
             msg.Show(title, buttonText, buttonAction, subTitle, iconPath);
+        }
+
+        public static void ShowInline(string title, string subTitle, NotificationSeverity severity)
+        {
+            var infoBarSeverity = severity switch
+            {
+                NotificationSeverity.Success => InfoBarSeverity.Success,
+                NotificationSeverity.Warning => InfoBarSeverity.Warning,
+                NotificationSeverity.Error => InfoBarSeverity.Error,
+                _ => InfoBarSeverity.Informational
+            };
+
+            var mainVM = Ioc.Default.GetRequiredService<MainViewModel>();
+            mainVM.ShowInlineNotification(title, subTitle, infoBarSeverity);
         }
     }
 }
