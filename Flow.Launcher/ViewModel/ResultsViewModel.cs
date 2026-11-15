@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Windows;
@@ -8,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 
@@ -25,6 +27,21 @@ namespace Flow.Launcher.ViewModel
         private readonly Settings _settings;
         private readonly MainViewModel _mainVM;
         private int MaxResults => _settings?.MaxResultsToShow ?? 6;
+        private readonly bool _isPreviewVisible;
+        private bool IsPreviewVisible => _mainVM?.InternalPreviewVisible ?? _isPreviewVisible;
+        private int VisibleResultCount
+        {
+            get
+            {
+                var resultCount = MaxResults;
+                if (IsPreviewVisible)
+                {
+                    var previewResultCount = (int)Math.Ceiling(Constant.PreviewMinimumHeight / _settings.ItemHeightSize);
+                    resultCount = Math.Max(resultCount, previewResultCount);
+                }
+                return resultCount;
+            }
+        }
 
         public ResultsViewModel()
         {
@@ -32,10 +49,14 @@ namespace Flow.Launcher.ViewModel
             BindingOperations.EnableCollectionSynchronization(Results, _collectionLock);
         }
 
-        public ResultsViewModel(Settings settings, MainViewModel mainVM) : this()
+        public ResultsViewModel(Settings settings, MainViewModel mainVM, bool isPreviewVisible = false) : this()
         {
             _settings = settings;
             _mainVM = mainVM;
+            _isPreviewVisible = isPreviewVisible;
+            if (_mainVM != null)
+                _mainVM.PropertyChanged += MainViewModel_PropertyChanged;
+
             _settings.PropertyChanged += (s, e) =>
             {
                 switch (e.PropertyName)
@@ -51,28 +72,17 @@ namespace Flow.Launcher.ViewModel
             };
         }
 
+        private void MainViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(MainViewModel.InternalPreviewVisible))
+                OnPropertyChanged(nameof(MaxHeight));
+        }
+
         #endregion
 
         #region Properties
 
-        public bool IsPreviewOn { get; set; }
-
-        public double MaxHeight
-        {
-            get
-            {
-                var newResultsCount = MaxResults;
-                if (IsPreviewOn)
-                {
-                    newResultsCount = (int)Math.Ceiling(380 / _settings.ItemHeightSize);
-                    if (newResultsCount < MaxResults)
-                    {
-                        newResultsCount = MaxResults;
-                    }
-                }
-                return newResultsCount * _settings.ItemHeightSize;
-            }
-        }
+        public double MaxHeight => VisibleResultCount * ItemHeightSize;
 
         public double ItemHeightSize
         {
@@ -147,12 +157,12 @@ namespace Flow.Launcher.ViewModel
 
         public void SelectNextPage()
         {
-            SelectPage(MaxResults);
+            SelectPage(VisibleResultCount);
         }
 
         public void SelectPrevPage()
         {
-            SelectPage(-MaxResults);
+            SelectPage(-VisibleResultCount);
         }
 
         public void SelectFirstResult()

@@ -14,13 +14,37 @@ namespace Flow.Launcher.Test
     internal class MainViewModelPreviewTest
     {
         [Test]
+        public async Task GivenPreviewVisibilityChanges_WhenPreviewIsToggled_ThenResultAreaColumnMatchesPreviewState_Async()
+        {
+            var settings = new Settings
+            {
+                AlwaysPreview = false
+            };
+            var viewModel = CreatePreviewViewModel(settings, false);
+            viewModel.PreviewSelectedItem = ViewModel("Normal", PreviewVisibility.Optional, settings);
+
+            ClassicAssert.IsFalse(viewModel.InternalPreviewVisible);
+            ClassicAssert.AreEqual(3, viewModel.ResultAreaColumn);
+
+            await viewModel.TogglePreviewCommand.ExecuteAsync(null);
+
+            ClassicAssert.IsTrue(viewModel.InternalPreviewVisible);
+            ClassicAssert.AreEqual(1, viewModel.ResultAreaColumn);
+
+            await viewModel.TogglePreviewCommand.ExecuteAsync(null);
+
+            ClassicAssert.IsFalse(viewModel.InternalPreviewVisible);
+            ClassicAssert.AreEqual(3, viewModel.ResultAreaColumn);
+        }
+
+        [Test]
         public async Task GivenPreviewToggledOn_WhenNeverThenDefaultResultSelected_ThenInternalPreviewIsRestored_Async()
         {
             var settings = new Settings
             {
                 AlwaysPreview = false
             };
-            var viewModel = CreatePreviewViewModel(settings, ResultAreaColumnPreviewHidden);
+            var viewModel = CreatePreviewViewModel(settings, false);
 
             await viewModel.TogglePreviewCommand.ExecuteAsync(null);
 
@@ -41,7 +65,7 @@ namespace Flow.Launcher.Test
             {
                 AlwaysPreview = false
             };
-            var viewModel = CreatePreviewViewModel(settings, ResultAreaColumnPreviewHidden);
+            var viewModel = CreatePreviewViewModel(settings, false);
 
             await viewModel.TogglePreviewCommand.ExecuteAsync(null);
 
@@ -66,7 +90,7 @@ namespace Flow.Launcher.Test
             {
                 AlwaysPreview = false
             };
-            var viewModel = CreatePreviewViewModel(settings, ResultAreaColumnPreviewHidden);
+            var viewModel = CreatePreviewViewModel(settings, false);
 
             viewModel.PreviewSelectedItem = ViewModel("Forced", PreviewVisibility.Always, settings);
             await InvokeUpdatePreviewAsync(viewModel);
@@ -83,7 +107,7 @@ namespace Flow.Launcher.Test
             {
                 AlwaysPreview = false
             };
-            var viewModel = CreatePreviewViewModel(settings, ResultAreaColumnPreviewHidden);
+            var viewModel = CreatePreviewViewModel(settings, false);
 
             viewModel.PreviewSelectedItem =
                 ViewModel("Markdown", PreviewVisibility.Optional, settings, PreviewContentType.Markdown);
@@ -99,7 +123,7 @@ namespace Flow.Launcher.Test
             {
                 AlwaysPreview = false
             };
-            var viewModel = CreatePreviewViewModel(settings, ResultAreaColumnPreviewHidden);
+            var viewModel = CreatePreviewViewModel(settings, false);
 
             viewModel.PreviewSelectedItem = ViewModel("Forced", PreviewVisibility.Always, settings);
             await InvokeUpdatePreviewAsync(viewModel);
@@ -118,7 +142,7 @@ namespace Flow.Launcher.Test
             {
                 AlwaysPreview = false
             };
-            var viewModel = CreatePreviewViewModel(settings, ResultAreaColumnPreviewHidden);
+            var viewModel = CreatePreviewViewModel(settings, false);
 
             await viewModel.TogglePreviewCommand.ExecuteAsync(null);
 
@@ -135,7 +159,7 @@ namespace Flow.Launcher.Test
             {
                 AlwaysPreview = false
             };
-            var viewModel = CreatePreviewViewModel(settings, ResultAreaColumnPreviewHidden);
+            var viewModel = CreatePreviewViewModel(settings, false);
 
             viewModel.PreviewSelectedItem = ViewModel("Forced", PreviewVisibility.Always, settings);
             await InvokeUpdatePreviewAsync(viewModel);
@@ -160,7 +184,7 @@ namespace Flow.Launcher.Test
             {
                 AlwaysPreview = true
             };
-            var viewModel = CreatePreviewViewModel(settings, ResultAreaColumnPreviewShown);
+            var viewModel = CreatePreviewViewModel(settings, true);
 
             await viewModel.TogglePreviewCommand.ExecuteAsync(null);
             ClassicAssert.IsFalse(viewModel.InternalPreviewVisible);
@@ -178,7 +202,7 @@ namespace Flow.Launcher.Test
             {
                 AlwaysPreview = true
             };
-            var viewModel = CreatePreviewViewModel(settings, ResultAreaColumnPreviewHidden);
+            var viewModel = CreatePreviewViewModel(settings, false);
 
             viewModel.PreviewSelectedItem = ViewModel("Never", PreviewVisibility.Never, settings);
             await InvokeUpdatePreviewAsync(viewModel);
@@ -199,7 +223,7 @@ namespace Flow.Launcher.Test
             {
                 AlwaysPreview = true
             };
-            var viewModel = CreatePreviewViewModel(settings, ResultAreaColumnPreviewShown);
+            var viewModel = CreatePreviewViewModel(settings, true);
 
             await viewModel.TogglePreviewCommand.ExecuteAsync(null);
             ClassicAssert.IsFalse(viewModel.InternalPreviewVisible);
@@ -223,7 +247,7 @@ namespace Flow.Launcher.Test
             {
                 AlwaysPreview = false
             };
-            var viewModel = CreatePreviewViewModel(settings, ResultAreaColumnPreviewHidden);
+            var viewModel = CreatePreviewViewModel(settings, false);
             viewModel.PreviewSelectedItem = ViewModel("Forced", PreviewVisibility.Always, settings);
 
             // Setup correctness assertions
@@ -244,7 +268,7 @@ namespace Flow.Launcher.Test
             {
                 AlwaysPreview = false
             };
-            var viewModel = CreatePreviewViewModel(settings, ResultAreaColumnPreviewShown);
+            var viewModel = CreatePreviewViewModel(settings, true);
             viewModel.PreviewSelectedItem = ViewModel("Normal", PreviewVisibility.Optional, settings);
 
             // Setup correctness assertions
@@ -267,7 +291,7 @@ namespace Flow.Launcher.Test
             {
                 AlwaysPreview = false
             };
-            var viewModel = CreatePreviewViewModel(settings, ResultAreaColumnPreviewHidden);
+            var viewModel = CreatePreviewViewModel(settings, false);
             SetExternalPreviewVisible(viewModel, true);
             viewModel.PreviewSelectedItem = ViewModel("Forced", PreviewVisibility.Always, settings);
 
@@ -291,7 +315,7 @@ namespace Flow.Launcher.Test
             {
                 AlwaysPreview = false
             };
-            var viewModel = CreatePreviewViewModel(settings, ResultAreaColumnPreviewShown);
+            var viewModel = CreatePreviewViewModel(settings, true);
             SetExternalPreviewVisible(viewModel, true);
             viewModel.PreviewSelectedItem = ViewModel("Normal", PreviewVisibility.Optional, settings);
 
@@ -315,7 +339,7 @@ namespace Flow.Launcher.Test
             {
                 AlwaysPreview = true
             };
-            var viewModel = CreatePreviewViewModel(settings, ResultAreaColumnPreviewShown);
+            var viewModel = CreatePreviewViewModel(settings, true);
 
             await viewModel.TogglePreviewCommand.ExecuteAsync(null);
             ClassicAssert.IsFalse(viewModel.InternalPreviewVisible);
@@ -330,13 +354,15 @@ namespace Flow.Launcher.Test
             ClassicAssert.IsFalse(viewModel.InternalPreviewVisible);
         }
 
-        private static MainViewModel CreatePreviewViewModel(Settings settings, int resultAreaColumn)
+        private static MainViewModel CreatePreviewViewModel(Settings settings, bool internalPreviewVisible)
         {
             var viewModel = (MainViewModel)RuntimeHelpers.GetUninitializedObject(typeof(MainViewModel));
             typeof(MainViewModel)
                 .GetField("<Settings>k__BackingField", BindingFlags.Instance | BindingFlags.NonPublic)
                 .SetValue(viewModel, settings);
-            viewModel.ResultAreaColumn = resultAreaColumn;
+            typeof(MainViewModel)
+                .GetField("_internalPreviewVisible", BindingFlags.Instance | BindingFlags.NonPublic)
+                .SetValue(viewModel, internalPreviewVisible);
             return viewModel;
         }
 
@@ -356,16 +382,6 @@ namespace Flow.Launcher.Test
                     }
                 },
                 settings);
-
-        private static int ResultAreaColumnPreviewShown
-            => (int)typeof(MainViewModel)
-                .GetField("ResultAreaColumnPreviewShown", BindingFlags.NonPublic | BindingFlags.Static)
-                .GetValue(null);
-
-        private static int ResultAreaColumnPreviewHidden
-            => (int)typeof(MainViewModel)
-                .GetField("ResultAreaColumnPreviewHidden", BindingFlags.NonPublic | BindingFlags.Static)
-                .GetValue(null);
 
         private static async Task InvokeUpdatePreviewAsync(MainViewModel viewModel)
         {
