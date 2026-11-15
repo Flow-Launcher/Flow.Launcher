@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Security.Principal;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using Windows.ApplicationModel;
@@ -201,11 +203,25 @@ namespace Flow.Launcher.Plugin.Program.Programs
             var support = SupportUWP();
             if (support && settings.EnableUWP)
             {
+                // Read the previous pass's results, record only what this pass sees (so superseded
+                // versions drop out). Passes are serialized by Main's UWP index lock.
+                var previous = Interlocked.Exchange(ref _discardParsedPackages, 0) == 1 ? null : _parsedPackages;
+                var current = new ConcurrentDictionary<string, UWPApp[]>();
+
                 var applications = CurrentUserPackages().AsParallel().SelectMany(p =>
                 {
+                    string key = null;
                     UWPPackage u;
                     try
                     {
+                        // FullName includes the version; the path covers the same version reinstalled elsewhere.
+                        key = p.Id.FullName + "|" + p.InstalledLocation.Path;
+                        if (previous != null && previous.TryGetValue(key, out var parsed))
+                        {
+                            current[key] = parsed;
+                            return parsed;
+                        }
+
                         u = new UWPPackage(p);
                         u.InitAppsInPackage(p);
                     }
@@ -222,8 +238,10 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         throw;
                     }
 #endif
+                    current[key] = u.Apps;
                     return u.Apps;
                 }).ToArray();
+                _parsedPackages = current;
 
                 var updatedListWithoutDisabledApps = applications
                     .Where(t1 => !Main._settings.DisabledProgramSources
@@ -236,6 +254,15 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 return Array.Empty<UWPApp>();
             }
         }
+
+        // Parsing a package's manifest is ~90% of UWP indexing. Keyed by FullName (includes the version) + install
+        // path, so on a Store update only the updated package is parsed again.
+        private static ConcurrentDictionary<string, UWPApp[]> _parsedPackages = new();
+        private static int _discardParsedPackages;
+
+        // Called before a full reindex. Takes effect at the start of the next pass, so a pass already running
+        // can't feed its results into the full one.
+        public static void ClearParsedPackages() => Interlocked.Exchange(ref _discardParsedPackages, 1);
 
         public static bool SupportUWP()
         {
