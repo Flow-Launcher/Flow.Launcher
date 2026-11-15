@@ -84,8 +84,46 @@ namespace Flow.Launcher.Core.Plugin
 
         protected void ExecuteFlowLauncherAPI(string method, object[] parameters)
         {
-            var parametersTypeArray = parameters.Select(param => param.GetType()).ToArray();
-            var methodInfo = typeof(IPublicAPI).GetMethod(method, parametersTypeArray);
+            // RPC callers may omit optional parameters or pass null, and null
+            // arguments carry no type information for GetMethod(Type[]). Resolve
+            // the overload by name and arity instead: supplied arguments must be
+            // assignable, null arguments must sit on a nullable parameter slot,
+            // and trailing parameters omitted by the caller must be optional.
+            var methodInfo = typeof(IPublicAPI).GetMethods()
+                .Where(m => string.Equals(m.Name, method, StringComparison.Ordinal))
+                .Where(m => m.GetParameters().Length >= parameters.Length)
+                .FirstOrDefault(m =>
+                {
+                    var methodParams = m.GetParameters();
+                    for (var i = 0; i < methodParams.Length; i++)
+                    {
+                        var parameterType = methodParams[i].ParameterType;
+                        if (i >= parameters.Length)
+                        {
+                            if (!methodParams[i].HasDefaultValue)
+                            {
+                                return false;
+                            }
+
+                            continue;
+                        }
+
+                        var argument = parameters[i];
+                        if (argument == null)
+                        {
+                            if (parameterType.IsValueType && Nullable.GetUnderlyingType(parameterType) == null)
+                            {
+                                return false;
+                            }
+                        }
+                        else if (!parameterType.IsInstanceOfType(argument))
+                        {
+                            return false;
+                        }
+                    }
+
+                    return true;
+                });
 
             if (methodInfo == null)
             {
@@ -94,7 +132,17 @@ namespace Flow.Launcher.Core.Plugin
 
             try
             {
-                methodInfo.Invoke(Context.API, parameters);
+                var methodParams = methodInfo.GetParameters();
+                var invokeArgs = new object[methodParams.Length];
+                for (var i = 0; i < methodParams.Length; i++)
+                {
+                    // Omitted trailing optional parameters are filled with their
+                    // declared default values (Type.Missing for compile-time
+                    // null defaults on reference types).
+                    invokeArgs[i] = i < parameters.Length ? parameters[i] : methodParams[i].DefaultValue;
+                }
+
+                methodInfo.Invoke(Context.API, invokeArgs);
             }
             catch (Exception)
             {
