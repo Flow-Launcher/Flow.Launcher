@@ -10,9 +10,9 @@
     <system:String x:Key="flowlauncher_plugin_websearch_delete">Apagar</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_edit">Editar</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_add">Adicionar</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enabled_label">Enabled</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enabled_label">Ativado</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_private_mode_label">Private Mode</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_true">Enabled</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_true">Ativado</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_false">Disabled</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_confirm">Confirm</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">Action Keyword</system:String>
@@ -22,7 +22,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_max_suggestions">Max Suggestions</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">Autocomplete Data from:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">Please select a web search</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">Are you sure you want to delete {0}?</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">Tem certeza de que deseja deletar {0}?</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_guide_1">If you want to add a search for a particular website to Flow, first enter a dummy text string in the search bar of that website, and launch the search. Now copy the contents of the browser's address bar, and paste it in the URL field below. Replace your test string with {q}. For example, if you search for casino on Netflix, its address bar reads</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_guide_2">https://www.netflix.com/search?q=Casino</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_guide_3">

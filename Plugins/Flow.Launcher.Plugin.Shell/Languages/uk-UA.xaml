@@ -17,4 +17,14 @@
     <system:String x:Key="flowlauncher_plugin_cmd_history">Показати лише кількість найчастіше використовуваних команд:</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_command_not_found">Команду не знайдено: {0}</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_error_running_command">Помилка запуску команди: {0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_error_no_exe_path_set">Шлях до виконуваного файлу не задано. Перевірте налаштування плагіна оболонки.</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_custom_template_exe_path">Шлях до виконуваного файлу</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_custom_template_browse">Перегляд...</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_custom_template_browse_filter_exe">Виконувані файли</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_custom_template_browse_filter_all">Усі файли</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_custom_template_arguments">Шаблон аргументів</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_custom_template_exe_path_tooltip">Може бути абсолютним шляхом або назвою, яку буде знайдено через PATH. Наприклад: cmd.exe</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_custom_template_arguments_tooltip">Використовуйте {command} як заповнювач. Наприклад: /k &quot;{command}&quot;</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_shell_settings">Налаштування оболонки</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_other_settings">Інші налаштування</system:String>
 </ResourceDictionary>

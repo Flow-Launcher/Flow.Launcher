@@ -42,6 +42,8 @@
     <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Формат дати й часу</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">Варіант сортування:</system:String>
     <system:String x:Key="plugin_explorer_everything_installed_path">Шлях до Everything:</system:String>
+    <system:String x:Key="plugin_explorer_everything_15_instance_name">Назва екземпляра Everything 1.5: </system:String>
+    <system:String x:Key="plugin_explorer_everything_15_instance_name_tooltip">Залиште це поле порожнім, щоб використовувати типовий екземпляр Everything 1.5b. Заповнюйте його лише, якщо ви використовуєте іменований екземпляр Everything або вкажіть «1.5a», аби використовувати Everything 1.5a.</system:String>
     <system:String x:Key="plugin_explorer_launch_hidden">Запустити приховано</system:String>
     <system:String x:Key="plugin_explorer_editor_path">Шлях до редактора</system:String>
     <system:String x:Key="plugin_explorer_shell_path">Шлях до оболонки Shell</system:String>
@@ -149,7 +151,11 @@
 
     <!--  Everything  -->
     <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">Не вдалося завантажити Everything SDK</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_architecture_check">Перевірте, чи ваша система має архітектуру x86 чи x64</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_is_not_running">Попередження: Служба Everything не запущена</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_15_unavailable">Попередження: Everything 1.5 недоступний</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_15_resolution">Переконайтеся, що Everything запущено, і перевірте налаштовану назву екземпляра</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_15_sort_warning">Попередження: Everything 1.5 недоступний. Можливо, служба не запущена або вказано неправильну назву екземпляра</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_query_error">Помилка при виконанні запиту Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by">Сортувати за</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_name_ascending">Назва ↑</system:String>
@@ -184,6 +190,8 @@
 
     <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">Шукати повний шлях</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_run_count">Увімкнути підрахунок запусків файлів / тек</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_enable_15_support">Використовувати Everything 1.5</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_15_restart_required">Перезапустіть Flow Launcher, щоб зміни набули чинності</system:String>
 
     <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Натисніть, щоб запустити або встановити Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_title">Встановлення програми Everything</system:String>

@@ -3,6 +3,9 @@
 
     <system:String x:Key="flowlauncher_plugin_pluginindicator_result_subtitle">{0} プラグインのアクションキーワード</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_settings_title">設定: {0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_settings_subtitle">Open the settings page for the {0} plugin</system:String>
+
     <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_name">プラグインインジケーター</system:String>
     <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_description">プラグインのアクションキーワードの一覧を検索します</system:String>
 

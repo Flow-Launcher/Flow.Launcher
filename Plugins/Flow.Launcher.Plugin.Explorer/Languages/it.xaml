@@ -42,6 +42,8 @@
     <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Formato data e ora</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">Opzioni di ordinamento:</system:String>
     <system:String x:Key="plugin_explorer_everything_installed_path">Percorso di Everything:</system:String>
+    <system:String x:Key="plugin_explorer_everything_15_instance_name">Everything 1.5 instance name: </system:String>
+    <system:String x:Key="plugin_explorer_everything_15_instance_name_tooltip">Leave this blank to use the default Everything 1.5b instance. Only set this if you run a named instance of Everything, or set it to &quot;1.5a&quot; to use Everything 1.5a.</system:String>
     <system:String x:Key="plugin_explorer_launch_hidden">Avvia nascosto</system:String>
     <system:String x:Key="plugin_explorer_editor_path">Tasto di accesso rapido alla finestra</system:String>
     <system:String x:Key="plugin_explorer_shell_path">Percorso Shell</system:String>
@@ -149,7 +151,11 @@
 
     <!--  Everything  -->
     <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">Impossibile caricare l'SDK di Everything</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_architecture_check">Please check whether your system is x86 or x64</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_is_not_running">Attenzione: Il servizio &quot;Everything&quot; non è in esecuzione</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_15_unavailable">Warning: Everything 1.5 is unavailable</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_15_resolution">Ensure Everything is running and verify the configured instance name</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_15_sort_warning">Warning: Everything 1.5 is unavailable. The service may not be running, or the instance name may be invalid</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_query_error">Errore nell'interrogazione di Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by">Ordina per</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_name_ascending">Name ↑</system:String>
@@ -184,6 +190,8 @@
 
     <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">Cerca Percorso Completo</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_run_count">Enable File/Folder Run Count</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_enable_15_support">Use Everything 1.5</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_15_restart_required">Restart Flow Launcher for this change to take effect</system:String>
 
     <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Clicca per avviare o installare Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_title">Installazione di Everything</system:String>

@@ -3,6 +3,9 @@
 
     <system:String x:Key="flowlauncher_plugin_pluginindicator_result_subtitle">הפעל את מילת הפעולה של התוסף {0}</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_settings_title">הגדרות: {0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_settings_subtitle">Open the settings page for the {0} plugin</system:String>
+
     <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_name">מחוון תוספים</system:String>
     <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_description">מספק הצעות למילות פעולה של תוספים</system:String>
 
