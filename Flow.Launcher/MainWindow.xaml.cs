@@ -1460,7 +1460,7 @@ namespace Flow.Launcher
             if (_viewModel.QueryText != QueryTextBox.Text)
             {
                 BindingExpression be = QueryTextBox.GetBindingExpression(TextBox.TextProperty);
-                be.UpdateSource();
+                be?.UpdateSource();
             }
         }
 
@@ -1528,6 +1528,13 @@ namespace Flow.Launcher
             var textBox = (TextBox)sender;
             _viewModel.QueryText = textBox.Text;
             _viewModel.Query(_settings.SearchQueryResultsWithDelay);
+
+            // Setting Text directly, as UI Automation's ValuePattern.SetValue does, replaces the
+            // one-way binding with a local value. Restore it so the box keeps following QueryText.
+            if (textBox.GetBindingExpression(TextBox.TextProperty) == null)
+            {
+                textBox.SetBinding(TextBox.TextProperty, new Binding(nameof(MainViewModel.QueryText)) { Mode = BindingMode.OneWay });
+            }
         }
 
         #endregion
