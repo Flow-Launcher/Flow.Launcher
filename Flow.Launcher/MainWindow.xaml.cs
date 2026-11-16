@@ -296,6 +296,9 @@ namespace Flow.Launcher
                             });
                             break;
                         }
+                    case nameof(MainViewModel.QueryText):
+                        Dispatcher.Invoke(RestoreQueryTextBinding);
+                        break;
                     case nameof(MainViewModel.QueryTextCursorMovedToEnd):
                         if (_viewModel.QueryTextCursorMovedToEnd)
                         {
@@ -1455,6 +1458,19 @@ namespace Flow.Launcher
             }
         }
 
+        /// <summary>
+        /// Setting Text directly, as UI Automation's ValuePattern.SetValue does, replaces the one-way
+        /// binding with a local value, even when the text is unchanged. Restore it on the next query
+        /// change so the box keeps following QueryText.
+        /// </summary>
+        private void RestoreQueryTextBinding()
+        {
+            if (QueryTextBox.GetBindingExpression(TextBox.TextProperty) == null)
+            {
+                QueryTextBox.SetBinding(TextBox.TextProperty, new Binding(nameof(MainViewModel.QueryText)) { Mode = BindingMode.OneWay });
+            }
+        }
+
         private void QueryTextBox_KeyUp(object sender, KeyEventArgs e)
         {
             if (_viewModel.QueryText != QueryTextBox.Text)
@@ -1528,13 +1544,6 @@ namespace Flow.Launcher
             var textBox = (TextBox)sender;
             _viewModel.QueryText = textBox.Text;
             _viewModel.Query(_settings.SearchQueryResultsWithDelay);
-
-            // Setting Text directly, as UI Automation's ValuePattern.SetValue does, replaces the
-            // one-way binding with a local value. Restore it so the box keeps following QueryText.
-            if (textBox.GetBindingExpression(TextBox.TextProperty) == null)
-            {
-                textBox.SetBinding(TextBox.TextProperty, new Binding(nameof(MainViewModel.QueryText)) { Mode = BindingMode.OneWay });
-            }
         }
 
         #endregion
