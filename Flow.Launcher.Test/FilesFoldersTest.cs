@@ -52,6 +52,16 @@ namespace Flow.Launcher.Test
             ClassicAssert.AreEqual(expectedResult, FilesFolders.PathContains(parentPath, path, allowEqual: expectedResult));
         }
 
+        [TestCase(null, false)]
+        [TestCase("", false)]
+        [TestCase(null, true)]
+        [TestCase("", true)]
+        public void GivenMissingParent_WhenCheckPathContains_ThenShouldNotContainPath(string parentPath, bool allowEqual)
+        {
+            var path = Path.GetFullPath("foo");
+            ClassicAssert.IsFalse(FilesFolders.PathContains(parentPath, path, allowEqual));
+        }
+
         [TestCase(@"c:\foo\plugin.zip", true)]
         [TestCase(@"c:\foo\plugin.ZIP", true)]
         [TestCase(@"c:\foo\plugin.Zip", true)]
