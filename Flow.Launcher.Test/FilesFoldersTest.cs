@@ -32,6 +32,8 @@ namespace Flow.Launcher.Test
         [TestCase(@"c:\foobar", @"c:\foo\a.txt", false)]
         [TestCase(@"c:\foobar\", @"c:\foo\a.txt", false)]
         // Edge case
+        [TestCase(null, @"c:\foo", false)]
+        [TestCase("", @"c:\foo", false)]
         [TestCase(@"c:\foo", @"c:\foo\..\bar\baz", false)]
         [TestCase(@"c:\bar", @"c:\foo\..\bar\baz", true)]
         [TestCase(@"c:\barr", @"c:\foo\..\bar\baz", false)]
@@ -50,6 +52,13 @@ namespace Flow.Launcher.Test
         public void GivenTwoPathsAreTheSame_WhenCheckPathContains_ThenShouldBeExpectedResult(string parentPath, string path, bool expectedResult)
         {
             ClassicAssert.AreEqual(expectedResult, FilesFolders.PathContains(parentPath, path, allowEqual: expectedResult));
+        }
+
+        [TestCase(null)]
+        [TestCase("")]
+        public void GivenMissingParent_WhenAllowEqual_ThenShouldNotContainPath(string parentPath)
+        {
+            ClassicAssert.IsFalse(FilesFolders.PathContains(parentPath, @"c:\foo", allowEqual: true));
         }
 
         [TestCase(@"c:\foo\plugin.zip", true)]
