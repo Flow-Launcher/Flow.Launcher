@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using NUnit.Framework;
 using NUnit.Framework.Legacy;
@@ -79,6 +80,26 @@ namespace Flow.Launcher.Test
             ClassicAssert.IsTrue(results[0].Title == "Inste");
             ClassicAssert.IsTrue(results[1].Title == "Install Package");
             ClassicAssert.IsTrue(results[2].Title == "file open in browser-test");
+        }
+
+        [TestCase("tr-TR")]
+        [TestCase("az-Latn-AZ")]
+        public void WhenCurrentCultureHasDottedAndDotlessI_ThenIgnoreCaseMatchShouldStillWork(string cultureName)
+        {
+            var originalCulture = CultureInfo.CurrentCulture;
+            try
+            {
+                CultureInfo.CurrentCulture = new CultureInfo(cultureName);
+                var matcher = new StringMatcher(alphabet, new Settings());
+
+                ClassicAssert.IsTrue(matcher.FuzzyMatch("internet", "Internet Explorer").IsSearchPrecisionScoreMet());
+                ClassicAssert.IsTrue(matcher.FuzzyMatch("INTERNET", "internet explorer").IsSearchPrecisionScoreMet());
+                ClassicAssert.IsTrue(matcher.FuzzyMatch("internet exp", "Internet Explorer").IsSearchPrecisionScoreMet());
+            }
+            finally
+            {
+                CultureInfo.CurrentCulture = originalCulture;
+            }
         }
 
         [TestCase("Chrome")]
