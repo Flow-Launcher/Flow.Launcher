@@ -370,7 +370,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                         }
                         else if (c.SpecialKeyState.ToModifierKeys() == ModifierKeys.Control)
                         {
-                            OpenFolder(filePath, filePath);
+                            OpenFolder(Path.GetDirectoryName(filePath), filePath);
                         }
                         else
                         {
