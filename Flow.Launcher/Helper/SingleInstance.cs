@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Windows;
 
 // http://blogs.microsoft.co.il/arik/2010/05/28/wpf-single-instance-application/
-// modified to allow single instace restart
+// modified to allow single instance restart
 namespace Flow.Launcher.Helper
 {
     public interface ISingleInstanceApp
