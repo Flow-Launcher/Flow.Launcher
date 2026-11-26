@@ -1,6 +1,6 @@
 ---
 name: "⭐ Feature request"
-about: Suggest a new idea or a feature enhacement
+about: Suggest a new idea or a feature enhancement
 title: "[Describe Your Feature]"
 labels: 'enhancement'
 assignees: ''

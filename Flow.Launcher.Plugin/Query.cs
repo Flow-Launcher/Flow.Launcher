@@ -65,7 +65,7 @@ namespace Flow.Launcher.Plugin
         public const string TermSeparator = " ";
 
         /// <summary>
-        /// User can set multiple action keywords seperated by whitespace
+        /// User can set multiple action keywords separated by whitespace
         /// </summary>
         public const string ActionKeywordSeparator = TermSeparator;
 
