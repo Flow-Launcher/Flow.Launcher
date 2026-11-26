@@ -427,6 +427,9 @@ namespace Flow.Launcher.Plugin.SharedCommands
         /// <returns></returns>
         public static bool PathContains(string parentPath, string subPath, bool allowEqual = false)
         {
+            // Missing Windows special folders return an empty path, not the drive root.
+            if (string.IsNullOrEmpty(parentPath)) return false;
+
             var rel = Path.GetRelativePath(parentPath.EnsureTrailingSlash(), subPath);
             return (rel != "." || allowEqual)
                    && rel != ".."
