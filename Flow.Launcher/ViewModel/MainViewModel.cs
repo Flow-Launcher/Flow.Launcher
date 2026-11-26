@@ -289,8 +289,18 @@ namespace Flow.Launcher.ViewModel
                 }
                 else
                 {
-                    // make a clone to avoid possible issue that plugin will also change the list and items when updating view model
-                    resultsCopy = DeepCloneResults(e.Results, false, token);
+                    try
+                    {
+                        PluginManager.ThrowIfBlocksPreviewInvalid(e.Results);
+
+                        // make a clone to avoid possible issue that plugin will also change the list and items when updating view model
+                        resultsCopy = DeepCloneResults(e.Results, false, token);
+                    }
+                    catch (InvalidPreviewBlockException exception)
+                    {
+                        App.API.LogException(ClassName, $"Invalid results update from plugin <{pair.Metadata.Name}>", exception);
+                        resultsCopy = [PluginManager.CreatePluginFailedResult(pair.Metadata, e.Query, exception)];
+                    }
                 }
 
                 foreach (var result in resultsCopy)
@@ -975,7 +985,18 @@ namespace Flow.Launcher.ViewModel
         }
 
         public Visibility ShowCustomizedPreview
-            => InternalPreviewVisible && PreviewSelectedItem?.Result.PreviewPanel != null ? Visibility.Visible : Visibility.Collapsed;
+        {
+            get
+            {
+                bool hasPreviewPanel = PreviewSelectedItem?.Result?.PreviewPanel != null;
+                bool hasContentBlocks = PreviewSelectedItem?.HasContentBlocks ?? false;
+
+                // A preview definition is preferred over the panel, so the panel only shows without blocks
+                return InternalPreviewVisible && hasPreviewPanel && !hasContentBlocks
+                    ? Visibility.Visible
+                    : Visibility.Collapsed;
+            }
+        }
 
         public UserControl CustomizedPreviewControl
             => ShowCustomizedPreview == Visibility.Visible ? PreviewSelectedItem?.Result.PreviewPanel.Value : null;
@@ -1145,6 +1166,11 @@ namespace Flow.Launcher.ViewModel
             get => _previewSelectedItem;
             set
             {
+                if (!ReferenceEquals(_previewSelectedItem, value))
+                {
+                    _previewSelectedItem?.CancelPreviewContentBlocksLoad();
+                }
+
                 _previewSelectedItem = value;
                 OnPropertyChanged();
             }
@@ -1251,6 +1277,7 @@ namespace Flow.Launcher.ViewModel
         {
             ResultAreaColumn = ResultAreaColumnPreviewShown;
             PreviewSelectedItem?.LoadPreviewImage();
+            PreviewSelectedItem?.LoadPreviewContentBlocks();
         }
 
         private void HideInternalPreview()
