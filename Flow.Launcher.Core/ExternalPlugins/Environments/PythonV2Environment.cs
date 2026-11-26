@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Flow.Launcher.Core.ExternalPlugins.PythonDependencies;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
@@ -13,11 +14,11 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
         {
             return new PluginPair
             {
-                Plugin = new PythonPluginV2(filePath),
+                Plugin = new PythonPluginV2(filePath, _pythonDependencies),
                 Metadata = metadata
             };
         }
         
-        internal PythonV2Environment(List<PluginMetadata> pluginMetadataList, PluginsSettings pluginSettings) : base(pluginMetadataList, pluginSettings) { }
+        internal PythonV2Environment(List<PluginMetadata> pluginMetadataList, PluginsSettings pluginSettings, PythonDependencyInstaller pythonDependencies) : base(pluginMetadataList, pluginSettings, pythonDependencies) { }
     }
 }

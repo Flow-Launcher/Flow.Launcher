@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Flow.Launcher.Core.ExternalPlugins.Environments;
+using Flow.Launcher.Core.ExternalPlugins.PythonDependencies;
 #pragma warning disable IDE0005
 using Flow.Launcher.Infrastructure.Logger;
 #pragma warning restore IDE0005
@@ -15,12 +16,14 @@ namespace Flow.Launcher.Core.Plugin
     {
         private static readonly string ClassName = nameof(PluginsLoader);
 
-        public static List<PluginPair> Plugins(List<PluginMetadata> metadatas, PluginsSettings settings)
+        internal static List<PluginPair> Plugins(List<PluginMetadata> metadatas, PluginsSettings settings, PythonDependencyInstaller pythonDependencies)
         {
+            WarnAboutDependenciesOnNonPythonPlugins(metadatas);
+
             var dotnetPlugins = DotNetPlugins(metadatas);
 
-            var pythonEnv = new PythonEnvironment(metadatas, settings);
-            var pythonV2Env = new PythonV2Environment(metadatas, settings);
+            var pythonEnv = new PythonEnvironment(metadatas, settings, pythonDependencies);
+            var pythonV2Env = new PythonV2Environment(metadatas, settings, pythonDependencies);
             var tsEnv = new TypeScriptEnvironment(metadatas, settings);
             var jsEnv = new JavaScriptEnvironment(metadatas, settings);
             var tsV2Env = new TypeScriptV2Environment(metadatas, settings);
@@ -46,6 +49,18 @@ namespace Flow.Launcher.Core.Plugin
                 .Concat(executableV2Plugins)
                 .ToList();
             return plugins;
+        }
+
+        private static void WarnAboutDependenciesOnNonPythonPlugins(List<PluginMetadata> metadatas)
+        {
+            foreach (var metadata in metadatas)
+            {
+                if (metadata.Dependencies is { Count: > 0 } && !AllowedLanguage.IsPython(metadata.Language))
+                {
+                    PublicApi.Instance.LogWarn(ClassName,
+                        $"Plugin <{metadata.Name}> declares Dependencies but its language is {metadata.Language}. Only Python plugins support Dependencies, so they are ignored.");
+                }
+            }
         }
 
         private static List<PluginPair> DotNetPlugins(List<PluginMetadata> source)

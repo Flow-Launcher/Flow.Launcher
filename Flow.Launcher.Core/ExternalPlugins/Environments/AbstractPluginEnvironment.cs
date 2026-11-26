@@ -131,7 +131,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
 
         internal abstract void InstallEnvironment();
 
-        private void EnsureLatestInstalled(string expectedPath, string currentPath, string installedDirPath)
+        protected virtual void EnsureLatestInstalled(string expectedPath, string currentPath, string installedDirPath)
         {
             if (expectedPath == currentPath) return;
 
@@ -198,6 +198,13 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
                         = GetUpdatedEnvironmentPath(settings.PluginSettings.NodeExecutablePath);
                 }
 
+                if (IsUsingPortablePath(settings.PluginSettings.UvExecutablePath, DataLocation.UvEnvironmentName)
+                    && !settings.PluginSettings.UvExecutablePath.StartsWith(DataLocation.PortableDataPath))
+                {
+                    settings.PluginSettings.UvExecutablePath
+                        = GetUpdatedEnvironmentPath(settings.PluginSettings.UvExecutablePath);
+                }
+
                 // When user has switched from roaming to portable
                 if (IsUsingRoamingPath(settings.PluginSettings.PythonExecutablePath))
                 {
@@ -209,6 +216,12 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
                 {
                     settings.PluginSettings.NodeExecutablePath
                         = settings.PluginSettings.NodeExecutablePath.Replace(DataLocation.RoamingDataPath, DataLocation.PortableDataPath);
+                }
+
+                if (IsUsingRoamingPath(settings.PluginSettings.UvExecutablePath))
+                {
+                    settings.PluginSettings.UvExecutablePath
+                        = settings.PluginSettings.UvExecutablePath.Replace(DataLocation.RoamingDataPath, DataLocation.PortableDataPath);
                 }
             }
             else
@@ -223,6 +236,12 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
                 {
                     settings.PluginSettings.NodeExecutablePath
                         = GetUpdatedEnvironmentPath(settings.PluginSettings.NodeExecutablePath);
+                }
+
+                if (IsUsingPortablePath(settings.PluginSettings.UvExecutablePath, DataLocation.UvEnvironmentName))
+                {
+                    settings.PluginSettings.UvExecutablePath
+                        = GetUpdatedEnvironmentPath(settings.PluginSettings.UvExecutablePath);
                 }
             }
         }

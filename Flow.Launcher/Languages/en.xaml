@@ -37,6 +37,12 @@
     <!--  AbstractPluginEnvironment  -->
     <system:String x:Key="failToInstallTypeScriptEnv">Failed to install TypeScript environment. Please try again later</system:String>
     <system:String x:Key="failToInstallPythonEnv">Failed to install Python environment. Please try again later.</system:String>
+    <system:String x:Key="pythonDependencyInstallingTitle">Installing Python dependencies</system:String>
+    <system:String x:Key="pythonDependencyInstallingMessage">Installing dependencies for {0}...</system:String>
+    <system:String x:Key="pythonDependencyNotPinned">Plugin {0} lists Python dependencies that are not pinned to an exact version: {1}. Ask the plugin author to pin them (for example requests==2.32.3), or allow unpinned dependencies in Settings &gt; General.</system:String>
+    <system:String x:Key="pythonDependencyUvUnavailable">Could not find or download uv, which is needed to install Python dependencies for plugin {0}. Flow will try again on the next start.</system:String>
+    <system:String x:Key="pythonDependencyInstallFailed">Failed to install Python dependencies for plugin {0}. Flow will try again on the next start.{1}</system:String>
+    <system:String x:Key="pythonDependencyInvalidPluginId">Plugin {0} has an ID that cannot be used as a folder name, so its Python dependencies cannot be installed.</system:String>
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Failed to register hotkey "{0}". The hotkey may be in use by another program. Change to a different hotkey, or exit another program.</system:String>
@@ -116,6 +122,10 @@
     <system:String x:Key="nodeFilePath">Node.js Path</system:String>
     <system:String x:Key="selectNodeExecutable">Please select the Node.js executable</system:String>
     <system:String x:Key="selectPythonExecutable">Please select pythonw.exe</system:String>
+    <system:String x:Key="uvFilePath">uv Path</system:String>
+    <system:String x:Key="selectUvExecutable">Please select uv.exe</system:String>
+    <system:String x:Key="allowUnpinnedPythonDependencies">Allow unpinned Python plugin dependencies</system:String>
+    <system:String x:Key="allowUnpinnedPythonDependenciesToolTip">For plugin development. Lets Python plugins list dependencies without an exact version. Takes effect after restart.</system:String>
     <system:String x:Key="typingStartEn">Always Start Typing in English Mode</system:String>
     <system:String x:Key="typingStartEnTooltip">Temporarily change your input method to English mode when activating Flow.</system:String>
     <system:String x:Key="autoUpdates">Auto Update</system:String>

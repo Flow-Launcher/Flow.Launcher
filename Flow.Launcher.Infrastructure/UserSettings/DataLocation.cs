@@ -39,8 +39,11 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         public const string PythonEnvironmentName = "Python";
         public const string NodeEnvironmentName = "Node.js";
+        public const string UvEnvironmentName = "uv";
         public const string PluginEnvironments = "Environments";
         public const string PluginDeleteFile = "NeedDelete.txt";
         public static readonly string PluginEnvironmentsPath = Path.Combine(DataDirectory(), PluginEnvironments);
+        public static readonly string PythonDependenciesPath = Path.Combine(PluginEnvironmentsPath, PythonEnvironmentName, "PluginDependencies");
+        public static readonly string UvCachePath = Path.Combine(PluginEnvironmentsPath, UvEnvironmentName, "cache");
     }
 }

@@ -418,6 +418,18 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     }
 
     [RelayCommand]
+    private void SelectUv()
+    {
+        var selectedFile = GetFileFromDialog(
+            Localize.selectUvExecutable(),
+            "uv|uv.exe"
+        );
+
+        if (!string.IsNullOrEmpty(selectedFile))
+            Settings.PluginSettings.UvExecutablePath = selectedFile;
+    }
+
+    [RelayCommand]
     private void SelectFileManager()
     {
         var fileManagerChangeWindow = new SelectFileManagerWindow();
