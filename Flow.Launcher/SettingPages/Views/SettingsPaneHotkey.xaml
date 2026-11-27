@@ -65,6 +65,7 @@
                 Header="{DynamicResource openResultModifiers}">
                 <ComboBox
                     Width="120"
+                    AutomationProperties.Name="{DynamicResource openResultModifiers}"
                     FontSize="14"
                     ItemsSource="{Binding OpenResultModifiersList}"
                     SelectedValue="{Binding Settings.OpenResultModifiers}" />

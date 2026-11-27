@@ -55,6 +55,7 @@
 
                 <StackPanel Margin="14 28 0 0" Orientation="Horizontal">
                     <TextBlock
+                        x:Name="BrowserNameLabel"
                         Grid.Column="1"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
@@ -67,6 +68,8 @@
                         Margin="14 0 0 0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
+                        AutomationProperties.LabeledBy="{Binding ElementName=BrowserNameLabel}"
+                        ItemContainerStyle="{StaticResource DisplayNameComboBoxItemStyle}"
                         ItemsSource="{Binding CustomBrowsers}"
                         SelectedIndex="{Binding SelectedCustomBrowserIndex}">
                         <ComboBox.ItemTemplate>

@@ -177,6 +177,20 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <!--  Data-bound ComboBox items expose their type name (ToString) to screen readers unless AutomationProperties.Name is set  -->
+        <Style
+            x:Key="DisplayComboBoxItemStyle"
+            BasedOn="{StaticResource DefaultComboBoxItemStyle}"
+            TargetType="ComboBoxItem">
+            <Setter Property="AutomationProperties.Name" Value="{Binding Display}" />
+        </Style>
+        <Style
+            x:Key="DescriptionComboBoxItemStyle"
+            BasedOn="{StaticResource DefaultComboBoxItemStyle}"
+            TargetType="ComboBoxItem">
+            <Setter Property="AutomationProperties.Name" Value="{Binding Description}" />
+        </Style>
     </UserControl.Resources>
 
     <!--  Margin="-2 0 -2 0" is to make sure separator between expanders are expanded to left & right boarder  -->
@@ -328,6 +342,7 @@
                 </StackPanel>
 
                 <TextBlock
+                    x:Name="IndexSearchEngineLabel"
                     Grid.Row="7"
                     Grid.Column="0"
                     Margin="{StaticResource SettingPanelItemTopBottomMargin}"
@@ -340,11 +355,14 @@
                     Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
+                    AutomationProperties.LabeledBy="{Binding ElementName=IndexSearchEngineLabel}"
                     DisplayMemberPath="Description"
+                    ItemContainerStyle="{StaticResource DescriptionComboBoxItemStyle}"
                     ItemsSource="{Binding IndexSearchEngines}"
                     SelectedItem="{Binding SelectedIndexSearchEngine}" />
 
                 <TextBlock
+                    x:Name="ContentSearchEngineLabel"
                     Grid.Row="8"
                     Grid.Column="0"
                     Margin="{StaticResource SettingPanelItemTopBottomMargin}"
@@ -357,11 +375,14 @@
                     Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
+                    AutomationProperties.LabeledBy="{Binding ElementName=ContentSearchEngineLabel}"
                     DisplayMemberPath="Description"
+                    ItemContainerStyle="{StaticResource DescriptionComboBoxItemStyle}"
                     ItemsSource="{Binding ContentIndexSearchEngines}"
                     SelectedItem="{Binding SelectedContentSearchEngine}" />
 
                 <TextBlock
+                    x:Name="PathEnumerationEngineLabel"
                     Grid.Row="9"
                     Grid.Column="0"
                     Margin="{StaticResource SettingPanelItemTopBottomMargin}"
@@ -374,7 +395,9 @@
                     Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
+                    AutomationProperties.LabeledBy="{Binding ElementName=PathEnumerationEngineLabel}"
                     DisplayMemberPath="Description"
+                    ItemContainerStyle="{StaticResource DescriptionComboBoxItemStyle}"
                     ItemsSource="{Binding PathEnumerationEngines}"
                     SelectedItem="{Binding SelectedPathEnumerationEngine}" />
 
@@ -568,6 +591,7 @@
                         <StackPanel Margin="{StaticResource SettingPanelItemTopBottomMargin}" Orientation="Horizontal">
                             <ComboBox
                                 Margin="{StaticResource SettingPanelItemLeftMargin}"
+                                AutomationProperties.Name="{DynamicResource plugin_explorer_previewpanel_date_format_label}"
                                 ItemsSource="{Binding DateFormatList}"
                                 SelectedItem="{Binding PreviewPanelDateFormat}" />
                             <TextBlock
@@ -579,6 +603,7 @@
                         <StackPanel Margin="{StaticResource SettingPanelItemTopBottomMargin}" Orientation="Horizontal">
                             <ComboBox
                                 Margin="{StaticResource SettingPanelItemLeftMargin}"
+                                AutomationProperties.Name="{DynamicResource plugin_explorer_previewpanel_time_format_label}"
                                 ItemsSource="{Binding TimeFormatList}"
                                 SelectedItem="{Binding PreviewPanelTimeFormat}" />
                             <TextBlock
@@ -673,6 +698,7 @@
                     IsChecked="{Binding Settings.EverythingEnableRunCount}" />
 
                 <TextBlock
+                    x:Name="EverythingSortOptionLabel"
                     Grid.Row="5"
                     Grid.Column="0"
                     Margin="{StaticResource SettingPanelItemTopBottomMargin}"
@@ -684,7 +710,9 @@
                     Grid.Column="1"
                     Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
                     VerticalAlignment="Center"
+                    AutomationProperties.LabeledBy="{Binding ElementName=EverythingSortOptionLabel}"
                     DisplayMemberPath="Display"
+                    ItemContainerStyle="{StaticResource DisplayComboBoxItemStyle}"
                     ItemsSource="{Binding AllEverythingSortOptions}"
                     SelectedValue="{Binding SelectedEverythingSortOption, Mode=TwoWay}"
                     SelectedValuePath="Value" />
