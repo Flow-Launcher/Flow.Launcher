@@ -32,6 +32,12 @@ public partial class SettingsPanePluginStore
         UpdateCategoryGrouping();
         _viewModel.PropertyChanged += ViewModel_PropertyChanged;
         base.OnNavigatedTo(e);
+
+        // Refresh on entry so a manifest URL committed in General settings is
+        // fetched and reflected by the store without requiring a restart or a
+        // manual refresh. The manifest service skips the fetch while its cache
+        // is still valid unless the configured URL changed.
+        _viewModel.RefreshExternalPluginsCommand.Execute(null);
     }
 
     private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
