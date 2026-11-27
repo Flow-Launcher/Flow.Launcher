@@ -89,7 +89,7 @@ namespace Flow.Launcher.Infrastructure
             }
             else if (ignoreCase)
             {
-                queryToCompare = queryToCompare.ToLower();
+                queryToCompare = queryToCompare.ToLowerInvariant();
             }
 
             var querySubstrings = queryToCompare.Split([' '], StringSplitOptions.RemoveEmptyEntries);
@@ -128,7 +128,7 @@ namespace Flow.Launcher.Infrastructure
                 }
                 else if (ignoreCase)
                 {
-                    compareChar = char.ToLower(compareChar);
+                    compareChar = char.ToLowerInvariant(compareChar);
                 }
 
                 // To maintain a list of indices which correspond to spaces in the string to compare
@@ -346,7 +346,7 @@ namespace Flow.Launcher.Infrastructure
                 }
                 else if (ignoreCase)
                 {
-                    c = char.ToLower(c);
+                    c = char.ToLowerInvariant(c);
                 }
 
                 if (c != currentQuerySubstring[indexToCheck])
