@@ -540,12 +540,19 @@ namespace Flow.Launcher
         }
 
         private readonly List<Func<int, int, SpecialKeyState, bool>> _globalKeyboardHandlers = new();
+        private readonly object _globalKeyboardHandlersLock = new();
 
-        public void RegisterGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback) =>
-            _globalKeyboardHandlers.Add(callback);
+        public void RegisterGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback)
+        {
+            lock (_globalKeyboardHandlersLock)
+                _globalKeyboardHandlers.Add(callback);
+        }
 
-        public void RemoveGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback) =>
-            _globalKeyboardHandlers.Remove(callback);
+        public void RemoveGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback)
+        {
+            lock (_globalKeyboardHandlersLock)
+                _globalKeyboardHandlers.Remove(callback);
+        }
 
         public void ReQuery(bool reselect = true) => _mainVM.ReQuery(reselect);
 
@@ -665,10 +672,21 @@ namespace Flow.Launcher
 
         private bool KListener_hookedKeyboardCallback(KeyEvent keyevent, int vkcode, SpecialKeyState state)
         {
+            Func<int, int, SpecialKeyState, bool>[] snapshot;
+            lock (_globalKeyboardHandlersLock)
+                snapshot = _globalKeyboardHandlers.ToArray();
+
             var continueHook = true;
-            foreach (var x in _globalKeyboardHandlers)
+            foreach (var x in snapshot)
             {
-                continueHook &= x((int)keyevent, vkcode, state);
+                try
+                {
+                    continueHook &= x((int)keyevent, vkcode, state);
+                }
+                catch (Exception e)
+                {
+                    LogException(ClassName, "Global keyboard callback failed", e);
+                }
             }
 
             return continueHook;
