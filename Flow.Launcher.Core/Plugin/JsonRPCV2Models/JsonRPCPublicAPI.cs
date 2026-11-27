@@ -89,6 +89,11 @@ namespace Flow.Launcher.Core.Plugin.JsonRPCV2Models
             _api.ShowMsg(title, subTitle, iconPath, useMainWindowAsOwner);
         }
 
+        public void ShowMsg(string title, string subTitle, string iconPath, bool useMainWindowAsOwner = true, bool forceShown = false)
+        {
+            _api.ShowMsg(title, subTitle, iconPath, useMainWindowAsOwner, forceShown);
+        }
+
         public void OpenSettingDialog()
         {
             _api.OpenSettingDialog();
